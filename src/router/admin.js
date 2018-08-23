@@ -4,6 +4,16 @@ let admin_router = {
             path: '/admin',
             name: '首页',
             component: resolve =>void(require(['@/views/admin/news'], resolve))
+        },
+        {
+            path: '/accounts',
+            name: '导航',
+            component: resolve =>void(require(['@/views/admin/accounts'], resolve))
+        },
+        {
+            path: '/information',
+            name: '小块',
+            component: resolve =>void(require(['@/views/admin/information'], resolve))
         }
     ]
 }
