@@ -25,18 +25,17 @@
     	</div>
     </div>
 </template>
-<style>
+<style scoped>
 	.el-menu {
-		width: 200px;
+		width: 120px;
+		height: 1000px;
 	}
-	.navMenu {
-		width: 200px;
-	}
-	.navElMenu {
-		position: absolute;
+	/*.navElMenu {
+		position: relative;
 		top: 0;
-		left: 0;
-	}
+		left: 120px;
+		height: 0;
+	}*/
 </style>
 <script>
 export default {

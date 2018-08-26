@@ -14,6 +14,11 @@ let admin_router = {
             path: '/information',
             name: '小块',
             component: resolve =>void(require(['@/views/admin/information'], resolve))
+        },
+        {
+            path: '/operate',
+            name: '运营管理',
+            component: resolve =>void(require(['@/views/admin/Operate'], resolve))
         }
     ]
 }
