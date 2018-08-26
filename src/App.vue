@@ -47,12 +47,11 @@ export default {
 </script>
 
 <style>
-<<<<<<< HEAD
-body {
-	padding: 0;
-	margin: 0;
-}
-=======
+
+  body {
+  	padding: 0;
+  	margin: 0;
+  }
   .el-main {
     background-color: #E9EEF3;
     color: #333;
@@ -74,5 +73,4 @@ body {
     /* line-height: 60px; */
   }
 
->>>>>>> 6ef8778176844d62671ffa981c9fe74c3cc38154
 </style>
