@@ -12,7 +12,7 @@
 
   <div id="app">
     <el-container >
-        <el-aside width="201px">
+        <el-aside width="auto">
           <Navigation></Navigation> 
         </el-aside>
         <el-container>
