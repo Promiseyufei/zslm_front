@@ -1,18 +1,8 @@
 <template>
-  
-  <!-- <el-container>
-      <el-aside >
-          <Navigation></Navigation> 
-      </el-aside>
-
-      <el-main>
-          <router-view/>
-      </el-main>
-</el-container> -->
-
   <div id="app">
     <el-container >
         <el-aside width="201px">
+        <!-- 在components/admin下定义的组件，相当于封装了一个方法Navigation -->
           <Navigation></Navigation> 
         </el-aside>
         <el-container>

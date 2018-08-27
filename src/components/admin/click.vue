@@ -1,12 +1,10 @@
 <template>
 	<div>
-		<div>
-			<Tab></Tab>
-			<click></click>
-		</div>
-		<!-- <table></table> -->
+		<el-button size="small" type="primary">点击上传</el-button>
 	</div>
 </template>
+
+
 <script>
 	export default {
 	    data() {
@@ -27,19 +25,17 @@
 </script>
 
 <style>
-	/*.top {
-		display: flex;
-		justify-content: space-between;
-	}*/
-	/*.screen {
-		font-weight: bold;
-		font-size: 14px;
-		color: #666;
-		font-family:'Tahoma';
-		background-color: #F3F3F3;
-		height: 30px;
-		border: 1px solid #E4E4E4;
-		padding: 15px 0 0 35px;
-		margin: -10px 0 0 20px;
-	}*/
+	.el-button--small {
+	    padding: 9px 15px;
+	    width: 80px;
+	    height: 35px;
+	    background-color: #1ABC9C;
+	    border-color: #1ABC9C;
+	}
+	.el-button--small:hover {
+		background-color: #1ABC9C;
+		opacity: 0.8;
+		border-color: #1ABC9C;
+	}
+
 </style>

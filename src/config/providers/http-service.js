@@ -59,7 +59,10 @@ axios.interceptors.response.use(response => {
     return Promise.resolve(err.response);
 })
 
-
+this.fetch('/test',{
+    'id':2,
+    'test':'aaaa'
+})
 export default {
     //get
     fetch: function(url, params = {}) {

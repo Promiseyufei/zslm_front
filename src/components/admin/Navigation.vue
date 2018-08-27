@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
@@ -78,13 +77,8 @@
                     <el-menu-item index="1-4-1">选项1</el-menu-item>
                 </el-submenu>
             </el-submenu>
-        </el-menu>
-
-        
+        </el-menu>     
     </div>
-
-
-
 </template>    
 
 
