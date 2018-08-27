@@ -1,26 +1,42 @@
 <template>
     <div>
     	<div class="operateBox">
-        <!-- 导航 -->
-    		<el-menu
-		          background-color="#F0F6F6"
-		          text-color="#3C3F41"
-		          active-text-color="black" router 
-		          >
-		          <NavMenu :navMenus="menuData"></NavMenu>
-		    </el-menu>
         <!-- 中间内容 -->
-        <div class="operateFloatRight operateBig" v-bind:style="{ width: width + 'px' }">
-          <div class="operateHeader">
-            <span>频道banner</span>
-          </div>
-        </div>
-
-        <div class="operateFloatRight">
+        <div>
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
                 <el-menu-item v-for="(list, i) in banner" :key="i" :index = "i + '' ">{{list.name}}</el-menu-item>
           </el-menu>
           <div class="line"></div>
+
+          <!-- 上传banner -->
+          <div class="operateUpfiles">
+            <div class="operateUpfilesLeft">
+              <img src="" alt="">
+              <span>上传banner</span>
+            </div>
+            <div class="operateUpfilesRight">
+                <div>
+                  <el-upload
+                    class="upload-demo"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :before-remove="beforeRemove"
+                    :on-exceed="handleExceed"
+                    :file-list="fileList">
+                    <el-button size="small" type="primary">点击上传</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                  </el-upload>
+                </div>
+                <div>
+                  <img :src="this.fileList[0].url" alt="">
+                </div>
+                <div>
+                  Panner
+                </div>
+            </div>
+          </div>
+
         </div>
         
     	</div>
@@ -198,9 +214,25 @@ export default {
         activeIndex2: '1',
         banner: [],
         index: "1",
+        src: "",
+        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+
       }
     },
     methods:{
+        handleRemove(file, fileList) {
+          console.log(file, fileList);
+        },
+        handlePreview(file) {
+          console.log(file);
+        },
+        handleExceed(files, fileList) {
+          this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+          // if () {};
+        },
+        beforeRemove(file, fileList) {
+          return this.$confirm(`确定移除 ${ file.name }？`);
+        },
         handleSelect: function(key, keyPath) {
           // console.log(key, keyPath);
         },
@@ -226,41 +258,32 @@ export default {
       let w = document.body.clientWidth;
       this.width = w - 120;
       this.getInformationType();
+
+      console.log(this.fileList[0].url);
     }
 }
 </script>
 
 <style scoped>
 /*
-* 左侧导航样式
-*/
-.operateBox>.el-menu {
-    width: 120px;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-/*
 * 右边内容样式
 */
-.operateFloatRight {
-  margin-left: 120px;
-}
-.operateBig {
-  height: 50px;
-  background-color: #F3F3F3;
+.operateUpfiles {
+  border: 1px solid #e4e4e4;
+  background-color: #fff;
   display: flex;
-  align-items: center;
+  flex-direction: row;
 }
-
-.operateHeader {
-  width: 1500px;
-  margin: 0 auto;
+.operateUpfilesLeft {
+  background-color: #fcfcfc;
+  border-right: 1px solid #e4e4e4;
+  width: 160px;
 }
-.operateHeader>span {
-  border-left: 5px solid #1ABC9C;
-  padding-left: 5px;
+.operateUpfilesLeft>span {
+  /*background: url();*/
+}
+.operateUpfilesRight {
+  padding: 35px 90px 35px 80px;
 }
 </style>
 
