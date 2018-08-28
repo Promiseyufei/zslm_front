@@ -1,4 +1,4 @@
-<template>
+ <template>
 	<div>
 		<el-button size="small" type="primary" class="click">点击上传</el-button>
 	</div>
@@ -24,7 +24,7 @@
 
 </script>
 
-<style>
+<style scoped>
 	.el-button--primary {
 		position: absolute;
 		right: 0;

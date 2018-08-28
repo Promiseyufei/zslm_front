@@ -127,7 +127,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .el-table {
     color: #333;
   }
