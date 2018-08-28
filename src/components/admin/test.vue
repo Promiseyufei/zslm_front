@@ -27,7 +27,7 @@
     	</div>
     </div>
 </template>
-<style>
+<style scoped>
 	.el-menu {
 		width: 200px;
 	}

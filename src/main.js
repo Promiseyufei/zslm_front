@@ -1,3 +1,4 @@
+ 
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
@@ -13,11 +14,15 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
+//引入axios
+import axios from 'axios'
+window.axios = axios
+// axios.defaults.withCredentials = true
 
 //使用mock
 import Mock from 'mockjs'
 window.Mock = Mock
-
+require('../util/mock/xuhong_mock.js')
 
 Vue.config.productionTip = false
 

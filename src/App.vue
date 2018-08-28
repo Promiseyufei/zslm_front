@@ -1,8 +1,12 @@
 <template>
   <div id="app">
     <el-container >
+<<<<<<< HEAD
         <el-aside width="201px">
         <!-- 在components/admin下定义的组件，相当于封装了一个方法Navigation -->
+=======
+        <el-aside width="auto">
+>>>>>>> 786c23532cfba51ad4c0c1211745b6d3bca71d36
           <Navigation></Navigation> 
         </el-aside>
         <el-container>
@@ -37,6 +41,11 @@ export default {
 </script>
 
 <style>
+
+  body {
+  	padding: 0;
+  	margin: 0;
+  }
   .el-main {
     background-color: #E9EEF3;
     color: #333;

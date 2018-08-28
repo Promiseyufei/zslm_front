@@ -16,9 +16,15 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/information'], resolve))
         },
         {
+<<<<<<< HEAD
             path: '/files',
             name: '文件管理',
             component: resolve =>void(require(['@/views/admin/files'], resolve))
+=======
+            path: '/operate',
+            name: '运营管理',
+            component: resolve =>void(require(['@/views/admin/operate'], resolve))
+>>>>>>> 786c23532cfba51ad4c0c1211745b6d3bca71d36
         }
     ]
 }
