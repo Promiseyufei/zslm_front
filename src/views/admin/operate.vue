@@ -3,6 +3,10 @@
     	<div class="operateBox">
         <!-- 中间内容 -->
         <div>
+          <el-breadcrumb separator="/">
+            <el-breadcrumb-item>运行管理</el-breadcrumb-item>
+            <el-breadcrumb-item>频道banner</el-breadcrumb-item>
+          </el-breadcrumb>
           <!-- 选项卡 -->
           <div class="operateNav">
             <el-radio-group v-model="radio">
@@ -10,9 +14,13 @@
             </el-radio-group>
           </div>
           
-
+          <div class="operateUpfiles operateHeader">
+            <p>当前操作页面：<span>辅导机构列表页</span></p>
+            <el-button type="info" plain><i class="fa fa-trash-o fa-fw fa-lg"></i>刷新</el-button>
+          </div>
           <!-- 上传banner -->
           <div class="operateUpfiles operateUp">
+            
             <div class="operateUpfilesLeft">
               <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传banner</div>
             </div>
@@ -66,7 +74,7 @@
             <div class="operateUpfilesRight2">
               <div class="operateUpfilesRight2Nav">
                 <span>当前展示的banner</span>
-                <el-button type="info" plain><i class="fa fa-trash-o fa-fw fa-lg"></i>信息按钮</el-button>
+                <el-button type="info" plain><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
               </div>
               <!-- 表格 -->
               <div class="operateTable">
@@ -414,7 +422,7 @@ export default {
 * 选项卡样式
 */
 .operateNav {
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 .operateNav .el-radio-button {
   margin-right: 10px;
@@ -438,7 +446,7 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.operateUp {
+.operateHeader,.operateUp {
   border-bottom: none;
 }
 .operateDown {
