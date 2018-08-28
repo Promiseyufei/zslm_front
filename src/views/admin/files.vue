@@ -2,9 +2,7 @@
 	<div>
 		<div>
 			<Tab></Tab>
-			<click></click>
 		</div>
-		<!-- <table></table> -->
 	</div>
 </template>
 <script>

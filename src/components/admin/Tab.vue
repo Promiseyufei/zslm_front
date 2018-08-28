@@ -4,7 +4,8 @@
       <el-radio-button :label="item" v-for="item in items" ></el-radio-button>
     </el-radio-group> -->
       <div style="margin: 0 auto; width: 1500px; position:relative;">
-        <el-button size="small" type="primary">点击上传</el-button>
+        <Click></Click>
+        <!-- <el-button size="small" type="primary">点击上传</el-button> -->
         <el-tabs type="border-card">
         <!-- <el-tab-pane :label="item" v-for="(item,index) of items" :index="index + ''">{{item.list}}</el-tab-pane> -->
         <el-tab-pane label="全部文件">
@@ -12,7 +13,7 @@
             <i></i>
             <p class="screen">筛选查询</p>
           </div>
-          <el-form class="input" ref="form" :model="form" label-width="80px">
+          <el-form class="input" ref="form" label-width="80px">
             <el-form-item label="文件名称">
               <el-input placeholder="请输入文件名称"></el-input>
             </el-form-item>
@@ -37,12 +38,15 @@
               </el-select>
             </el-form-item>
           </el-form>
-          <div style="height:1000px;">
+          <div>
             <i></i>
             <p class="screen">数据列表</p>
           </div>
-          <click></click>
-          <!-- <table></table> -->
+            <Table></Table>
+            <div class="footer"> 
+              <div class="footer-left">共<span>10</span>页/<span>100</span>条数据</div>
+              <Page></Page>
+            </div>
         </el-tab-pane>
         <el-tab-pane label="招生简介">2</el-tab-pane>
         <el-tab-pane label="其他文件">3</el-tab-pane>
@@ -124,6 +128,43 @@
   }
 </script>
 <style>
+  .el-table {
+    color: #333;
+  }
+  .el-button--text {
+    color: #333;
+  }
+  .el-button--text:hover {
+    color: #1ABC9C;
+  }
+  .el-table th>.cell {
+    text-align: center;
+}
+  .el-pagination {
+    color: #999;
+    font-weight: 500;
+  }
+  .el-pager:hover {
+    /*color: #1ABC9C;*/
+  }
+  .footer-left {
+    /*text-align: center;*/
+    font-size: 12px;
+    color: #999;
+    margin: 8px 0 0 900px;
+  }
+  .footer-left span {
+    color: #F04844;    
+  }
+  .footer {
+    border: 1px solid #E4E4E4;
+    display: flex;
+    margin: 20px -5px;
+  }
+  .footer div {
+    text-align: center;
+    /*margin: 0 auto;*/
+  }
   .table {
     /*width: 100px;*/
     /*height: 100px;*/
@@ -138,17 +179,14 @@
   .input div>div {
     margin-left: 5px;
   } 
-  .el-button--small {
-      position: absolute;
-      right: 0;
-      z-index: 99;
+  .click {
       padding: 9px 15px;
       width: 80px;
       height: 35px;
       background-color: #1ABC9C;
       border-color: #1ABC9C;
   }
-  .el-button--small:hover {
+  .click {
     background-color: #1ABC9C;
     opacity: 0.8;
     border-color: #1ABC9C;
@@ -201,5 +239,9 @@
     padding: 15px 0 0 35px;
     text-align: left;
     margin: 5px 0 0 -5px;
+  }
+  *{
+    margin: 0;
+    padding: 0;
   }
 </style>
