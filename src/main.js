@@ -8,6 +8,9 @@ import router from './router'
 //引入jquery
 import $ from 'jquery'
 
+//引入font-awesome4.7.0
+import 'font-awesome/css/font-awesome.min.css'
+
 
 //引入element-ui
 import ElementUI from 'element-ui'
