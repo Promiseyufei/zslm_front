@@ -20,7 +20,7 @@ Mock.mock('/admin/operate/getInformationType',{
 })
 
 
-Mock.mock('/user/login',{
+Mock.mock('/putPictrue',{
 	"object|1": [{
 			"code": 0,
 			"msg": "success"
