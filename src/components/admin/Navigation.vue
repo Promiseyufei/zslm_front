@@ -3,52 +3,26 @@
     <div>
         <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
             <el-radio-button :label="!isCollapse">展开</el-radio-button>
-            <!-- <el-radio-button :label="test">收起</el-radio-button> -->
         </el-radio-group>
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :unique-opened="testa">
-            <el-submenu index="1">
+        <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :unique-opened="unOpend">
+            <el-submenu v-for="(item, index) in navigation" :key="index" :index="item.index + ''">
                 <template slot="title">
                     <i class="el-icon-location"></i>
-                    <span slot="title">导航一</span>
+                    <span slot="title">{{ item.title }}</span>
                 </template>
-                <el-menu-item-group>
-                    <span slot="title">分组一</span>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                    <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">导航一</span>
+                <template v-if="typeof item.groups != 'undefined'">
+                    <el-menu-item-group v-for="(group, i) in item.groups" :key="i">
+                        <span slot="title">{{ group.title }}</span>
+                        <el-menu-item v-for="(option, j) in group.options" :key="j" :index="item.index+option.index+''">{{ option.name }}</el-menu-item>
+                    </el-menu-item-group>
                 </template>
-                <el-menu-item-group>
-                <span slot="title">分组一</span>
-                    <el-menu-item index="2-1">选项1</el-menu-item>
-                    <el-menu-item index="2-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                    <el-menu-item index="2-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="2-4">
-                    <span slot="title">选项4</span>
-                    <el-menu-item index="2-4-1">选项1</el-menu-item>
-                </el-submenu>
             </el-submenu>
         </el-menu>
-
-        
     </div>
-
-
-
 </template>    
 
 
-<style>
+<style scoped>
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
@@ -56,25 +30,13 @@
 </style>
 
 <script>
+    import navigation from '../../config/navigation.js'
     export default {
         data() {
             return {
-                testa:false,
+                unOpend:false,
                 isCollapse: true,
-                arr: [
-                    {
-                        index :1,
-                        title: '这是导航啊'
-                    },
-                    {
-                        index :2,
-                        title: '这是导航啊'
-                    },
-                    {
-                        index :3,
-                        title: '这是导航啊'
-                    }
-                ]
+                navigation: navigation
             }
         },
         methods: {
