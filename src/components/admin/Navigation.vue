@@ -1,10 +1,10 @@
 
 <template>
     <div>
-        <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-            <el-radio-button :label="!isCollapse">展开</el-radio-button>
+        <el-radio-group style="display:flex;justify-content:center;">
+            <img src="../../assets/logo.png" alt="" style="height:60px;width:auto;">
         </el-radio-group>
-        <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :unique-opened="unOpend">
+        <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="collapse" :unique-opened="unOpend">
             <el-submenu v-for="(item, index) in navigation" :key="index" :index="item.index + ''">
                 <template slot="title">
                     <i class="el-icon-location"></i>
@@ -35,7 +35,6 @@
         data() {
             return {
                 unOpend:false,
-                isCollapse: true,
                 navigation: navigation
             }
         },
@@ -49,6 +48,7 @@
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
             }
-        }
+        },
+        props:['collapse']
     }
 </script>
