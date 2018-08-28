@@ -106,7 +106,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 	.el-table thead {
 	    color: #333;
 	    font-size: 12px;
