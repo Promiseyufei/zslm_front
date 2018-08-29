@@ -6,6 +6,7 @@ import Tab from './admin/tab.vue'
 import Click from './admin/click.vue'
 import Table from './admin/table.vue'
 import Page from  './admin/page.vue'
+import operateNav from  './admin/OperateNav.vue'
 
 export default {
     Test, 
@@ -14,5 +15,6 @@ export default {
     Tab,
     Click,
     Table,
-    Page
+    Page,
+    operateNav
 }
