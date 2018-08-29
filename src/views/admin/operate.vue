@@ -74,7 +74,7 @@
               <div class="operateUpfilesRight2">
                 <div class="operateUpfilesRight2Nav">
                   <span>当前展示的banner</span>
-                  <el-button type="info" plain><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                  <el-button type="info" plain><i class="fa fa-trash-o fa-fw fa-lg" @click="operateDelete()"></i>清空</el-button>
                 </div>
                 <!-- 表格 -->
                 <div class="operateTable">
@@ -86,9 +86,11 @@
                         width="210">
                       </el-table-column>
                       <el-table-column
-                        prop="show_weight"
                         label="展示顺序"
                         width="80">
+                        <template slot-scope="scope" prop="show_weight">
+                            <el-input v-model="tableData3[scope.$index].show_weight"></el-input>
+                        </template>
                       </el-table-column>
                       <el-table-column
                         prop="re_alt"
@@ -180,6 +182,18 @@ export default {
       },
     },
     methods:{
+        operateDelete: function() {
+          var table = this.tableData3;
+          var arrayTableId = [];
+          for (var i = 0; i < table.length; i++) {
+            arrayTableId.push(table[i].id);
+          };
+          console.log(arrayTableId);
+        },
+        indexMethod: function(index) {
+          console.log(index);
+          return index * 2;
+        },
         // 点击上传图片按钮
         submitForm: function (formName) {
           var self = this;
