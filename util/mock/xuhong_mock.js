@@ -47,7 +47,14 @@ Mock.mock('/admin/operate/createPageBillboard',{
 	"msg": Mock.mock('@cword(3, 5)')
 })
 
-
+/*Operate
+* 运营管理模块——首页
+* 删除一级页面的banner
+*/
+Mock.mock('/admin/operate/deleteBannerAd',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)')
+})
 
 Mock.mock('/putPictrue',{
 	

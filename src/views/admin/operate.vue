@@ -74,52 +74,15 @@
               <div class="operateUpfilesRight2">
                 <div class="operateUpfilesRight2Nav">
                   <span>当前展示的banner</span>
-                  <el-button type="info" plain><i class="fa fa-trash-o fa-fw fa-lg" @click="operateDelete()"></i>清空</el-button>
+                  <el-button type="info" plain @click="operateDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                 </div>
                 <!-- 表格 -->
-                <div class="operateTable">
-                  <template>
-                    <el-table :data="tableData3"  border style="width: 100%">
-                      <el-table-column
-                        prop="img"
-                        label="图片名称"
-                        width="210">
-                      </el-table-column>
-                      <el-table-column
-                        label="展示顺序"
-                        width="80">
-                        <template slot-scope="scope" prop="show_weight">
-                            <el-input v-model="tableData3[scope.$index].show_weight"></el-input>
-                        </template>
-                      </el-table-column>
-                      <el-table-column
-                        prop="re_alt"
-                        label="图片描述"
-                        width="210">
-                      </el-table-column>
-                      <el-table-column
-                        prop="re_url"
-                        label="图片地址"
-                        width="319">
-                      </el-table-column>
-                      <el-table-column
-                        prop="create_time"
-                        label="上传时间"
-                        width="210">
-                      </el-table-column>
-                      <el-table-column
-                        label="操作"
-                        width="140">
-                        <template slot-scope="scope">
-                          <el-button type="text" size="small">编辑</el-button>
-                          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                          <el-button type="text" size="small">删除</el-button>
-                        </template>
-                      </el-table-column>
-                    </el-table>
-                  </template>
+                <OperateTable :tableData3 = "tableData3" :listTable="listTable"></OperateTable>
+                <!-- 完成按钮 -->
+                <div class="operateFinalUp">
+                  <el-button type="primary">完成</el-button>
                 </div>
-              </div>
+              </div> 
             </div>
           </div>
           
@@ -172,6 +135,34 @@ export default {
           url: ''
         },
         i: 0,
+        TableValue: 0,
+        listTable: [
+          {
+            prop: 'img',
+            lable: '图片名称',
+            width: "210px"
+          },
+          {
+            prop: "show_weight",
+            lable: "展示权重",
+            width: "80px"
+          },
+          {
+            prop: "re_alt",
+            lable: "图片描述",
+            width: "210px"
+          },
+          {
+            prop: "re_url",
+            lable: "图片地址",
+            width: "319px"
+          },
+          {
+            prop: "create_time",
+            lable: "上传时间",
+            width: "210px"
+          }
+        ],
         // 表格默认数据
         tableData3: []
         }
@@ -182,32 +173,38 @@ export default {
       },
     },
     methods:{
+        // 清空所有banner
         operateDelete: function() {
           var table = this.tableData3;
           var arrayTableId = [];
           for (var i = 0; i < table.length; i++) {
             arrayTableId.push(table[i].id);
           };
-          console.log(arrayTableId);
-        },
-        indexMethod: function(index) {
-          console.log(index);
-          return index * 2;
+          this.deleteBanner(arrayTableId);
         },
         // 点击上传图片按钮
         submitForm: function (formName) {
           var self = this;
           this.$refs[formName].validate((valid) => {
             // 判断表单是否符合填写要求
-            if (valid) {
+            if (!valid) {
               // 判断是否上传图片
               if (self.fileList[0].file == '') {
                 this.$message('您还没有上传为图片呢');
                 return;
               };
               // 上传图片
-              // console.log(123,JSON.stringify(self.fileList[0].file));
-              return;
+              // var formData = new FormData();
+              // formData.append("userfile", self.fileList[0].file);
+              // var imgFile = formData.get("userfile");
+
+              var fd = new FormData()
+              fd.append('file', self.fileList[0].file)
+              let imgFile = {
+                  headers: {
+                      'Content-Type': 'multipart/form-data'
+                  }
+              }
               axios.post('/admin/operate/createPageBillboard', {
                 imgName: self.ruleForm.name,
                 imgAlt: self.ruleForm.message,
@@ -218,7 +215,10 @@ export default {
               .then(function (response) {
                 var date = response.data;
                 if (date.code == 0) {
-                  console.log(date.msg,456);
+                  self.$message({
+                    message: '上传成功',
+                    type: 'success'
+                  });
                 }else {
                   console.log(date.msg,123);
                 }
@@ -231,24 +231,6 @@ export default {
               return false;
             }
           });
-        },
-        // 判断是否为链接
-        validateImage: function(url) {    
-            var xmlHttp ;
-            if (window.ActiveXObject)
-             {
-              xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-             }
-             else if (window.XMLHttpRequest)
-             {
-              xmlHttp = new XMLHttpRequest();
-             } 
-            xmlHttp.open("Get",url,false);
-            xmlHttp.send();
-            if(xmlHttp.status==404)
-            return false;
-            else
-            return true;
         },
         // 刷新页面，重新加载页面数据
         operateUpdate: function() {
@@ -292,20 +274,6 @@ export default {
         },
         beforeRemove: function (file, fileList) {
           return this.$confirm(`确定移除 ${ file.name }？`);
-        },
-        // 判断是否是图片
-        beforeAvatarUpload:function (file) {
-          const isjpeg = file.type === 'image/jpeg';
-          const isPNG = file.type === 'image/png';
-          const isLt2M = file.size / 1024 / 1024 < 200;
-
-          if (!isjpeg&&!isPNG) {
-            this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
-          }
-          if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 200MB!');
-          }
-          return isjpeg || isPNG && isLt2M;
         },
         // 获取所有资讯类型
         getInformationType: function() {
@@ -490,6 +458,10 @@ export default {
 }
 .operateTable {
   margin-top: 25px;
+}
+.operateFinalUp {
+  text-align: center;
+  margin: 150px 0 20px;
 }
 </style>
 
