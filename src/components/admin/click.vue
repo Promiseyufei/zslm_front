@@ -27,7 +27,7 @@
 <style scoped>
 	.el-button--primary {
 		position: absolute;
-		right: 0;
+		right: 63px;
 		z-index: 1;
 	    padding: 9px 15px;
 	    width: 80px;
