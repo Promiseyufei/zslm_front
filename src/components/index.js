@@ -7,6 +7,7 @@ import Click from './admin/click.vue'
 import Table from './admin/table.vue'
 import Page from  './admin/page.vue'
 import operateNav from  './admin/OperateNav.vue'
+import OperateTable from  './admin/OperateTable.vue'
 
 export default {
     Test, 
@@ -16,5 +17,6 @@ export default {
     Click,
     Table,
     Page,
-    operateNav
+    operateNav,
+    OperateTable
 }

@@ -2,6 +2,55 @@ export default {
     callDialog:function() {
         alert('公共方法成功啦～');
     },
+    // 删除所给id序列的banner
+    deleteBanner: function(arrayTableId) {
+      var self = this;
+      console.log(arrayTableId);
+      axios.post('/admin/operate/deleteBannerAd', {
+        btId: arrayTableId
+      })
+      .then(function (response) {
+        var date = response.data;
+        if (date.code == 0) {
+          
+        };
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+    // 判断是否为链接
+    validateImage: function(url) {    
+        var xmlHttp ;
+        if (window.ActiveXObject)
+         {
+          xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         else if (window.XMLHttpRequest)
+         {
+          xmlHttp = new XMLHttpRequest();
+         } 
+        xmlHttp.open("Get",url,false);
+        xmlHttp.send();
+        if(xmlHttp.status==404)
+        return false;
+        else
+        return true;
+    },
+    // 判断是否是图片
+    beforeAvatarUpload:function (file) {
+      const isjpeg = file.type === 'image/jpeg';
+      const isPNG = file.type === 'image/png';
+      const isLt2M = file.size / 1024 / 1024 < 200;
+
+      if (!isjpeg&&!isPNG) {
+        this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 200MB!');
+      }
+      return isjpeg || isPNG && isLt2M;
+    },
     date: function(date, pattern) {
         if (date == undefined) {
             date = new Date();
