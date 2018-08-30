@@ -12,9 +12,7 @@
                 <template v-if="typeof item.groups != 'undefined'">
                     <el-menu-item-group v-for="(group, i) in item.groups" :key="i">
                         <span slot="title">{{ group.title }}</span>
-                        <el-menu-item v-for="(option, j) in group.options" :key="j" :index="item.index+option.index+''">{{ option.name 
-
- }}</el-menu-item>
+                        <el-menu-item v-for="(option, j) in group.options" :key="j" :index="item.index+option.index+''">{{ option.name }}</el-menu-item>
                     </el-menu-item-group>
                 </template>
             </el-submenu>
