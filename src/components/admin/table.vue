@@ -54,11 +54,11 @@
         .catch(function (error) {
             // console.log(error);
         });
-      }
+      },
     },
+    
     mounted(){
       this.gettable_info();
-      // this.test();
     }
   } 
 </script>

@@ -1,130 +1,133 @@
 <template>
-		<div class="filesTop" style="width:1500px;">
-			<Click></Click>
-			<!-- <Tab :table-data="tableData" :page="Page"></Tab> -->
-			<operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
-			<div>
-	            <i></i>
-	            <p class="screen">筛选查询</p>
-          	</div>
-            <div class="filesForm">
-              <el-form class="input" ref="form" label-width="80px">
-                <el-form-item label="文件名称">
-                  <el-input placeholder="请输入文件名称" ></el-input>
-                </el-form-item>
-                <el-form-item label="院校名称">
-                  <el-input placeholder="请输入院校名称" ></el-input>
-                </el-form-item>
-                <el-form-item label="文件年份">
-                  <el-date-picker
-                  v-model="value1"
-                  type="date"
-                  placeholder="选择日期">
-                </el-date-picker>
-                </el-form-item>
-                <el-form-item label="文件类型">
-                  <el-select v-model="value" placeholder="请选择">
-                    <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </el-form>
-              <el-button class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button>
-            </div>
-            <div class="filesSelect">
-          		<i></i>
-            <!-- <div></div> -->
-            	<p class="screen">数据列表</p>
-            	<el-select v-model="value7" placeholder="显示条数" class="filesSelect-sel">
-              <el-option-group
-                v-for="group in options3"
-                :key="group.label"
-                :label="group.label">
-                <el-option
-                  v-for="item in group.options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-option-group>
-            	</el-select>
-          	</div>
-          	<Table></Table>
-        	<div class="footer"> 
-          		<div class="footer-left">共<span>{{Page.pages}}</span>页/<span>{{Page.page}}</span>条数据</div>
-          	<Page></Page>
-        	</div>
+	<div class="filesTop" style="width:1500px;">
+		<Click></Click>
+		<!-- <Tab :table-data="tableData" :page="Page"></Tab> -->
+		<operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i" @click.native = "query"></operateNav>
+		<div>
+	        <i></i>
+	        <p class="screen">筛选查询</p>
+	  	</div>
+	    <div class="filesForm">
+	    	<el-form class="input" ref="filesForm" :model="filesForm" label-width="80px">
+		        <el-form-item label="文件名称">
+		          <el-input v-model="filesForm.name1" placeholder="请输入文件名称"></el-input>
+		        </el-form-item>
+		        <el-form-item label="院校名称">
+		          <el-input v-model="filesForm.name2" placeholder="请输入院校名称"></el-input>
+		        </el-form-item>
+		        <el-form-item label="文件年份">
+			    	<!-- <el-date-picker v-model="filesForm.year" type="date"placeholder="选择日期">
+			        </el-date-picker> -->
+			        <!-- <el-date-picker v-model="filesForm.year" type="year" placeholder="选择年"> -->
+			        <div class="block">
+					    <!-- <span class="demonstration">年</span> -->
+					    <el-date-picker
+					      v-model="filesForm.year" type="year" placeholder="选择年">
+					    </el-date-picker>
+					</div>
+	        		</el-form-item>
+	        	<el-form-item label="文件类型">
+		        	<el-select v-model="filesForm.type" placeholder="请选择">
+			          	<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+			            </el-option>
+		          	</el-select>
+	        	</el-form-item>
+	      </el-form>
+	      <el-button class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button>
+	    </div>
+	    <div class="filesSelect">
+	  		<i></i>
+	    	<p class="screen">数据列表</p>
+	    	<el-select v-model="value7" placeholder="显示条数" class="filesSelect-sel">
+	      <el-option-group
+	        v-for="group in options3"
+	        :key="group.label"
+	        :label="group.label">
+	        <el-option
+	          v-for="item in group.options"
+	          :key="item.value"
+	          :label="item.label"
+	          :value="item.value">
+	        </el-option>
+	      </el-option-group>
+	    	</el-select>
+	  	</div>
+	  	<Table ref = "table"></Table>
+		<div class="footer"> 
+	  		<div class="footer-left">共<span>{{Page.pages}}</span>页/<span>{{Page.page}}</span>条数据</div>
+	  		<Page ref = "page" @click.native = "query"></Page>
 		</div>
+	</div>
 </template>
 <script>
 export default {
 	data() {
 	    return {
+	    	filesForm: {
+	    		name1:'',
+	    		name2:'',
+	    		year:'',
+	    		type:'',
+	    	},
 	    	options3: [
-          	{
-	            options: [{
-	              value: 'Shanghai',
-	              label: '10条/页'
-	            }]
-          	}, 
-          	{
-            	// label: '城市名',
-	            options: [{
-	              value: 'Chengdu',
-	              label: '50条/页'
-	            }]
-          	},
-          	{
-            	// label: '城市名',
-	            options: [{
-	              value: 'Chengdu',
-	              label: '100条/页'
-	            }]
-          	}
+	          	{
+		            options: [{
+		              value: 'Shanghai',
+		              label: '10条/页'
+		            },]
+	          	}, 
+	          	{
+	            	// label: '城市名',
+		            options: [{
+		              value: 'Chengdu',
+		              label: '50条/页'
+		            }]
+	          	},
+	          	{
+	            	// label: '城市名',
+		            options: [{
+		              value: 'Chengdu',
+		              label: '100条/页'
+		            }]
+	          	}
         	],
         	value7: '',
-        	props:{Page:{
-	          	// type:string,
-	          	required:true,
-        	}},
+        	// props:{Page:{
+	        //   	// type:string,
+	        //   	required:true,
+        	// }},
+        	// tableData:[],
 	        Page:{
 	          pages:'',
 	          page:'',
 	        },
-	        props:{tableData:{
-	          type:Array,
-	          required:true,
-	        }},
-         	options: [{
-          		value: '黄金糕',
-          		// label: '黄金糕'
-        	}, 
-        	{
-	          	value: '双皮奶',
-	          	// label: '双皮奶'
-       	 	}, 
-        	{
-	          value: '蚵仔煎',
-	          // label: '蚵仔煎'
-        	}, 
-        	{
-	          value: '龙须面',
-	          // label: '龙须面'
-        	}, 
-	        {
-	          value: '北京烤鸭',
-	          // label: '北京烤鸭'
-	        }],
-        	value: '',
+         	options: [
+	         	{
+	          		value: '黄金糕',
+	          		// label: '黄金糕'
+	        	}, 
+	        	{
+		          	value: '双皮奶',
+		          	// label: '双皮奶'
+	       	 	}, 
+	        	{
+		          value: '蚵仔煎',
+		          // label: '蚵仔煎'
+	        	}, 
+	        	{
+		          value: '龙须面',
+		          // label: '龙须面'
+	        	}, 
+		        {
+		          value: '北京烤鸭',
+		          // label: '北京烤鸭'
+		        }
+	        ],
+        	// value: '',
 	        value1: '',
-	        value2: '',
+	        // value5: '',
         	tabPosition: 'top',
 	    	Page:'',
-	    	tableData:'',
 	      	isCollapse: true,
 	      	radio2: "全部文件",
 			banner:[
@@ -145,10 +148,28 @@ export default {
 	    }
 	},
 	methods: {
+		//动态更新文件管理首页的id
 		toshow: function (i) {
           this.i = i;
           console.log(this.i);
         },
+      query: function (){
+      	this.$refs.table.gettable_info();
+      	// console.log(123)
+       //  var that = this;
+       //  axios.post('/admin/files/getUploadFile',{
+       //    // page:that.page,
+       //  })
+       //  .then(function (response) {
+       //      // that.page++;
+       //      that.tableData = response.data.data;
+
+       //      // that.pages = response.datas.data;
+       //  })
+       //  .catch(function (error) {
+       //      // console.log(error);
+       //  });
+      },
         getPage: function (){
         var that = this;
         axios.post('/admin/files/getUploadFile',{
