@@ -1,124 +1,128 @@
-<template>
+<template >
     <div>
     	<div class="operateBox">
         <!-- 中间内容 -->
-        <div>
+        <div 
+        >
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>运行管理</el-breadcrumb-item>
             <el-breadcrumb-item>频道banner</el-breadcrumb-item>
           </el-breadcrumb>
           <!-- 选项卡 -->
-          <div class="operateNav">
-            <el-radio-group v-model="radio">
-              <el-radio-button :label="list.name" v-for="(list,i) in banner" :key = "i"></el-radio-button>
-            </el-radio-group>
-          </div>
+          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
           
           <div class="operateUpfiles operateHeader">
             <p>当前操作页面：<span>辅导机构列表页</span></p>
-            <el-button type="info" plain><i class="fa fa-trash-o fa-fw fa-lg"></i>刷新</el-button>
+            <el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
           </div>
-          <!-- 上传banner -->
-          <div class="operateUpfiles operateUp">
-            
-            <div class="operateUpfilesLeft">
-              <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传banner</div>
-            </div>
-            <div class="operateUpfilesRight">
-              <div>
+          <div v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading">
+            <!-- 上传banner -->
+            <div class="operateUpfiles operateUp">
+              
+              <div class="operateUpfilesLeft">
+                <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传banner</div>
+              </div>
+              <div class="operateUpfilesRight">
                 <div>
-                  <el-upload
-                    class="upload-demo"
-                    action="/putPictrue"
-                    :on-preview="handlePreview"
-                    :on-change="handleChange"
-                    :on-remove="handleRemove"
-                    :before-remove="beforeRemove"
-                    :before-upload="beforeAvatarUpload"
-                    :on-success="handleAvatarSuccess"
-                    :file-list="fileList">
-                    <el-button size="small" type="primary">点击上传</el-button>
-                    <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div> -->
-                    <span class="el-upload__tip">当前以选择：</span>
-                  </el-upload>
+                  <div>
+                    <el-upload
+                      class="upload-demo"
+                      action="/putPictrue"
+                      :on-preview="handlePreview"
+                      :on-change="handleChange"
+                      :on-remove="handleRemove"
+                      :before-remove="beforeRemove"
+                      :before-upload="beforeAvatarUpload"
+                      :on-success="handleAvatarSuccess"
+                      :file-list="fileList">
+                      <el-button size="small" type="primary" class="operateFloat">点击上传</el-button>
+                      <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div> -->
+                      <span slot="tip" class="el-upload__tip">当前以选择：</span>
+                    </el-upload>
+                  </div>
+                  <div class="operateUpfilesRightImg">
+                    <img :src="this.fileList[0].url" alt="预览图">
+                  </div>
                 </div>
-                <div class="operateUpfilesRightImg">
-                  <img :src="this.fileList[0].url" alt="预览图">
-                </div>
-              </div>
-              <!-- 提交表单 -->
-              <div>
-                <el-form ref="form" :model="form" label-width="80px">
-                  <el-form-item label="图片名称">
-                    <el-input v-model="form.name" placeholder="输入图片名称"></el-input>
-                  </el-form-item>
-                  <el-form-item label="图片描述">
-                    <el-input v-model="form.message" placeholder="输入图片描述"></el-input>
-                  </el-form-item>
-                  <el-form-item label="图片URL">
-                    <el-input v-model="form.url" placeholder="输入图片URL"></el-input>
-                  </el-form-item>
+                <!-- 提交表单 -->
+                <div>
+                  <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
+                    <el-form-item label="图片名称" prop="name">
+                      <el-input v-model="ruleForm.name" placeholder="输入图片名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="图片描述" prop="message">
+                      <el-input v-model="ruleForm.message" placeholder="输入图片描述"></el-input>
+                    </el-form-item>
+                    <el-form-item label="图片URL" prop="url">
+                      <el-input v-model="ruleForm.url" placeholder="输入图片URL"></el-input>
+                    </el-form-item>
 
-                  <el-form-item>
-                    <el-button type="primary" @click="onSubmit">上传</el-button>
-                  </el-form-item>
-                </el-form>
+                    <el-form-item>
+                      <el-button type="primary" @click="submitForm('ruleForm')">上传</el-button>
+                    </el-form-item>
+                  </el-form>
+                </div>
+              </div>
+            </div>
+            <!-- 当前banner -->
+            <div class="operateUpfiles operateDown">
+              <div class="operateUpfilesLeft">
+                <div><i class="fa fa-list-alt fa-fw FA-3X"></i>&nbsp;当前banner</div>
+              </div>
+              <div class="operateUpfilesRight2">
+                <div class="operateUpfilesRight2Nav">
+                  <span>当前展示的banner</span>
+                  <el-button type="info" plain><i class="fa fa-trash-o fa-fw fa-lg" @click="operateDelete()"></i>清空</el-button>
+                </div>
+                <!-- 表格 -->
+                <div class="operateTable">
+                  <template>
+                    <el-table :data="tableData3"  border style="width: 100%">
+                      <el-table-column
+                        prop="img"
+                        label="图片名称"
+                        width="210">
+                      </el-table-column>
+                      <el-table-column
+                        label="展示顺序"
+                        width="80">
+                        <template slot-scope="scope" prop="show_weight">
+                            <el-input v-model="tableData3[scope.$index].show_weight"></el-input>
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                        prop="re_alt"
+                        label="图片描述"
+                        width="210">
+                      </el-table-column>
+                      <el-table-column
+                        prop="re_url"
+                        label="图片地址"
+                        width="319">
+                      </el-table-column>
+                      <el-table-column
+                        prop="create_time"
+                        label="上传时间"
+                        width="210">
+                      </el-table-column>
+                      <el-table-column
+                        label="操作"
+                        width="140">
+                        <template slot-scope="scope">
+                          <el-button type="text" size="small">编辑</el-button>
+                          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                          <el-button type="text" size="small">删除</el-button>
+                        </template>
+                      </el-table-column>
+                    </el-table>
+                  </template>
+                </div>
               </div>
             </div>
           </div>
-          <!-- 当前banner -->
-          <div class="operateUpfiles operateDown">
-            <div class="operateUpfilesLeft">
-              <div><i class="fa fa-list-alt fa-fw FA-3X"></i>&nbsp;当前banner</div>
-            </div>
-            <div class="operateUpfilesRight2">
-              <div class="operateUpfilesRight2Nav">
-                <span>当前展示的banner</span>
-                <el-button type="info" plain><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
-              </div>
-              <!-- 表格 -->
-              <div class="operateTable">
-                <template>
-                  <el-table :data="tableData3"  border style="width: 100%" >
-                    <el-table-column
-                      prop="name"
-                      label="图片名称"
-                      width="210">
-                    </el-table-column>
-                    <el-table-column
-                      prop="order"
-                      label="展示顺序"
-                      width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="detial"
-                      label="图片描述"
-                      width="210">
-                    </el-table-column>
-                    <el-table-column
-                      prop="URL"
-                      label="图片地址"
-                      width="319">
-                    </el-table-column>
-                    <el-table-column
-                      prop="date"
-                      label="上传时间"
-                      width="210">
-                    </el-table-column>
-                    <el-table-column
-                      label="操作"
-                      width="140">
-                      <template slot-scope="scope">
-                        <el-button type="text" size="small">编辑</el-button>
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                        <el-button type="text" size="small">删除</el-button>
-                      </template>
-                    </el-table-column>
-                  </el-table>
-                </template>
-              </div>
-            </div>
-          </div>
+          
 
         </div>
         
@@ -128,231 +132,157 @@
 </template>
 
 <script>
-import NavMenu from './accounts.vue'
 export default {
     components: {
-        NavMenu: NavMenu
     },
     data() {
+      var checkAge = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('图片URL不能为空！'));
+        } else if (!this.validateImage(value)) {
+          callback(new Error('请输入正确的URl'));
+        } else {
+          callback();
+        }
+      };
       return {
-        menuData: [
-                  {    //一级
-                      "entity": {
-                          "id": 1,
-                          "name": "systemManage",
-                          "icon": "el-icon-message\r\n",
-                          "alias": "两级菜单",
-                      },
-                      //二级
-                      "childs": [
-                          {
-                              "entity": {
-                                  "id": 3,
-                                  "name": "authManage",
-                                  "icon": "el-icon-loading",
-                                  "alias": "权限管理",
-                                  "value": {path: '/hello'},
-                              },
-
-                          },
-                          {
-                              "entity": {
-                                  "id": 4,
-                                  "name": "roleManage",
-                                  "icon": "el-icon-bell",
-                                  "alias": "角色管理",
-                                  "value": "/system/role",
-                              },
-
-                          },
-                          {
-                              "entity": {
-                                  "id": 2,
-                                  "name": "menuManage",
-                                  "icon": "el-icon-edit",
-                                  "alias": "菜单管理",
-                                  "value": "/system/menu",
-                              },
-
-                          },
-                          {
-                              "entity": {
-                                  "id": 5,
-                                  "name": "groupManage",
-                                  "icon": "el-icon-mobile-phone\r\n",
-                                  "alias": "分组管理",
-                                  "value": "/system/group",
-                              },
-
-                          }
-                      ]
-                  },
-                  {
-                    //一级
-                      "entity": {
-                          "id": 6,
-                          "name": "userManage",
-                          "icon": "el-icon-news",
-                          "alias": "三级菜单",
-                      },
-                      //二级
-                      "childs": [
-                          {
-                              "entity": {
-                                  "id": 7,
-                                  "name": "accountManage",
-                                  "icon": "el-icon-phone-outline\r\n",
-                                  "alias": "帐号管理",
-                                  "value": "",
-                              },
-                              //三级
-                              "childs": [
-                                  {
-                                      "entity": {
-                                          "id": 14,
-                                          "name": "emailManage",
-                                          "icon": "el-icon-sold-out\r\n",
-                                          "alias": "邮箱管理",
-                                          "value": "/content/email",
-                                      },
-                                  },
-                                  {
-                                      "entity": {
-                                          "id": 13,
-                                          "name": "passManage",
-                                          "icon": "el-icon-service\r\n",
-                                          "alias": "密码管理",
-                                          "value": "/content/pass",
-
-                                      }
-
-                                  }
-                              ]
-                          },
-                          {
-                              "entity": {
-                                  "id": 8,
-                                  "name": "integralManage",
-                                  "icon": "el-icon-picture",
-                                  "alias": "积分管理",
-
-                                  "value": "/user/integral",
-
-
-                              },
-
-                          }
-                      ]
-                  },
-                  {//一级
-                      "entity": {
-                          "id": 40,
-
-                          "name": "contentManage",
-                          "icon": "el-icon-rank",
-                          "alias":"四级菜单",
-
-                      },
-                      //er级
-                      "childs": [
-                          {
-                              "entity": {
-                                  "id": 41,
-                                  "name": "classifyManage2",
-                                  "icon": "el-icon-printer",
-                                  "alias": "分类管理",
-                              },
-                              //三级
-                              "childs": [
-                                {
-                                    "entity": {
-                                        "id": 42,
-                                        "name": "classifyManage3",
-                                        "icon": "el-icon-printer",
-                                        "alias": "分类管理",
-                                    },
-                                    //四级
-                                    "childs": [
-                                        {
-                                            "entity": {
-                                                "id": 43,
-                                                "name": "classifyManage4",
-                                                "icon": "el-icon-printer",
-                                                "alias": "分类管理",
-                                                "value": "/content/classify",
-                                            },
-
-                                        }
-                                      ]
-
-                                }
-                              ]
-
-                          }
-                      ]
-                  }
-        ],
+        rules: {
+          name: [
+            { required: true, message: '图片名称不能为空！', trigger: 'blur' },
+            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          ],
+          message: [
+            { required: true, message: '图片描述不能为空！', trigger: 'blur' },
+            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+          ],
+          url: [
+            { validator: checkAge, required: true, trigger: 'blur' }
+          ],
+        },
+        loading: false,
         width: 0,
         banner: [],
         radio: "",
+        radio2: "",
         src: "",
-        fileList: [{name: '', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
-        form: {
+        fileList: [{name: '', url: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',file: ''}],
+        ruleForm: {
           name: '',
           message: '',
           url: ''
         },
-        tableData3: [
-          {
-            name: 'soufudao.png',
-            order: <el-input value="0"></el-input>,
-            detial: '测试图片,测试',
-            URL: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-            date: '2018-08-03 14:36:21',
-          },
-          {
-            name: 'soufudao.png',
-            order: <el-input value="0"></el-input>,
-            detial: '测试图片,测试',
-            URL: 'https://fuss10.elemecdn.com/',
-            date: '2018-08-03 14:36:21',
-          },
-          {
-            name: 'soufudao.png',
-            order: <el-input value="0"></el-input>,
-            detial: '测试图片,测试',
-            URL: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-            date: '2018-08-03 14:36:21',
-          },
-          {
-            name: 'soufudao.png',
-            order: <el-input value="0"></el-input>,
-            detial: '测试图片,测试',
-            URL: 'https://fuss10.elemecdn.com/',
-            date: '2018-08-03 14:36:21',
-          }
-          ]
+        i: 0,
+        // 表格默认数据
+        tableData3: []
         }
     },
+    watch: {
+      i: function(val,oldval) {
+        this.getIndexBanner();
+      },
+    },
     methods:{
-        handleClick(row) {
+        operateDelete: function() {
+          var table = this.tableData3;
+          var arrayTableId = [];
+          for (var i = 0; i < table.length; i++) {
+            arrayTableId.push(table[i].id);
+          };
+          console.log(arrayTableId);
+        },
+        indexMethod: function(index) {
+          console.log(index);
+          return index * 2;
+        },
+        // 点击上传图片按钮
+        submitForm: function (formName) {
+          var self = this;
+          this.$refs[formName].validate((valid) => {
+            // 判断表单是否符合填写要求
+            if (valid) {
+              // 判断是否上传图片
+              if (self.fileList[0].file == '') {
+                this.$message('您还没有上传为图片呢');
+                return;
+              };
+              // 上传图片
+              // console.log(123,JSON.stringify(self.fileList[0].file));
+              return;
+              axios.post('/admin/operate/createPageBillboard', {
+                imgName: self.ruleForm.name,
+                imgAlt: self.ruleForm.message,
+                reUrl: self.ruleForm.url,
+                img: imgFile,
+                urlId: self.i
+              })
+              .then(function (response) {
+                var date = response.data;
+                if (date.code == 0) {
+                  console.log(date.msg,456);
+                }else {
+                  console.log(date.msg,123);
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+            } else {
+              return false;
+            }
+          });
+        },
+        // 判断是否为链接
+        validateImage: function(url) {    
+            var xmlHttp ;
+            if (window.ActiveXObject)
+             {
+              xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+             }
+             else if (window.XMLHttpRequest)
+             {
+              xmlHttp = new XMLHttpRequest();
+             } 
+            xmlHttp.open("Get",url,false);
+            xmlHttp.send();
+            if(xmlHttp.status==404)
+            return false;
+            else
+            return true;
+        },
+        // 刷新页面，重新加载页面数据
+        operateUpdate: function() {
+          this.loading = true;
+          this.getIndexBanner();
+          this.ruleForm.name = "";
+          this.ruleForm.message = "";
+          this.ruleForm.url = "";
+          this.loading = false;
+        },
+        // 动态更新资讯类型id
+        toshow: function (i) {
+          this.i = i;
+          console.log(this.i);
+        },
+        handleClick: function (row) { 
           console.log(row);
         },
-        onSubmit() {
-          console.log('submit!');
-        },
-        handleRemove(file, fileList) {
+        // 图片移除时触发该事件
+        handleRemove: function (file, fileList) {
           var span = document.getElementsByClassName("el-upload__tip")[0];
           span.style.display = "none";
-          this.fileList[0].url = 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100';
+          this.fileList[0].url = 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658';
+          this.fileList[0].file = '';
         },
-        handlePreview(file) {
+        handlePreview: function (file) {
           console.log(file);
         },
-        handleAvatarSuccess(res, file) {
+        handleAvatarSuccess: function (res, file) {
           this.fileList[0].url = URL.createObjectURL(file.raw);
+          this.fileList[0].file = file;
         },
-        handleChange(file, fileList) {
+        // 每次上传图片列表改变时，触发
+        handleChange: function (file, fileList) {
           var li = document.getElementsByClassName("el-upload-list")[0];
           var span = document.getElementsByClassName("el-upload__tip")[0];
           span.style.display = "block";
@@ -360,10 +290,11 @@ export default {
           
           this.fileList = fileList.slice(-1);
         },
-        beforeRemove(file, fileList) {
+        beforeRemove: function (file, fileList) {
           return this.$confirm(`确定移除 ${ file.name }？`);
         },
-        beforeAvatarUpload(file) {
+        // 判断是否是图片
+        beforeAvatarUpload:function (file) {
           const isjpeg = file.type === 'image/jpeg';
           const isPNG = file.type === 'image/png';
           const isLt2M = file.size / 1024 / 1024 < 200;
@@ -376,6 +307,7 @@ export default {
           }
           return isjpeg || isPNG && isLt2M;
         },
+        // 获取所有资讯类型
         getInformationType: function() {
           var self = this;
           axios.post('/admin/operate/getInformationType', {
@@ -384,7 +316,29 @@ export default {
             var date = response.data;
             if (date.code == 0) {
               self.banner = date.data;
-              self.radio = date.data[0].name;
+              self.radio2 = date.data[0].name;
+              self.i = date.data[0].id;
+            };
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        },
+        // 获得页面的banner信息
+        getIndexBanner: function() {
+          var self = this;
+          axios.post('/admin/operate/getIndexBanner', {
+            indexId: self.i,
+            btType: 0
+          })
+          .then(function (response) {
+            var date = response.data;
+            if (date.code == 0) {
+              var res = date.data;
+              self.tableData3 = res;
+              for (var i = 0; i < res.length; i++) {
+                // self.tableData3[i].show_weight = <el-input v-model="this.tableData3[i].name"></el-input>;
+              };
             };
           })
           .catch(function (error) {
@@ -396,6 +350,7 @@ export default {
       let w = document.body.clientWidth;
       this.width = w - 120;
       this.getInformationType();
+      this.getIndexBanner();
     }
 }
 </script>
@@ -403,7 +358,6 @@ export default {
   /*
   * 上传图片列表初始时不显示
   */
-
   .operateUpfilesRight .el-upload-list {
     display: none;
     margin-top: -10px;
@@ -437,8 +391,8 @@ export default {
 }
 .operateUpfilesRight .el-upload__tip {
   margin-left: 20px;
+  margin-bottom: 8px;
   display: none;
-  float: right;
 }
 .operateUpfiles {
   border: 1px solid #e4e4e4;
@@ -446,7 +400,28 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.operateHeader,.operateUp {
+.operateHeader {
+  border-bottom: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e4e4e4;
+  color: #666;
+}
+.operateHeader .el-button {
+  width: 80px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 10px;
+}
+.operateHeader>p {
+  margin-left: 20px;
+  font-weight: bold;
+}
+.operateUp {
   border-bottom: none;
 }
 .operateDown {
@@ -460,7 +435,7 @@ export default {
 .operateUpfilesLeft>div {
   background: url(../../assets/img/point.png) no-repeat;
   position: relative;
-  top: 20px;
+  top: 50px;
   left: 0;
   width: 180px;
   height: 50px;
@@ -470,7 +445,7 @@ export default {
   padding-left: 20px;
 }
 .operateUpfilesRight {
-  padding: 35px 90px 35px 80px;
+  padding: 50px 80px;
   width: 1170px;
   display: flex;
   justify-content: space-between;

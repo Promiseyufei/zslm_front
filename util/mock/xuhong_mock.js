@@ -16,26 +16,39 @@ Mock.mock('/admin/operate/getInformationType',{
 		    ]
 		}
 	]
-	
+})
+
+/*Operate
+* 运营管理模块——首页
+* 获取一级页面的banner
+*/
+Mock.mock('/admin/operate/getIndexBanner',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)'),
+	"data|4": [
+		{
+			'id|+1': 0,
+			"img": Mock.mock('@cword(3, 5)'),
+			"img_alt": Mock.mock('@cword(3, 5)'),
+			"re_url|1": Mock.mock('@url'),
+			"re_alt|1": Mock.mock('@cword(5, 8)'),
+			"show_weight|1-100": 100,
+			"create_time": Mock.mock('@now')
+		}
+	]
+})
+
+/*Operate
+* 运营管理模块——首页
+* 上传一级页面的banner
+*/
+Mock.mock('/admin/operate/createPageBillboard',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)')
 })
 
 
+
 Mock.mock('/putPictrue',{
-	"object|1": [{
-			"code": 0,
-			"msg": "success"
-		},
-		{
-			"code": 1,
-			"msg": "没有该用户信息"
-		},
-		{
-			"code": 1,
-			"msg": "密码错误"
-		},
-		{
-			"code": 1,
-			"msg": "没有该用户信息"
-		},
-	]
+	
 })
