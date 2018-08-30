@@ -1,29 +1,25 @@
 <template>
-	<div>
 		<div>
-			<Tab></Tab>
+			<Tab :table-data="tableData" :page="Page"></Tab>
 		</div>
-	</div>
 </template>
 <script>
-	export default {
-	    data() {
-	        return {
-	          isCollapse: true
-	        };
-	    },
-	    methods: {
-	        handleOpen(key, keyPath) {
-	          console.log(key, keyPath);
-	        },
-	        handleClose(key, keyPath) {
-	          console.log(key, keyPath);
-	        }
-	    }
-	}
+export default {
+	data() {
+	    return {
+	    	Page:'',
+	    	tableData:'',
+	      	isCollapse: true
+	    };
+	},
+	methods: {},
+	mounted(){}
+}
 
 </script>
 
 <style scoped>
-	
+	.table {
+		/*width: 100px;*/
+	}
 </style>
