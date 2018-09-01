@@ -277,7 +277,7 @@ export default {
         // 获取所有资讯类型
         getInformationType: function() {
           var self = this;
-          axios.post('/admin/operate/getInformationType', {
+          axios.post('/admin/operate/getIndexListName', {
           })
           .then(function (response) {
             var date = response.data;

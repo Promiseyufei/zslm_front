@@ -40,6 +40,11 @@ let admin_router = {
             path: '/operate/ad',
             name: '运营管理——广告位管理',
             component: resolve =>void(require(['@/views/admin/operat/Ad'], resolve))
+        },
+        {
+            path: '/data',
+            name: '分享数据',
+            component: resolve =>void(require(['@/views/admin/data'], resolve))
         }
     ]
 }
