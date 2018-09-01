@@ -21,10 +21,10 @@
 			        <!-- <el-date-picker v-model="filesForm.year" type="year" placeholder="选择年"> -->
 			        <div class="block">
 					    <!-- <span class="demonstration">年</span> -->
-					    <el-date-picker
-					      v-model="filesForm.year" type="year" placeholder="选择年">
-					    </el-date-picker>
-					</div>
+  					    <el-date-picker
+  					      v-model="filesForm.year" type="year" placeholder="选择年">
+  					    </el-date-picker>
+					   </div>
 	        		</el-form-item>
 	        	<el-form-item label="文件类型">
 		        	<el-select v-model="filesForm.type" placeholder="请选择">
@@ -129,24 +129,24 @@ export default {
         	tabPosition: 'top',
 	    	Page:'',
 	      	isCollapse: true,
-	      	radio2: "全部文件",
-			banner:[
-	          {
-	            id: 0,
-	            name: "全部文件"
-	          },
-	          {
-	            id: 1,
-	            name: "招生简章"
-	          },
-	          {
-	            id: 2,
-	            name: "其他文件"
-	          }
-        	],
-			i: 0,
-	    }
-	},
+	      	radio2: "",
+  			banner:[
+  	          {
+  	            id: 0,
+  	            name: "全部文件"
+  	          },
+  	          {
+  	            id: 1,
+  	            name: "招生简章"
+  	          },
+  	          {
+  	            id: 2,
+  	            name: "其他文件"
+  	          }
+          	],
+  			i: 0,
+  	    }
+	   },
 	methods: {
 		//动态更新文件管理首页的id
 		toshow: function (i) {
@@ -155,20 +155,6 @@ export default {
         },
       query: function (){
       	this.$refs.table.gettable_info();
-      	// console.log(123)
-       //  var that = this;
-       //  axios.post('/admin/files/getUploadFile',{
-       //    // page:that.page,
-       //  })
-       //  .then(function (response) {
-       //      // that.page++;
-       //      that.tableData = response.data.data;
-
-       //      // that.pages = response.datas.data;
-       //  })
-       //  .catch(function (error) {
-       //      // console.log(error);
-       //  });
       },
         getPage: function (){
         var that = this;
@@ -176,8 +162,6 @@ export default {
         })
         .then(function (response) {
             that.Page = response.data.datas[0];
-            // console.log(that.Page);
-            // that.pages = response.datas.data;
         })
         .catch(function (error) {
             // console.log(error);
@@ -186,6 +170,8 @@ export default {
 	},
 	mounted(){
 		this.getPage();
+		this.radio2 = "全部文件";
+		console.log(this.radio2);
 	}
 }
 

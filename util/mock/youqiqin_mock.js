@@ -25,6 +25,7 @@ Mock.mock('/admin/files/getUploadFile',{
 	}]
 	
 })
+
 Mock.mock('/admin/files/huoQuChaXunTaioJian',{
 	 
 	"data": [{
@@ -37,6 +38,24 @@ Mock.mock('/admin/files/huoQuChaXunTaioJian',{
 		        'homepage': '@cword(1)',
 		        'time': '@datetime("yyyy-MM-dd  HH:mm:ss")',
 			}],
+	
+})
+
+
+Mock.mock('/admin/data/getdata-table',{
+	 
+	"data": [{
+				// 'date1': '@cword(1)' ,
+				'content': '@cword(10)',
+				'type':'@cword(4)',
+		        'pagedata':'@integer(1, 100)',
+		        'wxdata':'@integer(1, 100)',
+		        'wxdatas':'@integer(1, 100)',
+		        'wbdata':'@integer(1, 100)',
+		        'wbdatas':'@integer(1, 100)',
+		        'datas':'@integer(1, 100)',
+			},
+			],
 	
 })
 
