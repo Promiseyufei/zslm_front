@@ -24,8 +24,22 @@ let admin_router = {
         {
             path: '/operate',
             name: '运营管理',
-            component: resolve =>void(require(['@/views/admin/operate'], resolve))
-
+            component: resolve =>void(require(['@/views/admin/Operate'], resolve))
+        },
+        {
+            path: '/operate/advise',
+            name: '运营管理——资讯频道首页推荐',
+            component: resolve =>void(require(['@/views/admin/operat/OperateAdvise'], resolve))
+        },
+        {
+            path: '/operate/addAdvise/:id',
+            name: '运营管理——资讯频道首页推荐——添加',
+            component: resolve =>void(require(['@/views/admin/operat/AddAdvise'], resolve))
+        },
+        {
+            path: '/operate/ad',
+            name: '运营管理——广告位管理',
+            component: resolve =>void(require(['@/views/admin/operat/Ad'], resolve))
         }
     ]
 }

@@ -1,12 +1,12 @@
 <template >
     <div>
-    	<div class="operateBox">
+        <div class="operateBox">
         <!-- 中间内容 -->
         <div 
         >
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>运行管理</el-breadcrumb-item>
-            <el-breadcrumb-item>频道banner</el-breadcrumb-item>
+            <el-breadcrumb-item>广告位管理</el-breadcrumb-item>
           </el-breadcrumb>
           <!-- 选项卡 -->
           <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
@@ -89,8 +89,8 @@
 
         </div>
         
-    	</div>
-    	
+        </div>
+        
     </div>
 </template>
 
@@ -395,7 +395,7 @@ export default {
   width: 159px;
 }
 .operateUpfilesLeft>div {
-  background: url(../../assets/img/point.png) no-repeat;
+  background: url(../../../assets/img/point.png) no-repeat;
   position: relative;
   top: 50px;
   left: 0;

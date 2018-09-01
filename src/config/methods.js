@@ -2,6 +2,14 @@ export default {
     callDialog:function() {
         alert('公共方法成功啦～');
     },
+    // 消息提示框
+    message: function(judge, msg, type) {
+        return this.$message({
+            showClose: judge,
+            message: msg,
+            type: type
+        });
+    },
     // 删除所给id序列的banner
     deleteBanner: function(arrayTableId) {
       var self = this;
