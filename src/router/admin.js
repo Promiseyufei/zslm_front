@@ -16,7 +16,6 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/information'], resolve))
         },
         {
-
             path: '/files',
             name: '文件管理',
             component: resolve =>void(require(['@/views/admin/files'], resolve))
@@ -40,6 +39,11 @@ let admin_router = {
             path: '/operate/ad',
             name: '运营管理——广告位管理',
             component: resolve =>void(require(['@/views/admin/operat/Ad'], resolve))
+        },
+        {
+            path: '/files/fileup',
+            name: '文件管理——上传文件',
+            component: resolve =>void(require(['@/views/admin/filesManage/FileUp'], resolve))
         },
         {
             path: '/data',

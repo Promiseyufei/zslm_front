@@ -12,7 +12,7 @@
           <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
           
           <div class="operateUpfiles operateHeader">
-            <p>当前操作页面：<span>辅导机构列表页</span></p>
+            <p>当前操作页面：<span>{{this.radio}}</span></p>
             <el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
           </div>
           <div v-loading="loading"
@@ -22,7 +22,7 @@
             <div class="operateUpfiles operateUp">
               
               <div class="operateUpfilesLeft">
-                <div><i class="fa fa-pencil fa-fw FA-3X"></i>&nbsp;上传banner</div>
+                <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传banner</div>
               </div>
               <div class="operateUpfilesRight">
                 <div>
@@ -124,7 +124,7 @@ export default {
         },
         loading: false,
         banner: [],
-        radio: "",
+        radio: "辅导机构列表页",
         radio2: "",
         src: "",
         fileList: [{name: '', url: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',file: ''}],
@@ -169,6 +169,7 @@ export default {
     watch: {
       i: function(val,oldval) {
         this.getIndexBanner();
+        this.radio = this.banner[val].name;
       },
     },
     methods:{
@@ -192,10 +193,6 @@ export default {
                 this.$message('您还没有上传为图片呢');
                 return;
               };
-              // 上传图片
-              // var formData = new FormData();
-              // formData.append("userfile", self.fileList[0].file);
-              // var imgFile = formData.get("userfile");
 
               var fd = new FormData()
               fd.append('file', self.fileList[0].file)
@@ -204,7 +201,7 @@ export default {
                       'Content-Type': 'multipart/form-data'
                   }
               }
-              axios.post('/admin/operate/createPageBillboard', {
+              axios.post('/admin/operate/createBannerAd', {
                 imgName: self.ruleForm.name,
                 imgAlt: self.ruleForm.message,
                 reUrl: self.ruleForm.url,
@@ -277,7 +274,7 @@ export default {
         // 获取所有资讯类型
         getInformationType: function() {
           var self = this;
-          axios.post('/admin/operate/getIndexListName', {
+          axios.post('/admin/operate/getInformationType', {
           })
           .then(function (response) {
             var date = response.data;

@@ -1,17 +1,19 @@
 <template >
     <div>
-    	<div class="operateBox">
+        <div class="operateBox">
         <!-- 中间内容 -->
         <div>
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>运行管理</el-breadcrumb-item>
-            <el-breadcrumb-item>资讯频道首页推荐</el-breadcrumb-item>
+            <el-breadcrumb-item>广告位管理</el-breadcrumb-item>
           </el-breadcrumb>
-          <!-- 选项卡 -->
-          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
-          <div class="operateUpfiles operateHeader">
-            <p>当前操作页面：<span>{{this.radio}}</span></p>
-            <el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
+
+          <!-- 步骤条 -->
+          <div class="fileSteps">
+            <el-steps :active="2" align-center>
+              <el-step title="选择院校专业"></el-step>
+              <el-step title="上传文件"></el-step>
+            </el-steps>
           </div>
           
           <div v-loading="loading"
@@ -19,20 +21,41 @@
             element-loading-spinner="el-icon-loading">
             <!-- 上传banner -->
             <div class="operateUpfiles operateUp">
+              
               <div class="operateUpfilesLeft">
-                <div><i class="fa fa-pencil fa-fw FA-3X"></i>&nbsp;推荐区名称</div>
+                <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传广告图</div>
               </div>
               <div class="operateUpfilesRight">
+                <div>
+                  <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :auto-upload="false">
+                    <el-button slot="trigger" size="small" type="primary">select file</el-button>
+                    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
+                    <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
+                  </el-upload>
+                </div>
                 <!-- 提交表单 -->
                 <div>
-                  <el-form label-width="100px">
-                    <el-form-item label="推荐区名称" prop="name" width="80px">
-                      <el-input v-model="adviseName" placeholder="输入推荐区名称" v-bind:disabled="dis"></el-input>
-                      <span class="adviseNameChange" @click="adviseClickChange" v-bind:style="{ display: disp }">更改</span>
+                  <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
+                    <el-form-item label="文件名称" prop="name">
+                      <el-input v-model="ruleForm.name" placeholder="输入文件名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="文件描述" prop="message">
+                      <el-input v-model="ruleForm.message" placeholder="输入文件描述"></el-input>
+                    </el-form-item>
+                    <el-form-item label="年份信息" prop="url">
+                      <el-date-picker
+                        v-model="value2"
+                        type="date"
+                        placeholder="输入年份信息">
+                      </el-date-picker>
                     </el-form-item>
 
                     <el-form-item>
-                      <el-button type="primary" @click="adviseNameSubmit">确定</el-button>
+                      <el-button type="primary" @click="submitForm('ruleForm')">上传</el-button>
                     </el-form-item>
                   </el-form>
                 </div>
@@ -41,11 +64,11 @@
             <!-- 当前banner -->
             <div class="operateUpfiles operateDown">
               <div class="operateUpfilesLeft">
-                <div><i class="fa fa-wrench fa-fw FA-3X"></i>&nbsp;设置推荐资讯</div>
+                <div><i class="fa fa-list-alt fa-fw FA-3X"></i>&nbsp;当前广告图</div>
               </div>
               <div class="operateUpfilesRight2">
                 <div class="operateUpfilesRight2Nav">
-                  <el-button type="info" plain @click = "adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                  <span>当前展示的banner</span>
                   <el-button type="info" plain @click="operateDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                 </div>
                 <!-- 表格 -->
@@ -57,10 +80,12 @@
               </div> 
             </div>
           </div>
+          
+
         </div>
         
-    	</div>
-    	
+        </div>
+        
     </div>
 </template>
 
@@ -79,6 +104,7 @@ export default {
         }
       };
       return {
+        value2: '',
         rules: {
           name: [
             { required: true, message: '图片名称不能为空！', trigger: 'blur' },
@@ -92,22 +118,8 @@ export default {
             { validator: checkAge, required: true, trigger: 'blur' }
           ],
         },
-        dis: true,
-        disp: "inline-block",
-        adviseName: "",
-        adviseName2: "",
         loading: false,
-        banner: [
-          {
-            id: 0,
-            name: "区域一"
-          },
-          {
-            id: 1,
-            name: "区域二"
-          }
-        ],
-        radio: "区域一",
+        banner: [],
         radio2: "",
         src: "",
         fileList: [{name: '', url: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',file: ''}],
@@ -120,28 +132,28 @@ export default {
         TableValue: 0,
         listTable: [
           {
-            prop: 'id',
-            lable: '编号',
+            prop: 'img',
+            lable: '图片名称',
             width: "210px"
           },
           {
-            prop: "weight",
-            lable: "展示顺序",
+            prop: "show_weight",
+            lable: "展示权重",
             width: "80px"
           },
           {
-            prop: "information_type",
-            lable: "资讯类型",
+            prop: "re_alt",
+            lable: "图片描述",
             width: "210px"
           },
           {
-            prop: "zx_name",
-            lable: "资讯标题",
+            prop: "re_url",
+            lable: "图片地址",
             width: "319px"
           },
           {
             prop: "create_time",
-            lable: "发布时间",
+            lable: "上传时间",
             width: "210px"
           }
         ],
@@ -151,64 +163,12 @@ export default {
     },
     watch: {
       i: function(val,oldval) {
-        this.getAdviseName();
-        console.log(this.banner[val].name);
-        this.radio = this.banner[val].name;
+        this.getIndexBanner();
       },
     },
     methods:{
-        adviseAdd: function() {
-          this.$router.push('/operate/addAdvise/' + this.i);
-        },
-        // 点击修改标题时，控制输入框和“更改”按钮的显示
-        adviseClickChange: function() {
-          this.dis = false;
-          this.disp = "none";
-        },
-        // 修改名称
-        adviseNameSubmit: function() {
-          var self = this;
-          axios.post('/admin/operate/setAppointRegionName', {
-            regionId: self.i,
-            regionName: self.adviseName
-          })
-          .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              self.message(true,date.msg,'success');
-              self.dis = true;
-              self.disp = "inline-block";
-              self.adviseName2 = self.adviseName;
-            }else {
-              self.adviseName = self.adviseName2;
-              self.message(true,date.msg,'warning');
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        },
-        // 得到所有的咨询推荐
-        getAdviseName: function() {
-          var self = this;
-          axios.post('/admin/operate/getAppointRegionData', {
-            regionId: self.i
-          })
-          .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              var res = date.data;
-              self.adviseName = res[0].region_name;
-              self.adviseName2 = res[0].region_name;
-              self.tableData3 = res[0].zx_id;
-              for (var i = 0; i < self.tableData3.length; i++) {
-                self.$set(self.tableData3[i],'show_weight',self.tableData3[i].weight);
-              };
-            };
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        submitUpload() {
+          this.$refs.upload.submit();
         },
         // 清空所有banner
         operateDelete: function() {
@@ -230,10 +190,6 @@ export default {
                 this.$message('您还没有上传为图片呢');
                 return;
               };
-              // 上传图片
-              // var formData = new FormData();
-              // formData.append("userfile", self.fileList[0].file);
-              // var imgFile = formData.get("userfile");
 
               var fd = new FormData()
               fd.append('file', self.fileList[0].file)
@@ -272,7 +228,7 @@ export default {
         // 刷新页面，重新加载页面数据
         operateUpdate: function() {
           this.loading = true;
-          this.getAdviseName();
+          this.getIndexBanner();
           this.ruleForm.name = "";
           this.ruleForm.message = "";
           this.ruleForm.url = "";
@@ -312,10 +268,45 @@ export default {
         beforeRemove: function (file, fileList) {
           return this.$confirm(`确定移除 ${ file.name }？`);
         },
+        //  获得所有页面的名称
+        getInformationType: function() {
+          var self = this;
+          axios.post('/admin/operate/getAllPageListName', {
+          })
+          .then(function (response) {
+            var date = response.data;
+            if (date.code == 0) {
+              self.banner = date.data;
+              self.radio2 = date.data[0].name;
+              self.i = date.data[0].id;
+            };
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        },
+        // 获得页面的banner信息
+        getIndexBanner: function() {
+          var self = this;
+          axios.post('/admin/operate/getIndexBanner', {
+            indexId: self.i,
+            btType: 1
+          })
+          .then(function (response) {
+            var date = response.data;
+            if (date.code == 0) {
+              var res = date.data;
+              self.tableData3 = res;
+            };
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
     },
     mounted(){
-      this.radio2 = this.banner[0].name;
-      this.getAdviseName();
+      this.getInformationType();
+      this.getIndexBanner();
     }
 }
 </script>
@@ -323,10 +314,10 @@ export default {
   /*
   * 上传图片列表初始时不显示
   */
-  .operateUpfilesRight .el-upload-list {
+/*  .operateUpfilesRight .el-upload-list {
     display: none;
     margin-top: -10px;
-  }
+  }*/
   .operateUpfilesRight2 .has-gutter th {
     background-color: #EAEDF1 !important;
   }
@@ -337,39 +328,31 @@ export default {
   width: 1500px;
   margin: 0 auto;
 }
+
 /*
-* 选项卡样式
+* 步骤条样式
 */
-.operateNav {
+.fileSteps {
+  /*margin: 20px 0;*/
+  width: 400px;
+  margin: 0 auto;
+}
+.fileSteps .el-steps--horizontal {
   margin: 20px 0;
 }
-.operateNav .el-radio-button {
-  margin-right: 10px;
-}
-
-.operateUpfilesRight .el-button--primary {
-  float: left;
-}
-.adviseNameChange {
-  margin-left: 10px;
-  color: #1ABC9C;
-  cursor: pointer;
-}
-
 /*
 * 右边上传banner内容样式
 */
-.operateUpfilesRight .upload-demo {
+/*.operateUpfilesRight .upload-demo {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.operateUpfilesRight .el-upload__tip {
+}*/
+/*.operateUpfilesRight .el-upload__tip {
   margin-left: 20px;
   margin-bottom: 8px;
   display: none;
-}
+}*/
 .operateUpfiles {
   border: 1px solid #e4e4e4;
   background-color: #fff;
@@ -453,7 +436,7 @@ export default {
 */
 
 .operateUpfilesRight2 {
-  padding: 50px 90px 50px 80px;
+  padding: 40px 90px 40px 80px;
   width: 1170px;
 }
 .operateUpfilesRight2Nav {
