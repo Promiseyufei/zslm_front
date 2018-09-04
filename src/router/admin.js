@@ -16,7 +16,6 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/information'], resolve))
         },
         {
-
             path: '/files',
             name: '文件管理',
             component: resolve =>void(require(['@/views/admin/files'], resolve))
@@ -24,13 +23,33 @@ let admin_router = {
         {
             path: '/operate',
             name: '运营管理',
-            component: resolve =>void(require(['@/views/admin/operate'], resolve))
-
+            component: resolve =>void(require(['@/views/admin/Operate'], resolve))
+        },
+        {
+            path: '/operate/advise',
+            name: '运营管理——资讯频道首页推荐',
+            component: resolve =>void(require(['@/views/admin/operat/OperateAdvise'], resolve))
+        },
+        {
+            path: '/operate/addAdvise/:id',
+            name: '运营管理——资讯频道首页推荐——添加',
+            component: resolve =>void(require(['@/views/admin/operat/AddAdvise'], resolve))
+        },
+        {
+            path: '/operate/ad',
+            name: '运营管理——广告位管理',
+            component: resolve =>void(require(['@/views/admin/operat/Ad'], resolve))
+        },
+        {
+            path: '/files/fileup',
+            name: '文件管理——上传文件',
+            component: resolve =>void(require(['@/views/admin/filesManage/FileUp'], resolve))
         },
         {
             path: '/data',
             name: '分享数据',
             component: resolve =>void(require(['@/views/admin/data'], resolve))
+<<<<<<< HEAD
 
         },
         {
@@ -38,6 +57,8 @@ let admin_router = {
             name: '分享数据',
             component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
 
+=======
+>>>>>>> 528d9a01aed3e9be210dfd8c9b6731f20ded6151
         }
     ]
 }

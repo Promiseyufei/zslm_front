@@ -1,20 +1,21 @@
 <template >
     <div>
-    	<div class="operateBox">
+        <div class="operateBox">
         <!-- 中间内容 -->
-        <div 
-        >
+        <div>
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>运行管理</el-breadcrumb-item>
-            <el-breadcrumb-item>频道banner</el-breadcrumb-item>
+            <el-breadcrumb-item>广告位管理</el-breadcrumb-item>
           </el-breadcrumb>
-          <!-- 选项卡 -->
-          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
-          
-          <div class="operateUpfiles operateHeader">
-            <p>当前操作页面：<span>{{this.radio}}</span></p>
-            <el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
+
+          <!-- 步骤条 -->
+          <div class="fileSteps">
+            <el-steps :active="2" align-center>
+              <el-step title="选择院校专业"></el-step>
+              <el-step title="上传文件"></el-step>
+            </el-steps>
           </div>
+          
           <div v-loading="loading"
             element-loading-text="拼命加载中"
             element-loading-spinner="el-icon-loading">
@@ -22,41 +23,35 @@
             <div class="operateUpfiles operateUp">
               
               <div class="operateUpfilesLeft">
-                <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传banner</div>
+                <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传广告图</div>
               </div>
               <div class="operateUpfilesRight">
                 <div>
-                  <div>
-                    <el-upload
-                      class="upload-demo"
-                      action="/putPictrue"
-                      :on-preview="handlePreview"
-                      :on-change="handleChange"
-                      :on-remove="handleRemove"
-                      :before-remove="beforeRemove"
-                      :before-upload="beforeAvatarUpload"
-                      :on-success="handleAvatarSuccess"
-                      :file-list="fileList">
-                      <el-button size="small" type="primary" class="operateFloat">点击上传</el-button>
-                      <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div> -->
-                      <span slot="tip" class="el-upload__tip">当前以选择：</span>
-                    </el-upload>
-                  </div>
-                  <div class="operateUpfilesRightImg">
-                    <img :src="this.fileList[0].url" alt="预览图">
-                  </div>
+                  <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :auto-upload="false">
+                    <el-button slot="trigger" size="small" type="primary">select file</el-button>
+                    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
+                    <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
+                  </el-upload>
                 </div>
                 <!-- 提交表单 -->
                 <div>
                   <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
-                    <el-form-item label="图片名称" prop="name">
-                      <el-input v-model="ruleForm.name" placeholder="输入图片名称"></el-input>
+                    <el-form-item label="文件名称" prop="name">
+                      <el-input v-model="ruleForm.name" placeholder="输入文件名称"></el-input>
                     </el-form-item>
-                    <el-form-item label="图片描述" prop="message">
-                      <el-input v-model="ruleForm.message" placeholder="输入图片描述"></el-input>
+                    <el-form-item label="文件描述" prop="message">
+                      <el-input v-model="ruleForm.message" placeholder="输入文件描述"></el-input>
                     </el-form-item>
-                    <el-form-item label="图片URL" prop="url">
-                      <el-input v-model="ruleForm.url" placeholder="输入图片URL"></el-input>
+                    <el-form-item label="年份信息" prop="url">
+                      <el-date-picker
+                        v-model="value2"
+                        type="date"
+                        placeholder="输入年份信息">
+                      </el-date-picker>
                     </el-form-item>
 
                     <el-form-item>
@@ -69,7 +64,7 @@
             <!-- 当前banner -->
             <div class="operateUpfiles operateDown">
               <div class="operateUpfilesLeft">
-                <div><i class="fa fa-list-alt fa-fw FA-3X"></i>&nbsp;当前banner</div>
+                <div><i class="fa fa-list-alt fa-fw FA-3X"></i>&nbsp;当前广告图</div>
               </div>
               <div class="operateUpfilesRight2">
                 <div class="operateUpfilesRight2Nav">
@@ -89,8 +84,8 @@
 
         </div>
         
-    	</div>
-    	
+        </div>
+        
     </div>
 </template>
 
@@ -109,6 +104,7 @@ export default {
         }
       };
       return {
+        value2: '',
         rules: {
           name: [
             { required: true, message: '图片名称不能为空！', trigger: 'blur' },
@@ -124,7 +120,6 @@ export default {
         },
         loading: false,
         banner: [],
-        radio: "辅导机构列表页",
         radio2: "",
         src: "",
         fileList: [{name: '', url: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',file: ''}],
@@ -169,10 +164,12 @@ export default {
     watch: {
       i: function(val,oldval) {
         this.getIndexBanner();
-        this.radio = this.banner[val].name;
       },
     },
     methods:{
+        submitUpload() {
+          this.$refs.upload.submit();
+        },
         // 清空所有banner
         operateDelete: function() {
           var table = this.tableData3;
@@ -201,7 +198,7 @@ export default {
                       'Content-Type': 'multipart/form-data'
                   }
               }
-              axios.post('/admin/operate/createBannerAd', {
+              axios.post('/admin/operate/createPageBillboard', {
                 imgName: self.ruleForm.name,
                 imgAlt: self.ruleForm.message,
                 reUrl: self.ruleForm.url,
@@ -271,10 +268,10 @@ export default {
         beforeRemove: function (file, fileList) {
           return this.$confirm(`确定移除 ${ file.name }？`);
         },
-        // 获取所有资讯类型
+        //  获得所有页面的名称
         getInformationType: function() {
           var self = this;
-          axios.post('/admin/operate/getInformationType', {
+          axios.post('/admin/operate/getAllPageListName', {
           })
           .then(function (response) {
             var date = response.data;
@@ -293,7 +290,7 @@ export default {
           var self = this;
           axios.post('/admin/operate/getIndexBanner', {
             indexId: self.i,
-            btType: 0
+            btType: 1
           })
           .then(function (response) {
             var date = response.data;
@@ -317,10 +314,10 @@ export default {
   /*
   * 上传图片列表初始时不显示
   */
-  .operateUpfilesRight .el-upload-list {
+/*  .operateUpfilesRight .el-upload-list {
     display: none;
     margin-top: -10px;
-  }
+  }*/
   .operateUpfilesRight2 .has-gutter th {
     background-color: #EAEDF1 !important;
   }
@@ -331,28 +328,31 @@ export default {
   width: 1500px;
   margin: 0 auto;
 }
+
 /*
-* 选项卡样式
+* 步骤条样式
 */
-.operateNav {
-  margin: 20px 0;
+.fileSteps {
+  /*margin: 20px 0;*/
+  width: 400px;
+  margin: 0 auto;
 }
-.operateNav .el-radio-button {
-  margin-right: 10px;
+.fileSteps .el-steps--horizontal {
+  margin: 20px 0;
 }
 /*
 * 右边上传banner内容样式
 */
-.operateUpfilesRight .upload-demo {
+/*.operateUpfilesRight .upload-demo {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-.operateUpfilesRight .el-upload__tip {
+}*/
+/*.operateUpfilesRight .el-upload__tip {
   margin-left: 20px;
   margin-bottom: 8px;
   display: none;
-}
+}*/
 .operateUpfiles {
   border: 1px solid #e4e4e4;
   background-color: #fff;
@@ -392,7 +392,7 @@ export default {
   width: 159px;
 }
 .operateUpfilesLeft>div {
-  background: url(../../assets/img/point.png) no-repeat;
+  background: url(../../../assets/img/point.png) no-repeat;
   position: relative;
   top: 50px;
   left: 0;
