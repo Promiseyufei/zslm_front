@@ -44,11 +44,13 @@
       gettable_info: function (){
         var that = this;
         axios.post('/admin/files/getUploadFile',{
-          page:that.page,
         })
         .then(function (response) {
-            that.page++;
-            that.tableData = response.data.data;
+            var res = response.data;
+            if (res.code == 0) {
+                that.tableData =res.data;
+            };
+            console.log(that.tableData);
             // that.pages = response.datas.data;
         })
         .catch(function (error) {
@@ -80,11 +82,5 @@
 	.el-button--text, .el-button--text.is-disabled, .el-button--text.is-disabled:focus, .el-button--text.is-disabled:hover, .el-button--text:active {
 	    margin-left: 20px;
 	}
-	.el-table .cell {
-    	/*display: flex;*/
-	}
-
-	.el-button--small {
-	    /*width: 37px;*/
-	}
+	
 </style>
