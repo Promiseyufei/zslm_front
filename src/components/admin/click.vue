@@ -3,8 +3,6 @@
 		<el-button size="small" type="primary" class="click">点击上传</el-button>
 	</div>
 </template>
-
-
 <script>
 	export default {
 	    data() {

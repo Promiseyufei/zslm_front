@@ -49,6 +49,12 @@ let admin_router = {
             path: '/data',
             name: '分享数据',
             component: resolve =>void(require(['@/views/admin/data'], resolve))
+
+        },
+        {
+            path: '/SelectUnivers',
+            name: '分享数据',
+            component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
         }
     ]
 }

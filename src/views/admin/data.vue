@@ -20,7 +20,7 @@
 				    </el-select>
 			    </el-form-item>
 		        <el-form-item label="关键字">
-		          <el-input v-model="filesForm.name2" placeholder="请输入关键字"></el-input>
+		          <el-input v-model="filesForm.name1" placeholder="请输入关键字"></el-input>
 		        </el-form-item>
 	        	<!-- </el-form-item> -->
 	      	</el-form>
@@ -49,8 +49,7 @@
 			</el-table>
 		</div>
 		<div class="footer"> 
-	  		<div class="footer-left">共<span>{{Page.pages}}</span>页/<span>{{Page.page}}</span>条数据</div>
-	  		<Page ref = "page" @click.native = "gettable_info"></Page>
+	  		<Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @gettable_info="gettable_info" @showbox="toshow2" :msg="msg"></Page>
 		</div>
 	</div>
 </template>
@@ -59,10 +58,11 @@
 export default {
     data(){
     	return {
-    		Page:{
-	          pages:'',
-	          page:'',
-	        },
+    		currentPage4:2,
+    		msg:0,
+    		count:0,
+    		number:0,
+	        value: '',
     		tableTop:[
 	          {type:'',property:'content',label:'分享内容',width:700},
 	          {type:'',property:'type',label:'内容类型',width:150},
@@ -74,7 +74,6 @@ export default {
 	          {type:'',property:'datas',label:'总引流数',width:100},
 	        ],
     		Datatable: [{
-	          // date1: '',
 	          content:'',
 	          type:'',
 	          pagedata:'',
@@ -87,8 +86,6 @@ export default {
 	        currentRow:null,
     		filesForm: {
 	    		name1:'',
-	    		name2:'',
-	    		year:'',
 	    		type:'',
 	    	},
 	    	options: [
@@ -105,30 +102,26 @@ export default {
 		          label: '北京烤鸭'
 		        }
 	        ],
-	        value: '',
 	    };
     },
     methods: {
-    	getPage: function (){
-        var that = this;
-        axios.post('/admin/files/getUploadFile',{
-        })
-        .then(function (response) {
-            that.Page = response.data.datas[0];
-        })
-        .catch(function (error) {
-            // console.log(error);
-        });
-      },
+	    toshow2(msg) {
+	        this.msg = msg;
+	        console.log(this.msg);
+	    },
     	gettable_info: function (){
         var that = this;
         axios.post('/admin/data/getdata-table',{
-          page:that.page,
+        	type: that.filesForm.type,
+        	name1: that.filesForm.name1,
         })
         .then(function (response) {
-            that.page++;
-            that.Datatable = response.data.data;
-            console.log(that.Datatable);
+            // that.page++;
+            var res = response.data;
+            if (res.code == 0) {
+            	that.Datatable = res.data;
+            	that.count = res.count;
+            };
             // that.pages = response.datas.data;
         })
         .catch(function (error) {
@@ -141,7 +134,7 @@ export default {
     },
 	mounted() {
 		this.gettable_info();
-		this.getPage();
+		// this.getPage();
 	},
 }
 </script>
@@ -163,23 +156,12 @@ export default {
 		color: #999;
 		font-weight: 500;
 	}
-	.footer-left {
-		font-size: 12px;
-		color: #999;
-		margin: 8px 0 0 900px;
-	}
-	.footer-left span {
-		color: #F04844;    
-	}
 	.footer {
 		border: 1px solid #E4E4E4;
-		display: flex;
-		margin: 20px auto;
+		text-align: right;
 		width: 1500px;
 		background-color: #fdfdfe;
-	}
-	.footer div {
-		text-align: center;
+		margin: 0 auto;
 	}
 	.el-table thead {
 	    background: #f9fafc;

@@ -7,11 +7,10 @@
 
 //在表单里展示文件信息
 Mock.mock('/admin/files/getUploadFile',{
-	 
-	"data": [{
+	"code":0,
+	"data|4": [{
 				'name': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf' ,
 				'data': '@cword(1)',
-		        // 'name': '@cword(11)',
 		        'major':'@cword(11)'+'MBA',
 		        'type': '@cword(4)',
 		        'year': '@date("yyyy")',
@@ -19,10 +18,7 @@ Mock.mock('/admin/files/getUploadFile',{
 		        'time': '@datetime("yyyy-MM-dd  HH:mm:ss")',
 			},
 			],
-	"datas":[{
-		'pages':'@integer(60, 100)',
-		'page':'@integer(100, 999)'
-	}]
+	"count":'@integer(1000, 2000)',
 	
 })
 
@@ -43,8 +39,8 @@ Mock.mock('/admin/files/huoQuChaXunTaioJian',{
 
 
 Mock.mock('/admin/data/getdata-table',{
-	 
-	"data": [{
+	"code":0,
+	"data|4": [{
 				// 'date1': '@cword(1)' ,
 				'content': '@cword(10)',
 				'type':'@cword(4)',
@@ -56,6 +52,7 @@ Mock.mock('/admin/data/getdata-table',{
 		        'datas':'@integer(1, 100)',
 			},
 			],
+	"count":'@integer(1000, 2000)',
 	
 })
 
