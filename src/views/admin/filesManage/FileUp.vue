@@ -29,12 +29,14 @@
                 <div>
                   <el-upload
                     class="upload-demo"
-                    ref="upload"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :auto-upload="false">
-                    <el-button slot="trigger" size="small" type="primary">select file</el-button>
-                    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
-                    <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
+                    action="/putPictrue"
+                    :on-change="handleChange"
+                    :on-remove="handleRemove"
+                    :before-remove="beforeRemove"
+                    :file-list="fileList">
+                    <el-button size="small" type="primary">上传文件</el-button>
+                    <!-- <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div> -->
+                    <span slot="tip" class="el-upload__tip">当前以选择：</span>
                   </el-upload>
                 </div>
                 <!-- 提交表单 -->
@@ -48,12 +50,20 @@
                     </el-form-item>
                     <el-form-item label="年份信息" prop="url">
                       <el-date-picker
-                        v-model="value2"
+                        v-model="ruleForm.url"
                         type="date"
                         placeholder="输入年份信息">
                       </el-date-picker>
                     </el-form-item>
-
+                    <el-form-item label="文件类型" prop="resource">
+                      <el-radio-group v-model="ruleForm.resource">
+                        <el-radio label="招生简章"></el-radio>
+                        <el-radio label="其他文件"></el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="院校展示" prop="delivery">
+                      <el-switch v-model="ruleForm.delivery"></el-switch>
+                    </el-form-item>
                     <el-form-item>
                       <el-button type="primary" @click="submitForm('ruleForm')">上传</el-button>
                     </el-form-item>
@@ -96,9 +106,7 @@ export default {
     data() {
       var checkAge = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('图片URL不能为空！'));
-        } else if (!this.validateImage(value)) {
-          callback(new Error('请输入正确的URl'));
+          return callback(new Error('年份信息不能为空！'));
         } else {
           callback();
         }
@@ -107,15 +115,18 @@ export default {
         value2: '',
         rules: {
           name: [
-            { required: true, message: '图片名称不能为空！', trigger: 'blur' },
+            { required: true, message: '文件名称不能为空！', trigger: 'blur' },
             { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
           ],
           message: [
-            { required: true, message: '图片描述不能为空！', trigger: 'blur' },
+            { required: true, message: '文件描述不能为空！', trigger: 'blur' },
             { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
           ],
           url: [
-            { validator: checkAge, required: true, trigger: 'blur' }
+            { validator: checkAge, required: true, trigger: 'change' }
+          ],
+          resource: [
+            { required: true, message: '请选择文件类型', trigger: 'change' }
           ],
         },
         loading: false,
@@ -126,7 +137,9 @@ export default {
         ruleForm: {
           name: '',
           message: '',
-          url: ''
+          url: '',
+          resource: '',
+          delivery: ''
         },
         i: 0,
         TableValue: 0,
@@ -167,9 +180,6 @@ export default {
       },
     },
     methods:{
-        submitUpload() {
-          this.$refs.upload.submit();
-        },
         // 清空所有banner
         operateDelete: function() {
           var table = this.tableData3;
@@ -314,10 +324,10 @@ export default {
   /*
   * 上传图片列表初始时不显示
   */
-/*  .operateUpfilesRight .el-upload-list {
+  .operateUpfilesRight .el-upload-list {
     display: none;
-    margin-top: -10px;
-  }*/
+    margin-top: 20px;
+  }
   .operateUpfilesRight2 .has-gutter th {
     background-color: #EAEDF1 !important;
   }
@@ -343,16 +353,12 @@ export default {
 /*
 * 右边上传banner内容样式
 */
-/*.operateUpfilesRight .upload-demo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}*/
-/*.operateUpfilesRight .el-upload__tip {
-  margin-left: 20px;
-  margin-bottom: 8px;
+.operateUpfilesRight .upload-demo {
+  width: 250px;
+}
+.operateUpfilesRight .el-upload__tip {
   display: none;
-}*/
+}
 .operateUpfiles {
   border: 1px solid #e4e4e4;
   background-color: #fff;
@@ -419,7 +425,7 @@ export default {
 .operateUpfilesRight button {
   float: right;
 }
-.operateUpfilesRightImg {
+/*.operateUpfilesRightImg {
   width: 640px;
   height: 170px;
   overflow: hidden;
@@ -428,7 +434,7 @@ export default {
 .operateUpfilesRightImg>img {
   max-width: 100%;
   max-height: 100%;
-}
+}*/
 
 
 /*

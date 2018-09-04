@@ -82,6 +82,7 @@
                 <div class="operateFinalUp">
                   <el-button type="primary">完成</el-button>
                 </div>
+
               </div> 
             </div>
           </div>
