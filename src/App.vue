@@ -18,6 +18,9 @@
                 <el-main>
                     <router-view/>
                 </el-main>
+                <el-footer class="footer">
+                  <p>CopyRight &copy; MBA Helper 2018</p>
+                </el-footer>
             </el-container>
         </el-container>
     </div>
@@ -46,49 +49,43 @@
     .el-main {
       background-color: #E9EEF3;
       color: #333;
-      /* text-align: center; */
-      /* line-height: 160px; */
     }
 
     .el-aside {
       background-color: #D3DCE6;
       color: #333;
-      /* text-align: center; */
-      /* line-height: 200px; */
     }
 
     .el-header, .el-footer {
       background-color: #B3C0D1;
       color: #333;
-      /* text-align: center; */
-      /* line-height: 60px; */
     }
-
-  /* .el-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
+    .el-col {
+      border-radius: 4px;
     }
-  } */
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
-
+    .bg-purple-dark {
+      background: #99a9bf;
+    }
+    .bg-purple {
+      background: #d3dce6;
+    }
+    .bg-purple-light {
+      background: #e5e9f2;
+    }
+    .grid-content {
+      border-radius: 4px;
+      min-height: 36px;
+    }
+    .row-bg {
+      padding: 10px 0;
+      background-color: #f9fafc;
+    }
+    .footer {
+      background-color: #E9EEF3;
+    }
+    .footer p {
+      text-align: center;
+      font-size: 12px;
+      color: #c3c3c3;
+    }
 </style>

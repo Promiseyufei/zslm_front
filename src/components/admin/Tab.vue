@@ -1,133 +1,249 @@
 <template>
-  <div>
+  <!-- <div> -->
     <!-- <el-radio-group v-model="tabPosition" style="margin-bottom: 30px;" >
       <el-radio-button :label="item" v-for="item in items" ></el-radio-button>
     </el-radio-group> -->
-      <div style="margin: 0 auto; width: 1500px; position:relative;">
-        <Click></Click>
+      <!-- <div style="margin: 0 auto; width: 1500px; position:relative;"> -->
+        <!-- <Click></Click> -->
         <!-- <el-button size="small" type="primary">点击上传</el-button> -->
-        <el-tabs type="border-card">
+        <!-- <el-tabs type="border-card"> -->
         <!-- <el-tab-pane :label="item" v-for="(item,index) of items" :index="index + ''">{{item.list}}</el-tab-pane> -->
-        <el-tab-pane label="全部文件">
-          <div>
+        <!-- <el-tab-pane label="全部文件"> -->
+          <!-- <div>
             <i></i>
             <p class="screen">筛选查询</p>
-          </div>
-          <el-form class="input" ref="form" label-width="80px">
-            <el-form-item label="文件名称">
-              <el-input placeholder="请输入文件名称"></el-input>
-            </el-form-item>
-            <el-form-item label="院校名称">
-              <el-input placeholder="请输入院校名称"></el-input>
-            </el-form-item>
-            <el-form-item label="文件年份">
-              <el-date-picker
-              v-model="value1"
-              type="date"
-              placeholder="选择日期">
-            </el-date-picker>
-            </el-form-item>
-            <el-form-item label="文件类型">
-              <el-select v-model="value" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
+          </div> -->
+          <!-- <div class="filesForm"> -->
+              <!-- <el-form class="input" ref="form" label-width="80px">
+                <el-form-item label="文件名称">
+                  <el-input placeholder="请输入文件名称" ></el-input>
+                </el-form-item>
+                <el-form-item label="院校名称">
+                  <el-input placeholder="请输入院校名称" ></el-input>
+                </el-form-item>
+                <el-form-item label="文件年份">
+                  <el-date-picker
+                  v-model="value1"
+                  type="date"
+                  placeholder="选择日期"> -->
+                <!-- </el-date-picker>
+                </el-form-item>
+                <el-form-item label="文件类型">
+                  <el-select v-model="value" placeholder="请选择">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-form>
+              <el-button class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button> -->
+          <!-- </div> -->
+          <!-- <div class="filesSelect"> -->
+            <!-- <i></i> -->
+            <!-- <div></div> -->
+            <!-- <p class="screen">数据列表</p>
+            <el-select v-model="value7" placeholder="显示条数" class="filesSelect-sel">
+              <el-option-group
+                v-for="group in options3"
+                :key="group.label"
+                :label="group.label"> -->
+                <!-- <el-option
+                  v-for="item in group.options"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
                 </el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-          <div>
-            <i></i>
-            <p class="screen">数据列表</p>
-          </div>
-            <Table></Table>
+              </el-option-group> -->
+            <!-- </el-select> -->
+          <!-- </div> -->
+            <!-- <Table></Table>
             <div class="footer"> 
-              <div class="footer-left">共<span>10</span>页/<span>100</span>条数据</div>
+              <div class="footer-left">共<span>{{Page.pages}}</span>页/<span>{{Page.page}}</span>条数据</div>
               <Page></Page>
-            </div>
-        </el-tab-pane>
-        <el-tab-pane label="招生简介">2</el-tab-pane>
-        <el-tab-pane label="其他文件">3</el-tab-pane>
-        </el-tabs>
-    </div>
-  </div>
+            </div> -->
+        <!-- </el-tab-pane> -->
+        <!-- <el-tab-pane label="招生简介">2</el-tab-pane> -->
+        <!-- <el-tab-pane label="其他文件">3</el-tab-pane> -->
+        <!-- </el-tabs> -->
+    <!-- </div> -->
+  <!-- </div> -->
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-         options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, 
-        {
-          value: '选项2',
-          label: '双皮奶'
-        }, 
-        {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, 
-        {
-          value: '选项4',
-          label: '龙须面'
-        }, 
-        {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: '',
-        pickerOptions1: {
-          disabledDate(time) {
-            return time.getTime() > Date.now();
-          },
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, 
-          {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, 
-          {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
-        },
-        value1: '',
-        value2: '',
-        tabPosition: 'top',
+  // export default {
+    // data() {
+      // return {
+        // options3: [
+        //   {
+        //     options: [{
+        //       value: 'Shanghai',
+        //       label: '10条/页'
+        //     }]
+        //   }, 
+        //   {
+        //     // label: '城市名',
+        //     options: [{
+        //       value: 'Chengdu',
+        //       label: '50条/页'
+        //     }]
+        //   },
+        //   {
+        //     // label: '城市名',
+        //     options: [{
+        //       value: 'Chengdu',
+        //       label: '100条/页'
+        //     }]
+        //   }
+        // ],
+        // value7: '',
+        // props:{Page:{
+        //   // type:string,
+        //   required:true,
+        // }},
+        // Page:{
+        //   pages:'',
+        //   page:'',
+        // },
+        // props:{tableData:{
+        //   type:Array,
+        //   required:true,
+        // }},
+        //  options: [{
+        //   value: '黄金糕',
+        //   // label: '黄金糕'
+        // }, 
+        // {
+        //   value: '双皮奶',
+        //   // label: '双皮奶'
+        // }, 
+        // {
+        //   value: '蚵仔煎',
+        //   // label: '蚵仔煎'
+        // }, 
+        // {
+        //   value: '龙须面',
+        //   // label: '龙须面'
+        // }, 
+        // {
+        //   value: '北京烤鸭',
+        //   // label: '北京烤鸭'
+        // }],
+        // value: '',
+        // pickerOptions1: {
+        //   disabledDate(time) {
+        //     return time.getTime() > Date.now();
+        //   },
+        //   shortcuts: [{
+        //     text: '今天',
+        //     onClick(picker) {
+        //       picker.$emit('pick', new Date());
+        //     }
+        //   }, 
+        //   {
+        //     text: '昨天',
+        //     onClick(picker) {
+        //       const date = new Date();
+        //       date.setTime(date.getTime() - 3600 * 1000 * 24);
+        //       picker.$emit('pick', date);
+        //     }
+        //   }, 
+        //   {
+        //     text: '一周前',
+        //     onClick(picker) {
+        //       const date = new Date();
+        //       date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+        //       picker.$emit('pick', date);
+        //     }
+        //   }]
+        // },
+        // value1: '',
+        // value2: '',
+        // tabPosition: 'top',
         // isCollapse: true, 
         // activeIndex: '1',
-        index: '1',
-        items: {
-          top: '全部文件',
-          right: '招生简介',
-          left: '其他文件'
-        },
-      };
-    },
-    methods: {
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-      }
-    }
-  }
+        // index: '1',
+        // items: {
+        //   top: '全部文件',
+        //   right: '招生简介',
+        //   left: '其他文件'
+        // },
+      // };
+    // },
+    // methods: {
+      // handleSelect(key, keyPath) {
+        // console.log(key, keyPath);
+      // },
+      // query: function(){
+      //   var that = this;
+      //   axios.post('/admin/files/getUploadFile',{
+      //   })
+      //   .then(function (response) {
+      //       // that.Page = response.data.datas[0];
+      //       // console.log(that.Page);
+      //       // that.pages = response.datas.data;
+      //   })
+      //   .catch(function (error) {
+      //       // console.log(error);
+      //   });
+      // },
+    //   getPage: function (){
+    //     var that = this;
+    //     axios.post('/admin/files/getUploadFile',{
+    //     })
+    //     .then(function (response) {
+    //         that.Page = response.data.datas[0];
+    //     })
+    //     .catch(function (error) {
+    //     });
+    //   }
+    // },
+    // mounted(){
+      // this.getPage();
+      // console.log(this.getPage)
+    // }
+  // }
 </script>
 <style scoped>
+  /*.el-select-group__wrap:not(:last-of-type) {
+    padding-bottom: 7px;
+  }
+  .el-select-group .el-select-dropdown__item {
+    font-size: 12px;
+    color: #BBB;
+  }
+  .el-input__inner {
+    font-size: 12px;
+  }
+  .filesSelect-sel {
+    width: 105px;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+  }
+  .filesSelect {
+    display: flex;
+    position: relative;
+  }
+  .filesForm-query {
+    width: 80px;
+    height: 30px;
+    position: absolute;
+    right: -15px;
+    bottom: 5px;
+    background-color: #fff;
+    border-color: #CCC;
+    border-radius: 0;
+    color: #666;
+    font-size: 12px;
+  }
+  .filesForm {
+    display: flex;
+    position: relative;
+    margin: 0 0 20px 0 ;
+  }
   .el-table {
     color: #333;
   }
@@ -139,16 +255,13 @@
   }
   .el-table th>.cell {
     text-align: center;
-}
+  }
   .el-pagination {
     color: #999;
     font-weight: 500;
   }
-  .el-pager:hover {
-    /*color: #1ABC9C;*/
-  }
+  
   .footer-left {
-    /*text-align: center;*/
     font-size: 12px;
     color: #999;
     margin: 8px 0 0 900px;
@@ -163,12 +276,8 @@
   }
   .footer div {
     text-align: center;
-    /*margin: 0 auto;*/
   }
-  .table {
-    /*width: 100px;*/
-    /*height: 100px;*/
-  }
+  
   .input {
     display: flex;
     margin: 20px 0 0 0;
@@ -243,5 +352,5 @@
   *{
     margin: 0;
     padding: 0;
-  }
+  }*/
 </style>

@@ -1,12 +1,12 @@
 <template >
     <div>
-    	<div class="operateBox">
+        <div class="operateBox">
         <!-- 中间内容 -->
         <div 
         >
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>运行管理</el-breadcrumb-item>
-            <el-breadcrumb-item>频道banner</el-breadcrumb-item>
+            <el-breadcrumb-item>广告位管理</el-breadcrumb-item>
           </el-breadcrumb>
           <!-- 选项卡 -->
           <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
@@ -22,7 +22,7 @@
             <div class="operateUpfiles operateUp">
               
               <div class="operateUpfilesLeft">
-                <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传banner</div>
+                <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传广告图</div>
               </div>
               <div class="operateUpfilesRight">
                 <div>
@@ -69,7 +69,7 @@
             <!-- 当前banner -->
             <div class="operateUpfiles operateDown">
               <div class="operateUpfilesLeft">
-                <div><i class="fa fa-list-alt fa-fw FA-3X"></i>&nbsp;当前banner</div>
+                <div><i class="fa fa-list-alt fa-fw FA-3X"></i>&nbsp;当前广告图</div>
               </div>
               <div class="operateUpfilesRight2">
                 <div class="operateUpfilesRight2Nav">
@@ -82,13 +82,15 @@
                 <div class="operateFinalUp">
                   <el-button type="primary">完成</el-button>
                 </div>
-
               </div> 
             </div>
           </div>
+          
+
         </div>
-    	</div>
-    	
+        
+        </div>
+        
     </div>
 </template>
 
@@ -199,7 +201,7 @@ export default {
                       'Content-Type': 'multipart/form-data'
                   }
               }
-              axios.post('/admin/operate/createBannerAd', {
+              axios.post('/admin/operate/createPageBillboard', {
                 imgName: self.ruleForm.name,
                 imgAlt: self.ruleForm.message,
                 reUrl: self.ruleForm.url,
@@ -269,10 +271,10 @@ export default {
         beforeRemove: function (file, fileList) {
           return this.$confirm(`确定移除 ${ file.name }？`);
         },
-        // 获取所有资讯类型
+        //  获得所有页面的名称
         getInformationType: function() {
           var self = this;
-          axios.post('/admin/operate/getInformationType', {
+          axios.post('/admin/operate/getAllPageListName', {
           })
           .then(function (response) {
             var date = response.data;
@@ -291,7 +293,7 @@ export default {
           var self = this;
           axios.post('/admin/operate/getIndexBanner', {
             indexId: self.i,
-            btType: 0
+            btType: 1
           })
           .then(function (response) {
             var date = response.data;
@@ -390,7 +392,7 @@ export default {
   width: 159px;
 }
 .operateUpfilesLeft>div {
-  background: url(../../assets/img/point.png) no-repeat;
+  background: url(../../../assets/img/point.png) no-repeat;
   position: relative;
   top: 50px;
   left: 0;
