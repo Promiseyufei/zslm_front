@@ -10,9 +10,9 @@
                     <span slot="title">{{ item.title }}</span>
                 </template>
                 <template v-if="typeof item.groups != 'undefined'">
-                    <el-menu-item-group v-for="(group, i) in item.groups" :key="i">
+                    <el-menu-item-group v-for="(group, i) in item.groups" :key="i" >
                         <span slot="title">{{ group.title }}</span>
-                        <el-menu-item v-for="(option, j) in group.options" :key="j" :index="item.index+option.index+''">{{ option.name }}</el-menu-item>
+                        <el-menu-item v-for="(option, j) in group.options" :key="j" :index="item.index+option.index+''" @click="reUrl(option.url)">{{ option.name }}</el-menu-item>
                     </el-menu-item-group>
                 </template>
             </el-submenu>
@@ -38,8 +38,8 @@
             }
         },
         methods: {
-            test(index) {
-                console.log(index);
+            reUrl(url) {
+                (typeof url != undefined) ? this.$router.push(url) :this.$router.go(0);
             },
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);

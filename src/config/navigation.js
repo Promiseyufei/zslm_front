@@ -142,15 +142,18 @@ export default [
                 "options":[
                     {
                         "name":"频道Banner",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"资讯首页推荐",
-                        "index":2
+                        "index":2,
+                        "url":"/test"
                     },
                     {
                         "name":"广告位管理",
-                        "index":3
+                        "index":3,
+                        "url":"/test"
                     }
                 ]
             },
@@ -159,7 +162,8 @@ export default [
                 "options":[
                     {
                         "name":"分享数据",
-                        "index":1
+                        "index":1,
+                        "url":"/test"
                     }
                 ]
             }

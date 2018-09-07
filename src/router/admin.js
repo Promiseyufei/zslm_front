@@ -23,7 +23,7 @@ let admin_router = {
         {
             path: '/operate',
             name: '运营管理',
-            component: resolve =>void(require(['@/views/admin/Operate'], resolve))
+            component: resolve =>void(require(['@/views/admin/operate'], resolve))
         },
         {
             path: '/operate/advise',
