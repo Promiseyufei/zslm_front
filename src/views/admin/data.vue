@@ -38,7 +38,6 @@
 			    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
 			    </el-option>
 			</el-select>
-			<!-- <el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh">刷新</el-button> -->
 		</div>
 		<div class="datatable">
 			<el-table ref="singleTable" :data="Datatable" border @current-change="handleCurrentChange" style="width: 100%">
