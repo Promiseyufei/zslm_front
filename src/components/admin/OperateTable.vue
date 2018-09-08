@@ -92,18 +92,6 @@ export default {
     }
 }
 </script>
-<style>
-  /*
-  * 上传图片列表初始时不显示
-  */
-  .operateUpfilesRight .el-upload-list {
-    display: none;
-    margin-top: -10px;
-  }
-  .operateUpfilesRight2 .has-gutter th {
-    background-color: #EAEDF1 !important;
-  }
-</style>
 
 <style scoped>
 .operateBox {
