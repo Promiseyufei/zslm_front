@@ -109,23 +109,23 @@ export default {
 	        console.log(this.msg);
 	    },
     	gettable_info: function (){
-        var that = this;
-        axios.post('/admin/data/getdata-table',{
-        	type: that.filesForm.type,
-        	name1: that.filesForm.name1,
-        })
-        .then(function (response) {
-            // that.page++;
-            var res = response.data;
-            if (res.code == 0) {
-            	that.Datatable = res.data;
-            	that.count = res.count;
-            };
-            // that.pages = response.datas.data;
-        })
-        .catch(function (error) {
-            // console.log(error);
-        });
+        	var that = this;
+	        axios.post('/admin/data/getdata-table',{
+	        	type: that.filesForm.type,
+	        	name1: that.filesForm.name1,
+	        })
+	        .then(function (response) {
+	            // that.page++;
+	            var res = response.data;
+	            if (res.code == 0) {
+	            	that.Datatable = res.data;
+	            	that.count = res.count;
+	            };
+	            // that.pages = response.datas.data;
+	        })
+	        .catch(function (error) {
+	            // console.log(error);
+	        });
       },
     	handleCurrentChange(val) {
         this.currentRow = val;

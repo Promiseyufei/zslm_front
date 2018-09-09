@@ -44,9 +44,9 @@
             </el-select>
         </div>
         <div class="majorlist-table">
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 100%">
                 <el-table-column type="selection" width="55"></el-table-column>
-                <el-table-column label="编号" width="100"></el-table-column>
+                <el-table-column label="编号" prop="id" width="100"></el-table-column>
                 <el-table-column label="展示权重" width="100">
                     <template slot-scope="scope">
                         <el-input v-model="input"></el-input>
@@ -91,23 +91,15 @@
         data(){
             return{
                 tableTop:[
-                  // {type:'',prop:'data',label:'编号',width:100},
-                  // {type:'',prop:'name',label:'展示权重',width:100},
-                  // {type:'',prop:'major',label:'展示状态',width:100},
-                  // {type:'',prop:'type',label:'推荐状态',width:100},
-                  {type:'',prop:'year',label:'院校专业名称',width:580},
-                  {type:'',prop:'homepage',label:'招生项目',width:100},
+                  {type:'',prop:'name',label:'院校专业名称',width:580},
+                  {type:'',prop:'project',label:'招生项目',width:100},
                   {type:'',prop:'time',label:'发布时间',width:160},
-         
                 ],
-                tableData:[{
-                  data: '',
-                  name: '',
-                  major:'',
-                  type: '',
-                  year: '',
-                  homepage: '',
-                  time: '',
+                majorlisttable:[{
+                  id:'',
+                  name:'',
+                  project:'',
+                  time:'',
                 }],
                 value:'',
                 value2:'',
@@ -134,11 +126,32 @@
             }
         },
         methods:{
-
+            handleCurrentChange(val) {
+                this.currentRow = val;
+            },
+            gettable_info:function(){
+                var that = this;
+                axios.post('/admin/UniversMajorList/gettable-info',{
+                    // type: that.filesForm.type,
+                    // name1: that.filesForm.name1,
+                })
+                .then(function (response) {
+                    // that.page++;
+                    var res = response.data;
+                    if (res.code == 0) {
+                        that.majorlisttable = res.data;
+                        that.id = res.id;
+                        console.log(that.id);
+                    };
+                })
+                .catch(function (error) {
+                    // console.log(error);
+                });
+            }
         },
-        // mounted:{
-
-        // },
+        mounted(){
+            this.gettable_info();
+        },
     }
 
 </script>

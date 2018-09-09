@@ -8,11 +8,13 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             },
@@ -21,11 +23,13 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             }
@@ -40,11 +44,13 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             },
@@ -53,11 +59,13 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             }
@@ -72,11 +80,13 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             },
@@ -85,11 +95,13 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             }
@@ -104,11 +116,13 @@ export default [
                 "options":[
                     {
                         "name":"文件上传",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"文件管理",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             }
@@ -123,11 +137,13 @@ export default [
                 "options":[
                     {
                         "name":"消息管理",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"消息管理",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             }
@@ -178,11 +194,13 @@ export default [
                 "options":[
                     {
                         "name":"退款管理",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"退款管理",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             }
@@ -197,11 +215,13 @@ export default [
                 "options":[
                     {
                         "name":"模考管理",
-                        "index":1
+                        "index":1,
+                        "url":"/operate"
                     },
                     {
                         "name":"模考管理",
-                        "index":2
+                        "index":2,
+                        "url":"/operate"
                     }
                 ]
             }
