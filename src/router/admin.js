@@ -23,7 +23,7 @@ let admin_router = {
         {
             path: '/operate',
             name: '运营管理',
-            component: resolve =>void(require(['@/views/admin/Operate'], resolve))
+            component: resolve =>void(require(['@/views/admin/operate'], resolve))
         },
         {
             path: '/operate/advise',
@@ -52,7 +52,7 @@ let admin_router = {
 
         },
         {
-            path: '/SelectUnivers',
+            path: '/selectUnivers',
             name: '分享数据',
             component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
         },
@@ -60,7 +60,12 @@ let admin_router = {
             path: '/message/messageHome',
             name: '编辑院校专业',
             component: resolve =>void(require(['@/views/admin/message/MessageHome'], resolve))
-        }
+        },
+        {
+            path: '/universMajorList',
+            name: '分享数据',
+            component: resolve =>void(require(['@/views/admin/UniversMajorList'], resolve))
+        },
     ]
 }
 
