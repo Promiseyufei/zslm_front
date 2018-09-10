@@ -55,6 +55,11 @@ let admin_router = {
             path: '/SelectUnivers',
             name: '分享数据',
             component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
+        },
+        {
+            path: '/message/messageHome',
+            name: '编辑院校专业',
+            component: resolve =>void(require(['@/views/admin/message/MessageHome'], resolve))
         }
     ]
 }
