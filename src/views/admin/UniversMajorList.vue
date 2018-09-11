@@ -76,6 +76,8 @@
                 </el-table-column>
                 <div>
                   <el-table-column v-for="(val,index) in tableTop" :key="index" :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
+                <div v-for="(val, index) in tableTop" :key="index">
+                  <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
                   </el-table-column>
                 </div>
             </el-table>

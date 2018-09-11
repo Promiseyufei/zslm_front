@@ -81,12 +81,12 @@ export default [
                     {
                         "name":"选项一",
                         "index":1,
-                        "url":"/UniversMajorList"
+                        "url":"/selectUnivers"
                     },
                     {
                         "name":"选项二",
                         "index":2,
-                        "url":"/operate"
+                        "url":"/universMajorList"
                     }
                 ]
             },
