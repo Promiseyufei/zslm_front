@@ -129,6 +129,7 @@
 	}
 	.Select-top {
 		display: flex;
-		margin: 0 0 10px 60px;
+		width: 1500px;
+		margin: 0 auto;
 	}
 </style>
