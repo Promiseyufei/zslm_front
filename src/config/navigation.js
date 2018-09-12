@@ -122,7 +122,7 @@ export default [
                     {
                         "name":"文件管理",
                         "index":2,
-                        "url":"/operate"
+                        "url":"/files"
                     }
                 ]
             }
@@ -164,7 +164,7 @@ export default [
                     {
                         "name":"资讯首页推荐",
                         "index":2,
-                        "url":"/test"
+                        "url":"/SelectUnivers"
                     },
                     {
                         "name":"广告位管理",
@@ -179,7 +179,7 @@ export default [
                     {
                         "name":"分享数据",
                         "index":1,
-                        "url":"/test"
+                        "url":"/data"
                     }
                 ]
             }

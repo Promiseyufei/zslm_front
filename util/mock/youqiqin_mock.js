@@ -45,8 +45,8 @@ Mock.mock('/admin/files/huoQuChaXunTaioJian',{
 Mock.mock('/admin/data/getdata-table',{
 	"code":0,
 	"data|4": [{
-				// 'date1': '@cword(1)' ,
 				'content': '@cword(10)',
+				'id': '@integer(1, 100)' ,
 				'type':'@cword(4)',
 		        'pagedata':'@integer(1, 100)',
 		        'wxdata':'@integer(1, 100)',
@@ -54,6 +54,7 @@ Mock.mock('/admin/data/getdata-table',{
 		        'wbdata':'@integer(1, 100)',
 		        'wbdatas':'@integer(1, 100)',
 		        'datas':'@integer(1, 100)',
+				
 			},
 			],
 	"count":'@integer(1000, 2000)',
@@ -68,12 +69,14 @@ Mock.mock('/admin/data/getdata-table',{
 Mock.mock('/admin/UniversMajorList/gettable-info',{
 	"code":0,
 	"data|4": [{
+				"weight":'@integer(1, 100)',
 				'id':'@integer(1, 100)',
 				'name': '@cword(11)'+'MBA',
 		        'project':'@integer(1, 100)',
 		        'time':'@datetime("yyyy-MM-dd  HH:mm:ss")',
 			},
 			],
+	"count":'@integer(1000, 2000)',
 	// "count":'@integer(1000, 2000)',
 	
 })

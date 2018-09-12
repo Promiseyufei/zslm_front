@@ -1,10 +1,13 @@
  <template>
 	<div class="Select">
-		<div class="Select-top">
-			<p>运营管理</p>
-			<p class="span">/</p>
-			<p>分享管理</p>
-		</div>
+		<!-- <div class="Select-top"> -->
+			<el-breadcrumb separator="/">
+			  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+			  <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+			  <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+			</el-breadcrumb>
+		<!-- </div> -->
 		<div class="Select-steps">
 			<el-steps :active="1" align-center>
 			  <el-step title="选择院校专业"></el-step>
@@ -129,6 +132,7 @@
 	}
 	.Select-top {
 		display: flex;
-		margin: 0 0 10px 60px;
+		width: 1500px;
+		margin: 0 auto;
 	}
 </style>
