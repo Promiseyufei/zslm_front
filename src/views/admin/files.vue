@@ -265,6 +265,10 @@
       border-right: none;
       border-bottom: none;
   }
+  /*表格滚动条*/
+    .el-table--scrollable-x .el-table__body-wrapper {
+        overflow-x: hidden;
+    }
   .el-button--text, .el-button--text.is-disabled, .el-button--text.is-disabled:focus, .el-button--text.is-disabled:hover, .el-button--text:active {
       margin-left: 20px;
   }
@@ -285,29 +289,6 @@
   .el-input__inner {
     font-size: 12px;
   }
-  /*.dataquery-refresh {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    color: #666; 
-    background-color: #fff; 
-    border:1px solid #CCC;
-    border-radius:0;
-  }
-  .dataquery p {
-    font-size: 16px;
-    color: #666;
-    font-weight: bold;
-    padding: 0 20px;
-  }
-  .dataquery {
-    position: relative;
-    display: flex;
-    width: 1500px;
-    height: 50px;
-    background:#f3f3f3;
-    margin: 0 auto;
-  }*/
   .filesSelect-sel {
     width: 105px;
     position: absolute;
@@ -336,15 +317,7 @@
     display: flex;
     margin: 20px 0 0 0;
   }
-  .input div {
-    /*margin-left: 20px;*/
-  }
-  .input div>div {
-    /*margin-left: 5px;*/
-  } 
-  .filesForm div {
-    /*margin: 0 auto;*/
-  }
+
   .filesForm {
     width: 1500px;
     display: flex;

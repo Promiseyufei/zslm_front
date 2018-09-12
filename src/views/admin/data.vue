@@ -178,6 +178,10 @@
 		background-color: #fdfdfe;
 		margin: 0 auto;
 	}
+	/*表格滚动条*/
+    .el-table--scrollable-x .el-table__body-wrapper {
+        overflow-x: hidden;
+    }
 	.el-table thead {
 	    background: #f9fafc;
 	}

@@ -252,6 +252,10 @@
         font-size: 20px;
         color: #999;
     }
+    /*表格滚动条*/
+    .el-table--scrollable-x .el-table__body-wrapper {
+        overflow-x: hidden;
+    }
     .majorlist-table .el-input {
         width: 40px;
     }
@@ -314,6 +318,7 @@
         margin: 0 auto;
         width: 1500px;
     }
+    
 
 
 </style>
