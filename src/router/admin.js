@@ -10,16 +10,29 @@ let admin_router = {
             name: '导航',
             component: resolve =>void(require(['@/views/admin/accounts'], resolve))
         },
-        {
-            path: '/information',
-            name: '小块',
-            component: resolve =>void(require(['@/views/admin/information'], resolve))
-        },
+        // {
+        //     path: '/information',
+        //     name: '小块',
+        //     component: resolve =>void(require(['@/views/admin/information'], resolve))
+        // },
+
+        // 文件管理
         {
             path: '/files',
             name: '文件管理',
             component: resolve =>void(require(['@/views/admin/files'], resolve))
         },
+        {
+            path: '/selectUnivers',
+            name: '选择院校专业',
+            component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
+        },
+        {
+            path: '/files/fileup',
+            name: '文件管理——上传文件',
+            component: resolve =>void(require(['@/views/admin/filesManage/FileUp'], resolve))
+        },
+        // 运行管理
         {
             path: '/operate',
             name: '运营管理',
@@ -41,31 +54,28 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/operat/Ad'], resolve))
         },
         {
-            path: '/files/fileup',
-            name: '文件管理——上传文件',
-            component: resolve =>void(require(['@/views/admin/filesManage/FileUp'], resolve))
-        },
-        {
-            path: '/data',
+            path: '/operate/data',
             name: '分享数据',
-            component: resolve =>void(require(['@/views/admin/data'], resolve))
+            component: resolve =>void(require(['@/views/admin/operat/data'], resolve))
 
         },
+        // 信息发布
         {
-            path: '/selectUnivers',
-            name: '分享数据',
-            component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
+            path: '/universMajorList',
+            name: '院校专业列表',
+            component: resolve =>void(require(['@/views/admin/UniversMajorList'], resolve))
         },
         {
             path: '/message/messageHome',
-            name: '编辑院校专业',
+            name: '编辑-院校专业',
             component: resolve =>void(require(['@/views/admin/message/MessageHome'], resolve))
         },
         {
-            path: '/universMajorList',
-            name: '分享数据',
-            component: resolve =>void(require(['@/views/admin/UniversMajorList'], resolve))
+            path: '/message/universityMessage',
+            name: '编辑-招生项目',
+            component: resolve =>void(require(['@/views/admin/message/UniversityMessage'], resolve))
         },
+        
     ]
 }
 

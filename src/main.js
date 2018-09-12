@@ -22,6 +22,10 @@ import axios from 'axios'
 window.axios = axios
 // axios.defaults.withCredentials = true
 
+//引入exif
+import Exif from 'exif-js'
+window.Exif = Exif
+
 //使用mock
 import Mock from 'mockjs'
 window.Mock = Mock
