@@ -204,7 +204,10 @@
 
 <!-- 全局样式 -->
 <style>
-
+    /*表格滚动条*/
+    .majorlist-table .el-table--scrollable-x .el-table__body-wrapper {
+        overflow-x: hidden;
+    }
     /*表头文本居中*/
     .majorlist-table .el-table th.is-leaf {
         text-align: center;
@@ -252,10 +255,7 @@
         font-size: 20px;
         color: #999;
     }
-    /*表格滚动条*/
-    .el-table--scrollable-x .el-table__body-wrapper {
-        overflow-x: hidden;
-    }
+
     .majorlist-table .el-input {
         width: 40px;
     }

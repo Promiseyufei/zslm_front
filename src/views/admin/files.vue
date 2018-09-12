@@ -238,7 +238,10 @@
 
 <!-- 全局样式 -->
 <style>
-
+    /*表格滚动条*/
+    .file-table .el-table--scrollable-x .el-table__body-wrapper {
+        overflow-x: hidden;
+    }
     /*表头文本居中*/
     .file-table .el-table th.is-leaf {
         text-align: center;
@@ -265,10 +268,6 @@
       border-right: none;
       border-bottom: none;
   }
-  /*表格滚动条*/
-    .el-table--scrollable-x .el-table__body-wrapper {
-        overflow-x: hidden;
-    }
   .el-button--text, .el-button--text.is-disabled, .el-button--text.is-disabled:focus, .el-button--text.is-disabled:hover, .el-button--text:active {
       margin-left: 20px;
   }
