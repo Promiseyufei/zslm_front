@@ -26,6 +26,10 @@ window.axios = axios
 import Exif from 'exif-js'
 window.Exif = Exif
 
+
+import WangEditor from 'wangeditor'
+window.WangEditor = WangEditor
+
 //使用mock
 import Mock from 'mockjs'
 window.Mock = Mock

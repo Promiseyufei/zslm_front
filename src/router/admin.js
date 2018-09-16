@@ -75,6 +75,11 @@ let admin_router = {
             name: '编辑-招生项目',
             component: resolve =>void(require(['@/views/admin/message/UniversityMessage'], resolve))
         },
+        {
+            path: '/test',
+            name: 'WangEditor test',
+            component: resolve =>void(require(['@/views/admin/test'], resolve))
+        },
         
     ]
 }
