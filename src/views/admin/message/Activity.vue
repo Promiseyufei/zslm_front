@@ -132,16 +132,24 @@
                             <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;活动介绍信息</div>
                         </div>
                         <div class="operateUpfilesRight2">
-                            <el-button type="primary" @click="startChange2">编辑</el-button>
+                            <el-button type="primary" @click="startChange3">编辑</el-button>
                             <div class="messageBtn">
-                                 
-                            </div>
-                            <!-- 完成按钮 -->
-                            <div class="operateFinalUp">
-                              <el-button type="primary">完成</el-button>
+                                  <div id="editor">
+                                      <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+                                  </div>
+                                  <div class="messageEditor">
+                                    <el-button type="primary" plain :disabled = "disabled3" @click="messageEmpty">清空</el-button>
+                                    <el-button type="primary" :disabled = "disabled3"  @click="messageSubmit">提交</el-button>
+                                  </div>
                             </div>
                             
+                            
                         </div>
+                    </div>
+
+                    <!-- 完成按钮 -->
+                    <div class="operateFinalUp">
+                      <el-button type="primary">下一步，编辑推荐信息</el-button>
                     </div>
                 </div>    
             </div>
@@ -172,20 +180,38 @@ export default {
             endTime: "新生宿舍讨论",
             
             status: "河南科技学院",
-          },
-          imgUrls: [],
-          isShow:true,
-          disabled:true,
-          disabled2:true,
-          fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+        },
+        // 富文本编辑器
+        editorContent:'',
+        imgUrls: [],
+        isShow:true,
+        disabled:true,
+        disabled2:true,
+        disabled3:true,
+        editor: new WangEditor('#editor'),
+        fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
       }
     },
     methods:{
+      startChange3: function () {
+        this.disabled3 = false;
+        this.editor.$textElem.attr('contenteditable', true);
+      },
       startChange: function () {
         this.disabled = false;
       },
       startChange2: function () {
         this.disabled2 = false;
+      },
+      // 提交修改数据
+      messageSubmit: function() {
+        console.log(this.editor.txt.html());
+        this.disabled3 = true;
+        this.editor.$textElem.attr('contenteditable', false);
+      },
+      // 清空富文本编辑器内容
+      messageEmpty: function() {
+        this.editor.txt.clear();
       },
       handleRemove:function(file, fileList) {
         console.log(file, fileList);
@@ -367,15 +393,37 @@ export default {
       },
     },
     mounted(){
-      
+        // let editor = new WangEditor('#editor');
+        this.editor.customConfig.onchange = (html) => {
+            this.editorContent = html;
+        }
+        this.editor.create();
+        this.editor.$textElem.attr('contenteditable', false);
     }
 };
 </script>
-
 <style>
+  /*
+  * 
+  */
+</style>
+<style scoped>
     .operateBox {
         width: 1500px;
         margin: 0 auto;
+    }
+
+    /*
+    * 富文本编辑器
+    */
+    #editor {
+      text-align: left;
+    }
+    .messageEditor {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+
     }
 
     /*
@@ -460,7 +508,7 @@ export default {
     }
     .operateFinalUp {
       text-align: center;
-      margin: 150px 0 20px;
+      margin: 95px 0 70px;
     }
     .messageBtn button{
       float: right;

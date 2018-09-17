@@ -18,10 +18,17 @@ export default {
 
       }
     },
-}
-</script>
+    methods: {
 
+    },
+    mounted: {
+
+    },
+};
+</script>
 <style>
+</style>
+<style scoped>
 
 
 
