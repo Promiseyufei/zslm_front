@@ -4,30 +4,29 @@
       <div class="operateTable">
         <template>
           <el-table :data="tableData3"  border style="width: 100%">
-            <!-- <el-table-column
+            <el-table-column
               v-for="(list,index) in listTable" 
               :prop="list.prop"
               :label="list.lable"
               :width="list.width" :key = "index" v-if="index == 1">
               <template slot-scope="scope" >
-                  <el-input v-model="tableData3[scope.$index].show_weight" @focus="focusCount(tableData3[scope.$index].show_weight)" v-on:blur="changeCount(tableData3[scope.$index].show_weight,scope.$index)"></el-input>
-              </tem
-              plate>
-            </el-table-column> -->
-            <!-- <el-table-column
+                  <el-input v-model="tableData3[scope.$index].show_weight" @focus="focusCount(tableData3[scope.$index].show_weight)" v-on:blur="changeCount(tableData3[scope.$index].show_weight, scope.$index)"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column
               :prop="list.prop"
               :label="list.lable"
               :width="list.width" v-else>
-            </el-table-column> -->
-            <!-- <el-table-column
+            </el-table-column>
+            <el-table-column
               label="操作"
               width="140">
               <template slot-scope="scope">
                 <el-button type="text" size="small">编辑</el-button>
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                <el-button type="text" size="small" @click="deleteSingle(scope.row.id)">删除</el-button>
+                <el-button type="text" size="small" @click="deleteSingle(scope.row.id, scope.row)">删除</el-button>
               </template>
-            </el-table-column> -->
+            </el-table-column>
           </el-table>
         </template>
       </div>
@@ -41,52 +40,60 @@ export default {
     data() {
       return {
           TableValue: 0,
+        
         }
     },
     props:["tableData3","listTable"],
     methods:{
         // 表单获得焦点触发事件
         focusCount: function(val) {
-          this.TableValue = val;
-          console.log(this.TableValue);
+            this.TableValue = val;
+            console.log(this.TableValue);
         },
         // 鼠标失去焦点时触发事件，val=>当前input里面的值，index=>当前行的下标
         changeCount: function(val,index) {
-          var re = /^[0-9]+.?[0-9]*$/;
-          if (!re.test(val)) {
-            this.message(true,'请输入数值','warning');
-            this.tableData3[index].show_weight = this.TableValue;
-            // console.log(this.show_weight[index]);
-          } else if (val<0||val>1000) {
-            this.message(true,'权值范围为0~100','warning');
-            this.tableData3[index].show_weight = this.TableValue;
-          } else {
-            this.$confirm('此操作将修改该图片的权值, 是否继续?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              this.$message({
-                type: 'success',
-                message: '修改成功!'
-              });
-            }).catch(() => {
-              this.tableData3[index].show_weight = this.TableValue;
-              this.$message({
-                type: 'info',
-                message: '已取消修改'
-              });          
-            });
-          }
+            var re = /^[0-9]+.?[0-9]*$/;
+            if (!re.test(val)) {
+                this.message(true,'请输入数值','warning');
+                this.tableData3[index].show_weight = this.TableValue;
+            } else if (val<0||val>1000) {
+                this.message(true,'权值范围为0~100','warning');
+                this.tableData3[index].show_weight = this.TableValue;
+            } else {
+                this.confirm(() => {
+                    this.post('/admin/operate/setBtWeight', {
+                        bannerAdId: this.tableData3[index].id,
+                        weight:this.tableData3[index].show_weight
+                    }).then((response) => {
+                        (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+                    })
+                }, () => {
+                    this.tableData3[index].show_weight = this.TableValue;
+                    this.message(true, '已取消修改', 'info')    
+                })
+            }
         },
         // 删除单个banner
-        deleteSingle: function(res) {
-          var arrayId = [];
-          arrayId.push(res);
-          this.deleteBanner(arrayId);
+        deleteSingle: function(res, row) {
+            this.confirm(() => {
+                this.post('/admin/operate/deleteBannerAd', {
+                    btId: res
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.tableData3.splice(this.tableData3.indexOf(row), 1);
+                        this.message(true, response.msg, 'success');
+                    }
+                    else {
+                        this.message(true, response.msg, 'error');
+                    }
+                })
+            }, () => {
+                this.message(true, '已取消修改', 'info')
+            })
+
         },
         handleClick: function (row) { 
-          console.log(this.listTable[1].prop);
+            console.log(this.listTable[1].prop);
         }
     },
     mounted(){

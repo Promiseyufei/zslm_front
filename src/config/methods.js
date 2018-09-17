@@ -10,22 +10,40 @@ export default {
             type: type
         });
     },
+    confirm: function(callBack, catchBack, msg, type, data, ) {
+        msg = typeof msg !== 'undefined' ? msg : '是否取消操作？';
+        type = typeof type !== 'undefined' ? type : '提示';
+        data = typeof data !== 'undefined' ? data : {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        };
+        typeof callBack !== 'function' 
+        ? this.$confirm(msg, type, data) 
+        : (typeof catchBack !== 'function' 
+            ? this.$confirm(msg, type, data).then(callBack) 
+            : this.$confirm(msg, type, data).then(callBack).catch(catchBack));
+        
+    },
     // 删除所给id序列的banner
     deleteBanner: function(arrayTableId) {
-      var self = this;
-      console.log(arrayTableId);
-      axios.post('/admin/operate/deleteBannerAd', {
-        btId: arrayTableId
-      })
-      .then(function (response) {
-        var date = response.data;
-        if (date.code == 0) {
-          
-        };
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        var self = this;
+        console.log(arrayTableId);
+        this.confirm(() => {
+            this.post('/admin/operate/deleteBannerAd', {
+                btId: arrayTableId
+            }).then((response) => {
+                if(response.code == 0) {
+                    this.tableData3.splice(this.tableData3.indexOf(row), 1);
+                    this.message(true, response.msg, 'success');
+                }
+                else {
+                    this.message(true, response.msg, 'error');
+                }
+            })
+        }, () => {
+            this.message(true, '已取消修改', 'info');
+        })
     },
     // 判断是否为链接
     validateImage: function(url) {    
