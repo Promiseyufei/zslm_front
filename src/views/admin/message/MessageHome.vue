@@ -40,7 +40,7 @@
                       <el-checkbox label="CAMEA" name="type"></el-checkbox>
                     </el-checkbox-group>
                   </el-form-item>
-                  <el-form-item label="院校认证">
+                  <el-form-item label="院校性质">
                     <el-checkbox-group v-model="ruleForm.type" :disabled = "disabled">
                       <el-checkbox label="原985" name="type"></el-checkbox>
                       <el-checkbox label="原211" name="type"></el-checkbox>
@@ -71,11 +71,8 @@
                   <el-form-item label="招生专题">
                     <el-input v-model="ruleForm.topic" :disabled = "disabled"></el-input>
                   </el-form-item>
-                  <el-form-item label="院校专业名称">
-                    <el-input v-model="ruleForm.schoolName" :disabled = "disabled"></el-input>
-                  </el-form-item>
                   <el-form-item label="所属院校名称">
-                    <el-input v-model="ruleForm.school" :disabled = "disabled"></el-input>
+                    <el-input v-model="ruleForm.schoolName" :disabled = "disabled"></el-input>
                   </el-form-item>
                   <el-form-item label="专业类型">
                     <el-select v-model="ruleForm.typeAll" placeholder="全部" :disabled = "disabled">
@@ -84,16 +81,6 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item label="官方微信">
-                    <!-- <el-upload
-                      class="upload-demo"
-                      action="https://jsonplaceholder.typicode.com/posts/"
-                      :on-preview="handlePreview"
-                      :on-remove="handleRemove"
-                      :file-list="fileList2"
-                      list-type="picture">
-                      <div class="submit-picture">添加</div>
-                      <div slot="tip" class="el-upload__tip"></div>
-                    </el-upload> -->
                     <div style="padding: 0 5px 5px 8px">
                       <div class="add" @click.stop="addPic" cuort>
                           <input type="file" id="upload" accept="image" @change="upload" style="display: none">
@@ -102,7 +89,7 @@
                       <li class="show" v-for="(iu, index) in imgUrls">
                           <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
                       </li>
-                  </div>
+                    </div>
                   </el-form-item>
                   
                   <el-form-item>
@@ -139,7 +126,7 @@
                 </div>
                 <!-- 完成按钮 -->
                 <div class="operateFinalUp">
-                  <el-button type="primary">完成</el-button>
+                  <el-button type="primary">下一步，编辑招生信息</el-button>
                 </div>
                 
               </div>
