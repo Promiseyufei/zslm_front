@@ -81,6 +81,11 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/Activity'], resolve))
         },
         {
+            path: '/message/advise',
+            name: '编辑-推荐信息',
+            component: resolve =>void(require(['@/views/admin/message/Advise'], resolve))
+        },
+        {
             path: '/test',
             name: 'WangEditor test',
             component: resolve =>void(require(['@/views/admin/test'], resolve))

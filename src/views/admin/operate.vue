@@ -9,7 +9,7 @@
             <el-breadcrumb-item>频道banner</el-breadcrumb-item>
           </el-breadcrumb>
           <!-- 选项卡 -->
-          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
+          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i" @click.native="changeNav"></operateNav>
           
           <div class="operateUpfiles operateHeader">
             <p>当前操作页面：<span>{{this.radio}}</span></p>
@@ -164,13 +164,12 @@ export default {
         tableData3: []
         }
     },
-    watch: {
-      i: function(val,oldval) {
-        this.getIndexBanner();
-        this.radio = this.banner[val].name;
-      },
-    },
     methods:{
+        // 导航改变时
+        changeNav: function() {
+          this.getIndexBanner();
+          this.radio = this.banner[this.i].name;
+        },
         // 清空所有banner
         operateDelete: function() {
           var table = this.tableData3;
@@ -238,7 +237,6 @@ export default {
         // 动态更新资讯类型id
         toshow: function (i) {
           this.i = i;
-          console.log(this.i);
         },
         handleClick: function (row) { 
           console.log(row);
@@ -309,7 +307,7 @@ export default {
       this.getInformationType();
       this.getIndexBanner();
     }
-}
+};
 </script>
 <style>
   /*
