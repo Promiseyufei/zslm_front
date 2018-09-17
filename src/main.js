@@ -57,11 +57,11 @@ Object.keys(methods).forEach((key)=>{
 })
 
 
-// //二次封装axios
-// import httpServer from './config/providers/http-service'
-// Object.keys(httpServer).forEach((key) => {
-//   Vue.prototype[key] = httpServer[key];
-// })
+//二次封装axios
+import httpServer from './config/providers/http-service.js'
+Object.keys(httpServer).forEach((key) => {
+  Vue.prototype[key] = httpServer[key];
+})
 
 
 

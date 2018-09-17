@@ -25,6 +25,13 @@ export default {
             editorContent:''
         }
     },
+    created() {
+        console.log('aaaa');
+        this.fetch('/admin/news/test', {}).then((response) => {
+            console.log(response);
+        })
+
+    },
     mounted() {
         let editor = new WangEditor('#editor');
         editor.customConfig.onchange = (html) => {
