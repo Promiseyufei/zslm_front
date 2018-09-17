@@ -4,21 +4,22 @@
       <div class="operateTable">
         <template>
           <el-table :data="tableData3"  border style="width: 100%">
-            <el-table-column
+            <!-- <el-table-column
               v-for="(list,index) in listTable" 
               :prop="list.prop"
               :label="list.lable"
               :width="list.width" :key = "index" v-if="index == 1">
               <template slot-scope="scope" >
                   <el-input v-model="tableData3[scope.$index].show_weight" @focus="focusCount(tableData3[scope.$index].show_weight)" v-on:blur="changeCount(tableData3[scope.$index].show_weight,scope.$index)"></el-input>
-              </template>
-            </el-table-column>
-            <el-table-column
+              </tem
+              plate>
+            </el-table-column> -->
+            <!-- <el-table-column
               :prop="list.prop"
               :label="list.lable"
               :width="list.width" v-else>
-            </el-table-column>
-            <el-table-column
+            </el-table-column> -->
+            <!-- <el-table-column
               label="操作"
               width="140">
               <template slot-scope="scope">
@@ -26,7 +27,7 @@
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                 <el-button type="text" size="small" @click="deleteSingle(scope.row.id)">删除</el-button>
               </template>
-            </el-table-column>
+            </el-table-column> -->
           </el-table>
         </template>
       </div>

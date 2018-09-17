@@ -11,7 +11,7 @@
 
 			    <!-- 步骤条 -->
 		        <div class="fileSteps">
-	            	<el-steps :active=".1" align-center>
+	            	<el-steps :active="2" align-center>
 	              		<el-step title="院校专业信息"></el-step>
 	              		<el-step title="招生项目信息"></el-step>
 	            	</el-steps>
@@ -20,28 +20,32 @@
 	          	<div>
 	          		<div class="operateUpfiles operateUp">
 	          			<div class="operateUpfilesLeft">
-			                <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
+			                <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;招生项目信息</div>
 			            </div>
 			            <div class="operateUpfilesRight">
 		          			<el-form ref="universityForm" :model="universityForm" label-width="110px" class="demo-ruleForm">
-		          				<el-form-item>
-			                    	<el-button type="primary" @click="startChange">开始编辑</el-button>
-			                    </el-form-item>
-			                    <div class="college">
-			          				<div>
-			          					院校专业名称
-			          				</div>
-			          				<div>
-			          					{{ collegeInformation }}
-			          				</div>
-			          			</div>
-			          			<el-form-item label="院校专业名称" :rules="{required: true}">
+		          				<div class="collegeBox">
+		          					<div class="college">
+				          				<div>
+				          					院校专业名称
+				          				</div>
+				          				<div>
+				          					{{ collegeInformation }}
+				          				</div>
+				          			</div>
+		          					<el-form-item>
+				                    	<el-button type="primary" @click="startChange">开始编辑</el-button>
+				                    </el-form-item>
+		          				</div>
+		          				
+			                    
+			          			<el-form-item label="院校专业名称" :rules="required">
 				                    <el-input v-model="universityForm.project" :disabled = "disabled"></el-input>
 				                </el-form-item>
 				                <el-form-item label="项目费用">
 				                    <el-input v-model="universityForm.free" :disabled = "disabled"></el-input>
 				                </el-form-item>
-				                <el-form-item label="费用筛选区间" prop="project" :rules="{required: true}">
+				                <el-form-item label="费用筛选区间" prop="project" :rules="required">
 				                    <el-col :span="6">
 								      <el-form-item>
 								        <el-input v-model="universityForm.choice.low" style="width: 100%;" :disabled = "disabled"></el-input>
@@ -77,14 +81,14 @@
 				                <el-form-item label="分数线描述">
 				                    <el-input v-model="universityForm.fraction" :disabled = "disabled"></el-input>
 				                </el-form-item>
-				                <el-form-item label="分数线类型" :rules="{required: true}">
+				                <el-form-item label="分数线类型" :rules="required">
 				                    <el-radio-group v-model="universityForm.fractionKind">
 								      <el-radio label="A线"></el-radio>
 								      <el-radio label="B线"></el-radio>
 								      <el-radio label="自主划线"></el-radio>
 								    </el-radio-group>
 				                </el-form-item>
-				                <el-form-item label="统招模式" :rules="{required: true}">
+				                <el-form-item label="统招模式" :rules="required">
 				                    <el-radio-group v-model="universityForm.fractionDay">
 								      <el-radio label="全日制"></el-radio>
 								      <el-radio label="非全日制"></el-radio>
@@ -169,53 +173,54 @@
 </template>
 
 <script>
-export default{
-	components: {
-    },
-    data(){
-    	return{
-			universityForm: {
-				project:"xxx",
-				free:2.000,
-				choice:{
-					low:0,
-					height:10
+	export default{
+		components: {
+	    },
+	    data(){
+	    	return{
+				universityForm: {
+					project:"xxx",
+					free:2.000,
+					choice:{
+						low:0,
+						height:10
+					},
+					number:20,
+					language:"chinese",
+					classStudent:"xxx",
+					term:"xxx",
+					item:"xxx",
+					fraction:1233,
+					fractionKind:1,
+					fractionDay:1,
+					recruitStudents:"xxx",
+					graduation:"xxx",
+					required: true
 				},
-				number:20,
-				language:"chinese",
-				classStudent:"xxx",
-				term:"xxx",
-				item:"xxx",
-				fraction:1233,
-				fractionKind:1,
-				fractionDay:1,
-				recruitStudents:"xxx",
-				graduation:"xxx",
-			},
-			collegeInformation:"XX大学XX学院MBA专业",
-			disabled:true,
-			tableData: [
-				{
-					major:"XX大学XX学院MBA专业",
-					progectStudent:"招生项目1"
-				},
-			]
-    	}
-    },
-    methods:{
-    	startChange: function() {
-    		this.disabled = false;
-    	},
-    	getRowClass: function({ row, column, rowIndex, columnIndex }){
-    		console.log(rowIndex);
-    		if (rowIndex == 0) {
-				return 'background:#EFEFEF;text-align:center'
-			} else {
-				return ''
-			}
-    	}
-    }
-}
+				collegeInformation:"XX大学XX学院MBA专业",
+				disabled:true,
+				tableData: [
+					{
+						major:"XX大学XX学院MBA专业",
+						progectStudent:"招生项目1"
+					},
+				]
+	    	}
+	    },
+	    methods:{
+	    	startChange: function() {
+	    		this.disabled = false;
+	    	},
+	    	getRowClass: function({ row, column, rowIndex, columnIndex }){
+	    		console.log(rowIndex);
+	    		if (rowIndex == 0) {
+					return 'background:#EFEFEF;text-align:center'
+				} else {
+					return ''
+				}
+	    	}
+	    }
+	};
 </script>
 
 <style scoped>
@@ -291,11 +296,17 @@ export default{
 }
 
 
+.collegeBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 .college{
 	height: 40px;
+	margin-left: 15px;
 }
 .college > div{
-	margin-right: 25px;
+	margin-right: 10px;
 	float: left;
 	font-size: 14px;
     line-height: 1;
