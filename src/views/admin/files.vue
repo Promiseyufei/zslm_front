@@ -66,7 +66,7 @@
                 <el-button type="text" size="small">删除</el-button>
               </template>
             </el-table-column>
-          <div v-for="val in tableTop">
+          <div v-for="(val, index) in tableTop" :key="index">
             <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
             </el-table-column>
           </div>
