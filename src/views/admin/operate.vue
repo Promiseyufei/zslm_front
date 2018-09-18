@@ -164,15 +164,6 @@ export default {
         tableData3: []
         }
     },
-<<<<<<< HEAD
-    watch: {
-      // i: function(val,oldval) {
-      //   this.getIndexBanner();
-      //   this.radio = this.banner[val - 1].name;
-      // },
-    },
-=======
->>>>>>> f76e1e5c140cac471dc67840adcfa02cda6f6cf5
     methods:{
         // 导航改变时
         changeNav: function() {
