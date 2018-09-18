@@ -27,7 +27,7 @@ export default {
             this.$emit('showbox',i);
         }
     }
-}
+};
 </script>
 
 
