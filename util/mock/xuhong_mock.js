@@ -160,3 +160,12 @@ Mock.mock('/admin/operate/setAppointRegionName',{
 Mock.mock('/putPictrue',{
 	
 })
+
+/*message
+* 信息发布模块——信息推荐
+* 上传院校logo
+*/
+Mock.mock('/admin/message/setUploadPhoto',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)')
+})

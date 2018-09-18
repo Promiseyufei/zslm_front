@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-axios.defaults.timeout = 8080;
+axios.defaults.timeout = 5000;
 
-axios.defaults.baseURL = 'http://localhost/#/';
+axios.defaults.baseURL = 'http://localhost:81/zslm_back/public';
 
 axios.interceptors.request.use(
     config => {
-        config.data = JSON.stringify(config.data);
+        // config.data = JSON.stringify(config.data);
         config.headers = {
-            'Content-Type':'application/x-www-form-urlencoded'
+            'Content-Type':'application/json',
         }
         return config;
     },
@@ -59,10 +59,10 @@ axios.interceptors.response.use(response => {
     return Promise.resolve(err.response);
 })
 
-this.fetch('/test',{
-    'id':2,
-    'test':'aaaa'
-})
+// this.fetch('/test',{
+//     'id':2,
+//     'test':'aaaa'
+// })
 export default {
     //get
     fetch: function(url, params = {}) {

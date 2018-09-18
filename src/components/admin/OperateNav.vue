@@ -3,7 +3,7 @@
       <!-- 选项卡 -->
       <div class="operateNav">
         <el-radio-group v-model="radio">
-          <el-radio-button :label="list.name" v-for="(list,i) in Banner" :key = "i" @click.native="open(list.id)"></el-radio-button>
+          <el-radio-button :label="list.name" v-for="(list, index) in Banner" :key = "index" @click.native="open(list.id)"></el-radio-button>
         </el-radio-group>
       </div>
     </div>
@@ -13,7 +13,8 @@
 export default {
     data() {
       return {
-            radio:""
+            radio:"",
+            catchI: 0
         }
     },
     props:["Banner","radio2"],
@@ -24,10 +25,12 @@ export default {
     },
     methods:{
         open(i) {
+            if(this.catchI == i) return;
+            this.catchI = i;
             this.$emit('showbox',i);
         }
     }
-}
+};
 </script>
 
 

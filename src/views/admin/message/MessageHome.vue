@@ -4,89 +4,96 @@
         <!-- 中间内容 -->
         <div>
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item>运行管理</el-breadcrumb-item>
-            <el-breadcrumb-item>广告位管理</el-breadcrumb-item>
+            <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+            <el-breadcrumb-item>院校专业</el-breadcrumb-item>
+            <el-breadcrumb-item>院校专业信息编辑</el-breadcrumb-item>
           </el-breadcrumb>
 
           <!-- 步骤条 -->
           <div class="fileSteps">
-            <el-steps :active="2" align-center>
-              <el-step title="选择院校专业"></el-step>
-              <el-step title="上传文件"></el-step>
+            <el-steps :active=".1" align-center>
+              <el-step title="院校专业信息"></el-step>
+              <el-step title="招生项目信息"></el-step>
             </el-steps>
           </div>
           
           <div>
             <!-- 上传banner -->
             <div class="operateUpfiles operateUp">
-              
               <div class="operateUpfilesLeft">
-                <div><i class="fa fa-cloud-upload fa-fw FA-3X"></i>&nbsp;上传广告图</div>
+                <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
               </div>
               <div class="operateUpfilesRight">
+                
                 <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
+                  <el-form-item>
+                    <el-button type="primary" @click="startChange">开始编辑</el-button>
+                  </el-form-item>
                   <el-form-item label="院校专业名称">
-                    <el-input v-model="ruleForm.name"></el-input>
+                    <el-input v-model="ruleForm.name" :disabled = "disabled"></el-input>
                   </el-form-item>
                   <el-form-item label="专业认证">
-                    <el-checkbox-group v-model="ruleForm.authentication">
+                    <el-checkbox-group v-model="ruleForm.authentication" :disabled = "disabled">
                       <el-checkbox label="AMBA" name="type"></el-checkbox>
                       <el-checkbox label="EQUIS" name="type"></el-checkbox>
                       <el-checkbox label="AACSB" name="type"></el-checkbox>
                       <el-checkbox label="CAMEA" name="type"></el-checkbox>
                     </el-checkbox-group>
                   </el-form-item>
-                  <el-form-item label="院校认证">
-                    <el-checkbox-group v-model="ruleForm.type">
+                  <el-form-item label="院校性质">
+                    <el-checkbox-group v-model="ruleForm.type" :disabled = "disabled">
                       <el-checkbox label="原985" name="type"></el-checkbox>
                       <el-checkbox label="原211" name="type"></el-checkbox>
                       <el-checkbox label="双一流" name="type"></el-checkbox>
                     </el-checkbox-group>
                   </el-form-item>
                   <el-form-item label="审批年限">
-                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                    <el-select v-model="ruleForm.year" placeholder="请选择活动区域" :disabled = "disabled">
+                      <el-option label="2" value="2"></el-option>
+                      <el-option label="3" value="3"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="所在省市">
-                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域" :disabled = "disabled">
+                      <el-option label="河南" value="shanghai"></el-option>
+                      <el-option label="北京" value="beijing"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="院校地址">
-                    <el-input v-model="ruleForm.name"></el-input>
+                    <el-input v-model="ruleForm.address" :disabled = "disabled"></el-input>
                   </el-form-item>
                   <el-form-item label="资讯电话">
-                    <el-input v-model="ruleForm.name"></el-input>
+                    <el-input v-model="ruleForm.tell" :disabled = "disabled"></el-input>
                   </el-form-item>
                   <el-form-item label="院校官网">
-                    <el-input v-model="ruleForm.name"></el-input>
+                    <el-input v-model="ruleForm.web" :disabled = "disabled"></el-input>
                   </el-form-item>
                   <el-form-item label="招生专题">
-                    <el-input v-model="ruleForm.name"></el-input>
-                  </el-form-item>
-                  <el-form-item label="院校专业名称">
-                    <el-input v-model="ruleForm.name"></el-input>
+                    <el-input v-model="ruleForm.topic" :disabled = "disabled"></el-input>
                   </el-form-item>
                   <el-form-item label="所属院校名称">
-                    <el-input v-model="ruleForm.name"></el-input>
+                    <el-input v-model="ruleForm.schoolName" :disabled = "disabled"></el-input>
                   </el-form-item>
                   <el-form-item label="专业类型">
-                    <el-select v-model="ruleForm.region" placeholder="全部">
+                    <el-select v-model="ruleForm.typeAll" placeholder="全部" :disabled = "disabled">
                       <el-option label="区域一" value="shanghai"></el-option>
                       <el-option label="区域二" value="beijing"></el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="所属院校名称">
-                    <el-input v-model="ruleForm.name"></el-input>
+                  <el-form-item label="官方微信">
+                    <div style="padding: 0 5px 5px 8px">
+                      <div class="add" @click.stop="addPic" cuort>
+                          <input type="file" id="upload" accept="image" @change="upload" style="display: none">
+                          <span style="color:#B2B2B2;" >添加图片</span>
+                      </div>
+                      <li class="show" v-for="(iu, index) in imgUrls">
+                          <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
+                      </li>
+                    </div>
                   </el-form-item>
-
-
-
+                  
                   <el-form-item>
-                    <el-button type="primary" @click="">提交</el-button>
+                    <el-button type="primary" @click="" :disabled = "disabled">提交</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -94,34 +101,38 @@
             <!-- 当前banner -->
             <div class="operateUpfiles operateDown">
               <div class="operateUpfilesLeft">
-                <div><i class="fa fa-list-alt fa-fw FA-3X"></i>&nbsp;当前广告图</div>
+                <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;页面优化信息</div>
               </div>
-              <div class="operateUpfilesRight2"> 
-                <el-form ref="form" label-width="100px">
-                  <el-form-item label="Title">
-                    <el-input v-model="ruleForm.name"></el-input>
-                  </el-form-item>
-                  <el-form-item label="Keywords">
-                    <el-input v-model="ruleForm.name"></el-input>
-                  </el-form-item>
-                  <el-form-item label="Description">
-                    <el-input v-model="ruleForm.name"></el-input>
-                  </el-form-item>
+              <div class="operateUpfilesRight2">
+                <div class="messageBtn">
+                  <el-form ref="form" label-width="100px">
+                    <el-form-item>
+                      <el-button type="primary" @click="startChange2">开始编辑</el-button>
+                    </el-form-item>
+                    <el-form-item label="Title">
+                      <el-input v-model="ruleForm.name" :disabled = "disabled2"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Keywords">
+                      <el-input v-model="ruleForm.name" :disabled = "disabled2"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Description">
+                      <el-input v-model="ruleForm.name" :disabled = "disabled2"></el-input>
+                    </el-form-item>
 
-                  <el-form-item>
-                    <el-button type="primary" @click="">提交</el-button>
-                  </el-form-item>
-
-                  <!-- 完成按钮 -->
-                  <div class="operateFinalUp">
-                    <el-button type="primary">完成</el-button>
-                  </div>
-                </el-form>
-              </div> 
+                    <el-form-item>
+                      <el-button type="primary" @click="" :disabled = "disabled2">提交</el-button>
+                    </el-form-item>
+                  </el-form>  
+                </div>
+                <!-- 完成按钮 -->
+                <div class="operateFinalUp">
+                  <el-button type="primary">下一步，编辑招生信息</el-button>
+                </div>
+                
+              </div>
+              
             </div>
           </div>
-          
-
         </div>
         
         </div>
@@ -132,115 +143,225 @@
 <script>
 export default {
     components: {
+
     },
     data() {
       return {
-        ruleForm: {
-
-        },
-        ruleForm: {
-          name: '',
-          message: '',
-          url: '',
-          resource: '',
-          delivery: ''
-        },
-        i: 0,
-        TableValue: 0,
-        listTable: [
-          {
-            prop: 'img',
-            lable: '图片名称',
-            width: "210px"
+          ruleForm: {
+            name: "河南科技学院",
+            authentication: 0,
+            type: 1,
+            year: 2,
+            address: "河南省新乡市河南科技学院",
+            tell: "18303612352",
+            web:"http://qinghua.cn",
+            topic: "新生宿舍讨论",
+            schoolName: "大数据",
+            school: "河南科技学院",
+            typeAll: "2"
           },
-          {
-            prop: "show_weight",
-            lable: "展示权重",
-            width: "80px"
-          },
-          {
-            prop: "re_alt",
-            lable: "图片描述",
-            width: "210px"
-          },
-          {
-            prop: "re_url",
-            lable: "图片地址",
-            width: "319px"
-          },
-          {
-            prop: "create_time",
-            lable: "上传时间",
-            width: "210px"
-          }
-        ],
-        // 表格默认数据
-        tableData3: []
+          imgUrls: [],
+          isShow:true,
+          disabled:true,
+          disabled2:true,
+          fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
         }
     },
     watch: {
-      i: function(val,oldval) {
-        this.getIndexBanner();
-      },
+      ruleForm: function(val,oldval) {
+        console.log(123);
+      }
     },
     methods:{
-        // 清空所有banner
-        operateDelete: function() {
-          var table = this.tableData3;
-          var arrayTableId = [];
-          for (var i = 0; i < table.length; i++) {
-            arrayTableId.push(table[i].id);
-          };
-          this.deleteBanner(arrayTableId);
-        },
-        // 动态更新资讯类型id
-        toshow: function (i) {
-          this.i = i;
-          console.log(this.i);
-        },
-        handleClick: function (row) { 
-          console.log(row);
-        },
-        //  获得所有页面的名称
-        getInformationType: function() {
-          var self = this;
-          axios.post('/admin/operate/getAllPageListName', {
-          })
-          .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              self.banner = date.data;
-              self.i = date.data[0].id;
-            };
-          })
-          .catch(function (error) {
-            console.log(error);
+      startChange: function () {
+        this.disabled = false;
+      },
+      startChange2: function () {
+        this.disabled2 = false;
+      },
+      handleRemove:function(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview:function(file) {
+        console.log(file);
+      },
+      addPic: function(e) {
+          $('input[type=file]').trigger('click');
+          return false;
+      },
+      delImage: function(index) {
+          let vm = this;
+          vm.$vux.confirm.show({
+              content: '取消选择？',
+              onConfirm () {
+                  vm.imgUrls.splice(index, 1);
+                  vm.count--;
+                  vm.count<3?vm.isShow = true:vm.isShow;
+                  vm.$vux.toast.text('图片删除成功', 'top');
+              }
           });
-        },
-        // 获得页面的banner信息
-        getIndexBanner: function() {
-          var self = this;
-          axios.post('/admin/operate/getIndexBanner', {
-            indexId: self.i,
-            btType: 1
-          })
-          .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              var res = date.data;
-              self.tableData3 = res;
-            };
-          })
-          .catch(function (error) {
-            console.log(error);
+      },
+      upload (e) {
+          let files = e.target.files || e.dataTransfer.files;
+          if (!files.length||this.count>2) {
+              return;
+          }
+          this.imgPreview(files[0],e);
+          this.count++;
+          this.count>=3?this.isShow = false:this.isShow;
+          this.message(true,'图片添加成功','');
+      },
+      imgPreview (file,e) {
+          let self = this;
+          let Orientation;
+          //去获取拍照时的信息，解决拍出来的照片旋转问题
+          Exif.getData(file, function(){
+
+              Orientation = Exif.getTag(this, 'Orientation');
           });
-        }
+          // 看支持不支持FileReader
+          if (!file || !window.FileReader) return;
+
+          if (/^image/.test(file.type)) {
+              // 创建一个reader
+              let reader = new FileReader();
+              // 将图片2将转成 base64 格式
+              reader.readAsDataURL(file);
+              // 读取成功后的回调
+              reader.onloadend = function () {
+                  let result = this.result;
+                  let img = new Image();
+                  img.src = result;
+                  //判断图片是否大于100K,是就直接上传，反之压缩图片
+                  if (this.result.length <= (100 * 1024)) {
+                      self.imgUrls.push(this.result);
+                  }else {
+                      img.onload = function () {
+                          let data = self.compress(img,Orientation);
+                          self.imgUrls.push(data);
+                      }
+                  }
+                  e.target.value = null;
+              }
+          }
+
+      },
+      rotateImg (img, direction,canvas) {
+          //最小与最大旋转方向，图片旋转4次后回到原方向
+          const min_step = 0;
+          const max_step = 3;
+          if (img == null)return;
+          //img的高度和宽度不能在img元素隐藏后获取，否则会出错
+          let height = img.height;
+          let width = img.width;
+          let step = 2;
+          if (step == null) {
+              step = min_step;
+          }
+          if (direction == 'right') {
+              step++;
+              //旋转到原位置，即超过最大值
+              step > max_step && (step = min_step);
+          } else {
+              step--;
+              step < min_step && (step = max_step);
+          }
+          //旋转角度以弧度值为参数
+          let degree = step * 90 * Math.PI / 180;
+          let ctx = canvas.getContext('2d');
+          switch (step) {
+              case 0:
+                  canvas.width = width;
+                  canvas.height = height;
+                  ctx.drawImage(img, 0, 0);
+                  break;
+              case 1:
+                  canvas.width = height;
+                  canvas.height = width;
+                  ctx.rotate(degree);
+                  ctx.drawImage(img, 0, -height);
+                  break;
+              case 2:
+                  canvas.width = width;
+                  canvas.height = height;
+                  ctx.rotate(degree);
+                  ctx.drawImage(img, -width, -height);
+                  break;
+              case 3:
+                  canvas.width = height;
+                  canvas.height = width;
+                  ctx.rotate(degree);
+                  ctx.drawImage(img, -width, 0);
+                  break;
+          }
+      },
+      compress(img,Orientation) {
+          let canvas = document.createElement("canvas");
+          let ctx = canvas.getContext('2d');
+          //瓦片canvas
+          let tCanvas = document.createElement("canvas");
+          let tctx = tCanvas.getContext("2d");
+          let initSize = img.src.length;
+          let width = img.width;
+          let height = img.height;
+          //如果图片大于四百万像素，计算压缩比并将大小压至400万以下
+          let ratio;
+          if ((ratio = width * height / 4000000) > 1) {
+              console.log("大于400万像素")
+              ratio = Math.sqrt(ratio);
+              width /= ratio;
+              height /= ratio;
+          } else {
+              ratio = 1;
+          }
+          canvas.width = width;
+          canvas.height = height;
+          //        铺底色
+          ctx.fillStyle = "#fff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          //如果图片像素大于100万则使用瓦片绘制
+          let count;
+          if ((count = width * height / 1000000) > 1) {
+              count = ~~(Math.sqrt(count) + 1); //计算要分成多少块瓦片
+              //            计算每块瓦片的宽和高
+              let nw = ~~(width / count);
+              let nh = ~~(height / count);
+              tCanvas.width = nw;
+              tCanvas.height = nh;
+              for (let i = 0; i < count; i++) {
+                  for (let j = 0; j < count; j++) {
+                      tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh);
+                      ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh);
+                  }
+              }
+          } else {
+              ctx.drawImage(img, 0, 0, width, height);
+          }
+          //修复ios上传图片的时候 被旋转的问题
+          if(Orientation != "" && Orientation != 1){
+              switch(Orientation){
+                  case 6://需要顺时针（向左）90度旋转
+                      this.rotateImg(img,'left',canvas);
+                      break;
+                  case 8://需要逆时针（向右）90度旋转
+                      this.rotateImg(img,'right',canvas);
+                      break;
+                  case 3://需要180度旋转
+                      this.rotateImg(img,'right',canvas);//转两次
+                      this.rotateImg(img,'right',canvas);
+                      break;
+              }
+          }
+          //进行最小压缩
+          let ndata = canvas.toDataURL('image/jpeg', 0.1);
+          tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
+          return ndata;
+      },
     },
     mounted(){
-      this.getInformationType();
-      this.getIndexBanner();
+      
     }
-}
+};
 </script>
 <style>
   /*
@@ -267,28 +388,15 @@ export default {
 }
 
 /*
-* 右边上传banner内容样式
+* 
 */
-.operateUpfilesRight .upload-demo {
-  width: 250px;
-}
-.operateUpfilesRight .el-upload__tip {
-  display: none;
-}
 .operateUpfiles {
   border: 1px solid #e4e4e4;
   background-color: #fff;
   display: flex;
   flex-direction: row;
 }
-.operateHeader {
-  border-bottom: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #e4e4e4;
-  color: #666;
-}
+
 .operateHeader .el-button {
   width: 80px;
   height: 30px;
@@ -297,10 +405,6 @@ export default {
   align-items: center;
   padding: 0;
   margin: 10px;
-}
-.operateHeader>p {
-  margin-left: 20px;
-  font-weight: bold;
 }
 .operateUp {
   border-bottom: none;
@@ -346,20 +450,63 @@ export default {
   padding: 40px 90px 40px 80px;
   width: 1170px;
 }
-.operateUpfilesRight2Nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  color: #666;
-  font-size: 14px;
-}
-.operateTable {
-  margin-top: 25px;
-}
 .operateFinalUp {
   text-align: center;
   margin: 150px 0 20px;
+}
+.messageBtn button{
+  float: right;
+}
+
+.submit-picture{
+  color: #13ce66;
+  margin: 0 10px;
+}
+.el-upload{
+  float: left;
+}
+
+.el-upload-list--picture .el-upload-list__item{
+  border: 0px solid #c0ccda;
+  padding: 0px; 
+  margin-right: 10px;
+  width: 95px;
+  height: 95px;
+}
+.el-upload-list--picture .el-upload-list__item-thumbnail{
+  margin-left: 0px !important; 
+}
+
+.el-upload__tip{
+  display: none;
+}
+
+.el-upload-list--picture{
+  float: left;
+}
+
+.show, .add{
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+}
+.show{
+    margin: 0 10px 0;
+}
+.add{
+    /*background-image:url('../../../img/wx/add.png');*/
+    background-repeat: no-repeat;
+    background-size:100%;
+}
+.picture {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 </style>
 
