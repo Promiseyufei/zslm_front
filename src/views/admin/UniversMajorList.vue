@@ -1,9 +1,10 @@
 <template>
     <div class="majorlist">
         <div class="majorlist-top">
-            <p>运营管理</p>
-            <p class="span">/</p>
-            <p>分享管理</p>
+            <el-breadcrumb separator="/">
+              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+            </el-breadcrumb>
         </div>
         <div class="majorlist-button">
             <el-button type="primary">新建</el-button>

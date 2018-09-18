@@ -87,7 +87,12 @@ export default [
                         "name":"选项二",
                         "index":2,
                         "url":"/universMajorList"
-                    }
+                    },
+                    // {
+                    //     "name":"选项二",
+                    //     "index":2,
+                    //     "url":"/hostuniversmajor"
+                    // }
                 ]
             },
             {

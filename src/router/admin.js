@@ -86,6 +86,11 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/Advise'], resolve))
         },
         {
+            path: '/message/hostuniversmajor',
+            name: '活动-设置主办院校专业',
+            component: resolve =>void(require(['@/views/admin/message/hostuniversmajor'], resolve))
+        },
+        {
             path: '/test',
             name: 'WangEditor test',
             component: resolve =>void(require(['@/views/admin/test'], resolve))

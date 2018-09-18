@@ -1,6 +1,4 @@
-<template>
-
-    
+<template>   
     <div>
         <test></test>
         <el-row>

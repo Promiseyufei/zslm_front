@@ -1,9 +1,10 @@
 <template>
 	<div class="dataAll">
 		<div class="dataAll-top">
-			<p>运营管理</p>
-			<p class="span">/</p>
-			<p>分享管理</p>
+			<el-breadcrumb separator="/">
+			  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+			</el-breadcrumb>
 		</div>
 		<div class="dataquery">
 			<i class=""></i>
@@ -41,8 +42,6 @@
 		</div>
 		<div class="datatable">
 			<el-table ref="singleTable" :data="Datatable" border @current-change="handleCurrentChange" style="width: 100%">
-				<!-- <el-table-column label="编号" prop="id" width="100"></el-table-column> -->
-				<!-- <el-table-column type="index" width="50"></el-table-column> -->
 				<div v-for="val in tableTop">
 					<el-table-column :type="val.type" :property="val.property" :label="val.label" :width="val.width"></el-table-column>
 				</div>

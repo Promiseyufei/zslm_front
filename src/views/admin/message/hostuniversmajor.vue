@@ -1,4 +1,4 @@
- <template>
+<template>
 	<div class="Select">
 		<div class="Select-top">
 			<el-breadcrumb separator="/">
@@ -65,7 +65,6 @@
 		<div class="footer">
 			<span class="Selected">当前已选择：<span class="majorname">{{majorname}}</span></span>
 		</div>
-		
 	</div>
 </template>
 <script>
@@ -299,7 +298,7 @@
 		width: 200px;
 		height: 50px;
 		display: flex;
-		background: url(../../assets/img/point.png) no-repeat;
+		background: url(../../../assets/img/point.png) no-repeat;
 		background-size: 100% 100%;
 	}
 	.condition-button {
