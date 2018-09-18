@@ -137,7 +137,7 @@ export default {
           {
             prop: 'img',
             lable: '图片名称',
-            width: "210px"
+            width: "250px"
           },
           {
             prop: "show_weight",
@@ -152,7 +152,7 @@ export default {
           {
             prop: "re_url",
             lable: "图片地址",
-            width: "319px"
+            width: "279px"
           },
           {
             prop: "create_time",
@@ -164,6 +164,15 @@ export default {
         tableData3: []
         }
     },
+<<<<<<< HEAD
+    watch: {
+      // i: function(val,oldval) {
+      //   this.getIndexBanner();
+      //   this.radio = this.banner[val - 1].name;
+      // },
+    },
+=======
+>>>>>>> f76e1e5c140cac471dc67840adcfa02cda6f6cf5
     methods:{
         // 导航改变时
         changeNav: function() {
@@ -177,7 +186,22 @@ export default {
           for (var i = 0; i < table.length; i++) {
             arrayTableId.push(table[i].id);
           };
-          this.deleteBanner(arrayTableId);
+
+          this.confirm(() => {
+              this.post('/admin/operate/deleteBannerAd', {
+                  btId: arrayTableId
+              }).then((response) => {
+                  if(response.code == 0) {
+                      this.tableData3 = [];
+                      this.message(true, response.msg, 'success');
+                  }
+                  else {
+                      this.message(true, response.msg, 'error');
+                  }
+              })
+          }, () => {
+              this.message(true, '已取消修改', 'info');
+          })
         },
         // 点击上传图片按钮
         submitForm: function (formName) {
@@ -198,7 +222,7 @@ export default {
                       'Content-Type': 'multipart/form-data'
                   }
               }
-              axios.post('/admin/operate/createBannerAd', {
+              this.post('/admin/operate/createBannerAd', {
                 imgName: self.ruleForm.name,
                 imgAlt: self.ruleForm.message,
                 reUrl: self.ruleForm.url,
@@ -237,9 +261,11 @@ export default {
         // 动态更新资讯类型id
         toshow: function (i) {
           this.i = i;
+          console.log(this.i);
+          this.getIndexBanner();
         },
         handleClick: function (row) { 
-          console.log(row);
+          // console.log(row);
         },
         // 图片移除时触发该事件
         handleRemove: function (file, fileList) {
@@ -267,17 +293,18 @@ export default {
         beforeRemove: function (file, fileList) {
           return this.$confirm(`确定移除 ${ file.name }？`);
         },
-        // 获取所有资讯类型
+        // 获取所有一级页面名称
         getInformationType: function() {
           var self = this;
-          axios.post('/admin/operate/getInformationType', {
+          this.post('/admin/operate/getIndexListName', {
+
           })
           .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              self.banner = date.data;
-              self.radio2 = date.data[0].name;
-              self.i = date.data[0].id;
+            if (response.code == 0) {
+              self.banner = response.result;
+              self.radio2 = response.result[0].name;
+              self.i = response.result[0].id;
+              self.getIndexBanner();
             };
           })
           .catch(function (error) {
@@ -287,15 +314,14 @@ export default {
         // 获得页面的banner信息
         getIndexBanner: function() {
           var self = this;
-          axios.post('/admin/operate/getIndexBanner', {
+          this.post('/admin/operate/getIndexBanner', {
             indexId: self.i,
             btType: 0
           })
           .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              var res = date.data;
-              self.tableData3 = res;
+            // console.log(response);
+            if (response.code == 0) {
+              self.tableData3 = response.result;
             };
           })
           .catch(function (error) {
@@ -305,7 +331,7 @@ export default {
     },
     mounted(){
       this.getInformationType();
-      this.getIndexBanner();
+      
     }
 };
 </script>

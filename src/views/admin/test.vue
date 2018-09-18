@@ -27,7 +27,12 @@ export default {
     },
     created() {
         console.log('aaaa');
-        this.fetch('/admin/news/test', {}).then((response) => {
+        // this.fetch('/admin/news/test', {}).then((response) => {
+        //     console.log(response);
+        // });
+
+
+        this.post('/admin/operate/getIndexListName', {}).then((response) => {
             console.log(response);
         })
 

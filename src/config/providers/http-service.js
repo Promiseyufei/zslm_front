@@ -6,9 +6,9 @@ axios.defaults.baseURL = 'http://localhost:81/zslm_back/public';
 
 axios.interceptors.request.use(
     config => {
-        config.data = JSON.stringify(config.data);
+        // config.data = JSON.stringify(config.data);
         config.headers = {
-            'Content-Type':'application/x-www-form-urlencoded'
+            'Content-Type':'application/json',
         }
         return config;
     },
