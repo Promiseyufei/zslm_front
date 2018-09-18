@@ -81,3 +81,92 @@ Mock.mock('/admin/UniversMajorList/gettable-info',{
 	
 })
 
+
+/*SelectUnivers
+*选择院校专业页面
+*获取城市的院校专业名称
+*/
+Mock.mock('/admin/SelectUnivers/getcity-info',{
+	"code":0,
+	"region|2":[{"name":'@cword(2)'}],
+	"count":'@integer(1000, 2000)',
+	"Name|3":[
+		{	
+			// "column":[
+			// 	{"cityname":'@cword(2)'}
+			// ],
+			"line|5":[
+				{"majorname":'@cword(6)'}
+			]
+		},
+	]
+	
+})
+
+/*SelectUnivers
+*选择院校专业页面
+*获取城市的院校专业名称
+*/
+Mock.mock('/admin/SelectUnivers/clickgetcity-info',{
+	"code":0,
+	"region":[{"name":'@cword(2)'}],
+	"Name|3":[
+		{	
+			// "column":[
+			// 	{"cityname":'@cword(2)'}
+			// ],
+			"line|5":[
+				{"majorname":'@cword(6)'}
+			]
+		},
+	]
+	
+})
+
+
+/*
+*选择院校专业页面
+*获取城市的名字
+*/
+// Mock.mock('/admin/SelectUnivers/getcity-name',{
+// 	"code":0,
+// 	"buttons": [
+// 				{	"region":'@cword(2)',
+// 					"city|5":[
+// 						{"name":'@cword(2)'},
+// 					]
+// 				},
+// 				{	"region":'@cword(2)',
+// 					"city|3":[
+// 						{"name":'@cword(2)'},
+// 					]
+// 				},
+// 				{	"region":'@cword(2)',
+// 					"city|7":[
+// 						{"name":'@cword(2)'},
+// 					]
+// 				},
+// 				{	"region":'@cword(2)',
+// 					"city|7":[
+// 						{"name":'@cword(2)'},
+// 					]
+// 				},
+// 				{	"region":'@cword(2)',
+// 					"city|5":[
+// 						{"name":'@cword(2)'},
+// 					]
+// 				},
+// 				{	"region":'@cword(2)',
+// 					"city|5":[
+// 						{"name":'@cword(2)'},
+// 					]
+// 				},
+// 				{	"region":'@cword(3)',
+// 					"city|3":[
+// 						{"name":'@cword(2)'},
+// 					]
+// 				},
+// 	],
+
+// })
+
