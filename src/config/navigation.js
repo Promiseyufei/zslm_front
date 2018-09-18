@@ -164,12 +164,12 @@ export default [
                     {
                         "name":"资讯首页推荐",
                         "index":2,
-                        "url":"/SelectUnivers"
+                        "url":"/operate/advise"
                     },
                     {
                         "name":"广告位管理",
                         "index":3,
-                        "url":"/test"
+                        "url":"/operate/ad"
                     }
                 ]
             },
@@ -179,7 +179,7 @@ export default [
                     {
                         "name":"分享数据",
                         "index":1,
-                        "url":"/data"
+                        "url":"/operate/data"
                     }
                 ]
             }

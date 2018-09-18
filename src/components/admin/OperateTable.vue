@@ -40,7 +40,6 @@ export default {
     data() {
       return {
           TableValue: 0,
-        
         }
     },
     props:["tableData3","listTable"],
@@ -60,37 +59,12 @@ export default {
                 this.message(true,'权值范围为0~100','warning');
                 this.tableData3[index].show_weight = this.TableValue;
             } else {
-                this.confirm(() => {
-                    this.post('/admin/operate/setBtWeight', {
-                        bannerAdId: this.tableData3[index].id,
-                        weight:this.tableData3[index].show_weight
-                    }).then((response) => {
-                        (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
-                    })
-                }, () => {
-                    this.tableData3[index].show_weight = this.TableValue;
-                    this.message(true, '已取消修改', 'info')    
-                })
+                this.$emit('setInfoRelation',this.tableData3[index].id, this.tableData3[index].show_weight);
             }
         },
         // 删除单个banner
         deleteSingle: function(res, row) {
-            this.confirm(() => {
-                this.post('/admin/operate/deleteBannerAd', {
-                    btId: res
-                }).then((response) => {
-                    if(response.code == 0) {
-                        this.tableData3.splice(this.tableData3.indexOf(row), 1);
-                        this.message(true, response.msg, 'success');
-                    }
-                    else {
-                        this.message(true, response.msg, 'error');
-                    }
-                })
-            }, () => {
-                this.message(true, '已取消修改', 'info')
-            })
-
+          this.$emit('del',res, row);
         },
         handleClick: function (row) { 
             console.log(this.listTable[1].prop);
