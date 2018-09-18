@@ -93,7 +93,7 @@
                   </el-form-item>
                   
                   <el-form-item>
-                    <el-button type="primary" @click="">提交</el-button>
+                    <el-button type="primary" @click="" :disabled = "disabled">提交</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -120,7 +120,7 @@
                     </el-form-item>
 
                     <el-form-item>
-                      <el-button type="primary" @click="">提交</el-button>
+                      <el-button type="primary" @click="" :disabled = "disabled2">提交</el-button>
                     </el-form-item>
                   </el-form>  
                 </div>
