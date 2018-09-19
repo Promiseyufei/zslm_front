@@ -7,9 +7,9 @@
 			</el-breadcrumb>
 		</div>
 		<div class="dataquery">
-			<i class=""></i>
+			<i class="el-icon-search"></i>
 			<p>筛选查询</p>
-			<div></div>
+			<!-- <div></div> -->
 			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettable_info">刷新</el-button>
 		</div>
 		<div class="dataform">
@@ -28,7 +28,7 @@
 	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native = "gettable_info">查询</el-button>
 		</div>
 		<div class="datalist">
-			<i class=""></i>
+			<i class="el-icon-tickets"></i>
 			<p>内容列表</p>
 			<div></div>
 			<!-- <el-select size="mini" class="datalist-selectone" v-model="value" placeholder="请选择">
@@ -200,7 +200,6 @@
 	}
 	.datalist-selecttwo {
 		width: 100px;
-		margin: 10px 0;
 	}
 	.dataform-input {
 		display: flex;
@@ -220,19 +219,26 @@
 	    border:1px solid #CCC;
 	    border-radius:0;
 	}
+	.dataquery i,.datalist i {
+		padding: 0 5px 0 10px;
+	}
 	.dataquery p,.datalist p {
 		font-size: 16px;
 		color: #666;
 		font-weight: bold;
-		padding: 0 20px;
 	}
+
 	.dataquery,.datalist {
 		position: relative;
 		display: flex;
+		align-items:center;
 		width: 1500px;
 		height: 50px;
 		background:#f3f3f3;
 		margin: 0 auto;
+	}
+	.dataquery {
+		margin: 15px auto;
 	}
 	.span {
 		margin: 10px 6.5px;

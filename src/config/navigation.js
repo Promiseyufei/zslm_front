@@ -88,11 +88,11 @@ export default [
                         "index":2,
                         "url":"/universMajorList"
                     },
-                    // {
-                    //     "name":"选项二",
-                    //     "index":2,
-                    //     "url":"/hostuniversmajor"
-                    // }
+                    {
+                        "name":"选项三",
+                        "index":3,
+                        "url":"/activityList"
+                    }
                 ]
             },
             {
@@ -107,6 +107,11 @@ export default [
                         "name":"选项二",
                         "index":2,
                         "url":"/operate"
+                    },  
+                    {
+                        "name":"选项三",
+                        "index":3,
+                        "url":"/message/hostuniversmajor"
                     }
                 ]
             }

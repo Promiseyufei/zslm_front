@@ -1,13 +1,14 @@
 <template>
 	<div class="filesAll">
 		<div class="filesTop">
-      <Click></Click>
-      <!-- <Tab :table-data="tableData" :page="Page"></Tab> -->
+      <!-- <Click></Click> -->
       <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i" @click.native = "query"></operateNav>  
+      <el-button size="small" type="primary" class="click">点击上传</el-button>
     </div>
-	  <div class="filesquery" style="width:1500px; margin:0 auto;"> 
-        <i></i>
+	  <div class="filesquery"> 
+        <i class="el-icon-search"></i>
         <p class="screen">筛选查询</p>
+        <el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh">刷新</el-button>
   	</div>
       <!-- <div class="dataquery">
         <i class=""></i>
@@ -39,13 +40,17 @@
           </el-form-item>
         </el-form>  
       </div>
-      <div>
+      <!-- <div> -->
         <el-button class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button> 
-      </div>
+      <!-- </div> -->
     </div>
 	    <div class="filesSelect">
-	  		<i></i>
+	  		<i class="el-icon-tickets"></i>
 	    	<p class="screen">数据列表</p>
+        <el-select size="mini" class="datalist-selecttwo" v-model="value" placeholder="请选择">
+          <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+        </el-select>
         <!-- <el-select class="filesSelect-sel" v-model="value" clearable placeholder="请选择">
           <el-option
             v-for="item in options3"
@@ -59,7 +64,7 @@
       <div class="file-table">
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column label="操作" width="200">
+          <el-table-column label="操作" width="240">
               <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                 <el-button type="text" size="small">编辑</el-button>
@@ -73,6 +78,7 @@
         </el-table>
       </div>
     <div class="footer">
+      <el-button type="primary" icon="el-icon-delete">删除</el-button>
       <Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @query="query" @showbox="toshow2" :msg="msg"></Page>
     </div>
 	</div>
@@ -89,6 +95,7 @@
           Page:'',
           isCollapse: true,
           radio2: "",
+          value:'',
           tableTop:[
             {type:'',prop:'data',label:'展示权重',width:100},
             {type:'',prop:'name',label:'文件名称',width:320},
@@ -96,7 +103,7 @@
             {type:'',prop:'type',label:'文件类型',width:100},
             {type:'',prop:'year',label:'文件年份',width:100},
             {type:'',prop:'homepage',label:'主页展示',width:100},
-            {type:'',prop:'time',label:'上传时间',width:160},
+            {type:'',prop:'time',label:'上传时间',width:165},
    
           ],
           tableData:[{
@@ -246,9 +253,25 @@
     .file-table .el-table th.is-leaf {
         text-align: center;
     }
+    .footer .el-button--primary[data-v-09f3e8a6] {
+      margin: 0 0 0 20px;
+    }
 </style>
 
 <style scoped>
+  /*上传按钮*/
+  .el-button--primary {
+      padding: 9px 15px;
+      width: 80px;
+      height: 35px;
+      background-color: #1ABC9C;
+      border-color: #1ABC9C;
+  }
+  .el-button--primary:hover {
+    background-color: #1ABC9C;
+    opacity: 0.8;
+    border-color: #1ABC9C;
+  }
   /* 表格样式 */
   .file-table {
     width: 1500px;
@@ -264,14 +287,20 @@
       font-family:'Tahoma';
   }
   .el-table--border {
-      margin-left: -5px;
+      /*margin-left: -5px;*/
       border-right: none;
       border-bottom: none;
   }
   .el-button--text, .el-button--text.is-disabled, .el-button--text.is-disabled:focus, .el-button--text.is-disabled:hover, .el-button--text:active {
-      margin-left: 20px;
+      /*margin-left: 20px;*/
+  }
+  .el-button--text[data-v-09f3e8a6] {
+    margin: 0 15px;
   }
 	.filesTop {
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
 		width: 1500px;
 		margin: 0 auto;
 	}
@@ -288,29 +317,34 @@
   .el-input__inner {
     font-size: 12px;
   }
-  .filesSelect-sel {
-    width: 105px;
+  .datalist-selecttwo {
     position: absolute;
     right: 10px;
-    top: 8px;
+  }
+  .datalist-selecttwo {
+    width: 100px;
   }
   .filesSelect {
     display: flex;
+    align-items:center;
     position: relative;
     width: 1500px;
+    height: 50px;
+    background: #f3f3f3;
     margin: 0 auto;
   }
   .filesForm-query {
-    width: 80px;
-    height: 30px;
     position: absolute;
-    right: 50px;
+    right: 10px;
     bottom: 5px;
     background-color: #fff;
     border-color: #CCC;
     border-radius: 0;
     color: #666;
     font-size: 12px;
+  }
+  .filesquery i,.filesSelect i {
+    padding: 0 5px 0 10px;
   }
   .input {
     display: flex;
@@ -321,7 +355,7 @@
     width: 1500px;
     display: flex;
     position: relative;
-    margin: 0 auto ;
+    margin: 0 auto 20px;
   }
   .el-table {
     color: #333;
@@ -343,8 +377,12 @@
     border: 1px solid #E4E4E4;
     text-align: right;
     width: 1500px;
+    height: 50px;
     background-color: #fdfdfe;
-    margin: 0 auto;
+    margin: 20px auto;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
   }
   .el-tabs__item {
     line-height: 36px;
@@ -384,16 +422,27 @@
   }
   .screen {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
     font-family:'Tahoma';
+  }
+  .dataquery-refresh {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      color: #666; 
+      background-color: #fff; 
+      border:1px solid #CCC;
+      border-radius:0;
+  }
+  .filesquery {
+    width: 1500px;
+    height: 50px;
+    margin: 0 auto;
     background-color: #F3F3F3;
-    height: 30px;
-    width: 100%;
-    border: 1px solid #E4E4E4;
-    padding: 15px 0 0 35px;
-    text-align: left;
-    margin: 5px 0 0 -5px;
+    position: relative;
+    display: flex;
+    align-items:center;
   }
   .filesTop {
     width: 1500px;

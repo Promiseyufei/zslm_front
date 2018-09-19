@@ -32,7 +32,7 @@ let admin_router = {
             name: '文件管理——上传文件',
             component: resolve =>void(require(['@/views/admin/filesManage/FileUp'], resolve))
         },
-        // 运行管理
+        // 运营管理
         {
             path: '/operate',
             name: '运营管理',
@@ -89,6 +89,11 @@ let admin_router = {
             path: '/message/hostuniversmajor',
             name: '活动-设置主办院校专业',
             component: resolve =>void(require(['@/views/admin/message/hostuniversmajor'], resolve))
+        },
+        {
+            path: '/activityList',
+            name: '活动-列表',
+            component: resolve =>void(require(['@/views/admin/message/activityList'], resolve))
         },
         {
             path: '/test',
