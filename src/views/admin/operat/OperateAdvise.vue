@@ -45,7 +45,7 @@
               </div>
               <div class="operateUpfilesRight2">
                 <div class="operateUpfilesRight2Nav">
-                  <el-button type="info" plain @click = "adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                  <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
                   <el-button type="info" plain @click="operateDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                 </div>
                 <!-- 表格 -->
@@ -128,14 +128,17 @@ export default {
         }
     },
     methods:{
+
         adviseAdd: function() {
           this.$router.push('/operate/addAdvise/' + this.i);
         },
+
         // 点击修改标题时，控制输入框和“更改”按钮的显示
         adviseClickChange: function() {
           this.dis = false;
           this.disp = "none";
         },
+
         // 修改名称
         adviseNameSubmit: function() {
           var self = this;
@@ -159,9 +162,11 @@ export default {
             console.log(error);
           });
         },
+
         // 得到所有的咨询推荐
         getAdviseName: function() {
           var self = this;
+          var load = this.openFullScreen2();
           this.post('/admin/operate/getAppointRegionData', {
             regionId: self.i
           })
@@ -174,12 +179,14 @@ export default {
                 for (var i = 0; i < self.tableData3.length; i++) {
                   self.$set(self.tableData3[i],'show_weight',self.tableData3[i].weight);
                 };
+                load.close();
             };
           })
           .catch(function (error) {
             console.log(error);
           });
         },
+        
         // 清空所有banner
         operateDelete: function() {
           var table = this.tableData3;
@@ -254,12 +261,11 @@ export default {
         },
         // 刷新页面，重新加载页面数据
         operateUpdate: function() {
-          this.loading = true;
-          this.getAdviseName();
           this.ruleForm.name = "";
           this.ruleForm.message = "";
           this.ruleForm.url = "";
-          this.loading = false;
+          this.i = 1;
+          this.getAdviseName();
         },
         // 动态更新资讯类型id
         toshow: function (i) {

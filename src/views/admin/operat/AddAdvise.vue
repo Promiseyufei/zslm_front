@@ -11,7 +11,7 @@
 
           <!-- 返回按钮 -->
           <div class="addadviseBtn">
-              <el-button type="success" plain>返回</el-button>
+              <el-button type="success" plain @click.native="$router.push('/operate/advise')">返回</el-button>
           </div>
           
           <div class="operateUpfiles operateHeader">
@@ -32,20 +32,12 @@
                       </el-form-item>
                   </el-form>
               </div>
-              <el-button type="info" plain @click=""><i class="fa fa-search fa-fw"></i>查询</el-button>
+              <el-button type="info" plain @click="getIndexInfo"><i class="fa fa-search fa-fw"></i>查询</el-button>
           </div>
 
           <!-- 筛选头部 -->
           <div class="operateUpfiles operateHeader">
             <p><i class="fa fa-bars"></i> 资讯列表</p>
-            <!-- <el-select v-model="count" placeholder="筛选条数">
-                <el-option
-                  v-for="item in count2"
-                  :key="item.number"
-                  :label="item.number"
-                  :value="item.number">
-                </el-option>
-            </el-select> -->
           </div>
             <!-- 表格 -->
             <div class="operateTable">
@@ -81,7 +73,7 @@
                   :current-page.sync="currentPage3"
                   :page-size="100"
                   layout="total, sizes, prev, pager, next, jumper"
-                  :total="1000">
+                  :total="total">
                 </el-pagination>
             </div>
 
@@ -114,7 +106,7 @@
 
             <!-- 加入推荐按钮 -->
             <div style="text-align:center;" class="addadviseFinish">
-                <el-button type="primary">加入推荐</el-button>
+                <el-button type="primary" @click="setInfoRecommend">加入推荐</el-button>
             </div>
         
     	</div>
@@ -134,8 +126,9 @@ export default {
             message: ''
           },
           banner: [],
+          total: 0,
           count: 100,
-          page: 5,
+          page: 1,
           sort: 0,
           count2: [
                 {
@@ -195,82 +188,122 @@ export default {
           // 表格默认数据
           tableData3: [],
           tableData: [],
-          currentPage3: 5,
+          currentPage3: this.page,
+          infoIdArr:[]
         }
     },
     methods:{
+
+
+        //从选中表格中删除指定的资讯
         delectSelect: function(row) {
             this.$refs.order.toggleRowSelection(row,false);
         },
+
+        //显示将要添加咨询表格
         addadviseSelect: function(row) {
-            if (row) {
-                this.$refs.order.toggleRowSelection(row,true);
-            } else {
-              this.message(true,'不能重复选择！','warning');
-            }
+          this.$refs.order.toggleRowSelection(row,true);
         },
 
+        handleClick:function(val) {
+          // console.log(val);
+        },
+
+        //获得需要添加的资讯的id数组
         handleSelectionChange(val) {
             this.tableData = val;
-            this.multipleSelection = val;
+            this.infoIdArr = [];
+            var self = this;
+            if(val.length > 0) {
+              val.forEach((item) => {
+                self.infoIdArr.push(item.id);
+              });
+            }
+            self = undefined;
         },
+        
+        //向指定区域添加相关咨讯
+        setInfoRecommend: function() {
+          if(this.infoIdArr.length == 0) {
+            this.message(true, '没有选择要推荐的资讯', 'warning');
+            return false;
+          }
+          this.confirm(() => {
+            var load = this.openFullScreen2();
+            this.post('/admin/operate/addAppoinInformations', {
+              appointId: this.id,
+              informArr: this.infoIdArr
+            }).then((response) => {
+              load.close();
+              console.log(typeof response);
+              if(response.code == 0) {
+                  this.infoIdArr = [];
+                  this.tableData = [];
+                  this.message(true, response.msg, 'seccess');
+              }
+              else 
+                this.message(true, response.msg, 'error');
+            })
+          }, () => {
+              this.message(true, '已取消修改', 'info');
+          })
+
+        },
+
         // 每页显示条数改变时触发事件
         handleSizeChange: function(val) {
             this.count = val;
-            this.getIndexBanner();
-            console.log(`${val} items per page`);
+            this.getIndexInfo();
         },
+
         // 点击小分页触发事件
         handleCurrentChange: function(val) {
             this.page = val;
-            this.getIndexBanner();
-            console.log(`current page: ${val}`);
+            this.getIndexInfo();
         },
+
         // 获取所有资讯类型
         getInformationType: function() {
           var self = this;
-          axios.post('/admin/operate/getInformationType', {
-          })
+          this.post('/admin/operate/getInformationType', {})
           .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              self.banner = date.data;
+            if (response.code == 0) {
+              self.banner = response.result;
             };
           })
           .catch(function (error) {
             console.log(error);
           });
         },
-        // 获取咨询列表添加分页数据
-        getIndexBanner: function() {
-          var self = this;
-          // var pageCount = 0;
-          // if (self.count != '') {
-          //   pageCount = self.count;
-          // };
 
-          axios.post('/admin/operate/getInformPagingData', {
-            informationTypeId: self.form.region,
+        // 获取咨询列表添加分页数据
+        getIndexInfo: function() {
+          var self = this;
+          var load = this.openFullScreen2();
+          this.post('/admin/operate/getInformPagingData', {
+            informationTypeId: self.form.region == '' ? 0 : self.form.region,
             titleKeyword: self.form.message,
             pageCount: self.count,
-            pageNumber: self.page,
+            pageNumber: self.page - 1,
             sortType: self.sort
           })
           .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              var res = date.data;
-              self.tableData3 = res;
-            };
+            if (response.code == 0) {
+              self.tableData3 = response.result['data'];
+              self.total = response.result['count'];
+            }
+            else 
+              self.message(true, response.msg, 'error');
+            load.close();
           })
           .catch(function (error) {
-            console.log(error);
+            load.close();
           });
         }
     },
     mounted(){
       this.getInformationType();
-      this.getIndexBanner();
+      this.getIndexInfo();
     }
 }
 </script>

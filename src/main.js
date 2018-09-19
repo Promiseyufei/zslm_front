@@ -62,9 +62,6 @@ Object.keys(httpServer).forEach((key) => {
   Vue.prototype[key] = httpServer[key];
 })
 
-// console.log(document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-
-
 
 
 /* eslint-disable no-new */
