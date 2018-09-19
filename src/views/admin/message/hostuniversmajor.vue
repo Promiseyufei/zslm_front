@@ -2,8 +2,10 @@
 	<div class="Select">
 		<div class="Select-top">
 			<el-breadcrumb separator="/">
-			  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-			  <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+			  <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
+			  <el-breadcrumb-item><a href="/">活动信息</a></el-breadcrumb-item>
+			  <el-breadcrumb-item :to="{ path: '/' }">活动信息编辑</el-breadcrumb-item>
+			  <el-breadcrumb-item><a href="/">设置主办院校</a></el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 		<div class="Select-steps">
@@ -175,7 +177,7 @@
 		    },
 		    getcity_info: function(){
 		    	var that = this;
-		        axios.post('/admin/SelectUnivers/getcity-info',{
+		        axios.post('/message/hostuniversmajor/getcity-info',{
 		          //后台参数，前台参数(传向后台)
 		          butname: that.butname,
 		        })
@@ -194,7 +196,7 @@
 		    },
 		    clickgetcity_info: function(){
 		    	var that = this;
-		        axios.post('/admin/SelectUnivers/clickgetcity-info',{
+		        axios.post('/message/hostuniversmajor/clickgetcity-info',{
 		          //后台参数，前台参数(传向后台)
 		          // type: that.filesForm.type,
 		        })
