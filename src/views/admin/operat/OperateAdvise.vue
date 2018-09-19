@@ -26,7 +26,7 @@
                 <!-- 提交表单 -->
                 <div>
                   <el-form label-width="100px">
-                    <el-form-item label="推荐区名称" prop="name" width="80px">
+                    <el-form-item label="推荐区名称" width="80px">
                       <el-input v-model="adviseName" placeholder="输入推荐区名称" v-bind:disabled="dis"></el-input>
                       <span class="adviseNameChange" @click="adviseClickChange" v-bind:style="{ display: disp }">更改</span>
                     </el-form-item>
@@ -49,7 +49,7 @@
                   <el-button type="info" plain @click="operateDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                 </div>
                 <!-- 表格 -->
-                <OperateTable :tableData3 = "tableData3" :listTable="listTable"></OperateTable>
+                <OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></OperateTable>
                 <!-- 完成按钮 -->
                 <div class="operateFinalUp">
                   <el-button type="primary">完成</el-button>
@@ -69,29 +69,7 @@ export default {
     components: {
     },
     data() {
-      var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('图片URL不能为空！'));
-        } else if (!this.validateImage(value)) {
-          callback(new Error('请输入正确的URl'));
-        } else {
-          callback();
-        }
-      };
       return {
-        rules: {
-          name: [
-            { required: true, message: '图片名称不能为空！', trigger: 'blur' },
-            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
-          ],
-          message: [
-            { required: true, message: '图片描述不能为空！', trigger: 'blur' },
-            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
-          ],
-          url: [
-            { validator: checkAge, required: true, trigger: 'blur' }
-          ],
-        },
         dis: true,
         disp: "inline-block",
         adviseName: "",
@@ -99,11 +77,11 @@ export default {
         loading: false,
         banner: [
           {
-            id: 0,
+            id: 1,
             name: "区域一"
           },
           {
-            id: 1,
+            id: 2,
             name: "区域二"
           }
         ],
@@ -116,7 +94,7 @@ export default {
           message: '',
           url: ''
         },
-        i: 0,
+        i: 1,
         TableValue: 0,
         listTable: [
           {
@@ -149,13 +127,6 @@ export default {
         tableData3: []
         }
     },
-    watch: {
-      i: function(val,oldval) {
-        this.getAdviseName();
-        console.log(this.banner[val].name);
-        this.radio = this.banner[val].name;
-      },
-    },
     methods:{
         adviseAdd: function() {
           this.$router.push('/operate/addAdvise/' + this.i);
@@ -168,21 +139,21 @@ export default {
         // 修改名称
         adviseNameSubmit: function() {
           var self = this;
-          axios.post('/admin/operate/setAppointRegionName', {
+          this.post('/admin/operate/setAppointRegionName', {
             regionId: self.i,
             regionName: self.adviseName
           })
           .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              self.message(true,date.msg,'success');
-              self.dis = true;
-              self.disp = "inline-block";
-              self.adviseName2 = self.adviseName;
-            }else {
-              self.adviseName = self.adviseName2;
-              self.message(true,date.msg,'warning');
-            }
+              console.log(typeof response);
+              if (response.code == 0) {
+                self.message(true,response.msg,'success');
+                self.dis = true;
+                self.disp = "inline-block";
+                self.adviseName2 = self.adviseName;
+              }else {
+                self.adviseName = self.adviseName2;
+                self.message(true,response.msg,'warning');
+              }
           })
           .catch(function (error) {
             console.log(error);
@@ -191,19 +162,18 @@ export default {
         // 得到所有的咨询推荐
         getAdviseName: function() {
           var self = this;
-          axios.post('/admin/operate/getAppointRegionData', {
+          this.post('/admin/operate/getAppointRegionData', {
             regionId: self.i
           })
           .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              var res = date.data;
-              self.adviseName = res[0].region_name;
-              self.adviseName2 = res[0].region_name;
-              self.tableData3 = res[0].zx_id;
-              for (var i = 0; i < self.tableData3.length; i++) {
-                self.$set(self.tableData3[i],'show_weight',self.tableData3[i].weight);
-              };
+            if (response.code == 0) {
+              self.adviseName = response.result.region_name;
+              self.adviseName2 = response.result.region_name;
+              self.tableData3 = response.result.zx_id;
+              if(self.tableData3 !== null)
+                for (var i = 0; i < self.tableData3.length; i++) {
+                  self.$set(self.tableData3[i],'show_weight',self.tableData3[i].weight);
+                };
             };
           })
           .catch(function (error) {
@@ -217,7 +187,20 @@ export default {
           for (var i = 0; i < table.length; i++) {
             arrayTableId.push(table[i].id);
           };
-          this.deleteBanner(arrayTableId);
+          if(arrayTableId.length < 1) {
+            this.message(true, '没有要清空的数据', 'error');
+            return;
+          }
+          this.post('/admin/operate/deleteAppoinInformation', {
+              RegionId: this.i,
+              InformationId : arrayTableId
+          }).then((response) => {
+            if(response.code == 0) {
+                this.tableData3 = [];
+                this.message(true, response.msg, 'success');
+            }
+            else this.message(true, response.msg, 'error');
+          })
         },
         // 点击上传图片按钮
         submitForm: function (formName) {
@@ -281,7 +264,38 @@ export default {
         // 动态更新资讯类型id
         toshow: function (i) {
           this.i = i;
-          console.log(this.i);
+          this.getAdviseName();
+        },
+        setOpAd: function(id, weight) {
+            this.confirm(() => {
+                this.post('/admin/operate/setAppoinInformationWeight', {
+                    informationId: id,
+                    weight:weight
+                }).then((response) => {
+                    (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+                })
+            }, () => {
+                this.tableData3[index].show_weight = this.TableValue;
+                this.message(true, '已取消修改', 'info');
+            })
+        },
+        delAdvise: function(res, row) {
+            this.confirm(() => {
+                this.post('/admin/operate/deleteAppoinInformation', {
+                    RegionId: this.i,
+                    InformationId: res
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.tableData3.splice(this.tableData3.indexOf(row), 1);
+                        this.message(true, response.msg, 'success');
+                    }
+                    else {
+                        this.message(true, response.msg, 'error');
+                    }
+                })
+            }, () => {
+                this.message(true, '已取消修改', 'info')
+            })
         },
         handleClick: function (row) { 
           console.log(row);

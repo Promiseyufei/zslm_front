@@ -1,3 +1,4 @@
+import { Loading } from 'element-ui';
 export default {
     callDialog:function() {
         alert('公共方法成功啦～');
@@ -25,6 +26,18 @@ export default {
             : this.$confirm(msg, type, data).then(callBack).catch(catchBack));
         
     },
+
+    
+    //加载是否显示
+    openFullScreen2() {
+        return Loading.service({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+        });
+    },
+
     // 删除所给id序列的banner
     deleteBanner: function(arrayTableId) {
         var self = this;
