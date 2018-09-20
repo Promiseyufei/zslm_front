@@ -15,9 +15,7 @@
             <p>当前操作页面：<span>{{this.radio}}</span></p>
             <el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
           </div>
-          <div v-loading="loading"
-            element-loading-text="拼命加载中"
-            element-loading-spinner="el-icon-loading">
+          <div>
             <!-- 上传banner -->
             <div class="operateUpfiles operateUp">
               
@@ -27,28 +25,19 @@
               <div class="operateUpfilesRight">
                 <div>
                   <div>
-                    <el-upload
-                      class="upload-demo"
-                      action="/putPictrue"
-                      :on-preview="handlePreview"
-                      :on-change="handleChange"
-                      :on-remove="handleRemove"
-                      :before-remove="beforeRemove"
-                      :before-upload="beforeAvatarUpload"
-                      :on-success="handleAvatarSuccess"
-                      :file-list="fileList">
-                      <el-button size="small" type="primary" class="operateFloat">点击上传</el-button>
-                      <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div> -->
-                      <span slot="tip" class="el-upload__tip">当前以选择：</span>
-                    </el-upload>
+                      <el-upload class="upload-demo" action='' :auto-upload="false" :on-change="changeUpload" :multiple="false" :show-file-list="false">
+                        <el-button size="small" type="primary" slot="trigger" class="operateFloat">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
+                        <div slot="tip" class="el-upload__tip">当前以选择：{{ this.file.name }}</div>
+                      </el-upload>
                   </div>
                   <div class="operateUpfilesRightImg">
-                    <img :src="this.fileList[0].url" alt="预览图">
+                    <img :src="this.initialImgUrl" alt="预览图">
                   </div>
                 </div>
                 <!-- 提交表单 -->
                 <div>
-                  <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="80px">
+                  <el-form ref="ruleForm" :model="ruleForm" label-width="80px">
                     <el-form-item label="图片名称" prop="name">
                       <el-input v-model="ruleForm.name" placeholder="输入图片名称"></el-input>
                     </el-form-item>
@@ -77,7 +66,7 @@
                   <el-button type="info" plain @click="operateDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                 </div>
                 <!-- 表格 -->
-                <OperateTable :tableData3 = "tableData3" :listTable="listTable"></OperateTable>
+                <OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setAdWeight" @del="delAd"></OperateTable>
                 <!-- 完成按钮 -->
                 <div class="operateFinalUp">
                   <el-button type="primary">完成</el-button>
@@ -99,35 +88,14 @@ export default {
     components: {
     },
     data() {
-      var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('图片URL不能为空！'));
-        } else if (!this.validateImage(value)) {
-          callback(new Error('请输入正确的URl'));
-        } else {
-          callback();
-        }
-      };
       return {
-        rules: {
-          name: [
-            { required: true, message: '图片名称不能为空！', trigger: 'blur' },
-            { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
-          ],
-          message: [
-            { required: true, message: '图片描述不能为空！', trigger: 'blur' },
-            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
-          ],
-          url: [
-            { validator: checkAge, required: true, trigger: 'blur' }
-          ],
-        },
         loading: false,
         banner: [],
         radio: "辅导机构列表页",
         radio2: "",
+        initialImgUrl: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',
+        file: {},
         src: "",
-        fileList: [{name: '', url: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',file: ''}],
         ruleForm: {
           name: '',
           message: '',
@@ -147,7 +115,7 @@ export default {
             width: "80px"
           },
           {
-            prop: "re_alt",
+            prop: "img_alt",
             lable: "图片描述",
             width: "210px"
           },
@@ -166,150 +134,190 @@ export default {
         tableData3: []
         }
     },
-    watch: {
-      i: function(val,oldval) {
-        this.getIndexBanner();
-        this.radio = this.banner[val].name;
-      },
-    },
     methods:{
-        // 清空所有banner
+
+        //设置指定广告的权重值
+        setAdWeight: function(id, weight) {
+          if(id < 1 || weight <0) {
+            this.message(true, '请选择要修改的行或检查权重值是否正确', 'error');
+            return false;
+          }
+          this.confirm(() => {
+            this.post('admin/operate/setBillboardWeight', {
+              billboardId: id,
+              weight:weight
+            }).then((response) => {
+              (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+            })
+          }, () => {
+            this.message(true, '已取消修改', 'info');
+          })
+        },
+
+        //删除指定的广告
+        delAd: function(id, row) {
+            this.confirm(() => {
+                this.post('/admin/operate/deleteBannerAd', {
+                    btId: id
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.tableData3.splice(this.tableData3.indexOf(row), 1);
+                        this.message(true, response.msg, 'success');
+                    }
+                    else {
+                        this.message(true, response.msg, 'error');
+                    }
+                })
+            }, () => {
+                this.message(true, '已取消修改', 'info')
+            })          
+        },
+
+        //获取图片file，并图片预览
+        changeUpload: function(file,fileList) {
+          if(this.beforeAvatarUpload(file)) {
+              this.initialImgUrl = file.url;
+              this.file = file.raw;
+          }
+        },
+
+        //上传图片判断
+        beforeAvatarUpload(file) {
+          const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png';
+          const isLt2M = file.raw.size / 1024 / 1024 < 4;
+
+          if (!isJPG) {
+            this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+          }
+          if (!isLt2M) {
+            this.$message.error('上传头像图片大小不能超过 4MB!');
+          }
+          return isJPG && isLt2M;
+        },
+
+        // 清空所有广告
         operateDelete: function() {
           var table = this.tableData3;
           var arrayTableId = [];
-          for (var i = 0; i < table.length; i++) {
-            arrayTableId.push(table[i].id);
-          };
-          this.deleteBanner(arrayTableId);
+          table.forEach((item) => {
+            arrayTableId.push(item.id);
+          });
+          if(arrayTableId.length < 1) {
+              this.message(true, '没有要清空的数据');
+              return;
+          }
+          this.confirm(() => {
+              this.post('/admin/operate/deleteBannerAd', {
+                  btId: arrayTableId
+              }).then((response) => {
+                  if(response.code == 0) {
+                      this.tableData3 = [];
+                      this.message(true, response.msg, 'success');
+                  }
+                  else {
+                      this.message(true, response.msg, 'error');
+                  }
+              })
+          }, () => {
+              this.message(true, '已取消修改', 'info');
+          })
         },
-        // 点击上传图片按钮
+
+        //上传广告
         submitForm: function (formName) {
           var self = this;
-          this.$refs[formName].validate((valid) => {
-            // 判断表单是否符合填写要求
-            if (valid) {
-              // 判断是否上传图片
-              if (self.fileList[0].file == '') {
-                this.$message('您还没有上传为图片呢');
-                return;
-              };
+          var urlReg = new RegExp("^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*([\?&]\w+=\w*)*$");
 
-              var fd = new FormData()
-              fd.append('file', self.fileList[0].file)
-              let imgFile = {
-                  headers: {
-                      'Content-Type': 'multipart/form-data'
-                  }
+          if(!(this.ruleForm.name.indexOf('.jpg') || this.ruleForm.name.indexOf('.png'))) this.message(true, '图片名称不能包含.jpg或.png', 'warnning');
+          else if(!urlReg.test(this.ruleForm.url.toString())) this.message(true, 'Banner跳转跳转网址不符合路由规范', 'warnning');
+          else if(JSON.stringify(this.file) == "{}") {
+            this.message(true, '您还没有选择上传的图片', 'warnning');
+            return false;
+          }
+          else {
+            var formdata = new FormData();
+            formdata.append('img', this.file);
+            formdata.append('imgName', this.ruleForm.name);
+            formdata.append('imgAlt', this.ruleForm.message);
+            formdata.append('reUrl', this.ruleForm.url.toString());
+            formdata.append('urlId', this.i);
+
+            let config = {
+              headers: {
+                'Content-Type': 'multipart/form-data'
               }
-              axios.post('/admin/operate/createPageBillboard', {
-                imgName: self.ruleForm.name,
-                imgAlt: self.ruleForm.message,
-                reUrl: self.ruleForm.url,
-                img: imgFile,
-                urlId: self.i
-              })
-              .then(function (response) {
-                var date = response.data;
-                if (date.code == 0) {
-                  self.$message({
-                    message: '上传成功',
-                    type: 'success'
-                  });
-                }else {
-                  console.log(date.msg,123);
-                }
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-
-            } else {
-              return false;
             }
-          });
+
+            this.post('/admin/operate/createPageBillboard', formdata, config).then((response) => {
+              console.log(typeof response);
+                if(response.code == 0) {
+                  this.operateUpdate();
+                  this.message(true, response.msg, 'success');
+                }
+                else this.message(true, response.msg, 'error');
+            })
+          }
         },
+
         // 刷新页面，重新加载页面数据
         operateUpdate: function() {
-          this.loading = true;
-          this.getIndexBanner();
           this.ruleForm.name = "";
+          this.initialImgUrl = 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658';
           this.ruleForm.message = "";
           this.ruleForm.url = "";
-          this.loading = false;
+          this.getIndexAd();
         },
+
         // 动态更新资讯类型id
         toshow: function (i) {
           this.i = i;
-          console.log(this.i);
+          this.getIndexAd();
         },
-        handleClick: function (row) { 
-          console.log(row);
-        },
-        // 图片移除时触发该事件
-        handleRemove: function (file, fileList) {
-          var span = document.getElementsByClassName("el-upload__tip")[0];
-          span.style.display = "none";
-          this.fileList[0].url = 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658';
-          this.fileList[0].file = '';
-        },
-        handlePreview: function (file) {
-          console.log(file);
-        },
-        handleAvatarSuccess: function (res, file) {
-          this.fileList[0].url = URL.createObjectURL(file.raw);
-          this.fileList[0].file = file;
-        },
-        // 每次上传图片列表改变时，触发
-        handleChange: function (file, fileList) {
-          var li = document.getElementsByClassName("el-upload-list")[0];
-          var span = document.getElementsByClassName("el-upload__tip")[0];
-          span.style.display = "block";
-          li.style.display = "block";
-          
-          this.fileList = fileList.slice(-1);
-        },
-        beforeRemove: function (file, fileList) {
-          return this.$confirm(`确定移除 ${ file.name }？`);
-        },
-        //  获得所有页面的名称
+
+        // 获得所有页面的名称
         getInformationType: function() {
           var self = this;
-          axios.post('/admin/operate/getAllPageListName', {
+          this.post('/admin/operate/getAllPageListName', {
           })
           .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              self.banner = date.data;
-              self.radio2 = date.data[0].name;
-              self.i = date.data[0].id;
-            };
+            if (response.code == 0) {
+              self.banner = response.result;
+              self.radio2 = response.result[0].name;
+              self.i = response.result[0].id;
+              self.getIndexAd();
+            }
+            else {
+              this.message(true, response.msg, 'error');
+            }
           })
           .catch(function (error) {
             console.log(error);
           });
         },
-        // 获得页面的banner信息
-        getIndexBanner: function() {
+
+        // 获得页面的广告信息
+        getIndexAd: function() {
           var self = this;
-          axios.post('/admin/operate/getIndexBanner', {
-            indexId: self.i,
+          var load =this.openFullScreen2();
+          this.post('/admin/operate/getAppointPageBillboard', {
+            pageId: self.i,
             btType: 1
           })
           .then(function (response) {
-            var date = response.data;
-            if (date.code == 0) {
-              var res = date.data;
-              self.tableData3 = res;
-            };
+            if (response.code == 0) {
+              self.tableData3 = response.result;
+              load.close();
+            }
           })
           .catch(function (error) {
             console.log(error);
+            load.close();
           });
         }
     },
+
     mounted(){
       this.getInformationType();
-      this.getIndexBanner();
     }
 }
 </script>
@@ -351,7 +359,7 @@ export default {
 .operateUpfilesRight .el-upload__tip {
   margin-left: 20px;
   margin-bottom: 8px;
-  display: none;
+  display: block;
 }
 .operateUpfiles {
   border: 1px solid #e4e4e4;

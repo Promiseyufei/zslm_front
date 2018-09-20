@@ -161,12 +161,10 @@ export default {
           table.forEach((item) => {
             arrayTableId.push(item.id);
           });
-
           if(arrayTableId.length < 1) {
               this.message(true, '没有要清空的数据');
               return;
           }
-
           this.confirm(() => {
               this.post('/admin/operate/deleteBannerAd', {
                   btId: arrayTableId
@@ -221,13 +219,11 @@ export default {
 
         // 刷新页面，重新加载页面数据
         operateUpdate: function() {
-          this.loading = true;
           this.getIndexBanner();
           this.initialImgUrl = 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658';
           this.ruleForm.name = "";
           this.ruleForm.message = "";
           this.ruleForm.url = "";
-          this.loading = false;
         },
 
         // 动态更新资讯类型id
@@ -248,6 +244,7 @@ export default {
                 this.message(true, '已取消修改', 'info')    
             })
         },
+
         delBanner: function(res, row) {
             this.confirm(() => {
                 this.post('/admin/operate/deleteBannerAd', {
