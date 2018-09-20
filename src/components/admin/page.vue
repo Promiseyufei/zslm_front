@@ -32,7 +32,6 @@ export default {
 	    handleCurrentChange(val) { 
 	    	this.$emit('query');
 	    	this.$emit('gettable_info');
-	    	// console.log(`当前页: ${val}`);
 	    	this.$emit('showbox',val);
 	    },
     }

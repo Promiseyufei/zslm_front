@@ -10,45 +10,42 @@
 			<i class="el-icon-search"></i>
 			<p>筛选查询</p>
 			<!-- <div></div> -->
-			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettable_info">刷新</el-button>
+			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettableInfo">刷新</el-button>
 		</div>
 		<div class="dataform">
 			<el-form class="dataform-input" ref="filesForm" :model="filesForm" label-width="80px">
 				<el-form-item label="内容类型">
 				    <el-select v-model="filesForm.type" placeholder="全部">
-				      <el-option label="区域一" value="shanghai"></el-option>
-				      <el-option label="区域二" value="beijing"></el-option>
+						<el-option v-for="(item, index) in contentType" :key="index" :label="item.label" :value="item.value"></el-option>
 				    </el-select>
 			    </el-form-item>
 		        <el-form-item label="关键字">
 		          <el-input v-model="filesForm.name1" placeholder="请输入关键字"></el-input>
 		        </el-form-item>
-	        	<!-- </el-form-item> -->
 	      	</el-form>
-	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native = "gettable_info">查询</el-button>
+	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native = "gettableInfo">查询</el-button>
 		</div>
 		<div class="datalist">
 			<i class="el-icon-tickets"></i>
 			<p>内容列表</p>
-			<div></div>
-			<!-- <el-select size="mini" class="datalist-selectone" v-model="value" placeholder="请选择">
-			    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-			    </el-option>
-			</el-select> -->
-			<el-select size="mini" class="datalist-selecttwo" v-model="value" placeholder="默认顺序">
-			    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettable_info">
-			    </el-option>
-			</el-select>
+			<el-cascader
+				size="mini"
+				class="datalist-selecttwo"
+				expand-trigger="hover"
+				:options="cascaderOptions"
+				v-model="selectedOptions2"
+				@change="handleChange">
+			</el-cascader>
 		</div>
 		<div class="datatable">
 			<el-table ref="singleTable" :data="Datatable" border @current-change="handleCurrentChange" style="width: 100%">
-				<div v-for="val in tableTop">
+				<div v-for="(val, index) in tableTop" :key="index">
 					<el-table-column :type="val.type" :property="val.property" :label="val.label" :width="val.width"></el-table-column>
 				</div>
 			</el-table>
 		</div>
 		<div class="footer"> 
-	  		<Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @gettable_info="gettable_info" @showbox="toshow2" :msg="msg"></Page>
+	  		<Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @gettable_info="gettableInfo" @showbox="toshow2" :msg="msg"></Page>
 		</div>
 	</div>
 </template>
@@ -61,34 +58,57 @@
 	    		msg:0,
 	    		count:0,
 	    		number:0,
-		        value: '',
+				value: '',
+
+				contentType:[
+					{
+						label: '院校专业主页',
+						value: 0
+					},
+					{
+						label: '活动详情',
+						value: 1
+					},
+					{
+						label: '资讯详情',
+						value: 2
+					},
+					{
+						label: '总量',
+						value:3
+					}
+					
+				],
+
 	    		tableTop:[
-		          {property:'content',label:'分享内容',width:650},
-	    		  {property:'id',label:'编号',width:100},
-		          {property:'type',label:'内容类型',width:150},
-		          {property:'pagedata',label:'页面浏览量',width:100},
-		          {property:'wxdata',label:'微信分享次数',width:100},
-		          {property:'wxdatas',label:'微信引流数',width:100},
-		          {property:'wbdata',label:'微博分享次数',width:100},
-		          {property:'wbdatas',label:'微博引流数',width:100},
-		          {property:'datas',label:'总引流数',width:100},
-		        ],
+					{property:'name',label:'分享内容',width:650},
+					{property:'id',label:'编号',width:100},
+					{property:'total_browse',label:'页面浏览量',width:100},
+					{property:'wx_count',label:'微信分享次数',width:100},
+					{property:'wx_browse',label:'微信引流数',width:100},
+					{property:'wb_count',label:'微博分享次数',width:100},
+					{property:'wb_browse',label:'微博引流数',width:100},
+					{property:'total_count',label:'总引流数',width:100},
+				],
+				
 	    		Datatable: [{
-		          content:'',
-	    		  id:'',
-		          type:'',
-		          pagedata:'',
-		          wxdata:'',
-		          wxdatas:'',
-		          wbdata:'',
-		          wbdatas:'',
-		          datas:'',
-		        }],
-		        currentRow:null,
+					id:'',
+					name:'',
+					wx_count:'',
+					wb_count:'',
+					wx_browse:'',
+					wb_browse:'',
+					total_count:'',
+					total_browse:''
+				}],
+				
+				currentRow:null,
+				
 	    		filesForm: {
 		    		name1:'',
 		    		type:'',
-		    	},
+				},
+				
 		    	options: [
 			        {
 			          value: '选项3',
@@ -102,31 +122,127 @@
 			          value: '选项5',
 			          label: '分享次数'
 			        }
-		        ],
+				],
+
+				selectedOptions2: [0, 0],
+
+				cascaderOptions:[
+					{
+						label: '总浏览量',
+						value: 0,
+						children: [
+							{
+								label:'升序',
+								value:0
+							},
+							{
+								label:'降序',
+								value:1
+							}
+						]
+					},
+					{
+						label: '总分享次数',
+						value: 1,
+						children: [
+							{
+								label:'升序',
+								value:0
+							},
+							{
+								label:'降序',
+								value:1
+							}
+						]
+					},
+					{
+						label: '微信分享次数',
+						value: 2,
+						children: [
+							{
+								label:'升序',
+								value:0
+							},
+							{
+								label:'降序',
+								value:1
+							}
+						]
+					},
+					{
+						label: '微博分享次数',
+						value: 3,
+						children: [
+							{
+								label:'升序',
+								value:0
+							},
+							{
+								label:'降序',
+								value:1
+							}
+						]
+					},
+					{
+						label: '微信浏览量',
+						value: 2,
+						children: [
+							{
+								label:'升序',
+								value:0
+							},
+							{
+								label:'降序',
+								value:1
+							}
+						]
+					},
+					{
+						label: '微博浏览量',
+						value: 5,
+						children: [
+							{
+								label:'升序',
+								value:0
+							},
+							{
+								label:'降序',
+								value:1
+							}
+						]
+					}
+				]
 		    };
 	    },
 	    methods: {
+
+			handleChange(value) {
+				console.log(this.selectedOptions2 == value);
+			},
+
 		    toshow2(msg) {
 		        this.msg = msg;
 		        console.log(this.msg);
 		    },
-	    	gettable_info: function (){
+	    	gettableInfo: function (){
 	        	var that = this;
-		        axios.post('/admin/data/getdata-table',{
-		        	type: that.filesForm.type,
-		        	name1: that.filesForm.name1,
+		        this.post('/admin/operate/getPagingData',{
+					// pageNumber: ,
+					// pageCount: ,
+					// sortType: ,
+					// riseOrDrop: ,
+					// contentType: ,
+					// titleKeyword: 
+
 		        })
 		        .then(function (response) {
-		            // that.page++;
-		            var res = response.data;
-		            if (res.code == 0) {
-		            	that.Datatable = res.data;
-		            	that.count = res.count;
+		            if (response.code == 0) {
+		            	that.Datatable = response.result;
+		            	that.count = response.count;
 		            };
-		            // that.pages = response.datas.data;
 		        })
 		        .catch(function (error) {
-		            // console.log(error);
+		            console.log(error);
 		        });
 	      },
 	    	handleCurrentChange(val) {
@@ -134,13 +250,12 @@
 	      }
 	    },
 		mounted() {
-			this.gettable_info();
+			this.gettableInfo();
 			// this.getPage();
 		},
 	}
 </script>
 
-</script>
 
 <!-- 全局样式 -->
 <style>

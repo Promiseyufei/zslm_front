@@ -118,6 +118,7 @@
 export default {
     components: {
     },
+    
     data() {
       return {
           id: this.$route.params.id,
