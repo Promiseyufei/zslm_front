@@ -3,7 +3,7 @@
         <div class="majorlist-top">
             <el-breadcrumb separator="/">
               <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">活动信息</a></el-breadcrumb-item>
+              <el-breadcrumb-item><a href="/">辅导机构</a></el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
@@ -17,7 +17,7 @@
         </div> 
         <div class="majorlist-form">
             <el-form class="majorlist-input" label-width="80px">
-                <el-form-item label="院校专业">
+                <el-form-item label="机构名称">
                     <el-input size="medium" v-model="name" placeholder="输入文件名称"></el-input>
                 </el-form-item>
                 <el-form-item label="展示状态">
@@ -32,8 +32,14 @@
                       <el-option label="区域二" value="beijing"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="活动状态">
+                <el-form-item label="优惠券" class="majorlist-formmini">
                     <el-select size="medium" v-model="type3" placeholder="全部">
+                      <el-option label="区域一" value="shanghai"></el-option>
+                      <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="退款保障" class="majorlist-formmini">
+                    <el-select size="medium" v-model="type4" placeholder="全部">
                       <el-option label="区域一" value="shanghai"></el-option>
                       <el-option label="区域二" value="beijing"></el-option>
                     </el-select>
@@ -43,7 +49,7 @@
         </div>
         <div class="majorlist-list">
             <i class="el-icon-tickets"></i>
-            <p>内容列表</p>
+            <p>辅导机构</p>
             <div></div>
             <el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="显示条数">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettableInfo">
@@ -61,26 +67,36 @@
                 </el-table-column>
                 <el-table-column label="展示状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].value2"></el-switch>
+                        <el-switch v-model="majorlisttable[scope.$index].showState" active-color="#999" inactive-color="#409eff"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="推荐状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].value3" active-color="#999" inactive-color="#409eff">
+                        <el-switch v-model="majorlisttable[scope.$index].adviceState" active-color="#409eff" inactive-color="#999">
                         </el-switch>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="120">
+                <el-table-column label="优惠券" width="80">
+                    <template slot-scope="scope">
+                        <el-switch v-model="majorlisttable[scope.$index].discount" active-color="#409eff" inactive-color="#999">
+                        </el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column label="退款保障" width="80">
+                    <template slot-scope="scope">
+                        <el-switch v-model="majorlisttable[scope.$index].refund" active-color="#409eff" inactive-color="#999">
+                        </el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="200">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
-                            <i class="el-icon-search"></i>
-                            <i class="el-icon-edit-outline"></i>
-                            <i class="el-icon-delete"></i>
+                            <i v-for="(val, index) in iconname" :key="index" :class="val.name"></i>
                         </div>
                     </template>
                 </el-table-column>
                 <div v-for="(val, index) in tableTop" :key="index">
-                  <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
+                    <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
                   </el-table-column>
                 </div>
             </el-table>
@@ -102,16 +118,11 @@
                     page:'',
                     limit:'',
                 },
-                // currentPage4:2,
-                // msg:0,
-                // count:0,
-                // number:0,
                 tableTop:[
-                  {prop:'name',label:'活动名称',width:380},
-                  {prop:'project',label:'活动类型',width:80},
+                  {prop:'name',label:'辅导机构名称',width:300},
+                  {prop:'project',label:'机构类型',width:80},
                   {prop:'project',label:'活动省市',width:80},
-                  {prop:'project',label:'主办院校',width:160},
-                  {prop:'project',label:'报名状态',width:80},
+                  {prop:'project',label:'辅导形式',width:80},
                   {prop:'time',label:'发布时间',width:160},
                 ],
                 majorlisttable:[{
@@ -120,15 +131,31 @@
                   name:'',
                   project:'',
                   time:'',
-                  value2:true,
-                  value3:'',
+                  showState:'',
+                  adviceState:'',
+                  discount:'',
+                  refund:'',
                 }],
+                tableSwitch:[
+                    {label:'展示状态',width:'100'},
+                    {label:'推荐状态',width:'100'},
+                    {label:'优惠券',width:'80'},
+                    {label:'退款保障',width:'80'},
+                ],
+                iconname:[
+                    {name:'el-icon-search'},
+                    {name:'el-icon-edit-outline'},
+                    {name:'el-icon-delete'},
+                    {name:'el-icon-refresh'},
+                    {name:'el-icon-tickets'},
+                ],
                 value:'',
                 // input:'',
                 name:'',
                 type1:'',
                 type2:'',
                 type3:'',
+                type4:'',
                 options: [
                     {
                       value: '选项1',
@@ -146,7 +173,7 @@
             }
         },
         methods:{
-           pageChange(msg) {
+            pageChange(msg) {
                 this.searchContent.page = msg.page;
                 this.searchContent.limit = msg.limit;
             },
@@ -187,7 +214,7 @@
             },
             gettableInfo:function(){
                 var that = this;
-                axios.post('/message/activityList/gettable-info',{
+                axios.post('/message/coachList/gettableInfo',{
                     // type: that.filesForm.type,
                     // name1: that.filesForm.name1,
                     // input: that.input,
@@ -198,10 +225,6 @@
                     if (res.code == 0) {
                         that.majorlisttable = res.data;
                         that.total = res.total;
-                        // that.weight = res.weight;
-                        // that.id = res.id;
-                        // that.input = res.input;
-                        console.log(that.id);
                     };
                 })
                 .catch(function (error) {
@@ -236,6 +259,9 @@
 
 <!-- 局部样式 scoped -->
 <style scoped>
+    .majorlist-formmini {
+        width: 180px;
+    }
     .el-table {
         color: #333;
     }

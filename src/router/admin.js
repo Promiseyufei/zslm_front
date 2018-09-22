@@ -96,6 +96,16 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/activityInformation/activityList'], resolve))
         },
         {
+            path: '/coachList',
+            name: '活动-列表',
+            component: resolve =>void(require(['@/views/admin/message/coachList'], resolve))
+        },
+        {
+            path: '/choiceactivity',
+            name: '活动-列表',
+            component: resolve =>void(require(['@/views/admin/message/choiceactivity'], resolve))
+        },
+        {
             path: '/test',
             name: 'WangEditor test',
             component: resolve =>void(require(['@/views/admin/test'], resolve))
