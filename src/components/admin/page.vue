@@ -29,15 +29,12 @@ export default {
 
 	    //当前页码变更
 	    handleCurrentChange(val) { 
-<<<<<<< HEAD
 	    	this.page.page = val;
 	    	this.$emit('pageChange',this.page);
 	    	console.log(this.total,123123);
-=======
 	    	this.$emit('query');
 	    	this.$emit('gettable_info');
 	    	this.$emit('showbox',val);
->>>>>>> 0c95373d954fd57108f53d2e186b934e7069d68f
 	    },
     },
     mounted(){
