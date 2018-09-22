@@ -61,29 +61,29 @@ let admin_router = {
         },
         // 信息发布
         {
-            path: '/universMajorList',
+            path: '/message/universMajorList',
             name: '院校专业列表',
             component: resolve =>void(require(['@/views/admin/UniversMajorList'], resolve))
         },
         {
             path: '/message/messageHome',
             name: '编辑-院校专业',
-            component: resolve =>void(require(['@/views/admin/message/MessageHome'], resolve))
+            component: resolve =>void(require(['@/views/admin/message/collegeInformation/MessageHome'], resolve))
         },
         {
             path: '/message/universityMessage',
             name: '编辑-招生项目',
-            component: resolve =>void(require(['@/views/admin/message/UniversityMessage'], resolve))
+            component: resolve =>void(require(['@/views/admin/message/collegeInformation/UniversityMessage'], resolve))
         },
         {
             path: '/message/activity',
             name: '编辑-活动信息',
-            component: resolve =>void(require(['@/views/admin/message/Activity'], resolve))
+            component: resolve =>void(require(['@/views/admin/message/activityInformation/Activity'], resolve))
         },
         {
             path: '/message/advise',
             name: '编辑-推荐信息',
-            component: resolve =>void(require(['@/views/admin/message/Advise'], resolve))
+            component: resolve =>void(require(['@/views/admin/message/activityInformation/Advise'], resolve))
         },
         {
             path: '/message/hostuniversmajor',
@@ -91,9 +91,9 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/hostuniversmajor'], resolve))
         },
         {
-            path: '/activityList',
+            path: '/message/activityList',
             name: '活动-列表',
-            component: resolve =>void(require(['@/views/admin/message/activityList'], resolve))
+            component: resolve =>void(require(['@/views/admin/message/activityInformation/activityList'], resolve))
         },
         {
             path: '/test',

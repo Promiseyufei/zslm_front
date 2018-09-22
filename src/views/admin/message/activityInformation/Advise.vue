@@ -11,7 +11,7 @@
 
                 <!-- 步骤条 -->
                 <div class="fileSteps">
-                    <el-steps :active="1" align-center>
+                    <el-steps :active="1.2" align-center>
                         <el-step title="活动信息"></el-step>
                         <el-step title="推荐信息"></el-step>
                         <el-step title="消息通知"></el-step>
@@ -209,7 +209,7 @@ export default {
         width: 159px;
     }
     .operateUpfilesLeft>div {
-        background: url(../../../assets/img/point.png) no-repeat;
+        background: url(../../../../assets/img/point.png) no-repeat;
         position: relative;
         top: 50px;
         left: 0;
