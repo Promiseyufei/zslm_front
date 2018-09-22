@@ -54,9 +54,9 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/operat/Ad'], resolve))
         },
         {
-            path: '/operate/data',
+            path: '/operate/share',
             name: '分享数据',
-            component: resolve =>void(require(['@/views/admin/operat/data'], resolve))
+            component: resolve =>void(require(['@/views/admin/operat/Share'], resolve))
 
         },
         // 信息发布

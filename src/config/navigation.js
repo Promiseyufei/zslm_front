@@ -138,6 +138,7 @@ export default [
             }
         ]
     },
+    
     {
         "index" :5,
         "title": "消息管理",
@@ -189,7 +190,7 @@ export default [
                     {
                         "name":"分享数据",
                         "index":1,
-                        "url":"/operate/data"
+                        "url":"/operate/share"
                     }
                 ]
             }

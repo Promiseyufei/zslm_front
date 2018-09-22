@@ -11,8 +11,13 @@ export default {
             type: type
         });
     },
+<<<<<<< HEAD
     confirm: function(callBack, catchBack, msg, type, data) {
         msg = typeof msg !== 'undefined' ? msg : '是否取消操作？';
+=======
+    confirm: function(callBack, catchBack, msg, type, data, ) {
+        msg = typeof msg !== 'undefined' ? msg : '是否确认操作？';
+>>>>>>> 0c95373d954fd57108f53d2e186b934e7069d68f
         type = typeof type !== 'undefined' ? type : '提示';
         data = typeof data !== 'undefined' ? data : {
             confirmButtonText: '确定',
