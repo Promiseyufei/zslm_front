@@ -143,7 +143,7 @@
 	export default {
 	    data() {
 	        return {
-	        	majorname:'',
+	        	majorname:0,
 	        	// majorname:'',
 	        	butname:'',
 	        	count:100,

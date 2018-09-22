@@ -1,7 +1,6 @@
 <template>
 	<div class="filesAll">
 		<div class="filesTop">
-      <!-- <Click></Click> -->
       <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i" @click.native = "query"></operateNav>  
       <el-button size="small" type="primary" class="click">点击上传</el-button>
     </div>
@@ -10,39 +9,31 @@
         <p class="screen">筛选查询</p>
         <el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh">刷新</el-button>
   	</div>
-      <!-- <div class="dataquery">
-        <i class=""></i>
-        <p>筛选查询</p>
-        <div></div>
-        <el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettable_info">刷新</el-button>
-      </div> -->
     <div class="filesForm">
     	<div>
         <el-form class="input" ref="filesForm" :model="filesForm" label-width="80px">
           <el-form-item label="文件名称">
-            <el-input v-model="filesForm.name1" placeholder="请输入文件名称"></el-input>
+            <el-input size="medium" v-model="filesForm.name1" placeholder="请输入文件名称"></el-input>
           </el-form-item>
           <el-form-item label="院校名称">
-            <el-input v-model="filesForm.name2" placeholder="请输入院校名称"></el-input>
+            <el-input size="medium" v-model="filesForm.name2" placeholder="请输入院校名称"></el-input>
           </el-form-item>
           <el-form-item label="文件年份">
             <div class="block">
               <el-date-picker
-                v-model="filesForm.year" type="year" placeholder="选择年">
+                v-model="filesForm.year" type="year" placeholder="选择年" size="medium">
               </el-date-picker>
            </div>
             </el-form-item>
           <el-form-item label="文件类型">
-            <el-select v-model="filesForm.type" placeholder="请选择">
+            <el-select size="medium" v-model="filesForm.type" placeholder="请选择">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
           </el-form-item>
         </el-form>  
       </div>
-      <!-- <div> -->
         <el-button class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button> 
-      <!-- </div> -->
     </div>
 	    <div class="filesSelect">
 	  		<i class="el-icon-tickets"></i>
@@ -51,16 +42,7 @@
           <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
         </el-select>
-        <!-- <el-select class="filesSelect-sel" v-model="value" clearable placeholder="请选择">
-          <el-option
-            v-for="item in options3"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select> -->
 	  	</div>
-	  	<!-- <Table ref = "table"></Table> -->
       <div class="file-table">
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column type="selection" width="55"></el-table-column>
@@ -78,8 +60,8 @@
         </el-table>
       </div>
     <div class="footer">
-      <el-button type="primary" icon="el-icon-delete">删除</el-button>
-      <Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @query="query" @showbox="toshow2" :msg="msg"></Page>
+      <el-button type="primary" size="mini" icon="el-icon-delete">删除</el-button>
+      <Page :total="total" @pageChange="pageChange" @click.native = "query"></Page>
     </div>
 	</div>
 </template>
@@ -87,10 +69,12 @@
   export default {
   	data() {
   	    return {
-          msg:0,
-          currentPage4: 4,
-          number:0,
-          count:0,
+          /*分页*/
+          total:0,
+          searchContent:{
+              page:'',
+              limit:'',
+          },
           tabPosition: 'top',
           Page:'',
           isCollapse: true,
@@ -179,20 +163,14 @@
         // }
        },
   	methods: {
-      // handleSizeChange(val) {
-      //   console.log(`每页 ${val} 条`);
-      // },
-      // handleCurrentChange(val) {
-      //   console.log(`当前页: ${val}`);
-      // },
   		//动态更新文件管理首页的id
   		toshow: function (i) {
         this.i = i;
         console.log(this.i);
       },
-      toshow2(msg) {
-          this.msg = msg;
-          // console.log(this.msg);
+      pageChange(msg) {
+          this.searchContent.page = msg.page;
+          this.searchContent.limit = msg.limit;
       },
       query: function (){
         var that = this;
@@ -205,11 +183,9 @@
         })
         .then(function (response) {
             var res = response.data;
-            // console.log(res.count,123);
             if (res.code == 0) {
                 that.tableData =res.data;
-                // that.number = Math.ceil(res.count/that.value2);
-                that.count = res.count;
+                that.total = res.total;
                 // console.log(that.number);
             };
             console.log(that.tableData);
@@ -262,8 +238,6 @@
   /*上传按钮*/
   .el-button--primary {
       padding: 9px 15px;
-      width: 80px;
-      height: 35px;
       background-color: #1ABC9C;
       border-color: #1ABC9C;
   }
@@ -287,12 +261,8 @@
       font-family:'Tahoma';
   }
   .el-table--border {
-      /*margin-left: -5px;*/
       border-right: none;
       border-bottom: none;
-  }
-  .el-button--text, .el-button--text.is-disabled, .el-button--text.is-disabled:focus, .el-button--text.is-disabled:hover, .el-button--text:active {
-      /*margin-left: 20px;*/
   }
   .el-button--text[data-v-09f3e8a6] {
     margin: 0 15px;

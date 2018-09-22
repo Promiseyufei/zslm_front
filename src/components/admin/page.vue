@@ -1,40 +1,42 @@
 <template>
-	<!-- <div class="block">
-	  <span class="demonstration"></span>
-	  <el-pagination
-	    layout="prev, pager, next" :page-size="number" :total="count">
-	  </el-pagination>
-	</div> -->
-	<el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="number"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="count">
-      </el-pagination>
+	<el-pagination samll @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.page" :page-sizes="pageSizes" :page-size="page.limit" layout="total, sizes, prev, pager, next, jumper" :total = "total">
+    </el-pagination>
 </template>
 
 <script>
 export default {
 	data() {
 		return {
-			// currentPage4,
-		}
+			pageSizes:[100,200,300,400],
+			page:{
+				page:1,//默认第一页
+				limit:100//默认显示一百条
+			},
+		};
 	},
-    props:["count","number","currentPage4"],
+	props:["total"],
+    // props:{
+    // 	total: {
+    // 		type: Number
+    // 	}
+    // },
     methods:{
+    	//每页总条数变更
     	handleSizeChange(val) {
-    		this.$emit('query');
-    		this.$emit('gettable_info');
+    		this.page.limit = val;
+    		this.$emit('pageChange',this.page);
 	    },
+
+	    //当前页码变更
 	    handleCurrentChange(val) { 
-	    	this.$emit('query');
-	    	this.$emit('gettable_info');
-	    	// console.log(`当前页: ${val}`);
-	    	this.$emit('showbox',val);
+	    	this.page.page = val;
+	    	this.$emit('pageChange',this.page);
+	    	console.log(this.total,123123);
 	    },
+    },
+    mounted(){
+            // this.handleCurrentChange();
+            // console.log(this.total);
     }
 }
 </script>

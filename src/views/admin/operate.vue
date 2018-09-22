@@ -305,6 +305,12 @@ export default {
         }
     },
     mounted(){
+        this.confirm(() => {
+            console.log('this is callback');
+        }, () => {
+            console.log('this is catchback');
+        },'确定删除吗', 'error');
+        // this.message(true, 'test', 'error');
       this.getInformationType();
       
     }

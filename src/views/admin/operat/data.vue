@@ -10,33 +10,28 @@
 			<i class="el-icon-search"></i>
 			<p>筛选查询</p>
 			<!-- <div></div> -->
-			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettable_info">刷新</el-button>
+			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettableInfo">刷新</el-button>
 		</div>
 		<div class="dataform">
 			<el-form class="dataform-input" ref="filesForm" :model="filesForm" label-width="80px">
 				<el-form-item label="内容类型">
-				    <el-select v-model="filesForm.type" placeholder="全部">
+				    <el-select size="medium" v-model="filesForm.type" placeholder="全部">
 				      <el-option label="区域一" value="shanghai"></el-option>
 				      <el-option label="区域二" value="beijing"></el-option>
 				    </el-select>
 			    </el-form-item>
 		        <el-form-item label="关键字">
-		          <el-input v-model="filesForm.name1" placeholder="请输入关键字"></el-input>
+		          <el-input size="medium" v-model="filesForm.name1" placeholder="请输入关键字"></el-input>
 		        </el-form-item>
 	        	<!-- </el-form-item> -->
 	      	</el-form>
-	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native = "gettable_info">查询</el-button>
+	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native = "gettableInfo">查询</el-button>
 		</div>
 		<div class="datalist">
 			<i class="el-icon-tickets"></i>
 			<p>内容列表</p>
-			<div></div>
-			<!-- <el-select size="mini" class="datalist-selectone" v-model="value" placeholder="请选择">
-			    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-			    </el-option>
-			</el-select> -->
 			<el-select size="mini" class="datalist-selecttwo" v-model="value" placeholder="默认顺序">
-			    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettable_info">
+			    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettableInfo">
 			    </el-option>
 			</el-select>
 		</div>
@@ -47,8 +42,9 @@
 				</div>
 			</el-table>
 		</div>
-		<div class="footer"> 
-	  		<Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @gettable_info="gettable_info" @showbox="toshow2" :msg="msg"></Page>
+		<div class="footer">
+			<div></div>
+	  		<Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
 		</div>
 	</div>
 </template>
@@ -57,10 +53,16 @@
 	export default {
 	    data(){
 	    	return {
-	    		currentPage4:2,
-	    		msg:0,
-	    		count:0,
-	    		number:0,
+	    		/*分页*/
+                total:0,
+                searchContent:{
+                    page:'',
+                    limit:'',
+                },
+	    		// currentPage4:2,
+	    		// msg:0,
+	    		// count:0,
+	    		// number:0,
 		        value: '',
 	    		tableTop:[
 		          {property:'content',label:'分享内容',width:650},
@@ -106,11 +108,11 @@
 		    };
 	    },
 	    methods: {
-		    toshow2(msg) {
-		        this.msg = msg;
-		        console.log(this.msg);
-		    },
-	    	gettable_info: function (){
+		    pageChange(msg) {
+                this.searchContent.page = msg.page;
+                this.searchContent.limit = msg.limit;
+            },
+	    	gettableInfo: function (){
 	        	var that = this;
 		        axios.post('/admin/data/getdata-table',{
 		        	type: that.filesForm.type,
@@ -121,7 +123,7 @@
 		            var res = response.data;
 		            if (res.code == 0) {
 		            	that.Datatable = res.data;
-		            	that.count = res.count;
+		            	that.total = res.total;
 		            };
 		            // that.pages = response.datas.data;
 		        })
@@ -134,7 +136,7 @@
 	      }
 	    },
 		mounted() {
-			this.gettable_info();
+			this.gettableInfo();
 			// this.getPage();
 		},
 	}
@@ -177,8 +179,12 @@
 		border: 1px solid #E4E4E4;
 		text-align: right;
 		width: 1500px;
+		height: 50px;
 		background-color: #fdfdfe;
-		margin: 0 auto;
+		margin: 20px auto;
+		display: flex;
+    	align-items:center;
+    	justify-content:space-between;
 	}
 	.el-table thead {
 	    background: #f9fafc;
@@ -208,7 +214,7 @@
 		display: flex;
 		position: relative;
 		width: 1500px;
-		margin: 20px auto;
+		margin: 0 auto 10px;
 	}
 	.dataquery-refresh {
 		position: absolute;

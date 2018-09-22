@@ -7,13 +7,13 @@
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
-            <el-button type="primary">新建</el-button>
+            <el-button>新建</el-button>
         </div>
         <div class="majorlist-query">
             <i class=""></i>
             <p>筛选查询</p>
             <div></div>
-            <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native = "gettable_info">刷新</el-button>
+            <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native = "gettableInfo">刷新</el-button>
         </div> 
         <div class="majorlist-form">
             <el-form class="majorlist-input" label-width="80px">
@@ -33,14 +33,14 @@
                     </el-select>
                 </el-form-item>
             </el-form>
-            <el-button size="mini" type="primary" icon="el-icon-search" class="majorlist-queryrefresh" @click.native = "gettable_info">查询</el-button>
+            <el-button size="mini" type="primary" icon="el-icon-search" class="majorlist-queryrefresh" @click.native = "gettableInfo">查询</el-button>
         </div>
         <div class="majorlist-list">
             <i class=""></i>
             <p>内容列表</p>
             <div></div>
             <el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="默认顺序">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettable_info">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettableInfo">
                 </el-option>
             </el-select>
         </div>
@@ -67,11 +67,7 @@
                 <el-table-column label="操作" width="210">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
-                            <i class="el-icon-search"></i>
-                            <i class="el-icon-edit-outline"></i>
-                            <i class="el-icon-delete"></i>
-                            <i class="el-icon-refresh"></i>
-                            <i class="el-icon-tickets"></i>
+                            <i v-for="(val, index) in iconname" :key="index" :class="val.name"></i>
                         </div>
                     </template>
                 </el-table-column>
@@ -84,7 +80,7 @@
             </el-table>
         </div>
         <div class="footer"> 
-            <Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @gettable_info="gettable_info" @showbox="toshow2" :msg="msg"></Page>
+            <Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
         </div>
     </div>
 </template>
@@ -93,10 +89,16 @@
     export default {
         data(){
             return{
-                currentPage4:2,
-                msg:0,
-                count:0,
-                number:0,
+                /*分页*/
+                total:0,
+                searchContent:{
+                    page:'',
+                    limit:'',
+                },
+                // currentPage4:2,
+                // msg:0,
+                // count:0,
+                // number:0,
                 tableTop:[
                   {prop:'name',label:'院校专业名称',width:580},
                   {prop:'project',label:'招生项目',width:100},
@@ -111,6 +113,13 @@
                   value2:true,
                   value3:'',
                 }],
+                iconname:[
+                    {name:'el-icon-search'},
+                    {name:'el-icon-edit-outline'},
+                    {name:'el-icon-delete'},
+                    {name:'el-icon-refresh'},
+                    {name:'el-icon-tickets'},
+                ],
                 value:'',
                 // input:'',
                 name:'',
@@ -133,9 +142,9 @@
             }
         },
         methods:{
-            toshow2(msg) {
-                this.msg = msg;
-                console.log(this.msg);
+            pageChange(msg) {
+                this.searchContent.page = msg.page;
+                this.searchContent.limit = msg.limit;
             },
             handleCurrentChange(val) {
                 this.currentRow = val;
@@ -172,7 +181,7 @@
                 this.input = val;
                 console.log(this.TableValue);
             },
-            gettable_info:function(){
+            gettableInfo:function(){
                 var that = this;
                 axios.post('/admin/UniversMajorList/gettable-info',{
                     // type: that.filesForm.type,
@@ -184,7 +193,7 @@
                     var res = response.data;
                     if (res.code == 0) {
                         that.majorlisttable = res.data;
-                        that.count = res.count;
+                        that.total = res.total;
                         // that.weight = res.weight;
                         // that.id = res.id;
                         // that.input = res.input;
@@ -197,7 +206,7 @@
             }
         },
         mounted(){
-            this.gettable_info();
+            this.gettableInfo();
         },
     }
 
@@ -304,7 +313,7 @@
         margin: 0 auto;
     }
     .majorlist-button {
-        margin: 0 auto;
+        margin: 20px auto;
         width: 1500px;
     }
     .span {

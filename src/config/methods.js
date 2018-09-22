@@ -11,7 +11,7 @@ export default {
             type: type
         });
     },
-    confirm: function(callBack, catchBack, msg, type, data, ) {
+    confirm: function(callBack, catchBack, msg, type, data) {
         msg = typeof msg !== 'undefined' ? msg : '是否取消操作？';
         type = typeof type !== 'undefined' ? type : '提示';
         data = typeof data !== 'undefined' ? data : {
