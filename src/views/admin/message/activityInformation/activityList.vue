@@ -10,8 +10,7 @@
             <el-button type="primary">新建</el-button>
         </div>
         <div class="majorlist-query">
-            <i class="el-icon-search"></i>
-            <p>筛选查询</p>
+            <i class="el-icon-search"></i            <p>筛选查询</p>
             <div></div>
             <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native = "gettableInfo">刷新</el-button>
         </div> 
