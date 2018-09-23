@@ -10,7 +10,8 @@
             <el-button type="primary">新建</el-button>
         </div>
         <div class="majorlist-query">
-            <i class="el-icon-search"></i            <p>筛选查询</p>
+            <i class="el-icon-search"></i>
+            <p>筛选查询</p>
             <div></div>
             <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native = "gettableInfo">刷新</el-button>
         </div> 
@@ -85,7 +86,7 @@
             </el-table>
         </div>
         <div class="footer"> 
-            <el-button type="primary" size="mini" icon="el-icon-delete">删除</el-button>
+            <el-button size="mini" icon="el-icon-delete">删除</el-button>
             <Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
         </div>
     </div>
@@ -225,7 +226,7 @@
     .majorlist-table .el-table th.is-leaf {
         text-align: center;
     }
-    .footer .el-button--primary {
+    .footer .el-button--mini {
       margin: 0 0 0 20px;
     }
     .majorlist-table .el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {

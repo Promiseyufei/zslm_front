@@ -74,47 +74,87 @@ export default [
     {
         "index" :3,
         "title": "信息发布",
-        "groups":[
+        "options":[
             {
-                "title": "分组一",
-                "options":[
-                    {
-                        "name":"选项一",
-                        "index":1,
-                        "url":"/selectUnivers"
-                    },
-                    {
-                        "name":"选项二",
-                        "index":2,
-                        "url":"/universMajorList"
-                    },
-                    {
-                        "name":"选项三",
-                        "index":3,
-                        "url":"/activityList"
-                    }
-                ]
+                "name":"院校专业",
+                "index":1,
+                "url":"/selectUnivers"
             },
             {
-                "title": "分组二",
-                "options":[
-                    {
-                        "name":"选项一",
-                        "index":1,
-                        "url":"/operate"
-                    },
-                    {
-                        "name":"选项二",
-                        "index":2,
-                        "url":"/operate"
-                    },  
-                    {
-                        "name":"选项三",
-                        "index":3,
-                        "url":"/message/hostuniversmajor"
-                    }
-                ]
-            }
+                "name":"活动信息",
+                "index":2,
+                "url":"/selectUnivers"
+            },
+            {
+                "name":"辅导机构",
+                "index":3,
+                "url":"/selectUnivers"
+            },
+            {
+                "name":"资讯发布",
+                "index":4,
+                "url":"/selectUnivers"
+            },
+            // {
+            //     "title": "活动信息",
+            //     "options":[
+            //         {
+            //             "name":"选项一",
+            //             "index":1,
+            //             "url":"/operate"
+            //         },
+            //         {
+            //             "name":"选项二",
+            //             "index":2,
+            //             "url":"/operate"
+            //         },  
+            //         {
+            //             "name":"选项三",
+            //             "index":3,
+            //             "url":"/message/hostuniversmajor"
+            //         }
+            //     ]
+            // },
+            // {
+            //     "title": "辅导机构",
+            //     "options":[
+            //         {
+            //             "name":"选项一",
+            //             "index":1,
+            //             "url":"/operate"
+            //         },
+            //         {
+            //             "name":"选项二",
+            //             "index":2,
+            //             "url":"/operate"
+            //         },  
+            //         {
+            //             "name":"选项三",
+            //             "index":3,
+            //             "url":"/message/hostuniversmajor"
+            //         }
+            //     ]
+            // },
+            // {
+            //     "title": "资讯发布",
+            //     "options":[
+            //         {
+            //             "name":"选项一",
+            //             "index":1,
+            //             "url":"/operate"
+            //         },
+            //         {
+            //             "name":"选项二",
+            //             "index":2,
+            //             "url":"/operate"
+            //         },  
+            //         {
+            //             "name":"选项三",
+            //             "index":3,
+            //             "url":"/message/hostuniversmajor"
+            //         }
+            //     ]
+            // }
         ]
     },
     {
@@ -190,7 +230,7 @@ export default [
                     {
                         "name":"分享数据",
                         "index":1,
-                        "url":"/operate/share"
+                        "url":"/operate/sharedata"
                     }
                 ]
             }

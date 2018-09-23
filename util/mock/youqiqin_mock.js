@@ -5,17 +5,17 @@
 Mock.mock('/admin/files/getUploadFile',{
 	"code":0,
 	"data|4": [{
-				'name': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf' ,
-				'data': '@cword(1)',
-		        'major':'@cword(11)'+'MBA',
-		        'type': '@cword(4)',
-		        'year': '@date("yyyy")',
-		        'homepage': '@cword(1)',
-		        'time': '@datetime("yyyy-MM-dd  HH:mm:ss")',
+				'id':'@integer(1,10)',
+				'showweight': '@integer(1,10)' ,
+				'filename': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'universmajor':'@cword(11)'+'MBA',
+		        'filetype': '@cword(4)',
+		        'fileyear': '@date("yyyy")',
+		        'showhomepage': '@cword(1)',
+		        'onlinetime': '@datetime("yyyy-MM-dd  HH:mm:ss")',
 			},
 			],
 	"total":'@integer(1000, 2000)',
-	
 })
 
 /*files
@@ -226,4 +226,25 @@ Mock.mock('/admin/choiceactivity/getcityInfo',{
 		}
 	],
 	"total":'@integer(1000, 2000)',
+})
+
+
+/*informationList
+*活动-列表
+*获取表格内容
+*/
+Mock.mock('/message/informationList/gettableInfo',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(1, 100)',
+				"showweight":'@integer(1, 100)',
+				"informTitle":'@cword(12)',
+				'informState': '@cword(4)',
+		        'informSource':'@cword(4)',
+		        'onlineTime':'@datetime("yyyy-MM-dd  HH:mm:ss")',
+			},
+			],
+	"total":'@integer(1000, 2000)',
+	// "count":'@integer(1000, 2000)',
+	
 })

@@ -54,9 +54,9 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/operat/Ad'], resolve))
         },
         {
-            path: '/operate/data',
+            path: '/operate/sharedata',
             name: '分享数据',
-            component: resolve =>void(require(['@/views/admin/operat/data'], resolve))
+            component: resolve =>void(require(['@/views/admin/operat/sharedata'], resolve))
 
         },
         // 信息发布
@@ -104,6 +104,11 @@ let admin_router = {
             path: '/message/choiceactivity',
             name: '信息管理-辅导-相关活动-添加活动',
             component: resolve =>void(require(['@/views/admin/message/counselling/choiceactivity'], resolve))
+        },
+        {
+            path: '/message/informationList',
+            name: '信息管理-资讯发布-资讯-列表',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/informationList'], resolve))
         },
         {
             path: '/test',
