@@ -294,7 +294,7 @@
         width: 200px;
         height: 50px;
         display: flex;
-        background: url(../../../assets/img/point.png) no-repeat;
+        background: url(../../../../assets/img/point.png) no-repeat;
         background-size: 100% 100%;
         z-index: 1;
     }

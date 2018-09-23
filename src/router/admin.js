@@ -54,9 +54,9 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/operat/Ad'], resolve))
         },
         {
-            path: '/operate/share',
+            path: '/operate/data',
             name: '分享数据',
-            component: resolve =>void(require(['@/views/admin/operat/Share'], resolve))
+            component: resolve =>void(require(['@/views/admin/operat/data'], resolve))
 
         },
         // 信息发布
@@ -96,14 +96,14 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/activityInformation/activityList'], resolve))
         },
         {
-            path: '/coachList',
+            path: '/message/coachList',
             name: '活动-列表',
-            component: resolve =>void(require(['@/views/admin/message/coachList'], resolve))
+            component: resolve =>void(require(['@/views/admin/message/counselling/coachList'], resolve))
         },
         {
-            path: '/choiceactivity',
+            path: '/message/choiceactivity',
             name: '活动-列表',
-            component: resolve =>void(require(['@/views/admin/message/choiceactivity'], resolve))
+            component: resolve =>void(require(['@/views/admin/message/counselling/choiceactivity'], resolve))
         },
         {
             path: '/test',
