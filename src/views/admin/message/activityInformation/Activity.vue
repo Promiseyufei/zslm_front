@@ -33,23 +33,20 @@
                                 </el-form-item>
                                 <el-form-item label="活动类型">
                                     <el-select v-model="ruleForm.type" placeholder="请选择活动类型" :disabled = "disabled">
-                                    <el-option label="提前面试" value="1"></el-option>
-                                    <el-option label="招生宣讲" value="2"></el-option>
-                                    <el-option label="高精会议" value="3"></el-option>
-                                    <el-option label="讲座论坛" value="4"></el-option>
+                                        <el-option label="提前面试" value="1"></el-option>
+                                        <el-option label="招生宣讲" value="2"></el-option>
+                                        <el-option label="高精会议" value="3"></el-option>
+                                        <el-option label="讲座论坛" value="4"></el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="活动省市">
                                     <el-select v-model="ruleForm.region" placeholder="请选择活动区域" :disabled = "disabled">
-                                    <el-option label="河南" value="shanghai"></el-option>
-                                    <el-option label="北京" value="beijing"></el-option>
+                                        <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="专业类型">
                                     <el-select v-model="ruleForm.spaticalType" placeholder="请选择专业类型" :disabled = "disabled">
-                                    <el-option label="原985" value="1"></el-option>
-                                    <el-option label="原211" value="2"></el-option>
-                                    <el-option label="双一流" value="3"></el-option>
+                                        <el-option :label="item.name" :value="item.id" v-for="(item, index) in major" :key="index"></el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="活动地址">
@@ -150,7 +147,7 @@
 
                     <!-- 完成按钮 -->
                     <div class="operateFinalUp">
-                      <el-button type="primary">下一步，编辑推荐信息</el-button>
+                      <el-button type="primary" @click="toAdvise">下一步，编辑推荐信息</el-button>
                     </div>
                 </div>    
             </div>
@@ -174,13 +171,19 @@ export default {
             name: "河南科技学院",
             type: "提前面试",
             region: "河南",
-            spaticalType: "原211",
+            spaticalType: "大数据",
             address: "河南省新乡市河南科技学院",
             time: "我们的招新活动将在2018年9月20日开始咯",
             startTime:"",
             endTime: "",
             status: "可报名",
         },
+        // 活动ID
+        id: 1,
+        // 省份字典
+        province: [],
+        // 专业字典
+        major: [],
         // 富文本编辑器
         editorContent:'',
         imgUrls: [],
@@ -203,20 +206,38 @@ export default {
         startChange2: function () {
             this.disabled2 = false;
         },
+        // 提交表单数据
         projectSubmit: function() {
             let self = this;
             // 提交表单数据，没有找到相应的接口
         },
+        // 跳转页面
+        toAdvise: function() {
+            this.$router.push('/message/advise/' + this.id);
+        },
+        // 得到省份字典
         getProvince: function() {
             let self = this;
             axios.post('/admin/information/getMajorProvincesAndCities',{
-
             })
             .then(function(response) {
                 var res = response.data;
                 if (res.code == 0) {
-                    that.majorlisttable = res.data;
-                    that.total = res.total;
+                    self.province = res.data;
+                };
+            })
+            .catch(function (error) {
+            });
+        },
+        // 得到专业字典
+        getMajor: function() {
+            let self = this;
+            axios.post('/admin/information/getMajorType',{
+            })
+            .then(function(response) {
+                var res = response.data;
+                if (res.code == 0) {
+                    self.major = res.data;
                 };
             })
             .catch(function (error) {
@@ -407,6 +428,8 @@ export default {
       },
     },
     mounted(){
+        this.getProvince();
+        this.getMajor();
         this.editor.customConfig.onchange = (html) => {
             this.editorContent = html;
         }

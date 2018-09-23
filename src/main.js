@@ -33,8 +33,8 @@ window.WangEditor = WangEditor
 //使用mock
 import Mock from 'mockjs'
 window.Mock = Mock
-// require('../util/mock/xuhong_mock.js')
-require('../util/mock/youqiqin_mock.js')
+require('../util/mock/xuhong_mock.js')
+// require('../util/mock/youqiqin_mock.js')
 Vue.config.productionTip = false
 
 
