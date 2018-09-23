@@ -94,7 +94,7 @@
                                 </el-form-item>
                                 
                                 <el-form-item>
-                                    <el-button type="primary" @click="" :disabled = "disabled">提交</el-button>
+                                    <el-button type="primary" @click="projectSubmit" :disabled = "disabled">提交</el-button>
                                 </el-form-item>
                             </el-form>
                         </div>
@@ -202,6 +202,19 @@ export default {
         },
         startChange2: function () {
             this.disabled2 = false;
+        },
+        projectSubmit: function() {
+            let self = this;
+            this.confirm(() => {
+                this.post('admin/operate/setBillboardWeight', {
+                    billboardId: id,
+                    weight:weight
+                }).then((response) => {
+                    (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+                })
+            }, () => {
+                this.message(true, '已取消修改', 'info');
+            })
         },
         // 提交修改数据
         messageSubmit: function() {

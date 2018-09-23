@@ -278,45 +278,28 @@ export default {
 						console.log(error);
 					});
 				},
+   
 
-<<<<<<< HEAD
-        // 获取所有一级页面名称
-        getInformationType: function() {
-          var self = this;
-          this.post('/admin/operate/getIndexListName', {})
-          .then(function (response) {
-            if (response.code == 0) {
-              self.banner = response.result;
-              self.radio2 = response.result[0].name;
-              self.i = response.result[0].id;
-              self.getIndexBanner();
-            };
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        },
-
-        // 获得页面的banner信息
-        getIndexBanner: function() {
-          var self = this;
-          var load =this.openFullScreen2();
-          this.post('/admin/operate/getIndexBanner', {
-            indexId: self.i,
-            btType: 0
-          })
-          .then(function (response) {
-            if (response.code == 0) {
-              self.tableData3 = response.result;
-              load.close();
-            };
-          })
-          .catch(function (error) {
-            console.log(error);
-            load.close();
-          });
-          
-        }
+				// 获得页面的banner信息
+				getIndexBanner: function() {
+				var self = this;
+				var load =this.openFullScreen2();
+				this.post('/admin/operate/getIndexBanner', {
+					indexId: self.i,
+					btType: 0
+				})
+				.then(function (response) {
+					if (response.code == 0) {
+					self.tableData3 = response.result;
+					load.close();
+					};
+				})
+				.catch(function (error) {
+					console.log(error);
+					load.close();
+				});
+				
+				}
     },
     mounted(){
         this.confirm(() => {
@@ -328,33 +311,6 @@ export default {
       this.getInformationType();
       
     }
-=======
-				// 获得页面的banner信息
-				getIndexBanner: function() {
-					var self = this;
-					var load =this.openFullScreen2();
-					this.post('/admin/operate/getIndexBanner', {
-						indexId: self.i,
-						btType: 0
-					})
-					.then(function (response) {
-						if (response.code == 0) {
-							self.tableData3 = response.result;
-							load.close();
-						};
-					})
-					.catch(function (error) {
-						console.log(error);
-						load.close();
-					});
-					
-				}
-		},
-		mounted(){
-			this.getInformationType();
-			
-		}
->>>>>>> 0c95373d954fd57108f53d2e186b934e7069d68f
 };
 </script>
 <style>
