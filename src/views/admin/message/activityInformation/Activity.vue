@@ -205,16 +205,22 @@ export default {
         },
         projectSubmit: function() {
             let self = this;
-            this.confirm(() => {
-                this.post('admin/operate/setBillboardWeight', {
-                    billboardId: id,
-                    weight:weight
-                }).then((response) => {
-                    (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
-                })
-            }, () => {
-                this.message(true, '已取消修改', 'info');
+            // 提交表单数据，没有找到相应的接口
+        },
+        getProvince: function() {
+            let self = this;
+            axios.post('/admin/information/getMajorProvincesAndCities',{
+
             })
+            .then(function(response) {
+                var res = response.data;
+                if (res.code == 0) {
+                    that.majorlisttable = res.data;
+                    that.total = res.total;
+                };
+            })
+            .catch(function (error) {
+            });
         },
         // 提交修改数据
         messageSubmit: function() {
