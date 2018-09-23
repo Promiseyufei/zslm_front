@@ -97,12 +97,12 @@ let admin_router = {
         },
         {
             path: '/message/coachList',
-            name: '活动-列表',
+            name: '辅导-列表',
             component: resolve =>void(require(['@/views/admin/message/counselling/coachList'], resolve))
         },
         {
             path: '/message/choiceactivity',
-            name: '活动-列表',
+            name: '信息管理-辅导-相关活动-添加活动',
             component: resolve =>void(require(['@/views/admin/message/counselling/choiceactivity'], resolve))
         },
         {
