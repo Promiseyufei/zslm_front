@@ -26,7 +26,7 @@
                         </div>
                         <div class="operateUpfilesRight">
                             <div class="messageBtn">
-                                <el-button type="primary" plain>跳过</el-button>
+                                <el-button type="primary" @click="toNotice" plain>跳过</el-button>
                                 <el-button type="primary" @click="">设置</el-button>
                             </div>
                             <!-- 主办院校logo -->
@@ -40,23 +40,59 @@
                         </div>
                     </div>
 
-                    <!-- 所有招生项目 -->
+                    <!-- 设置推荐活动 -->
                     <div class="operateUpfiles operateDown">
                         <div class="operateUpfilesLeft">
-                            <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;所有招生项目</div>
+                            <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;设置推荐活动</div>
                         </div>
                         <div class="operateUpfilesRight2">
                             <template>
-                                <el-radio-group v-model="radio" @change="valuechange">
+                                <el-radio-group v-model="setSwitch" @change="valuechange">
                                     <el-radio :label="1">自动设置</el-radio>
                                     <el-radio :label="2">手动设置</el-radio>
                                 </el-radio-group>
-                                <div v-if="">
-                                    123
+                                <div v-if="this.setSwitch == 2">
+                                    <div class="messageUpfilesRight2Nav">
+                                        <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                                        <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                                    </div>
+                                    <!-- 表格 -->
+                                    <messageTable :tableData3 = "tableData" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
                                 </div>
                             </template>
                         </div>
                     </div>
+
+                    <!-- 设置推荐院校专业 -->
+                    <div class="operateUpfiles operateDown">
+                        <div class="operateUpfilesLeft">
+                            <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;设置推荐院校专业</div>
+                        </div>
+                        <div class="operateUpfilesRight2">
+                            <template>
+                                <el-radio-group v-model="setSwitch2" @change="valuechange">
+                                    <el-radio :label="1">自动设置</el-radio>
+                                    <el-radio :label="2">手动设置</el-radio>
+                                </el-radio-group>
+                                <div v-if="this.setSwitch2 == 2">
+                                    <div class="messageUpfilesRight2Nav">
+                                        <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                                        <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                                    </div>
+                                    <!-- 表格 -->
+                                    <messageTable :tableData3 = "tableData2" :listTable="listTable2" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- 按钮 -->
+                    <div class="operateFinalUp">
+                        <el-button type="primary" @click="toBack" plain>返回上一步</el-button>
+                        <el-button type="primary" @click="toNotice">下一步，消息通知</el-button>
+                        <el-button type="primary" @click="">完成！</el-button>
+                    </div>
+
                 </div> 
             </div>
         </div>
@@ -74,10 +110,220 @@ export default {
         id: this.$route.params.id,
         imageUrl: '',
         messageSchool: "未设置主办院校",
-        radio: 1,
+        setSwitch: 1,
+        setSwitch2: 1,
+        listTable: [
+            {
+                prop: 'id',
+                lable: '编号',
+                width: "210px"
+            },
+            {
+                prop: "weight",
+                lable: "展示顺序",
+                width: "80px"
+            },
+            {
+                prop: "activity_type",
+                lable: "活动类型",
+                width: "210px"
+            },
+            {
+                prop: "active_name",
+                lable: "活动名称",
+                width: "319px"
+            },
+            {
+                prop: "create_time",
+                lable: "发布时间",
+                width: "210px"
+            }
+        ],
+        // 表格默认数据
+        tableData: [],
+        listTable2: [
+            {
+                prop: 'id',
+                lable: '编号',
+                width: "210px"
+            },
+            {
+                prop: "weight",
+                lable: "展示顺序",
+                width: "80px"
+            },
+            {
+                prop: "activity_type",
+                lable: "活动类型",
+                width: "210px"
+            },
+            {
+                prop: "active_name",
+                lable: "活动名称",
+                width: "319px"
+            },
+            {
+                prop: "create_time",
+                lable: "发布时间",
+                width: "210px"
+            }
+        ],
+        // 表格默认数据
+        tableData2: []
       }
     },
+    watch: {
+        setSwitch: function(val,oldval) {
+            if(val == 1&&oldval!=val) {
+                this.setActivity();
+            }
+            if(val == 2&&oldval!=val) {
+                this.getAdviseName();
+            }
+        },
+        setSwitch2: function(val,oldval) {
+            if(val == 1&&oldval!=val) {
+                this.setCollege();
+            }
+            if(val == 2&&oldval!=val) {
+                this.getAdviseCollege();
+            }
+        }
+    },
     methods: {
+        // 跳转到“活动列表”页面添加推荐活动
+        adviseAdd: function() {
+          this.$router.push('/operate/addAdvise/' + this.id);
+        },
+        
+        // 返回上一步
+        toBack: function() {
+            this.$router.push('/message/activity');
+        },
+
+        // 跳转到消息通知页面
+        toNotice: function() {
+            this.$router.push('/message/notice/' + this.id);
+        },
+
+        // 自动设置推荐活动
+        setActivity: function() {
+            let self = this;
+            axios.post('/admin/information/setAutomaticRecActivitys', {
+                regionId: self.id
+            })
+            .then(function (response) {
+                // console.log("测试123");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        // 自动设置院校专业
+        setCollege: function() {
+            let self = this;
+            axios.post('/admin/information/setAutomaticRecActivitys', {
+                regionId: self.id
+            })
+            .then(function (response) {
+                // console.log("测试123");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+        
+        // 得到所有的推荐活动
+        getAdviseName: function() {
+            var self = this;
+            //   var load = this.openFullScreen2();
+            axios.post('/admin/information/getAllActivitys', {
+                regionId: self.id
+            })
+            .then(function (response) {
+                var res = response.data;
+                if (res.code == 0) {
+                    self.tableData = res.data;
+                };
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        // 得到所有的推荐院校专业
+        getAdviseCollege: function() {
+            var self = this;
+            //   var load = this.openFullScreen2();
+            axios.post('/admin/information/getAllCollege', {
+                regionId: self.id
+            })
+            .then(function (response) {
+                var res = response.data;
+                if (res.code == 0) {
+                    self.tableData2 = res.data;
+                };
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        setOpAd: function(id, weight) {
+            console.log(123);
+            // this.confirm(() => {
+            //     this.post('/admin/operate/setAppoinInformationWeight', {
+            //         informationId: id,
+            //         weight:weight
+            //     }).then((response) => {
+            //         (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+            //     })
+            // }, () => {
+            //     this.tableData3[index].show_weight = this.TableValue;
+            //     this.message(true, '已取消修改', 'info');
+            // })
+        },
+        delAdvise: function(res, row) {
+            // this.confirm(() => {
+            //     this.post('/admin/operate/deleteAppoinInformation', {
+            //         RegionId: this.i,
+            //         InformationId: res
+            //     }).then((response) => {
+            //         if(response.code == 0) {
+            //             this.tableData3.splice(this.tableData3.indexOf(row), 1);
+            //             this.message(true, response.msg, 'success');
+            //         }
+            //         else {
+            //             this.message(true, response.msg, 'error');
+            //         }
+            //     })
+            // }, () => {
+            //     this.message(true, '已取消修改', 'info')
+            // })
+        },
+        // 清空所有推荐活动
+        activityDelete: function() {
+          var table = this.tableData3;
+          var arrayTableId = [];
+          for (var i = 0; i < table.length; i++) {
+            arrayTableId.push(table[i].id);
+          };
+          if(arrayTableId.length < 1) {
+            this.message(true, '没有要清空的数据', 'error');
+            return;
+          }
+          this.post('/admin/operate/deleteAppoinInformation', {
+              RegionId: this.id,
+              InformationId : arrayTableId
+          }).then((response) => {
+            if(response.code == 0) {
+                this.tableData3 = [];
+                this.message(true, response.msg, 'success');
+            }
+            else this.message(true, response.msg, 'error');
+          })
+        },
         startChange: function () {
             this.disabled = false;
         },
@@ -105,7 +351,8 @@ export default {
         }
     },
     mounted() {
-
+        this.setActivity();
+        this.setCollege();
     },
 };
 </script>
@@ -233,11 +480,17 @@ export default {
     * 右边当前banner内容样式
     */
     .operateUpfilesRight2 {
-      padding: 40px 90px 40px 80px;
+      padding: 50px 80px;
       width: 1170px;
     }
-    .operateUpfilesRight2 button {
-        margin-bottom: 20px;
+    .messageUpfilesRight2Nav {
+        margin: 20px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        color: #666;
+        font-size: 14px;
     }
     .operateFinalUp {
       text-align: center;

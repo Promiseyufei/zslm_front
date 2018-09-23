@@ -56,6 +56,45 @@ Mock.mock('/admin/information/getMajorType', {
   	]
 })
 
+/* message
+* 信息发布模块——活动信息——活动信息编辑——推荐信息
+* 得到所有的推荐活动
+*/
+Mock.mock('/admin/information/getAllActivitys', {
+	"code": 0,
+	'msg': Mock.mock('@cword(3, 5)'),
+	"data|4": [
+		{
+			'id|+1': 0,
+			"active_name": Mock.mock('@cword(3, 5)'),
+		}
+	]
+})
+
+/* message
+* 信息发布模块——活动信息——活动信息编辑——推荐信息
+* 获得所有的院校专业(在设置相关院校和推荐院校的手动设置时使用)
+*/
+Mock.mock('/admin/information/getAllCollege', {
+	"code": 0,
+	'msg': Mock.mock('@cword(3, 5)'),
+	"data|4": [
+		{
+			'id|+1': 0,
+			"active_name": Mock.mock('@cword(3, 5)'),
+		}
+	]
+})
+
+/* message
+* 信息发布模块——活动信息——活动信息编辑——推荐信息
+* 自动设置推荐活动
+*/
+Mock.mock('/admin/information/setAutomaticRecActivitys', {
+	"code": 0,
+	'msg': Mock.mock('@cword(3, 5)'),
+})
+
 /* Operate
 * 运营管理模块——广告位管理
 * 获取所有资讯类型

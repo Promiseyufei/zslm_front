@@ -8,6 +8,7 @@ import Table from './admin/table.vue'
 import Page from  './admin/page.vue'
 import operateNav from  './admin/OperateNav.vue'
 import OperateTable from  './admin/OperateTable.vue'
+import messageTable from  './admin/messageTable.vue'
 
 export default {
     Test, 
@@ -18,5 +19,6 @@ export default {
     Table,
     Page,
     operateNav,
-    OperateTable
+    OperateTable,
+    messageTable
 }

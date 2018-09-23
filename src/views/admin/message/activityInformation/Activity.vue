@@ -206,12 +206,13 @@ export default {
         startChange2: function () {
             this.disabled2 = false;
         },
+        // 提交表单数据
         projectSubmit: function() {
             let self = this;
             // 提交表单数据，没有找到相应的接口
         },
+        // 跳转页面
         toAdvise: function() {
-            // this.$router.push({name: '/message/advise',params:{ id:'1'}});
             this.$router.push('/message/advise/' + this.id);
         },
         // 得到省份字典

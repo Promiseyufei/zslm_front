@@ -77,12 +77,17 @@ let admin_router = {
         },
         {
             path: '/message/activity',
-            name: '编辑-活动信息',
+            name: '活动——编辑-活动信息',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Activity'], resolve))
         },
         {
+            path: '/message/notice/:id',
+            name: '消息通知',
+            component: resolve =>void(require(['@/views/admin/message/activityInformation/messageNotice'], resolve))
+        },
+        {
             path: '/message/advise/:id',
-            name: '编辑-推荐信息',
+            name: '活动——编辑-推荐信息',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Advise'], resolve))
         },
         {
