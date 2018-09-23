@@ -76,45 +76,30 @@ export default [
         "title": "信息发布",
         "groups":[
             {
-                "title": "分组一",
+                "title": "信息发布",
                 "options":[
                     {
-                        "name":"选项一",
+                        "name":"院校专业",
                         "index":1,
-                        "url":"/selectUnivers"
+                        "url":"/message/universMajorList"
                     },
                     {
-                        "name":"选项二",
+                        "name":"活动信息",
                         "index":2,
-                        "url":"/universMajorList"
+                        "url":"/message/activityList"
                     },
                     {
-                        "name":"选项三",
+                        "name":"辅导机构",
                         "index":3,
-                        "url":"/activityList"
+                        "url":"/message/coachList"
+                    },
+                    {
+                        "name":"资讯发布",
+                        "index":4,
+                        "url":"/message/informationList"
                     }
                 ]
             },
-            {
-                "title": "分组二",
-                "options":[
-                    {
-                        "name":"选项一",
-                        "index":1,
-                        "url":"/operate"
-                    },
-                    {
-                        "name":"选项二",
-                        "index":2,
-                        "url":"/operate"
-                    },  
-                    {
-                        "name":"选项三",
-                        "index":3,
-                        "url":"/message/hostuniversmajor"
-                    }
-                ]
-            }
         ]
     },
     {

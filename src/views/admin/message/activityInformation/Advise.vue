@@ -26,20 +26,12 @@
                         </div>
                         <div class="operateUpfilesRight">
                             <div class="messageBtn">
-                                <el-button type="primary" plain>主要按钮</el-button>
+                                <el-button type="primary" plain>跳过</el-button>
                                 <el-button type="primary" @click="">设置</el-button>
                             </div>
                             <!-- 主办院校logo -->
                             <div class="messageSchool">
-                                <el-upload
-                                  class="avatar-uploader"
-                                  action="/admin/message/setUploadPhoto"
-                                  :show-file-list="false"
-                                  :on-success="handleAvatarSuccess"
-                                  :before-upload="beforeAvatarUpload">
-                                  <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                                </el-upload>
+                                <img src="../../../../assets/img/collegeLogo.png" alt="">
                             </div>
 
                             <!-- 院校名称 -->
@@ -59,6 +51,9 @@
                                     <el-radio :label="1">自动设置</el-radio>
                                     <el-radio :label="2">手动设置</el-radio>
                                 </el-radio-group>
+                                <div v-if="">
+                                    123
+                                </div>
                             </template>
                         </div>
                     </div>
@@ -75,6 +70,8 @@ export default {
     },
     data() {
       return {
+        // 上个页面传过来的参数（xx活动的id）
+        id: this.$route.params.id,
         imageUrl: '',
         messageSchool: "未设置主办院校",
         radio: 1,

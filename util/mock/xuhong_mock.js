@@ -12,13 +12,51 @@ Mock.mock('/admin/operate/getInformationType', {
 		        "辅导机构列表页",
 		        "资讯频道首页",
 		        "活动列表页",
-		        "院校列表页"
+		        '院校列表页'
 		    ]
-		}
-	]
+    }
+  ]
 })
 
-/*Operate
+/* message
+* 信息发布模块——活动信息——活动信息编辑
+* 获得活动省市字典
+*/
+Mock.mock('/admin/information/getMajorProvincesAndCities', {
+	"code": 0,
+	'msg': Mock.mock('@cword(3, 5)'),
+	"data|50": [
+		{
+			'id|+1': 0,
+			"name|+1": [
+		        Mock.mock('@province')
+		    ]
+    	}	
+  	]
+})
+
+
+/* message
+* 信息发布模块——活动信息——活动信息编辑
+* 获得活动省市字典
+*/
+Mock.mock('/admin/information/getMajorType', {
+	"code": 0,
+	'msg': Mock.mock('@cword(3, 5)'),
+	"data|50": [
+		{
+			'id|+1': 0,
+			"name|+1": [
+		        "计算机科学与技术",
+		        "大数据",
+		        "教育学",
+		        '工美艺术'
+		    ]
+    	}	
+  	]
+})
+
+/* Operate
 * 运营管理模块——广告位管理
 * 获取所有资讯类型
 */
@@ -40,7 +78,7 @@ Mock.mock('/admin/operate/getAllPageListName',{
 	]
 })
 
-/*Operate
+/* Operate
 * 运营管理模块——首页
 * 获取一级页面的banner
 */
@@ -60,7 +98,7 @@ Mock.mock('/admin/operate/getIndexBanner',{
 	]
 })
 
-/*Operate
+/* Operate
 * 运营管理模块——资讯推荐添加
 * 获取咨询列表添加分页数据
 */
@@ -86,8 +124,6 @@ Mock.mock('/admin/operate/createBannerAd',{
 	"msg": Mock.mock('@cword(3, 5)')
 })
 
-
-
 // var date = function (option) {
 // 	// console.log(option.body);
 // 	var message = option.body;
@@ -101,8 +137,7 @@ Mock.mock('/admin/operate/createBannerAd',{
 
 
 
-
-/*Operate
+/* Operate
 * 运营管理模块——广告位管理
 * 上传一级页面的广告
 */
@@ -111,7 +146,7 @@ Mock.mock('/admin/operate/createPageBillboard',{
 	"msg": Mock.mock('@cword(3, 5)')
 })
 
-/*Operate
+/* Operate
 * 运营管理模块——首页
 * 删除一级页面的banner
 */
@@ -120,7 +155,7 @@ Mock.mock('/admin/operate/deleteBannerAd',{
 	"msg": Mock.mock('@cword(3, 5)')
 })
 
-/*Operate
+/* Operate
 * 运营管理模块——资讯推荐区
 * 获得指定区域的咨询内容
 */
@@ -143,7 +178,7 @@ Mock.mock('/admin/operate/getAppointRegionData',{
 		]
 })
 
-/*Operate
+/* Operate
 * 运营管理模块——资讯推荐区
 * 修改指定区域的名称
 */
@@ -161,7 +196,7 @@ Mock.mock('/putPictrue',{
 	
 })
 
-/*message
+/* message
 * 信息发布模块——信息推荐
 * 上传院校logo
 */
