@@ -1,10 +1,10 @@
-/*Operate
+/* Operate
 * 运营管理模块——首页
 * 获取所有资讯类型
 */
 Mock.mock('/admin/operate/getInformationType', {
 	"code": 0,
-	"msg": Mock.mock('@cword(3, 5)'),
+	'msg': Mock.mock('@cword(3, 5)'),
 	"data|4": [
 		{
 			'id|+1': 0,

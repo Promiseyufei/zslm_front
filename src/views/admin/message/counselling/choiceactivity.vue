@@ -166,21 +166,21 @@
             handleClick(tab, event) {
                 console.log(tab, event);
             },
-           gettableInfo: function(){
-                var that = this;
-                axios.post('/admin/choiceactivity/getcityInfo',{
-                  //后台参数，前台参数(传向后台)
-                  // butname: that.butname,
-                })
-                .then(function(response) {
-                    var res = response.data;
-                    if (res.code == 0) {
-                        that.majorlisttable = res.data;
-                        that.total = res.total;
-                    };
-                })
-                .catch(function (error) {
-                });
+            gettableInfo: function(){
+                    var that = this;
+                    axios.post('/admin/choiceactivity/getcityInfo',{
+                    //后台参数，前台参数(传向后台)
+                    // butname: that.butname,
+                    })
+                    .then(function(response) {
+                        var res = response.data;
+                        if (res.code == 0) {
+                            that.majorlisttable = res.data;
+                            that.total = res.total;
+                        };
+                    })
+                    .catch(function (error) {
+                    });
            },
         },
         mounted(){
