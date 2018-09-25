@@ -418,7 +418,7 @@ export default {
   width: 159px;
 }
 .operateUpfilesLeft>div {
-  background: url(../../../assets/img/point.png) no-repeat;
+  background: url(../../../../assets/img/point.png) no-repeat;
   position: relative;
   top: 50px;
   left: 0;

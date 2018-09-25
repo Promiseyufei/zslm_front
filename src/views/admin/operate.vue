@@ -278,32 +278,39 @@ export default {
 						console.log(error);
 					});
 				},
+   
 
 				// 获得页面的banner信息
 				getIndexBanner: function() {
-					var self = this;
-					var load =this.openFullScreen2();
-					this.post('/admin/operate/getIndexBanner', {
-						indexId: self.i,
-						btType: 0
-					})
-					.then(function (response) {
-						if (response.code == 0) {
-							self.tableData3 = response.result;
-							load.close();
-						};
-					})
-					.catch(function (error) {
-						console.log(error);
-						load.close();
-					});
-					
+				var self = this;
+				var load =this.openFullScreen2();
+				this.post('/admin/operate/getIndexBanner', {
+					indexId: self.i,
+					btType: 0
+				})
+				.then(function (response) {
+					if (response.code == 0) {
+					self.tableData3 = response.result;
+					load.close();
+					};
+				})
+				.catch(function (error) {
+					console.log(error);
+					load.close();
+				});
+				
 				}
-		},
-		mounted(){
-			this.getInformationType();
-			
-		}
+    },
+    mounted(){
+        this.confirm(() => {
+            console.log('this is callback');
+        }, () => {
+            console.log('this is catchback');
+        },'确定删除吗', 'error');
+        // this.message(true, 'test', 'error');
+      this.getInformationType();
+      
+    }
 };
 </script>
 <style>

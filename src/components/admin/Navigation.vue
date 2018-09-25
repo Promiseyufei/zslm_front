@@ -6,7 +6,7 @@
         <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="collapse" :unique-opened="unOpend">
             <el-submenu v-for="(item, index) in navigation" :key="index" :index="item.index + ''">
                 <template slot="title">
-                    <i class="el-icon-location"></i>
+                    <i :class="item.icon" aria-hidden="true"></i>
                     <span slot="title">{{ item.title }}</span>
                 </template>
                 <template v-if="typeof item.groups != 'undefined'">
