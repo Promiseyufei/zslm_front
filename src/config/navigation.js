@@ -88,7 +88,7 @@ export default [
                     {
                         "name":"活动信息",
                         "index":2,
-                        "url":"/selectUnivers"
+                        "url":"/message/activity"
                     },
                     {
                         "name":"辅导机构",
