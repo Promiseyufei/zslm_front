@@ -42,7 +42,21 @@ export default {
         .catch(function (error) {
         });
     },
-    
+
+    // 改变表格第一行的背景颜色
+    getRowClass: function({ row, column, rowIndex, columnIndex }){
+        if (rowIndex == 0) {
+            return 'background:#EFEFEF;text-align:center'
+        } else {
+            return ''
+        }
+    },
+
+    // 删除单个banner
+    deleteSingle: function(res, row) {
+        this.$emit('del',res, row);
+    },
+
     // 得到专业字典
     getMajor: function() {
         let self = this;

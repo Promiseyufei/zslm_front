@@ -64,11 +64,6 @@ export default {
                 this.$emit('setInfoRelation',this.tableData3[index].id, this.tableData3[index].show_weight);
             }
         },
-
-        // 删除单个banner
-        deleteSingle: function(res, row) {
-          this.$emit('del',res, row);
-        },
         
         handleClick: function (row) { 
             console.log(this.listTable[1].prop);
