@@ -179,7 +179,7 @@
                                             width="120">
                                             <template slot-scope="scope" >
                                                 <el-switch
-                                                    v-model="tableData[scope.$index].state" @click.native="changeState(tableData[scope.$index].weight, scope.$index)">
+                                                    v-model="tableData[scope.$index].state" @click.native="changeState(tableData[scope.$index].state, scope.$index)">
                                                 </el-switch>
                                             </template>
                                         </el-table-column>
@@ -207,7 +207,7 @@
 
                             <!-- 完成按钮 -->
                             <div class="operateFinalUp">
-                                <el-button type="primary">完成</el-button>
+                                <el-button type="primary" @click="collegeFinish">完成</el-button>
                             </div>
                         </div>
                     </div>
@@ -249,20 +249,29 @@
                 inputValue: '',
                 tableData: [],
                 TableValue: 0,
+                id: 0,
 	    	}
 	    },
 	    methods:{
+            collegeFinish: function() {
+                this.$router.push('/message/universMajorList');
+            },
 	    	startChange: function() {
 	    		this.disabled = false;
             },
-            changeState: function(weight,row) {
-                // axios.post('/deleteprojectDelete', {
-                    
-                // }).then((response) => {
-                //     if(response.code == 0) {
-                        
-                //     }
-                // })
+            changeState: function(state,row) {
+                let self = this;
+                // console.log(state,row);
+                axios.post('/admin/information/setProjectState', {
+                    projectId: row,
+                    type: 1,
+                    state: state
+                }).then((response) => {
+                    var res = response.data;
+                    if(res.code == 0) {
+                        self.message(true,"修改成功","success");
+                    }
+                })
             },
             // 删除专业方向标签
             handleClose(tag,disabled) {

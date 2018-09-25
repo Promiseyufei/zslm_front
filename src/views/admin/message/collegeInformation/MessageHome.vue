@@ -107,13 +107,13 @@
                       <el-button type="primary" @click="startChange2">开始编辑</el-button>
                     </el-form-item>
                     <el-form-item label="Title">
-                      <el-input v-model="ruleForm.name" :disabled = "disabled2"></el-input>
+                      <el-input v-model="form.name" :disabled = "disabled2"></el-input>
                     </el-form-item>
                     <el-form-item label="Keywords">
-                      <el-input v-model="ruleForm.name" :disabled = "disabled2"></el-input>
+                      <el-input v-model="form.name" :disabled = "disabled2"></el-input>
                     </el-form-item>
                     <el-form-item label="Description">
-                      <el-input v-model="ruleForm.name" :disabled = "disabled2"></el-input>
+                      <el-input v-model="form.name" :disabled = "disabled2"></el-input>
                     </el-form-item>
 
                     <el-form-item>
@@ -144,154 +144,159 @@ export default {
     },
     data() {
       return {
-          ruleForm: {
-            name: "河南科技学院",
-            authentication: 0,
-            type: 1,
-            year: 2018,
-            address: "河南省新乡市河南科技学院",
-            tell: "18303612352",
-            web:"http://qinghua.cn",
-            topic: "新生宿舍讨论",
-            schoolName: "大数据",
-            school: "河南科技学院",
-            typeAll: "2"
-          },
-          imgUrls: [],
-          // 省份字典
-          province: [],
-          // 专业字典
-          major: [],
-          isShow:true,
-          disabled:true,
-          disabled2:true,
-          fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+            form: {
+                Title: "",
+                Keywords: "",
+                Description: ""
+            },
+            ruleForm: {
+                name: "河南科技学院",
+                authentication: 0,
+                type: 1,
+                year: 2018,
+                address: "河南省新乡市河南科技学院",
+                tell: "18303612352",
+                web:"http://qinghua.cn",
+                topic: "新生宿舍讨论",
+                schoolName: "大数据",
+                school: "河南科技学院",
+                typeAll: "2"
+            },
+            imgUrls: [],
+            // 省份字典
+            province: [],
+            // 专业字典
+            major: [],
+            isShow:true,
+            disabled:true,
+            disabled2:true,
+            fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
         }
     },
     watch: {
-      ruleForm: function(val,oldval) {
-        console.log(123);
-      }
+        ruleForm: function(val,oldval) {
+            console.log(123);
+        }
     },
     methods:{
-      startChange: function () {
-        this.disabled = false;
-      },
-      startChange2: function () {
-        this.disabled2 = false;
-      },
-      //点击上传图片，弹出选择文件窗口
-      addPic: function(e) {
-          $('input[type=file]').trigger('click');
-          return false;
-      },
-      delImage: function(index) {
-          let vm = this;
-          vm.$vux.confirm.show({
-              content: '取消选择？',
-              onConfirm () {
-                  vm.imgUrls.splice(index, 1);
-                  vm.count--;
-                  vm.count<3?vm.isShow = true:vm.isShow;
-                  vm.$vux.toast.text('图片删除成功', 'top');
-              }
-          });
-      },
-      upload (e) {
-          let files = e.target.files || e.dataTransfer.files;
-          if (!files.length||this.count>2) {
-              return;
-          }
-          this.imgPreview(files[0],e);
-          this.count++;
-          this.count>=3?this.isShow = false:this.isShow;
-          this.message(true,'图片添加成功','');
-      },
-      imgPreview (file,e) {
-          let self = this;
-          let Orientation;
-          //去获取拍照时的信息，解决拍出来的照片旋转问题
-          Exif.getData(file, function(){
+        startChange: function () {
+            this.disabled = false;
+        },
+        startChange2: function () {
+            this.disabled2 = false;
+        },
+        //点击上传图片，弹出选择文件窗口
+        addPic: function(e) {
+            $('input[type=file]').trigger('click');
+            return false;
+        },
+        delImage: function(index) {
+            let vm = this;
+            vm.$vux.confirm.show({
+                content: '取消选择？',
+                onConfirm () {
+                    vm.imgUrls.splice(index, 1);
+                    vm.count--;
+                    vm.count<3?vm.isShow = true:vm.isShow;
+                    vm.$vux.toast.text('图片删除成功', 'top');
+                }
+            });
+        },
+        upload (e) {
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length||this.count>2) {
+                return;
+            }
+            this.imgPreview(files[0],e);
+            this.count++;
+            this.count>=3?this.isShow = false:this.isShow;
+            this.message(true,'图片添加成功','');
+        },
+        imgPreview (file,e) {
+            let self = this;
+            let Orientation;
+            //去获取拍照时的信息，解决拍出来的照片旋转问题
+            Exif.getData(file, function(){
 
-              Orientation = Exif.getTag(this, 'Orientation');
-          });
-          // 看支持不支持FileReader
-          if (!file || !window.FileReader) return;
+                Orientation = Exif.getTag(this, 'Orientation');
+            });
+            // 看支持不支持FileReader
+            if (!file || !window.FileReader) return;
 
-          if (/^image/.test(file.type)) {
-              // 创建一个reader
-              let reader = new FileReader();
-              // 将图片2将转成 base64 格式
-              reader.readAsDataURL(file);
-              // 读取成功后的回调
-              reader.onloadend = function () {
-                  let result = this.result;
-                  let img = new Image();
-                  img.src = result;
-                  //判断图片是否大于100K,是就直接上传，反之压缩图片
-                  if (this.result.length <= (100 * 1024)) {
-                      self.imgUrls.push(this.result);
-                  }else {
-                      img.onload = function () {
-                          let data = self.compress(img,Orientation);
-                          self.imgUrls.push(data);
-                      }
-                  }
-                  e.target.value = null;
-              }
-          }
+            if (/^image/.test(file.type)) {
+                // 创建一个reader
+                let reader = new FileReader();
+                // 将图片2将转成 base64 格式
+                reader.readAsDataURL(file);
+                // 读取成功后的回调
+                reader.onloadend = function () {
+                    let result = this.result;
+                    let img = new Image();
+                    img.src = result;
+                    //判断图片是否大于100K,是就直接上传，反之压缩图片
+                    if (this.result.length <= (100 * 1024)) {
+                        self.imgUrls.push(this.result);
+                    }else {
+                        img.onload = function () {
+                            let data = self.compress(img,Orientation);
+                            self.imgUrls.push(data);
+                        }
+                    }
+                    e.target.value = null;
+                }
+            }
 
-      },
-      rotateImg (img, direction,canvas) {
-          //最小与最大旋转方向，图片旋转4次后回到原方向
-          const min_step = 0;
-          const max_step = 3;
-          if (img == null)return;
-          //img的高度和宽度不能在img元素隐藏后获取，否则会出错
-          let height = img.height;
-          let width = img.width;
-          let step = 2;
-          if (step == null) {
-              step = min_step;
-          }
-          if (direction == 'right') {
-              step++;
-              //旋转到原位置，即超过最大值
-              step > max_step && (step = min_step);
-          } else {
-              step--;
-              step < min_step && (step = max_step);
-          }
-          //旋转角度以弧度值为参数
-          let degree = step * 90 * Math.PI / 180;
-          let ctx = canvas.getContext('2d');
-          switch (step) {
-              case 0:
-                  canvas.width = width;
-                  canvas.height = height;
-                  ctx.drawImage(img, 0, 0);
-                  break;
-              case 1:
-                  canvas.width = height;
-                  canvas.height = width;
-                  ctx.rotate(degree);
-                  ctx.drawImage(img, 0, -height);
-                  break;
-              case 2:
-                  canvas.width = width;
-                  canvas.height = height;
-                  ctx.rotate(degree);
-                  ctx.drawImage(img, -width, -height);
-                  break;
-              case 3:
-                  canvas.width = height;
-                  canvas.height = width;
-                  ctx.rotate(degree);
-                  ctx.drawImage(img, -width, 0);
-                  break;
-          }
-      },
-      compress(img,Orientation) {
+        },
+        rotateImg (img, direction,canvas) {
+            //最小与最大旋转方向，图片旋转4次后回到原方向
+            const min_step = 0;
+            const max_step = 3;
+            if (img == null)return;
+            //img的高度和宽度不能在img元素隐藏后获取，否则会出错
+            let height = img.height;
+            let width = img.width;
+            let step = 2;
+            if (step == null) {
+                step = min_step;
+            }
+            if (direction == 'right') {
+                step++;
+                //旋转到原位置，即超过最大值
+                step > max_step && (step = min_step);
+            } else {
+                step--;
+                step < min_step && (step = max_step);
+            }
+            //旋转角度以弧度值为参数
+            let degree = step * 90 * Math.PI / 180;
+            let ctx = canvas.getContext('2d');
+            switch (step) {
+                case 0:
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0);
+                    break;
+                case 1:
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, 0, -height);
+                    break;
+                case 2:
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, -width, -height);
+                    break;
+                case 3:
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, -width, 0);
+                    break;
+            }
+        },
+        compress(img,Orientation) {
           let canvas = document.createElement("canvas");
           let ctx = canvas.getContext('2d');
           //瓦片canvas
@@ -355,8 +360,8 @@ export default {
       },
     },
     mounted(){
-      this.getProvince();
-      this.getMajor();
+        this.getProvince();
+        this.getMajor();
     }
 };
 </script>
@@ -440,7 +445,7 @@ export default {
 
 
 /*
-* 右边当前banner内容样式
+* 右边内容样式
 */
 
 .operateUpfilesRight2 {

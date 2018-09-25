@@ -1,11 +1,11 @@
 <template>
     <div>
-    	<div>
-    		
+        <div>
+            优惠卷设置
 
-		    
-    	</div>
-    	
+            
+        </div>
+        
     </div>
 </template>
 
@@ -14,9 +14,9 @@ export default {
     components: {
     },
     data() {
-      return {
-
-      }
+        return {
+            
+        }
     },
     methods: {
 
@@ -33,4 +33,3 @@ export default {
 
 
 </style>
-

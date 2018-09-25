@@ -190,6 +190,15 @@ Mock.mock('/deleteprojectDelete',{
 	"msg": Mock.mock('@cword(3, 5)')
 })
 
+/* message
+* 信息发布模块——院校专业——信息编辑——招生信息编辑
+* 编辑招生项目的状态
+*/
+Mock.mock('/admin/information/setProjectState',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)')
+})
+
 // var date = function (option) {
 // 	// console.log(option.body);
 // 	var message = option.body;

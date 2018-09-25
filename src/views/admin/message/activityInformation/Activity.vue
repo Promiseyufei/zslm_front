@@ -504,7 +504,6 @@ export default {
     /*
     * 右边当前banner内容样式
     */
-
     .operateUpfilesRight2 {
       padding: 40px 90px 40px 80px;
       width: 1170px;
