@@ -10,7 +10,7 @@
 			<i class="el-icon-search"></i>
 			<p>筛选查询</p>
 			<!-- <div></div> -->
-			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettableInfo">刷新</el-button>
+			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native="gettableInfo">刷新</el-button>
 		</div>
 		<div class="dataform">
 			<el-form class="dataform-input" ref="filesForm" :model="filesForm" label-width="80px">
@@ -23,7 +23,7 @@
 		          <el-input v-model="filesForm.name1" placeholder="请输入关键字"></el-input>
 		        </el-form-item>
 	      	</el-form>
-	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native = "gettableInfo">查询</el-button>
+	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native="gettableInfo">查询</el-button>
 		</div>
 		<div class="datalist">
 			<i class="el-icon-tickets"></i>
@@ -45,7 +45,17 @@
 			</el-table>
 		</div>
 		<div class="footer"> 
-	  		<Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @gettable_info="gettableInfo" @showbox="toshow2" :msg="msg"></Page>
+	  		<div class="addadviseblock">
+                <el-pagination
+                	background
+                  	@size-change="handleSizeChange"
+                  	@current-change="handleCurrent"
+                  	:current-page.sync="currentSubscript"
+                  	:page-size="currentPage3"
+                  	layout="total, sizes, prev, pager, next, jumper"
+                  	:total="total">
+                </el-pagination>
+            </div>
 		</div>
 	</div>
 </template>
@@ -54,9 +64,12 @@
 	export default {
 	    data(){
 	    	return {
+				currentPage3:10,
+				total:100,
+				currentSubscript: 1,
 	    		currentPage4:2,
 	    		msg:0,
-	    		count:0,
+				count:0,
 	    		number:0,
 				value: '',
 
@@ -106,7 +119,7 @@
 				
 	    		filesForm: {
 		    		name1:'',
-		    		type:'',
+		    		type: 3,
 				},
 				
 		    	options: [
@@ -215,24 +228,38 @@
 		    };
 	    },
 	    methods: {
-
-			handleChange(value) {
-				console.log(this.selectedOptions2 == value);
+			//分页页数改变时触发
+			handleSizeChange: function(val) {
+				this.currentPage3 = val;
+				this.gettableInfo();
 			},
+			//分页下标改变时触发
+			handleCurrent:function(val) {
+				this.currentSubscript = val;
+				this.gettableInfo();
+			},
+
+			//排序方式改变时触发
+			handleChange(value) {
+				this.selectedOptions2 = value;
+				this.gettableInfo();
+			},
+
 
 		    toshow2(msg) {
 		        this.msg = msg;
 		        console.log(this.msg);
-		    },
+			},
+			
 	    	gettableInfo: function (){
-	        	var that = this;
+				var that = this;
 		        this.post('/admin/operate/getPagingData',{
-					// pageNumber: ,
-					// pageCount: ,
-					// sortType: ,
-					// riseOrDrop: ,
-					// contentType: ,
-					// titleKeyword: 
+					pageNumber: that.currentSubscript,
+					pageCount: that.currentPage3,
+					sortType: that.selectedOptions2[0],
+					riseOrDrop: that.selectedOptions2[1],
+					contentType: that.filesForm.type,
+					titleKeyword: that.filesForm.name1 == null ? '' : that.filesForm.name1 
 
 		        })
 		        .then(function (response) {
@@ -246,7 +273,8 @@
 		        });
 	      },
 	    	handleCurrentChange(val) {
-	        this.currentRow = val;
+				console.log(val);
+				this.currentRow = val;
 	      }
 	    },
 		mounted() {
