@@ -184,7 +184,7 @@
 		        .then(function (response) {
 		            var res = response.data;
 		            if (res.code == 0) {
-		                that.region = res.region;
+		                that.region = res.region;chongtu
 		                that.Name = res.Name;
 		                // console.log( that.region);
 		                that.count = res.count;

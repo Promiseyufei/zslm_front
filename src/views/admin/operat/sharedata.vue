@@ -10,7 +10,7 @@
 			<i class="el-icon-search"></i>
 			<p>筛选查询</p>
 			<!-- <div></div> -->
-			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettableInfo">刷新</el-button>
+			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native="gettableInfo">刷新</el-button>
 		</div>
 		<div class="dataform">
 			<el-form class="dataform-input" ref="filesForm" :model="filesForm" label-width="80px">
@@ -25,7 +25,7 @@
 		        </el-form-item>
 	        	<!-- </el-form-item> -->
 	      	</el-form>
-	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native = "gettableInfo">查询</el-button>
+	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native="gettableInfo">查询</el-button>
 		</div>
 		<div class="datalist">
 			<i class="el-icon-tickets"></i>
@@ -37,14 +37,23 @@
 		</div>
 		<div class="datatable">
 			<el-table ref="singleTable" :data="Datatable" border @current-change="handleCurrentChange" style="width: 100%">
-				<div v-for="val in tableTop">
+				<div v-for="(val, index) in tableTop" :key="index">
 					<el-table-column :type="val.type" :property="val.property" :label="val.label" :width="val.width"></el-table-column>
 				</div>
 			</el-table>
 		</div>
-		<div class="footer">
-			<div></div>
-	  		<Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
+		<div class="footer"> 
+	  		<div class="addadviseblock">
+                <el-pagination
+                	background
+                  	@size-change="handleSizeChange"
+                  	@current-change="handleCurrent"
+                  	:current-page.sync="currentSubscript"
+                  	:page-size="currentPage3"
+                  	layout="total, sizes, prev, pager, next, jumper"
+                  	:total="total">
+                </el-pagination>
+            </div>
 		</div>
 	</div>
 </template>
@@ -53,17 +62,35 @@
 	export default {
 	    data(){
 	    	return {
-	    		/*分页*/
-                total:0,
-                searchContent:{
-                    page:'',
-                    limit:'',
-                },
-	    		// currentPage4:2,
-	    		// msg:0,
-	    		// count:0,
-	    		// number:0,
-		        value: '',
+				currentPage3:10,
+				total:100,
+				currentSubscript: 1,
+	    		currentPage4:2,
+	    		msg:0,
+				count:0,
+	    		number:0,
+				value: '',
+
+				contentType:[
+					{
+						label: '院校专业主页',
+						value: 0
+					},
+					{
+						label: '活动详情',
+						value: 1
+					},
+					{
+						label: '资讯详情',
+						value: 2
+					},
+					{
+						label: '总量',
+						value:3
+					}
+					
+				],
+
 	    		tableTop:[
 		          {property:'content',label:'分享内容',width:650},
 	    		  {property:'id',label:'编号',width:100},
@@ -89,8 +116,9 @@
 		        currentRow:null,
 	    		filesForm: {
 		    		name1:'',
-		    		type:'',
-		    	},
+		    		type: 3,
+				},
+				
 		    	options: [
 			        {
 			          value: '选项3',
@@ -108,15 +136,39 @@
 		    };
 	    },
 	    methods: {
-		    pageChange(msg) {
-                this.searchContent.page = msg.page;
-                this.searchContent.limit = msg.limit;
-            },
+			//分页页数改变时触发
+			handleSizeChange: function(val) {
+				this.currentPage3 = val;
+				this.gettableInfo();
+			},
+			//分页下标改变时触发
+			handleCurrent:function(val) {
+				this.currentSubscript = val;
+				this.gettableInfo();
+			},
+
+			//排序方式改变时触发
+			handleChange(value) {
+				this.selectedOptions2 = value;
+				this.gettableInfo();
+			},
+
+
+		    toshow2(msg) {
+		        this.msg = msg;
+		        console.log(this.msg);
+			},
+			
 	    	gettableInfo: function (){
-	        	var that = this;
-		        axios.post('/admin/data/getdata-table',{
-		        	type: that.filesForm.type,
-		        	name1: that.filesForm.name1,
+				var that = this;
+		        this.post('/admin/operate/getPagingData',{
+					pageNumber: that.currentSubscript,
+					pageCount: that.currentPage3,
+					sortType: that.selectedOptions2[0],
+					riseOrDrop: that.selectedOptions2[1],
+					contentType: that.filesForm.type,
+					titleKeyword: that.filesForm.name1 == null ? '' : that.filesForm.name1 
+
 		        })
 		        .then(function (response) {
 		            // that.page++;
@@ -132,7 +184,8 @@
 		        });
 	      },
 	    	handleCurrentChange(val) {
-	        this.currentRow = val;
+				console.log(val);
+				this.currentRow = val;
 	      }
 	    },
 		mounted() {
