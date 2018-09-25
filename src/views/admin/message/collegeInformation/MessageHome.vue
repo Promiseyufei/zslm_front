@@ -33,31 +33,29 @@
                     <el-input v-model="ruleForm.name" :disabled = "disabled"></el-input>
                   </el-form-item>
                   <el-form-item label="专业认证">
-                    <el-checkbox-group v-model="ruleForm.authentication" :disabled = "disabled">
-                      <el-checkbox label="AMBA" name="type"></el-checkbox>
-                      <el-checkbox label="EQUIS" name="type"></el-checkbox>
-                      <el-checkbox label="AACSB" name="type"></el-checkbox>
-                      <el-checkbox label="CAMEA" name="type"></el-checkbox>
-                    </el-checkbox-group>
+                    <el-radio-group v-model="ruleForm.authentication" :disabled = "disabled">
+                        <el-radio label="AMBA">AMBA</el-radio>
+                        <el-radio label="EQUIS">EQUIS</el-radio>
+                        <el-radio label="AACSB">AACSB</el-radio>
+                        <el-radio label="CAMEA">CAMEA</el-radio>
+                      </el-radio-group>
                   </el-form-item>
                   <el-form-item label="院校性质">
-                    <el-checkbox-group v-model="ruleForm.type" :disabled = "disabled">
-                      <el-checkbox label="原985" name="type"></el-checkbox>
-                      <el-checkbox label="原211" name="type"></el-checkbox>
-                      <el-checkbox label="双一流" name="type"></el-checkbox>
-                    </el-checkbox-group>
+                    <el-radio-group v-model="ruleForm.type" :disabled = "disabled">
+                        <el-radio label="原985">原985</el-radio>
+                        <el-radio label="原211">原211</el-radio>
+                        <el-radio label="双一流">双一流</el-radio>
+                      </el-radio-group>
                   </el-form-item>
                   <el-form-item label="审批年限">
                     <el-select v-model="ruleForm.year" placeholder="请选择活动区域" :disabled = "disabled">
-                      <el-option label="2" value="2"></el-option>
-                      <el-option label="3" value="3"></el-option>
+                      <el-option :label="1990+index" :value="1990+index" v-for="(item, index) in 29" :key="index"></el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="所在省市">
-                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域" :disabled = "disabled">
-                      <el-option label="河南" value="shanghai"></el-option>
-                      <el-option label="北京" value="beijing"></el-option>
-                    </el-select>
+                  <el-form-item label="活动省市">
+                      <el-select v-model="ruleForm.region" placeholder="请选择活动区域" :disabled = "disabled">
+                          <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option>
+                      </el-select>
                   </el-form-item>
                   <el-form-item label="院校地址">
                     <el-input v-model="ruleForm.address" :disabled = "disabled"></el-input>
@@ -75,10 +73,9 @@
                     <el-input v-model="ruleForm.schoolName" :disabled = "disabled"></el-input>
                   </el-form-item>
                   <el-form-item label="专业类型">
-                    <el-select v-model="ruleForm.typeAll" placeholder="全部" :disabled = "disabled">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
+                      <el-select v-model="ruleForm.spaticalType" placeholder="请选择专业类型" :disabled = "disabled">
+                          <el-option :label="item.name" :value="item.id" v-for="(item, index) in major" :key="index"></el-option>
+                      </el-select>
                   </el-form-item>
                   <el-form-item label="官方微信">
                     <div style="padding: 0 5px 5px 8px">
@@ -151,7 +148,7 @@ export default {
             name: "河南科技学院",
             authentication: 0,
             type: 1,
-            year: 2,
+            year: 2018,
             address: "河南省新乡市河南科技学院",
             tell: "18303612352",
             web:"http://qinghua.cn",
@@ -161,6 +158,10 @@ export default {
             typeAll: "2"
           },
           imgUrls: [],
+          // 省份字典
+          province: [],
+          // 专业字典
+          major: [],
           isShow:true,
           disabled:true,
           disabled2:true,
@@ -179,12 +180,7 @@ export default {
       startChange2: function () {
         this.disabled2 = false;
       },
-      handleRemove:function(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview:function(file) {
-        console.log(file);
-      },
+      //点击上传图片，弹出选择文件窗口
       addPic: function(e) {
           $('input[type=file]').trigger('click');
           return false;
@@ -359,7 +355,8 @@ export default {
       },
     },
     mounted(){
-      
+      this.getProvince();
+      this.getMajor();
     }
 };
 </script>

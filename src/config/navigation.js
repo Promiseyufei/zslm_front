@@ -79,30 +79,30 @@ export default [
         "title": "信息发布",
         "groups":[
             {
-                "options": [
+                "title": "信息发布",
+                "options":[
                     {
                         "name":"院校专业",
                         "index":1,
-                        "url":"/selectUnivers"
+                        "url":"/message/universMajorList"
                     },
                     {
                         "name":"活动信息",
                         "index":2,
-                        "url":"/message/activity"
+                        "url":"/message/activityList"
                     },
                     {
                         "name":"辅导机构",
                         "index":3,
-                        "url":"/selectUnivers"
+                        "url":"/message/coachList"
                     },
                     {
                         "name":"资讯发布",
                         "index":4,
-                        "url":"/selectUnivers"
-                    }
+                        "url":"/message/informationList"
+                    },
                 ]
-            }
-
+            },
         ]
     },
     {

@@ -3,170 +3,200 @@
 		<div class="operateBox">
 			<div>
 				<el-breadcrumb separator="/">
-			        <el-breadcrumb-item>信息发布</el-breadcrumb-item>
-			        <el-breadcrumb-item>院校专业</el-breadcrumb-item>
-			        <el-breadcrumb-item>院校专业信息编辑</el-breadcrumb-item>
-			        <el-breadcrumb-item>招生项目信息编辑</el-breadcrumb-item>
-			    </el-breadcrumb>
+                    <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+                    <el-breadcrumb-item>院校专业</el-breadcrumb-item>
+                    <el-breadcrumb-item>院校专业信息编辑</el-breadcrumb-item>
+                    <el-breadcrumb-item>招生项目信息编辑</el-breadcrumb-item>
+                </el-breadcrumb>
 
-			    <!-- 步骤条 -->
-		        <div class="fileSteps">
-	            	<el-steps :active="2" align-center>
-	              		<el-step title="院校专业信息"></el-step>
-	              		<el-step title="招生项目信息"></el-step>
-	            	</el-steps>
-	          	</div>
+				<!-- 步骤条 -->
+                <div class="fileSteps">
+                    <el-steps :active="1.2" align-center>
+                            <el-step title="院校专业信息"></el-step>
+                            <el-step title="招生项目信息"></el-step>
+                    </el-steps>
+                </div>
 
-	          	<div>
-	          		<div class="operateUpfiles operateUp">
-	          			<div class="operateUpfilesLeft">
-			                <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;招生项目信息</div>
-			            </div>
-			            <div class="operateUpfilesRight">
-		          			<el-form ref="universityForm" :model="universityForm" label-width="110px" class="demo-ruleForm">
-		          				<div class="collegeBox">
-		          					<div class="college">
-				          				<div>
-				          					院校专业名称
-				          				</div>
-				          				<div>
-				          					{{ collegeInformation }}
-				          				</div>
-				          			</div>
-		          					<el-form-item>
-				                    	<el-button type="primary" @click="startChange">开始编辑</el-button>
-				                    </el-form-item>
-		          				</div>
-		          				
-			                    
-			          			<el-form-item label="院校专业名称" :rules="required">
-				                    <el-input v-model="universityForm.project" :disabled = "disabled"></el-input>
-				                </el-form-item>
-				                <el-form-item label="项目费用">
-				                    <el-input v-model="universityForm.free" :disabled = "disabled"></el-input>
-				                </el-form-item>
-				                <el-form-item label="费用筛选区间" prop="project" :rules="required">
-				                    <el-col :span="6">
-								      <el-form-item>
-								        <el-input v-model="universityForm.choice.low" style="width: 100%;" :disabled = "disabled"></el-input>
-								      </el-form-item>
-								    </el-col>
-								    <el-col class="line" :span="2" text-align: center>至</el-col>
-								    <el-col :span="6">
-								      <el-form-item>
-								        <el-input v-model="universityForm.choice.height" style="width: 100%;" :disabled = "disabled"></el-input>
-								      </el-form-item>
-								    </el-col>
-				                </el-form-item>		       
-				                <el-form-item label="招生名额" prop="project" size="medium">
-				                	<el-col :span="5">
-					                	<el-form-item>
-					                		<el-input v-model="universityForm.number" :disabled = "disabled"></el-input>
-					                	</el-form-item>				                	
-				                	</el-col>				                    
-				                </el-form-item>
-				                <el-form-item label="授课语言">
-				                    <el-col :span="5">
-					                	<el-form-item>
-					                		<el-input v-model="universityForm.language" placeholder="请输入..." :disabled = "disabled"></el-input>
-					                	</el-form-item>				                	
-				                	</el-col>		
-				                </el-form-item>
-				                <el-form-item label="学制">
-				                    <el-input v-model="universityForm.term" :disabled = "disabled"></el-input>
-				                </el-form-item>
-				                <el-form-item label="报考条件">
-				                    <el-input v-model="universityForm.item" :disabled = "disabled"></el-input>
-				                </el-form-item>
-				                <el-form-item label="分数线描述">
-				                    <el-input v-model="universityForm.fraction" :disabled = "disabled"></el-input>
-				                </el-form-item>
-				                <el-form-item label="分数线类型" :rules="required">
-				                    <el-radio-group v-model="universityForm.fractionKind">
-								      <el-radio label="A线"></el-radio>
-								      <el-radio label="B线"></el-radio>
-								      <el-radio label="自主划线"></el-radio>
-								    </el-radio-group>
-				                </el-form-item>
-				                <el-form-item label="统招模式" :rules="required">
-				                    <el-radio-group v-model="universityForm.fractionDay">
-								      <el-radio label="全日制"></el-radio>
-								      <el-radio label="非全日制"></el-radio>
-								      <el-radio label="中外合作"></el-radio>
-								    </el-radio-group>
-				                </el-form-item>
-				                <el-form-item label="招生模式">
-				                    <el-input v-model="universityForm.recruitStudents" :disabled = "disabled"></el-input>
-				                </el-form-item>
-				                <el-form-item label="毕业证书">
-				                    <el-input v-model="universityForm.graduation" :disabled = "disabled"></el-input>
-				                </el-form-item>		
+                <div>
+                    <div class="operateUpfiles operateUp">
+                        <div class="operateUpfilesLeft">
+                            <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;招生项目信息</div>
+                        </div>
+                        <div class="operateUpfilesRight">
+                            <el-form ref="universityForm" :model="universityForm" label-width="110px" class="demo-ruleForm">
+                                <div class="collegeBox">
+                                    <div class="college">
+                                        <div>
+                                            院校专业名称
+                                        </div>
+                                        <div>
+                                            {{ collegeInformation }}
+                                        </div>
+                                    </div>
+                                    <el-form-item>
+                                        <el-button type="primary" @click="startChange">开始编辑</el-button>
+                                    </el-form-item>
+                                </div>
+                                
+                                <el-form-item label="院校专业名称">
+                                    <el-input v-model="universityForm.project" :disabled = "disabled"></el-input>
+                                </el-form-item>
+                                <el-form-item label="项目费用">
+                                    <el-input v-model="universityForm.free" :disabled = "disabled"></el-input>
+                                </el-form-item>
 
-				                <el-form-item>
-			                    	<el-button type="primary" @click="">提交</el-button>
-			                    </el-form-item>		            
-		          			</el-form>
-		          		</div>
-	          		</div>
+                                <el-form-item label="费用筛选区间" prop="project">
+                                    <el-col :span="6">
+                                        <el-form-item>
+                                            <el-input v-model="universityForm.choice.low" style="width: 100%;" :disabled = "disabled"></el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col class="line" :span="2" text-align: center>至</el-col>
+                                    <el-col :span="6">
+                                        <el-form-item>
+                                            <el-input v-model="universityForm.choice.height" style="width: 100%;" :disabled = "disabled"></el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-form-item>
 
-					<!-- 当前banner -->
-	          		<div class="operateUpfiles operateDown">
-	          			<div class="operateUpfilesLeft">
-		                	<div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;所有招生项目</div>
-		              	</div>
-		              	<div class="operateUpfilesRight2">
-		              		<div class="messageBtn">
-		              			<el-form ref="form" label-width="100px">
-		              				<el-form-item>
-				                    	<el-button icon="el-icon-delete" @click="">清空</el-button>
-				                    </el-form-item>
+                                <el-form-item label="招生名额" prop="project" size="medium">
+                                    <el-col :span="5">
+                                        <el-form-item>
+                                            <el-input v-model="universityForm.number" :disabled = "disabled"></el-input>
+                                        </el-form-item>				                	
+                                    </el-col>				                    
+                                </el-form-item>
+                                <el-form-item label="授课语言">
+                                        <el-col :span="5">
+                                        <el-form-item>
+                                            <el-input v-model="universityForm.language" placeholder="请输入..." :disabled = "disabled"></el-input>
+                                        </el-form-item>				                	
+                                    </el-col>		
+                                </el-form-item>
 
-				                    <el-table
-								    ref="singleTable"
-								    :data="tableData"
-								    highlight-current-row
-								    border 
-								    style="width: 100%"
-								    :header-cell-style="getRowClass">
-									    <el-table-column
-									      type="index"
-									      label="编号"
-									      width="50">
-									    </el-table-column>
-									    <el-table-column
-									      property="date"
-									      label="展示顺序"
-									      width="120">
-									    </el-table-column>
-									    <el-table-column
-									      property="name"
-									      label="展示状态"
-									      width="120">
-									    </el-table-column>
-									      <el-table-column
-									      property="name"
-									      label="院校专业">
-									    </el-table-column>
-									      <el-table-column
-									      property="name"
-									      label="招生项目">
-									    </el-table-column>
-									     <el-table-column
-									      property="name"
-									      label="操作"
-									      width="200">
-									    </el-table-column>									     
-								    </el-table>
-		              			</el-form>
-		              		</div>
+                                <el-form-item label="学制">
+                                        <el-input v-model="universityForm.term" :disabled = "disabled"></el-input>
+                                </el-form-item>
 
-		              		<!-- 完成按钮 -->
-			                <div class="operateFinalUp">
-			                  <el-button type="primary">完成</el-button>
-			                </div>
-		              	</div>
-	          		</div>
-	          	</div>
+                                <el-form-item label="报考条件">
+                                        <el-input v-model="universityForm.item" :disabled = "disabled"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="分数线描述">
+                                        <el-input v-model="universityForm.fraction" :disabled = "disabled"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="分数线类型">
+                                    <el-radio-group v-model="universityForm.fractionKind">
+                                        <el-radio label="A线"></el-radio>
+                                        <el-radio label="B线"></el-radio>
+                                        <el-radio label="自主划线"></el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+
+                                <el-form-item label="统招模式">
+                                    <el-radio-group v-model="universityForm.fractionDay">
+                                        <el-radio label="全日制"></el-radio>
+                                        <el-radio label="非全日制"></el-radio>
+                                        <el-radio label="中外合作"></el-radio>
+                                    </el-radio-group>
+                                </el-form-item>
+
+                                <el-form-item label="招生模式">
+                                    <el-input v-model="universityForm.recruitStudents" :disabled = "disabled"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="毕业证书">
+                                    <el-input v-model="universityForm.graduation" :disabled = "disabled"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="专业方向">
+                                    <el-tag
+                                        :key="tag"
+                                        v-for="tag in dynamicTags"
+                                        closable
+                                        :disable-transitions="false"
+                                        @close="handleClose(tag)">{{tag}}
+                                    </el-tag>
+                                    <el-input
+                                        class="input-new-tag"
+                                        v-if="inputVisible"
+                                        v-model="inputValue"
+                                        ref="saveTagInput"
+                                        size="small"
+                                        @keyup.enter.native="handleInputConfirm"
+                                        @blur="handleInputConfirm">
+                                    </el-input>
+                                    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+                                </el-form-item>
+
+
+                                <el-form-item>
+                                    <el-button type="primary" @click="">提交</el-button>
+                                </el-form-item>		            
+                            </el-form>
+                        </div>
+                    </div>
+
+                    <!-- 当前banner -->
+                    <div class="operateUpfiles operateDown">
+                        <div class="operateUpfilesLeft">
+                            <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;所有招生项目</div>
+                        </div>
+
+                        <div class="operateUpfilesRight2">
+                            <div class="messageBtn">
+                                <el-form ref="form" label-width="100px">
+                                    <el-form-item>
+                                        <el-button icon="el-icon-delete" @click="">清空</el-button>
+                                    </el-form-item>
+
+                                    <el-table
+                                    ref="singleTable"
+                                    :data="tableData"
+                                    highlight-current-row
+                                    border 
+                                    style="width: 100%"
+                                    :header-cell-style="getRowClass">
+                                        <el-table-column
+                                            type="index"
+                                            label="编号"
+                                            width="50">
+                                        </el-table-column>
+                                        <el-table-column
+                                            property="date"
+                                            label="展示顺序"
+                                            width="120">
+                                        </el-table-column>
+                                        <el-table-column
+                                            property="name"
+                                            label="展示状态"
+                                            width="120">
+                                        </el-table-column>
+                                            <el-table-column
+                                            property="name"
+                                            label="院校专业">
+                                        </el-table-column>
+                                            <el-table-column
+                                            property="name"
+                                            label="招生项目">
+                                        </el-table-column>
+                                            <el-table-column
+                                            property="name"
+                                            label="操作"
+                                            width="200">
+                                        </el-table-column>									     
+                                    </el-table>
+                                </el-form>
+                            </div>
+
+                            <!-- 完成按钮 -->
+                            <div class="operateFinalUp">
+                                <el-button type="primary">完成</el-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -198,7 +228,10 @@
 					required: true
 				},
 				collegeInformation:"XX大学XX学院MBA专业",
-				disabled:true,
+                disabled:true,
+                dynamicTags: ['标签一', '标签二', '标签三'],
+                inputVisible: false,
+                inputValue: '',
 				tableData: [
 					{
 						major:"XX大学XX学院MBA专业",
@@ -210,7 +243,22 @@
 	    methods:{
 	    	startChange: function() {
 	    		this.disabled = false;
-	    	},
+            },
+            showInput() {
+                this.inputVisible = true;
+                this.$nextTick(_ => {
+                this.$refs.saveTagInput.$refs.input.focus();
+                });
+            },
+
+            handleInputConfirm() {
+                let inputValue = this.inputValue;
+                if (inputValue) {
+                this.dynamicTags.push(inputValue);
+                }
+                this.inputVisible = false;
+                this.inputValue = '';
+            },
 	    	getRowClass: function({ row, column, rowIndex, columnIndex }){
 	    		console.log(rowIndex);
 	    		if (rowIndex == 0) {
@@ -227,6 +275,25 @@
 .operateBox {
   width: 1500px;
   margin: 0 auto;
+}
+
+/*
+* tag标签样式
+*/
+.el-tag + .el-tag {
+    margin-left: 10px;
+}
+.button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
 }
 
 /*

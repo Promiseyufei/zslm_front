@@ -215,34 +215,7 @@ export default {
         toAdvise: function() {
             this.$router.push('/message/advise/' + this.id);
         },
-        // 得到省份字典
-        getProvince: function() {
-            let self = this;
-            axios.post('/admin/information/getMajorProvincesAndCities',{
-            })
-            .then(function(response) {
-                var res = response.data;
-                if (res.code == 0) {
-                    self.province = res.data;
-                };
-            })
-            .catch(function (error) {
-            });
-        },
-        // 得到专业字典
-        getMajor: function() {
-            let self = this;
-            axios.post('/admin/information/getMajorType',{
-            })
-            .then(function(response) {
-                var res = response.data;
-                if (res.code == 0) {
-                    self.major = res.data;
-                };
-            })
-            .catch(function (error) {
-            });
-        },
+        
         // 提交修改数据
         messageSubmit: function() {
             console.log(this.editor.txt.html());
