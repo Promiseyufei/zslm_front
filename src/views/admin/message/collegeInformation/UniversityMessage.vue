@@ -259,6 +259,7 @@
 	    	startChange: function() {
 	    		this.disabled = false;
             },
+            //改变展示状的时候触发事件
             changeState: function(state,row) {
                 let self = this;
                 // console.log(state,row);
@@ -341,6 +342,7 @@
                 this.inputVisible = false;
                 this.inputValue = '';
             },
+            //得到所有的项目
             getProject: function() {
                 let self = this;
 

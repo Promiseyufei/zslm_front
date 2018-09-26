@@ -181,11 +181,20 @@ Mock.mock('/admin/operate/createBannerAd',{
 	"msg": Mock.mock('@cword(3, 5)')
 })
 
-/* Operate
-* 运营管理模块——首页
-* 上传一级页面的banner
+/* message
+* 信息发布模块——辅导机构——编辑基本信息
+* 清空所有项目
 */
 Mock.mock('/deleteprojectDelete',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)')
+})
+
+/* message
+* 信息发布模块——辅导机构——优惠卷设置
+* 清空所有的优惠卷
+*/
+Mock.mock('/deletecouponDelete',{
 	"code": 0,
 	"msg": Mock.mock('@cword(3, 5)')
 })

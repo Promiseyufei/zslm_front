@@ -147,7 +147,7 @@
 
                 <!-- 完成按钮 -->
                 <div class="operateFinalUp">
-                    <el-button type="primary" @click="toBack" plain>返回上一步</el-button>
+                    <el-button type="primary" @click="toBack" plain>返回</el-button>
                     <el-button type="primary" @click="toAdvise">下一步，消息通知</el-button>
                 </div>
             </div>
@@ -227,10 +227,15 @@ export default {
         messageEmpty: function() {
             this.editor.txt.clear();
         },
+        //返回上一页
+        toBack: function() {
+            this.$router.push('/message/coachList');
+        },
         // 跳转到优惠卷设置页面
         toAdvise: function() {
             this.$router.push('/message/coupon/' + this.id);
         },
+        
     },
     mounted(){
         this.getProvince();
@@ -256,7 +261,6 @@ export default {
 * 步骤条样式
 */
 .fileSteps {
-  /*margin: 20px 0;*/
   width: 400px;
   margin: 0 auto;
 }
