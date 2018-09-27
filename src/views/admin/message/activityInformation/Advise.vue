@@ -304,25 +304,25 @@ export default {
         },
         // 清空所有推荐活动
         activityDelete: function() {
-          var table = this.tableData3;
-          var arrayTableId = [];
-          for (var i = 0; i < table.length; i++) {
-            arrayTableId.push(table[i].id);
-          };
-          if(arrayTableId.length < 1) {
-            this.message(true, '没有要清空的数据', 'error');
-            return;
-          }
-          this.post('/admin/operate/deleteAppoinInformation', {
-              RegionId: this.id,
-              InformationId : arrayTableId
-          }).then((response) => {
-            if(response.code == 0) {
-                this.tableData3 = [];
-                this.message(true, response.msg, 'success');
+            var table = this.tableData3;
+            var arrayTableId = [];
+            for (var i = 0; i < table.length; i++) {
+                arrayTableId.push(table[i].id);
+            };
+            if(arrayTableId.length < 1) {
+                this.message(true, '没有要清空的数据', 'error');
+                return;
             }
-            else this.message(true, response.msg, 'error');
-          })
+            this.post('/admin/operate/deleteAppoinInformation', {
+                RegionId: this.id,
+                InformationId : arrayTableId
+            }).then((response) => {
+                if(response.code == 0) {
+                    this.tableData3 = [];
+                    this.message(true, response.msg, 'success');
+                }
+                else this.message(true, response.msg, 'error');
+            })
         },
         startChange: function () {
             this.disabled = false;

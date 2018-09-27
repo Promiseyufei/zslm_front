@@ -87,7 +87,7 @@
                                 </el-form-item>
 
                                 <el-form-item label="分数线类型">
-                                    <el-radio-group v-model="universityForm.fractionKind">
+                                    <el-radio-group v-model="universityForm.fractionKind" :disabled = "disabled">
                                         <el-radio label="A线"></el-radio>
                                         <el-radio label="B线"></el-radio>
                                         <el-radio label="自主划线"></el-radio>
@@ -95,7 +95,7 @@
                                 </el-form-item>
 
                                 <el-form-item label="统招模式">
-                                    <el-radio-group v-model="universityForm.fractionDay">
+                                    <el-radio-group v-model="universityForm.fractionDay" :disabled = "disabled">
                                         <el-radio label="全日制"></el-radio>
                                         <el-radio label="非全日制"></el-radio>
                                         <el-radio label="中外合作"></el-radio>
@@ -110,13 +110,13 @@
                                     <el-input v-model="universityForm.graduation" :disabled = "disabled"></el-input>
                                 </el-form-item>
 
-                                <el-form-item label="专业方向">
+                                <el-form-item label="专业方向" class="collegeAddMajor" :disabled = "disabled">
                                     <el-tag
                                         :key="tag"
                                         v-for="tag in dynamicTags"
                                         closable
                                         :disable-transitions="false"
-                                        @close="handleClose(tag)">{{tag}}
+                                        @close="handleClose(tag,disabled)">{{tag}}
                                     </el-tag>
                                     <el-input
                                         class="input-new-tag"
@@ -127,7 +127,8 @@
                                         @keyup.enter.native="handleInputConfirm"
                                         @blur="handleInputConfirm">
                                     </el-input>
-                                    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+                                    <el-button v-else class="button-new-tag" size="small" @click="showInput" :disabled = "disabled">+ 添加</el-button>
+                                    
                                 </el-form-item>
 
 
@@ -148,7 +149,7 @@
                             <div class="messageBtn">
                                 <el-form ref="form" label-width="100px">
                                     <el-form-item>
-                                        <el-button icon="el-icon-delete" @click="">清空</el-button>
+                                        <el-button icon="el-icon-delete" @click="projectDelete">清空</el-button>
                                     </el-form-item>
 
                                     <el-table
@@ -157,34 +158,48 @@
                                     highlight-current-row
                                     border 
                                     style="width: 100%"
-                                    :header-cell-style="getRowClass">
+                                    :header-cell-style="getRowClass"
+                                    class="collegeTable">
                                         <el-table-column
-                                            type="index"
+                                            property="id"
                                             label="编号"
-                                            width="50">
+                                            width="150">
                                         </el-table-column>
                                         <el-table-column
-                                            property="date"
+                                            prop="weight"
                                             label="展示顺序"
-                                            width="120">
-                                        </el-table-column>
+                                            width="100">
+                                            <template slot-scope="scope" >
+                                                <el-input v-model="tableData[scope.$index].weight" @focus="focusCount(tableData[scope.$index].weight)" v-on:blur="changeCount(tableData[scope.$index].weight, scope.$index)"></el-input>
+                                            </template>
+                                            </el-table-column>
                                         <el-table-column
-                                            property="name"
+                                            property="state"
                                             label="展示状态"
                                             width="120">
+                                            <template slot-scope="scope" >
+                                                <el-switch
+                                                    v-model="tableData[scope.$index].state" @click.native="changeState(tableData[scope.$index].state, scope.$index)">
+                                                </el-switch>
+                                            </template>
                                         </el-table-column>
                                             <el-table-column
-                                            property="name"
+                                            property="pj_name"
                                             label="院校专业">
                                         </el-table-column>
                                             <el-table-column
-                                            property="name"
-                                            label="招生项目">
+                                            property="project_type"
+                                            label="招生项目"
+                                            width="100">
                                         </el-table-column>
-                                            <el-table-column
+                                        <el-table-column
                                             property="name"
                                             label="操作"
                                             width="200">
+                                            <template slot-scope="scope">
+                                                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                                                <el-button type="text" size="small" @click="deleteSingle(scope.row.id, scope.row)">删除</el-button>
+                                            </template>
                                         </el-table-column>									     
                                     </el-table>
                                 </el-form>
@@ -192,7 +207,7 @@
 
                             <!-- 完成按钮 -->
                             <div class="operateFinalUp">
-                                <el-button type="primary">完成</el-button>
+                                <el-button type="primary" @click="collegeFinish">完成</el-button>
                             </div>
                         </div>
                     </div>
@@ -232,42 +247,123 @@
                 dynamicTags: ['标签一', '标签二', '标签三'],
                 inputVisible: false,
                 inputValue: '',
-				tableData: [
-					{
-						major:"XX大学XX学院MBA专业",
-						progectStudent:"招生项目1"
-					},
-				]
+                tableData: [],
+                TableValue: 0,
+                id: 0,
 	    	}
 	    },
 	    methods:{
+            collegeFinish: function() {
+                this.$router.push('/message/universMajorList');
+            },
 	    	startChange: function() {
 	    		this.disabled = false;
             },
+            //改变展示状的时候触发事件
+            changeState: function(state,row) {
+                let self = this;
+                // console.log(state,row);
+                axios.post('/admin/information/setProjectState', {
+                    projectId: row,
+                    type: 1,
+                    state: state
+                }).then((response) => {
+                    var res = response.data;
+                    if(res.code == 0) {
+                        self.message(true,"修改成功","success");
+                    }
+                })
+            },
+            // 删除专业方向标签
+            handleClose(tag,disabled) {
+                if(disabled==true) {
+                    this.message(true,"您现在不能编辑","warn");
+                }else {
+                    this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+                }
+            },
+            // 表单获得焦点触发事件
+            focusCount: function(val) {
+                this.TableValue = val;
+                console.log(this.TableValue);
+            },
+
+            // 清空所有推荐活动
+            projectDelete: function() {
+                var table = this.tableData;
+                var arrayTableId = [];
+                for (var i = 0; i < table.length; i++) {
+                    arrayTableId.push(table[i].id);
+                };
+                console.log(arrayTableId);
+                if(arrayTableId.length < 1) {
+                    this.message(true, '没有要清空的数据', 'error');
+                    return;
+                }
+                axios.post('/deleteprojectDelete', {
+                    
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.tableData = [];
+                    }
+                })
+            },
+
+            // 鼠标失去焦点时触发事件，val=>当前input里面的值，index=>当前行的下标
+            changeCount: function(val,index) {
+                var re = /^[0-9]+.?[0-9]*$/;
+                if (!re.test(val)) {
+                    this.message(true,'请输入数值','warning');
+                    this.tableData[index].weight = this.TableValue;
+                } else if (val<0||val>1000) {
+                    this.message(true,'权值范围为0~100','warning');
+                    this.tableData[index].weight = this.TableValue;
+                } else {
+                    this.$emit('setInfoRelation',this.tableData[index].id, this.tableData[index].weight);
+                }
+            },
+            
+            handleClick: function (row) { 
+                
+            },
+            // 添加专业方向标签输入框
             showInput() {
                 this.inputVisible = true;
                 this.$nextTick(_ => {
-                this.$refs.saveTagInput.$refs.input.focus();
+                    this.$refs.saveTagInput.$refs.input.focus();
                 });
             },
-
+            // 添加成功，假如标签数组里
             handleInputConfirm() {
                 let inputValue = this.inputValue;
                 if (inputValue) {
-                this.dynamicTags.push(inputValue);
+                    this.dynamicTags.push(inputValue);
                 }
                 this.inputVisible = false;
                 this.inputValue = '';
             },
-	    	getRowClass: function({ row, column, rowIndex, columnIndex }){
-	    		console.log(rowIndex);
-	    		if (rowIndex == 0) {
-					return 'background:#EFEFEF;text-align:center'
-				} else {
-					return ''
-				}
-	    	}
-	    }
+            //得到所有的项目
+            getProject: function() {
+                let self = this;
+
+                axios.post('/getProject', {
+                    
+                })
+                .then(function (response) {
+                    var res = response.data;
+                    if(res.code == 0) {
+                        self.tableData = res.data;
+                        console.log(self.tableData);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        mounted() {
+            this.getProject();
+        }
 	};
 </script>
 
@@ -294,6 +390,9 @@
     width: 90px;
     margin-left: 10px;
     vertical-align: bottom;
+}
+.collegeAddMajor button,.collegeTable button {
+    float:none !important;
 }
 
 /*
