@@ -2,32 +2,44 @@
     <div class="majorlist">
         <div class="majorlist-top">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
+              <el-breadcrumb-item><a href="/">辅导机构</a></el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
-            <el-button>新建</el-button>
+            <el-button type="primary">新建</el-button>
         </div>
         <div class="majorlist-query">
-            <i class=""></i>
+            <i class="el-icon-search"></i>
             <p>筛选查询</p>
             <div></div>
             <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native = "gettableInfo">刷新</el-button>
         </div> 
         <div class="majorlist-form">
             <el-form class="majorlist-input" label-width="80px">
-                <el-form-item label="院校专业">
-                    <el-input size="mini" v-model="name" placeholder="输入文件名称"></el-input>
+                <el-form-item label="机构名称">
+                    <el-input size="medium" v-model="name" placeholder="输入文件名称"></el-input>
                 </el-form-item>
                 <el-form-item label="展示状态">
-                    <el-select size="mini" v-model="type1" placeholder="全部">
+                    <el-select size="medium" v-model="type1" placeholder="全部">
                       <el-option label="区域一" value="shanghai"></el-option>
                       <el-option label="区域二" value="beijing"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="推荐状态">
-                    <el-select size="mini" v-model="type2" placeholder="全部">
+                    <el-select size="medium" v-model="type2" placeholder="全部">
+                      <el-option label="区域一" value="shanghai"></el-option>
+                      <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="优惠券" class="majorlist-formmini">
+                    <el-select size="medium" v-model="type3" placeholder="全部">
+                      <el-option label="区域一" value="shanghai"></el-option>
+                      <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="退款保障" class="majorlist-formmini">
+                    <el-select size="medium" v-model="type4" placeholder="全部">
                       <el-option label="区域一" value="shanghai"></el-option>
                       <el-option label="区域二" value="beijing"></el-option>
                     </el-select>
@@ -36,10 +48,10 @@
             <el-button size="mini" type="primary" icon="el-icon-search" class="majorlist-queryrefresh" @click.native = "gettableInfo">查询</el-button>
         </div>
         <div class="majorlist-list">
-            <i class=""></i>
-            <p>内容列表</p>
+            <i class="el-icon-tickets"></i>
+            <p>辅导机构</p>
             <div></div>
-            <el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="默认顺序">
+            <el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="显示条数">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettableInfo">
                 </el-option>
             </el-select>
@@ -55,31 +67,42 @@
                 </el-table-column>
                 <el-table-column label="展示状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].value2"></el-switch>
+                        <el-switch v-model="majorlisttable[scope.$index].showState" active-color="#999" inactive-color="#409eff"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="推荐状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].value3" active-color="#999" inactive-color="#409eff">
+                        <el-switch v-model="majorlisttable[scope.$index].adviceState" active-color="#409eff" inactive-color="#999">
                         </el-switch>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="210">
+                <el-table-column label="优惠券" width="80">
+                    <template slot-scope="scope">
+                        <el-switch v-model="majorlisttable[scope.$index].discount" active-color="#409eff" inactive-color="#999">
+                        </el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column label="退款保障" width="80">
+                    <template slot-scope="scope">
+                        <el-switch v-model="majorlisttable[scope.$index].refund" active-color="#409eff" inactive-color="#999">
+                        </el-switch>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="200">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name"></i>
                         </div>
                     </template>
                 </el-table-column>
-                <!-- <div> -->
-                  <!-- <el-table-column v-for="(val,index) in tableTop" :key="index" :type="val.type" :prop="val.prop" :label="val.label" :width="val.width"> -->
                 <div v-for="(val, index) in tableTop" :key="index">
-                  <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
+                    <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
                   </el-table-column>
                 </div>
             </el-table>
         </div>
         <div class="footer"> 
+            <el-button type="primary" size="mini" icon="el-icon-delete">删除</el-button>
             <Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
         </div>
     </div>
@@ -95,13 +118,11 @@
                     page:'',
                     limit:'',
                 },
-                // currentPage4:2,
-                // msg:0,
-                // count:0,
-                // number:0,
                 tableTop:[
-                  {prop:'name',label:'院校专业名称',width:580},
-                  {prop:'project',label:'招生项目',width:100},
+                  {prop:'name',label:'辅导机构名称',width:300},
+                  {prop:'project',label:'机构类型',width:80},
+                  {prop:'project',label:'活动省市',width:80},
+                  {prop:'project',label:'辅导形式',width:80},
                   {prop:'time',label:'发布时间',width:160},
                 ],
                 majorlisttable:[{
@@ -110,9 +131,17 @@
                   name:'',
                   project:'',
                   time:'',
-                  value2:true,
-                  value3:'',
+                  showState:'',
+                  adviceState:'',
+                  discount:'',
+                  refund:'',
                 }],
+                tableSwitch:[
+                    {label:'展示状态',width:'100'},
+                    {label:'推荐状态',width:'100'},
+                    {label:'优惠券',width:'80'},
+                    {label:'退款保障',width:'80'},
+                ],
                 iconname:[
                     {name:'el-icon-search'},
                     {name:'el-icon-edit-outline'},
@@ -125,18 +154,20 @@
                 name:'',
                 type1:'',
                 type2:'',
+                type3:'',
+                type4:'',
                 options: [
                     {
                       value: '选项1',
-                      label: '时间'
+                      label: '10条'
                     }, 
                     {
                       value: '选项2',
-                      label: '浏览量'
+                      label: '50条'
                     }, 
                     {
                       value: '选项3',
-                      label: '招生项目'
+                      label: '100条'
                     }
                 ],
             }
@@ -183,7 +214,7 @@
             },
             gettableInfo:function(){
                 var that = this;
-                axios.post('/admin/UniversMajorList/gettable-info',{
+                axios.post('/message/coachList/gettableInfo',{
                     // type: that.filesForm.type,
                     // name1: that.filesForm.name1,
                     // input: that.input,
@@ -194,10 +225,6 @@
                     if (res.code == 0) {
                         that.majorlisttable = res.data;
                         that.total = res.total;
-                        // that.weight = res.weight;
-                        // that.id = res.id;
-                        // that.input = res.input;
-                        console.log(that.id);
                     };
                 })
                 .catch(function (error) {
@@ -222,10 +249,19 @@
     .majorlist-table .el-table th.is-leaf {
         text-align: center;
     }
+    .footer .el-button--primary {
+      margin: 0 0 0 20px;
+    }
+    .majorlist-table .el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
+        padding-left: 0;
+    }
 </style>
 
 <!-- 局部样式 scoped -->
 <style scoped>
+    .majorlist-formmini {
+        width: 180px;
+    }
     .el-table {
         color: #333;
     }
@@ -246,8 +282,12 @@
         border: 1px solid #E4E4E4;
         text-align: right;
         width: 1500px;
+        height: 50px;
         background-color: #fdfdfe;
         margin: 20px auto;
+        display: flex;
+        align-items:center;
+        justify-content:space-between;
     }
     .el-table thead {
         background: #f9fafc;
@@ -259,13 +299,14 @@
         text-align: center;
     }
     .majorlist-icon i {
-        margin: 0 3px;
+        margin: 0 5px;
     }
     .majorlist-icon {
-        font-size: 20px;
+        display: flex;
+        justify-content:center;
+        font-size: 18px;
         color: #999;
     }
-
     .majorlist-table .el-input {
         width: 40px;
     }
@@ -278,7 +319,6 @@
         position: absolute;
         right: 10px;
         width: 100px;
-        margin: 10px 0;
     }
     .majorlist-input {
         display: flex;
@@ -287,7 +327,7 @@
         display: flex;
         position: relative;
         width: 1500px;
-        margin: 20px auto;
+        margin: 20px auto 0;
     }
     .majorlist-queryrefresh {
         position: absolute;
@@ -302,11 +342,14 @@
         font-size: 16px;
         color: #666;
         font-weight: bold;
-        padding: 0 20px;
+    }
+    .majorlist-query i,.majorlist-list i {
+        padding: 0 5px 0 10px;
     }
     .majorlist-query,.majorlist-list {
         position: relative;
         display: flex;
+        align-items:center;
         width: 1500px;
         height: 50px;
         background:#f3f3f3;
@@ -328,7 +371,4 @@
         margin: 0 auto;
         width: 1500px;
     }
-    
-
-
 </style>

@@ -1,6 +1,7 @@
 export default [
     {
         "index" :1,
+        "icon": "fa fa-sliders fa-lg fa-fw",
         "title": "控制中心",
         "groups":[
             {
@@ -37,6 +38,7 @@ export default [
     },
     {
         "index" :2,
+        "icon": "fa fa-user-o fa-lg fa-fw",
         "title": "账户管理",
         "groups":[
             {
@@ -73,42 +75,39 @@ export default [
     },
     {
         "index" :3,
+        "icon": "fa fa-commenting-o fa-lg fa-fw",
         "title": "信息发布",
         "groups":[
             {
-                "title": "分组一",
+                "title": "信息发布",
                 "options":[
                     {
-                        "name":"选项一",
+                        "name":"院校专业",
                         "index":1,
-                        "url":"/selectUnivers"
+                        "url":"/message/universMajorList"
                     },
                     {
-                        "name":"选项二",
+                        "name":"活动信息",
                         "index":2,
-                        "url":"/universMajorList"
-                    }
+                        "url":"/message/activityList"
+                    },
+                    {
+                        "name":"辅导机构",
+                        "index":3,
+                        "url":"/message/coachList"
+                    },
+                    {
+                        "name":"资讯发布",
+                        "index":4,
+                        "url":"/message/informationList"
+                    },
                 ]
             },
-            {
-                "title": "分组二",
-                "options":[
-                    {
-                        "name":"选项一",
-                        "index":1,
-                        "url":"/operate"
-                    },
-                    {
-                        "name":"选项二",
-                        "index":2,
-                        "url":"/operate"
-                    }
-                ]
-            }
         ]
     },
     {
         "index" :4,
+        "icon": "fa fa-folder-open-o fa-lg fa-fw",
         "title": "文件管理",
         "groups":[
             {
@@ -128,8 +127,10 @@ export default [
             }
         ]
     },
+    
     {
         "index" :5,
+        "icon": "fa fa-file-text-o fa-lg fa-fw",
         "title": "消息管理",
         "groups":[
             {
@@ -151,6 +152,7 @@ export default [
     },
     {
         "index" :6,
+        "icon": "fa fa-paper-plane-o fa-lg fa-fw",
         "title": "运营管理",
         "groups":[
             {
@@ -164,12 +166,12 @@ export default [
                     {
                         "name":"资讯首页推荐",
                         "index":2,
-                        "url":"/SelectUnivers"
+                        "url":"/operate/advise"
                     },
                     {
                         "name":"广告位管理",
                         "index":3,
-                        "url":"/test"
+                        "url":"/operate/ad"
                     }
                 ]
             },
@@ -179,7 +181,7 @@ export default [
                     {
                         "name":"分享数据",
                         "index":1,
-                        "url":"/data"
+                        "url":"/operate/sharedata"
                     }
                 ]
             }
@@ -187,6 +189,7 @@ export default [
     },  
     {
         "index" :7,
+        "icon": "fa fa-money fa-lg fa-fw",
         "title": "退款管理",
         "groups":[
             {
@@ -208,6 +211,7 @@ export default [
     },
     {
         "index" :8,
+        "icon": "fa fa-television fa-lg fa-fw",
         "title": "模考管理",
         "groups":[
             {

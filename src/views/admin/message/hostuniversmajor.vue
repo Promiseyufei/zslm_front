@@ -1,9 +1,11 @@
- <template>
+<template>
 	<div class="Select">
 		<div class="Select-top">
 			<el-breadcrumb separator="/">
-			  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-			  <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+			  <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
+			  <el-breadcrumb-item><a href="/">活动信息</a></el-breadcrumb-item>
+			  <el-breadcrumb-item :to="{ path: '/' }">活动信息编辑</el-breadcrumb-item>
+			  <el-breadcrumb-item><a href="/">设置主办院校</a></el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 		<div class="Select-steps">
@@ -65,7 +67,6 @@
 		<div class="footer">
 			<span class="Selected">当前已选择：<span class="majorname">{{majorname}}</span></span>
 		</div>
-		
 	</div>
 </template>
 <script>
@@ -143,7 +144,7 @@
 	export default {
 	    data() {
 	        return {
-	        	majorname:0,
+	        	majorname:'',
 	        	// majorname:'',
 	        	butname:'',
 	        	count:100,
@@ -176,14 +177,14 @@
 		    },
 		    getcity_info: function(){
 		    	var that = this;
-		        axios.post('/admin/SelectUnivers/getcity-info',{
+		        axios.post('/message/hostuniversmajor/getcity-info',{
 		          //后台参数，前台参数(传向后台)
 		          butname: that.butname,
 		        })
 		        .then(function (response) {
 		            var res = response.data;
 		            if (res.code == 0) {
-		                that.region = res.region;
+		                that.region = res.region;chongtu
 		                that.Name = res.Name;
 		                // console.log( that.region);
 		                that.count = res.count;
@@ -195,7 +196,7 @@
 		    },
 		    clickgetcity_info: function(){
 		    	var that = this;
-		        axios.post('/admin/SelectUnivers/clickgetcity-info',{
+		        axios.post('/message/hostuniversmajor/clickgetcity-info',{
 		          //后台参数，前台参数(传向后台)
 		          // type: that.filesForm.type,
 		        })
@@ -299,7 +300,7 @@
 		width: 200px;
 		height: 50px;
 		display: flex;
-		background: url(../../assets/img/point.png) no-repeat;
+		background: url(../../../assets/img/point.png) no-repeat;
 		background-size: 100% 100%;
 	}
 	.condition-button {

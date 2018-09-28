@@ -1,3 +1,4 @@
+import { Loading } from 'element-ui';
 export default {
     callDialog:function() {
         alert('公共方法成功啦～');
@@ -10,7 +11,8 @@ export default {
             type: type
         });
     },
-    confirm: function(callBack, catchBack, msg, type, data, ) {
+
+    confirm: function(callBack, catchBack, msg, type, data) {
         msg = typeof msg !== 'undefined' ? msg : '是否取消操作？';
         type = typeof type !== 'undefined' ? type : '提示';
         data = typeof data !== 'undefined' ? data : {
@@ -25,6 +27,61 @@ export default {
             : this.$confirm(msg, type, data).then(callBack).catch(catchBack));
         
     },
+
+    // 得到省份字典
+    getProvince: function() {
+        let self = this;
+        axios.post('/admin/information/getMajorProvincesAndCities',{
+        })
+        .then(function(response) {
+            var res = response.data;
+            if (res.code == 0) {
+                self.province = res.data;
+            };
+        })
+        .catch(function (error) {
+        });
+    },
+
+    // 改变表格第一行的背景颜色
+    getRowClass: function({ row, column, rowIndex, columnIndex }){
+        if (rowIndex == 0) {
+            return 'background:#EFEFEF;text-align:center'
+        } else {
+            return ''
+        }
+    },
+
+    // 删除单个banner
+    deleteSingle: function(res, row) {
+        this.$emit('del',res, row);
+    },
+
+    // 得到专业字典
+    getMajor: function() {
+        let self = this;
+        axios.post('/admin/information/getMajorType',{
+        })
+        .then(function(response) {
+            var res = response.data;
+            if (res.code == 0) {
+                self.major = res.data;
+            };
+        })
+        .catch(function (error) {
+        });
+    },
+
+    //加载是否显示
+    openFullScreen2() {
+        return Loading.service({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+        });
+    },
+
     // 删除所给id序列的banner
     deleteBanner: function(arrayTableId) {
         var self = this;

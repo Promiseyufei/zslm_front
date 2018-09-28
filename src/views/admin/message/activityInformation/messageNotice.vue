@@ -1,11 +1,11 @@
 <template>
     <div>
-    	<div>
-    		
+        <div>
+            消息通知
 
-		    
-    	</div>
-    	
+            
+        </div>
+        
     </div>
 </template>
 
@@ -14,9 +14,9 @@ export default {
     components: {
     },
     data() {
-      return {
-
-      }
+        return {
+            id: this.$route.params.id,
+        }
     },
     methods: {
 
@@ -33,4 +33,5 @@ export default {
 
 
 </style>
-
+    
+        

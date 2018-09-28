@@ -1,170 +1,143 @@
 <template>
 	<div class="filesAll">
-		<div class="filesTop">
-      <Click></Click>
-      <!-- <Tab :table-data="tableData" :page="Page"></Tab> -->
-      <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i" @click.native = "query"></operateNav>  
-    </div>
-	  <div class="filesquery" style="width:1500px; margin:0 auto;"> 
-        <i></i>
-        <p class="screen">筛选查询</p>
-  	</div>
-      <!-- <div class="dataquery">
-        <i class=""></i>
-        <p>筛选查询</p>
-        <div></div>
-        <el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettable_info">刷新</el-button>
-      </div> -->
-    <div class="filesForm">
-    	<div>
-        <el-form class="input" ref="filesForm" :model="filesForm" label-width="80px">
-          <el-form-item label="文件名称">
-            <el-input v-model="filesForm.name1" placeholder="请输入文件名称"></el-input>
-          </el-form-item>
-          <el-form-item label="院校名称">
-            <el-input v-model="filesForm.name2" placeholder="请输入院校名称"></el-input>
-          </el-form-item>
-          <el-form-item label="文件年份">
-            <div class="block">
-              <el-date-picker
-                v-model="filesForm.year" type="year" placeholder="选择年">
-              </el-date-picker>
+        <!-- 选项卡 -->
+        <div class="files-tab">
+          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i" @click.native = "query"></operateNav>  
+          <el-button size="small" type="primary" class="click">点击上传</el-button>
+        </div>
+
+        <!-- 筛选查询 -->
+    	<div class="filesquery"> 
+            <i class="el-icon-search"></i>
+            <p class="screen">筛选查询</p>
+            <el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "query">刷新</el-button>
+      	</div>
+
+        <!-- 查询输入框 -->
+        <div class="filesForm">
+    	   <div>
+                <el-form class="input" v-model="filesForm" label-width="80px">
+                    <el-form-item label="文件名称">
+                        <el-input size="medium" placeholder="请输入文件名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="院校名称">
+                        <el-input size="medium" placeholder="请输入院校名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="文件年份">
+                        <!-- <div class="block"> -->
+                          <el-date-picker type="year" placeholder="选择年" size="medium">
+                          </el-date-picker>
+                        <!-- </div> -->
+                    </el-form-item>
+                    <el-form-item label="文件类型">
+                        <el-select v-model="filetype" size="medium" placeholder="请选择">
+                            <el-option v-for="(opt,index) in input" :key="index" :label="opt.label" :value="opt.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-form>  
            </div>
-            </el-form-item>
-          <el-form-item label="文件类型">
-            <el-select v-model="filesForm.type" placeholder="请选择">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-          </el-form-item>
-        </el-form>  
-      </div>
-      <div>
-        <el-button class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button> 
-      </div>
-    </div>
-	    <div class="filesSelect">
-	  		<i></i>
+           <el-button class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button> 
+        </div>
+
+		<!-- 数据列表 -->
+	    <div class="files-datalist">
+	  		<i class="el-icon-tickets"></i>
 	    	<p class="screen">数据列表</p>
-        <!-- <el-select class="filesSelect-sel" v-model="value" clearable placeholder="请选择">
-          <el-option
-            v-for="item in options3"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select> -->
+	        <el-select size="mini" class="datalist-selecttwo" v-model="Sort" placeholder="排序方式">
+		         <el-option v-for="(item,index) in sort" :key="index" :label="item.label" :value="item.value">
+		         </el-option>
+	        </el-select>
 	  	</div>
-	  	<!-- <Table ref = "table"></Table> -->
-      <div class="file-table">
-        <el-table :data="tableData" border style="width: 100%">
-          <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column label="操作" width="200">
-              <template slot-scope="scope">
-                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                <el-button type="text" size="small">编辑</el-button>
-                <el-button type="text" size="small">删除</el-button>
-              </template>
-            </el-table-column>
-          <div v-for="(val, index) in tableTop" :key="index">
-            <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
-            </el-table-column>
-          </div>
-        </el-table>
-      </div>
-    <div class="footer">
-      <Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @query="query" @showbox="toshow2" :msg="msg"></Page>
-    </div>
+
+	  	<!-- 表格 -->
+	    <div class="file-table">
+		      <el-table :data="tableData" border style="width: 100%">
+		          <el-table-column type="selection" width="50"></el-table-column>
+		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
+		          <el-table-column label="展示权重" width="80">
+                    <template slot-scope="scope">
+                        <el-input @click.native="changeweight" v-model="tableData[scope.$index].showweight"></el-input>
+                    </template>
+                </el-table-column>
+		          <el-table-column label="操作" width="240">
+		              <template slot-scope="scope">
+		                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+		                <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+		                <el-button type="text" size="small" @click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
+		              </template>
+		          </el-table-column>
+		          <div v-for="(val, index) in tableTop" :key="index">
+		            <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
+		            </el-table-column>
+		          </div>
+		      </el-table>
+	    </div>
+
+	    <!-- 分页 -->
+	    <div class="footer">
+	      <el-button type="primary" size="mini" icon="el-icon-delete">批量删除</el-button>
+	      <Page :total="total" @pageChange="pageChange" @click.native = "query"></Page>
+	    </div>
 	</div>
 </template>
 <script>
-  export default {
-  	data() {
-  	    return {
-          msg:0,
-          currentPage4: 4,
-          number:0,
-          count:0,
-          tabPosition: 'top',
-          Page:'',
-          isCollapse: true,
-          radio2: "",
-          tableTop:[
-            {type:'',prop:'data',label:'展示权重',width:100},
-            {type:'',prop:'name',label:'文件名称',width:320},
-            {type:'',prop:'major',label:'所属院校专业',width:320},
-            {type:'',prop:'type',label:'文件类型',width:100},
-            {type:'',prop:'year',label:'文件年份',width:100},
-            {type:'',prop:'homepage',label:'主页展示',width:100},
-            {type:'',prop:'time',label:'上传时间',width:160},
-   
-          ],
-          tableData:[{
-            data: '',
-            name: '',
-            major:'',
-            type: '',
-            year: '',
-            homepage: '',
-            time: '',
-          }],
-  	    	filesForm: {
-  	    		name1:'',
-  	    		name2:'',
-  	    		year:'',
-  	    		type:'',
-  	    	},
-          options3: [{
-              value: 10,
-              label: '10条'
-            }, {
-              value: 50,
-              label: '50条'
-            }, {
-              value: 100,
-              label: '100条'
-            }], 
-         	options: [
-           	{
-            		value: '黄金糕',
-            		// label: '黄金糕'
-          	}, 
-          	{
-  	          	value: '双皮奶',
-  	          	// label: '双皮奶'
-         	 	}, 
-          	{
-  	          value: '蚵仔煎',
-  	          // label: '蚵仔煎'
-          	}, 
-          	{
-  	          value: '龙须面',
-  	          // label: '龙须面'
-          	}, 
-  	        {
-  	          value: '北京烤鸭',
-  	          // label: '北京烤鸭'
-  	        }
-          ],
-          
-    			banner:[
-    	          {
-    	            id: 0,
-    	            name: "全部文件"
-    	          },
-    	          {
-    	            id: 1,
-    	            name: "招生简章"
-    	          },
-    	          {
-    	            id: 2,
-    	            name: "其他文件"
-    	          }
+    export default {
+  		data() {
+  	    	return {
+  	    		/*选项卡*/
+  	    		banner:[
+    	          {id: 0,name: "全部文件"},
+    	          {id: 1,name: "招生简章"},
+    	          {id: 2,name: "其他文件"}
             	],
-    			i: 0,
+            	radio2: "",
+    			i: 0,//当前选项卡id
+  	    		/*查询输入框*/
+  	    		filesForm:'',
+  	    		filetype:'',
+  	    		input: [	
+		           	{value: '选项一',label:'类型一'},
+		           	{value: '选项二',label:'类型二'},
+		           	{value: '选项三',label:'类型三'},
+          		],
+          		/*数据列表  排序方式*/
+          		Sort:'',
+          		sort:[
+	          		{value: '选项一',label: '10条'},
+	          		{value: '选项二',label: '50条'},
+	          		{value: '选项三',label: '100条'},        
+	            ],
+	            /*表格*/
+	            tableTop:[
+		            // {type:'',prop:'showweight',label:'展示权重',width:100},
+		            {type:'',prop:'filename',label:'文件名称',width:260},
+		            {type:'',prop:'universmajor',label:'所属院校专业',width:320},
+		            {type:'',prop:'filetype',label:'文件类型',width:100},
+		            {type:'',prop:'fileyear',label:'文件年份',width:100},
+		            {type:'',prop:'showhomepage',label:'主页展示',width:100},
+		            {type:'',prop:'onlinetime',label:'上传时间',width:180},
+		        ],
+		        tableData:[{
+		        	id:'',
+		            showweight: '',
+		            filename: '',
+		            universmajor:'',
+		            filetype: '',
+		            fileyear: '',
+		            showhomepage: '',
+		            onlinetime: '',
+		        }],
+
+		        /*分页*/
+		        total:0,
+		        searchContent:{
+		              page:'',
+		              limit:'',
+		        },
     	    }
-  	   },
-       watch: {
+  	    },
+       	watch: {
         // value: function(val,oldval) {
         //   console.log(val);
         //   this.value2 = val;
@@ -240,9 +213,9 @@
   	}
   }
 
-</script>
 
 </script>
+
 
 <!-- 全局样式 -->
 <style>
@@ -250,13 +223,30 @@
     .file-table .el-table--scrollable-x .el-table__body-wrapper {
         overflow-x: hidden;
     }
+    .file-table .el-input__inner {
+    	width: 45px;
+    }
     /*表头文本居中*/
     .file-table .el-table th.is-leaf {
         text-align: center;
     }
+    .footer .el-button--primary[data-v-09f3e8a6] {
+      margin: 0 0 0 20px;
+    }
 </style>
 
 <style scoped>
+  /*上传按钮*/
+  .el-button--primary {
+      padding: 9px 15px;
+      background-color: #1ABC9C;
+      border-color: #1ABC9C;
+  }
+  .el-button--primary:hover {
+    background-color: #1ABC9C;
+    opacity: 0.8;
+    border-color: #1ABC9C;
+  }
   /* 表格样式 */
   .file-table {
     width: 1500px;
@@ -272,17 +262,13 @@
       font-family:'Tahoma';
   }
   .el-table--border {
-      margin-left: -5px;
       border-right: none;
       border-bottom: none;
   }
-  .el-button--text, .el-button--text.is-disabled, .el-button--text.is-disabled:focus, .el-button--text.is-disabled:hover, .el-button--text:active {
-      margin-left: 20px;
+  .el-button--text[data-v-09f3e8a6] {
+    margin: 0 15px;
   }
-	.filesTop {
-		width: 1500px;
-		margin: 0 auto;
-	}
+	
 	.el-main[data-v-04c2046b] {
 		background-color: #fff!important; 
 	}
@@ -296,29 +282,34 @@
   .el-input__inner {
     font-size: 12px;
   }
-  .filesSelect-sel {
-    width: 105px;
+  .datalist-selecttwo {
     position: absolute;
     right: 10px;
-    top: 8px;
   }
-  .filesSelect {
+  .datalist-selecttwo {
+    width: 100px;
+  }
+  .files-datalist {
     display: flex;
+    align-items:center;
     position: relative;
     width: 1500px;
+    height: 50px;
+    background: #f3f3f3;
     margin: 0 auto;
   }
   .filesForm-query {
-    width: 80px;
-    height: 30px;
     position: absolute;
-    right: 50px;
+    right: 10px;
     bottom: 5px;
     background-color: #fff;
     border-color: #CCC;
     border-radius: 0;
     color: #666;
     font-size: 12px;
+  }
+  .filesquery i,.files-datalist i {
+    padding: 0 5px 0 10px;
   }
   .input {
     display: flex;
@@ -329,7 +320,7 @@
     width: 1500px;
     display: flex;
     position: relative;
-    margin: 0 auto ;
+    margin: 0 auto 20px;
   }
   .el-table {
     color: #333;
@@ -351,8 +342,12 @@
     border: 1px solid #E4E4E4;
     text-align: right;
     width: 1500px;
+    height: 50px;
     background-color: #fdfdfe;
-    margin: 0 auto;
+    margin: 20px auto;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
   }
   .el-tabs__item {
     line-height: 36px;
@@ -392,20 +387,34 @@
   }
   .screen {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
     font-family:'Tahoma';
-    background-color: #F3F3F3;
-    height: 30px;
-    width: 100%;
-    border: 1px solid #E4E4E4;
-    padding: 15px 0 0 35px;
-    text-align: left;
-    margin: 5px 0 0 -5px;
   }
-  .filesTop {
+  .dataquery-refresh {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      color: #666; 
+      background-color: #fff; 
+      border:1px solid #CCC;
+      border-radius:0;
+  }
+  .filesquery {
+    width: 1500px;
+    height: 50px;
+    margin: 0 auto;
+    background-color: #F3F3F3;
+    position: relative;
+    display: flex;
+    align-items:center;
+  }
+  .files-tab {
     width: 1500px;
     margin: 0 auto;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
   }
   *{
     margin: 0;

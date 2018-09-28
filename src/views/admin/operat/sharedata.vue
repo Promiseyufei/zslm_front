@@ -1,55 +1,59 @@
 <template>
 	<div class="dataAll">
 		<div class="dataAll-top">
-			<p>运营管理</p>
-			<p class="span">/</p>
-			<p>分享管理</p>
+			<el-breadcrumb separator="/">
+			  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+			</el-breadcrumb>
 		</div>
 		<div class="dataquery">
-			<i class=""></i>
+			<i class="el-icon-search"></i>
 			<p>筛选查询</p>
-			<div></div>
-			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "gettable_info">刷新</el-button>
+			<!-- <div></div> -->
+			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native="gettableInfo">刷新</el-button>
 		</div>
 		<div class="dataform">
 			<el-form class="dataform-input" ref="filesForm" :model="filesForm" label-width="80px">
 				<el-form-item label="内容类型">
-				    <el-select v-model="filesForm.type" placeholder="全部">
+				    <el-select size="medium" v-model="filesForm.type" placeholder="全部">
 				      <el-option label="区域一" value="shanghai"></el-option>
 				      <el-option label="区域二" value="beijing"></el-option>
 				    </el-select>
 			    </el-form-item>
 		        <el-form-item label="关键字">
-		          <el-input v-model="filesForm.name1" placeholder="请输入关键字"></el-input>
+		          <el-input size="medium" v-model="filesForm.name1" placeholder="请输入关键字"></el-input>
 		        </el-form-item>
 	        	<!-- </el-form-item> -->
 	      	</el-form>
-	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native = "gettable_info">查询</el-button>
+	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native="gettableInfo">查询</el-button>
 		</div>
 		<div class="datalist">
-			<i class=""></i>
+			<i class="el-icon-tickets"></i>
 			<p>内容列表</p>
-			<div></div>
-			<!-- <el-select size="mini" class="datalist-selectone" v-model="value" placeholder="请选择">
-			    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-			    </el-option>
-			</el-select> -->
 			<el-select size="mini" class="datalist-selecttwo" v-model="value" placeholder="默认顺序">
-			    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettable_info">
+			    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettableInfo">
 			    </el-option>
 			</el-select>
 		</div>
 		<div class="datatable">
 			<el-table ref="singleTable" :data="Datatable" border @current-change="handleCurrentChange" style="width: 100%">
-				<!-- <el-table-column label="编号" prop="id" width="100"></el-table-column> -->
-				<!-- <el-table-column type="index" width="50"></el-table-column> -->
-				<div v-for="val in tableTop">
+				<div v-for="(val, index) in tableTop" :key="index">
 					<el-table-column :type="val.type" :property="val.property" :label="val.label" :width="val.width"></el-table-column>
 				</div>
 			</el-table>
 		</div>
 		<div class="footer"> 
-	  		<Page ref = "page" :count="count" :number="number" :currentPage4="currentPage4" @gettable_info="gettable_info" @showbox="toshow2" :msg="msg"></Page>
+	  		<div class="addadviseblock">
+                <el-pagination
+                	background
+                  	@size-change="handleSizeChange"
+                  	@current-change="handleCurrent"
+                  	:current-page.sync="currentSubscript"
+                  	:page-size="currentPage3"
+                  	layout="total, sizes, prev, pager, next, jumper"
+                  	:total="total">
+                </el-pagination>
+            </div>
 		</div>
 	</div>
 </template>
@@ -58,11 +62,35 @@
 	export default {
 	    data(){
 	    	return {
+				currentPage3:10,
+				total:100,
+				currentSubscript: 1,
 	    		currentPage4:2,
 	    		msg:0,
-	    		count:0,
+				count:0,
 	    		number:0,
-		        value: '',
+				value: '',
+
+				contentType:[
+					{
+						label: '院校专业主页',
+						value: 0
+					},
+					{
+						label: '活动详情',
+						value: 1
+					},
+					{
+						label: '资讯详情',
+						value: 2
+					},
+					{
+						label: '总量',
+						value:3
+					}
+					
+				],
+
 	    		tableTop:[
 		          {property:'content',label:'分享内容',width:650},
 	    		  {property:'id',label:'编号',width:100},
@@ -88,8 +116,9 @@
 		        currentRow:null,
 	    		filesForm: {
 		    		name1:'',
-		    		type:'',
-		    	},
+		    		type: 3,
+				},
+				
 		    	options: [
 			        {
 			          value: '选项3',
@@ -107,22 +136,46 @@
 		    };
 	    },
 	    methods: {
+			//分页页数改变时触发
+			handleSizeChange: function(val) {
+				this.currentPage3 = val;
+				this.gettableInfo();
+			},
+			//分页下标改变时触发
+			handleCurrent:function(val) {
+				this.currentSubscript = val;
+				this.gettableInfo();
+			},
+
+			//排序方式改变时触发
+			handleChange(value) {
+				this.selectedOptions2 = value;
+				this.gettableInfo();
+			},
+
+
 		    toshow2(msg) {
 		        this.msg = msg;
 		        console.log(this.msg);
-		    },
-	    	gettable_info: function (){
-	        	var that = this;
-		        axios.post('/admin/data/getdata-table',{
-		        	type: that.filesForm.type,
-		        	name1: that.filesForm.name1,
+			},
+			
+	    	gettableInfo: function (){
+				var that = this;
+		        this.post('/admin/operate/getPagingData',{
+					pageNumber: that.currentSubscript,
+					pageCount: that.currentPage3,
+					sortType: that.selectedOptions2[0],
+					riseOrDrop: that.selectedOptions2[1],
+					contentType: that.filesForm.type,
+					titleKeyword: that.filesForm.name1 == null ? '' : that.filesForm.name1 
+
 		        })
 		        .then(function (response) {
 		            // that.page++;
 		            var res = response.data;
 		            if (res.code == 0) {
 		            	that.Datatable = res.data;
-		            	that.count = res.count;
+		            	that.total = res.total;
 		            };
 		            // that.pages = response.datas.data;
 		        })
@@ -131,11 +184,12 @@
 		        });
 	      },
 	    	handleCurrentChange(val) {
-	        this.currentRow = val;
+				console.log(val);
+				this.currentRow = val;
 	      }
 	    },
 		mounted() {
-			this.gettable_info();
+			this.gettableInfo();
 			// this.getPage();
 		},
 	}
@@ -178,8 +232,12 @@
 		border: 1px solid #E4E4E4;
 		text-align: right;
 		width: 1500px;
+		height: 50px;
 		background-color: #fdfdfe;
-		margin: 0 auto;
+		margin: 20px auto;
+		display: flex;
+    	align-items:center;
+    	justify-content:space-between;
 	}
 	.el-table thead {
 	    background: #f9fafc;
@@ -201,7 +259,6 @@
 	}
 	.datalist-selecttwo {
 		width: 100px;
-		margin: 10px 0;
 	}
 	.dataform-input {
 		display: flex;
@@ -210,7 +267,7 @@
 		display: flex;
 		position: relative;
 		width: 1500px;
-		margin: 20px auto;
+		margin: 0 auto 10px;
 	}
 	.dataquery-refresh {
 		position: absolute;
@@ -221,19 +278,26 @@
 	    border:1px solid #CCC;
 	    border-radius:0;
 	}
+	.dataquery i,.datalist i {
+		padding: 0 5px 0 10px;
+	}
 	.dataquery p,.datalist p {
 		font-size: 16px;
 		color: #666;
 		font-weight: bold;
-		padding: 0 20px;
 	}
+
 	.dataquery,.datalist {
 		position: relative;
 		display: flex;
+		align-items:center;
 		width: 1500px;
 		height: 50px;
 		background:#f3f3f3;
 		margin: 0 auto;
+	}
+	.dataquery {
+		margin: 15px auto;
 	}
 	.span {
 		margin: 10px 6.5px;

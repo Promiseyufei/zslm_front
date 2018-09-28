@@ -22,9 +22,8 @@
               label="操作"
               width="140">
               <template slot-scope="scope">
-                <el-button type="text" size="small">编辑</el-button>
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                <el-button type="text" size="small" @click="deleteSingle(scope.row.id, scope.row)">删除</el-button>
+                <el-button type="text" size="small" @click="deleteSingle(scope.row.id, scope.row)">取消推荐</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -63,6 +62,11 @@ export default {
             } else {
                 this.$emit('setInfoRelation',this.tableData3[index].id, this.tableData3[index].show_weight);
             }
+        },
+
+        // 删除单个banner
+        deleteSingle: function(res, row) {
+          this.$emit('del',res, row);
         },
         
         handleClick: function (row) { 

@@ -6,9 +6,8 @@ axios.defaults.baseURL = 'http://localhost:81/zslm_back/public';
 
 axios.interceptors.request.use(
     config => {
-        // config.data = JSON.stringify(config.data);
         config.headers = {
-            'Content-Type':'application/json',
+            'Content-Type':'application/json'
         }
         return config;
     },
@@ -59,10 +58,6 @@ axios.interceptors.response.use(response => {
     return Promise.resolve(err.response);
 })
 
-// this.fetch('/test',{
-//     'id':2,
-//     'test':'aaaa'
-// })
 export default {
     //get
     fetch: function(url, params = {}) {
@@ -79,9 +74,10 @@ export default {
     },
 
     //post
-    post: function(url, data = {}) {
+    post: function(url, data, config) {
+        typeof config !== 'undefined' ? config : {};
         return new Promise((resolve, reject) => {
-            axios.post(url, data)
+            axios.post(url, data, config)
                 .then(response => {
                     resolve(response.data);
                 }, err => {
