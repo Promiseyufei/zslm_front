@@ -33,6 +33,7 @@
                     :on-change="handleChange"
                     :on-remove="handleRemove"
                     :before-remove="beforeRemove"
+                    :auto-upload="false"
                     :file-list="fileList">
                     <el-button size="small" type="primary">上传文件</el-button>
                     <!-- <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div> -->
@@ -112,6 +113,8 @@ export default {
         }
       };
       return {
+
+        isUpload:false,
         value2: '',
         rules: {
           name: [
@@ -191,6 +194,7 @@ export default {
         },
         // 点击上传图片按钮
         submitForm: function (formName) {
+            // console.log(self.fileList[0].file)
           var self = this;
           this.$refs[formName].validate((valid) => {
             // 判断表单是否符合填写要求
@@ -202,19 +206,19 @@ export default {
               };
 
               var fd = new FormData()
-              fd.append('file', self.fileList[0].file)
+                fd.append('uploadFile', self.fileList[0].raw)
+                fd.append('isShow',0)
+                fd.append('fileName',self.ruleForm.name)
+                fd.append('fileDescribe',self.ruleForm.message)
+                fd.append('fileYear',123124)
+                fd.append('fileType',1)
               let imgFile = {
                   headers: {
                       'Content-Type': 'multipart/form-data'
                   }
               }
-              axios.post('/admin/operate/createPageBillboard', {
-                imgName: self.ruleForm.name,
-                imgAlt: self.ruleForm.message,
-                reUrl: self.ruleForm.url,
-                img: imgFile,
-                urlId: self.i
-              })
+              console.log( self.fileList[0].raw)
+              axios.post('http://www.zslm.com/admin/files/upload',fd,imgFile)
               .then(function (response) {
                 var date = response.data;
                 if (date.code == 0) {

@@ -189,12 +189,20 @@
       },
       query: function (){
         var that = this;
-        axios.post('/admin/files/getUploadFile',{
+          that.filesForm.name1='';
+          that.filesForm.name2='';
+          that.filesForm.year=''
+          that.filesForm.type = 2
+        axios.get('http://www.zslm.com/admin/files/getUploadFile',{
+            params:{
           //后台参数，前台参数(传向后台)
-          name1: that.filesForm.name1,
-          name2: that.filesForm.name2,
-          year: that.filesForm.year,
-          type: that.filesForm.type,
+            fileName: that.filesForm.name1,
+            majorName: that.filesForm.name2,
+            fileYear: that.filesForm.year,
+            fileType: that.filesForm.type,
+            page:1,
+            pageSzie:5
+            }
         })
         .then(function (response) {
             var res = response.data;
