@@ -19,7 +19,23 @@
                 </div>
 
                 <!-- 设置推荐院校专业 -->
-                
+                <div class="operateUpfiles operateDown">
+                    <div class="operateUpfilesLeft">
+                        <div><i class="fa fa-wrench fa-fw FA-3X"></i>&nbsp;设置推荐资讯</div>
+                    </div>
+                    <div class="operateUpfilesRight2">
+                        <div class="operateUpfilesRight2Nav">
+                            <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                            <el-button type="info" plain @click="operateDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                        </div>
+                        <!-- 表格 -->
+                        <!-- <OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></OperateTable> -->
+                        <!-- 完成按钮 -->
+                        <!-- <div class="operateFinalUp">
+                            <el-button type="primary">完成</el-button>
+                        </div> -->
+                    </div> 
+                </div>
 
 
 
@@ -120,6 +136,29 @@ export default {
 }
 
 
+
+/*
+* 右边样式
+*/
+.operateUpfilesRight2 {
+  padding: 50px 90px 50px 80px;
+  width: 1170px;
+}
+.operateUpfilesRight2Nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: #666;
+  font-size: 14px;
+}
+.operateTable {
+  margin-top: 25px;
+}
+.operateFinalUp {
+  text-align: center;
+  margin: 150px 0 20px;
+}
 </style>
     
     
