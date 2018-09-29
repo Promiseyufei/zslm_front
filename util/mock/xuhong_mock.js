@@ -181,6 +181,24 @@ Mock.mock('/admin/operate/createBannerAd',{
 	"msg": Mock.mock('@cword(3, 5)')
 })
 
+/* Operate
+* 运营管理模块——资讯推荐添加
+* 获取咨询列表添加分页数据
+*/
+Mock.mock('/admin/message/getActivity',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)'),
+	"data|4": [
+		{
+			'id|+1': 0,
+			"show_weight|1-100": 100,
+			"name": Mock.mock('@cword(5, 15)'),
+			"z_type": Mock.mock('@cword(5, 15)'),
+			"create_time": Mock.mock('@now')
+		}
+	]
+})
+
 /* message
 * 信息发布模块——辅导机构——编辑基本信息
 * 清空所有项目

@@ -5,79 +5,48 @@
             <div>
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item>信息发布</el-breadcrumb-item>
-                    <el-breadcrumb-item>辅导机构</el-breadcrumb-item>
-                    <el-breadcrumb-item>辅导机构信息编辑</el-breadcrumb-item>
+                    <el-breadcrumb-item>资讯发布</el-breadcrumb-item>
+                    <el-breadcrumb-item>资讯内容编辑</el-breadcrumb-item>
                 </el-breadcrumb>
 
                 <!-- 步骤条 -->
                 <div class="fileSteps">
                     <el-steps :active=".1" align-center>
-                        <el-step title="辅导机构信息"></el-step>
-                        <el-step title="优惠卷设置"></el-step>
-                        <el-step title="相关活动设置"></el-step>
+                        <el-step title="资讯内容"></el-step>
+                        <el-step title="推荐信息"></el-step>
+                        <el-step title="消息通知"></el-step>
                     </el-steps>
                 </div>
 
                 <!-- 辅导机构基本信息 -->
                 <div class="operateUpfiles operateUp">
                     <div class="operateUpfilesLeft">
-                        <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;辅导机构基本信息</div>
+                        <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;资讯信息</div>
                     </div>
                     <div class="operateUpfilesRight">
-                        <el-form ref="counsellForm" :model="counsellForm" label-width="100px">
+                        <el-form ref="informationForm" :model="informationForm" label-width="100px">
                             <el-form-item>
                                 <el-button type="primary" @click="startChange">开始编辑</el-button>
                             </el-form-item>
 
+                            <el-form-item label="资讯标题">
+                                <el-input v-model="informationForm.name" :disabled = "disabled"></el-input>
+                            </el-form-item>
+
                             <el-form-item label="资讯类型">
-                                <el-select v-model="counsellForm.region" placeholder="请选择活动区域" :disabled = "disabled">
+                                <el-select v-model="informationForm.region" placeholder="请选择活动区域" :disabled = "disabled">
                                     <el-option :label="item.type" :value="item.id" v-for="(item, index) in counsell_type" :key="index"></el-option>
                                 </el-select>
                             </el-form-item>
 
-                            <el-form-item label="辅导机构名称">
-                                <el-input v-model="counsellForm.name" :disabled = "disabled"></el-input>
+                            <el-form-item label="资讯来源">
+                                <el-input v-model="informationForm.address" :disabled = "disabled"></el-input>
                             </el-form-item>
 
-                            <el-form-item label="所在省市">
-                                <el-select v-model="counsellForm.region" placeholder="请选择活动区域" :disabled = "disabled">
-                                    <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option>
-                                </el-select>
-                            </el-form-item>
-
-                            <el-form-item label="联系电话">
-                                <el-input v-model="counsellForm.tell" :disabled = "disabled"></el-input>
-                            </el-form-item>
-
-                            <el-form-item label="地址">
-                                <el-input v-model="counsellForm.address" :disabled = "disabled"></el-input>
-                            </el-form-item>
-
-                            <el-form-item label="网址">
-                                <el-input v-model="counsellForm.web" :disabled = "disabled"></el-input>
+                            <el-form-item label="来源URL">
+                                <el-input v-model="informationForm.web" :disabled = "disabled"></el-input>
                             </el-form-item>
                             
-                            <el-form-item label="课程形式">
-                                <el-radio-group v-model="counsellForm.type" :disabled = "disabled">
-                                    <el-radio label="线上">线上</el-radio>
-                                    <el-radio label="线下">线下</el-radio>
-                                </el-radio-group>
-                            </el-form-item>
-
-                            <el-form-item label="优惠卷">
-                                <el-radio-group v-model="counsellForm.cheap" :disabled = "disabled">
-                                    <el-radio label="启用">启用</el-radio>
-                                    <el-radio label="禁用">禁用</el-radio>
-                                </el-radio-group>
-                            </el-form-item>
-
-                            <el-form-item label="退款保障">
-                                <el-radio-group v-model="counsellForm.refund" :disabled = "disabled">
-                                    <el-radio label="支持">支持</el-radio>
-                                    <el-radio label="不支持">不支持</el-radio>
-                                </el-radio-group>
-                            </el-form-item>
-
                             <!--<el-form-item label="官方微信">
                                 <div style="padding: 0 5px 5px 8px">
                                     <div class="add" @click.stop="addPic" cuort>
@@ -129,7 +98,7 @@
                 <!-- 活动介绍信息 -->
                 <div class="operateUpfiles operateDown">
                     <div class="operateUpfilesLeft">
-                        <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;辅导机构简介</div>
+                        <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;资讯详情</div>
                     </div>
                     <div class="operateUpfilesRight2">
                         <el-button type="primary" @click="startChange3">编辑</el-button>
@@ -148,7 +117,7 @@
                 <!-- 完成按钮 -->
                 <div class="operateFinalUp">
                     <el-button type="primary" @click="toBack" plain>返回</el-button>
-                    <el-button type="primary" @click="toAdvise">下一步，相关活动设置</el-button>
+                    <el-button type="primary" @click="toAdvise">下一步，编辑推荐信息</el-button>
                 </div>
             </div>
         </div>
@@ -166,11 +135,10 @@ export default {
                 Keywords: "",
                 Description: ""
             },
-            counsellForm: {
-                counsell_type: "提前面试",
+            informationForm: {
                 name: "河南科技学院",
-                region: "河南省",
-                tell: "18303612352",
+                counsell_type: "提前面试",
+                region: "提前面试",
                 address: "河南省新乡市河南科技学院",
                 web:"http://qinghua.cn",
                 type: "线上",
