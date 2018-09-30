@@ -46,6 +46,10 @@
                             <el-form-item label="来源URL">
                                 <el-input v-model="informationForm.web" :disabled = "disabled"></el-input>
                             </el-form-item>
+
+                            <el-form-item label="资讯简介">
+                                <el-input type="textarea" v-model="informationForm.detial" :disabled = "disabled"></el-input>
+                            </el-form-item>
                             
                             <!--<el-form-item label="官方微信">
                                 <div style="padding: 0 5px 5px 8px">
@@ -141,9 +145,7 @@ export default {
                 region: "提前面试",
                 address: "河南省新乡市河南科技学院",
                 web:"http://qinghua.cn",
-                type: "线上",
-                cheap: "启用",
-                refund: "支持",
+                detial: "ahjksdbfhjbsahejsdnb"
             },
             disabled: true,
             disabled2: true,
@@ -166,8 +168,6 @@ export default {
                     type: "讲座论坛"
                 },
             ],
-            // 省份字典
-            province: [],
             // 富文本编辑器
             editorContent:'',
             editor: new WangEditor('#editor'),
@@ -197,17 +197,15 @@ export default {
         },
         //返回上一页
         toBack: function() {
-            this.$router.push('/message/coachList');
+            this.$router.push('/message/informationList');
         },
-        // 跳转到优惠卷设置页面
+        // 跳转到推荐内容设置页面
         toAdvise: function() {
-            this.$router.push('/message/coupon/' + this.id);
+            this.$router.push('/message/recommend/' + this.id);
         },
         
     },
     mounted(){
-        this.getProvince();
-
         // 创建富文本编辑器
         this.editor.customConfig.onchange = (html) => {
             this.editorContent = html;

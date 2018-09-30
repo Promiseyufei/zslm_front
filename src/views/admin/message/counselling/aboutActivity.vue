@@ -77,7 +77,7 @@ export default {
                 lable: "发布时间",
                 width: "210px"
             }
-        ],
+            ],
             // 表格默认数据
             tableData3: [],
         }
