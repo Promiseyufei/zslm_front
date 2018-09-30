@@ -183,6 +183,12 @@ let admin_router = {
             name: '消息管理-历史消息记录详情',
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordDetail'], resolve))
         },
+        // 账户管理
+        {
+            path: '/usermanagement/userfocusmajor',
+            name: '用户管理-关注院校',
+            component: resolve =>void(require(['@/views/admin/usermanagement/userfocusmajor'], resolve))
+        },
         
     ]
 }

@@ -143,70 +143,76 @@
         //   this.value2 = val;
         //   this.query();
         // }
-       	},
-	  	methods: {
-	  		// 改变权重前的判断
-	  		changeweight: function() {
-	  			this.confirm(() => {
-            		console.log('this is callback');
-        		}, () => {
-            		console.log('this is catchback');
-        		},'确定更改吗', '危险操作');
-	  		},
-	      	// 表格删除
-	    	deleteRow(index, rows) {
-	      		// 删除前判断
-	      		this.confirm(() => {
-	      			rows.splice(index, 1);
-            		console.log('this is callback');
-        		}, () => {
-            		console.log('this is catchback');
-        		},'确定删除吗', '危险操作');
-        		// 删除某一行
-	        	
-	      },
-	      	// 编辑、查看表格某一行
-	    	handleClick(row) {
-	        // console.log(row);
-	    	},
-	  		//动态更新文件管理首页的id
-	  		toshow: function (i) {
-	        this.i = i;
-	        // console.log(this.i);
-	      },
-	      	// 分页  获得当前页码和总页数
-	      	pageChange(msg) {
-	        	this.searchContent.page = msg.page;
-	          	this.searchContent.limit = msg.limit;
-	      	},
-	      	query: function (){
-	        	var that = this;
-	        	axios.post('/admin/files/getUploadFile',{
-		          //后台参数，前台参数(传向后台)
-		          name1: that.filesForm.name1,
-		          name2: that.filesForm.name2,
-		          year: that.filesForm.year,
-		          type: that.filesForm.type,
-	        	})
-	        	.then(function (response) {
-	            	var res = response.data;
-	            	if (res.code == 0) {
-	               		that.tableData =res.data;
-	                	that.total = res.total;
-	            	};
-	        	})
-	        	.catch(function (error) {
-	        	});
-	      	},
-	  	},
-	  	mounted(){
-	      this.handleClick();
-	  		// this.getPage();
-	      this.query();
-	  		this.radio2 = "全部文件";
-	  		// console.log(this.radio2);
-	  	}
-	}
+       },
+  	methods: {
+      // handleSizeChange(val) {
+      //   console.log(`每页 ${val} 条`);
+      // },
+      // handleCurrentChange(val) {
+      //   console.log(`当前页: ${val}`);
+      // },
+  		//动态更新文件管理首页的id
+  		toshow: function (i) {
+        this.i = i;
+        console.log(this.i);
+      },
+      toshow2(msg) {
+          this.msg = msg;
+          // console.log(this.msg);
+      },
+      query: function (){
+        var that = this;
+          that.filesForm.name1='';
+          that.filesForm.name2='';
+          that.filesForm.year=''
+          that.filesForm.type = 2
+        axios.get('http://www.zslm.com/admin/files/getUploadFile',{
+            params:{
+          //后台参数，前台参数(传向后台)
+            fileName: that.filesForm.name1,
+            majorName: that.filesForm.name2,
+            fileYear: that.filesForm.year,
+            fileType: that.filesForm.type,
+            page:1,
+            pageSzie:5
+            }
+        })
+        .then(function (response) {
+            var res = response.data;
+            // console.log(res.count,123);
+            if (res.code == 0) {
+                that.tableData =res.data;
+                // that.number = Math.ceil(res.count/that.value2);
+                that.count = res.count;
+                // console.log(that.number);
+            };
+            console.log(that.tableData);
+            // that.pages = response.datas.data;
+        })
+        .catch(function (error) {
+            // console.log(error);
+        });
+        // this.$refs.page.handleCurrentChange();
+      },
+        // getPage: function (){
+        //   var that = this;
+        //   axios.post('/admin/files/getUploadFile',{
+        //   })
+        //   .then(function (response) {
+        //       that.Page = response.data.datas[0];
+        //   })
+        //   .catch(function (error) {
+        //   });
+        // }
+  	},
+  	mounted(){
+  		// this.getPage();
+      this.query();
+  		this.radio2 = "全部文件";
+  		console.log(this.radio2);
+  	}
+  }
+
 
 </script>
 
