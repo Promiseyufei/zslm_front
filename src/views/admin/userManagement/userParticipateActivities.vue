@@ -1,10 +1,9 @@
 <template>
     <div>
-
         <el-breadcrumb separator="/" style="width: 1500px;margin: 0 auto 20px">
             <el-breadcrumb-item>账户管理</el-breadcrumb-item>
             <el-breadcrumb-item>注册用户</el-breadcrumb-item>
-            <el-breadcrumb-item><div class="now-page">关注院校</div></el-breadcrumb-item>
+            <el-breadcrumb-item><div class="now-page">参与活动</div></el-breadcrumb-item>
         </el-breadcrumb>
         <div style="width: 1500px;margin: 0 auto 20px">
             <el-button class="query-button" type="primary" icon="el-icon-upload2"  @click.native = "query" style="float: none">导出</el-button>
@@ -18,7 +17,7 @@
         <div class="filesForm">
 
                 <el-form class="input" v-model="userFrom" label-width="80px" style="width: 100%">
-                    <el-form-item label="院校专业">
+                    <el-form-item label="活动名称">
                         <el-input size="medium" placeholder="请输入院校专业"></el-input>
                     </el-form-item>
                     <el-form-item label="昵称">
@@ -81,7 +80,7 @@
                     {value: '选项三',label: '100条'},
                 ],
                 tableTop:[
-                    {type:'',prop:'universmajor',label:'院校专业',width:320},
+                    {type:'',prop:'universmajor',label:'活动名称',width:320},
                     {type:'',prop:'userid',label:'帐户ID',width:200},
                     {type:'',prop:'username',label:'昵称',width:200},
                     {type:'',prop:'userrealname',label:'真实姓名',width:200},
@@ -109,8 +108,7 @@
     .now-page{
         padding-bottom: 3px;
         border-bottom: solid 1px #68c368;
-    }
-
+    }npm
     .el-form-item{
         display: inline-block;
         width: 20%;
