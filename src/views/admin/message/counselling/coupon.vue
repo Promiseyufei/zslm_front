@@ -183,9 +183,7 @@ export default {
         //得到所有的项目
         getCoupon: function() {
             let self = this;
-
             axios.post('/getProject', {
-                
             })
             .then(function (response) {
                 var res = response.data;

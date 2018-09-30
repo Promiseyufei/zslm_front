@@ -70,6 +70,7 @@ export default {
         }
     },
     mounted(){
+      console.log(this.tableData3);
     }
 };
 </script>

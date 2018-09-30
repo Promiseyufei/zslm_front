@@ -19,7 +19,23 @@
                 </div>
 
                 <!-- 设置推荐院校专业 -->
-                
+                <div class="operateUpfiles operateDown">
+                    <div class="operateUpfilesLeft">
+                        <div><i class="fa fa-wrench fa-fw FA-3X"></i>&nbsp;设置相关活动</div>
+                    </div>
+                    <div class="operateUpfilesRight2">
+                        <div class="operateUpfilesRight2Nav">
+                            <el-button type="info" plain @click="couponAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                            <el-button type="info" plain @click=""><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                        </div>
+                        <!-- 表格 -->
+                        <messageTable :tableData3 = "tableData3" :listTable="listTable" @del=""></messageTable>
+                        <!-- 完成按钮 -->
+                        <div class="operateFinalUp">
+                            <el-button type="primary" @click="couponFinish">完成</el-button>
+                        </div>
+                    </div> 
+                </div>
 
 
 
@@ -35,14 +51,65 @@ export default {
     },
     data() {
         return {
-
+            listTable: [
+            {
+                prop: 'id',
+                lable: '编号',
+                width: "210px"
+            },
+            {
+                prop: "weight",
+                lable: "展示顺序",
+                width: "80px"
+            },
+            {
+                prop: "z_type",
+                lable: "活动类型",
+                width: "210px"
+            },
+            {
+                prop: "name",
+                lable: "活动名称",
+                width: "319px"
+            },
+            {
+                prop: "create_time",
+                lable: "发布时间",
+                width: "210px"
+            }
+            ],
+            // 表格默认数据
+            tableData3: [],
         }
     },
     methods: {
+        // 跳转页面，跳到添加活动页面
+        couponAdd: function() {
+            this.$router.push('/message/coupon/');
+        },
+        //获得相关活动页面
+        getActivity: function() {
+            let self = this;
+
+            axios.post('/admin/message/getActivity', {
+                
+            }).then((response) => {
+                var res = response.data;
+                if(res.code == 0) {
+                    this.tableData3 = res.data;
+                    // this.message(true, response.msg, 'success');
+                }
+                // else this.message(true, response.msg, 'error');
+            })
+        },
+        //点击完成跳转页面
+        couponFinish: function() {
+            this.$router.push('/message/coachList');
+        }
 
     },
     mounted(){
-
+        this.getActivity();
     },
 };
 </script>
@@ -120,6 +187,29 @@ export default {
 }
 
 
+
+/*
+* 右边样式
+*/
+.operateUpfilesRight2 {
+  padding: 50px 90px 50px 80px;
+  width: 1170px;
+}
+.operateUpfilesRight2Nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: #666;
+  font-size: 14px;
+}
+.operateTable {
+  margin-top: 25px;
+}
+.operateFinalUp {
+  text-align: center;
+  margin: 150px 0 20px;
+}
 </style>
     
     
