@@ -10,11 +10,11 @@ let admin_router = {
             name: '导航',
             component: resolve =>void(require(['@/views/admin/accounts'], resolve))
         },
-        // {
-        //     path: '/information',
-        //     name: '小块',
-        //     component: resolve =>void(require(['@/views/admin/information'], resolve))
-        // },
+        {
+            path: '/inf',
+            name: '小块',
+            component: resolve =>void(require(['@/views/admin/information'], resolve))
+        },
 
         // 文件管理
         {
