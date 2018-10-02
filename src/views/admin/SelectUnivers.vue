@@ -7,7 +7,7 @@
 			</el-breadcrumb>
 		</div>
 		<div class="Select-steps">
-			<el-steps :active="1" align-center>
+			<el-steps :active=".1" align-center>
 			  <el-step title="选择院校专业"></el-step>
 			  <el-step title="上传文件"></el-step>
 			</el-steps>
@@ -143,7 +143,7 @@
 	export default {
 	    data() {
 	        return {
-	        	majorname:0,
+	        	majorname:'',
 	        	// majorname:'',
 	        	butname:'',
 	        	count:100,

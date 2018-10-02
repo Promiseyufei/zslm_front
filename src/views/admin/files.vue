@@ -52,7 +52,7 @@
 
 	  	<!-- 表格 -->
 	    <div class="file-table">
-		      <el-table :data="tableData" border style="width: 100%">
+		      <el-table :data="tableData" border style="width: 100%" @selection-change="selesChange">
 		          <el-table-column type="selection" width="50"></el-table-column>
 		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
 		          <el-table-column label="展示权重" width="80">
@@ -76,7 +76,7 @@
 
 	    <!-- 分页 -->
 	    <div class="footer">
-	      <el-button type="primary" size="mini" icon="el-icon-delete">批量删除</el-button>
+	      <el-button type="primary" size="mini" icon="el-icon-delete" @click="deGloup(sels)" :disabled="this.sels.length === 0">批量删除</el-button>
 	      <Page :total="total" @pageChange="pageChange" @click.native = "query"></Page>
 	    </div>
 	</div>
@@ -128,6 +128,8 @@
 		            showhomepage: '',
 		            onlinetime: '',
 		        }],
+		        sels:[],
+		        disabled:true,
 
 		        /*分页*/
 		        total:0,
@@ -138,13 +140,24 @@
     	    }
   	    },
        	watch: {
-        // value: function(val,oldval) {
-        //   console.log(val);
-        //   this.value2 = val;
-        //   this.query();
-        // }
+	        // value: function(val,oldval) {
+	        //   console.log(val);
+	        //   this.value2 = val;
+	        //   this.query();
+	        // }
        	},
 	  	methods: {
+	  		// 批量删除
+	  		selesChange(sels) {
+	  			this.sels = sels;
+	  		},
+	  		deGloup() {
+	  			// var ids = this.rels.map(item => item.id).join();
+	  			var ids = [];
+	  			rows.forEarch(element =>{
+	  				ids.push(element.id)
+	  			})
+	  		},
 	  		// 改变权重前的判断
 	  		changeweight: function() {
 	  			this.confirm(() => {
