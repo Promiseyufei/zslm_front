@@ -4,8 +4,8 @@
             <div>
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item>信息发布</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动信息</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动信息编辑</el-breadcrumb-item>
+                    <el-breadcrumb-item>资讯发布</el-breadcrumb-item>
+                    <el-breadcrumb-item>资讯内容推荐</el-breadcrumb-item>
                     <el-breadcrumb-item>推荐信息</el-breadcrumb-item>
                 </el-breadcrumb>
 
@@ -22,7 +22,7 @@
                     <!-- 招生项目信息 -->
                     <div class="operateUpfiles operateUp">
                         <div class="operateUpfilesLeft">
-                            <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;设置主办院校</div>
+                            <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;设置相关院校</div>
                         </div>
                         <div class="operateUpfilesRight">
                             <div class="messageBtn">
@@ -35,7 +35,7 @@
                             </div>
 
                             <!-- 院校名称 -->
-                            <p style="text-align: center;">{{messageSchool}}</p>
+                            <p style="text-align: left;">{{messageSchool}}</p>
                             
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                     <!-- 设置推荐活动 -->
                     <div class="operateUpfiles operateDown">
                         <div class="operateUpfilesLeft">
-                            <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;设置推荐活动</div>
+                            <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;设置推荐阅读</div>
                         </div>
                         <div class="operateUpfilesRight2">
                             <template>
@@ -90,7 +90,7 @@
                     <div class="operateFinalUp">
                         <el-button type="primary" @click="toBack" plain>返回上一步</el-button>
                         <el-button type="primary" @click="toNotice">下一步，消息通知</el-button>
-                        <el-button type="primary" @click="">完成！</el-button>
+                        <el-button type="primary" @click="finish">完成！</el-button>
                     </div>
 
                 </div> 
@@ -125,12 +125,12 @@ export default {
             },
             {
                 prop: "activity_type",
-                lable: "活动类型",
+                lable: "资讯类型",
                 width: "210px"
             },
             {
                 prop: "active_name",
-                lable: "活动名称",
+                lable: "资讯标题",
                 width: "319px"
             },
             {
@@ -154,12 +154,12 @@ export default {
             },
             {
                 prop: "activity_type",
-                lable: "活动类型",
+                lable: "院校省市",
                 width: "210px"
             },
             {
                 prop: "active_name",
-                lable: "活动名称",
+                lable: "院校专业名称",
                 width: "319px"
             },
             {
@@ -198,12 +198,17 @@ export default {
         
         // 返回上一步
         toBack: function() {
-            this.$router.push('/message/activity');
+            this.$router.push('/message/changeInformation');
         },
 
         // 跳转到消息通知页面
         toNotice: function() {
-            this.$router.push('/message/notice/' + this.id);
+            this.$router.push('/message/informationNotice/' + this.id);
+        },
+
+        //点击完成，跳转到资讯列表首页
+        finish:function() {
+            this.$router.push('/message/informationList');
         },
 
         // 自动设置推荐活动

@@ -1,7 +1,7 @@
 <template>
     <div>
     	<div>
-    		
+    		消息通知，小奇勤～快点写～
 
 		    
     	</div>
@@ -33,4 +33,3 @@ export default {
 
 
 </style>
-

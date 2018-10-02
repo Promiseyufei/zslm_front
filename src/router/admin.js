@@ -106,6 +106,21 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/counselling/coachList'], resolve))
         },
         {
+            path: '/message/changeMessage',
+            name: '辅导-新建/编辑——基本信息',
+            component: resolve =>void(require(['@/views/admin/message/counselling/changeMessage'], resolve))
+        },
+        {
+            path: '/message/coupon/:id',
+            name: '辅导-新建/编辑——优惠卷设置',
+            component: resolve =>void(require(['@/views/admin/message/counselling/coupon'], resolve))
+        },
+        {
+            path: '/message/aboutActivity/:id',
+            name: '辅导-新建/编辑——相关活动设置',
+            component: resolve =>void(require(['@/views/admin/message/counselling/aboutActivity'], resolve))
+        },
+        {
             path: '/message/choiceactivity',
             name: '信息管理-辅导-相关活动-添加活动',
             component: resolve =>void(require(['@/views/admin/message/counselling/choiceactivity'], resolve))
@@ -116,9 +131,63 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationList'], resolve))
         },
         {
-            path: '/test',
-            name: 'WangEditor test',
-            component: resolve =>void(require(['@/views/admin/test'], resolve))
+            path: '/message/changeInformation',
+            name: '信息发布-资讯发布-资讯内容编辑',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/changeInformation'], resolve))
+        },
+        {
+            path: '/message/recommend/:id',
+            name: '信息发布-资讯发布-推荐信息',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/recommend'], resolve))
+        },
+        {
+            path: '/message/informationNotice/:id',
+            name: '信息发布-资讯发布-消息通知',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/informationNotice'], resolve))
+        },
+        // {
+        //     path: '/test',
+        //     name: 'WangEditor test',
+        //     component: resolve =>void(require(['@/views/admin/test'], resolve))
+        // },
+
+
+        //消息管理
+        {
+            path: '/send/sendHome',
+            name: '消息管理-发消息',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/sendHome'], resolve))
+        },
+        {
+            path: '/send/setMessageObject',
+            name: '消息管理-设置消息对象—特定行为的用户',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageObject'], resolve))
+        },
+        {
+            path: '/send/setMessageSelf',
+            name: '消息管理-设置消息对象—手动选择的用户',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageSelf'], resolve))
+        },
+        {
+            path: '/send/setMessageDetail',
+            name: '消息管理-编辑发送',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageDetail'], resolve))
+        },
+        {
+            path: '/send/recordHome',
+            name: '消息管理-历史消息记录',
+            component: resolve =>void(require(['@/views/admin/sendMessage/record/recordHome'], resolve))
+        },
+        {
+            path: '/send/recordDetail',
+            name: '消息管理-历史消息记录详情',
+            component: resolve =>void(require(['@/views/admin/sendMessage/record/recordDetail'], resolve))
+        },
+        // 账户管理
+        {
+            path: '/usermanagement/userfocusmajor',
+            name: '用户管理-关注院校',
+            component: resolve =>void(require(['@/views/admin/usermanagement/userfocusmajor'], resolve))
         },
         
     ]

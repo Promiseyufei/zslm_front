@@ -72,6 +72,24 @@ Mock.mock('/admin/information/getAllActivitys', {
 })
 
 /* message
+* 信息发布模块—-院校专业——院校专业信息编辑——招生项目信息编辑
+* 得到所有的招生项目
+*/
+Mock.mock('/getProject', {
+	"code": 0,
+	'msg': Mock.mock('@cword(3, 5)'),
+	"data|4": [
+		{
+			"id": Mock.mock('@cword(3, 5)'),
+			"state|1-2": true,
+			"weight|1-100": 100,
+			"pj_name": Mock.mock('@cword(3, 5)'),
+			"project_type": Mock.mock('@cword(3, 5)'),
+		}
+	]
+})
+
+/* message
 * 信息发布模块——活动信息——活动信息编辑——推荐信息
 * 获得所有的院校专业(在设置相关院校和推荐院校的手动设置时使用)
 */
@@ -154,11 +172,56 @@ Mock.mock('/admin/operate/getInformPagingData',{
 	]
 })
 
-/*Operate
+/* Operate
 * 运营管理模块——首页
 * 上传一级页面的banner
 */
 Mock.mock('/admin/operate/createBannerAd',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)')
+})
+
+/* Operate
+* 运营管理模块——资讯推荐添加
+* 获取咨询列表添加分页数据
+*/
+Mock.mock('/admin/message/getActivity',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)'),
+	"data|4": [
+		{
+			'id|+1': 0,
+			"show_weight|1-100": 100,
+			"name": Mock.mock('@cword(5, 15)'),
+			"z_type": Mock.mock('@cword(5, 15)'),
+			"create_time": Mock.mock('@now')
+		}
+	]
+})
+
+/* message
+* 信息发布模块——辅导机构——编辑基本信息
+* 清空所有项目
+*/
+Mock.mock('/deleteprojectDelete',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)')
+})
+
+/* message
+* 信息发布模块——辅导机构——优惠卷设置
+* 清空所有的优惠卷
+*/
+Mock.mock('/deletecouponDelete',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)')
+})
+
+/* message
+* 信息发布模块——院校专业——信息编辑——招生信息编辑
+* 编辑招生项目的状态
+*/
+Mock.mock('/admin/information/setProjectState',{
 	"code": 0,
 	"msg": Mock.mock('@cword(3, 5)')
 })

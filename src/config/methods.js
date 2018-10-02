@@ -28,7 +28,50 @@ export default {
         
     },
 
-    
+    // 得到省份字典
+    getProvince: function() {
+        let self = this;
+        axios.post('/admin/information/getMajorProvincesAndCities',{
+        })
+        .then(function(response) {
+            var res = response.data;
+            if (res.code == 0) {
+                self.province = res.data;
+            };
+        })
+        .catch(function (error) {
+        });
+    },
+
+    // 改变表格第一行的背景颜色
+    getRowClass: function({ row, column, rowIndex, columnIndex }){
+        if (rowIndex == 0) {
+            return 'background:#EFEFEF;text-align:center'
+        } else {
+            return ''
+        }
+    },
+
+    // 删除单个banner
+    deleteSingle: function(res, row) {
+        this.$emit('del',res, row);
+    },
+
+    // 得到专业字典
+    getMajor: function() {
+        let self = this;
+        axios.post('/admin/information/getMajorType',{
+        })
+        .then(function(response) {
+            var res = response.data;
+            if (res.code == 0) {
+                self.major = res.data;
+            };
+        })
+        .catch(function (error) {
+        });
+    },
+
     //加载是否显示
     openFullScreen2() {
         return Loading.service({

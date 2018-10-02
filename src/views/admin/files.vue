@@ -220,6 +220,83 @@
 	  		// console.log(this.radio2);
 	  	}
 	}
+=======
+        // value: function(val,oldval) {
+        //   console.log(val);
+        //   this.value2 = val;
+        //   this.query();
+        // }
+       },
+  	methods: {
+      // handleSizeChange(val) {
+      //   console.log(`每页 ${val} 条`);
+      // },
+      // handleCurrentChange(val) {
+      //   console.log(`当前页: ${val}`);
+      // },
+  		//动态更新文件管理首页的id
+  		toshow: function (i) {
+        this.i = i;
+        console.log(this.i);
+      },
+      toshow2(msg) {
+          this.msg = msg;
+          // console.log(this.msg);
+      },
+      query: function (){
+        var that = this;
+          that.filesForm.name1='';
+          that.filesForm.name2='';
+          that.filesForm.year=''
+          that.filesForm.type = 2
+        axios.get('http://www.zslm.com/admin/files/getUploadFile',{
+            params:{
+          //后台参数，前台参数(传向后台)
+            fileName: that.filesForm.name1,
+            majorName: that.filesForm.name2,
+            fileYear: that.filesForm.year,
+            fileType: that.filesForm.type,
+            page:1,
+            pageSzie:5
+            }
+        })
+        .then(function (response) {
+            var res = response.data;
+            // console.log(res.count,123);
+            if (res.code == 0) {
+                that.tableData =res.data;
+                // that.number = Math.ceil(res.count/that.value2);
+                that.count = res.count;
+                // console.log(that.number);
+            };
+            console.log(that.tableData);
+            // that.pages = response.datas.data;
+        })
+        .catch(function (error) {
+            // console.log(error);
+        });
+        // this.$refs.page.handleCurrentChange();
+      },
+        // getPage: function (){
+        //   var that = this;
+        //   axios.post('/admin/files/getUploadFile',{
+        //   })
+        //   .then(function (response) {
+        //       that.Page = response.data.datas[0];
+        //   })
+        //   .catch(function (error) {
+        //   });
+        // }
+  	},
+  	mounted(){
+  		// this.getPage();
+      this.query();
+  		this.radio2 = "全部文件";
+  		console.log(this.radio2);
+  	}
+  }
+
+>>>>>>> 699a155746670f0fd59688624fe7033e274859d4
 
 </script>
 

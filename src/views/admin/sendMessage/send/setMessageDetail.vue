@@ -1,7 +1,7 @@
 <template>
     <div>
     	<div>
-    		
+    		发消息—-设置消息对象——编辑发送，come on～
 
 		    
     	</div>
@@ -33,4 +33,3 @@ export default {
 
 
 </style>
-
