@@ -52,7 +52,7 @@
 
 	  	<!-- 表格 -->
 	    <div class="file-table">
-		      <el-table :data="tableData" border style="width: 100%">
+		      <el-table :data="tableData" border style="width: 100%" @selection-change="selesChange">
 		          <el-table-column type="selection" width="50"></el-table-column>
 		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
 		          <el-table-column label="展示权重" width="80">
@@ -76,7 +76,7 @@
 
 	    <!-- 分页 -->
 	    <div class="footer">
-	      <el-button type="primary" size="mini" icon="el-icon-delete">批量删除</el-button>
+	      <el-button type="primary" size="mini" icon="el-icon-delete" @click="deGloup(sels)" :disabled="this.sels.length === 0">批量删除</el-button>
 	      <Page :total="total" @pageChange="pageChange" @click.native = "query"></Page>
 	    </div>
 	</div>
@@ -128,6 +128,8 @@
 		            showhomepage: '',
 		            onlinetime: '',
 		        }],
+		        sels:[],
+		        disabled:true,
 
 		        /*分页*/
 		        total:0,
@@ -138,6 +140,87 @@
     	    }
   	    },
        	watch: {
+	        // value: function(val,oldval) {
+	        //   console.log(val);
+	        //   this.value2 = val;
+	        //   this.query();
+	        // }
+       	},
+	  	methods: {
+	  		// 批量删除
+	  		selesChange(sels) {
+	  			this.sels = sels;
+	  		},
+	  		deGloup() {
+	  			// var ids = this.rels.map(item => item.id).join();
+	  			var ids = [];
+	  			rows.forEarch(element =>{
+	  				ids.push(element.id)
+	  			})
+	  		},
+	  		// 改变权重前的判断
+	  		changeweight: function() {
+	  			this.confirm(() => {
+            		console.log('this is callback');
+        		}, () => {
+            		console.log('this is catchback');
+        		},'确定更改吗', '危险操作');
+	  		},
+	      	// 表格删除
+	    	deleteRow(index, rows) {
+	      		// 删除前判断
+	      		this.confirm(() => {
+	      			rows.splice(index, 1);
+            		console.log('this is callback');
+        		}, () => {
+            		console.log('this is catchback');
+        		},'确定删除吗', '危险操作');
+        		// 删除某一行
+	        	
+	      },
+	      	// 编辑、查看表格某一行
+	    	handleClick(row) {
+	        // console.log(row);
+	    	},
+	  		//动态更新文件管理首页的id
+	  		toshow: function (i) {
+	        this.i = i;
+	        // console.log(this.i);
+	      },
+	      	// 分页  获得当前页码和总页数
+	      	pageChange(msg) {
+	        	this.searchContent.page = msg.page;
+	          	this.searchContent.limit = msg.limit;
+	      	},
+	      	query: function (){
+	        	var that = this;
+	        	axios.post('/admin/files/getUploadFile',{
+		          //后台参数，前台参数(传向后台)
+		          name1: that.filesForm.name1,
+		          name2: that.filesForm.name2,
+		          year: that.filesForm.year,
+		          type: that.filesForm.type,
+	        	})
+	        	.then(function (response) {
+	            	var res = response.data;
+	            	if (res.code == 0) {
+	               		that.tableData =res.data;
+	                	that.total = res.total;
+	            	};
+	        	})
+	        	.catch(function (error) {
+	        	});
+	      	},
+	  	},
+	  	mounted(){
+	      this.handleClick();
+	  		// this.getPage();
+	      this.query();
+	  		this.radio2 = "全部文件";
+	  		// console.log(this.radio2);
+	  	}
+	}
+=======
         // value: function(val,oldval) {
         //   console.log(val);
         //   this.value2 = val;
@@ -213,6 +296,7 @@
   	}
   }
 
+>>>>>>> 699a155746670f0fd59688624fe7033e274859d4
 
 </script>
 
