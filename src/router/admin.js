@@ -188,7 +188,7 @@ let admin_router = {
         {
             path: '/usermanagement/userfocusmajor',
             name: '用户管理-关注院校',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userfocusmajor'], resolve))
+            component: resolve =>void(require(['@/views/admin/userManagement/userFocusMajor'], resolve))
         },
         
     ]
