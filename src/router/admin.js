@@ -23,7 +23,8 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/files'], resolve))
         },
         {
-            path: '/selectUnivers',
+            // path: '/SelectUnivers/:i',
+            path: '/SelectUnivers',
             name: '选择院校专业',
             component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
         },
@@ -187,7 +188,7 @@ let admin_router = {
         {
             path: '/usermanagement/userfocusmajor',
             name: '用户管理-关注院校',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userfocusmajor'], resolve))
+            component: resolve =>void(require(['@/views/admin/userManagement/userFocusMajor'], resolve))
         },
         
     ]

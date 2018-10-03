@@ -7,7 +7,7 @@
 export default {
 	data() {
 		return {
-			pageSizes:[100,200,300,400],
+			pageSizes:[10,20,50],
 			page:{
 				page:1,//默认第一页
 				limit:100//默认显示一百条
@@ -15,11 +15,6 @@ export default {
 		};
 	},
 	props:["total"],
-    // props:{
-    // 	total: {
-    // 		type: Number
-    // 	}
-    // },
     methods:{
     	//每页总条数变更
     	handleSizeChange(val) {
@@ -31,10 +26,13 @@ export default {
 	    handleCurrentChange(val) { 
 	    	this.page.page = val;
 	    	this.$emit('pageChange',this.page);
-	    	console.log(this.total,123123);
-	    	this.$emit('query');
-	    	this.$emit('gettable_info');
-	    	this.$emit('showbox',val);
+	    	// if (this.page.page) {
+	    	// 	this.$emit('query');
+	    	// 	console.log(this.page.page);
+
+	    	// };
+	    	// this.$emit('gettable_info');
+	    	// this.$emit('showbox',val);
 	    },
     },
     mounted(){
