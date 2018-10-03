@@ -20,15 +20,15 @@
 				</div>
 			</div>
 			<div class="SelectUnivers-right">
-				<!-- <div class="SelectUnivers-condition">
+				<div class="SelectUnivers-condition">
 					<div class="condition-input">
-						<el-input placeholder="请输入内容" v-model="input10"clearable></el-input>
+						<el-input placeholder="请输入内容" v-model="queryUnivers"></el-input>
 						<el-button size="mini" icon="el-icon-search"></el-button>
 					</div>
 					<div class="condition-button">
-						<el-button type="primary">全部</el-button>
+						<el-button type="primary" @click.native = "query">全部</el-button>
 					</div>
-				</div> -->
+				</div>
 				<!-- <el-radio-group v-model="tabPosition" style="margin-bottom: 30px;">
 				    <el-radio-button label="top">top</el-radio-button>
 				    <el-radio-button label="right">right</el-radio-button>
@@ -62,7 +62,7 @@
 			</div>
 			
 		</div>
-		<div class="footer">
+		<div class="footer" v-if="this.majorname">
 			<span class="Selected">当前已选择：<span class="majorname">{{majorname}}</span></span>
 		</div>
 		
@@ -143,11 +143,12 @@
 	export default {
 	    data() {
 	        return {
+	        	queryUnivers:'',
 	        	majorname:'',
-	        	// majorname:'',
 	        	butname:'',
-	        	count:100,
-	        	checkboxGroup1: ['北京','天津'],
+	        	count:0,
+	        	//默认选择所有城市
+	        	checkboxGroup1: ['北京','天津','河北','山西','内蒙古','辽宁','吉林','黑龙江','上海','江苏','浙江','江西','安微','福建','山东','河南','湖北','湖南','广东','广西','海南','重庆','四川','贵州','云南','西藏','陕西','甘肃','青海','宁夏','新疆','香港','澳门','台湾'],
 	        	button: buttons,
 	        	region:[
 		        	{name:''},
@@ -162,7 +163,6 @@
 		        },
 	        	radio2:'',
     			i: 0,
-	        	input10:'',
 	        };
 	    },
 	    methods: {
@@ -210,6 +210,9 @@
 		        .catch(function (error) {
 		            // console.log(error);
 		        });
+		    },
+		    query: function() {
+		    	this.checkboxGroup1 = ['北京','天津','河北','山西','内蒙古','辽宁','吉林','黑龙江','上海','江苏','浙江','江西','安微','福建','山东','河南','湖北','湖南','广东','广西','海南','重庆','四川','贵州','云南','西藏','陕西','甘肃','青海','宁夏','新疆','香港','澳门','台湾']
 		    },
 	    },
 	    mounted(){
@@ -260,9 +263,11 @@
 	}
 	.region {
 		height: 60px;
+		width: 50px;
 		line-height: 60px;
 		font-size: 12px;
 		color: #666;
+		text-align: right;
 	}
 	.cityname  {
 		margin: 0 0 0 15px;
@@ -280,7 +285,7 @@
     	flex-direction: column;
 	}
 	.SelectUnivers-city {
-		margin: 0 0 0 50px;
+		margin: 50px 0 0 50px;
 	}
 	.leftImg p {
 		position: relative;
@@ -314,6 +319,7 @@
 	}
 	.SelectUnivers-condition {
 		position: relative;
+		margin: 0 0 50px 0;
 	}
 	.SelectUnivers-condition,.condition-input {
 		display: flex;
