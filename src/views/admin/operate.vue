@@ -232,15 +232,15 @@ export default {
 				},
 				setInfoRelation: function(id, weight) {
 					this.confirm(() => {
-							this.post('/admin/operate/setBtWeight', {
-									bannerAdId: id,
-									weight:weight
-							}).then((response) => {
-									(response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
-							})
+						this.post('/admin/operate/setBtWeight', {
+								bannerAdId: id,
+								weight:weight
+						}).then((response) => {
+								(response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+						})
 					}, () => {
-							this.tableData3[index].show_weight = this.TableValue;
-							this.message(true, '已取消修改', 'info');    
+						this.tableData3[index].show_weight = this.TableValue;
+						this.message(true, '已取消修改', 'info');    
 					})
 				},
 
@@ -302,13 +302,7 @@ export default {
 				}
     },
     mounted(){
-        this.confirm(() => {
-            console.log('this is callback');
-        }, () => {
-            console.log('this is catchback');
-        },'确定删除吗', 'error');
-        // this.message(true, 'test', 'error');
-      this.getInformationType();
+      	this.getInformationType();
       
     }
 };
