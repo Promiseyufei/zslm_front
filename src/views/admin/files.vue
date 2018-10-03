@@ -52,15 +52,15 @@
 
 	  	<!-- 表格 -->
 	    <div class="file-table">
-		      <el-table :data="tableData" border style="width: 100%" @selection-change="selesChange">
+		      <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
 		          <el-table-column type="selection" width="50"></el-table-column>
 		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
-		          <el-table-column label="展示权重" width="80">
+		          <el-table-column label="展示权重" width="100">
                     <template slot-scope="scope">
-                        <el-input @click.native="changeweight" v-model="tableData[scope.$index].showweight"></el-input>
+                        <el-input id="inputID" onkeyup="value=this.value.replace(/\D+/g,'')" @click.native="changeweight" v-model="tableData[scope.$index].showweight"></el-input>
                     </template>
                 </el-table-column>
-		          <el-table-column label="操作" width="240">
+		          <el-table-column label="操作" width="220">
 		              <template slot-scope="scope">
 		                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
 		                <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
@@ -76,8 +76,8 @@
 
 	    <!-- 分页 -->
 	    <div class="footer">
-	      <el-button type="primary" size="mini" icon="el-icon-delete" @click="deGloup(sels)" :disabled="this.sels.length === 0">批量删除</el-button>
-	      <Page :total="total" @pageChange="pageChange" @click.native = "query"></Page>
+	      <el-button type="primary" size="mini" icon="el-icon-delete" @click.native = "BatchDelete">批量删除</el-button>
+	      <Page class="page" :total="total" @pageChange="pageChange" @click.native = "query"></Page>
 	    </div>
 	</div>
 </template>
@@ -130,6 +130,8 @@
 		        }],
 		        sels:[],
 		        disabled:true,
+		        // val:'',
+		        multipleSelection:[],
 
 		        /*分页*/
 		        total:0,
@@ -147,33 +149,58 @@
 	        // }
        	},
 	  	methods: {
-	  		// 批量删除
-	  		selesChange(sels) {
-	  			this.sels = sels;
-	  		},
-	  		deGloup() {
-	  			// var ids = this.rels.map(item => item.id).join();
-	  			var ids = [];
-	  			rows.forEarch(element =>{
-	  				ids.push(element.id)
-	  			})
-	  		},
+	  		//获得选中行的id
+	  		handleSelectionChange(val) {
+		    	this.multipleSelection = val;
+		    	// console.log(this.multipleSelection);
+		    },
+		    //批量删除表格内容
+		    BatchDelete: function(){
+		    	var that = this;
+		    	for (var i = 0; i < that.multipleSelection.length; i++) {
+		    		var ID = that.multipleSelection[i].id;
+		    		// console.log(ID)
+		    	};
+	        	axios.post('/admin/files/getUploadFile',{
+		          //后台参数，前台参数(传向后台)
+		          	ID: that.ID,
+	        	})
+	        	.then(function (response) {
+	        	})
+	        	.catch(function (error) {
+	        	});
+		    },
+	      	toshow2(msg) {
+	        	this.msg = msg;
+	          // console.log(this.msg);
+	      	},
 	  		// 改变权重前的判断
 	  		changeweight: function() {
 	  			this.confirm(() => {
-            		console.log('this is callback');
+            		// console.log('this is callback');//确定
+            		for (var i = 0; i < this.tableData.length; i++) {
+            			// this.tableData[i]
+            			// console.log(this.tableData.length);
+            		};
+					// this.val=e.target.value.replace(/[^\d]/g,'');
         		}, () => {
-            		console.log('this is catchback');
+        			for (var i = 0; i < this.tableData.length; i++) {
+        				// console.log(this.tableData.length);
+        				var input = document.getElementById("inputID");
+						input.blur();
+						// i=0;
+            		};
+            		// console.log(1);//取消
         		},'确定更改吗', '危险操作');
 	  		},
-	      	// 表格删除
+	      	// 表格单行删除
 	    	deleteRow(index, rows) {
 	      		// 删除前判断
 	      		this.confirm(() => {
 	      			rows.splice(index, 1);
-            		console.log('this is callback');
+            		// console.log('this is callback');
         		}, () => {
-            		console.log('this is catchback');
+            		// console.log('this is catchback');
         		},'确定删除吗', '危险操作');
         		// 删除某一行
 	        	
@@ -184,7 +211,7 @@
 	    	},
 	  		//动态更新文件管理首页的id
 	  		toshow: function (i) {
-	        this.i = i;
+	        	this.i = i;
 	        // console.log(this.i);
 	      },
 	      	// 分页  获得当前页码和总页数
@@ -212,91 +239,55 @@
 	        	});
 	      	},
 	  	},
-	  	mounted(){
-	      this.handleClick();
+  		// methods: {
+	  	// 	// this.handleClick();
+		  // 	// this.getPage();
+		  //   // this.query();
+		  // 	// this.radio2 = "全部文件";
+	  	// 	//动态更新文件管理首页的id
+	  		
+	   //  	// query: function (){
+	   //   //    	var that = this;
+	   //   //    	that.filesForm.name1='';
+	   //   //    	that.filesForm.name2='';
+	   //   //    	that.filesForm.year=''
+	   //   //    	that.filesForm.type = 2
+	   //   //    	axios.get('http://www.zslm.com/admin/files/getUploadFile',{
+	   //   //        	params:{
+	   //   //      			//后台参数，前台参数(传向后台)
+		  //   //         	fileName: that.filesForm.name1,
+		  //   //         	majorName: that.filesForm.name2,
+		  //   //         	fileYear: that.filesForm.year,
+		  //   //         	fileType: that.filesForm.type,
+		  //   //         	page:1,
+		  //   //         	pageSzie:5
+	   //   //        	}
+	   //   //    	})
+	   //   //    	.then(function (response) {
+	   //   //        	var res = response.data;
+	   //   //        	// console.log(res.count,123);
+	   //   //        	if (res.code == 0) {
+	   //   //            	that.tableData =res.data;
+	   //   //            	// that.number = Math.ceil(res.count/that.value2);
+	   //   //            	that.count = res.count;
+	   //   //            	// console.log(that.number);
+	   //   //        	};
+	   //   //       		console.log(that.tableData);
+	   //   //        	// that.pages = response.datas.data;
+	   //   //    	})
+	   //   //    	.catch(function (error) {
+	   //   //        	// console.log(error);
+	   //   //    	});
+	   //   //    		// this.$refs.page.handleCurrentChange();
+	   //   //  	},
+  		// },
+  		mounted(){
 	  		// this.getPage();
-	      this.query();
+	    	this.query();
 	  		this.radio2 = "全部文件";
-	  		// console.log(this.radio2);
-	  	}
-	}
-=======
-        // value: function(val,oldval) {
-        //   console.log(val);
-        //   this.value2 = val;
-        //   this.query();
-        // }
-       },
-  	methods: {
-      // handleSizeChange(val) {
-      //   console.log(`每页 ${val} 条`);
-      // },
-      // handleCurrentChange(val) {
-      //   console.log(`当前页: ${val}`);
-      // },
-  		//动态更新文件管理首页的id
-  		toshow: function (i) {
-        this.i = i;
-        console.log(this.i);
-      },
-      toshow2(msg) {
-          this.msg = msg;
-          // console.log(this.msg);
-      },
-      query: function (){
-        var that = this;
-          that.filesForm.name1='';
-          that.filesForm.name2='';
-          that.filesForm.year=''
-          that.filesForm.type = 2
-        axios.get('http://www.zslm.com/admin/files/getUploadFile',{
-            params:{
-          //后台参数，前台参数(传向后台)
-            fileName: that.filesForm.name1,
-            majorName: that.filesForm.name2,
-            fileYear: that.filesForm.year,
-            fileType: that.filesForm.type,
-            page:1,
-            pageSzie:5
-            }
-        })
-        .then(function (response) {
-            var res = response.data;
-            // console.log(res.count,123);
-            if (res.code == 0) {
-                that.tableData =res.data;
-                // that.number = Math.ceil(res.count/that.value2);
-                that.count = res.count;
-                // console.log(that.number);
-            };
-            console.log(that.tableData);
-            // that.pages = response.datas.data;
-        })
-        .catch(function (error) {
-            // console.log(error);
-        });
-        // this.$refs.page.handleCurrentChange();
-      },
-        // getPage: function (){
-        //   var that = this;
-        //   axios.post('/admin/files/getUploadFile',{
-        //   })
-        //   .then(function (response) {
-        //       that.Page = response.data.datas[0];
-        //   })
-        //   .catch(function (error) {
-        //   });
-        // }
-  	},
-  	mounted(){
-  		// this.getPage();
-      this.query();
-  		this.radio2 = "全部文件";
-  		console.log(this.radio2);
-  	}
+	  		console.log(this.radio2);
+  		}
   }
-
->>>>>>> 699a155746670f0fd59688624fe7033e274859d4
 
 </script>
 
@@ -308,7 +299,8 @@
         overflow-x: hidden;
     }
     .file-table .el-input__inner {
-    	width: 45px;
+    	width: 60px;
+    	text-align: center;
     }
     /*表头文本居中*/
     .file-table .el-table th.is-leaf {
