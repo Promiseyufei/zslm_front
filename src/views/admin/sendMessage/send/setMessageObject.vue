@@ -1,6 +1,7 @@
 <template>
     <div>
     	<div>
+    		发消息—-设置消息对象——特定行为的用户，come on～
 
 		    
     	</div>
@@ -32,4 +33,3 @@ export default {
 
 
 </style>
-

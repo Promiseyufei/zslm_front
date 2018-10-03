@@ -10,11 +10,11 @@ let admin_router = {
             name: '导航',
             component: resolve =>void(require(['@/views/admin/accounts'], resolve))
         },
-        // {
-        //     path: '/information',
-        //     name: '小块',
-        //     component: resolve =>void(require(['@/views/admin/information'], resolve))
-        // },
+        {
+            path: '/inf',
+            name: '小块',
+            component: resolve =>void(require(['@/views/admin/information'], resolve))
+        },
 
         // 文件管理
         {
@@ -23,7 +23,8 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/files'], resolve))
         },
         {
-            path: '/selectUnivers',
+            // path: '/SelectUnivers/:i',
+            path: '/SelectUnivers',
             name: '选择院校专业',
             component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
         },
@@ -145,16 +146,49 @@ let admin_router = {
             name: '信息发布-资讯发布-消息通知',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationNotice'], resolve))
         },
+        // {
+        //     path: '/test',
+        //     name: 'WangEditor test',
+        //     component: resolve =>void(require(['@/views/admin/test'], resolve))
+        // },
+
+
+        //消息管理
         {
-            path: '/test',
-            name: 'WangEditor test',
-            component: resolve =>void(require(['@/views/admin/test'], resolve))
+            path: '/send/sendHome',
+            name: '消息管理-发消息',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/sendHome'], resolve))
+        },
+        {
+            path: '/send/setMessageObject',
+            name: '消息管理-设置消息对象—特定行为的用户',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageObject'], resolve))
+        },
+        {
+            path: '/send/setMessageSelf',
+            name: '消息管理-设置消息对象—手动选择的用户',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageSelf'], resolve))
+        },
+        {
+            path: '/send/setMessageDetail',
+            name: '消息管理-编辑发送',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageDetail'], resolve))
+        },
+        {
+            path: '/send/recordHome',
+            name: '消息管理-历史消息记录',
+            component: resolve =>void(require(['@/views/admin/sendMessage/record/recordHome'], resolve))
+        },
+        {
+            path: '/send/recordDetail',
+            name: '消息管理-历史消息记录详情',
+            component: resolve =>void(require(['@/views/admin/sendMessage/record/recordDetail'], resolve))
         },
         // 账户管理
         {
             path: '/usermanagement/userfocusmajor',
             name: '用户管理-关注院校',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userfocusmajor'], resolve))
+            component: resolve =>void(require(['@/views/admin/userManagement/userFocusMajor'], resolve))
         },
         {
             path: '/usermanagement/userlist',

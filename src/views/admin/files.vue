@@ -2,8 +2,8 @@
 	<div class="filesAll">
         <!-- 选项卡 -->
         <div class="files-tab">
-          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i" @click.native = "query"></operateNav>  
-          <el-button size="small" type="primary" class="click">点击上传</el-button>
+          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>  
+          <el-button size="small" type="primary"  @click.native = "jumpPage" class="click">点击上传</el-button>
         </div>
 
         <!-- 筛选查询 -->
@@ -16,21 +16,20 @@
         <!-- 查询输入框 -->
         <div class="filesForm">
     	   <div>
-                <el-form class="input" v-model="filesForm" label-width="80px">
+                <el-form class="input" label-width="80px">
                     <el-form-item label="文件名称">
-                        <el-input size="medium" placeholder="请输入文件名称"></el-input>
+                        <el-input size="medium" v-model="filesName" placeholder="请输入文件名称">
+                        </el-input>
                     </el-form-item>
                     <el-form-item label="院校名称">
-                        <el-input size="medium" placeholder="请输入院校名称"></el-input>
+                        <el-input v-model="majorName" size="medium" placeholder="请输入院校名称"></el-input>
                     </el-form-item>
                     <el-form-item label="文件年份">
-                        <!-- <div class="block"> -->
-                          <el-date-picker type="year" placeholder="选择年" size="medium">
+                          <el-date-picker v-model="fileYear" type="year" placeholder="选择年" size="medium">
                           </el-date-picker>
-                        <!-- </div> -->
                     </el-form-item>
                     <el-form-item label="文件类型">
-                        <el-select v-model="filetype" size="medium" placeholder="请选择">
+                        <el-select v-model="fileType" size="medium" placeholder="请选择">
                             <el-option v-for="(opt,index) in input" :key="index" :label="opt.label" :value="opt.value">
                             </el-option>
                         </el-select>
@@ -52,15 +51,15 @@
 
 	  	<!-- 表格 -->
 	    <div class="file-table">
-		      <el-table :data="tableData" border style="width: 100%">
+		      <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
 		          <el-table-column type="selection" width="50"></el-table-column>
 		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
-		          <el-table-column label="展示权重" width="80">
+		          <el-table-column label="展示权重" width="100">
                     <template slot-scope="scope">
-                        <el-input @click.native="changeweight" v-model="tableData[scope.$index].showweight"></el-input>
+                        <el-input id="inputID" @focus="getFocus(tableData[scope.$index].showweight)" v-on:blur="loseFocus(tableData[scope.$index].showweight,scope.$index)" v-model="tableData[scope.$index].showweight"></el-input>
                     </template>
                 </el-table-column>
-		          <el-table-column label="操作" width="240">
+		          <el-table-column label="操作" width="220">
 		              <template slot-scope="scope">
 		                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
 		                <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
@@ -76,8 +75,8 @@
 
 	    <!-- 分页 -->
 	    <div class="footer">
-	      <el-button type="primary" size="mini" icon="el-icon-delete">批量删除</el-button>
-	      <Page :total="total" @pageChange="pageChange" @click.native = "query"></Page>
+	      <el-button type="primary" size="mini" icon="el-icon-delete" @click.native = "BatchDelete">批量删除</el-button>
+	      <Page class="page" :total="total" @pageChange="pageChange"></Page>
 	    </div>
 	</div>
 </template>
@@ -94,13 +93,11 @@
             	radio2: "",
     			i: 0,//当前选项卡id
   	    		/*查询输入框*/
-  	    		filesForm:{
-                    name1:'',
-                    name2:'',
-                    year:'',
-                    type:0
-                },
-  	    		filetype:'',
+
+  	    		filesName:'',
+  	    		fileType:'',
+  	    		fileYear:'',
+  	    		majorName:'',
   	    		input: [	
 		           	{value: '选项一',label:'类型一'},
 		           	{value: '选项二',label:'类型二'},
@@ -133,7 +130,10 @@
 		            showhomepage: '',
 		            onlinetime: '',
 		        }],
-
+		        showweight:'',
+		        sels:[],
+		        disabled:true,
+		        multipleSelection:[],
 		        /*分页*/
 		        total:0,
 		        searchContent:{
@@ -143,88 +143,126 @@
     	    }
   	    },
        	watch: {
-        // value: function(val,oldval) {
-        //   console.log(val);
-        //   this.value2 = val;
-        //   this.query();
-        // }
-       },
-  	methods: {
-        pageChange(){
+	        // page: function(newpage,oldpage) {
+	        // 	if (this.searchContent.page == 1) {
+	        //     	this.query();
+	        // 	};
+	        // }
+       	},
+	  	methods: {
+	  		//跳转页面
+	  		jumpPage:function() {
+	    		this.$router.push('/SelectUnivers');
+	    	},
+	  		//获得选中表格行的id
+	  		handleSelectionChange(val) {
+		    	this.multipleSelection = val;
+		    	// console.log(this.multipleSelection);
+		    },
+		    //批量删除表格内容
+		    BatchDelete: function(){
+		    	var that = this;
+		    	for (var i = 0; i < that.multipleSelection.length; i++) {
+		    		var ID = that.multipleSelection[i].id;
+		    	};
+	        	axios.post('/admin/files/getUploadFile',{
+		          //后台参数，前台参数(传向后台)
+		          	ID: that.ID,
+	        	})
+	        	.then(function (response) {
+	        	})
+	        	.catch(function (error) {
+	        	});
+		    },
+	      	toshow2(msg) {
+	        	this.msg = msg;
+	          // console.log(this.msg);
+	      	},
+	  		//获得焦点，储存原值
+	  		getFocus: function(val) {
+	  			this.showweight = val;
+	  			// console.log(val);
+	  		},
+	  		//失去焦点做判断
+	  		loseFocus:function(val,index) {
+	  			var re = /^[0-9]+.?[0-9]*$/;
+	            if (!re.test(val)) {
+	                this.message(true,'请输入数值','warning');
+	                this.tableData[index].showweight = this.showweight;
+	            } else if (val<0||val>1000) {
+	                this.message(true,'权值范围为0~100','warning');
+	                this.tableData[index].showweight = this.showweight;
+	            } else {
+	            	//权重正确，将该行表格id传给后台
+	            	var that = this;
+	            	axios.post('/admin/files/updateFile',{
+			          //后台参数，前台参数(传向后台)
+			          fileId: that.tableData[index].id,
+		        	})
+	            }
+	  		},
+	      	// 表格单行删除
+	    	deleteRow(index, rows) {
+	      		// 删除前判断
+	      		this.confirm(() => {
+	      			rows.splice(index, 1);
+            		// console.log('this is callback');
+        		}, () => {
+            		// console.log('this is catchback');
+        		},'确定删除吗', '危险操作');
+        		// 删除某一行
+	        	
+	      	},
+	      	// 编辑、查看表格某一行
+	    	handleClick(row) {
+	        // console.log(row);
+	    	},
+	  		//动态更新文件管理首页的id
+	  		toshow: function (i) {
+	        	this.i = i;
+	        	this.query();
+	      	},
+	      	pageChange(msg) {
+	        	this.searchContent.page = msg.page;
+	        	//分页改变时，更新表格数据
+	        	if (this.searchContent.page) {
+	        		this.query();
+	        	};
+	        	// console.log(this.searchContent.page);
+	          	this.searchContent.limit = msg.limit;
+	      	},
+	      	query: function (){
+	        	var that = this;
+	        	axios.post('/admin/files/getUploadFile',{
+		          //后台参数，前台参数(传向后台)
+		          page: that.searchContent.page,
+		          pageSize: that.searchContent.limit,
+		          fileName: that.fileName,
+		          majorName: that.majorName,
+		          fileYear: that.fileYear,
+		          fileType: that.fileType,
+	        	})
+	        	.then(function (response) {
+	            	var res = response.data;
+                    if (res.code == 0) {
+                        console.log(res.result.data)
+                        that.tableData =res.result.data;
 
-        },
-      // handleSizeChange(val) {
-      //   console.log(`每页 ${val} 条`);
-      // },
-      // handleCurrentChange(val) {
-      //   console.log(`当前页: ${val}`);
-      // },
-  		//动态更新文件管理首页的id
-  		toshow: function (i) {
-        this.i = i;
-        console.log(this.i);
-      },
-      toshow2(msg) {
-          this.msg = msg;
-          // console.log(this.msg);
-      },
-      query: function (){
-        var that = this;
-        console.log(that.filesForm)
-          that.filesForm.name1="";
-          that.filesForm.name2="";
-          that.filesForm.year="";
-          that.filesForm.type = 2
-        axios.get('http://www.zslm.com/admin/files/getUploadFile',{
-            params:{
-          //后台参数，前台参数(传向后台)
-            fileName: that.filesForm.name1,
-            majorName: that.filesForm.name2,
-            fileYear: that.filesForm.year,
-            fileType: that.filesForm.type,
-            page:1,
-            pageSzie:5
-            }
-        })
-        .then(function (response) {
-            var res = response.data;
-            // console.log(res.count,123);
-
-            if (res.code == 0) {
-                console.log(res.result.data)
-                that.tableData =res.result.data;
-
-                // that.number = Math.ceil(res.count/that.value2);
-                that.total = res.result.dataCount;
-                console.log(that.total);
-            };
-            console.log(that.tableData);
-            // that.pages = response.datas.data;
-        })
-        .catch(function (error) {
-            // console.log(error);
-        });
-        // this.$refs.page.handleCurrentChange();
-      },
-        // getPage: function (){
-        //   var that = this;
-        //   axios.post('/admin/files/getUploadFile',{
-        //   })
-        //   .then(function (response) {
-        //       that.Page = response.data.datas[0];
-        //   })
-        //   .catch(function (error) {
-        //   });
-        // }
-  	},
-  	mounted(){
-  		// this.getPage();
-      this.query();
-  		this.radio2 = "全部文件";
-  		console.log(this.radio2);
-  	}
+                        that.total = res.result.dataCount;
+                        console.log(that.total);
+                    };
+	        	})
+	        	.catch(function (error) {
+	        	});
+	      	},
+	  	},
+  		mounted(){
+	  		// this.getPage();
+	    	this.query();
+	  		this.radio2 = "全部文件";
+	  		console.log(this.radio2);
+  		}
   }
-
 
 </script>
 
@@ -236,7 +274,8 @@
         overflow-x: hidden;
     }
     .file-table .el-input__inner {
-    	width: 45px;
+    	width: 60px;
+    	text-align: center;
     }
     /*表头文本居中*/
     .file-table .el-table th.is-leaf {
@@ -245,6 +284,10 @@
     .footer .el-button--primary[data-v-09f3e8a6] {
       margin: 0 0 0 20px;
     }
+    /*分页右间距*/
+    .footer .el-pagination[data-v-09f3e8a6] {
+	    padding-right: 20px;
+	}
 </style>
 
 <style scoped>

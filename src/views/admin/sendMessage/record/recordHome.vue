@@ -1,6 +1,7 @@
 <template>
     <div>
     	<div>
+    		历史消息记录，come on！
 
 		    
     	</div>
@@ -32,4 +33,3 @@ export default {
 
 
 </style>
-

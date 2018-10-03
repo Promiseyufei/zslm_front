@@ -17,6 +17,13 @@ Mock.mock('/admin/files/getUploadFile',{
 			],
 	"total":'@integer(1000, 2000)',
 })
+/*files
+*文件管理页面
+*获取表格内容、文件总数
+*/
+Mock.mock('/admin/files/updateFile',{
+	
+})
 
 /*files
 *文件管理页面
