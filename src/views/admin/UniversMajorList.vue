@@ -2,8 +2,8 @@
     <div class="majorlist">
         <div class="majorlist-top">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
+              <el-breadcrumb-item><a href="/">院校专业</a></el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">

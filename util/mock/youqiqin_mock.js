@@ -126,9 +126,17 @@ Mock.mock('/admin/UniversMajorList/gettable-info',{
 */
 Mock.mock('/admin/SelectUnivers/getcity-info',{
 	"code":0,
-	"region|2":[{"name":'@cword(2)'}],
+	"onecityName":'@cword(2)',
+	"twocityName":'@cword(2)',
 	"count":'@integer(1000, 2000)',
-	"Name|3":[
+	"oneCity|3":[
+		{	
+			"line|5":[
+				{"majorname":'@cword(6)'}
+			]
+		},
+	],
+	"twoCity|3":[
 		{	
 			// "column":[
 			// 	{"cityname":'@cword(2)'}
