@@ -16,21 +16,20 @@
         <!-- 查询输入框 -->
         <div class="filesForm">
     	   <div>
-                <el-form class="input" v-model="filesForm" label-width="80px">
+                <el-form class="input" label-width="80px">
                     <el-form-item label="文件名称">
-                        <el-input size="medium" placeholder="请输入文件名称"></el-input>
+                        <el-input size="medium" v-model="filesName" placeholder="请输入文件名称">
+                        </el-input>
                     </el-form-item>
                     <el-form-item label="院校名称">
-                        <el-input size="medium" placeholder="请输入院校名称"></el-input>
+                        <el-input v-model="majorName" size="medium" placeholder="请输入院校名称"></el-input>
                     </el-form-item>
                     <el-form-item label="文件年份">
-                        <!-- <div class="block"> -->
-                          <el-date-picker type="year" placeholder="选择年" size="medium">
+                          <el-date-picker v-model="fileYear" type="year" placeholder="选择年" size="medium">
                           </el-date-picker>
-                        <!-- </div> -->
                     </el-form-item>
                     <el-form-item label="文件类型">
-                        <el-select v-model="filetype" size="medium" placeholder="请选择">
+                        <el-select v-model="fileType" size="medium" placeholder="请选择">
                             <el-option v-for="(opt,index) in input" :key="index" :label="opt.label" :value="opt.value">
                             </el-option>
                         </el-select>
@@ -57,7 +56,7 @@
 		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
 		          <el-table-column label="展示权重" width="100">
                     <template slot-scope="scope">
-                        <el-input id="inputID" @focud="focus" onkeyup="value=this.value.replace(/\D+/g,'')" @click.native="changeweight" v-model="tableData[scope.$index].showweight"></el-input>
+                        <el-input id="inputID" @focus="getFocus(tableData[scope.$index].showweight)" v-on:blur="loseFocus(tableData[scope.$index].showweight,scope.$index)" v-model="tableData[scope.$index].showweight"></el-input>
                     </template>
                 </el-table-column>
 		          <el-table-column label="操作" width="220">
@@ -94,8 +93,10 @@
             	radio2: "",
     			i: 0,//当前选项卡id
   	    		/*查询输入框*/
-  	    		filesForm:'',
-  	    		filetype:'',
+  	    		filesName:'',
+  	    		fileType:'',
+  	    		fileYear:'',
+  	    		majorName:'',
   	    		input: [	
 		           	{value: '选项一',label:'类型一'},
 		           	{value: '选项二',label:'类型二'},
@@ -128,11 +129,10 @@
 		            showhomepage: '',
 		            onlinetime: '',
 		        }],
+		        showweight:'',
 		        sels:[],
 		        disabled:true,
-		        // val:'',
 		        multipleSelection:[],
-
 		        /*分页*/
 		        total:0,
 		        searchContent:{
@@ -148,21 +148,6 @@
 	        // 	};
 	        // }
        	},
-  //      	directives:{
-		//     focus: {
-		//         inserted: function (el,option) {
-		//             var defClass = 'el-input', defTag = 'input';
-		//             var value = option.value || true;
-		//             if (typeof value === 'boolean')
-		//             value = { cls: defClass, tag: defTag, foc: value };
-		//             else 
-		// 				value = { cls: value.cls || defClass, tag: value.tag || defTag, foc: value.foc || false };
-		// 		            if (el.classList.contains(value.cls) && value.foc)
-		// 		                el.getElementsByTagName(value.tag)[0].focus();
-		//         }
-		//     }
- 
-		// },
 	  	methods: {
 	  		//跳转页面
 	  		jumpPage:function() {
@@ -192,19 +177,28 @@
 	        	this.msg = msg;
 	          // console.log(this.msg);
 	      	},
-	  		// 改变权重前的判断
-	  		changeweight: function() {
-	  			this.confirm(() => {//确定操作
-            		for (var i = 0; i < this.tableData.length; i++) {
-	  					// console.log(this.tableData[i].showweight);
-            		};
-        		}, () => {//取消操作
-        				var input = document.getElementById("inputID");
-						input.blur();
-        		},'确定更改吗', '危险操作');
+	  		//获得焦点，储存原值
+	  		getFocus: function(val) {
+	  			this.showweight = val;
+	  			// console.log(val);
 	  		},
-	  		focus:function() {
-	  			console.log(123)
+	  		//失去焦点做判断
+	  		loseFocus:function(val,index) {
+	  			var re = /^[0-9]+.?[0-9]*$/;
+	            if (!re.test(val)) {
+	                this.message(true,'请输入数值','warning');
+	                this.tableData[index].showweight = this.showweight;
+	            } else if (val<0||val>1000) {
+	                this.message(true,'权值范围为0~100','warning');
+	                this.tableData[index].showweight = this.showweight;
+	            } else {
+	            	//权重正确，将该行表格id传给后台
+	            	var that = this;
+	            	axios.post('/admin/files/updateFile',{
+			          //后台参数，前台参数(传向后台)
+			          fileId: that.tableData[index].id,
+		        	})
+	            }
 	  		},
 	      	// 表格单行删除
 	    	deleteRow(index, rows) {
@@ -240,12 +234,12 @@
 	        	var that = this;
 	        	axios.post('/admin/files/getUploadFile',{
 		          //后台参数，前台参数(传向后台)
-		          page: this.searchContent.page,
-		          limit: this.searchContent.limit,
-		          name1: that.filesForm.name1,
-		          name2: that.filesForm.name2,
-		          year: that.filesForm.year,
-		          type: that.filesForm.type,
+		          page: that.searchContent.page,
+		          pageSize: that.searchContent.limit,
+		          fileName: that.fileName,
+		          majorName: that.majorName,
+		          fileYear: that.fileYear,
+		          fileType: that.fileType,
 	        	})
 	        	.then(function (response) {
 	            	var res = response.data;
