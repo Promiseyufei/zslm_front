@@ -94,7 +94,12 @@
             	radio2: "",
     			i: 0,//当前选项卡id
   	    		/*查询输入框*/
-  	    		filesForm:'',
+  	    		filesForm:{
+                    name1:'',
+                    name2:'',
+                    year:'',
+                    type:0
+                },
   	    		filetype:'',
   	    		input: [	
 		           	{value: '选项一',label:'类型一'},
@@ -145,6 +150,9 @@
         // }
        },
   	methods: {
+        pageChange(){
+
+        },
       // handleSizeChange(val) {
       //   console.log(`每页 ${val} 条`);
       // },
@@ -162,9 +170,10 @@
       },
       query: function (){
         var that = this;
-          that.filesForm.name1='';
-          that.filesForm.name2='';
-          that.filesForm.year=''
+        console.log(that.filesForm)
+          that.filesForm.name1="";
+          that.filesForm.name2="";
+          that.filesForm.year="";
           that.filesForm.type = 2
         axios.get('http://www.zslm.com/admin/files/getUploadFile',{
             params:{
@@ -180,11 +189,14 @@
         .then(function (response) {
             var res = response.data;
             // console.log(res.count,123);
+
             if (res.code == 0) {
-                that.tableData =res.data;
+                console.log(res.result.data)
+                that.tableData =res.result.data;
+
                 // that.number = Math.ceil(res.count/that.value2);
-                that.count = res.count;
-                // console.log(that.number);
+                that.total = res.result.dataCount;
+                console.log(that.total);
             };
             console.log(that.tableData);
             // that.pages = response.datas.data;
