@@ -2,8 +2,8 @@
 	<div class="Select">
 		<div class="Select-top">
 			<el-breadcrumb separator="/">
-			  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-			  <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+			  <el-breadcrumb-item>文件上传</el-breadcrumb-item>
+			  <el-breadcrumb-item>选择院校专业</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 		<div class="Select-steps">

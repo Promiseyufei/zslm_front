@@ -31,10 +31,13 @@ export default {
 	    handleCurrentChange(val) { 
 	    	this.page.page = val;
 	    	this.$emit('pageChange',this.page);
-	    	console.log(this.total,123123);
-	    	this.$emit('query');
-	    	this.$emit('gettable_info');
-	    	this.$emit('showbox',val);
+	    	// if (this.page.page) {
+	    	// 	this.$emit('query');
+	    	// 	console.log(this.page.page);
+
+	    	// };
+	    	// this.$emit('gettable_info');
+	    	// this.$emit('showbox',val);
 	    },
     },
     mounted(){

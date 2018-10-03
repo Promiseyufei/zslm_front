@@ -2,8 +2,8 @@
 	<div class="filesAll">
         <!-- 选项卡 -->
         <div class="files-tab">
-          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i" @click.native = "query"></operateNav>  
-          <el-button size="small" type="primary" class="click">点击上传</el-button>
+          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>  
+          <el-button size="small" type="primary"  @click.native = "jumpPage" class="click">点击上传</el-button>
         </div>
 
         <!-- 筛选查询 -->
@@ -57,7 +57,7 @@
 		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
 		          <el-table-column label="展示权重" width="100">
                     <template slot-scope="scope">
-                        <el-input id="inputID" onkeyup="value=this.value.replace(/\D+/g,'')" @click.native="changeweight" v-model="tableData[scope.$index].showweight"></el-input>
+                        <el-input id="inputID" @focud="focus" onkeyup="value=this.value.replace(/\D+/g,'')" @click.native="changeweight" v-model="tableData[scope.$index].showweight"></el-input>
                     </template>
                 </el-table-column>
 		          <el-table-column label="操作" width="220">
@@ -77,7 +77,7 @@
 	    <!-- 分页 -->
 	    <div class="footer">
 	      <el-button type="primary" size="mini" icon="el-icon-delete" @click.native = "BatchDelete">批量删除</el-button>
-	      <Page class="page" :total="total" @pageChange="pageChange" @click.native = "query"></Page>
+	      <Page class="page" :total="total" @pageChange="pageChange"></Page>
 	    </div>
 	</div>
 </template>
@@ -142,14 +142,33 @@
     	    }
   	    },
        	watch: {
-	        // value: function(val,oldval) {
-	        //   console.log(val);
-	        //   this.value2 = val;
-	        //   this.query();
+	        // page: function(newpage,oldpage) {
+	        // 	if (this.searchContent.page == 1) {
+	        //     	this.query();
+	        // 	};
 	        // }
        	},
+  //      	directives:{
+		//     focus: {
+		//         inserted: function (el,option) {
+		//             var defClass = 'el-input', defTag = 'input';
+		//             var value = option.value || true;
+		//             if (typeof value === 'boolean')
+		//             value = { cls: defClass, tag: defTag, foc: value };
+		//             else 
+		// 				value = { cls: value.cls || defClass, tag: value.tag || defTag, foc: value.foc || false };
+		// 		            if (el.classList.contains(value.cls) && value.foc)
+		// 		                el.getElementsByTagName(value.tag)[0].focus();
+		//         }
+		//     }
+ 
+		// },
 	  	methods: {
-	  		//获得选中行的id
+	  		//跳转页面
+	  		jumpPage:function() {
+	    		this.$router.push('/SelectUnivers');
+	    	},
+	  		//获得选中表格行的id
 	  		handleSelectionChange(val) {
 		    	this.multipleSelection = val;
 		    	// console.log(this.multipleSelection);
@@ -159,7 +178,6 @@
 		    	var that = this;
 		    	for (var i = 0; i < that.multipleSelection.length; i++) {
 		    		var ID = that.multipleSelection[i].id;
-		    		// console.log(ID)
 		    	};
 	        	axios.post('/admin/files/getUploadFile',{
 		          //后台参数，前台参数(传向后台)
@@ -176,22 +194,17 @@
 	      	},
 	  		// 改变权重前的判断
 	  		changeweight: function() {
-	  			this.confirm(() => {
-            		// console.log('this is callback');//确定
+	  			this.confirm(() => {//确定操作
             		for (var i = 0; i < this.tableData.length; i++) {
-            			// this.tableData[i]
-            			// console.log(this.tableData.length);
+	  					// console.log(this.tableData[i].showweight);
             		};
-					// this.val=e.target.value.replace(/[^\d]/g,'');
-        		}, () => {
-        			for (var i = 0; i < this.tableData.length; i++) {
-        				// console.log(this.tableData.length);
+        		}, () => {//取消操作
         				var input = document.getElementById("inputID");
 						input.blur();
-						// i=0;
-            		};
-            		// console.log(1);//取消
         		},'确定更改吗', '危险操作');
+	  		},
+	  		focus:function() {
+	  			console.log(123)
 	  		},
 	      	// 表格单行删除
 	    	deleteRow(index, rows) {
@@ -204,7 +217,7 @@
         		},'确定删除吗', '危险操作');
         		// 删除某一行
 	        	
-	      },
+	      	},
 	      	// 编辑、查看表格某一行
 	    	handleClick(row) {
 	        // console.log(row);
@@ -212,17 +225,23 @@
 	  		//动态更新文件管理首页的id
 	  		toshow: function (i) {
 	        	this.i = i;
-	        // console.log(this.i);
-	      },
-	      	// 分页  获得当前页码和总页数
+	        	this.query();
+	      	},
 	      	pageChange(msg) {
 	        	this.searchContent.page = msg.page;
+	        	//分页改变时，更新表格数据
+	        	if (this.searchContent.page) {
+	        		this.query();
+	        	};
+	        	// console.log(this.searchContent.page);
 	          	this.searchContent.limit = msg.limit;
 	      	},
 	      	query: function (){
 	        	var that = this;
 	        	axios.post('/admin/files/getUploadFile',{
 		          //后台参数，前台参数(传向后台)
+		          page: this.searchContent.page,
+		          limit: this.searchContent.limit,
 		          name1: that.filesForm.name1,
 		          name2: that.filesForm.name2,
 		          year: that.filesForm.year,
@@ -239,48 +258,6 @@
 	        	});
 	      	},
 	  	},
-  		// methods: {
-	  	// 	// this.handleClick();
-		  // 	// this.getPage();
-		  //   // this.query();
-		  // 	// this.radio2 = "全部文件";
-	  	// 	//动态更新文件管理首页的id
-	  		
-	   //  	// query: function (){
-	   //   //    	var that = this;
-	   //   //    	that.filesForm.name1='';
-	   //   //    	that.filesForm.name2='';
-	   //   //    	that.filesForm.year=''
-	   //   //    	that.filesForm.type = 2
-	   //   //    	axios.get('http://www.zslm.com/admin/files/getUploadFile',{
-	   //   //        	params:{
-	   //   //      			//后台参数，前台参数(传向后台)
-		  //   //         	fileName: that.filesForm.name1,
-		  //   //         	majorName: that.filesForm.name2,
-		  //   //         	fileYear: that.filesForm.year,
-		  //   //         	fileType: that.filesForm.type,
-		  //   //         	page:1,
-		  //   //         	pageSzie:5
-	   //   //        	}
-	   //   //    	})
-	   //   //    	.then(function (response) {
-	   //   //        	var res = response.data;
-	   //   //        	// console.log(res.count,123);
-	   //   //        	if (res.code == 0) {
-	   //   //            	that.tableData =res.data;
-	   //   //            	// that.number = Math.ceil(res.count/that.value2);
-	   //   //            	that.count = res.count;
-	   //   //            	// console.log(that.number);
-	   //   //        	};
-	   //   //       		console.log(that.tableData);
-	   //   //        	// that.pages = response.datas.data;
-	   //   //    	})
-	   //   //    	.catch(function (error) {
-	   //   //        	// console.log(error);
-	   //   //    	});
-	   //   //    		// this.$refs.page.handleCurrentChange();
-	   //   //  	},
-  		// },
   		mounted(){
 	  		// this.getPage();
 	    	this.query();
@@ -309,6 +286,10 @@
     .footer .el-button--primary[data-v-09f3e8a6] {
       margin: 0 0 0 20px;
     }
+    /*分页右间距*/
+    .footer .el-pagination[data-v-09f3e8a6] {
+	    padding-right: 20px;
+	}
 </style>
 
 <style scoped>
