@@ -17,6 +17,43 @@ Mock.mock('/admin/files/getUploadFile',{
 			],
 	"total":'@integer(1000, 2000)',
 })
+/*files
+*文件管理页面
+*刷新页面
+*/
+Mock.mock('/admin/files/updateFile',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'showweight': '@integer(1,10)' ,
+				'filename': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'universmajor':'@cword(11)'+'MBA',
+		        'filetype': '@cword(4)',
+		        'fileyear': '@date("yyyy")',
+		        'showhomepage': '@cword(1)',
+		        'onlinetime': '@datetime("yyyy-MM-dd  HH:mm:ss")',
+			},
+			],
+})
+
+/*files
+*文件管理页面
+*删除表格某一行
+*/
+Mock.mock('/admin/files/deleteFile',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'showweight': '@integer(1,10)' ,
+				'filename': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'universmajor':'@cword(11)'+'MBA',
+		        'filetype': '@cword(4)',
+		        'fileyear': '@date("yyyy")',
+		        'showhomepage': '@cword(1)',
+		        'onlinetime': '@datetime("yyyy-MM-dd  HH:mm:ss")',
+			},
+			],
+})
 
 /*files
 *文件管理页面
