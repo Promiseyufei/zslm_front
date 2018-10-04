@@ -5,7 +5,7 @@
         <template>
           <el-table :data="tableData3"  border style="width: 100%">
             <el-table-column
-              v-for="(list,index) in listTable" 
+              v-for="(list,index) in listTable"
               :prop="list.prop"
               :label="list.lable"
               :width="list.width" :key = "index" v-if="index == 1">
