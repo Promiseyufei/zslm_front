@@ -7,7 +7,11 @@
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
+<<<<<<< HEAD
             <el-button @click.native ="jumpPage">新建</el-button>
+=======
+            <el-button @click="$router.push('/message/messageHome')">新建</el-button>
+>>>>>>> f76be56e418b9075b78e712be5bd5b37ccd85aa3
         </div>
         <div class="majorlist-query">
             <i class="el-icon-search"></i>
@@ -70,14 +74,15 @@
                             <i class="el-icon-delete"></i>
                             <i class="el-icon-refresh"></i>
                             <i class="el-icon-tickets"></i>
+                            <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
                         </div>
                     </template>
                 </el-table-column>
                 <!-- <div> -->
                   <!-- <el-table-column v-for="(val,index) in tableTop" :key="index" :type="val.type" :prop="val.prop" :label="val.label" :width="val.width"> -->
                 <div v-for="(val, index) in tableTop" :key="index">
-                  <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
-                  </el-table-column>
+                    <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width" >
+                </el-table-column>
                 </div>
             </el-table>
         </div>
@@ -109,6 +114,13 @@
                 //     {name:'el-icon-refresh'},
                 //     {name:'el-icon-tickets'},
                 // ],
+                // iconname:[
+                //     {name:'el-icon-search'},
+                //     {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
+                //     {name:'el-icon-delete', event:"delAppointMajor"},
+                //     {name:'el-icon-refresh', event:"updateMajorTime"},
+                //     {name:'el-icon-tickets'},
+                // ],
                 options: [
                     {value: 0,　label: '选项一'}, 
                     {value: 1,label: '选项二'}, 
@@ -135,6 +147,70 @@
             //跳转页面
             jumpPage:function() {
                 this.$router.push('/SelectUnivers');
+            },
+            //操作方法回调
+            clickEvent(eventName, row) {
+                if(this[eventName+""]) {
+                    this[eventName+""](row);
+                }
+                else {
+                    this.message(true, "浏览器版本不兼容", "error");
+                }
+            },
+
+            //删除指定的院校专业
+            delAppointMajor(val) {
+                let _this = this;
+                this.confirm(() => {
+                    _this.post('/admin/information/deleteMajor', {
+                        majorId: val.id
+                    }).then((response) => {
+                        if(response.code == 0){
+                            _this.majorlisttable.splice(this.majorlisttable.indexOf(val), 1);
+                            this.message(true,response.msg, 'success');
+                        }
+                        else
+                            this.message(true, response.msg, 'error');
+                    })
+                }, ()=> {
+                    this.message(true, "已取消操作", "info");
+                })
+            },
+
+            //更新指定院校专业的更新时间
+            updateMajorTime(val) {
+                let _this = this;
+                this.confirm(() => {
+                    this.post('/admin/information/updateMajorInformationTime', {
+                        majorId: val.id
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            _this.majorlisttable[_this.majorlisttable.indexOf(val)].update_time = response.result;
+                            this.message(true, response.msg, 'success');
+                        }
+                        else 
+                            this.message(true, response.msg, 'error');
+                    })
+                }, () => {
+                    this.message(false, "已取消修改", 'info');
+                });
+            },
+
+            //跳转到指定的院校专业编辑页面
+            jumpMajorMsgPage(val) {
+                this.$router.push('/message/messageHome/' + val.id);
+            },
+
+            //刷新页面
+            refreshMajorPage() {
+                this.name = '';
+                this.type1 = 2;
+                this.type2 = 2;
+                this.majorlisttable = [];
+                this.searchContent.page = 1;
+                this.searchContent.limit = 10;
+                this.value = this.options[2].value;
+                this.gettableInfo();
             },
 
             //设置专业状态(权重，展示状态，推荐状态)

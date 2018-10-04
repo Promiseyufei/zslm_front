@@ -91,7 +91,7 @@
                             </el-form-item> -->
                             
                             <el-form-item>
-                                <el-button type="primary" @click="" :disabled = "disabled">提交</el-button>
+                                <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -119,7 +119,7 @@
                                 </el-form-item>
             
                                 <el-form-item>
-                                    <el-button type="primary" @click="" :disabled = "disabled2">提交</el-button>
+                                    <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
                                 </el-form-item>
                             </el-form>  
                         </div>
@@ -238,7 +238,7 @@ export default {
         
     },
     mounted(){
-        this.getProvince();
+        this.province = this.getProvince();
 
         // 创建富文本编辑器
         this.editor.customConfig.onchange = (html) => {
