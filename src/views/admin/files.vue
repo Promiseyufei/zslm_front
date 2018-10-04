@@ -25,7 +25,7 @@
 						<el-input v-model="majorName" size="medium" placeholder="请输入院校名称"></el-input>
 					</el-form-item>
 					<el-form-item label="文件年份">
-						  <el-date-picker v-model="fileYear" type="year" placeholder="选择年" size="medium">
+						  <el-date-picker v-model="fileYear" type="year" placeholder="选择年" size="medium" value-format="yyyy">
 						  </el-date-picker>
 					</el-form-item>
 					<el-form-item label="文件类型">
@@ -43,10 +43,10 @@
 		<div class="files-datalist">
 			<i class="el-icon-tickets"></i>
 			<p class="screen">数据列表</p>
-			<el-select size="mini" class="datalist-selecttwo" v-model="Sort" placeholder="排序方式">
+			<!-- <el-select size="mini" class="datalist-selecttwo" v-model="Sort" placeholder="排序方式">
 				 <el-option v-for="(item,index) in sort" :key="index" :label="item.label" :value="item.value">
 				 </el-option>
-			</el-select>
+			</el-select> -->
 		</div>
 
 		<!-- 表格 -->
@@ -103,12 +103,12 @@
 					{value: '选项三',label:'类型三'},
 				],
 				/*数据列表  排序方式*/
-				Sort:'',
-				sort:[
-					{value: '选项一',label: '10条'},
-					{value: '选项二',label: '50条'},
-					{value: '选项三',label: '100条'},        
-				],
+				// Sort:'',
+				// sort:[
+				// 	{value: '选项一',label: '10条'},
+				// 	{value: '选项二',label: '50条'},
+				// 	{value: '选项三',label: '100条'},        
+				// ],
 				/*表格*/
 				tableTop:[
 					// {type:'',prop:'showweight',label:'展示权重',width:100},
@@ -239,11 +239,12 @@
 			//查询按钮函数
 			query: function(){
 				var that = this;
+				console.log(that.fileYear)
 				axios.post('/admin/files/getUploadFile',{
 				  //后台参数，前台参数(传向后台)
 				  page: that.searchContent.page,
 				  pageSize: that.searchContent.limit,
-				  fileName: that.fileName,
+				  fileName: that.filesName,
 				  majorName: that.majorName,
 				  fileYear: that.fileYear,
 				  fileType: that.fileType,
@@ -380,7 +381,7 @@
   	.filesForm-query {
 		position: absolute;
 		right: 10px;
-		bottom: 5px;
+		bottom: 25px;
 		background-color: #fff;
 		border-color: #CCC;
 		border-radius: 0;

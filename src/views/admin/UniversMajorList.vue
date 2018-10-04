@@ -2,15 +2,15 @@
     <div class="majorlist">
         <div class="majorlist-top">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">院校专业</a></el-breadcrumb-item>
+              <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+              <el-breadcrumb-item>院校专业</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
-            <el-button>新建</el-button>
+            <el-button @click.native ="jumpPage">新建</el-button>
         </div>
         <div class="majorlist-query">
-            <i class=""></i>
+            <i class="el-icon-search"></i>
             <p>筛选查询</p>
             <div></div>
             <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native ="refreshMajorPage">刷新</el-button>
@@ -18,15 +18,15 @@
         <div class="majorlist-form">
             <el-form class="majorlist-input" label-width="80px">
                 <el-form-item label="院校专业">
-                    <el-input size="mini" v-model="name" placeholder="输入文件名称"></el-input>
+                    <el-input size="medium" v-model="name" placeholder="输入文件名称"></el-input>
                 </el-form-item>
                 <el-form-item label="展示状态">
-                    <el-select size="mini" v-model="type1" placeholder="全部">
+                    <el-select size="medium" v-model="type1" placeholder="全部">
                       <el-option v-for="(item, index) in screenType" :label="item.label" :value="item.value" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="推荐状态">
-                    <el-select size="mini" v-model="type2" placeholder="全部">
+                    <el-select size="medium" v-model="type2" placeholder="全部">
                         <el-option v-for="(item, index) in screenState" :label="item.label" :value="item.value" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
@@ -34,7 +34,7 @@
             <el-button size="mini" type="primary" icon="el-icon-search" class="majorlist-queryrefresh" @click.native="gettableInfo">查询</el-button>
         </div>
         <div class="majorlist-list">
-            <i class=""></i>
+            <i class="el-icon-tickets"></i>
             <p>内容列表</p>
             <div></div>
             <el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="默认顺序">
@@ -65,7 +65,11 @@
                 <el-table-column label="操作" width="210">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
-                            <i v-for="(val, index) in iconname" :key="index" :class="val.name"></i>
+                            <i class="el-icon-search"></i>
+                            <i class="el-icon-edit-outline"></i>
+                            <i class="el-icon-delete"></i>
+                            <i class="el-icon-refresh"></i>
+                            <i class="el-icon-tickets"></i>
                         </div>
                     </template>
                 </el-table-column>
@@ -98,27 +102,27 @@
                     page:1,
                     limit:10,
                 },
-                iconname:[
-                    {name:'el-icon-search'},
-                    {name:'el-icon-edit-outline'},
-                    {name:'el-icon-delete'},
-                    {name:'el-icon-refresh'},
-                    {name:'el-icon-tickets'},
-                ],
+                // iconname:[
+                //     {name:'el-icon-search'},
+                //     {name:'el-icon-edit-outline'},
+                //     {name:'el-icon-delete'},
+                //     {name:'el-icon-refresh'},
+                //     {name:'el-icon-tickets'},
+                // ],
                 options: [
-                    {value: 0,　label: '按权重升序'}, 
-                    {value: 1,label: '按权重降序'}, 
-                    {value: 2,label: '按信息更新时间'}
+                    {value: 0,　label: '选项一'}, 
+                    {value: 1,label: '选项二'}, 
+                    {value: 2,label: '选项三'}
                 ],
                 screenType: [
-                    {label: '展示', value: 0},
-                    {label: '不展示', value: 1},
-                    {label: '全部', value: 2}
+                    {label: '选项一', value: 0},
+                    {label: '选项二', value: 1},
+                    {label: '选项三', value: 2}
                 ],
                 screenState: [
-                    {label: '推荐', value: 0},
-                    {label: '不推荐', value: 1},
-                    {label: '全部', value: 2}
+                    {label: '选项一', value: 0},
+                    {label: '选项二', value: 1},
+                    {label: '选项三', value: 2}
                 ],
                 tableTop:[
                   {prop:'z_name',label:'院校专业名称',width:580},
@@ -128,9 +132,9 @@
             }
         },
         methods:{
-            //刷新页面
-            refreshMajorPage() {
-
+            //跳转页面
+            jumpPage:function() {
+                this.$router.push('/SelectUnivers');
             },
 
             //设置专业状态(权重，展示状态，推荐状态)
@@ -227,10 +231,16 @@
     .majorlist-table .el-table th.is-leaf {
         text-align: center;
     }
+    .footer .el-pagination[data-v-67d9ff78] {
+        margin: 10px 10px 10px 0;
+    }
 </style>
 
 <!-- 局部样式 scoped -->
 <style scoped>
+    .page {
+        padding: 5px 10px;
+    }
     .el-table {
         color: #333;
     }
@@ -253,6 +263,7 @@
         width: 1500px;
         background-color: #fdfdfe;
         margin: 20px auto;
+        /*padding: 10px;*/
     }
     .el-table thead {
         background: #f9fafc;
@@ -270,7 +281,6 @@
         font-size: 20px;
         color: #999;
     }
-
     .majorlist-table .el-input {
         width: 40px;
     }
@@ -283,7 +293,6 @@
         position: absolute;
         right: 10px;
         width: 100px;
-        margin: 10px 0;
     }
     .majorlist-input {
         display: flex;
@@ -303,15 +312,19 @@
         border:1px solid #CCC;
         border-radius:0;
     }
+    .majorlist-query i,.majorlist-list i {
+        padding: 0 0 0 10px;
+    }
     .majorlist-query p,.majorlist-list p {
         font-size: 16px;
         color: #666;
         font-weight: bold;
-        padding: 0 20px;
+        padding: 0 10px;
     }
     .majorlist-query,.majorlist-list {
         position: relative;
         display: flex;
+        align-items:center;
         width: 1500px;
         height: 50px;
         background:#f3f3f3;
@@ -321,9 +334,6 @@
         margin: 20px auto;
         width: 1500px;
     }
-    .span {
-        margin: 10px 6.5px;
-    }
     .majorlist-top p {
         font-size: 10px;
         color: #999;
@@ -332,8 +342,5 @@
         display: flex;
         margin: 0 auto;
         width: 1500px;
-    }
-    
-
-
+    }    
 </style>
