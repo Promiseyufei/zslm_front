@@ -23,13 +23,17 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/files'], resolve))
         },
         {
-            // path: '/SelectUnivers/:i',
             path: '/SelectUnivers',
             name: '选择院校专业',
             component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
         },
         {
-            path: '/files/fileup',
+            path: '/UniversMajorList',
+            name: '选择院校专业',
+            component: resolve =>void(require(['@/views/admin/UniversMajorList'], resolve))
+        },
+        {
+            path: '/filesManage/fileup/:majorname',
             name: '文件管理——上传文件',
             component: resolve =>void(require(['@/views/admin/filesManage/FileUp'], resolve))
         },
@@ -67,7 +71,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/UniversMajorList'], resolve))
         },
         {
-            path: '/message/messageHome',
+            path: '/message/messageHome/:majorId?',
             name: '编辑-院校专业',
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/MessageHome'], resolve))
         },

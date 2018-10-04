@@ -55,25 +55,6 @@ Mock.mock('/admin/files/deleteFile',{
 			],
 })
 
-/*files
-*文件管理页面
-*获取查询条件
-*/
-Mock.mock('/admin/files/huoQuChaXunTaioJian',{
-	 
-	"data": [{
-				'name': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf' ,
-				'data': '@cword(1)',
-		        // 'name': '@cword(11)',
-		        'major':'@cword(11)'+'MBA',
-		        'type': '@cword(4)',
-		        'year': '@date("yyyy")',
-		        'homepage': '@cword(1)',
-		        'time': '@datetime("yyyy-MM-dd  HH:mm:ss")',
-			}],
-	// "total":'@integer(1000, 2000)',
-	
-})
 
 
 /*data
@@ -126,9 +107,17 @@ Mock.mock('/admin/UniversMajorList/gettable-info',{
 */
 Mock.mock('/admin/SelectUnivers/getcity-info',{
 	"code":0,
-	"region|2":[{"name":'@cword(2)'}],
+	"onecityName":'@cword(2)',
+	"twocityName":'@cword(2)',
 	"count":'@integer(1000, 2000)',
-	"Name|3":[
+	"oneCity|3":[
+		{	
+			"line|5":[
+				{"majorname":'@cword(6)'}
+			]
+		},
+	],
+	"twoCity|3":[
 		{	
 			// "column":[
 			// 	{"cityname":'@cword(2)'}
@@ -284,4 +273,60 @@ Mock.mock('/message/informationList/gettableInfo',{
 	"total":'@integer(1000, 2000)',
 	// "count":'@integer(1000, 2000)',
 	
+})
+
+
+
+
+/*recordHome
+*消息管理页面
+*获取表格内容、文件总数
+*/
+Mock.mock('/admin/recordHome/getUploadFile',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(10000,20000)',
+				'messageType': '@cword(1,6)' ,
+				'messageObject': '@cword(4,7)',
+		        'sendTime':'@datetime("yyyy-MM-dd  HH:mm:ss")',
+		        'sendState': '@cword(2)',
+		        'sendCont': '@cword(40)',
+			},
+			],
+	// "total":'@integer(1000, 2000)',
+})
+/*recordHome
+*消息管理页面
+*刷新页面
+*/
+Mock.mock('/admin/recordHome/updateFile',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(10000,20000)',
+				'messageType': '@cword(1,6)' ,
+				'messageObject': '@cword(4,7)',
+		        'sendTime':'@datetime("yyyy-MM-dd  HH:mm:ss")',
+		        'sendState': '@cword(2)',
+		        'sendCont': '@cword(40)',
+			},
+			],
+})
+
+/*recordHome
+*消息管理页面
+*删除表格某一行
+*/
+Mock.mock('/admin/recordHome/deleteFile',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'showweight': '@integer(1,10)' ,
+				'filename': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'universmajor':'@cword(11)'+'MBA',
+		        'filetype': '@cword(4)',
+		        'fileyear': '@date("yyyy")',
+		        'showhomepage': '@cword(1)',
+		        'onlinetime': '@datetime("yyyy-MM-dd  HH:mm:ss")',
+			},
+			],
 })

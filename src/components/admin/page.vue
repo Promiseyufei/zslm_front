@@ -7,6 +7,7 @@
 export default {
 	data() {
 		return {
+			//每页显示的条数
 			pageSizes:[10,20,50],
 			page:{
 				page:1,//默认第一页
