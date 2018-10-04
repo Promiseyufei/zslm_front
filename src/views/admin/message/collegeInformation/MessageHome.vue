@@ -54,7 +54,10 @@
                   </el-form-item>
                   <el-form-item label="活动省市">
                       <el-select v-model="ruleForm.region" placeholder="请选择活动区域" :disabled = "disabled">
-                          <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option>
+						  <el-option-group v-for="(pro, index) in province" :key="index" :label="pro.name">
+							  <el-option v-for="(city, i) in pro.citys" :key="i" :label="city.name" :value="city.id"></el-option>
+						  </el-option-group>
+                          <!-- <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option> -->
                       </el-select>
                   </el-form-item>
                   <el-form-item label="院校地址">
@@ -83,14 +86,14 @@
                           <input type="file" id="upload" accept="image" @change="upload" style="display: none">
                           <span style="color:#B2B2B2;" >添加图片</span>
                       </div>
-                      <li class="show" v-for="(iu, index) in imgUrls">
+                      <li class="show" v-for="(iu, index) in imgUrls" :key="index">
                           <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
                       </li>
                     </div>
                   </el-form-item>
                   
                   <el-form-item>
-                    <el-button type="primary" @click="" :disabled = "disabled">提交</el-button>
+                    <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -117,7 +120,7 @@
                     </el-form-item>
 
                     <el-form-item>
-                      <el-button type="primary" @click="" :disabled = "disabled2">提交</el-button>
+                      <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
                     </el-form-item>
                   </el-form>  
                 </div>
@@ -179,6 +182,9 @@ export default {
         }
     },
     methods:{
+        test: function() {
+          console.log(this.province);
+        },
         startChange: function () {
             this.disabled = false;
         },
@@ -191,16 +197,15 @@ export default {
             return false;
         },
         delImage: function(index) {
-            let vm = this;
-            vm.$vux.confirm.show({
-                content: '取消选择？',
-                onConfirm () {
-                    vm.imgUrls.splice(index, 1);
-                    vm.count--;
-                    vm.count<3?vm.isShow = true:vm.isShow;
-                    vm.$vux.toast.text('图片删除成功', 'top');
-                }
-            });
+			let vm = this;
+			this.confirm(() => {
+				vm.imgUrls.splice(index, 1);
+				vm.count--;
+				vm.count<3?vm.isShow = true:vm.isShow;
+				this.message(true, '图片删除成功', 'success');
+			}, () => {
+				this.message(true, '取消删除', 'info');
+			});
         },
         upload (e) {
             let files = e.target.files || e.dataTransfer.files;
@@ -217,8 +222,7 @@ export default {
             let Orientation;
             //去获取拍照时的信息，解决拍出来的照片旋转问题
             Exif.getData(file, function(){
-
-                Orientation = Exif.getTag(this, 'Orientation');
+				Orientation = Exif.getTag(this, 'Orientation');
             });
             // 看支持不支持FileReader
             if (!file || !window.FileReader) return;
@@ -227,17 +231,18 @@ export default {
                 // 创建一个reader
                 let reader = new FileReader();
                 // 将图片2将转成 base64 格式
-                reader.readAsDataURL(file);
+				reader.readAsDataURL(file);
+				// console.log(reader);
                 // 读取成功后的回调
                 reader.onloadend = function () {
                     let result = this.result;
                     let img = new Image();
-                    img.src = result;
+					img.src = result;
                     //判断图片是否大于100K,是就直接上传，反之压缩图片
                     if (this.result.length <= (100 * 1024)) {
-                        self.imgUrls.push(this.result);
+						self.imgUrls.push(this.result);
                     }else {
-                        img.onload = function () {
+						img.onload = function () {
                             let data = self.compress(img,Orientation);
                             self.imgUrls.push(data);
                         }
@@ -295,73 +300,89 @@ export default {
                     ctx.drawImage(img, -width, 0);
                     break;
             }
-        },
+		},
+		
+		//压缩图片
         compress(img,Orientation) {
-          let canvas = document.createElement("canvas");
-          let ctx = canvas.getContext('2d');
-          //瓦片canvas
-          let tCanvas = document.createElement("canvas");
-          let tctx = tCanvas.getContext("2d");
-          let initSize = img.src.length;
-          let width = img.width;
-          let height = img.height;
-          //如果图片大于四百万像素，计算压缩比并将大小压至400万以下
-          let ratio;
-          if ((ratio = width * height / 4000000) > 1) {
-              console.log("大于400万像素")
-              ratio = Math.sqrt(ratio);
-              width /= ratio;
-              height /= ratio;
-          } else {
-              ratio = 1;
-          }
-          canvas.width = width;
-          canvas.height = height;
-          //        铺底色
-          ctx.fillStyle = "#fff";
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          //如果图片像素大于100万则使用瓦片绘制
-          let count;
-          if ((count = width * height / 1000000) > 1) {
-              count = ~~(Math.sqrt(count) + 1); //计算要分成多少块瓦片
-              //            计算每块瓦片的宽和高
-              let nw = ~~(width / count);
-              let nh = ~~(height / count);
-              tCanvas.width = nw;
-              tCanvas.height = nh;
-              for (let i = 0; i < count; i++) {
-                  for (let j = 0; j < count; j++) {
-                      tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh);
-                      ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh);
-                  }
-              }
-          } else {
-              ctx.drawImage(img, 0, 0, width, height);
-          }
-          //修复ios上传图片的时候 被旋转的问题
-          if(Orientation != "" && Orientation != 1){
-              switch(Orientation){
-                  case 6://需要顺时针（向左）90度旋转
-                      this.rotateImg(img,'left',canvas);
-                      break;
-                  case 8://需要逆时针（向右）90度旋转
-                      this.rotateImg(img,'right',canvas);
-                      break;
-                  case 3://需要180度旋转
-                      this.rotateImg(img,'right',canvas);//转两次
-                      this.rotateImg(img,'right',canvas);
-                      break;
-              }
-          }
-          //进行最小压缩
-          let ndata = canvas.toDataURL('image/jpeg', 0.1);
-          tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
-          return ndata;
-      },
+			let canvas = document.createElement("canvas");
+			let ctx = canvas.getContext('2d');
+			//瓦片canvas
+			let tCanvas = document.createElement("canvas");
+			let tctx = tCanvas.getContext("2d");
+			let initSize = img.src.length;
+			let width = img.width;
+			let height = img.height;
+			//如果图片大于四百万像素，计算压缩比并将大小压至400万以下
+			let ratio;
+			if ((ratio = width * height / 4000000) > 1) {
+				console.log("大于400万像素")
+				ratio = Math.sqrt(ratio);
+				width /= ratio;
+				height /= ratio;
+			} else {
+				ratio = 1;
+			}
+			canvas.width = width;
+			canvas.height = height;
+			//        铺底色
+			ctx.fillStyle = "#fff";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			//如果图片像素大于100万则使用瓦片绘制
+			let count;
+			if ((count = width * height / 1000000) > 1) {
+				count = ~~(Math.sqrt(count) + 1); //计算要分成多少块瓦片
+				//            计算每块瓦片的宽和高
+				let nw = ~~(width / count);
+				let nh = ~~(height / count);
+				tCanvas.width = nw;
+				tCanvas.height = nh;
+				for (let i = 0; i < count; i++) {
+					for (let j = 0; j < count; j++) {
+						tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh);
+						ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh);
+					}
+				}
+			} else {
+				ctx.drawImage(img, 0, 0, width, height);
+			}
+			//修复ios上传图片的时候 被旋转的问题
+			if(Orientation != "" && Orientation != 1){
+				switch(Orientation){
+					case 6://需要顺时针（向左）90度旋转
+						this.rotateImg(img,'left',canvas);
+						break;
+					case 8://需要逆时针（向右）90度旋转
+						this.rotateImg(img,'right',canvas);
+						break;
+					case 3://需要180度旋转
+						this.rotateImg(img,'rightprovince',canvas);//转两次
+						this.rotateImg(img,'rightprovince',canvas);
+						break;
+				}
+			}
+			//进行最小压缩
+			let ndata = canvas.toDataURL('image/jpeg', 0.1);
+			tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
+			return ndata;
+	  },
+
     },
     mounted(){
-        this.getProvince();
-        this.getMajor();
+		let _this = this;
+
+		//获取省份列表信息
+		this.getMajorPageOptions('post', '/admin/information/getMajorProvincesAndCities', {}, (response)=> {
+			_this.province = response.result[0];
+		}, (response) => {
+			this.message(false, "未查询到省份信息", "error");
+		});
+
+		//获取院校专业类型字典
+		this.getMajorPageOptions('post', '/admin/information/getMajorType', {}, (response) => {
+			_this.major = response.result;
+		}, (response) => {
+			this.message(true, "未查询到专业类型", 'error');
+		})
     }
 };
 </script>
