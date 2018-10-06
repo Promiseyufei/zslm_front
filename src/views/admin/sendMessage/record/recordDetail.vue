@@ -39,9 +39,11 @@
                        </div>
                        <div></div>
                    </div>
-               </div> 
-               <div class="rightLow">
-                   <userTable></userTable>
+               </div>
+               <div class="line"></div> 
+               <div class="rightLow" style="width:1170px;margin:0 auto;">
+                   <userTable :listTable="listTable" :tableData="tableData"></userTable>
+                   <singlePage :currentPage="currentPage" :totalData="totalData"></singlePage>
                </div>
             </div>
         </div>       
@@ -69,20 +71,21 @@
                     {title:'发送状态',content:''},
                     {title:'消息内容',content:''},
                 ],
-               listTable:[
-                    {prop:'id',label:'账户ID',width:100},
-                    {prop:'account',label:'账号',width:100},
-                    {prop:'nickname',label:'昵称',width:100},
-                    {prop:'name',label:'真实姓名',width:100},
-                    {prop:'sex',label:'性别',width:100},
-                    {prop:'address',label:'常住地',width:100},
-                    {prop:'highEduc',label:'最高学历',width:100},
-                    {prop:'belongUnivers',label:'毕业院校',width:100},
-                    {prop:'industry',label:'所属行业',width:100},
-                    {prop:'workFix',label:'工作年限',width:100},
-                    {prop:'shareCon',label:'分享内容',width:100},
-               ],
-               tableData: [{
+                
+                //表格
+                listTable:[
+                    {prop:'id',lable:'账户ID',width:80},
+                    {prop:'account',lable:'账号',width:100},
+                    {prop:'nickname',lable:'昵称',width:140},
+                    {prop:'name',lable:'真实姓名',width:80},
+                    {prop:'sex',lable:'性别',width:80},
+                    {prop:'address',lable:'常住地',width:80},
+                    {prop:'highEduc',lable:'最高学历',width:80},
+                    {prop:'belongUnivers',lable:'毕业院校',width:180},
+                    {prop:'industry',lable:'所属行业',width:248},
+                    {prop:'workFix',lable:'工作年限',width:100},
+                ],
+                tableData: [{
                   id:'',
                   account:'',
                   nickname:'',
@@ -91,16 +94,20 @@
                   address:'',
                   highEduc:'',
                   belongUnivers:'',
+                  industry:'',
                   workFix:'',
-                  shareCon:'',
                 }],
+
+                //分页
+                totalData:0,
+                currentPage:1,
             };
         },
         methods: {
             //初次进入页面，获取的院校专业
             getcityInfo: function(){
                 var that = this;
-                axios.post('/admin/recordDetail/getcity-info',{
+                axios.post('/admin/recordDetail/getcityInfo',{
                   //后台参数，前台参数(传向后台)
                   // butname: that.butname,
                 })
@@ -111,24 +118,17 @@
                         that.careJoin = res.careJoin;
                         that.rightUpCon = res.rightUpCon;
                         that.tableData = res.data;
+                        that.totalData = res.totalData;
+                        // console.log(that.totalData);
+                        // console.log(res.totalData)
                     };
                 })
                 .catch(function (error) {
                 });
             },
-            //点击城市按钮
-            clickCity:function() {
-                var that = this;
-                axios.post('/admin/recordDetail/clickgetcity-info',{
-                  //后台参数，前台参数(传向后台)
-                  butname: that.butname,
-                })
-            },
             //跳转页面按钮
             jumpPage:function() {
-                // if (this.majorname) {
                     this.$router.push('/send/recordHome');
-                // }
             }
         },
         mounted(){
@@ -138,11 +138,19 @@
 
 </script>
 <style>
-    
+    .rightLow .el-table td, .el-table th.is-leaf {
+        text-align: center;
+    }
     
 </style>
 
 <style scoped>
+    .line {
+        width: 1170px;
+        height: 2px;
+        background: #e4e4e4;
+        margin: 0 auto;
+    }
     .messageObjc {
         text-align: right;
     }

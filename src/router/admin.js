@@ -174,17 +174,17 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageSelf'], resolve))
         },
         {
-            path: '/send/setMessageDetail/:table',
+            path: '/send/setMessageDetail',
             name: '消息管理-编辑发送',
             component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageDetail'], resolve))
         },
         {
-            path: '/send/recordHome',
+            path: '/record/recordHome',
             name: '消息管理-历史消息记录',
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordHome'], resolve))
         },
         {
-            path: '/send/recordDetail',
+            path: '/record/recordDetail',
             name: '消息管理-历史消息记录详情',
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordDetail'], resolve))
         },
