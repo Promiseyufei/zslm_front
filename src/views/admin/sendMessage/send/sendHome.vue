@@ -67,20 +67,9 @@
                            <!-- 表格 -->
                            <userTable :tableData = "tableData" :listTable="listTable" v-if=" radio!='' "></userTable>
                            <!-- 分页 -->
-                           <div class="apartPage" v-if=" radio!='' ">
-                                <div class="countPage">
-                                    <span>共{{Math.ceil(totalData/100)}}页</span>
-                                    <span>/100条</span>
-                                </div>
-                                <el-pagination
-                                  @current-change="handleCurrentChange"
-                                  :current-page="currentPage"
-                                  :page-size="100"
-                                  layout="prev, pager, next, jumper"
-                                  :total="totalData">
-                                </el-pagination>
-                            </div>
-
+                           <div v-if=" radio!='' ">
+                                <singlePage :currentPage = "currentPage" :totalData = "totalData"></singlePage>
+                           </div>
                         </div>
                     </div>
 
@@ -163,17 +152,25 @@ export default {
         currentPage: 4,
         // 分页总数,默认值
         totalData: 0,
-        configCenterInfo:{
-            contractIds:[],
-        },
-
+        table1: [],
+        table2: []
       }
+    },
+    watch: {
+        radio: function(val,oldval) {
+            if(val == "1" && oldval != "1") {
+                this.getUser();
+            }else if(val == "2" && oldval != "2") {
+                this.tableData = this.table1;
+            }else if(val == "3" && oldval != "3") {
+                this.tableData = this.table2;
+            }
+        }
     },
     methods: {
         //获取全部用户
         getUser: function() {
             let self = this;
-
             axios.post('/admin/news/getAllAccounts', {
                 pageCount: 100,
                 pageNumber: self.currentPage
@@ -185,11 +182,6 @@ export default {
                     // self.message(true,"修改成功","success");
                 }
             })
-        },
-        //改变当前页时，触发事件,val为当前页
-        handleCurrentChange(val) {
-            this.currentPage = val;
-            this.getUser();
         },
 
         // 跳转页面
@@ -206,9 +198,30 @@ export default {
                 this.$router.push('/send/setMessageSelf');
             }
         },
+        //
+        remove: function(key) {
+            console.log(this.table2);
+            this.table2.pop();
+            // this.table2[key] = null;
+            console.log(this.table2);
+        }
     },
     mounted(){
-        this.getUser();
+        // this.getUser();
+        
+        if(this.$route.query.setStr != null) {
+            let setArray = JSON.parse(this.$route.query.setStr);
+            let tt = setArray.pop();
+            console.log(tt);
+            if(tt == "3") {
+                this.radio = "3";
+                this.table2 = setArray;
+            }else if(tt == "2") {
+                this.radio = "2";
+                this.table1 = setArray;
+            }
+        }
+        
     },
 };
 </script>
@@ -218,38 +231,6 @@ export default {
         padding: 0;
     }
 
-    /*
-    * 分页样式
-    */
-    .apartPage li, .apartPage button {
-        border: 1px solid #d7d7d7 !important;
-        margin-right: 10px;
-        border-radius: 3px;
-        color: #999;
-    }
-    .apartPage .btn-prev {
-        margin-right: 10px;
-        padding-right: 6px;
-        color: #999;
-    }
-    .apartPage .btn-next {
-        padding-left: 6px;
-        color: #999;
-    }
-    .apartPage .active {
-        border: 1px solid #1abc9c !important;
-        color: #fff !important;
-        background: #1abc9c;
-    }
-    .apartPage .active:hover {
-        color: #fff !important;
-    }
-    .apartPage li:hover { 
-        color: #1abc9c !important;
-    }
-    .apartPage button:hover {
-        color: #1abc9c !important;
-    }
 </style>
 <style scoped>
     .operateBox {
@@ -266,18 +247,6 @@ export default {
         justify-content: flex-end;
         align-items: center;
         margin: 20px;
-    }
-    .apartPage span {
-        float: left;
-        font-size: 13px;
-        min-width: 35.5px;
-        height: 28px;
-        line-height: 28px;
-        font-weight: 400;
-        color: #606266;
-    }
-    .apartPage active {
-        border: 1px solid #1abc9c !important;
     }
     .countPage {
         margin-right: 15px;

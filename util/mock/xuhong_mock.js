@@ -291,6 +291,7 @@ Mock.mock('/admin/news/getAllAccounts',{
 			"count": 3456,
 			"data|10":[{
 					'id|+1': 0,
+					"photo": "18338409172",
 					"account":Mock.mock('@integer'),
 					"user_name":Mock.mock('@cname'),
 					"real_name":Mock.mock('@cword(3, 5)'),
