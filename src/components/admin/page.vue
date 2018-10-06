@@ -7,7 +7,7 @@
 export default {
 	data() {
 		return {
-			pageSizes:[100,200,300,400],
+			pageSizes:[5,20,50],
 			page:{
 				page:1,//默认第一页
 				limit:100//默认显示一百条

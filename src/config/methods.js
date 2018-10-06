@@ -4,6 +4,13 @@ export default {
         alert('公共方法成功啦～');
     },
     // 消息提示框
+    /**
+     *
+     * @param judge 默认为true
+     * @param msg   警示信息
+     * @param type string 提示框类型 success info warning error
+     * @return {ElMessageComponent | *}
+     */
     message: function(judge, msg, type) {
         return this.$message({
             showClose: judge,

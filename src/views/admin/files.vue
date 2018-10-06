@@ -56,7 +56,10 @@
 		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
 		          <el-table-column label="展示权重" width="100">
                     <template slot-scope="scope">
-                        <el-input id="inputID" @focus="getFocus(tableData[scope.$index].showweight)" v-on:blur="loseFocus(tableData[scope.$index].showweight,scope.$index)" v-model="tableData[scope.$index].showweight"></el-input>
+                        <el-input id="inputID" @focus="getFocus(tableData[scope.$index].show_weight)"
+                                  v-on:blur="loseFocus(tableData[scope.$index].show_weight,scope.$index)"
+                                  v-model="tableData[scope.$index].show_weight">
+                        </el-input>
                     </template>
                 </el-table-column>
 		          <el-table-column label="操作" width="220">
@@ -95,7 +98,7 @@
   	    		/*查询输入框*/
 
   	    		filesName:'',
-  	    		fileType:'',
+  	    		fileType:2,
   	    		fileYear:'',
   	    		majorName:'',
   	    		input: [	
@@ -113,22 +116,22 @@
 	            /*表格*/
 	            tableTop:[
 		            // {type:'',prop:'showweight',label:'展示权重',width:100},
-		            {type:'',prop:'filename',label:'文件名称',width:260},
-		            {type:'',prop:'universmajor',label:'所属院校专业',width:320},
-		            {type:'',prop:'filetype',label:'文件类型',width:100},
-		            {type:'',prop:'fileyear',label:'文件年份',width:100},
-		            {type:'',prop:'showhomepage',label:'主页展示',width:100},
-		            {type:'',prop:'onlinetime',label:'上传时间',width:180},
+		            {type:'',prop:'file_name',label:'文件名称',width:260},
+		            {type:'',prop:'z_name',label:'所属院校专业',width:320},
+		            {type:'',prop:'file_type',label:'文件类型',width:100},
+		            {type:'',prop:'file_year',label:'文件年份',width:100},
+		            {type:'',prop:'show_weight',label:'主页展示',width:100},
+		            {type:'',prop:'create_time',label:'上传时间',width:180},
 		        ],
 		        tableData:[{
 		        	id:'',
-		            showweight: '',
-		            filename: '',
-		            universmajor:'',
-		            filetype: '',
-		            fileyear: '',
-		            showhomepage: '',
-		            onlinetime: '',
+		            show_weight: '',
+                    file_name: '',
+                    z_name:'',
+                    file_type: '',
+                    file_year: '',
+		            is_show: '',
+                    create_time: '',
 		        }],
 		        showweight:'',
 		        sels:[],
@@ -137,8 +140,8 @@
 		        /*分页*/
 		        total:0,
 		        searchContent:{
-		              page:'',
-		              limit:'',
+		              page:1,
+		              limit:5,
 		        },
     	    }
   	    },
@@ -162,17 +165,12 @@
 		    //批量删除表格内容
 		    BatchDelete: function(){
 		    	var that = this;
+		    	let selectId = [];
 		    	for (var i = 0; i < that.multipleSelection.length; i++) {
-		    		var ID = that.multipleSelection[i].id;
+		    		selectId.push( that.multipleSelection[i].id);
 		    	};
-	        	axios.post('/admin/files/getUploadFile',{
-		          //后台参数，前台参数(传向后台)
-		          	ID: that.ID,
-	        	})
-	        	.then(function (response) {
-	        	})
-	        	.catch(function (error) {
-	        	});
+		    	this.deleteRequest(selectId)
+
 		    },
 	      	toshow2(msg) {
 	        	this.msg = msg;
@@ -195,23 +193,59 @@
 	            } else {
 	            	//权重正确，将该行表格id传给后台
 	            	var that = this;
-	            	axios.post('/admin/files/updateFile',{
+
+                    axios.post('http://www.zslm.com/admin/files/updateweight',{
 			          //后台参数，前台参数(传向后台)
-			          fileId: that.tableData[index].id,
+                        fileId: that.tableData[index].id,
+                        weight: that.tableData[index].show_weight
 		        	})
 	            }
 	  		},
+            //删除请求方法
+            deleteRequest(filesId){
+	  		    let that = this;
+                this.confirm(() => {
+                    axios.post('http://www.zslm.com/admin/files/deletefiles',{
+                        //后台参数，前台参数(传向后台)
+                        fileId: filesId,
+                    }).then(function (response) {
+                        var res = response.data;
+                        if (res.code == 0) {
+                            that.query();
+                            that.message(true,'删除成功','success');
+                        }else{
+                            that.message(true,'删除失败','error');
+                        }
+                    }).catch(function (error) {
+
+                    });
+                }, () => {
+                    // console.log('this is catchback');
+                },'确定删除吗', '危险操作');
+            },
 	      	// 表格单行删除
 	    	deleteRow(index, rows) {
 	      		// 删除前判断
-	      		this.confirm(() => {
-	      			rows.splice(index, 1);
-            		// console.log('this is callback');
-        		}, () => {
-            		// console.log('this is catchback');
-        		},'确定删除吗', '危险操作');
+                let that = this;
+
+                    // axios.post('http://www.zslm.com/admin/files/deletefiles',{
+                    //     //后台参数，前台参数(传向后台)
+                    //     fileId: [rows[index].id],
+                    // }).then(function (response) {
+                    //     var res = response.data;
+                    //     if (res.code == 0) {
+                    //         that.query();
+                    //         that.message(true,'删除成功','success');
+                    //     }else{
+                    //         that.message(true,'删除失败','error');
+                    //     }
+                    // }).catch(function (error) {
+                    //
+                    // });
+                    that.deleteRequest([rows[index].id]);
+
         		// 删除某一行
-	        	
+
 	      	},
 	      	// 编辑、查看表格某一行
 	    	handleClick(row) {
@@ -232,15 +266,18 @@
 	          	this.searchContent.limit = msg.limit;
 	      	},
 	      	query: function (){
+
 	        	var that = this;
-	        	axios.post('/admin/files/getUploadFile',{
+	        	axios.get('http://www.zslm.com/admin/files/getuploadfile',{
 		          //后台参数，前台参数(传向后台)
-		          page: that.searchContent.page,
-		          pageSize: that.searchContent.limit,
-		          fileName: that.fileName,
-		          majorName: that.majorName,
-		          fileYear: that.fileYear,
-		          fileType: that.fileType,
+                    params:{
+                      page: that.searchContent.page,
+                      pageSize: that.searchContent.limit,
+                      fileName: that.filesName,
+                      majorName: that.majorName,
+                      fileYear: that.fileYear,
+                      fileType: that.fileType
+                    }
 	        	})
 	        	.then(function (response) {
 	            	var res = response.data;
