@@ -152,13 +152,25 @@ export default {
         currentPage: 4,
         // 分页总数,默认值
         totalData: 0,
+        table1: [],
+        table2: []
       }
+    },
+    watch: {
+        radio: function(val,oldval) {
+            if(val == "1" && oldval != "1") {
+                this.getUser();
+            }else if(val == "2" && oldval != "2") {
+                this.tableData = this.table1;
+            }else if(val == "3" && oldval != "3") {
+                this.tableData = this.table2;
+            }
+        }
     },
     methods: {
         //获取全部用户
         getUser: function() {
             let self = this;
-
             axios.post('/admin/news/getAllAccounts', {
                 pageCount: 100,
                 pageNumber: self.currentPage
@@ -186,9 +198,30 @@ export default {
                 this.$router.push('/send/setMessageSelf');
             }
         },
+        //
+        remove: function(key) {
+            console.log(this.table2);
+            this.table2.pop();
+            // this.table2[key] = null;
+            console.log(this.table2);
+        }
     },
     mounted(){
-        this.getUser();
+        // this.getUser();
+        
+        if(this.$route.query.setStr != null) {
+            let setArray = JSON.parse(this.$route.query.setStr);
+            let tt = setArray.pop();
+            console.log(tt);
+            if(tt == "3") {
+                this.radio = "3";
+                this.table2 = setArray;
+            }else if(tt == "2") {
+                this.radio = "2";
+                this.table1 = setArray;
+            }
+        }
+        
     },
 };
 </script>
@@ -215,9 +248,6 @@ export default {
         align-items: center;
         margin: 20px;
     }
-    /* .apartPage active {
-        border: 1px solid #1abc9c !important;
-    } */
     .countPage {
         margin-right: 15px;
     }

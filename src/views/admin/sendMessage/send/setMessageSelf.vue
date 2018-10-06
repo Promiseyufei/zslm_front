@@ -24,7 +24,12 @@
                 <!-- 表格 -->
                 <div class="selfTable">
                     <template>
-                        <el-table :data="tableData"  border style="width: 100%" :header-cell-style="getRowClass">
+                        <el-table 
+                            :data="tableData"  
+                            border 
+                            style="width: 100%" 
+                            :header-cell-style="getRowClass"
+                            @selection-change="handleSelectionChange">
                             <el-table-column
                                 type="selection"
                                 width="55">
@@ -45,6 +50,14 @@
                     <div>
                         <singlePage :currentPage = "currentPage" :totalData = "totalData" @use="getUser"></singlePage>
                     </div>
+                </div>
+                <div class="selectFin">
+                    <p>当前已选择：<span>{{multipleSelection.length}}</span>个对象</p>
+                </div>
+
+                <!-- 完成按钮 -->
+                <div class="operateFinalUp">
+                    <el-button type="primary" @click="finial">完成！</el-button>
                 </div>
 
             </div>
@@ -144,16 +157,39 @@ export default {
         currentPage: 4,
         // 分页总数,默认值
         totalData: 1234,
+        multipleSelection:[]
       }
     },
     methods: {
+        //添加键值对
+        set: function (key, value) {
+            if (this.multipleSelection[key] == null) {
+                //如键不存在则身【键】数组添加键名
+                this.multipleSelection.push(value);
+            }
+            this.multipleSelection[key] = value;
+            //给键赋值
+        },
+
+        //点击完成按钮时，触发事件
+        finial: function() {
+            this.multipleSelection.push("3");
+            console.log(this.multipleSelection);
+            let setStr = encodeURIComponent(JSON.stringify(this.multipleSelection));
+            this.$router.push('/send/sendHome?setStr=' + setStr);
+        },
+        //当表格选择项发生变化时会触发该事件
+        handleSelectionChange(val) {
+            this.multipleSelection = val;
+            console.log(this.multipleSelection);
+        },
         //获取全部用户
         getUser: function(res) {
             let self = this;
             if(res==null) {
                 res = 4;
             }
-            console.log(res);
+            // console.log(res);
             axios.post('/admin/news/getAllAccounts', {
                 pageCount: 100,
                 pageNumber: res
@@ -188,6 +224,9 @@ export default {
         margin: 0 auto;
     }
 
+    /*
+    * 带删除的分页
+    */
     .bottomPage {
         display: flex;
         justify-content: space-between;
@@ -196,6 +235,20 @@ export default {
         border-top: none;
         background: #fff;
         padding-left: 20px;
+    }
+
+    /*
+    * 当前已选择对象个数
+    */
+    .selectFin p{
+        /* margin-left: 20px; */
+        font-size: 14px;
+        color: #666;
+        margin-top: 20px;
+    }
+    .selectFin span {
+        color: red;
+        margin: 0 3px;
     }
 
     /*
@@ -230,6 +283,15 @@ export default {
     .operateHeader>p {
       margin-left: 20px;
       font-weight: bold;
+    }
+
+
+    /*
+    * 底部跳转按钮样式
+    */
+    .operateFinalUp {
+      text-align: center;
+      margin: 95px 0 70px;
     }
 
 </style>
