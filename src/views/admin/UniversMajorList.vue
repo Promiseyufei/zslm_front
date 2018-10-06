@@ -7,11 +7,7 @@
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
-<<<<<<< HEAD
             <el-button @click.native ="jumpPage">新建</el-button>
-=======
-            <el-button @click="$router.push('/message/messageHome')">新建</el-button>
->>>>>>> f76be56e418b9075b78e712be5bd5b37ccd85aa3
         </div>
         <div class="majorlist-query">
             <i class="el-icon-search"></i>

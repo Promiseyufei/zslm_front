@@ -43,12 +43,7 @@
 		<div class="files-datalist">
 			<i class="el-icon-tickets"></i>
 			<p class="screen">数据列表</p>
-			<!-- <el-select size="mini" class="datalist-selecttwo" v-model="Sort" placeholder="排序方式">
-				 <el-option v-for="(item,index) in sort" :key="index" :label="item.label" :value="item.value">
-				 </el-option>
-			</el-select> -->
 		</div>
-
 		<!-- 表格 -->
 		<div class="file-table">
 			  <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
