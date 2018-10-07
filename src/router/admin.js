@@ -194,27 +194,6 @@ let admin_router = {
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/userManagement/userFocusMajor'], resolve))
         },
-        {
-            path: '/usermanagement/userlist',
-            name: '用户管理-关注院校',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userList'], resolve))
-        },
-        {
-            path: '/usermanagement/usercoupons',
-            name: '用户管理-关注院校',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userCoupons'], resolve))
-        },
-        //退款
-        {
-            path: '/refund/refundlist',
-            name: '用户管理-退款',
-            component: resolve =>void(require(['@/views/admin/refund/refundList'], resolve))
-        },
-        {
-            path: '/refund/refunddetails',
-            name: '用户管理-退款',
-            component: resolve =>void(require(['@/views/admin/refund/refundDetails'], resolve))
-        },
         
     ]
 }
