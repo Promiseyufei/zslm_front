@@ -280,6 +280,31 @@ Mock.mock('/admin/operate/getAppointRegionData',{
 		]
 })
 
+/* news
+* 信息管理模块——发信息
+* 获取全部用户
+*/
+Mock.mock('/admin/news/getAllAccounts',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)'),
+	"data": {
+			"count": 3456,
+			"data|10":[{
+					'id|+1': 0,
+					"photo": "18338409172",
+					"account":Mock.mock('@integer'),
+					"user_name":Mock.mock('@cname'),
+					"real_name":Mock.mock('@cword(3, 5)'),
+					"sex":"女",
+					"address":Mock.mock('@county'),
+					"schooling_id":Mock.mock('@cword(3, 5)'),
+					"graduate_school":Mock.mock('@cword(3, 5)'),
+					"industry":Mock.mock('@cword(3, 5)'),
+					"worked_year|+1": 7,
+				}]
+		}
+})
+
 /* Operate
 * 运营管理模块——资讯推荐区
 * 修改指定区域的名称

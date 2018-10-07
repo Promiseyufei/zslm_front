@@ -84,7 +84,7 @@
                                             <input type="file" id="upload" accept="image" @change="upload" style="display: none">
                                             <span style="color:#B2B2B2;" >添加图片</span>
                                         </div>
-                                        <li class="show" v-for="(iu, index) in imgUrls">
+                                        <li class="show" v-for="(iu, index) in imgUrls" :key="index">
                                             <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
                                         </li>
                                     </div>
@@ -119,7 +119,7 @@
                                 </el-form-item>
 
                                 <el-form-item>
-                                  <el-button type="primary" @click="" :disabled = "disabled2">提交</el-button>
+                                  <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
                                 </el-form-item>
                               </el-form>  
                             </div>
@@ -401,7 +401,7 @@ export default {
       },
     },
     mounted(){
-        this.getProvince();
+        this.province = this.getProvince();
         this.getMajor();
         this.editor.customConfig.onchange = (html) => {
             this.editorContent = html;

@@ -22,15 +22,63 @@
                             <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;设置消息对象</div>
                         </div>
                         <div class="operateUpfilesRight">
+                            <template>
+                                <el-radio v-model="radio" label="1">全部用户</el-radio>
+                                <el-radio v-model="radio" label="2">特定行为的用户（关注院校、参与活动）</el-radio>
+                                <el-radio v-model="radio" label="3">给手动选择的用户发消息</el-radio>
+                            </template>
 
+                            <el-row>
+                                <el-button type="primary" @click="setUser">设置</el-button>
+                            </el-row>
                         </div>
                     </div>
 
-
+                    <!-- 已选消息对象 -->
+                    <div class="operateUpfiles operateDown">
+                        <div class="operateUpfilesLeft">
+                            <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;已选消息对象</div>
+                        </div>
+                        <div class="operateUpfilesRight">
+                           <div v-if=" radio=='2' ">
+                               <div class="sendNav">
+                                    <span>消息对象类型：</span>
+                                    <div>
+                                        <p>全部用户</p>
+                                    </div>
+                               </div>
+                               <div class="sendNav">
+                                    <span>关注院校：</span>
+                                    <div>
+                                        <p>院校名称1</p>
+                                        <p>院校名称2</p>
+                                        <p>院校名称3</p>
+                                    </div>
+                               </div>
+                               <div class="sendNav">
+                                    <span>关系类型：</span>
+                                    <div>
+                                        <p>关注了以上任意一种院校</p>
+                                    </div>
+                               </div>
+                               <hr>
+                           </div>
+                           
+                           <!-- 表格 -->
+                           <userTable :tableData = "tableData" :listTable="listTable" v-if=" radio!='' "></userTable>
+                           <!-- 分页 -->
+                           <div v-if=" radio!='' ">
+                                <singlePage :currentPage = "currentPage" :totalData = "totalData"></singlePage>
+                           </div>
+                        </div>
+                    </div>
 
                 </div>
 
-
+                <!-- 完成按钮 -->
+                <div class="operateFinalUp">
+                    <el-button type="primary" @click="toAdvise">下一步，编辑消息内容</el-button>
+                </div>
 
 
 
@@ -45,23 +93,163 @@ export default {
     },
     data() {
       return {
-
+        radio: "",
+        listTable: [
+            {
+                prop: 'id',
+                lable: '账户ID',
+                width: "80px"
+            },
+            {
+                prop: "account",
+                lable: "账号",
+                width: "100px"
+            },
+            {
+                prop: "user_name",
+                lable: "昵称",
+                width: "160px"
+            },
+            {
+                prop: "real_name",
+                lable: "真实姓名",
+                width: "80px"
+            },
+            {
+                prop: "sex",
+                lable: "性别",
+                width: "80px"
+            },
+            {
+                prop: "address",
+                lable: "常住地",
+                width: "80px"
+            },
+            {
+                prop: "schooling_id",
+                lable: "最高学历",
+                width: "80px"
+            },
+            {
+                prop: "graduate_school",
+                lable: "毕业院校",
+                width: "180px"
+            },
+            {
+                prop: "industry",
+                lable: "所属行业",
+                width: "240px"
+            },
+            {
+                prop: "worked_year",
+                lable: "工作年限",
+                width: "100px"
+            }
+        ],
+        // 表格默认数据
+        tableData: [],
+        //默认展示页数
+        currentPage: 4,
+        // 分页总数,默认值
+        totalData: 0,
+        table1: [],
+        table2: []
       }
     },
+    watch: {
+        radio: function(val,oldval) {
+            if(val == "1" && oldval != "1") {
+                this.getUser();
+            }else if(val == "2" && oldval != "2") {
+                this.tableData = this.table1;
+            }else if(val == "3" && oldval != "3") {
+                this.tableData = this.table2;
+            }
+        }
+    },
     methods: {
+        //获取全部用户
+        getUser: function() {
+            let self = this;
+            axios.post('/admin/news/getAllAccounts', {
+                pageCount: 100,
+                pageNumber: self.currentPage
+            }).then((response) => {
+                var res = response.data;
+                if(res.code == 0) {
+                    self.totalData = res.data.count;
+                    self.tableData = res.data.data;
+                    // self.message(true,"修改成功","success");
+                }
+            })
+        },
 
+        // 跳转页面
+        toAdvise: function() {
+            let setStr = encodeURIComponent(JSON.stringify(this.tableData));
+            this.$router.push('/send/setMessageDetail?setStr=' + setStr);
+        },
+
+        // 设置消息对象类型
+        setUser: function() {
+            if(this.radio == "2") {
+                this.$router.push('/send/setMessageObject');
+            }else if(this.radio == "3"){
+                this.$router.push('/send/setMessageSelf');
+            }
+        },
+        //
+        remove: function(key) {
+            console.log(this.table2);
+            this.table2.pop();
+            // this.table2[key] = null;
+            console.log(this.table2);
+        }
     },
     mounted(){
-
+        // this.getUser();
+        
+        if(this.$route.query.setStr != null) {
+            let setArray = JSON.parse(this.$route.query.setStr);
+            let tt = setArray.pop();
+            console.log(tt);
+            if(tt == "3") {
+                this.radio = "3";
+                this.table2 = setArray;
+            }else if(tt == "2") {
+                this.radio = "2";
+                this.table1 = setArray;
+            }
+        }
+        
     },
 };
 </script>
 <style>
+    p,hr {
+        margin: 0;
+        padding: 0;
+    }
+
 </style>
 <style scoped>
     .operateBox {
         width: 1500px;
         margin: 0 auto;
+    }
+
+    /*
+    * 分页样式
+    */
+    .apartPage {
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 20px;
+    }
+    .countPage {
+        margin-right: 15px;
     }
 
     /*
@@ -124,4 +312,34 @@ export default {
         border-top: none;
     }
 
+    /*
+    * 已选消息对象内容的样式
+    */
+    .sendNav {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+    }
+    .sendNav span {
+        width: 150px;
+        text-align: right;
+    }
+    .sendNav p {
+        margin-bottom: 15px;
+        color: #333;
+    }
+    .operateUpfilesRight hr {
+        background-color: #e4e4e4;
+        height: 1px;
+        line-height: 1px;
+        border:none;
+    }
+
+    /*
+    * 底部跳转按钮样式
+    */
+    .operateFinalUp {
+      text-align: center;
+      margin: 95px 0 70px;
+    }
 </style>

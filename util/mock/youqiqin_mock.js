@@ -19,31 +19,42 @@ Mock.mock('/admin/files/getUploadFile',{
 })
 /*files
 *文件管理页面
-*获取表格内容、文件总数
+*刷新页面
 */
 Mock.mock('/admin/files/updateFile',{
-	
+	"code":0,
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'showweight': '@integer(1,10)' ,
+				'filename': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'universmajor':'@cword(11)'+'MBA',
+		        'filetype': '@cword(4)',
+		        'fileyear': '@date("yyyy")',
+		        'showhomepage': '@cword(1)',
+		        'onlinetime': '@datetime("yyyy-MM-dd  HH:mm:ss")',
+			},
+			],
 })
 
 /*files
 *文件管理页面
-*获取查询条件
+*删除表格某一行
 */
-Mock.mock('/admin/files/huoQuChaXunTaioJian',{
-	 
-	"data": [{
-				'name': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf' ,
-				'data': '@cword(1)',
-		        // 'name': '@cword(11)',
-		        'major':'@cword(11)'+'MBA',
-		        'type': '@cword(4)',
-		        'year': '@date("yyyy")',
-		        'homepage': '@cword(1)',
-		        'time': '@datetime("yyyy-MM-dd  HH:mm:ss")',
-			}],
-	// "total":'@integer(1000, 2000)',
-	
+Mock.mock('/admin/files/deleteFile',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'showweight': '@integer(1,10)' ,
+				'filename': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'universmajor':'@cword(11)'+'MBA',
+		        'filetype': '@cword(4)',
+		        'fileyear': '@date("yyyy")',
+		        'showhomepage': '@cword(1)',
+		        'onlinetime': '@datetime("yyyy-MM-dd  HH:mm:ss")',
+			},
+			],
 })
+
 
 
 /*data
@@ -96,13 +107,18 @@ Mock.mock('/admin/UniversMajorList/gettable-info',{
 */
 Mock.mock('/admin/SelectUnivers/getcity-info',{
 	"code":0,
-	"region|2":[{"name":'@cword(2)'}],
+	"onecityName":'@cword(2)',
+	"twocityName":'@cword(2)',
 	"count":'@integer(1000, 2000)',
-	"Name|3":[
+	"oneCity|3":[
 		{	
-			// "column":[
-			// 	{"cityname":'@cword(2)'}
-			// ],
+			"line|5":[
+				{"majorname":'@cword(6)'}
+			]
+		},
+	],
+	"twoCity|3":[
+		{	
 			"line|5":[
 				{"majorname":'@cword(6)'}
 			]
@@ -253,5 +269,173 @@ Mock.mock('/message/informationList/gettableInfo',{
 			],
 	"total":'@integer(1000, 2000)',
 	// "count":'@integer(1000, 2000)',
+	
+})
+
+
+
+
+/*recordHome
+*消息管理页面
+*获取表格内容、文件总数
+*/
+Mock.mock('/admin/recordHome/getUploadFile',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(10000,20000)',
+				'messageType': '@cword(1,6)' ,
+				'messageObject': '@cword(4,7)',
+		        'sendTime':'@datetime("yyyy-MM-dd  HH:mm:ss")',
+		        'sendState': '@cword(2)',
+		        'sendCont': '@cword(40)',
+			},
+			],
+	// "total":'@integer(1000, 2000)',
+})
+/*recordHome
+*消息管理页面
+*刷新页面
+*/
+Mock.mock('/admin/recordHome/updateFile',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(10000,20000)',
+				'messageType': '@cword(1,6)' ,
+				'messageObject': '@cword(4,7)',
+		        'sendTime':'@datetime("yyyy-MM-dd  HH:mm:ss")',
+		        'sendState': '@cword(2)',
+		        'sendCont': '@cword(40)',
+			},
+			],
+})
+
+/*recordHome
+*消息管理页面
+*删除表格某一行
+*/
+Mock.mock('/admin/recordHome/deleteFile',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'showweight': '@integer(1,10)' ,
+				'filename': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'universmajor':'@cword(11)'+'MBA',
+		        'filetype': '@cword(4)',
+		        'fileyear': '@date("yyyy")',
+		        'showhomepage': '@cword(1)',
+		        'onlinetime': '@datetime("yyyy-MM-dd  HH:mm:ss")',
+			},
+			],
+})
+
+
+/*recordDetail
+*选择院校专业页面
+*获取城市的名称
+*/
+Mock.mock('/admin/recordDetail/getcityInfo',{
+	"code":0,
+	"messageObjc":'@cword(1,10)',
+	"careJoin|2":[
+		{	
+			"titl":'@cword(4)',
+			"cont|3":[
+				{"content":'@cword(4)'}
+			],
+		},
+	],
+	"rightUpCon|4":[
+		{	
+			"title":'@cword(4)',
+			"content|3":'@cword(1,10)',
+		},
+	],
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'account': '@integer(1,10)' ,
+				'nickname': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'name':'@cword(11)'+'MBA',
+		        'sex': '@cword(4)',
+		        'address': '@cword(4)',
+		        'highEduc': '@cword(4)',
+		        'belongUnivers': '@date("yyyy")',
+		        "industry":'@date("yyyy")',
+		        'workFix': '@cword(1)',
+			},
+			],
+	"totalData":'@integer(200,3000)',
+	
+})
+
+/*recordDetail
+*选择院校专业页面
+*获取城市的院校专业名称
+*/
+Mock.mock('/admin/recordDetail/clickgetcity-info',{
+	"code":0,
+	"region":[{"name":'@cword(2)'}],
+	"Name|3":[
+		{	
+			"line|5":[
+				{"majorname":'@cword(6)'}
+			]
+		},
+	]
+	
+})
+
+
+/*setMessageDetail
+*消息管理
+*获取城市的名称
+*/
+Mock.mock('/admin/setMessageDetail/getcityInfo',{
+	"code":0,
+	"messageObjc":'@cword(1,10)',
+	"careJoin|2":[
+		{	
+			"titl":'@cword(4)',
+			"cont|3":[
+				{"content":'@cword(4)'}
+			],
+		},
+	],
+	"rightUpCon|4":[
+		{	
+			"title":'@cword(4)',
+			"content|3":'@cword(1,10)',
+		},
+	],
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'account': '@integer(1,10)' ,
+				'nickname': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'name':'@cword(11)'+'MBA',
+		        'sex': '@cword(4)',
+		        'address': '@cword(4)',
+		        'highEduc': '@cword(4)',
+		        'belongUnivers': '@date("yyyy")',
+		        "industry":'@date("yyyy")',
+		        'workFix': '@cword(1)',
+			},
+			],
+	"totalData":'@integer(200,3000)',
+	
+})
+
+/*setMessageDetail
+*消息管理
+*获取城市的院校专业名称
+*/
+Mock.mock('/admin/setMessageDetail/clickgetcity-info',{
+	"code":0,
+	"region":[{"name":'@cword(2)'}],
+	"Name|3":[
+		{	
+			"line|5":[
+				{"majorname":'@cword(6)'}
+			]
+		},
+	]
 	
 })

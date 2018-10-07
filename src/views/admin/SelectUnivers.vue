@@ -20,38 +20,36 @@
 				</div>
 			</div>
 			<div class="SelectUnivers-right">
-				<!-- <div class="SelectUnivers-condition">
+				<!-- 查询条件 -->
+				<div class="SelectUnivers-condition">
 					<div class="condition-input">
-						<el-input placeholder="请输入内容" v-model="input10"clearable></el-input>
-						<el-button size="mini" icon="el-icon-search"></el-button>
+						<el-input placeholder="请输入内容" v-model="UniversMajorName"></el-input>
+						<el-button size="mini" icon="el-icon-search" @click.native = "search"></el-button>
 					</div>
 					<div class="condition-button">
-						<el-button type="primary">全部</el-button>
+						<el-button type="primary" @click.native = "allCity">全部</el-button>
 					</div>
-				</div> -->
-				<!-- <el-radio-group v-model="tabPosition" style="margin-bottom: 30px;">
-				    <el-radio-button label="top">top</el-radio-button>
-				    <el-radio-button label="right">right</el-radio-button>
-				    <el-radio-button label="bottom">bottom</el-radio-button>
-				    <el-radio-button label="left">left</el-radio-button>
-				</el-radio-group> -->
-				<!-- <div ></div> -->
-
+				</div>
 				<!-- 城市按钮 -->
 				<el-tabs>
 				    <div class="SelectUnivers-city">
 					    <el-checkbox-group v-model="checkboxGroup1" v-for = "(vals,index) in button" :key="index">
 						    <div class="region">{{vals.butregion}}</div>
-							<el-checkbox-button v-model="butname" @click.native = "clickgetcity_info" v-for = "(val,indexs) in vals.city" :key="indexs" :label="val.name">{{val.name}}</el-checkbox-button>
+							<el-checkbox-button v-model="butname" @click.native = "clickCity" v-for = "(val,indexs) in vals.city" :key="indexs" :label="val.name">{{val.name}}</el-checkbox-button>
 						</el-checkbox-group>
 				    </div>
 				</el-tabs>
-				<div class="SelectUnivers-name" v-for = "(reg,regs) in region" :key="regs">
-					<div class="cityname">{{reg.name}}</div>
-					<el-radio-group v-for = "(vals,val) in Name" :key="val" v-model="majorname">
-						<el-radio-button v-for = "(val,vals) in vals.line" :key="vals"  :label="val.majorname">
-							<div>{{val.majorname}}</div>
-						</el-radio-button>
+				<!-- 院校专业名称 -->
+				<div class="SelectUnivers-majorname">
+					<div class="cityname">{{onecityName}}</div>
+					<el-radio-group v-for = "(vals,val) in oneCity" :key="val" v-model="majorname">
+						<el-radio-button v-for = "(val,vals) in vals.line" :key="vals"  :label="val.majorname"></el-radio-button>
+					</el-radio-group>
+				</div>
+				<div class="SelectUnivers-majorname">
+					<div class="cityname">{{twocityName}}</div>
+					<el-radio-group v-for = "(vals,val) in twoCity" :key="val" v-model="majorname">
+						<el-radio-button v-for = "(val,vals) in vals.line" :key="vals"  :label="val.majorname"></el-radio-button>
 					</el-radio-group>
 				</div>
 				<div class="ellipsis">……</div>
@@ -60,11 +58,11 @@
 					</el-pagination>
 				</div>
 			</div>
-			
 		</div>
 		<div class="footer">
-			<span class="Selected">当前已选择：<span class="majorname">{{majorname}}</span></span>
+			<span class="Selected" v-if="this.majorname">当前已选择：<span class="majorname">{{majorname}}</span></span>
 		</div>
+		<div class="jumpPage"><el-button type="primary" @click.native = "jumpPage">下一步，上传文件</el-button></div>
 		
 	</div>
 </template>
@@ -143,37 +141,38 @@
 	export default {
 	    data() {
 	        return {
-	        	majorname:'',
-	        	// majorname:'',
+	        	//查询条件
+	        	UniversMajorName:'',
 	        	butname:'',
-	        	count:100,
-	        	checkboxGroup1: ['北京','天津'],
-	        	button: buttons,
+
+	        	//默认选择所有城市
+	        	checkboxGroup1: ['北京','天津','河北','山西','内蒙古','辽宁','吉林','黑龙江','上海','江苏','浙江','江西','安微','福建','山东','河南','湖北','湖南','广东','广西','海南','重庆','四川','贵州','云南','西藏','陕西','甘肃','青海','宁夏','新疆','香港','澳门','台湾'],
+	        	button: buttons,//从const buttons 引入
+
+	        	//院校专业
+	        	onecityName:'',
+	        	twocityName:'',
 	        	region:[
 		        	{name:''},
 	        	],
-	        	Name:{
-	        		// column:{
-	        		// 	cityname:'',
-	        		// },
+	        	oneCity:{
 	        		line:{
 	        			majorname:'',
 	        		},
 		        },
-	        	radio2:'',
-    			i: 0,
-	        	input10:'',
+		        twoCity:{
+	        		line:{
+	        			majorname:'',
+	        		},
+		        },
+	        	majorname:'',
+
+	        	//分页
+	        	count:0,
 	        };
 	    },
 	    methods: {
-	    	toshow2(msg) {
-		        this.msg = msg;
-		        console.log(this.msg);
-		    },
-	        handleClick(tab, event) {
-		    	console.log(tab, event);
-		    	// console.log(this.buttons.city);
-		    },
+	    	//初次进入页面，获取的院校专业
 		    getcity_info: function(){
 		    	var that = this;
 		        axios.post('/admin/SelectUnivers/getcity-info',{
@@ -183,34 +182,47 @@
 		        .then(function (response) {
 		            var res = response.data;
 		            if (res.code == 0) {
-		                that.region = res.region;
-		                that.Name = res.Name;
-		                // console.log( that.region);
+		                that.onecityName = res.onecityName;
+		                that.twocityName = res.twocityName;
+		                that.oneCity = res.oneCity;
+		                that.twoCity = res.twoCity;
 		                that.count = res.count;
-		                // console.log(that.number);
 		            };
 		        })
 		        .catch(function (error) {
 		        });
 		    },
-		    clickgetcity_info: function(){
+		    //点击城市按钮
+		    clickCity:function() {
 		    	var that = this;
 		        axios.post('/admin/SelectUnivers/clickgetcity-info',{
 		          //后台参数，前台参数(传向后台)
-		          // type: that.filesForm.type,
+		          butname: that.butname,
 		        })
-		        .then(function (response) {
-		            var res = response.data;
-		            if (res.code == 0) {
-		                that.region = res.region;
-		                that.Name = res.Name;
-		                // console.log(that.number);
-		            };
-		        })
-		        .catch(function (error) {
-		            // console.log(error);
-		        });
 		    },
+		    //点击搜索按钮
+		    search:function() {
+		    	var that = this;
+		        axios.post('/admin/SelectUnivers/clickgetcity-info',{
+		          //后台参数，前台参数(传向后台)
+		          UniversMajorName: that.UniversMajorName,
+		        })
+		    },
+		    //点击全部按钮
+		    allCity: function() {
+		    	var that = this;
+		        axios.post('/admin/SelectUnivers/clickgetcity-info',{
+		          //后台参数，前台参数(传向后台)
+		          butname: that.butname,
+		        })
+		    	that.checkboxGroup1 = ['北京','天津','河北','山西','内蒙古','辽宁','吉林','黑龙江','上海','江苏','浙江','江西','安微','福建','山东','河南','湖北','湖南','广东','广西','海南','重庆','四川','贵州','云南','西藏','陕西','甘肃','青海','宁夏','新疆','香港','澳门','台湾']
+		    },
+		    //跳转页面按钮
+		    jumpPage:function() {
+		    	if (this.majorname) {
+		    		this.$router.push('/filesManage/fileup/' + this.majorname);
+		    	}
+		    }
 	    },
 	    mounted(){
 	    	this.getcity_info();
@@ -226,15 +238,15 @@
 	.SelectUnivers-city .el-checkbox-button, .el-checkbox-button__inner {
 	    margin: 5px 0 0 5px;
 	}
-	.SelectUnivers-name .el-radio-button__inner {
+	.SelectUnivers-majorname .el-radio-button__inner {
 		background: #e9eef3;
 		border: 1px solid #e9eef3;
 		color: #333;
 	}
-	.SelectUnivers-name .el-radio-button:first-child .el-radio-button__inner {
+	.SelectUnivers-majorname .el-radio-button:first-child .el-radio-button__inner {
 		/*border-left: 1px solid #e9eef3;*/
 	}
-	.SelectUnivers-name .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+	.SelectUnivers-majorname .el-radio-button__orig-radio:checked+.el-radio-button__inner {
 		color: #409EFF;
 		background-color: #e9eef3;
 		border-left: 1px solid #e9eef3;
@@ -243,6 +255,10 @@
 </style>
 
 <style scoped>
+	.jumpPage {
+		width: 200px;
+		margin: 95px auto 0;
+	}
 	.footer {
 		width: 1500px;
 		margin: 0 auto;
@@ -260,9 +276,11 @@
 	}
 	.region {
 		height: 60px;
+		width: 50px;
 		line-height: 60px;
 		font-size: 12px;
 		color: #666;
+		text-align: right;
 	}
 	.cityname  {
 		margin: 0 0 0 15px;
@@ -274,13 +292,13 @@
 		background-color: #e9eef3;
 		margin: 20px 0 40px 0;
 	}
-	.SelectUnivers-name {
+	.SelectUnivers-majorname {
 		margin: 40px 0 0 45px;
 		display: flex;
     	flex-direction: column;
 	}
 	.SelectUnivers-city {
-		margin: 0 0 0 50px;
+		margin: 50px 0 0 50px;
 	}
 	.leftImg p {
 		position: relative;
@@ -314,6 +332,7 @@
 	}
 	.SelectUnivers-condition {
 		position: relative;
+		margin: 0 0 50px 0;
 	}
 	.SelectUnivers-condition,.condition-input {
 		display: flex;

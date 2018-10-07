@@ -35,16 +35,44 @@ export default {
         
     },
 
+    /**
+     * 
+     * @param {String} request 请求方式：post/get 
+     * @param {String} url 请求路由 
+     * @param {Object} parameter 请求参数
+     * @param {callback} callback 请求返回成功时的回调函数 
+     * @param {callback} failCallback 请求返回失败时的回调函数 
+     */
+    getMajorPageOptions(request, url, parameter, callback, failCallback) {
+        if(request == 'post' || request == 'POST') {
+            this.post(url, parameter).then((response) => {
+                if(response.code == 0) {
+                    callback(response);
+                }
+                else {
+                    failCallback(response);
+                }
+            })
+        }
+        else if(request == 'get' || request == 'GET') {
+            this.fetch(url, parameter).then((response) => {
+                response.code == 0 ? callback() : failCallback();
+            })
+        }
+    },
+
     // 得到省份字典
     getProvince: function() {
         let self = this;
-        axios.post('/admin/information/getMajorProvincesAndCities',{
+        this.post('/admin/information/getMajorProvincesAndCities',{
         })
         .then(function(response) {
-            var res = response.data;
-            if (res.code == 0) {
-                self.province = res.data;
-            };
+            // console.log(response);
+            if (response.code == 0) {
+                return response.result;
+            }
+            else 
+                return [];
         })
         .catch(function (error) {
         });
@@ -67,12 +95,11 @@ export default {
     // 得到专业字典
     getMajor: function() {
         let self = this;
-        axios.post('/admin/information/getMajorType',{
+        this.post('/admin/information/getMajorType',{
         })
         .then(function(response) {
-            var res = response.data;
-            if (res.code == 0) {
-                self.major = res.data;
+            if (response.code == 0) {
+                this.major = response.result;
             };
         })
         .catch(function (error) {
