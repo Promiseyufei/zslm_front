@@ -67,222 +67,256 @@
 				  </div>
 			  </el-table>
 		</div>
+	  	<!-- 表格 -->
+	    <div class="file-table">
+		      <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
+		          <el-table-column type="selection" width="50"></el-table-column>
+		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
+		          <el-table-column label="展示权重" width="100">
+                    <template slot-scope="scope">
+                        <el-input id="inputID" @focus="getFocus(tableData[scope.$index].show_weight)"
+                                  v-on:blur="loseFocus(tableData[scope.$index].show_weight,scope.$index)"
+                                  v-model="tableData[scope.$index].show_weight">
+                        </el-input>
+                    </template>
+                </el-table-column>
+		          <el-table-column label="操作" width="220">
+		              <template slot-scope="scope">
+		                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+		                <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+		                <el-button type="text" size="small" @click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
+		              </template>
+		          </el-table-column>
+		          <div v-for="(val, index) in tableTop" :key="index">
+		            <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
+		            </el-table-column>
+		          </div>
+		      </el-table>
+	    </div>
 
-		<!-- 分页 -->
-		<div class="footer">
-		  <el-button type="primary" size="mini" icon="el-icon-delete" @click.native = "BatchDelete">批量删除</el-button>
-		  <Page class="page" :total="total" @pageChange="pageChange"></Page>
-		</div>
+	    <!-- 分页 -->
+	    <div class="footer">
+	      <el-button type="primary" size="mini" icon="el-icon-delete" @click.native = "BatchDelete">批量删除</el-button>
+	      <Page class="page" :total="total" @pageChange="pageChange"></Page>
+	    </div>
 	</div>
 </template>
 <script>
-	export default {
-		data() {
-			return {
-				/*选项卡*/
-				banner:[
-				  {id: 0,name: "全部文件"},
-				  {id: 1,name: "招生简章"},
-				  {id: 2,name: "其他文件"}
-				],
-				radio2: "",
-				i: 0,//当前选项卡id
-				/*查询输入框*/
-				filesName:'',
-				fileType:'',
-				fileYear:'',
-				majorName:'',
-				input: [	
-					{value: '选项一',label:'类型一'},
-					{value: '选项二',label:'类型二'},
-					{value: '选项三',label:'类型三'},
-				],
-				/*数据列表  排序方式*/
-				// Sort:'',
-				// sort:[
-				// 	{value: '选项一',label: '10条'},
-				// 	{value: '选项二',label: '50条'},
-				// 	{value: '选项三',label: '100条'},        
-				// ],
-				/*表格*/
-				tableTop:[
-					// {type:'',prop:'showweight',label:'展示权重',width:100},
-					{type:'',prop:'filename',label:'文件名称',width:260},
-					{type:'',prop:'universmajor',label:'所属院校专业',width:320},
-					{type:'',prop:'filetype',label:'文件类型',width:100},
-					{type:'',prop:'fileyear',label:'文件年份',width:100},
-					{type:'',prop:'showhomepage',label:'主页展示',width:100},
-					{type:'',prop:'onlinetime',label:'上传时间',width:180},
-				],
-				tableData:[{
-					id:'',
-					showweight: '',
-					filename: '',
-					universmajor:'',
-					filetype: '',
-					fileyear: '',
-					showhomepage: '',
-					onlinetime: '',
-				}],
-				showweight:'',
-				sels:[],
-				disabled:true,
-				multipleSelection:[],
-				/*分页*/
-				total:0,
-				searchContent:{
-					  page:'',
-					  limit:'',
-				},
-			}
-		},
-		watch: {
-			// page: function(newpage,oldpage) {
-			// 	if (this.searchContent.page == 1) {
-			//     	this.query();
-			// 	};
-			// }
-		},
-		methods: {
-			//跳转页面
-			jumpPage:function() {
-				this.$router.push('/SelectUnivers');
-			},
-			//获得选中表格行的id
-			handleSelectionChange(val) {
-				this.multipleSelection = val;
-				// console.log(this.multipleSelection);
-			},
-			//批量删除表格内容
-			BatchDelete: function(){
-				var that = this;
-				for (var i = 0; i < that.multipleSelection.length; i++) {
-					var ID = that.multipleSelection[i].id;
-				};
-				axios.post('/admin/files/getUploadFile',{
-				  //后台参数，前台参数(传向后台)
-					ID: that.ID,
-				})
-				.then(function (response) {
-				})
-				.catch(function (error) {
-				});
-			},
-			toshow2(msg) {
-				this.msg = msg;
-			  // console.log(this.msg);
-			},
-			//获得焦点，储存原值
-			getFocus: function(val) {
-				this.showweight = val;
-				// console.log(val);
-			},
-			//失去焦点做判断
-			loseFocus:function(val,index) {
-				var re = /^[0-9]+.?[0-9]*$/;
-				if (!re.test(val)) {
-					this.message(true,'请输入数值','warning');
-					this.tableData[index].showweight = this.showweight;
-				} else if (val<0||val>1000) {
-					this.message(true,'权值范围为0~100','warning');
-					this.tableData[index].showweight = this.showweight;
-				} else {
-					//权重正确，将该行表格id传给后台
-					var that = this;
-					axios.post('/admin/files/updateFile',{
-					  //后台参数，前台参数(传向后台)
-					  fileId: that.tableData[index].id,
-					})
-				}
-			},
-			// 表格单行删除
-			deleteRow(index, rows) {
-				// 删除前判断
-				this.confirm(() => {
-					rows.splice(index, 1);
-					var that = this;
-					axios.post('/admin/files/deleteFile',{
-					  //后台参数，前台参数(传向后台)
-					  fileId: that.tableData[index].id,
-					})
-					// console.log('this is callback');
-				}, () => {
-					// console.log('this is catchback');
-				},'确定删除吗', '危险操作');
-				// 删除某一行
-				
-			},
-			// 编辑、查看表格某一行
-			handleClick(row) {
-			// console.log(row);
-			},
-			//动态更新文件管理首页的id
-			toshow: function (i) {
-				this.i = i;
-				this.query();
-			},
-			pageChange(msg) {
-				this.searchContent.page = msg.page;
-				//分页改变时，更新表格数据
-				if (this.searchContent.page) {
-					this.query();
-					console.log(this.total)
-				};
-				// console.log(this.searchContent.page);
-				this.searchContent.limit = msg.limit;
-			},
-			//查询按钮函数
-			query: function(){
-				var that = this;
-				console.log(that.fileYear)
-				axios.post('/admin/files/getUploadFile',{
-				  //后台参数，前台参数(传向后台)
-				  page: that.searchContent.page,
-				  pageSize: that.searchContent.limit,
-				  fileName: that.filesName,
-				  majorName: that.majorName,
-				  fileYear: that.fileYear,
-				  fileType: that.fileType,
-				})
-				.then(function (response) {
-					var res = response.data;
-					if (res.code == 0) {
-						that.tableData =res.data;
-						that.total = res.total;
-					};
-				})
-				.catch(function (error) {
-				});
-			},
-			//刷新按钮函数
-			Refresh: function() {
-				var that = this;
-				axios.post('/admin/files/updateFile',{
-				  //后台参数，前台参数(传向后台)
-				  fileName: that.tableData.filename,
-				  fileYear: that.tableData.fileyear,
-				  fileType: that.tableData.filetype,
-				  //文件描述不知道是啥？
-				  // fileDescribe: that.tableData[index].showhomepage,
-				  isShow:that.tableData.showhomepage,
-				})
-				.then(function (response) {
-					var res = response.data;
-					if (res.code == 0) {
-						that.tableData =res.data;
-						that.total = res.total;
-					};
-				})
-				.catch(function (error) {
-				});
-			}
-		},
-		mounted(){
-			// this.getPage();
-			this.query();
-			this.radio2 = "全部文件";
-			console.log(this.radio2);
-		}
+    export default {
+  		data() {
+  	    	return {
+  	    		/*选项卡*/
+  	    		banner:[
+    	          {id: 0,name: "全部文件"},
+    	          {id: 1,name: "招生简章"},
+    	          {id: 2,name: "其他文件"}
+            	],
+            	radio2: "",
+    			i: 0,//当前选项卡id
+  	    		/*查询输入框*/
+
+  	    		filesName:'',
+  	    		fileType:2,
+  	    		fileYear:'',
+  	    		majorName:'',
+  	    		input: [	
+		           	{value: '选项一',label:'类型一'},
+		           	{value: '选项二',label:'类型二'},
+		           	{value: '选项三',label:'类型三'},
+          		],
+          		/*数据列表  排序方式*/
+          		Sort:'',
+          		sort:[
+	          		{value: '选项一',label: '10条'},
+	          		{value: '选项二',label: '50条'},
+	          		{value: '选项三',label: '100条'},        
+	            ],
+	            /*表格*/
+	            tableTop:[
+		            // {type:'',prop:'showweight',label:'展示权重',width:100},
+		            {type:'',prop:'file_name',label:'文件名称',width:260},
+		            {type:'',prop:'z_name',label:'所属院校专业',width:320},
+		            {type:'',prop:'file_type',label:'文件类型',width:100},
+		            {type:'',prop:'file_year',label:'文件年份',width:100},
+		            {type:'',prop:'show_weight',label:'主页展示',width:100},
+		            {type:'',prop:'create_time',label:'上传时间',width:180},
+		        ],
+		        tableData:[{
+		        	id:'',
+		            show_weight: '',
+                    file_name: '',
+                    z_name:'',
+                    file_type: '',
+                    file_year: '',
+		            is_show: '',
+                    create_time: '',
+		        }],
+		        showweight:'',
+		        sels:[],
+		        disabled:true,
+		        multipleSelection:[],
+		        /*分页*/
+		        total:0,
+		        searchContent:{
+		              page:1,
+		              limit:5,
+		        },
+    	    }
+  	    },
+       	watch: {
+	        // page: function(newpage,oldpage) {
+	        // 	if (this.searchContent.page == 1) {
+	        //     	this.query();
+	        // 	};
+	        // }
+       	},
+	  	methods: {
+	  		//跳转页面
+	  		jumpPage:function() {
+	    		this.$router.push('/SelectUnivers');
+	    	},
+	  		//获得选中表格行的id
+	  		handleSelectionChange(val) {
+		    	this.multipleSelection = val;
+		    	// console.log(this.multipleSelection);
+		    },
+		    //批量删除表格内容
+		    BatchDelete: function(){
+		    	var that = this;
+		    	let selectId = [];
+		    	for (var i = 0; i < that.multipleSelection.length; i++) {
+		    		selectId.push( that.multipleSelection[i].id);
+		    	};
+		    	this.deleteRequest(selectId)
+
+		    },
+	      	toshow2(msg) {
+	        	this.msg = msg;
+	          // console.log(this.msg);
+	      	},
+	  		//获得焦点，储存原值
+	  		getFocus: function(val) {
+	  			this.showweight = val;
+	  			// console.log(val);
+	  		},
+	  		//失去焦点做判断
+	  		loseFocus:function(val,index) {
+	  			var re = /^[0-9]+.?[0-9]*$/;
+	            if (!re.test(val)) {
+	                this.message(true,'请输入数值','warning');
+	                this.tableData[index].showweight = this.showweight;
+	            } else if (val<0||val>1000) {
+	                this.message(true,'权值范围为0~100','warning');
+	                this.tableData[index].showweight = this.showweight;
+	            } else {
+	            	//权重正确，将该行表格id传给后台
+	            	var that = this;
+
+                    axios.post('http://www.zslm.com/admin/files/updateweight',{
+			          //后台参数，前台参数(传向后台)
+                        fileId: that.tableData[index].id,
+                        weight: that.tableData[index].show_weight
+		        	})
+	            }
+	  		},
+            //删除请求方法
+            deleteRequest(filesId){
+	  		    let that = this;
+                this.confirm(() => {
+                    axios.post('http://www.zslm.com/admin/files/deletefiles',{
+                        //后台参数，前台参数(传向后台)
+                        fileId: filesId,
+                    }).then(function (response) {
+                        var res = response.data;
+                        if (res.code == 0) {
+                            that.query();
+                            that.message(true,'删除成功','success');
+                        }else{
+                            that.message(true,'删除失败','error');
+                        }
+                    }).catch(function (error) {
+
+                    });
+                }, () => {
+                    // console.log('this is catchback');
+                },'确定删除吗', '危险操作');
+            },
+	      	// 表格单行删除
+	    	deleteRow(index, rows) {
+	      		// 删除前判断
+                let that = this;
+
+                    // axios.post('http://www.zslm.com/admin/files/deletefiles',{
+                    //     //后台参数，前台参数(传向后台)
+                    //     fileId: [rows[index].id],
+                    // }).then(function (response) {
+                    //     var res = response.data;
+                    //     if (res.code == 0) {
+                    //         that.query();
+                    //         that.message(true,'删除成功','success');
+                    //     }else{
+                    //         that.message(true,'删除失败','error');
+                    //     }
+                    // }).catch(function (error) {
+                    //
+                    // });
+                    that.deleteRequest([rows[index].id]);
+
+        		// 删除某一行
+
+	      	},
+	      	// 编辑、查看表格某一行
+	    	handleClick(row) {
+	        // console.log(row);
+	    	},
+	  		//动态更新文件管理首页的id
+	  		toshow: function (i) {
+	        	this.i = i;
+	        	this.query();
+	      	},
+	      	pageChange(msg) {
+	        	this.searchContent.page = msg.page;
+	        	//分页改变时，更新表格数据
+	        	if (this.searchContent.page) {
+	        		this.query();
+	        	};
+	        	// console.log(this.searchContent.page);
+	          	this.searchContent.limit = msg.limit;
+	      	},
+	      	query: function (){
+
+	        	var that = this;
+	        	axios.get('http://www.zslm.com/admin/files/getuploadfile',{
+		          //后台参数，前台参数(传向后台)
+                    params:{
+                      page: that.searchContent.page,
+                      pageSize: that.searchContent.limit,
+                      fileName: that.filesName,
+                      majorName: that.majorName,
+                      fileYear: that.fileYear,
+                      fileType: that.fileType
+                    }
+	        	})
+	        	.then(function (response) {
+	            	var res = response.data;
+                    if (res.code == 0) {
+                        console.log(res.result.data)
+                        that.tableData =res.result.data;
+
+                        that.total = res.result.dataCount;
+                        console.log(that.total);
+                    };
+	        	})
+	        	.catch(function (error) {
+	        	});
+	      	},
+	  	},
+  		mounted(){
+	  		// this.getPage();
+	    	this.query();
+	  		this.radio2 = "全部文件";
+	  		console.log(this.radio2);
+  		}
   }
 
 </script>
