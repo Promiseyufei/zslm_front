@@ -48,7 +48,7 @@
                 <div class="bottomPage">
                     <el-button icon="el-icon-delete"> 删除</el-button>
                     <div>
-                        <singlePage :currentPage = "currentPage" :totalData = "totalData" @use="getUser"></singlePage>
+                        <singlePage :currentPage = "currentPage" @use="getUser" ref="useChild"></singlePage>
                     </div>
                 </div>
                 <div class="selectFin">
@@ -198,6 +198,7 @@ export default {
                 if(res.code == 0) {
                     self.totalData = res.data.count;
                     self.tableData = res.data.data;
+                    self.$refs.useChild.childMethod(res.data.count);
                     // self.message(true,"修改成功","success");
                 }
             })
@@ -205,6 +206,7 @@ export default {
     },
     mounted(){
         this.getUser();
+    
     },
 };
 </script>

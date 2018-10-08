@@ -21,19 +21,23 @@ export default {
     data() {
         return {
             currentPage2: this.currentPage,
-            totalData2: this.totalData
+            totalData2: 0
         };
     },
-    props:["currentPage","totalData"],
+
+    props:["currentPage"],
     methods:{
         //改变当前页时，触发事件,val为当前页
         handleCurrentChange(val) {
             this.currentPage2 = val;
-            // this.getUser();
             this.$emit('use',this.currentPage2);
         },
+        childMethod: function(res) {
+            this.totalData2 = res;
+        }
     },
     mounted(){
+        // console.log(this.totalData2);
     }
 }
 </script>

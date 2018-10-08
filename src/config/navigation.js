@@ -42,31 +42,31 @@ export default [
         "title": "账户管理",
         "groups":[
             {
-                "title": "分组一",
+                "title": "用户列表",
                 "options":[
                     {
-                        "name":"选项一",
+                        "name":"用户列表",
                         "index":1,
-                        "url":"/operate"
-                    },
-                    {
-                        "name":"选项二",
-                        "index":2,
                         "url":"/operate"
                     }
                 ]
             },
             {
-                "title": "分组二",
+                "title": "用户行为",
                 "options":[
                     {
-                        "name":"选项一",
+                        "name":"关注院校",
                         "index":1,
                         "url":"/operate"
                     },
                     {
-                        "name":"选项二",
+                        "name":"参与活动",
                         "index":2,
+                        "url":"/operate"
+                    },
+                    {
+                        "name":"领优惠卷",
+                        "index":3,
                         "url":"/operate"
                     }
                 ]
@@ -134,20 +134,25 @@ export default [
         "title": "消息管理",
         "groups":[
             {
-                "title": "消息管理",
+                "title": "发消息",
                 "options":[
                     {
-                        "name":"消息管理",
+                        "name":"发消息",
                         "index":1,
-                        "url":"/operate"
-                    },
-                    {
-                        "name":"消息管理",
-                        "index":2,
                         "url":"/operate"
                     }
                 ]
-            }
+            },
+            {
+                "title": "历史消息记录",
+                "options":[
+                    {
+                        "name":"历史记录",
+                        "index":1,
+                        "url":"/operate"
+                    }
+                ]
+            },
         ]
     },
     {
