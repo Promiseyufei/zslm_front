@@ -174,17 +174,17 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageSelf'], resolve))
         },
         {
-            path: '/send/setMessageDetail/:table',
+            path: '/send/setMessageDetail',
             name: '消息管理-编辑发送',
             component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageDetail'], resolve))
         },
         {
-            path: '/send/recordHome',
+            path: '/record/recordHome',
             name: '消息管理-历史消息记录',
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordHome'], resolve))
         },
         {
-            path: '/send/recordDetail',
+            path: '/record/recordDetail',
             name: '消息管理-历史消息记录详情',
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordDetail'], resolve))
         },
@@ -193,6 +193,27 @@ let admin_router = {
             path: '/usermanagement/userfocusmajor',
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/userManagement/userFocusMajor'], resolve))
+        },
+        {
+            path: '/usermanagement/userlist',
+            name: '用户管理-关注院校',
+            component: resolve =>void(require(['@/views/admin/usermanagement/userList'], resolve))
+        },
+        {
+            path: '/usermanagement/usercoupons',
+            name: '用户管理-关注院校',
+            component: resolve =>void(require(['@/views/admin/usermanagement/userCoupons'], resolve))
+        },
+        //退款
+        {
+            path: '/refund/refundlist',
+            name: '用户管理-退款',
+            component: resolve =>void(require(['@/views/admin/refund/refundList'], resolve))
+        },
+        {
+            path: '/refund/refunddetails',
+            name: '用户管理-退款',
+            component: resolve =>void(require(['@/views/admin/refund/refundDetails'], resolve))
         },
         
     ]

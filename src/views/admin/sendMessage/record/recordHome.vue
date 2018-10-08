@@ -47,7 +47,7 @@
                   <el-table-column label="操作" width="60">
                       <template slot-scope="scope">
                           <div class="recordHome-icon">
-                            <span ><i v-on:click="jumpPage" class="el-icon-search"></i></span>
+                            <i v-on:click="jumpPage" class="el-icon-search"></i>
                           </div>
                       </template>
                   </el-table-column>
@@ -222,6 +222,9 @@
         cursor: pointer;
         font-size: 20px;
         color: #999;
+    }
+    .recordHome-icon i {
+        cursor: pointer;
     }
 
     /*刷新、查询按钮*/

@@ -133,6 +133,7 @@
 			          label: '分享次数'
 			        }
 		        ],
+                selectedOptions2:0
 		    };
 	    },
 	    methods: {
@@ -150,7 +151,8 @@
 			//排序方式改变时触发
 			handleChange(value) {
 				this.selectedOptions2 = value;
-				this.gettableInfo();
+				console.log(this.selectedOptions2)
+				// this.gettableInfo();
 			},
 
 
@@ -161,13 +163,15 @@
 			
 	    	gettableInfo: function (){
 				var that = this;
-		        this.post('/admin/operate/getPagingData',{
-					pageNumber: that.currentSubscript,
-					pageCount: that.currentPage3,
-					sortType: that.selectedOptions2[0],
-					riseOrDrop: that.selectedOptions2[1],
-					contentType: that.filesForm.type,
-					titleKeyword: that.filesForm.name1 == null ? '' : that.filesForm.name1 
+		        axios.get('http://www.zslm.com/admin/operate/getPagingData',{
+					params:{
+                        pageNumber: that.currentSubscript,
+                        pageCount: that.currentPage3,
+                        sortType: 0,
+                        riseOrDrop: that.selectedOptions2,
+                        contentType: that.filesForm.type,
+                        titleKeyword: that.filesForm.name1
+                    }
 
 		        })
 		        .then(function (response) {
@@ -195,7 +199,6 @@
 	}
 </script>
 
-</script>
 
 <!-- 全局样式 -->
 <style>

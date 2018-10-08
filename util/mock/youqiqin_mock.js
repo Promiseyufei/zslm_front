@@ -119,9 +119,6 @@ Mock.mock('/admin/SelectUnivers/getcity-info',{
 	],
 	"twoCity|3":[
 		{	
-			// "column":[
-			// 	{"cityname":'@cword(2)'}
-			// ],
 			"line|5":[
 				{"majorname":'@cword(6)'}
 			]
@@ -329,4 +326,116 @@ Mock.mock('/admin/recordHome/deleteFile',{
 		        'onlinetime': '@datetime("yyyy-MM-dd  HH:mm:ss")',
 			},
 			],
+})
+
+
+/*recordDetail
+*选择院校专业页面
+*获取城市的名称
+*/
+Mock.mock('/admin/recordDetail/getcityInfo',{
+	"code":0,
+	"messageObjc":'@cword(1,10)',
+	"careJoin|2":[
+		{	
+			"titl":'@cword(4)',
+			"cont|3":[
+				{"content":'@cword(4)'}
+			],
+		},
+	],
+	"rightUpCon|4":[
+		{	
+			"title":'@cword(4)',
+			"content|3":'@cword(1,10)',
+		},
+	],
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'account': '@integer(1,10)' ,
+				'nickname': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'name':'@cword(11)'+'MBA',
+		        'sex': '@cword(4)',
+		        'address': '@cword(4)',
+		        'highEduc': '@cword(4)',
+		        'belongUnivers': '@date("yyyy")',
+		        "industry":'@date("yyyy")',
+		        'workFix': '@cword(1)',
+			},
+			],
+	"totalData":'@integer(200,3000)',
+	
+})
+
+/*recordDetail
+*选择院校专业页面
+*获取城市的院校专业名称
+*/
+Mock.mock('/admin/recordDetail/clickgetcity-info',{
+	"code":0,
+	"region":[{"name":'@cword(2)'}],
+	"Name|3":[
+		{	
+			"line|5":[
+				{"majorname":'@cword(6)'}
+			]
+		},
+	]
+	
+})
+
+
+/*setMessageDetail
+*消息管理
+*获取城市的名称
+*/
+Mock.mock('/admin/setMessageDetail/getcityInfo',{
+	"code":0,
+	"messageObjc":'@cword(1,10)',
+	"careJoin|2":[
+		{	
+			"titl":'@cword(4)',
+			"cont|3":[
+				{"content":'@cword(4)'}
+			],
+		},
+	],
+	"rightUpCon|4":[
+		{	
+			"title":'@cword(4)',
+			"content|3":'@cword(1,10)',
+		},
+	],
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'account': '@integer(1,10)' ,
+				'nickname': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'name':'@cword(11)'+'MBA',
+		        'sex': '@cword(4)',
+		        'address': '@cword(4)',
+		        'highEduc': '@cword(4)',
+		        'belongUnivers': '@date("yyyy")',
+		        "industry":'@date("yyyy")',
+		        'workFix': '@cword(1)',
+			},
+			],
+	"totalData":'@integer(200,3000)',
+	
+})
+
+/*setMessageDetail
+*消息管理
+*获取城市的院校专业名称
+*/
+Mock.mock('/admin/setMessageDetail/clickgetcity-info',{
+	"code":0,
+	"region":[{"name":'@cword(2)'}],
+	"Name|3":[
+		{	
+			"line|5":[
+				{"majorname":'@cword(6)'}
+			]
+		},
+	]
+	
 })
