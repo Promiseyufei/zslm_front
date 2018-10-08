@@ -197,12 +197,12 @@ let admin_router = {
         {
             path: '/usermanagement/userlist',
             name: '用户管理-关注院校',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userList'], resolve))
+            component: resolve =>void(require(['@/views/admin/userManagement/userList'], resolve))
         },
         {
             path: '/usermanagement/usercoupons',
             name: '用户管理-关注院校',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userCoupons'], resolve))
+            component: resolve =>void(require(['@/views/admin/userManagement/userCoupons'], resolve))
         },
         //退款
         {
