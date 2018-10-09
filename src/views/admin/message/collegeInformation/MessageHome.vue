@@ -126,7 +126,7 @@
                 </div>
                 <!-- 完成按钮 -->
                 <div class="operateFinalUp">
-                  <el-button type="primary">下一步，编辑招生信息</el-button>
+                  <el-button type="primary" @click="jumpPage">下一步，编辑招生信息</el-button>
                 </div>
                 
               </div>
@@ -182,6 +182,9 @@ export default {
         }
     },
     methods:{
+      jumpPage:function(){
+        this.$router.push('/message/universityMessage');
+      },
         test: function() {
           console.log(this.province);
         },

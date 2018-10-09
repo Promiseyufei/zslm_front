@@ -54,7 +54,7 @@
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)"
+                        <el-button @click="jumpPage"
                                    type="text"
                                    icon="el-icon-search">
 
@@ -161,6 +161,9 @@
         methods:{
             handleClick(val){
                 this.dialogFormVisible = true
+            },
+            jumpPage:function() {
+                this.$router.push('/refund/refunddetails');
             }
         }
     }

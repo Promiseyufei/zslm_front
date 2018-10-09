@@ -10,7 +10,7 @@
 
         <!-- 新建按钮 -->
         <div class="informationList-newbuild">
-            <el-button type="primary" size="medium">新建</el-button>
+            <el-button type="primary" size="medium" @click.native = "jumpPage">新建</el-button>
         </div>
 
         <!-- 筛选查询   刷新按钮需要获得表格数据-->
@@ -147,6 +147,9 @@
             }
         },
         methods:{
+            jumpPage:function(){
+                this.$router.push('/message/changeMessage');
+            },
             /*删除表格某一行*/
             deleteRow(index, rows) {
                 rows.splice(index, 1);

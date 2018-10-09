@@ -147,7 +147,7 @@
         },
         methods:{
             jumpPage:function(){
-                this.$router.push('/message/activityInformation/Activity');
+                this.$router.push('/message/activity');
             },
             pageChange(msg) {
                 this.searchContent.page = msg.page;

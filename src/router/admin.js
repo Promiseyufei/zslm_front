@@ -150,11 +150,7 @@ let admin_router = {
             name: '信息发布-资讯发布-消息通知',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationNotice'], resolve))
         },
-        // {
-        //     path: '/test',
-        //     name: 'WangEditor test',
-        //     component: resolve =>void(require(['@/views/admin/test'], resolve))
-        // },
+        
 
 
         //消息管理
@@ -194,8 +190,6 @@ let admin_router = {
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/userManagement/userFocusMajor'], resolve))
         },
-<<<<<<< HEAD
-=======
         {
             path: '/usermanagement/userlist',
             name: '用户管理-关注院校',
@@ -206,18 +200,17 @@ let admin_router = {
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/userManagement/userCoupons'], resolve))
         },
-        //退款
+        //退款管理
         {
             path: '/refund/refundlist',
-            name: '用户管理-退款',
+            name: '用户管理-退款管理',
             component: resolve =>void(require(['@/views/admin/refund/refundList'], resolve))
         },
         {
             path: '/refund/refunddetails',
-            name: '用户管理-退款',
+            name: '用户管理-退款详情',
             component: resolve =>void(require(['@/views/admin/refund/refundDetails'], resolve))
         },
->>>>>>> 7973e2af8bd447d22cd92e38dcfd055838ee7c0f
         
     ]
 }
