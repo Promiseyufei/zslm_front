@@ -220,7 +220,7 @@
 		    //跳转页面按钮
 		    jumpPage:function() {
 		    	// if (this.majorname) {
-		    		this.$router.push('/filesManage/fileup/' + "");
+		    		// this.$router.push('/filesManage/fileup/' + "");
 		    	// }
 		    }
 	    },
