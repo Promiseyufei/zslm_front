@@ -196,6 +196,11 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/userManagement/userList'], resolve))
         },
         {
+            path: '/usermanagement/userParticipateActivities',
+            name: '用户管理-关注院校',
+            component: resolve =>void(require(['@/views/admin/userManagement/userParticipateActivities'], resolve))
+        },
+        {
             path: '/usermanagement/usercoupons',
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/userManagement/userCoupons'], resolve))
