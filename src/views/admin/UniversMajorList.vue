@@ -65,11 +65,6 @@
                 <el-table-column label="操作" width="210">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
-                            <i class="el-icon-search"></i>
-                            <i class="el-icon-edit-outline"></i>
-                            <i class="el-icon-delete"></i>
-                            <i class="el-icon-refresh"></i>
-                            <i class="el-icon-tickets"></i>
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
                         </div>
                     </template>
@@ -98,25 +93,20 @@
                 type1:2,
                 type2:2,
                 cacheMajorWeight:'',
-                majorlisttable:[],
+                majorlisttable:[
+                   { weight:0}
+                ],
                 searchContent:{
                     page:1,
                     limit:10,
                 },
-                // iconname:[
-                //     {name:'el-icon-search'},
-                //     {name:'el-icon-edit-outline'},
-                //     {name:'el-icon-delete'},
-                //     {name:'el-icon-refresh'},
-                //     {name:'el-icon-tickets'},
-                // ],
-                // iconname:[
-                //     {name:'el-icon-search'},
-                //     {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
-                //     {name:'el-icon-delete', event:"delAppointMajor"},
-                //     {name:'el-icon-refresh', event:"updateMajorTime"},
-                //     {name:'el-icon-tickets'},
-                // ],
+                iconname:[
+                    {name:'el-icon-search', event:'jumpFontMajorPage'},
+                    {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
+                    {name:'el-icon-delete', event:"delAppointMajor"},
+                    {name:'el-icon-refresh', event:"updateMajorTime"},
+                    {name:'el-icon-tickets', event:"alertSeeProject"},
+                ],
                 options: [
                     {value: 0,　label: '选项一'}, 
                     {value: 1,label: '选项二'}, 
@@ -196,7 +186,10 @@
             jumpMajorMsgPage(val) {
                 this.$router.push('/message/messageHome/' + val.id);
             },
-
+            //跳到相应的前台院校专业主页
+            jumpFontMajorPage(){
+                //此页面还未给
+            },
             //刷新页面
             refreshMajorPage() {
                 this.name = '';
@@ -207,6 +200,10 @@
                 this.searchContent.limit = 10;
                 this.value = this.options[2].value;
                 this.gettableInfo();
+            },
+            //弹出查看招生项目页面
+            alertSeeProject(){
+                
             },
 
             //设置专业状态(权重，展示状态，推荐状态)
@@ -347,7 +344,8 @@
         text-align: center;
     }
     .majorlist-icon i {
-        margin: 0 3px;
+        margin: 0 5px;
+        cursor: pointer;
     }
     .majorlist-icon {
         font-size: 20px;

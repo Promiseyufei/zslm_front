@@ -85,7 +85,7 @@ Mock.mock('/admin/data/getdata-table',{
 *院校专业列表页面
 *获取表格内容
 */
-Mock.mock('/admin/UniversMajorList/gettable-info',{
+Mock.mock('/admin/information/getMajorPageMessage',{
 	"code":0,
 	"data|4": [{
 				"weight":'@integer(1, 100)',
