@@ -130,10 +130,10 @@
 		        multipleSelection:[],
 		        /*分页*/
 		        total:0,
-		        // searchContent:{
-		        //       page:1,
-		        //       limit:0,
-		        // },
+		        searchContent:{
+		              page:1,
+		              limit:0,
+		        },
     	    }
   	    },
        	watch: {

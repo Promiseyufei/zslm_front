@@ -113,20 +113,14 @@ export default [
             {
                 "title": "文件管理",
                 "options":[
-<<<<<<< HEAD
-                    // {
-                    //     "name":"文件上传",
-                    //     "index":1,
-                    //     "url":"/filesManage/fileup"
-                    // },
                     {
-                        "name":"文件管理",
+                        "name":"文件上传",
                         "index":1,
-=======
+                        "url":"/filesManage/fileup"
+                    },
                     {
                         "name":"文件管理",
-                        "index":4.1,
->>>>>>> cb391a49bb11d57cd9863de3c99377f4897f5a3a
+                        "index":2,
                         "url":"/files"
                     }
                 ]
