@@ -5,7 +5,7 @@
 				<div>
 					<el-breadcrumb separator="/">
 						<el-breadcrumb-item>运行管理</el-breadcrumb-item>
-						<el-breadcrumb-item>频道banner</el-breadcrumb-item>
+						<el-breadcrumb-item class="selectedNavPublic">频道banner</el-breadcrumb-item>
 					</el-breadcrumb>
 					<!-- 选项卡 -->
 					<operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
@@ -265,12 +265,13 @@ export default {
 				// 获取所有一级页面名称
 				getInformationType: function() {
 					var self = this;
-					this.post('/admin/operate/getIndexListName', {})
+					axios.post('/admin/operate/getIndexListName', {})
 					.then(function (response) {
+						var response = response.data;
 						if (response.code == 0) {
-							self.banner = response.result;
-							self.radio2 = response.result[0].name;
-							self.i = response.result[0].id;
+							self.banner = response.data;
+							self.radio2 = response.data[0].name;
+							self.i = response.data[0].id;
 							self.getIndexBanner();
 						};
 					})
@@ -284,13 +285,14 @@ export default {
 				getIndexBanner: function() {
 				var self = this;
 				var load =this.openFullScreen2();
-				this.post('/admin/operate/getIndexBanner', {
+				axios.post('/admin/operate/getIndexBanner', {
 					indexId: self.i,
 					btType: 0
 				})
 				.then(function (response) {
+					var response = response.data;
 					if (response.code == 0) {
-					self.tableData3 = response.result;
+					self.tableData3 = response.data;
 					load.close();
 					};
 				})
@@ -317,6 +319,13 @@ export default {
 	}
 	.operateUpfilesRight2 .has-gutter th {
 		background-color: #EAEDF1 !important;
+	}
+
+	/*
+	* 公共样式
+	*/
+	.selectedNavPublic {
+		border-bottom: 1px solid #1abc1a;
 	}
 </style>
 

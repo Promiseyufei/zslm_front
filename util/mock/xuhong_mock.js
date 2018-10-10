@@ -2,7 +2,7 @@
 * 运营管理模块——首页
 * 获取所有资讯类型
 */
-Mock.mock('/admin/operate/getInformationType', {
+Mock.mock('/admin/operate/getIndexListName', {
 	"code": 0,
 	'msg': Mock.mock('@cword(3, 5)'),
 	"data|4": [
