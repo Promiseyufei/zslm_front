@@ -156,7 +156,7 @@ let admin_router = {
         //消息管理
         {
             path: '/send/sendHome',
-            name: '消息管理-发消息',
+            name: '/send/sendHome',
             component: resolve =>void(require(['@/views/admin/sendMessage/send/sendHome'], resolve))
         },
         {
@@ -194,6 +194,11 @@ let admin_router = {
             path: '/usermanagement/userlist',
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/userManagement/userList'], resolve))
+        },
+        {
+            path: '/usermanagement/userParticipateActivities',
+            name: '用户管理-关注院校',
+            component: resolve =>void(require(['@/views/admin/userManagement/userParticipateActivities'], resolve))
         },
         {
             path: '/usermanagement/usercoupons',

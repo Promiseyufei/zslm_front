@@ -174,14 +174,15 @@ export default {
         //点击完成按钮时，触发事件
         finial: function() {
             this.multipleSelection.push("3");
-            console.log(this.multipleSelection);
-            let setStr = encodeURIComponent(JSON.stringify(this.multipleSelection));
-            this.$router.push('/send/sendHome?setStr=' + setStr);
+            // console.log(this.multipleSelection);
+            // let setStr = encodeURIComponent(JSON.stringify(this.multipleSelection));
+            // this.$router.push('/send/sendHome?setStr=' + setStr);
+            this.$router.push({name:'/send/sendHome', params: {setStr: this.multipleSelection}});
         },
         //当表格选择项发生变化时会触发该事件
         handleSelectionChange(val) {
             this.multipleSelection = val;
-            console.log(this.multipleSelection);
+            // console.log(this.multipleSelection);
         },
         //获取全部用户
         getUser: function(res) {

@@ -9,12 +9,12 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1,
+                        "index":1.1,
                         "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2,
+                        "index":1.2,
                         "url":"/operate"
                     }
                 ]
@@ -24,12 +24,12 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1,
+                        "index":1.3,
                         "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2,
+                        "index":1.4,
                         "url":"/operate"
                     }
                 ]
@@ -46,7 +46,7 @@ export default [
                 "options":[
                     {
                         "name":"用户列表",
-                        "index":1,
+                        "index":2.1,
                         "url":"/usermanagement/userlist"
                     }
                 ]
@@ -56,17 +56,17 @@ export default [
                 "options":[
                     {
                         "name":"关注院校",
-                        "index":1,
+                        "index":2.2,
                         "url":"/usermanagement/userfocusmajor"
                     },
                     {
                         "name":"参与活动",
-                        "index":2,
-                        "url":"/operate"
+                        "index":2.3,
+                        "url":"/usermanagement/userParticipateActivities"
                     },
                     {
                         "name":"领优惠卷",
-                        "index":3,
+                        "index":2.4,
                         "url":"/usermanagement/usercoupons"
                     }
                 ]
@@ -83,22 +83,22 @@ export default [
                 "options":[
                     {
                         "name":"院校专业",
-                        "index":1,
+                        "index":3.1,
                         "url":"/message/universMajorList"
                     },
                     {
                         "name":"活动信息",
-                        "index":2,
+                        "index":3.2,
                         "url":"/message/activityList"
                     },
                     {
                         "name":"辅导机构",
-                        "index":3,
+                        "index":3.3,
                         "url":"/message/coachList"
                     },
                     {
                         "name":"资讯发布",
-                        "index":4,
+                        "index":3.4,
                         "url":"/message/informationList"
                     },
                 ]
@@ -113,6 +113,7 @@ export default [
             {
                 "title": "文件管理",
                 "options":[
+<<<<<<< HEAD
                     // {
                     //     "name":"文件上传",
                     //     "index":1,
@@ -121,6 +122,11 @@ export default [
                     {
                         "name":"文件管理",
                         "index":1,
+=======
+                    {
+                        "name":"文件管理",
+                        "index":4.1,
+>>>>>>> cb391a49bb11d57cd9863de3c99377f4897f5a3a
                         "url":"/files"
                     }
                 ]
@@ -138,8 +144,8 @@ export default [
                 "options":[
                     {
                         "name":"发消息",
-                        "index":1,
-                        "url":"/operate"
+                        "index":5.1,
+                        "url":"/send/sendHome"
                     }
                 ]
             },
@@ -148,8 +154,8 @@ export default [
                 "options":[
                     {
                         "name":"历史记录",
-                        "index":1,
-                        "url":"/operate"
+                        "index":5.2,
+                        "url":"/record/recordHome"
                     }
                 ]
             },
@@ -165,17 +171,17 @@ export default [
                 "options":[
                     {
                         "name":"频道Banner",
-                        "index":1,
+                        "index":6.1,
                         "url":"/operate"
                     },
                     {
                         "name":"资讯首页推荐",
-                        "index":2,
+                        "index":6.2,
                         "url":"/operate/advise"
                     },
                     {
                         "name":"广告位管理",
-                        "index":3,
+                        "index":6.3,
                         "url":"/operate/ad"
                     }
                 ]
@@ -185,7 +191,7 @@ export default [
                 "options":[
                     {
                         "name":"分享数据",
-                        "index":1,
+                        "index":6.4,
                         "url":"/operate/sharedata"
                     }
                 ]
@@ -202,7 +208,7 @@ export default [
                 "options":[
                     {
                         "name":"退款管理",
-                        "index":1,
+                        "index":7.1,
                         "url":"/refund/refundlist"
                     },
                     // {
@@ -224,12 +230,12 @@ export default [
                 "options":[
                     {
                         "name":"模考管理",
-                        "index":1,
+                        "index":8.1,
                         "url":"/operate"
                     },
                     {
                         "name":"模考管理",
-                        "index":2,
+                        "index":8.2,
                         "url":"/operate"
                     }
                 ]
