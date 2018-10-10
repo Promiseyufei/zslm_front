@@ -47,7 +47,7 @@ export default [
                     {
                         "name":"用户列表",
                         "index":1,
-                        "url":"/operate"
+                        "url":"/usermanagement/userlist"
                     }
                 ]
             },
@@ -57,7 +57,7 @@ export default [
                     {
                         "name":"关注院校",
                         "index":1,
-                        "url":"/operate"
+                        "url":"/usermanagement/userfocusmajor"
                     },
                     {
                         "name":"参与活动",
@@ -67,7 +67,7 @@ export default [
                     {
                         "name":"领优惠卷",
                         "index":3,
-                        "url":"/operate"
+                        "url":"/usermanagement/usercoupons"
                     }
                 ]
             }
@@ -203,13 +203,13 @@ export default [
                     {
                         "name":"退款管理",
                         "index":1,
-                        "url":"/operate"
+                        "url":"/refund/refundlist"
                     },
-                    {
-                        "name":"退款管理",
-                        "index":2,
-                        "url":"/operate"
-                    }
+                    // {
+                    //     "name":"退款管理",
+                    //     "index":2,
+                    //     "url":"/operate"
+                    // }
                 ]
             }
         ]

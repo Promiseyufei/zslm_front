@@ -128,7 +128,7 @@
             },
             //跳转页面按钮
             jumpPage:function() {
-                    this.$router.push('/send/recordHome');
+                    this.$router.push('/record/recordHome');
             }
         },
         mounted(){
@@ -169,23 +169,17 @@
     .rightUp h1 {
         text-align: center;
     }
-    .leftImg p {
-        position: relative;
-        left: 35px;
-    }
     .leftImg i {
-        position: absolute;
-        left: 15px;
-        top: 17px;
+        margin: 0 8px 0 15px;
     }
     .leftImg {
-        position: relative;
-        top: 50px;
+        margin: 50px 0 0 0;
         color: #FFF;
         font-size: 14px;
         width: 200px;
         height: 50px;
         display: flex;
+        align-items:center;
         background: url(../../../../assets/img/point.png) no-repeat;
         background-size: 100% 100%;
     }

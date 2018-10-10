@@ -40,10 +40,14 @@
                         <div><el-radio v-model="univerMess" label="1">院校动态消息</el-radio></div>
                     </div>
                </div>
+               <div class="setUp"><el-button type="primary">设置</el-button></div>
                <div class="rightEditor">
                </div>
             </div>
-        </div>       
+        </div>
+        <div class="sendMess">
+            <el-button type="primary">发消息</el-button>     
+        </div> 
     </div>
 </template>
 <script>
@@ -78,7 +82,7 @@
             
         },
         mounted(){
-            // this.getcityInfo();
+            this.getcityInfo();
         }
     }
 
@@ -88,7 +92,17 @@
 </style>
 
 <style scoped>
+    .sendMess {
+        display: flex;
+        justify-content:center;
+    }
+    .setUp {
+        margin: 20px 0 0 180px;
+        /*padding: 0 0 50px 0;*/
+        /*border-bottom: 1px solid #dddddd; */
+    }
     .rightEditor {
+        border-bottom: 1px solid #dddddd; 
         height: 100px;
     }
     .radio {
@@ -97,7 +111,6 @@
     .rightRedio {
         display: flex;
         margin: 50px 0 0 180px;
-        border-bottom: 1px solid #efefef; 
         /*justify-content:center;*/
     }
     .messageSteps {

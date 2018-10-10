@@ -7,7 +7,7 @@
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
-            <el-button type="primary">新建</el-button>
+            <el-button type="primary" @click = "jumpPage">新建</el-button>
         </div>
         <div class="majorlist-query">
             <i class="el-icon-search"></i>
@@ -173,6 +173,9 @@
             }
         },
         methods:{
+            jumpPage:function(){
+                this.$router.push('/message/changeMessage');
+            },
             pageChange(msg) {
                 this.searchContent.page = msg.page;
                 this.searchContent.limit = msg.limit;

@@ -60,9 +60,7 @@
 
         <!-- 分页 -->
         <div class="footer">
-
-          <!-- <el-button type="primary" size="mini" icon="el-icon-delete" @click.native = "BatchDelete">批量删除</el-button> -->
-          <!-- <Page class="page" :total="total" @pageChange="pageChange"></Page> -->
+            <singlePage :currentPage="currentPage" :totalData="totalData"></singlePage>
         </div>
     </div>
 </template>
@@ -94,6 +92,8 @@
                 }],
 
                 /*分页*/
+                currentPage:1,
+                totalData:0,
             }
         },
         watch: {
@@ -106,8 +106,8 @@
         methods: {
             //跳转页面
             jumpPage:function() {
-                this.$router.push('/send/recordDetail');
                 var that = this;
+                this.$router.push('/record/recordDetail');
                 axios.post('/admin/recordHome/updateFile',{
                   //后台参数，前台参数(传向后台)
                   id: that.tableData.id,
@@ -119,7 +119,30 @@
                   
                 })
             },
-            //查询按钮函数
+            //进入页面自动调用
+            intoPage: function(){
+                var that = this;
+                console.log(that.fileYear)
+                axios.post('/admin/recordHome/intoPage',{
+                  //后台参数，前台参数(传向后台)
+                  id: that.tableData.id,
+                  messageType: that.tableData.messageType,
+                  messageObject: that.tableData.messageObject,
+                  sendTime: that.tableData.sendTime,
+                  sendState: that.tableData.sendState,
+                  sendCont: that.tableData.sendCont,
+                })
+                .then(function (response) {
+                    var res = response.data;
+                    if (res.code == 0) {
+                        that.tableData = res.data;
+                        that.totalData = res.totalData;
+
+                    };
+                })
+                .catch(function (error) {
+                });
+            },            //查询按钮函数
             query: function(){
                 var that = this;
                 console.log(that.fileYear)
@@ -166,8 +189,7 @@
             }
         },
         mounted(){
-            this.query();
-            console.log(this.radio2);
+            this.intoPage();
         }
   }
 
@@ -210,7 +232,7 @@
         margin: 20px auto;
         display: flex;
         align-items:center;
-        justify-content:space-between;
+        justify-content:flex-end;
     }
     /* 表格样式 */
     .recordHomeTable {

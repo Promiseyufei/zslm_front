@@ -142,7 +142,7 @@
         methods:{
             //跳转页面
             jumpPage:function() {
-                this.$router.push('/SelectUnivers');
+                this.$router.push('/message/messageHome/'+"");
             },
             //操作方法回调
             clickEvent(eventName, row) {
