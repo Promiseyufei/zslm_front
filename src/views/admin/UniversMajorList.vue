@@ -65,11 +65,6 @@
                 <el-table-column label="操作" width="210">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
-                            <i class="el-icon-search"></i>
-                            <i class="el-icon-edit-outline"></i>
-                            <i class="el-icon-delete"></i>
-                            <i class="el-icon-refresh"></i>
-                            <i class="el-icon-tickets"></i>
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
                         </div>
                     </template>
@@ -103,20 +98,13 @@
                     page:1,
                     limit:10,
                 },
-                // iconname:[
-                //     {name:'el-icon-search'},
-                //     {name:'el-icon-edit-outline'},
-                //     {name:'el-icon-delete'},
-                //     {name:'el-icon-refresh'},
-                //     {name:'el-icon-tickets'},
-                // ],
-                // iconname:[
-                //     {name:'el-icon-search'},
-                //     {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
-                //     {name:'el-icon-delete', event:"delAppointMajor"},
-                //     {name:'el-icon-refresh', event:"updateMajorTime"},
-                //     {name:'el-icon-tickets'},
-                // ],
+                iconname:[
+                    {name:'el-icon-search'},
+                    {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
+                    {name:'el-icon-delete', event:"delAppointMajor"},
+                    {name:'el-icon-refresh', event:"updateMajorTime"},
+                    {name:'el-icon-tickets'},
+                ],
                 options: [
                     {value: 0,　label: '选项一'}, 
                     {value: 1,label: '选项二'}, 

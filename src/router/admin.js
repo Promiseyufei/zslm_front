@@ -156,7 +156,7 @@ let admin_router = {
         //消息管理
         {
             path: '/send/sendHome',
-            name: '消息管理-发消息',
+            name: '/send/sendHome',
             component: resolve =>void(require(['@/views/admin/sendMessage/send/sendHome'], resolve))
         },
         {
