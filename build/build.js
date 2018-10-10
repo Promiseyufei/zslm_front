@@ -1,12 +1,15 @@
 'use strict'
+
+//检测node和npm版本，删除dist包，webpack构建打包，在终端输出构建信息并结束，如果报错，则输出报错信息。
+
 require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
 
-const ora = require('ora')
-const rm = require('rimraf')
+const ora = require('ora')  // 在终端显示的旋转器插件
+const rm = require('rimraf') // 用于删除文件夹
 const path = require('path')
-const chalk = require('chalk')
+const chalk = require('chalk') // 终端文字颜色插件
 const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')

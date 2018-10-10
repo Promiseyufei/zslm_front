@@ -33,7 +33,6 @@
                             </el-row>
                         </div>
                     </div>
-
                     <!-- 已选消息对象 -->
                     <div class="operateUpfiles operateDown">
                         <div class="operateUpfilesLeft">
@@ -207,10 +206,8 @@ export default {
         }
     },
     mounted(){
-        // this.getUser();
-        
-        if(this.$route.query.setStr != null) {
-            let setArray = JSON.parse(this.$route.query.setStr);
+        if(this.$route.params.setStr != undefined) {
+            let setArray = this.$route.params.setStr;
             let tt = setArray.pop();
             console.log(tt);
             if(tt == "3") {

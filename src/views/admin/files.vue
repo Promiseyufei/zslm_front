@@ -67,32 +67,6 @@
 				  </div>
 			  </el-table>
 		</div>
-	  	<!-- 表格 -->
-	    <div class="file-table">
-		      <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
-		          <el-table-column type="selection" width="50"></el-table-column>
-		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
-		          <el-table-column label="展示权重" width="100">
-                    <template slot-scope="scope">
-                        <el-input id="inputID" @focus="getFocus(tableData[scope.$index].show_weight)"
-                                  v-on:blur="loseFocus(tableData[scope.$index].show_weight,scope.$index)"
-                                  v-model="tableData[scope.$index].show_weight">
-                        </el-input>
-                    </template>
-                </el-table-column>
-		          <el-table-column label="操作" width="220">
-		              <template slot-scope="scope">
-		                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-		                <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-		                <el-button type="text" size="small" @click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
-		              </template>
-		          </el-table-column>
-		          <div v-for="(val, index) in tableTop" :key="index">
-		            <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
-		            </el-table-column>
-		          </div>
-		      </el-table>
-	    </div>
 
 	    <!-- 分页 -->
 	    <div class="footer">
@@ -133,7 +107,6 @@
 	            ],
 	            /*表格*/
 	            tableTop:[
-		            // {type:'',prop:'showweight',label:'展示权重',width:100},
 		            {type:'',prop:'file_name',label:'文件名称',width:260},
 		            {type:'',prop:'z_name',label:'所属院校专业',width:320},
 		            {type:'',prop:'file_type',label:'文件类型',width:100},
@@ -159,7 +132,7 @@
 		        total:0,
 		        searchContent:{
 		              page:1,
-		              limit:5,
+		              limit:0,
 		        },
     	    }
   	    },
@@ -275,16 +248,17 @@
 	        	this.query();
 	      	},
 	      	pageChange(msg) {
+	      		// var page = msg.page;
+	      		// var page = msg.limit;
 	        	this.searchContent.page = msg.page;
+	        	this.searchContent.limit = msg.limit;
 	        	//分页改变时，更新表格数据
-	        	if (this.searchContent.page) {
-	        		this.query();
-	        	};
+	        	// if (this.searchContent.page) {
+	        		// this.query();
+	        	// };
 	        	// console.log(this.searchContent.page);
-	          	this.searchContent.limit = msg.limit;
 	      	},
 	      	query: function (){
-
 	        	var that = this;
 	        	axios.get('http://www.zslm.com/admin/files/getuploadfile',{
 		          //后台参数，前台参数(传向后台)

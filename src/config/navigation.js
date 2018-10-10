@@ -114,8 +114,13 @@ export default [
                 "title": "文件管理",
                 "options":[
                     {
+                        "name":"文件上传",
+                        "index":1,
+                        "url":"/filesManage/fileup"
+                    },
+                    {
                         "name":"文件管理",
-                        "index":4.1,
+                        "index":2,
                         "url":"/files"
                     }
                 ]
