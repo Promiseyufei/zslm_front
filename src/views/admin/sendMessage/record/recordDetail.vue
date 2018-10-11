@@ -22,19 +22,19 @@
                    <h1>消息记录详情</h1>
                    <div class="rightUpCon">
                        <div class="Nav">
-                           <div>
+                           <!-- <div>
                                <p class="messageObjc">消息对象类型：</p>
                                <p>{{messageObjc}}</p>
-                           </div>
-                           <div v-for = "(val,index) in careJoin" :key="index+'b'">
+                           </div> -->
+                           <!-- <div v-for = "(val,index) in careJoin" :key="index+'b'">
                                <p class="a">&#8195&#8195{{val.titl}}：</p>
                                <div class="careJoin">
                                     <p v-for = "(cont,index) in val.cont" :key="index+'b'">{{cont.content}}</p>
                                </div>
-                           </div>
+                           </div> -->
                            <div v-for = "(vals,index) in rightUpCon" :key="index">
-                               <p class="a">&#8195&#8195{{vals.title}}：</p>
-                               <p>{{vals.content}}</p>
+                                <p class="a">&#8195&#8195{{vals.title}}：</p>
+                                <p>{{vals.context}}</p>    
                            </div>
                        </div>
                        <div></div>
@@ -43,7 +43,7 @@
                <div class="line"></div> 
                <div class="rightLow" style="width:1170px;margin:0 auto;">
                    <userTable :listTable="listTable" :tableData="tableData"></userTable>
-                   <singlePage :currentPage="currentPage" :totalData="totalData"></singlePage>
+                   <singlePage :currentPage="currentPage" :totalData="totalData" @use="changePageNum"></singlePage>
                </div>
             </div>
         </div>       
@@ -55,76 +55,83 @@
             return {
                 //消息记录详情
                 messageObjc:'',
-                careJoin:[
-                    {
-                        titl:'关注院校',
-                        cont:[
-                            {content:''}
-                        ]
-                    },
-                    {titl:'参与活动',cont:''},
-                ],
+                // careJoin:[
+                //     {
+                //         titl:'关注院校',
+                //         cont:[
+                //             {content:''}
+                //         ]
+                //     },
+                //     {titl:'参与活动',cont:''},
+                // ],
                 rightUpCon:[
-                    {title:'关系类型',content:''},
-                    {title:'消息类型',content:''},
-                    {title:'发送时间',content:''},
-                    {title:'发送状态',content:''},
-                    {title:'消息内容',content:''},
+                    {title:'消息载体类型',props:'carrier',context:''},
+                    {title:'消息标题',props:'news_title',context:''},
+                    {title:'相关链接',props:'url',context:''},
+                    {title:'消息类型',props:'type',context:''},
+                    {title:'发送时间',props:'create_time',context:''},
+                    {title:'发送状态',props:'success',context:''},
+                    {title:'消息内容',props:'context',context:''},
                 ],
                 
                 //表格
                 listTable:[
                     {prop:'id',lable:'账户ID',width:80},
                     {prop:'account',lable:'账号',width:100},
-                    {prop:'nickname',lable:'昵称',width:140},
-                    {prop:'name',lable:'真实姓名',width:80},
+                    {prop:'user_name',lable:'昵称',width:140},
+                    {prop:'real_name',lable:'真实姓名',width:80},
                     {prop:'sex',lable:'性别',width:80},
                     {prop:'address',lable:'常住地',width:80},
-                    {prop:'highEduc',lable:'最高学历',width:80},
-                    {prop:'belongUnivers',lable:'毕业院校',width:180},
+                    {prop:'schooling_id',lable:'最高学历',width:80},
+                    {prop:'graduate_school',lable:'毕业院校',width:180},
                     {prop:'industry',lable:'所属行业',width:248},
-                    {prop:'workFix',lable:'工作年限',width:100},
+                    {prop:'worked_year',lable:'工作年限',width:100},
                 ],
-                tableData: [{
-                  id:'',
-                  account:'',
-                  nickname:'',
-                  name:'',
-                  sex:'',
-                  address:'',
-                  highEduc:'',
-                  belongUnivers:'',
-                  industry:'',
-                  workFix:'',
-                }],
-
+                tableData: [],
+                newsData:[],
                 //分页
                 totalData:0,
                 currentPage:1,
+                newsId: 0,
+                size: 10
             };
         },
         methods: {
-            //初次进入页面，获取的院校专业
-            getcityInfo: function(){
-                var that = this;
-                axios.post('/admin/recordDetail/getcityInfo',{
-                  //后台参数，前台参数(传向后台)
-                  // butname: that.butname,
+            getNewsInfo() {
+                let _this = this;
+                this.post('/admin/news/getAppointNews', {
+                    newsId: this.newsId
+                }).then((response) => {
+                    console.log(response.result instanceof Object);
+                    if(response.code == 0) {
+                        for(let i = 0; i < this.rightUpCon.length; i++) {
+                            Object.keys(response.result).forEach((key) => {
+                                if(key == _this.rightUpCon[i].props) _this.rightUpCon[i].context = response.result[key];
+                            })
+                        }
+                    }
+                    else 
+                        this.message(true, response.msg, 'error');
                 })
-                .then(function (response) {
-                    var res = response.data;
-                    if (res.code == 0) {
-                        that.messageObjc = res.messageObjc;
-                        that.careJoin = res.careJoin;
-                        that.rightUpCon = res.rightUpCon;
-                        that.tableData = res.data;
-                        that.totalData = res.totalData;
-                        // console.log(that.totalData);
-                        // console.log(res.totalData)
-                    };
+            },
+            changePageNum(pageNum) {
+                this.currentPage = pageNum;
+                this.getNewsUsersInfo();
+            },
+            getNewsUsersInfo() {
+                this.post('/admin/news/getAppointUser', {
+                    pageCount: this.size,
+                    pageNum: this.currentPage,
+                    newsId: this.newsId
+                }).then((response) => {
+                    // console.log(response);
+                    if(response.code == 0) {
+                        this.tableData = response.result.map;
+                        this.totalData = response.result.total;
+                    }
+                    else
+                        this.message(true, response.msg, 'error');
                 })
-                .catch(function (error) {
-                });
             },
             //跳转页面按钮
             jumpPage:function() {
@@ -132,7 +139,9 @@
             }
         },
         mounted(){
-            this.getcityInfo();
+            this.newsId = this.$route.params.newsId;
+            this.getNewsInfo();
+            this.getNewsUsersInfo();
         }
     }
 

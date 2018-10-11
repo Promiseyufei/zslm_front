@@ -20,7 +20,7 @@
            <div>
                 <el-form class="input" >
                     <el-form-item label="从">
-                        <el-date-picker v-model="startTime" type="date" placeholder="选择日期">
+                        <el-date-picker v-model="startTime" type="date" placeholder="选择日期" default-time="['00:00:00', '23:59:59']">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="到">
@@ -32,7 +32,7 @@
                     </el-form-item>
                 </el-form>  
            </div>
-           <el-button class="queryBut" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button> 
+           <el-button class="queryBut" type="primary" icon="el-icon-search" @click.native="query">查询</el-button> 
         </div>
 
         <!-- 数据列表 -->
@@ -47,7 +47,7 @@
                   <el-table-column label="操作" width="60">
                       <template slot-scope="scope">
                           <div class="recordHome-icon">
-                            <i v-on:click="jumpPage" class="el-icon-search"></i>
+                            <i @click="jumpPage(scope.row.id)" class="el-icon-search"></i>
                           </div>
                       </template>
                   </el-table-column>
@@ -71,121 +71,63 @@
                 /*查询输入框*/
                 startTime:'',
                 overTime:'',
-                messageCont:'',
+                messageCont: '',
                 
                 /*表格*/
                 tableTop:[
                     {type:'',prop:'id',label:'消息ID',width:150},
-                    {type:'',prop:'messageType',label:'消息类型',width:150},
-                    {type:'',prop:'messageObject',label:'消息对象',width:150},
-                    {type:'',prop:'sendTime',label:'发送时间',width:200},
-                    {type:'',prop:'sendState',label:'发送状态',width:100},
-                    {type:'',prop:'sendCont',label:'消息内容',width:690},
+                    {type:'',prop:'carrier',label:'消息类型',width:150},
+                    // {type:'',prop:'messageObject',label:'消息对象',width:150},
+                    {type:'',prop:'create_time',label:'发送时间',width:200},
+                    {type:'',prop:'success',label:'发送状态',width:100},
+                    {type:'',prop:'news_title',label:'消息内容',width:690},
                 ],
-                tableData:[{
-                    id:'',
-                    messageType: '',
-                    messageObject: '',
-                    sendTime: '',
-                    sendState: '',
-                    sendCont: '',
-                }],
+                tableData:[],
 
                 /*分页*/
                 currentPage:1,
                 totalData:0,
+                size: 10
             }
-        },
-        watch: {
-            // page: function(newpage,oldpage) {
-            //  if (this.searchContent.page == 1) {
-            //      this.query();
-            //  };
-            // }
         },
         methods: {
             //跳转页面
-            jumpPage:function() {
-                var that = this;
-                this.$router.push('/record/recordDetail');
-                axios.post('/admin/recordHome/updateFile',{
-                  //后台参数，前台参数(传向后台)
-                  id: that.tableData.id,
-                  messageType: that.tableData.messageType,
-                  messageObject: that.tableData.messageObject,
-                  sendTime: that.tableData.sendTime,
-                  sendState: that.tableData.sendState,
-                  sendCont: that.tableData.sendCont,
-                  
-                })
+            jumpPage:function(newsId) {
+                this.$router.push('/record/recordDetail/' + newsId);
             },
             //进入页面自动调用
             intoPage: function(){
                 var that = this;
-                console.log(that.fileYear)
-                axios.post('/admin/recordHome/intoPage',{
-                  //后台参数，前台参数(传向后台)
-                  id: that.tableData.id,
-                  messageType: that.tableData.messageType,
-                  messageObject: that.tableData.messageObject,
-                  sendTime: that.tableData.sendTime,
-                  sendState: that.tableData.sendState,
-                  sendCont: that.tableData.sendCont,
+                this.post('/admin/news/getScreenNews',{
+                    newTitleKeywords: null,
+                    startTime: this.startTime,
+                    endTime: this.overTime,
+                    pageCount: this.size,
+                    pageNumber: this.currentPage
                 })
                 .then(function (response) {
-                    var res = response.data;
-                    if (res.code == 0) {
-                        that.tableData = res.data;
-                        that.totalData = res.totalData;
-
-                    };
+                    if(response.code == 0) {
+                        that.totalData = response.result.total;
+                        that.tableData = response.result.his_news;
+                    }
+                    else
+                        this.message(true, response.msg, 'error');
                 })
                 .catch(function (error) {
                 });
             },            //查询按钮函数
             query: function(){
-                var that = this;
-                console.log(that.fileYear)
-                axios.post('/admin/recordHome/getUploadFile',{
-                  //后台参数，前台参数(传向后台)
-                  // page: that.searchContent.page,
-                  // pageSize: that.searchContent.limit,
-                  startTime: that.startTime,
-                  overTime: that.overTime,
-                  messageCont: that.messageCont,
-                })
-                .then(function (response) {
-                    var res = response.data;
-                    if (res.code == 0) {
-                        that.tableData =res.data;
-                        // that.total = res.total;
-                    };
-                })
-                .catch(function (error) {
-                });
+                this.intoPage();
             },
             //刷新按钮函数
             Refresh: function() {
-                var that = this;
-                axios.post('/admin/recordHome/updateFile',{
-                  //后台参数，前台参数(传向后台)
-                  id: that.tableData.id,
-                  messageType: that.tableData.messageType,
-                  messageObject: that.tableData.messageObject,
-                  sendTime: that.tableData.sendTime,
-                  sendState: that.tableData.sendState,
-                  sendCont: that.tableData.sendCont,
-                  
-                })
-                .then(function (response) {
-                    var res = response.data;
-                    if (res.code == 0) {
-                        that.tableData =res.data;
-                        that.total = res.total;
-                    };
-                })
-                .catch(function (error) {
-                });
+                this.startTime = '',
+                this.overTime = '',
+                this.messageCont = '',
+                this.tableData = [];
+                this.currentPage = 1;
+                this.totalData = 0;
+                this.intoPage();
             }
         },
         mounted(){

@@ -180,7 +180,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordHome'], resolve))
         },
         {
-            path: '/record/recordDetail',
+            path: '/record/recordDetail/:newsId',
             name: '消息管理-历史消息记录详情',
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordDetail'], resolve))
         },
