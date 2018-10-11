@@ -30,7 +30,7 @@
             </div>
             <div class="setMessDeta-right">
                <div class="rightRedio">
-                    <div>
+                    <div class="checkbox">
                         <div><el-checkbox v-model="shortMess" label="短信"></el-checkbox></div>
                         <div><el-checkbox v-model="stationMess" label="站内信"></el-checkbox></div>
                     </div>
@@ -91,6 +91,9 @@
 
 </script>
 <style>
+    .checkbox>div {
+        margin: 10px 0 0;
+    }
     .radi .el-radio+.el-radio {
         margin: 10px 0 0 0;
     }
@@ -113,7 +116,7 @@
         height: 100px;
     }
     .radio {
-        margin: 30px 0 0 20px;
+        margin: 50px 0 0 20px;
     }
     .rightRedio {
         display: flex;
@@ -123,10 +126,6 @@
     .messageSteps {
         width: 450px;
         margin: 0 auto;
-    }
-    .leftImg p,.messageCon p {
-        /*position: relative;*/
-        /*left: 35px;*/
     }
     .leftImg i,.messageCon i {
         margin: 0 10px 0;
@@ -145,7 +144,7 @@
         margin: 50px 0 0;
     }
     .messageCon {
-        margin: 350px 0 0;
+        margin: 280px 0 0;
     }
     .setMessDeta-right {
         width: 1320px;
@@ -155,6 +154,7 @@
     .setMessDeta-left {
         width: 180px;
         background-color: #fcfcfc;
+        z-index: 1;
     }
     .setMessDeta {
         width: 1500px;
