@@ -127,7 +127,7 @@
             },
             send() {
                 if(this.validateParameter()) {
-                    this.confirm(() => {
+                    // this.confirm(() => {
                         this.post('/admin/news/getNewNewsMessage', {
                             userArr: this.idArr,
                             carrier: this.carrier,
@@ -141,15 +141,16 @@
                                 console.log(response);
                             }
                         })
-                    }, () => {
-                        this.message(true, "已取消发送", 'info');
-                    }, "确定发送吗?");
+                    // }, () => {
+                        // this.message(true, "已取消发送", 'info');
+                    // }, "确定发送吗?");
                 }
             }
         },
         mounted(){
-            if(this.$route.query.setStr instanceof Array && this.$route.query.setStr.length > 0)
-                this.idArr = this.$route.query.setStr;
+            // console.log(decodeURIComponent(JSON.parse(this.$route.query.setStr)));
+            if(JSON.parse(this.$route.query.setStr) instanceof Array && JSON.parse(this.$route.query.setStr).length > 0)
+                this.idArr = JSON.parse(this.$route.query.setStr);
             else {
                 // this.message(true, "请先选择发送消息的用户");
                 // this.$router.go(-1);
