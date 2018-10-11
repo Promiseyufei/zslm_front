@@ -64,10 +64,10 @@
                            </div>
                            
                            <!-- 表格 -->
-                           <userTable :tableData = "tableData" :listTable="listTable" v-if=" radio!='' "></userTable>
+                           <userTable :tableData="tableData" :listTable="listTable" v-if=" radio!='' "></userTable>
                            <!-- 分页 -->
                            <div v-if=" radio!='' ">
-                                <singlePage :currentPage = "currentPage" :totalData = "totalData"></singlePage>
+                                <singlePage :currentPage="currentPage" :totalData="totalData" @use="changePageNum"></singlePage>
                            </div>
                         </div>
                     </div>
@@ -148,11 +148,12 @@ export default {
         // 表格默认数据
         tableData: [],
         //默认展示页数
-        currentPage: 4,
+        currentPage: 1,
         // 分页总数,默认值
         totalData: 0,
         table1: [],
-        table2: []
+        table2: [],
+        size:10
       }
     },
     watch: {
@@ -161,31 +162,64 @@ export default {
                 this.getUser();
             }else if(val == "2" && oldval != "2") {
                 this.tableData = this.table1;
-            }else if(val == "3" && oldval != "3") {
-                this.tableData = this.table2;
             }
+            // else if(val == "3" && oldval != "3") {
+            //     this.tableData = this.table2;
+            // }
         }
     },
     methods: {
         //获取全部用户
         getUser: function() {
             let self = this;
-            axios.post('/admin/news/getAllAccounts', {
+            this.post('/admin/news/getAllAccounts', {
                 pageCount: 100,
                 pageNumber: self.currentPage
             }).then((response) => {
-                var res = response.data;
-                if(res.code == 0) {
-                    self.totalData = res.data.count;
-                    self.tableData = res.data.data;
-                    // self.message(true,"修改成功","success");
+                // console.log(response);
+                if(response.code == 0) {
+                    self.totalData = response.result.total;
+                    self.tableData = response.result.map;
+                    // console.log(self.totalData);
                 }
+                else 
+                    this.message(true, response.msg, 'error');
             })
+        },
+
+        //改变分页下标并请求
+        changePageNum: function(pageNum) {
+            console.log('aa');
+            if(this.radio == "1") {
+                this.currentPage = pageNum;
+                this.getUser();
+            }
+            else if(this.radio == "3") {
+                console.log(this.table2);
+                if(this.table2.length <= this.size) {
+                    this.tableData = this.table2;
+                }
+                else
+                    this.tableData = this.interceptArray(this.table2, (pageNum - 1) * this.size, this.size);
+            }
+
         },
 
         // 跳转页面
         toAdvise: function() {
-            let setStr = encodeURIComponent(JSON.stringify(this.tableData));
+            let sendArr = [];
+            if(this.radio == "1") {
+                this.tableData.forEach((item) => {
+                    sendArr.push(item.id);
+                });
+            }
+            else if(this.radio == "3") 
+                this.table2.forEach((item) => {
+                    sendArr.push(item.id);
+                });
+
+
+            let setStr = encodeURIComponent(JSON.stringify(sendArr));
             this.$router.push('/send/setMessageDetail?setStr=' + setStr);
         },
 
@@ -193,30 +227,28 @@ export default {
         setUser: function() {
             if(this.radio == "2") {
                 this.$router.push('/send/setMessageObject');
-            }else if(this.radio == "3"){
+            }else if(this.radio == "3") {
                 this.$router.push('/send/setMessageSelf');
             }
         },
         //
         remove: function(key) {
-            console.log(this.table2);
+            // console.log(this.table2);
             this.table2.pop();
             // this.table2[key] = null;
-            console.log(this.table2);
+            // console.log(this.table2);
         }
     },
+    
     mounted(){
         if(this.$route.params.setStr != undefined) {
             let setArray = this.$route.params.setStr;
+
             let tt = setArray.pop();
-            console.log(tt);
-            if(tt == "3") {
-                this.radio = "3";
-                this.table2 = setArray;
-            }else if(tt == "2") {
-                this.radio = "2";
-                this.table1 = setArray;
-            }
+            this.radio = tt;
+            this.totalData = setArray.length;
+            tt == "2" ? this.table1 = setArray : (tt == "3" ? this.table2 = setArray : this.table2 = this.table2);
+            this.changePageNum(1);
         }
         
     },

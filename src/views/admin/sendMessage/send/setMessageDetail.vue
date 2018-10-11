@@ -35,18 +35,41 @@
                         <div><el-checkbox v-model="stationMess" label="站内信"></el-checkbox></div>
                     </div>
                     <div class="radio">
-                        <div><el-radio v-model="assisMess" label="1">小助手消息</el-radio></div>
-                        <div><el-radio v-model="adminMess" label="1">系统员管理消息</el-radio></div>
-                        <div><el-radio v-model="univerMess" label="1">院校动态消息</el-radio></div>
+                        <el-radio-group v-model="radio">
+                            <div><el-radio label=1>小助手消息</el-radio></div>
+                            <div><el-radio label=2>系统员管理消息</el-radio></div>
+                            <div><el-radio label=3>院校动态消息</el-radio></div>
+                        </el-radio-group>
+                        <!-- <div><el-radio label="1">小助手消息</el-radio></div>
+                        <div><el-radio label="2">系统员管理消息</el-radio></div>
+                        <div><el-radio label="3">院校动态消息</el-radio></div> -->
                     </div>
                </div>
-               <div class="setUp"><el-button type="primary">设置</el-button></div>
-               <div class="rightEditor">
+               <!-- <div class="setUp"><el-button type="primary">设置</el-button></div> -->
+               <div class="rightEditor"></div>
+
+                <div style="margin-bottom:30px;">
+                    <el-input
+                    type="textarea"
+                    autosize
+                    placeholder="请输入内容"
+                    v-model="textarea">
+                    </el-input>
+                </div>
+               <div id="editor">
+
                </div>
+
+                <div>
+                    <el-input placeholder="请输入内容" v-model="input" style="margin-top:30px;">
+                        <template slot="prepend">Http://</template>
+                    </el-input>
+                </div>
+               
             </div>
         </div>
         <div class="sendMess">
-            <el-button type="primary">发消息</el-button>     
+            <el-button type="primary" @click="send">发消息</el-button>     
         </div> 
     </div>
 </template>
@@ -57,32 +80,87 @@
                 //设置消息类型
                 shortMess:false,
                 stationMess:false,
-                assisMess:'',
-                adminMess:'',
-                univerMess:'',
+                // assisMess:'',
+                // adminMess:'',
+                // univerMess:'',
+                idArr:[],
+                radio:0,
+                input:'',
+                editor:{},
+                editorContent:'',
+                carrier:-1,
+                textarea:''
             };
         },
+        // watch:{
+        //     radio:function(val, old) {
+        //         console.log(val);
+        //     }
+        // },
         methods: {
-            //初次进入页面，获取的院校专业
-            getcityInfo: function(){
-                var that = this;
-                axios.post('/admin/setMessageDetail/getcityInfo',{
-                  //后台参数，前台参数(传向后台)
-                  // butname: that.butname,
-                })
-                .then(function (response) {
-                    var res = response.data;
-                    if (res.code == 0) {
-                        
-                    };
-                })
-                .catch(function (error) {
-                });
+
+            judgeCarrier() {
+                if(this.shortMess == true && this.stationMess == false) this.carrier = 0;
+                else if(this.shortMess == false && this.stationMess == true) this.carrier = 1;
+                else if(this.shortMess == true && this.stationMess == true) this.carrier = 2;
             },
-            
+            validateParameter() {
+                this.judgeCarrier();
+                if(this.carrier < 0) {
+                    this.message(true, "请选择消息载体类型");
+                    return false;
+                }
+                else if(this.textarea == '') {
+                    this.message(true, "请填写消息标题");
+                    return false;
+                }
+                else if(this.editorContent == "") {
+                    this.message(true, "请填写消息内容");
+                    return false;
+                }
+                else if(this.input == "") {
+                    this.message(true, "请输入相关链接");
+                    return false;
+                }
+                return true;
+            },
+            send() {
+                if(this.validateParameter()) {
+                    this.confirm(() => {
+                        this.post('/admin/news/getNewNewsMessage', {
+                            userArr: this.idArr,
+                            carrier: this.carrier,
+                            type: this.radio,
+                            title: this.textarea,
+                            context: this.editorContent,
+                            url: this.input
+                        }).then((response) => {
+                            console.log(response);
+                            if(response.code == 0) {
+                                console.log(response);
+                            }
+                        })
+                    }, () => {
+                        this.message(true, "已取消发送", 'info');
+                    }, "确定发送吗?");
+                }
+            }
         },
         mounted(){
-            this.getcityInfo();
+            if(this.$route.query.setStr instanceof Array && this.$route.query.setStr.length > 0)
+                this.idArr = this.$route.query.setStr;
+            else {
+                // this.message(true, "请先选择发送消息的用户");
+                // this.$router.go(-1);
+            }
+
+            //生成编辑器
+            this.editor = new WangEditor('#editor');
+            this.editor.customConfig.onchange = (html) => {
+                this.editorContent = html;
+            }
+            this.editor.create();
+            
         }
     }
 
@@ -163,5 +241,8 @@
         display: flex;
         width: 1500px;
         margin: 0 auto 20px;
+    }
+    #editor {
+        background-color: #ffffff;
     }
 </style>

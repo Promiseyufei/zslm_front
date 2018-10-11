@@ -74,7 +74,7 @@
 
                             <!-- 完成按钮 -->
                             <div style="text-align:center;" class="selectFinish">
-                                <el-button type="primary" @click="">完成</el-button>
+                                <el-button type="primary" @click="test">完成</el-button>
                             </div>
                         </div>
                     </div>
@@ -97,38 +97,41 @@ export default {
     data() {
         return {
             majorData: [
-                {
-                    id: 123,
-                    name: "河南科技大学",
-                },
-                {
-                    id: 456,
-                    name: "新乡医学院",
-                },
-                {
-                    id: 99,
-                    name: "清华大学",
-                },
+                // {
+                //     id: 123,
+                //     name: "河南科技大学",
+                // },
+                // {
+                //     id: 456,
+                //     name: "新乡医学院",
+                // },
+                // {
+                //     id: 99,
+                //     name: "清华大学",
+                // },
             ],
             activityData: [
-                {
-                    id: 123,
-                    name: "我要上天！！",
-                },
-                {
-                    id: 456,
-                    name: "今天我好好学习了，✌️，开心",
-                },
-                {
-                    id: 99,
-                    name: "加油",
-                },
+                // {
+                //     id: 123,
+                //     name: "我要上天！！",
+                // },
+                // {
+                //     id: 456,
+                //     name: "今天我好好学习了，✌️，开心",
+                // },
+                // {
+                //     id: 99,
+                //     name: "加油",
+                // },
             ],
             radio: "1",
                 
         }
     },
     methods: {
+        test:function() {
+            
+        },
         //删除单个院校
         majorDelete: function(index) {
             this.majorData.pop(index);
