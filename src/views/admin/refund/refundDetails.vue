@@ -46,7 +46,7 @@
                     <!-- 操作管理 -->
                     <div class="operateUpfiles operateDown">
                         <div class="operateUpfilesLeft">
-                            <div><i class="fa fa-list-alt fa-fw FA-3X"></i>&nbsp;操作管理</div>
+                            <div><i class="fa fa-wrench fa-fw FA-3X"></i>&nbsp;操作管理</div>
                         </div>
                         <div class="operateUpfilesRight2">
                             <div class="operateUpfilesRight2Nav">
@@ -101,8 +101,8 @@
                     desc:[{ required: true, message: '请输入审核意见', trigger: 'blur' }],
                     status :[ { required: true, message: '请选择流程状态', trigger: 'blur' }]
                 },
-                status:''
-                // form:''
+                status:'',
+                model: []
             }
         },
         methods:{
@@ -270,27 +270,6 @@
     }
     .operateUpfilesRight .el-form {
         margin-left: 100px;
-    }
-
-
-
-    .body{
-        width: 1500px;
-        margin: 0 auto;
-    }
-    
-
-    .img-body{
-        width: 490px;
-        margin: 0 auto;
-        display: inline-block;
-    }
-
-    .img-title{
-        width: 500px;
-        height: 100%;
-        text-align: end;
-        display: inline-block;
     }
     .img{
         display: inline-block;
