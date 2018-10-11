@@ -17,13 +17,13 @@
             <div class="setMessDeta-left">
                 <div>
                     <div class="leftImg">
-                        <i class="el-icon-view"></i>
+                        <i class="el-icon-edit-outline"></i>
                         <p>设置消息类型</p>
                     </div>
                 </div>
                 <div>
-                    <div class="leftImg">
-                        <i class="el-icon-view"></i>
+                    <div class="messageCon">
+                        <i class="el-icon-setting"></i>
                         <p>编辑消息内容</p>
                     </div>
                 </div>
@@ -35,9 +35,11 @@
                         <div><el-checkbox v-model="stationMess" label="站内信"></el-checkbox></div>
                     </div>
                     <div class="radio">
-                        <div><el-radio v-model="assisMess" label="1">小助手消息</el-radio></div>
-                        <div><el-radio v-model="adminMess" label="1">系统员管理消息</el-radio></div>
-                        <div><el-radio v-model="univerMess" label="1">院校动态消息</el-radio></div>
+                        <div class="radi">
+                            <el-radio v-model="radio" label="1">小助手消息</el-radio>
+                            <el-radio v-model="radio" label="2">系统员管理消息</el-radio>
+                            <el-radio v-model="radio" label="3">院校动态消息</el-radio>
+                        </div>
                     </div>
                </div>
                <div class="setUp"><el-button type="primary">设置</el-button></div>
@@ -55,11 +57,12 @@
         data() {
             return {
                 //设置消息类型
+                radio:'1',
                 shortMess:false,
                 stationMess:false,
-                assisMess:'',
-                adminMess:'',
-                univerMess:'',
+                // assisMess:'',
+                // adminMess:'',
+                // univerMess:'',
             };
         },
         methods: {
@@ -88,25 +91,29 @@
 
 </script>
 <style>
-    
+    .radi .el-radio+.el-radio {
+        margin: 10px 0 0 0;
+    }
 </style>
 
 <style scoped>
+    .radi {
+        display: flex;
+        flex-direction:column ;
+    }
     .sendMess {
         display: flex;
         justify-content:center;
     }
     .setUp {
         margin: 20px 0 0 180px;
-        /*padding: 0 0 50px 0;*/
-        /*border-bottom: 1px solid #dddddd; */
     }
     .rightEditor {
         border-bottom: 1px solid #dddddd; 
         height: 100px;
     }
     .radio {
-        margin: 20px 0 0 20px;
+        margin: 30px 0 0 20px;
     }
     .rightRedio {
         display: flex;
@@ -117,25 +124,28 @@
         width: 450px;
         margin: 0 auto;
     }
-    .leftImg p {
-        position: relative;
-        left: 35px;
+    .leftImg p,.messageCon p {
+        /*position: relative;*/
+        /*left: 35px;*/
     }
-    .leftImg i {
-        position: absolute;
-        left: 15px;
-        top: 17px;
+    .leftImg i,.messageCon i {
+        margin: 0 10px 0;
     }
-    .leftImg {
-        position: relative;
-        top: 50px;
+    .leftImg,.messageCon {
         color: #FFF;
         font-size: 14px;
         width: 200px;
         height: 50px;
         display: flex;
+        align-items:center;
         background: url(../../../../assets/img/point.png) no-repeat;
         background-size: 100% 100%;
+    }
+    .leftImg {
+        margin: 50px 0 0;
+    }
+    .messageCon {
+        margin: 350px 0 0;
     }
     .setMessDeta-right {
         width: 1320px;
