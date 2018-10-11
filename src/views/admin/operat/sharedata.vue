@@ -2,13 +2,12 @@
 	<div class="dataAll">
 		<div class="dataAll-top">
 			<el-breadcrumb separator="/">
-			  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-			  <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+			  <el-breadcrumb-item>首页</el-breadcrumb-item>
+			  <el-breadcrumb-item class="selectedNavPublic">活动管理</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 		<div class="dataquery">
-			<i class="el-icon-search"></i>
-			<p>筛选查询</p>
+			<p><i class="el-icon-search"></i> 筛选查询</p>
 			<!-- <div></div> -->
 			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native="gettableInfo">刷新</el-button>
 		</div>
@@ -23,7 +22,6 @@
 		        <el-form-item label="关键字">
 		          <el-input size="medium" v-model="filesForm.name1" placeholder="请输入关键字"></el-input>
 		        </el-form-item>
-	        	<!-- </el-form-item> -->
 	      	</el-form>
 	      	<el-button size="mini" type="primary" icon="el-icon-search" class="dataquery-refresh" @click.native="gettableInfo">查询</el-button>
 		</div>
@@ -221,9 +219,6 @@
 	.el-button--text {
 		color: #333;
 	}
-	.el-button--text:hover {
-		color: #1ABC9C;
-	}
 	.el-table th>.cell {
 		text-align: center;
 	}
@@ -233,14 +228,13 @@
 	}
 	.footer {
 		border: 1px solid #E4E4E4;
-		text-align: right;
-		width: 1500px;
-		height: 50px;
+		width: 1480px;
+		padding: 10px;
 		background-color: #fdfdfe;
 		margin: 20px auto;
 		display: flex;
     	align-items:center;
-    	justify-content:space-between;
+    	justify-content:flex-end;
 	}
 	.el-table thead {
 	    background: #f9fafc;
@@ -268,21 +262,26 @@
 	}
 	.dataform {
 		display: flex;
-		position: relative;
+		justify-content: space-between;
+		align-items: center;
 		width: 1500px;
-		margin: 0 auto 10px;
+		margin: 0 auto 20px;
+	}
+	.dataform .el-form-item {
+		margin: 0;
 	}
 	.dataquery-refresh {
-		position: absolute;
+		/* position: absolute;
 		right: 10px;
-		top: 10px;
+		top: 10px; */
 	    color: #666; 
 	    background-color: #fff; 
 	    border:1px solid #CCC;
 	    border-radius:0;
+		margin-right: 10px;
 	}
 	.dataquery i,.datalist i {
-		padding: 0 5px 0 10px;
+		padding: 0 5px 0 20px;
 	}
 	.dataquery p,.datalist p {
 		font-size: 16px;
@@ -295,12 +294,13 @@
 		display: flex;
 		align-items:center;
 		width: 1500px;
-		height: 50px;
 		background:#f3f3f3;
 		margin: 0 auto;
 	}
 	.dataquery {
-		margin: 15px auto;
+		margin: 20px auto;
+		display: flex;
+		justify-content: space-between;
 	}
 	.span {
 		margin: 10px 6.5px;
