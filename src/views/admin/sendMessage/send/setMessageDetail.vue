@@ -35,7 +35,6 @@
                         <div><el-checkbox v-model="stationMess" label="站内信"></el-checkbox></div>
                     </div>
                     <div class="radio">
-<<<<<<< HEAD
                         <el-radio-group v-model="radio">
                             <div><el-radio label=1>小助手消息</el-radio></div>
                             <div><el-radio label=2>系统员管理消息</el-radio></div>
@@ -44,13 +43,6 @@
                         <!-- <div><el-radio label="1">小助手消息</el-radio></div>
                         <div><el-radio label="2">系统员管理消息</el-radio></div>
                         <div><el-radio label="3">院校动态消息</el-radio></div> -->
-=======
-                        <div class="radi">
-                            <el-radio v-model="radio" label="1">小助手消息</el-radio>
-                            <el-radio v-model="radio" label="2">系统员管理消息</el-radio>
-                            <el-radio v-model="radio" label="3">院校动态消息</el-radio>
-                        </div>
->>>>>>> bba2926c1fb82ec2cc4e5b5aaaf501781239c870
                     </div>
                </div>
                <!-- <div class="setUp"><el-button type="primary">设置</el-button></div> -->
@@ -92,7 +84,6 @@
                 // assisMess:'',
                 // adminMess:'',
                 // univerMess:'',
-<<<<<<< HEAD
                 idArr:[],
                 radio:0,
                 input:'',
@@ -100,8 +91,6 @@
                 editorContent:'',
                 carrier:-1,
                 textarea:''
-=======
->>>>>>> bba2926c1fb82ec2cc4e5b5aaaf501781239c870
             };
         },
         // watch:{
