@@ -204,6 +204,11 @@ let admin_router = {
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/usermanagement/userCoupons'], resolve))
         },
+        {
+            path: '/usermanagement/userparticipateactivities',
+            name: '用户管理-关注活动',
+            component: resolve =>void(require(['@/views/admin/usermanagement/userParticipateActivities'], resolve))
+        },
         //退款
         {
             path: '/refund/refundlist',
