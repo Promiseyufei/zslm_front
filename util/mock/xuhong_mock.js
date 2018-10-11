@@ -18,6 +18,15 @@ Mock.mock('/admin/operate/getIndexListName', {
   ]
 })
 
+/* Operate
+* 运营管理模块——首页
+* 修改权值
+*/
+Mock.mock('/admin/operate/setBtWeight', {
+	"code": 0,
+	'msg': Mock.mock('@cword(3, 5)')
+})
+
 /* message
 * 信息发布模块——活动信息——活动信息编辑
 * 获得活动省市字典
@@ -162,14 +171,17 @@ Mock.mock('/admin/operate/getIndexBanner',{
 Mock.mock('/admin/operate/getInformPagingData',{
 	"code": 0,
 	"msg": Mock.mock('@cword(3, 5)'),
-	"data|4": [
-		{
-			'id|+1': 0,
-			"name": Mock.mock('@cword(5, 15)'),
-			"z_type|1-100": 100,
-			"create_time": Mock.mock('@now')
-		}
-	]
+	"data": {
+		"count": 2340,
+		"data|4": [
+			{
+				'id|+1': 0,
+				"name": Mock.mock('@cword(5, 15)'),
+				"z_type|1-100": 100,
+				"create_time": Mock.mock('@now')
+			}
+		]
+	}
 })
 
 /* Operate
@@ -313,8 +325,6 @@ Mock.mock('/admin/operate/setAppointRegionName',{
 	"code": 0,
 	"msg": Mock.mock('@cword(3, 5)')
 })
-
-
 
 
 

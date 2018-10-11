@@ -3,7 +3,7 @@
       <!-- 表格 -->
       <div class="operateTable">
         <template>
-          <el-table :data="tableData3"  border style="width: 100%">
+          <el-table :data="tableData3"  border style="width: 100%" :header-cell-style="getRowClass">
             <el-table-column
               v-for="(list,index) in listTable"
               :prop="list.prop"
@@ -61,7 +61,7 @@ export default {
                 this.message(true,'权值范围为0~100','warning');
                 this.tableData3[index].show_weight = this.TableValue;
             } else {
-                this.$emit('setInfoRelation',this.tableData3[index].id, this.tableData3[index].show_weight);
+                this.$emit('setInfoRelation',this.tableData3[index].id, this.tableData3[index].show_weight,this.TableValue,index);
             }
         },
         
@@ -75,127 +75,13 @@ export default {
 };
 </script>
 
+<style>
+.operateTable .cell {
+  text-align: center;
+  font-size: 12px;
+}  
+</style>
 <style scoped>
-.operateBox {
-  width: 1500px;
-  margin: 0 auto;
-}
-/*
-* 选项卡样式
-*/
-.operateNav {
-  margin: 20px 0;
-}
-.operateNav .el-radio-button {
-  margin-right: 10px;
-}
-/*
-* 右边上传banner内容样式
-*/
-.operateUpfilesRight .upload-demo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.operateUpfilesRight .el-upload__tip {
-  margin-left: 20px;
-  margin-bottom: 8px;
-  display: none;
-}
-.operateUpfiles {
-  border: 1px solid #e4e4e4;
-  background-color: #fff;
-  display: flex;
-  flex-direction: row;
-}
-.operateHeader {
-  border-bottom: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #e4e4e4;
-  color: #666;
-}
-.operateHeader .el-button {
-  width: 80px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin: 10px;
-}
-.operateHeader>p {
-  margin-left: 20px;
-  font-weight: bold;
-}
-.operateUp {
-  border-bottom: none;
-}
-.operateDown {
-  border-top: none;
-}
-.operateUpfilesLeft {
-  background-color: #fcfcfc;
-  border-right: 1px solid #e4e4e4;
-  width: 159px;
-}
-.operateUpfilesLeft>div {
-  background: url(../../assets/img/point.png) no-repeat;
-  position: relative;
-  top: 50px;
-  left: 0;
-  width: 180px;
-  height: 50px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  padding-left: 20px;
-}
-.operateUpfilesRight {
-  padding: 50px 80px;
-  width: 1170px;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #e4e4e4;
-}
-.operateUpfilesRight .el-input {
-  width: 360px;
-}
-.operateUpfilesRight form {
-  margin-top: 50px;
-}
-.operateUpfilesRight button {
-  float: right;
-}
-.operateUpfilesRightImg {
-  width: 640px;
-  height: 170px;
-  overflow: hidden;
-  margin-top: 20px;
-}
-.operateUpfilesRightImg>img {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-
-/*
-* 右边当前banner内容样式
-*/
-
-.operateUpfilesRight2 {
-  padding: 40px 90px 40px 80px;
-  width: 1170px;
-}
-.operateUpfilesRight2Nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  color: #666;
-  font-size: 14px;
-}
 .operateTable {
   margin-top: 25px;
 }

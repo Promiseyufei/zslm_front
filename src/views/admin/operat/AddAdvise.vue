@@ -6,12 +6,14 @@
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>运行管理</el-breadcrumb-item>
             <el-breadcrumb-item>资讯频道首页推荐</el-breadcrumb-item>
-            <el-breadcrumb-item>添加推荐</el-breadcrumb-item>
+            <el-breadcrumb-item class="selectedNavPublic">添加推荐</el-breadcrumb-item>
           </el-breadcrumb>
 
           <!-- 返回按钮 -->
           <div class="addadviseBtn">
-              <el-button type="success" plain @click.native="$router.push('/operate/advise')">返回</el-button>
+              <el-row>
+                <el-button @click.native="$router.push('/operate/advise')">返回</el-button>
+              </el-row>
           </div>
           
           <div class="operateUpfiles operateHeader">
@@ -32,7 +34,7 @@
                       </el-form-item>
                   </el-form>
               </div>
-              <el-button type="info" plain @click="getIndexInfo"><i class="fa fa-search fa-fw"></i>查询</el-button>
+              <el-button type="info" plain @click="getIndexInfo" size="small"><i class="fa fa-search fa-fw"></i>查询</el-button>
           </div>
 
           <!-- 筛选头部 -->
@@ -42,7 +44,7 @@
             <!-- 表格 -->
             <div class="operateTable">
                 <template>
-                  <el-table :data="tableData3"  border style="width: 100%" ref="order"  @selection-change="handleSelectionChange">
+                  <el-table :data="tableData3"  border style="width: 100%" ref="order"  @selection-change="handleSelectionChange" :header-cell-style="getRowClass">
                     <el-table-column
                       type="selection"
                       width="55">
@@ -85,7 +87,7 @@
             <!-- 选中状态 -->
             <div class="operateTable">
                 <template>
-                  <el-table :data="tableData"  border style="width: 100%">
+                  <el-table :data="tableData"  border style="width: 100%" :header-cell-style="getRowClass">
                     <el-table-column
                       v-for="(list,index) in listTable2" 
                       :prop="list.prop"
@@ -206,10 +208,6 @@ export default {
           this.$refs.order.toggleRowSelection(row,true);
         },
 
-        handleClick:function(val) {
-          // console.log(val);
-        },
-
         //获得需要添加的资讯的id数组
         handleSelectionChange(val) {
             this.tableData = val;
@@ -241,12 +239,14 @@ export default {
                   this.infoIdArr = [];
                   this.tableData = [];
                   this.message(true, response.msg, 'seccess');
+                  this.$router.push('/operate/advise');
               }
               else 
                 this.message(true, response.msg, 'error');
             })
           }, () => {
               this.message(true, '已取消修改', 'info');
+              load.close();
           })
 
         },
@@ -289,12 +289,13 @@ export default {
             sortType: self.sort
           })
           .then(function (response) {
+            // response = response.data;
             if (response.code == 0) {
               self.tableData3 = response.result['data'];
               self.total = response.result['count'];
-            }
-            else 
+            }else {
               self.message(true, response.msg, 'error');
+            }
             load.close();
           })
           .catch(function (error) {
@@ -312,6 +313,10 @@ export default {
     .operateTable .has-gutter th {
         background-color: #ebeef5 !important;
     }
+    .operateTable .cell {
+      text-align: center;
+      font-size: 12px;
+    }  
 </style>
 
 <style scoped>

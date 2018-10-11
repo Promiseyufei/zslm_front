@@ -33,13 +33,18 @@ export default {
 };
 </script>
 
-
+<style>
+.el-radio-button__inner {
+  font-size: 12px !important;
+}
+</style>
 <style scoped>
 /*
 * 选项卡样式
 */
 .operateNav {
   margin: 20px 0;
+  
 }
 .operateNav .el-radio-button {
   margin-right: 10px;
