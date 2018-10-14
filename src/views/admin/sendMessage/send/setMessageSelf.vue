@@ -196,7 +196,7 @@ export default {
                 pageCount: 100,
                 pageNumber: this.currentPage
             }).then((response) => {
-                // console.log(response);
+                console.log(typeof response);
                 if(response.code == 0) {
                     self.totalData = response.result.total;
                     self.tableData = response.result.map;
