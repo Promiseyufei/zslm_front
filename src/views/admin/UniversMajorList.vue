@@ -18,7 +18,7 @@
         <div class="majorlist-form">
             <el-form class="majorlist-input" label-width="80px">
                 <el-form-item label="院校专业">
-                    <el-input size="medium" v-model="name" placeholder="输入文件名称"></el-input>
+                    <el-input size="medium" v-model="name" placeholder="输入院校专业名称"></el-input>
                 </el-form-item>
                 <el-form-item label="展示状态">
                     <el-select size="medium" v-model="type1" placeholder="全部">
@@ -93,9 +93,7 @@
                 type1:2,
                 type2:2,
                 cacheMajorWeight:'',
-                majorlisttable:[
-                   { weight:0}
-                ],
+                majorlisttable:[],
                 searchContent:{
                     page:1,
                     limit:10,
@@ -113,19 +111,19 @@
                     {name:'el-icon-tickets'},
                 ],
                 options: [
-                    {value: 0,　label: '选项一'}, 
-                    {value: 1,label: '选项二'}, 
-                    {value: 2,label: '选项三'}
+                    {value: 0,　label: '按权重升序'}, 
+                    {value: 1,label: '按权重降序'}, 
+                    {value: 2,label: '按信息更新时间'}
                 ],
                 screenType: [
-                    {label: '选项一', value: 0},
-                    {label: '选项二', value: 1},
-                    {label: '选项三', value: 2}
+                    {label: '展示', value: 0},
+                    {label: '不展示', value: 1},
+                    {label: '显示全部', value: 2}
                 ],
                 screenState: [
-                    {label: '选项一', value: 0},
-                    {label: '选项二', value: 1},
-                    {label: '选项三', value: 2}
+                    {label: '推荐', value: 0},
+                    {label: '不推荐', value: 1},
+                    {label: '显示全部', value: 2}
                 ],
                 tableTop:[
                   {prop:'z_name',label:'院校专业名称',width:580},
@@ -206,6 +204,7 @@
                 this.value = this.options[2].value;
                 this.gettableInfo();
             },
+
             //弹出查看招生项目页面
             alertSeeProject(){
                 
@@ -278,6 +277,7 @@
                     pageNumber:that.searchContent.page - 1
                 })
                 .then(function (response) {
+                    console.log(response);
                     if (response.code == 0) {
                         that.majorlisttable = response.result.get_page_msg;
                         that.total = response.result.count;
