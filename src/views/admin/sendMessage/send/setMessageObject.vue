@@ -138,10 +138,11 @@ export default {
         },
         // 跳转到“活动列表”页面添加推荐活动
         adviseAdd: function() {
-          this.$router.push('/operate/addAdvise');
+          this.$router.push('/message/hostuniversmajor');
         },
         //跳到活动页面
         adviseAdd2: function() {
+            this.$router.push('/message/choiceactivity/'+"");
             console.log("我就不跳～，哼");
         },
         //删除单个活动
