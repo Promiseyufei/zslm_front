@@ -86,7 +86,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Activity'], resolve))
         },
         {
-            path: '/message/notice/:id',
+            path: '/message/notice',
             name: '消息通知',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/messageNotice'], resolve))
         },
@@ -150,17 +150,13 @@ let admin_router = {
             name: '信息发布-资讯发布-消息通知',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationNotice'], resolve))
         },
-        // {
-        //     path: '/test',
-        //     name: 'WangEditor test',
-        //     component: resolve =>void(require(['@/views/admin/test'], resolve))
-        // },
+        
 
 
         //消息管理
         {
             path: '/send/sendHome',
-            name: '消息管理-发消息',
+            name: '/send/sendHome',
             component: resolve =>void(require(['@/views/admin/sendMessage/send/sendHome'], resolve))
         },
         {
@@ -184,7 +180,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordHome'], resolve))
         },
         {
-            path: '/record/recordDetail',
+            path: '/record/recordDetail/:newsId',
             name: '消息管理-历史消息记录详情',
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordDetail'], resolve))
         },
@@ -197,12 +193,17 @@ let admin_router = {
         {
             path: '/usermanagement/userlist',
             name: '用户管理-关注院校',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userList'], resolve))
+            component: resolve =>void(require(['@/views/admin/userManagement/userList'], resolve))
+        },
+        {
+            path: '/usermanagement/userParticipateActivities',
+            name: '用户管理-关注院校',
+            component: resolve =>void(require(['@/views/admin/userManagement/userParticipateActivities'], resolve))
         },
         {
             path: '/usermanagement/usercoupons',
             name: '用户管理-关注院校',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userCoupons'], resolve))
+            component: resolve =>void(require(['@/views/admin/userManagement/userCoupons'], resolve))
         },
         {
             path: '/usermanagement/userparticipateactivities',
@@ -212,12 +213,12 @@ let admin_router = {
         //退款
         {
             path: '/refund/refundlist',
-            name: '用户管理-退款',
+            name: '用户管理-退款管理',
             component: resolve =>void(require(['@/views/admin/refund/refundList'], resolve))
         },
         {
             path: '/refund/refunddetails',
-            name: '用户管理-退款',
+            name: '用户管理-退款详情',
             component: resolve =>void(require(['@/views/admin/refund/refundDetails'], resolve))
         },
         

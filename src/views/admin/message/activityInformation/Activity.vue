@@ -135,13 +135,15 @@
                         <div class="operateUpfilesRight2">
                             <el-button type="primary" @click="startChange3">编辑</el-button>
                             <div class="messageBtn">
-                                  <div id="editor">
-                                      <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
-                                  </div>
-                                  <div class="messageEditor">
+                                <!-- <div id="editor">
+                                    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+                                </div>
+                                <div class="messageEditor">
                                     <el-button type="primary" plain :disabled = "disabled3" @click="messageEmpty">清空</el-button>
                                     <el-button type="primary" :disabled = "disabled3"  @click="messageSubmit">提交</el-button>
-                                  </div>
+                                </div> -->
+
+                                <editor :disabled = "disabled3"></editor>
                             </div>
                         </div>
                     </div>
@@ -195,11 +197,12 @@ export default {
         disabled:true,
         disabled2:true,
         disabled3:true,
-        editor: new WangEditor('#editor'),
+        // editor: new WangEditor('#editor'),
         fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
       }
     },
     methods:{
+
         /**
          * info
          * 初始化地区字典以及专业字典
@@ -251,6 +254,7 @@ export default {
                 }
             return new File([u8arr], filename, {type:mime});
         },
+
         startChange: function () {
             this.disabled = false;
         },
@@ -360,15 +364,16 @@ export default {
         },
         
         // 提交修改数据
+
         messageSubmit: function() {
             this.disabled3 = true;
             this.editor.$textElem.attr('contenteditable', false);
             this.inPost();
         },
         // 清空富文本编辑器内容
-        messageEmpty: function() {
-            this.editor.txt.clear();
-        },
+        // messageEmpty: function() {
+        //     this.editor.txt.clear();
+        // },
         //弹出上传图片对话框
         addPic: function(e) {
             $('input[type=file]').trigger('click');
@@ -569,7 +574,7 @@ export default {
     /*
     * 富文本编辑器
     */
-    #editor {
+    /* #editor {
       text-align: left;
     }
     .messageEditor {
@@ -577,7 +582,7 @@ export default {
       display: flex;
       justify-content: flex-end;
 
-    }
+    } */
 
     /*
     * 步骤条样式
@@ -637,9 +642,6 @@ export default {
         padding: 50px 80px;
         width: 1170px;
         border-bottom: 1px solid #e4e4e4;
-    }
-    .operateUpfilesRight form {
-        margin-top: 50px;
     }
     .operateUpfilesRight button {
         float: right;

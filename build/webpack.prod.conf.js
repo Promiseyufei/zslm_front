@@ -1,4 +1,12 @@
 'use strict'
+/**
+ * 作用
+ * 1.提取webpack生成的bundle中的文本，到特定的文件，使得css，js文件与webpack输出的bundle分离。
+ * 2.合并基本的webpack配置
+ * 3.配置webpack的输出，包括输出路径，文件名格式。
+ * 4.配置webpack插件，包括丑化代码。
+ * 5.gzip下引入compression插件进行压缩。
+ */
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')

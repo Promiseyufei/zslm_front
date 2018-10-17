@@ -1,143 +1,168 @@
 <template >
     <div>
         <div class="operateBox">
+
         <!-- 中间内容 -->
-        <div>
-          <el-breadcrumb separator="/">
-            <el-breadcrumb-item>信息发布</el-breadcrumb-item>
-            <el-breadcrumb-item>院校专业</el-breadcrumb-item>
-            <el-breadcrumb-item>院校专业信息编辑</el-breadcrumb-item>
-          </el-breadcrumb>
+            <div>
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+                    <el-breadcrumb-item>院校专业</el-breadcrumb-item>
+                    <el-breadcrumb-item  class="selectedNavPublic">院校专业信息编辑</el-breadcrumb-item>
+                </el-breadcrumb>
 
-          <!-- 步骤条 -->
-          <div class="fileSteps">
-            <el-steps :active=".1" align-center>
-              <el-step title="院校专业信息"></el-step>
-              <el-step title="招生项目信息"></el-step>
-            </el-steps>
-          </div>
-          
-          <div>
-            <!-- 上传banner -->
-            <div class="operateUpfiles operateUp">
-              <div class="operateUpfilesLeft">
-                <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
-              </div>
-              <div class="operateUpfilesRight">
-                
-                <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
-                  <el-form-item>
-                    <el-button type="primary" @click="startChange">开始编辑</el-button>
-                  </el-form-item>
-                  <el-form-item label="院校专业名称">
-                    <el-input v-model="ruleForm.name" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="专业认证">
-                    <el-radio-group v-model="ruleForm.authentication" :disabled = "disabled">
-                        <el-radio label="AMBA">AMBA</el-radio>
-                        <el-radio label="EQUIS">EQUIS</el-radio>
-                        <el-radio label="AACSB">AACSB</el-radio>
-                        <el-radio label="CAMEA">CAMEA</el-radio>
-                      </el-radio-group>
-                  </el-form-item>
-                  <el-form-item label="院校性质">
-                    <el-radio-group v-model="ruleForm.type" :disabled = "disabled">
-                        <el-radio label="原985">原985</el-radio>
-                        <el-radio label="原211">原211</el-radio>
-                        <el-radio label="双一流">双一流</el-radio>
-                      </el-radio-group>
-                  </el-form-item>
-                  <el-form-item label="审批年限">
-                    <el-select v-model="ruleForm.year" placeholder="请选择活动区域" :disabled = "disabled">
-                      <el-option :label="1990+index" :value="1990+index" v-for="(item, index) in 29" :key="index"></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item label="活动省市">
-                      <el-select v-model="ruleForm.region" placeholder="请选择活动区域" :disabled = "disabled">
-						  <el-option-group v-for="(pro, index) in province" :key="index" :label="pro.name">
-							  <el-option v-for="(city, i) in pro.citys" :key="i" :label="city.name" :value="city.id"></el-option>
-						  </el-option-group>
-                          <!-- <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option> -->
-                      </el-select>
-                  </el-form-item>
-                  <el-form-item label="院校地址">
-                    <el-input v-model="ruleForm.address" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="资讯电话">
-                    <el-input v-model="ruleForm.tell" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="院校官网">
-                    <el-input v-model="ruleForm.web" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="招生专题">
-                    <el-input v-model="ruleForm.topic" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="所属院校名称">
-                    <el-input v-model="ruleForm.schoolName" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="专业类型">
-                      <el-select v-model="ruleForm.spaticalType" placeholder="请选择专业类型" :disabled = "disabled">
-                          <el-option :label="item.name" :value="item.id" v-for="(item, index) in major" :key="index"></el-option>
-                      </el-select>
-                  </el-form-item>
-                  <el-form-item label="官方微信">
-                    <div style="padding: 0 5px 5px 8px">
-                      <div class="add" @click.stop="addPic" cuort>
-                          <input type="file" id="upload" accept="image" @change="upload" style="display: none">
-                          <span style="color:#B2B2B2;" >添加图片</span>
-                      </div>
-                      <li class="show" v-for="(iu, index) in imgUrls" :key="index">
-                          <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
-                      </li>
+            <!-- 步骤条 -->
+            <div class="fileSteps">
+                <el-steps :active=".1" align-center>
+                <el-step title="院校专业信息"></el-step>
+                <el-step title="招生项目信息"></el-step>
+                </el-steps>
+            </div>
+            
+            <div>
+                <!-- 上传banner -->
+                <div class="operateUpfiles operateUp">
+                <div class="operateUpfilesLeft">
+                    <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
+                </div>
+                <div class="operateUpfilesRight">
+                    
+                    <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
+                    <el-form-item>
+                        <el-button type="primary" @click="startChange">开始编辑</el-button>
+                    </el-form-item>
+                    <el-form-item label="院校专业名称">             
+                        <el-input v-model="majorInfo.z_name" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="专业认证"> 
+                        <el-radio-group v-model="majorInfo.major_confirm_id" :disabled = "disabled">
+                            <el-radio v-for="(item, index) in majorAuthentication" :key="index" :label="item.id">{{ item.name }}</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="院校性质">
+                        <el-radio-group v-model="majorInfo.major_follow_id" :disabled = "disabled">
+                            <el-radio v-for="(item, index) in majorNature" :key="index" :label="item.id">{{ item.name }}</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="审批年限">
+                        <el-select v-model="majorInfo.access_year" placeholder="请选择活动区域" :disabled = "disabled">
+                        <el-option :label="1990+index" :value="1990+index" v-for="(item, index) in 29" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="活动省市">
+                        <el-select v-model="majorInfo.province" placeholder="请选择活动区域" :disabled = "disabled">
+                            <el-option-group v-for="(pro, index) in province" :key="index" :label="pro.name">
+                                <el-option v-for="(city, i) in pro.citys" :key="i" :label="city.name" :value="city.id"></el-option>
+                            </el-option-group>
+                            <!-- <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option> -->
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="院校地址">
+                        <el-input v-model="majorInfo.address" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="资讯电话">
+                        <el-input v-model="majorInfo.phone" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="院校官网">
+                        <el-input v-model="majorInfo.index_web" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="招生专题">
+                        <el-input v-model="majorInfo.admissions_web" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="所属院校名称">
+                        <el-input v-model="majorInfo.school_id" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="专业类型">
+                        <el-select v-model="majorInfo.z_type" placeholder="请选择专业类型" :disabled = "disabled">
+                            <el-option :label="item.name" :value="item.id" v-for="(item, index) in major" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="官方微信">
+                        <div style="padding: 0 5px 5px 8px">
+                        <div class="add" @click.stop="addPic" cuort>
+                            <input type="file" id="upload" accept="image" @change="upload" style="display: none">
+                            <span style="color:#B2B2B2;">添加图片</span>
+                        </div>
+                        <li class="show" v-for="(iu, index) in imgUrls" :key="index">
+                            <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
+                        </li>
+                        </div>
+                    </el-form-item>
+                    
+                    <el-form-item>
+                        <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
+                    </el-form-item>
+                    </el-form>
+                </div>
+                </div>
+            
+                <div>
+                    <!-- 上传banner -->
+                    <div class="operateUpfiles operateUp">
+                    <div class="operateUpfilesLeft">
+                        <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
                     </div>
-                  </el-form-item>
-                  
-                  <el-form-item>
-                    <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
-                  </el-form-item>
-                </el-form>
-              </div>
-            </div>
-            <!-- 当前banner -->
-            <div class="operateUpfiles operateDown">
-              <div class="operateUpfilesLeft">
-                <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;页面优化信息</div>
-              </div>
-              <div class="operateUpfilesRight2">
-                <div class="messageBtn">
-                  <el-form ref="form" label-width="100px">
-                    <el-form-item>
-                      <el-button type="primary" @click="startChange2">开始编辑</el-button>
-                    </el-form-item>
-                    <el-form-item label="Title">
-                      <el-input v-model="form.name" :disabled = "disabled2"></el-input>
-                    </el-form-item>
-                    <el-form-item label="Keywords">
-                      <el-input v-model="form.name" :disabled = "disabled2"></el-input>
-                    </el-form-item>
-                    <el-form-item label="Description">
-                      <el-input v-model="form.name" :disabled = "disabled2"></el-input>
-                    </el-form-item>
+                    <div class="operateUpfilesRight">
+                        
+                        <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
+                        <el-form-item>
+                            <el-button type="primary" @click="startChange">开始编辑</el-button>
+                        </el-form-item>
+                        <el-form-item label="Title">
+                        <el-input v-model="majorInfo.title" :disabled = "disabled2"></el-input>
+                        </el-form-item>
+                        <el-form-item label="Keywords">
+                        <el-input v-model="majorInfo.keywords" :disabled = "disabled2"></el-input>
+                        </el-form-item>
+                        <el-form-item label="Description">
+                        <el-input v-model="majorInfo.descciption" :disabled = "disabled2"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
+                        </el-form-item>
+                        </el-form>
+                    </div>
+                    </div>
+                    <!-- 当前banner -->
+                    <div class="operateUpfiles operateDown">
+                    <div class="operateUpfilesLeft">
+                        <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;页面优化信息</div>
+                    </div>
+                    <div class="operateUpfilesRight2">
+                        <div class="messageBtn">
+                        <el-form ref="form" label-width="100px">
+                            <el-form-item>
+                            <el-button type="primary" @click="startChange2">开始编辑</el-button>
+                            </el-form-item>
+                            <el-form-item label="Title">
+                            <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Keywords">
+                            <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Description">
+                            <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                            </el-form-item>
 
-                    <el-form-item>
-                      <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
-                    </el-form-item>
-                  </el-form>  
+                            <el-form-item>
+                            <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
+                            </el-form-item>
+                        </el-form>  
+                        </div>
+                        <!-- 完成按钮 -->
+                        <div class="operateFinalUp">
+                        <el-button type="primary" @click="jumpPage">下一步，编辑招生信息</el-button>
+                        </div>
+                        
+                    </div>
+                    
+                    </div>
                 </div>
-                <!-- 完成按钮 -->
-                <div class="operateFinalUp">
-                  <el-button type="primary">下一步，编辑招生信息</el-button>
-                </div>
-                
-              </div>
-              
             </div>
-          </div>
+            
+            </div>
         </div>
-        
-        </div>
-        
     </div>
+    
 </template>
 
 <script>
@@ -164,12 +189,18 @@ export default {
                 schoolName: "大数据",
                 school: "河南科技学院",
                 typeAll: "2"
-            },
-            imgUrls: [],
+			},
+			imgUrls: [],
+			sendImg:[],
             // 省份字典
             province: [],
             // 专业字典
-            major: [],
+			major: [],
+			//专业认证
+			majorAuthentication:[],
+			//院校性质
+			majorNature:[],
+			majorInfo:{},
             isShow:true,
             disabled:true,
             disabled2:true,
@@ -182,6 +213,53 @@ export default {
         }
     },
     methods:{
+		
+
+		putMajorMainMsg() {
+			console.log(this.sendImg);
+			let formdata = new FormData();
+
+			formdata.append('z_name', this.majorInfo.z_name);
+			formdata.append('major_confirm_id', this.majorInfo.major_confirm_id);
+			formdata.append('major_follow_id', this.majorInfo.major_follow_id);
+			formdata.append('access_year', this.majorInfo.access_year);
+			formdata.append('province', this.changeMajorProvince(this.majorInfo.province));
+			formdata.append('address', this.majorInfo.address);
+			formdata.append('phone', this.majorInfo.phone);
+			formdata.append('index_web', this.majorInfo.index_web);
+			formdata.append('admissions_web', this.majorInfo.admissions_web);
+			formdata.append('school_name', this.majorInfo.school_id);
+			formdata.append('z_type', this.changeMajorType(this.majorInfo.z_type));
+			this.sendImg.forEach((item) => {
+				formdata.append('wc_image', item);
+			});
+			// formdata.append('wc_image', this.sendImg);
+			let config = {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+			this.post('/admin/information/updateMajorMsg', formdata, config).then((response) => {
+				// console.log(response);
+			});
+		},
+
+		changeMajorType(typeName) {
+			this.major.forEach((item) => {
+				if(typeof(typeName) == 'String' && typeName == item.name) return item.id;
+			});
+			return typeName;
+		},
+		changeMajorProvince(majorProvinceName) {
+			this.province.forEach((province) => {
+				province.citys.forEach((city) =>{
+					if((typeof(majorProvinceName) == 'String' && city.name == majorProvinceName) || (typeof(majorProvinceName) == 'Number' && city.id == majorProvinceName)) return city.father_id + ',' + city.id;
+				})
+			});
+		},
+		jumpPage:function(){
+			this.$router.push('/message/universityMessage');
+		},
         test: function() {
           console.log(this.province);
         },
@@ -202,19 +280,22 @@ export default {
 				vm.imgUrls.splice(index, 1);
 				vm.count--;
 				vm.count<3?vm.isShow = true:vm.isShow;
+				this.sendImg.splice(index, 1);
+				console.log(this.sendImg);
 				this.message(true, '图片删除成功', 'success');
 			}, () => {
 				this.message(true, '取消删除', 'info');
 			});
         },
         upload (e) {
-            let files = e.target.files || e.dataTransfer.files;
+			let files = e.target.files || e.dataTransfer.files;
             if (!files.length||this.count>2) {
                 return;
             }
             this.imgPreview(files[0],e);
             this.count++;
-            this.count>=3?this.isShow = false:this.isShow;
+			this.count>=3?this.isShow = false:this.isShow;
+			this.sendImg.push(files[0]);
             this.message(true,'图片添加成功','');
         },
         imgPreview (file,e) {
@@ -244,14 +325,14 @@ export default {
                     }else {
 						img.onload = function () {
                             let data = self.compress(img,Orientation);
-                            self.imgUrls.push(data);
                         }
                     }
                     e.target.value = null;
                 }
             }
 
-        },
+		},
+		
         rotateImg (img, direction,canvas) {
             //最小与最大旋转方向，图片旋转4次后回到原方向
             const min_step = 0;
@@ -366,30 +447,68 @@ export default {
 			return ndata;
 	  },
 
+	  dictionaries() {
+			let _this = this;
+			let dictionariesArr = [
+				{re:'post', url:'/admin/information/getMajorAuthentication', pa:{}, calls: (response) => {_this.majorAuthentication = response.result;}, errorMsg: '未查询到专业认证信息'},
+				{re:'post', url:'/admin/information/getMajorNature', pa:{}, calls: (response) => {_this.majorNature = response.result;}, errorMsg: '未查询到院校性质信息'},
+				{re:'post', url:'/admin/information/getMajorProvincesAndCities', pa:{}, calls: (response) => {_this.province = response.result[0];}, errorMsg: '未查询到省份信息'},
+				{re:'post', url:'/admin/information/getMajorType', pa:{}, calls: (response) => {_this.major = response.result;}, errorMsg: '未查询到专业类型'},
+			];
+
+			dictionariesArr.forEach((item) => {
+				_this.getMajorPageOptions(item.re, item.url, item.pa, (response) => {
+					response.code == 0 ? item.calls(response) : this.message(true, response.msg, 'error');
+				}, (response) => {
+					this.message(true, item.errorMsg, 'error');
+				});
+			})
+
+	  }
+
     },
     mounted(){
+
+		this.dictionaries();
+
 		let _this = this;
 
-		//获取省份列表信息
-		this.getMajorPageOptions('post', '/admin/information/getMajorProvincesAndCities', {}, (response)=> {
-			_this.province = response.result[0];
-		}, (response) => {
-			this.message(false, "未查询到省份信息", "error");
-		});
-
-		//获取院校专业类型字典
-		this.getMajorPageOptions('post', '/admin/information/getMajorType', {}, (response) => {
-			_this.major = response.result;
-		}, (response) => {
-			this.message(true, "未查询到专业类型", 'error');
-		})
+		if(this.$route.params.majorId != null) {
+			this.post('/admin/information/selectReception', {
+				majorId: this.$route.params.majorId
+			}).then((response) => {
+				console.log(response);
+				if(response.code == 0) {
+					_this.majorInfo = response.result;
+					if(response.result.wc_image instanceof Array && response.result.wc_image.length > 0)  
+						_this.imgUrls.push.apply(_this.imgUrls, response.result.wc_image);
+						_this.sendImg.push.apply(_this.sendImg, response.result.wc_image);
+				}
+				else
+					this.message(true, response.msg, 'error');
+			})
+		}
     }
 };
 </script>
 <style>
-  /*
-  * 
-  */
+    /*
+    * 
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
 </style>
 
 <style scoped>
@@ -403,12 +522,14 @@ export default {
 */
 .fileSteps {
   /*margin: 20px 0;*/
-  width: 400px;
+  width: 600px;
   margin: 0 auto;
 }
 .fileSteps .el-steps--horizontal {
   margin: 20px 0;
 }
+
+
 
 /*
 * 
@@ -456,9 +577,6 @@ export default {
   padding: 50px 80px;
   width: 1170px;
   border-bottom: 1px solid #e4e4e4;
-}
-.operateUpfilesRight form {
-  margin-top: 50px;
 }
 .operateUpfilesRight button {
   float: right;

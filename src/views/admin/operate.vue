@@ -5,13 +5,13 @@
 				<div>
 					<el-breadcrumb separator="/">
 						<el-breadcrumb-item>运行管理</el-breadcrumb-item>
-						<el-breadcrumb-item>频道banner</el-breadcrumb-item>
+						<el-breadcrumb-item class="selectedNavPublic">频道banner</el-breadcrumb-item>
 					</el-breadcrumb>
 					<!-- 选项卡 -->
 					<operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
 					
 					<div class="operateUpfiles operateHeader">
-						<p>当前操作页面：<span>{{this.radio}}</span></p>
+						<p>当前操作页面：<span>{{this.radio2}}</span></p>
 						<el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
 					</div>
 					<div v-loading="loading"
@@ -49,7 +49,7 @@
 											<el-input v-model="ruleForm.url" placeholder="输入图片URL"></el-input>
 										</el-form-item>
 									</el-form>
-									<el-button type="primary" key="shanchuan" @click.native="submitForm">上传</el-button>
+									<el-button type="primary" key="shanchuan" @click.native="submitForm" size="medium">上传</el-button>
 								</div>
 							</div>
 						</div>
@@ -60,8 +60,8 @@
 							</div>
 							<div class="operateUpfilesRight2">
 								<div class="operateUpfilesRight2Nav">
-									<span>当前展示的banner</span>
-									<el-button type="info" plain @click="operateDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+									<!-- <span>当前展示的banner</span> -->
+									<el-button type="info" plain @click="operateDelete" size="small"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
 								</div>
 								<!-- 表格 -->
 								<OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setInfoRelation" @del="delBanner"></OperateTable>
@@ -87,7 +87,6 @@ export default {
 			return {
 					loading: false,
 					banner: [],
-					radio: "辅导机构列表页",
 					radio2: "",
 					src: "",
 					initialImgUrl: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',
@@ -133,6 +132,7 @@ export default {
 		methods:{
 				//获取图片file，并图片预览
 				changeUpload: function(file,fileList) {
+					console.log(file);
 					if(this.beforeAvatarUpload(file)) {
 							this.initialImgUrl = file.url;
 							this.file = file.raw;
@@ -228,34 +228,43 @@ export default {
 				// 动态更新资讯类型id
 				toshow: function (i) {
 					this.i = i;
+					for(var i=0;i<this.banner.length;i++) {
+						if(this.banner[i].id == this.i) {
+							this.radio2 = this.banner[i].name;
+							break;
+						}
+					}
+					
 					this.getIndexBanner();
 				},
-				setInfoRelation: function(id, weight) {
+				setInfoRelation: function(id, weight, val, index) {
 					this.confirm(() => {
-						this.post('/admin/operate/setBtWeight', {
-								bannerAdId: id,
-								weight:weight
+						axios.post('/admin/operate/setBtWeight', {
+							bannerAdId: id,
+							weight:weight
 						}).then((response) => {
-								(response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+							response = response.data;
+							(response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
 						})
 					}, () => {
-						this.tableData3[index].show_weight = this.TableValue;
+						this.tableData3[index].show_weight = val;
 						this.message(true, '已取消修改', 'info');    
 					})
 				},
 
 				delBanner: function(res, row) {
 					this.confirm(() => {
-							this.post('/admin/operate/deleteBannerAd', {
-									btId: res
+							axios.post('/admin/operate/deleteBannerAd', {
+								btId: res
 							}).then((response) => {
-									if(response.code == 0) {
-											this.tableData3.splice(this.tableData3.indexOf(row), 1);
-											this.message(true, response.msg, 'success');
-									}
-									else {
-											this.message(true, response.msg, 'error');
-									}
+								response = response.data;
+								if(response.code == 0) {
+									this.tableData3.splice(this.tableData3.indexOf(row), 1);
+									this.message(true, response.msg, 'success');
+								}
+								else {
+									this.message(true, response.msg, 'error');
+								}
 							})
 					}, () => {
 							this.message(true, '已取消修改', 'info')
@@ -265,12 +274,13 @@ export default {
 				// 获取所有一级页面名称
 				getInformationType: function() {
 					var self = this;
-					this.post('/admin/operate/getIndexListName', {})
+					axios.post('/admin/operate/getIndexListName', {})
 					.then(function (response) {
+						var response = response.data;
 						if (response.code == 0) {
-							self.banner = response.result;
-							self.radio2 = response.result[0].name;
-							self.i = response.result[0].id;
+							self.banner = response.data;
+							self.radio2 = response.data[0].name;
+							self.i = response.data[0].id;
 							self.getIndexBanner();
 						};
 					})
@@ -284,13 +294,14 @@ export default {
 				getIndexBanner: function() {
 				var self = this;
 				var load =this.openFullScreen2();
-				this.post('/admin/operate/getIndexBanner', {
+				axios.post('/admin/operate/getIndexBanner', {
 					indexId: self.i,
 					btType: 0
 				})
 				.then(function (response) {
+					var response = response.data;
 					if (response.code == 0) {
-					self.tableData3 = response.result;
+					self.tableData3 = response.data;
 					load.close();
 					};
 				})
@@ -317,6 +328,17 @@ export default {
 	}
 	.operateUpfilesRight2 .has-gutter th {
 		background-color: #EAEDF1 !important;
+	}
+
+	/*
+	* 公共样式
+	*/
+	.selectedNavPublic {
+		border-bottom: 1px solid #1abc1a;
+		padding-bottom: 5px;
+	}
+	.el-breadcrumb__inner {
+		font-size: 12px;
 	}
 </style>
 
@@ -435,7 +457,7 @@ export default {
 }
 .operateUpfilesRight2Nav {
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 	align-items: center;
 	font-weight: bold;
 	color: #666;

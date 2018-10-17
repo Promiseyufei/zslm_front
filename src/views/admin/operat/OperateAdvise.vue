@@ -5,12 +5,12 @@
         <div>
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>运行管理</el-breadcrumb-item>
-            <el-breadcrumb-item>资讯频道首页推荐</el-breadcrumb-item>
+            <el-breadcrumb-item  class="selectedNavPublic">资讯频道首页推荐</el-breadcrumb-item>
           </el-breadcrumb>
           <!-- 选项卡 -->
           <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
           <div class="operateUpfiles operateHeader">
-            <p>当前操作页面：<span>{{this.radio}}</span></p>
+            <p>当前操作页面：<span>{{this.radio2}}</span></p>
             <el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
           </div>
           
@@ -45,8 +45,8 @@
               </div>
               <div class="operateUpfilesRight2">
                 <div class="operateUpfilesRight2Nav">
-                  <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
-                  <el-button type="info" plain @click="operateDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                  <el-button type="info" plain @click="adviseAdd" size="small"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                  <el-button type="info" plain @click="operateDelete" size="small"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                 </div>
                 <!-- 表格 -->
                 <OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></OperateTable>
@@ -86,7 +86,6 @@ export default {
             name: "区域二"
           }
         ],
-        radio: "区域一",
         radio2: "",
         src: "",
         fileList: [{name: '', url: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',file: ''}],
@@ -129,7 +128,6 @@ export default {
         }
     },
     methods:{
-
         adviseAdd: function() {
           this.$router.push('/operate/addAdvise/' + this.i);
         },
@@ -180,8 +178,8 @@ export default {
                 for (var i = 0; i < self.tableData3.length; i++) {
                   self.$set(self.tableData3[i],'show_weight',self.tableData3[i].weight);
                 };
-                load.close();
             };
+            load.close();
           })
           .catch(function (error) {
             console.log(error);
@@ -233,7 +231,7 @@ export default {
                       'Content-Type': 'multipart/form-data'
                   }
               }
-              axios.post('/admin/operate/createPageBillboard', {
+              this.post('/admin/operate/createPageBillboard', {
                 imgName: self.ruleForm.name,
                 imgAlt: self.ruleForm.message,
                 reUrl: self.ruleForm.url,
@@ -241,7 +239,7 @@ export default {
                 urlId: self.i
               })
               .then(function (response) {
-                var date = response.data;
+                // var date = response.data;
                 if (date.code == 0) {
                   self.$message({
                     message: '上传成功',
@@ -271,6 +269,12 @@ export default {
         // 动态更新资讯类型id
         toshow: function (i) {
           this.i = i;
+          for(var i=0;i<this.banner.length;i++) {
+						if(this.banner[i].id == this.i) {
+							this.radio2 = this.banner[i].name;
+							break;
+						}
+					}
           this.getAdviseName();
         },
         setOpAd: function(id, weight) {
@@ -341,16 +345,7 @@ export default {
 }
 </script>
 <style>
-  /*
-  * 上传图片列表初始时不显示
-  */
-  .operateUpfilesRight .el-upload-list {
-    display: none;
-    margin-top: -10px;
-  }
-  .operateUpfilesRight2 .has-gutter th {
-    background-color: #EAEDF1 !important;
-  }
+
 </style>
 
 <style scoped>
@@ -450,9 +445,6 @@ export default {
 }
 .operateUpfilesRight .el-input {
   width: 360px;
-}
-.operateUpfilesRight form {
-  margin-top: 50px;
 }
 .operateUpfilesRight button {
   float: right;

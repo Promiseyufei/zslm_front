@@ -9,12 +9,12 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1,
+                        "index":1.1,
                         "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2,
+                        "index":1.2,
                         "url":"/operate"
                     }
                 ]
@@ -24,12 +24,12 @@ export default [
                 "options":[
                     {
                         "name":"选项一",
-                        "index":1,
+                        "index":1.3,
                         "url":"/operate"
                     },
                     {
                         "name":"选项二",
-                        "index":2,
+                        "index":1.4,
                         "url":"/operate"
                     }
                 ]
@@ -42,32 +42,32 @@ export default [
         "title": "账户管理",
         "groups":[
             {
-                "title": "分组一",
+                "title": "用户列表",
                 "options":[
                     {
-                        "name":"选项一",
-                        "index":1,
-                        "url":"/operate"
-                    },
-                    {
-                        "name":"选项二",
-                        "index":2,
-                        "url":"/operate"
+                        "name":"用户列表",
+                        "index":2.1,
+                        "url":"/usermanagement/userlist"
                     }
                 ]
             },
             {
-                "title": "分组二",
+                "title": "用户行为",
                 "options":[
                     {
-                        "name":"选项一",
-                        "index":1,
-                        "url":"/operate"
+                        "name":"关注院校",
+                        "index":2.2,
+                        "url":"/usermanagement/userfocusmajor"
                     },
                     {
-                        "name":"选项二",
-                        "index":2,
-                        "url":"/operate"
+                        "name":"参与活动",
+                        "index":2.3,
+                        "url":"/usermanagement/userParticipateActivities"
+                    },
+                    {
+                        "name":"领优惠卷",
+                        "index":2.4,
+                        "url":"/usermanagement/usercoupons"
                     }
                 ]
             }
@@ -83,22 +83,22 @@ export default [
                 "options":[
                     {
                         "name":"院校专业",
-                        "index":1,
+                        "index":3.1,
                         "url":"/message/universMajorList"
                     },
                     {
                         "name":"活动信息",
-                        "index":2,
+                        "index":3.2,
                         "url":"/message/activityList"
                     },
                     {
                         "name":"辅导机构",
-                        "index":3,
+                        "index":3.3,
                         "url":"/message/coachList"
                     },
                     {
                         "name":"资讯发布",
-                        "index":4,
+                        "index":3.4,
                         "url":"/message/informationList"
                     },
                 ]
@@ -116,7 +116,7 @@ export default [
                     {
                         "name":"文件上传",
                         "index":1,
-                        "url":"/operate"
+                        "url":"/filesManage/fileup"
                     },
                     {
                         "name":"文件管理",
@@ -134,20 +134,25 @@ export default [
         "title": "消息管理",
         "groups":[
             {
-                "title": "消息管理",
+                "title": "发消息",
                 "options":[
                     {
-                        "name":"消息管理",
-                        "index":1,
-                        "url":"/operate"
-                    },
-                    {
-                        "name":"消息管理",
-                        "index":2,
-                        "url":"/operate"
+                        "name":"发消息",
+                        "index":5.1,
+                        "url":"/send/sendHome"
                     }
                 ]
-            }
+            },
+            {
+                "title": "历史消息记录",
+                "options":[
+                    {
+                        "name":"历史记录",
+                        "index":5.2,
+                        "url":"/record/recordHome"
+                    }
+                ]
+            },
         ]
     },
     {
@@ -160,17 +165,17 @@ export default [
                 "options":[
                     {
                         "name":"频道Banner",
-                        "index":1,
+                        "index":6.1,
                         "url":"/operate"
                     },
                     {
                         "name":"资讯首页推荐",
-                        "index":2,
+                        "index":6.2,
                         "url":"/operate/advise"
                     },
                     {
                         "name":"广告位管理",
-                        "index":3,
+                        "index":6.3,
                         "url":"/operate/ad"
                     }
                 ]
@@ -180,7 +185,7 @@ export default [
                 "options":[
                     {
                         "name":"分享数据",
-                        "index":1,
+                        "index":6.4,
                         "url":"/operate/sharedata"
                     }
                 ]
@@ -197,14 +202,14 @@ export default [
                 "options":[
                     {
                         "name":"退款管理",
-                        "index":1,
-                        "url":"/operate"
+                        "index":7.1,
+                        "url":"/refund/refundlist"
                     },
-                    {
-                        "name":"退款管理",
-                        "index":2,
-                        "url":"/operate"
-                    }
+                    // {
+                    //     "name":"退款管理",
+                    //     "index":2,
+                    //     "url":"/operate"
+                    // }
                 ]
             }
         ]
@@ -219,12 +224,12 @@ export default [
                 "options":[
                     {
                         "name":"模考管理",
-                        "index":1,
+                        "index":8.1,
                         "url":"/operate"
                     },
                     {
                         "name":"模考管理",
-                        "index":2,
+                        "index":8.2,
                         "url":"/operate"
                     }
                 ]

@@ -85,7 +85,7 @@ Mock.mock('/admin/data/getdata-table',{
 *院校专业列表页面
 *获取表格内容
 */
-Mock.mock('/admin/UniversMajorList/gettable-info',{
+Mock.mock('/admin/information/getMajorPageMessage',{
 	"code":0,
 	"data|4": [{
 				"weight":'@integer(1, 100)',
@@ -292,6 +292,25 @@ Mock.mock('/admin/recordHome/getUploadFile',{
 			],
 	// "total":'@integer(1000, 2000)',
 })
+
+
+/*recordHome
+*消息管理页面
+*进入页面
+*/
+Mock.mock('/admin/recordHome/intoPage',{
+	"code":0,
+	"data|4": [{
+				'id':'@integer(10000,20000)',
+				'messageType': '@cword(1,6)' ,
+				'messageObject': '@cword(4,7)',
+		        'sendTime':'@datetime("yyyy-MM-dd  HH:mm:ss")',
+		        'sendState': '@cword(2)',
+		        'sendCont': '@cword(40)',
+			},
+			],
+	"totalData":'@integer(1000,2000)'
+})
 /*recordHome
 *消息管理页面
 *刷新页面
@@ -423,19 +442,44 @@ Mock.mock('/admin/setMessageDetail/getcityInfo',{
 	
 })
 
-/*setMessageDetail
-*消息管理
-*获取城市的院校专业名称
+
+
+/*messageNotice
+*活动信息
+*消息通知
 */
-Mock.mock('/admin/setMessageDetail/clickgetcity-info',{
+Mock.mock('/admin/messageNotice/getcityInfo',{
 	"code":0,
-	"region":[{"name":'@cword(2)'}],
-	"Name|3":[
+	"messageObjc":'@cword(1,10)',
+	"careJoin|2":[
 		{	
-			"line|5":[
-				{"majorname":'@cword(6)'}
-			]
+			"titl":'@cword(4)',
+			"cont|3":[
+				{"content":'@cword(4)'}
+			],
 		},
-	]
+	],
+	"rightUpCon|4":[
+		{	
+			"title":'@cword(4)',
+			"content|3":'@cword(1,10)',
+		},
+	],
+	"data|4": [{
+				'id':'@integer(1,10)',
+				'account': '@integer(1,10)' ,
+				'nickname': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
+		        'name':'@cword(11)'+'MBA',
+		        'sex': '@cword(4)',
+		        'address': '@cword(4)',
+		        'highEduc': '@cword(4)',
+		        'belongUnivers': '@date("yyyy")',
+		        "industry":'@date("yyyy")',
+		        'workFix': '@cword(1)',
+			},
+			],
+	"totalData":'@integer(200,3000)',
 	
 })
+
+

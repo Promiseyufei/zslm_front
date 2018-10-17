@@ -7,7 +7,7 @@
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
-            <el-button type="primary">新建</el-button>
+            <el-button type="primary" @click.native = "jumpPage">新建</el-button>
         </div>
         <div class="majorlist-query">
             <i class="el-icon-search"></i>
@@ -146,41 +146,17 @@
             }
         },
         methods:{
-           pageChange(msg) {
+            jumpPage:function(){
+                this.$router.push('/message/activity');
+            },
+            pageChange(msg) {
                 this.searchContent.page = msg.page;
                 this.searchContent.limit = msg.limit;
             },
             handleCurrentChange(val) {
                 this.currentRow = val;
             },
-            // changeCount: function(val,index) {
-            //   var re = /^[0-9]+.?[0-9]*$/;
-            //   if (!re.test(val)) {
-            //     this.message(true,'请输入数值','warning');
-            //     this.tableData3[index].show_weight = this.inputval;
-            //     // console.log(this.show_weight[index]);
-            //   } else if (val<0||val>1000) {
-            //     this.message(true,'权值范围为0~100','warning');
-            //     this.tableData3[index].show_weight = this.inputval;
-            //   } else {
-            //     this.$confirm('此操作将修改该图片的权值, 是否继续?', '提示', {
-            //       confirmButtonText: '确定',
-            //       cancelButtonText: '取消',
-            //       type: 'warning'
-            //     }).then(() => {
-            //       this.$message({
-            //         type: 'success',
-            //         message: '修改成功!'
-            //       });
-            //     }).catch(() => {
-            //       this.tableData3[index].show_weight = this.inputval;
-            //       this.$message({
-            //         type: 'info',
-            //         message: '已取消修改'
-            //       });          
-            //     });
-            //   }
-            // },
+            
             focusCount:function(){
                 this.input = val;
                 console.log(this.TableValue);

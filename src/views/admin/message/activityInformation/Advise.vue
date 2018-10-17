@@ -203,7 +203,7 @@ export default {
 
         // 跳转到消息通知页面
         toNotice: function() {
-            this.$router.push('/message/notice/' + this.id);
+            this.$router.push('/message/notice');
         },
 
         // 自动设置推荐活动

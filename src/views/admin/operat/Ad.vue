@@ -6,13 +6,13 @@
 				>
 					<el-breadcrumb separator="/">
 						<el-breadcrumb-item>运行管理</el-breadcrumb-item>
-						<el-breadcrumb-item>广告位管理</el-breadcrumb-item>
+						<el-breadcrumb-item class="selectedNavPublic">广告位管理</el-breadcrumb-item>
 					</el-breadcrumb>
 					<!-- 选项卡 -->
 					<operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
 					
 					<div class="operateUpfiles operateHeader">
-						<p>当前操作页面：<span>{{this.radio}}</span></p>
+						<p>当前操作页面：<span>{{this.radio2}}</span></p>
 						<el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
 					</div>
 					<div>
@@ -49,7 +49,7 @@
 										</el-form-item>
 
 										<el-form-item>
-											<el-button type="primary" @click="submitForm('ruleForm')">上传</el-button>
+											<el-button type="primary" @click="submitForm('ruleForm')" size="medium">上传</el-button>
 										</el-form-item>
 									</el-form>
 								</div>
@@ -91,7 +91,6 @@ export default {
 			return {
 				loading: false,
 				banner: [],
-				radio: "辅导机构列表页",
 				radio2: "",
 				initialImgUrl: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',
 				file: {},
@@ -137,19 +136,21 @@ export default {
 		methods:{
 
 				//设置指定广告的权重值
-				setAdWeight: function(id, weight) {
+				setAdWeight: function(id, weight, val, index) {
 					if(id < 1 || weight <0) {
 						this.message(true, '请选择要修改的行或检查权重值是否正确', 'error');
 						return false;
 					}
 					this.confirm(() => {
-						this.post('admin/operate/setBillboardWeight', {
+						axios.post('admin/operate/setBillboardWeight', {
 							billboardId: id,
 							weight:weight
 						}).then((response) => {
+							response = response.data;
 							(response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
 						})
 					}, () => {
+						this.tableData3[index].show_weight = val;
 						this.message(true, '已取消修改', 'info');
 					})
 			  	},
@@ -271,15 +272,22 @@ export default {
 				// 动态更新资讯类型id
 				toshow: function (i) {
 					this.i = i;
+					for(var i=0;i<this.banner.length;i++) {
+						if(this.banner[i].id == this.i) {
+							this.radio2 = this.banner[i].name;
+							break;
+						}
+					}
 					this.getIndexAd();
 				},
 
 				// 获得所有页面的名称
 				getInformationType: function() {
 					var self = this;
-					this.post('/admin/operate/getAllPageListName', {
+					axios.post('/admin/operate/getAllPageListName', {
 					})
 					.then(function (response) {
+						response = response.data;
 						if (response.code == 0) {
 							self.banner = response.result;
 							self.radio2 = response.result[0].name;
@@ -299,11 +307,12 @@ export default {
 				getIndexAd: function() {
 					var self = this;
 					var load =this.openFullScreen2();
-					this.post('/admin/operate/getAppointPageBillboard', {
+					axios.post('/admin/operate/getAppointPageBillboard', {
 						pageId: self.i,
 						btType: 1
 					})
 					.then(function (response) {
+						response = response.data;
 						if (response.code == 0) {
 							self.tableData3 = response.result;
 							load.close();

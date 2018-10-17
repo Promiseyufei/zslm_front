@@ -44,6 +44,7 @@
 			<i class="el-icon-tickets"></i>
 			<p class="screen">数据列表</p>
 		</div>
+
 	  	<!-- 表格 -->
 	    <div class="file-table">
 		      <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
@@ -70,6 +71,7 @@
 		          </div>
 		      </el-table>
 	    </div>
+		<!-- 表格 -->
 
 	    <!-- 分页 -->
 	    <div class="footer">
@@ -110,7 +112,6 @@
 	            ],
 	            /*表格*/
 	            tableTop:[
-		            // {type:'',prop:'showweight',label:'展示权重',width:100},
 		            {type:'',prop:'file_name',label:'文件名称',width:260},
 		            {type:'',prop:'z_name',label:'所属院校专业',width:320},
 		            {type:'',prop:'file_type',label:'文件类型',width:100},
@@ -136,7 +137,7 @@
 		        total:0,
 		        searchContent:{
 		              page:1,
-		              limit:5,
+		              limit:0,
 		        },
     	    }
   	    },
@@ -237,16 +238,17 @@
 	        	this.query();
 	      	},
 	      	pageChange(msg) {
+	      		// var page = msg.page;
+	      		// var page = msg.limit;
 	        	this.searchContent.page = msg.page;
+	        	this.searchContent.limit = msg.limit;
 	        	//分页改变时，更新表格数据
-	        	if (this.searchContent.page) {
-	        		this.query();
-	        	};
+	        	// if (this.searchContent.page) {
+	        		// this.query();
+	        	// };
 	        	// console.log(this.searchContent.page);
-	          	this.searchContent.limit = msg.limit;
 	      	},
 	      	query: function (){
-
 	        	var that = this;
 	        	axios.get('http://www.zslm.com/admin/files/getuploadfile',{
 		          //后台参数，前台参数(传向后台)

@@ -19,6 +19,14 @@ export default {
         });
     },
 
+    /**
+     * 对话框
+     * @param callBack 确定执行的回调函数
+     * @param catchBack 取消执行的回调函数
+     * @param msg 对话框的内容
+     * @param type 对话框类型
+     * @param data 对话框按钮和种类属性等对象
+     */
     confirm: function(callBack, catchBack, msg, type, data) {
         msg = typeof msg !== 'undefined' ? msg : '是否取消操作？';
         type = typeof type !== 'undefined' ? type : '提示';
@@ -36,7 +44,7 @@ export default {
     },
 
     /**
-     * 
+     * 对post/get的三次封装
      * @param {String} request 请求方式：post/get 
      * @param {String} url 请求路由 
      * @param {Object} parameter 请求参数
@@ -60,6 +68,32 @@ export default {
             })
         }
     },
+
+    /** 
+     * 截取数组，且原数组的值不会改变
+     * @param array　目标数组
+     * @param index 初始截取下标
+     * @param length 截取长度
+     * 
+    */
+    interceptArray(array, index, length) {
+        if(array instanceof Array) {
+            let newArray = [];
+            if(index + length <= array.length) {
+                for(let i = index; i < length; i++) 
+                    newArray.push(array[i]);
+            }
+            else {
+                for(let i = index; i < array.length; i++) 
+                    newArray.push(array[i]);
+            }
+            
+            return newArray;
+        }
+        else
+            console.log("不是一个数组");
+    },
+
 
     // 得到省份字典
     getProvince: function() {
@@ -136,6 +170,7 @@ export default {
             this.message(true, '已取消修改', 'info');
         })
     },
+
     // 判断是否为链接
     validateImage: function(url) {    
         var xmlHttp ;
@@ -154,6 +189,7 @@ export default {
         else
         return true;
     },
+
     // 判断是否是图片
     beforeAvatarUpload:function (file) {
       const isjpeg = file.type === 'image/jpeg';
@@ -168,6 +204,7 @@ export default {
       }
       return isjpeg || isPNG && isLt2M;
     },
+
     date: function(date, pattern) {
         if (date == undefined) {
             date = new Date();
@@ -197,6 +234,7 @@ export default {
         }
         return pattern;
     },
+
     // 将时间戳 转换为 X天X小时X分钟
     formatDuring: function(mss){
         var days = parseInt(mss / ( 60 * 60 * 24));
@@ -205,6 +243,7 @@ export default {
         var seconds = mss %  60  ;
         return days + " 天 " + hours + " 小时 " + minutes + " 分钟 ";
     },
+
     //js计算时间为刚刚、几分钟前、几小时前、几天前
     timeago:function(dateTimeStamp){ //dateTimeStamp是一个时间毫秒，注意时间戳是秒的形式，在这个毫秒的基础上除以1000，就是十位数的时间戳。13位数的都是时间毫秒。
         var minute = 1000 * 60;      //把分，时，天，周，半个月，一个月用毫秒表示
@@ -267,4 +306,8 @@ export default {
         }
         return result;
     },
+
+
+
+    
 }

@@ -17,6 +17,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
+
 //引入图片插件
 import preview from 'vue-photo-preview'
 import 'vue-photo-preview/dist/skin.css'
@@ -62,10 +63,10 @@ Object.keys(methods).forEach((key)=>{
 })
 
 //二次封装axios
-// import httpServer from './config/providers/http-service.js'
-// Object.keys(httpServer).forEach((key) => {
-//   Vue.prototype[key] = httpServer[key];
-// })
+import httpServer from './config/providers/http-service.js'
+Object.keys(httpServer).forEach((key) => {
+  Vue.prototype[key] = httpServer[key];
+})
 
 
 
