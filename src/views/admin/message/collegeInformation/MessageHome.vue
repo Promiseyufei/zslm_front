@@ -9,12 +9,89 @@
                 <el-breadcrumb-item  class="selectedNavPublic">院校专业信息编辑</el-breadcrumb-item>
             </el-breadcrumb>
 
-            <!-- 步骤条 -->
-            <div class="fileSteps">
-                <el-steps :active=".1" align-center>
-                    <el-step title="院校专业信息"></el-step>
-                    <el-step title="招生项目信息"></el-step>
-                </el-steps>
+          <!-- 步骤条 -->
+          <div class="fileSteps">
+            <el-steps :active=".1" align-center>
+              <el-step title="院校专业信息"></el-step>
+              <el-step title="招生项目信息"></el-step>
+            </el-steps>
+          </div>
+          
+          <div>
+            <!-- 上传banner -->
+            <div class="operateUpfiles operateUp">
+              <div class="operateUpfilesLeft">
+                <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
+              </div>
+              <div class="operateUpfilesRight">
+                
+                <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
+                  <el-form-item>
+                    <el-button type="primary" @click="startChange">开始编辑</el-button>
+                  </el-form-item>
+                  <el-form-item label="院校专业名称">
+                    <el-input v-model="majorInfo.z_name" :disabled = "disabled"></el-input>
+                  </el-form-item>
+                  <el-form-item label="专业认证">
+                    <el-radio-group v-model="majorInfo.major_confirm_id" :disabled = "disabled">
+						<el-radio v-for="(item, index) in majorAuthentication" :key="index" :label="item.id">{{ item.name }}</el-radio>
+                      </el-radio-group>
+                  </el-form-item>
+                  <el-form-item label="院校性质">
+                    <el-radio-group v-model="majorInfo.major_follow_id" :disabled = "disabled">
+						<el-radio v-for="(item, index) in majorNature" :key="index" :label="item.id">{{ item.name }}</el-radio>
+                      </el-radio-group>
+                  </el-form-item>
+                  <el-form-item label="审批年限">
+                    <el-select v-model="majorInfo.access_year" placeholder="请选择活动区域" :disabled = "disabled">
+                      <el-option :label="1990+index" :value="1990+index" v-for="(item, index) in 29" :key="index"></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="活动省市">
+                      <el-select v-model="majorInfo.province" placeholder="请选择活动区域" :disabled = "disabled">
+						  <el-option-group v-for="(pro, index) in province" :key="index" :label="pro.name">
+							  <el-option v-for="(city, i) in pro.citys" :key="i" :label="city.name" :value="city.id"></el-option>
+						  </el-option-group>
+                          <!-- <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option> -->
+                      </el-select>
+                  </el-form-item>
+                  <el-form-item label="院校地址">
+                    <el-input v-model="majorInfo.address" :disabled = "disabled"></el-input>
+                  </el-form-item>
+                  <el-form-item label="资讯电话">
+                    <el-input v-model="majorInfo.phone" :disabled = "disabled"></el-input>
+                  </el-form-item>
+                  <el-form-item label="院校官网">
+                    <el-input v-model="majorInfo.index_web" :disabled = "disabled"></el-input>
+                  </el-form-item>
+                  <el-form-item label="招生专题">
+                    <el-input v-model="majorInfo.admissions_web" :disabled = "disabled"></el-input>
+                  </el-form-item>
+                  <el-form-item label="所属院校名称">
+                    <el-input v-model="majorInfo.school_id" :disabled = "disabled"></el-input>
+                  </el-form-item>
+                  <el-form-item label="专业类型">
+                      <el-select v-model="majorInfo.z_type" placeholder="请选择专业类型" :disabled = "disabled">
+                          <el-option :label="item.name" :value="item.id" v-for="(item, index) in major" :key="index"></el-option>
+                      </el-select>
+                  </el-form-item>
+                  <el-form-item label="官方微信">
+                    <div style="padding: 0 5px 5px 8px">
+                      <div class="add" @click.stop="addPic" cuort>
+                          <input type="file" id="upload" accept="image" @change="upload" style="display: none">
+                          <span style="color:#B2B2B2;">添加图片</span>
+                      </div>
+                      <li class="show" v-for="(iu, index) in imgUrls" :key="index">
+                          <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
+                      </li>
+                    </div>
+                  </el-form-item>
+                  
+                  <el-form-item>
+                    <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
+                  </el-form-item>
+                </el-form>
+              </div>
             </div>
           
             <div>
@@ -29,69 +106,15 @@
                     <el-form-item>
                         <el-button type="primary" @click="startChange">开始编辑</el-button>
                     </el-form-item>
-                    <el-form-item label="院校专业名称">
-                        <el-input v-model="ruleForm.name" :disabled = "disabled"></el-input>
+                    <el-form-item label="Title">
+                      <el-input v-model="majorInfo.title" :disabled = "disabled2"></el-input>
                     </el-form-item>
-                    <el-form-item label="专业认证">
-                        <el-radio-group v-model="ruleForm.authentication" :disabled = "disabled">
-                            <el-radio label="AMBA">AMBA</el-radio>
-                            <el-radio label="EQUIS">EQUIS</el-radio>
-                            <el-radio label="AACSB">AACSB</el-radio>
-                            <el-radio label="CAMEA">CAMEA</el-radio>
-                        </el-radio-group>
+                    <el-form-item label="Keywords">
+                      <el-input v-model="majorInfo.keywords" :disabled = "disabled2"></el-input>
                     </el-form-item>
-                    <el-form-item label="院校性质">
-                        <el-radio-group v-model="ruleForm.type" :disabled = "disabled">
-                            <el-radio label="原985">原985</el-radio>
-                            <el-radio label="原211">原211</el-radio>
-                            <el-radio label="双一流">双一流</el-radio>
-                        </el-radio-group>
+                    <el-form-item label="Description">
+                      <el-input v-model="majorInfo.descciption" :disabled = "disabled2"></el-input>
                     </el-form-item>
-                    <el-form-item label="审批年限">
-                        <el-select v-model="ruleForm.year" placeholder="请选择活动区域" :disabled = "disabled">
-                        <el-option :label="1990+index" :value="1990+index" v-for="(item, index) in 29" :key="index"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="活动省市">
-                        <el-select v-model="ruleForm.region" placeholder="请选择活动区域" :disabled = "disabled">
-                            <el-option-group v-for="(pro, index) in province" :key="index" :label="pro.name">
-                                <el-option v-for="(city, i) in pro.citys" :key="i" :label="city.name" :value="city.id"></el-option>
-                            </el-option-group>
-                            <!-- <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option> -->
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="院校地址">
-                        <el-input v-model="ruleForm.address" :disabled = "disabled"></el-input>
-                    </el-form-item>
-                    <el-form-item label="资讯电话">
-                        <el-input v-model="ruleForm.tell" :disabled = "disabled"></el-input>
-                    </el-form-item>
-                    <el-form-item label="院校官网">
-                        <el-input v-model="ruleForm.web" :disabled = "disabled"></el-input>
-                    </el-form-item>
-                    <el-form-item label="招生专题">
-                        <el-input v-model="ruleForm.topic" :disabled = "disabled"></el-input>
-                    </el-form-item>
-                    <el-form-item label="所属院校名称">
-                        <el-input v-model="ruleForm.schoolName" :disabled = "disabled"></el-input>
-                    </el-form-item>
-                    <el-form-item label="专业类型">
-                        <el-select v-model="ruleForm.spaticalType" placeholder="请选择专业类型" :disabled = "disabled">
-                            <el-option :label="item.name" :value="item.id" v-for="(item, index) in major" :key="index"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="官方微信">
-                        <div style="padding: 0 5px 5px 8px">
-                        <div class="add" @click.stop="addPic" cuort>
-                            <input type="file" id="upload" accept="image" @change="upload" style="display: none">
-                            <span style="color:#B2B2B2;" >添加图片</span>
-                        </div>
-                        <li class="show" v-for="(iu, index) in imgUrls" :key="index">
-                            <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
-                        </li>
-                        </div>
-                    </el-form-item>
-                    
                     <el-form-item>
                         <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
                     </el-form-item>
@@ -164,12 +187,17 @@ export default {
                 schoolName: "大数据",
                 school: "河南科技学院",
                 typeAll: "2"
-            },
+			},
             imgUrls: [],
             // 省份字典
             province: [],
             // 专业字典
-            major: [],
+			major: [],
+			//专业认证
+			majorAuthentication:[],
+			//院校性质
+			majorNature:[],
+			majorInfo:{},
             isShow:true,
             disabled:true,
             disabled2:true,
@@ -182,9 +210,9 @@ export default {
         }
     },
     methods:{
-      jumpPage:function(){
-        this.$router.push('/message/universityMessage');
-      },
+		jumpPage:function(){
+			this.$router.push('/message/universityMessage');
+		},
         test: function() {
           console.log(this.province);
         },
@@ -247,7 +275,7 @@ export default {
                     }else {
 						img.onload = function () {
                             let data = self.compress(img,Orientation);
-                            self.imgUrls.push(data);
+							self.imgUrls.push(data);
                         }
                     }
                     e.target.value = null;
@@ -369,23 +397,46 @@ export default {
 			return ndata;
 	  },
 
+	  dictionaries() {
+			let _this = this;
+			let dictionariesArr = [
+				{re:'post', url:'/admin/information/getMajorAuthentication', pa:{}, calls: (response) => {_this.majorAuthentication = response.result;}, errorMsg: '未查询到专业认证信息'},
+				{re:'post', url:'/admin/information/getMajorNature', pa:{}, calls: (response) => {_this.majorNature = response.result;}, errorMsg: '未查询到院校性质信息'},
+				{re:'post', url:'/admin/information/getMajorProvincesAndCities', pa:{}, calls: (response) => {_this.province = response.result[0];}, errorMsg: '未查询到省份信息'},
+				{re:'post', url:'/admin/information/getMajorType', pa:{}, calls: (response) => {_this.major = response.result;}, errorMsg: '未查询到专业类型'},
+			];
+
+			dictionariesArr.forEach((item) => {
+				_this.getMajorPageOptions(item.re, item.url, item.pa, (response) => {
+					response.code == 0 ? item.calls(response) : this.message(true, response.msg, 'error');
+				}, (response) => {
+					this.message(true, item.errorMsg, 'error');
+				});
+			})
+
+	  }
+
     },
     mounted(){
+
+		this.dictionaries();
+
 		let _this = this;
 
-		//获取省份列表信息
-		this.getMajorPageOptions('post', '/admin/information/getMajorProvincesAndCities', {}, (response)=> {
-			_this.province = response.result[0];
-		}, (response) => {
-			this.message(false, "未查询到省份信息", "error");
-		});
-
-		//获取院校专业类型字典
-		this.getMajorPageOptions('post', '/admin/information/getMajorType', {}, (response) => {
-			_this.major = response.result;
-		}, (response) => {
-			this.message(true, "未查询到专业类型", 'error');
-		})
+		if(this.$route.params.majorId != null) {
+			this.post('/admin/information/selectReception', {
+				majorId: this.$route.params.majorId
+			}).then((response) => {
+				console.log(response);
+				if(response.code == 0) {
+					_this.majorInfo = response.result;
+					if(response.result.wc_image instanceof Array && response.result.wc_image.length > 0)  
+						_this.imgUrls.push.apply(_this.imgUrls, response.result.wc_image);
+				}
+				else
+					this.message(true, response.msg, 'error');
+			})
+		}
     }
 };
 </script>
