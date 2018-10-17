@@ -102,7 +102,7 @@
                 this.post('/admin/news/getAppointNews', {
                     newsId: this.newsId
                 }).then((response) => {
-                    console.log(response.result instanceof Object);
+                    // console.log(response.result instanceof Object);
                     if(response.code == 0) {
                         for(let i = 0; i < this.rightUpCon.length; i++) {
                             Object.keys(response.result).forEach((key) => {
@@ -124,7 +124,6 @@
                     pageNum: this.currentPage,
                     newsId: this.newsId
                 }).then((response) => {
-                    // console.log(response);
                     if(response.code == 0) {
                         this.tableData = response.result.map;
                         this.totalData = response.result.total;

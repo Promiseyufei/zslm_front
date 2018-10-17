@@ -176,11 +176,11 @@ export default {
                 pageCount: 100,
                 pageNumber: self.currentPage
             }).then((response) => {
-                // console.log(response);
+                console.log(response);
                 if(response.code == 0) {
                     self.totalData = response.result.total;
                     self.tableData = response.result.map;
-                    // console.log(self.totalData);
+                    console.log(self.totalData);
                 }
                 else 
                     this.message(true, response.msg, 'error');

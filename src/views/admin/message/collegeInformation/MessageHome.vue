@@ -88,7 +88,7 @@
                   </el-form-item>
                   
                   <el-form-item>
-                    <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
+                    <el-button type="primary" @click="putMajorMainMsg" :disabled = "disabled">提交</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -159,7 +159,8 @@ export default {
                 school: "河南科技学院",
                 typeAll: "2"
 			},
-            imgUrls: [],
+			imgUrls: [],
+			sendImg:[],
             // 省份字典
             province: [],
             // 专业字典
@@ -181,6 +182,50 @@ export default {
         }
     },
     methods:{
+		
+
+		putMajorMainMsg() {
+			console.log(this.sendImg);
+			let formdata = new FormData();
+
+			formdata.append('z_name', this.majorInfo.z_name);
+			formdata.append('major_confirm_id', this.majorInfo.major_confirm_id);
+			formdata.append('major_follow_id', this.majorInfo.major_follow_id);
+			formdata.append('access_year', this.majorInfo.access_year);
+			formdata.append('province', this.changeMajorProvince(this.majorInfo.province));
+			formdata.append('address', this.majorInfo.address);
+			formdata.append('phone', this.majorInfo.phone);
+			formdata.append('index_web', this.majorInfo.index_web);
+			formdata.append('admissions_web', this.majorInfo.admissions_web);
+			formdata.append('school_name', this.majorInfo.school_id);
+			formdata.append('z_type', this.changeMajorType(this.majorInfo.z_type));
+			this.sendImg.forEach((item) => {
+				formdata.append('wc_image', item);
+			});
+			// formdata.append('wc_image', this.sendImg);
+			let config = {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+			this.post('/admin/information/updateMajorMsg', formdata, config).then((response) => {
+				// console.log(response);
+			});
+		},
+
+		changeMajorType(typeName) {
+			this.major.forEach((item) => {
+				if(typeof(typeName) == 'String' && typeName == item.name) return item.id;
+			});
+			return typeName;
+		},
+		changeMajorProvince(majorProvinceName) {
+			this.province.forEach((province) => {
+				province.citys.forEach((city) =>{
+					if((typeof(majorProvinceName) == 'String' && city.name == majorProvinceName) || (typeof(majorProvinceName) == 'Number' && city.id == majorProvinceName)) return city.father_id + ',' + city.id;
+				})
+			});
+		},
 		jumpPage:function(){
 			this.$router.push('/message/universityMessage');
 		},
@@ -204,19 +249,22 @@ export default {
 				vm.imgUrls.splice(index, 1);
 				vm.count--;
 				vm.count<3?vm.isShow = true:vm.isShow;
+				this.sendImg.splice(index, 1);
+				console.log(this.sendImg);
 				this.message(true, '图片删除成功', 'success');
 			}, () => {
 				this.message(true, '取消删除', 'info');
 			});
         },
         upload (e) {
-            let files = e.target.files || e.dataTransfer.files;
+			let files = e.target.files || e.dataTransfer.files;
             if (!files.length||this.count>2) {
                 return;
             }
             this.imgPreview(files[0],e);
             this.count++;
-            this.count>=3?this.isShow = false:this.isShow;
+			this.count>=3?this.isShow = false:this.isShow;
+			this.sendImg.push(files[0]);
             this.message(true,'图片添加成功','');
         },
         imgPreview (file,e) {
@@ -246,14 +294,14 @@ export default {
                     }else {
 						img.onload = function () {
                             let data = self.compress(img,Orientation);
-							self.imgUrls.push(data);
                         }
                     }
                     e.target.value = null;
                 }
             }
 
-        },
+		},
+		
         rotateImg (img, direction,canvas) {
             //最小与最大旋转方向，图片旋转4次后回到原方向
             const min_step = 0;
@@ -403,6 +451,7 @@ export default {
 					_this.majorInfo = response.result;
 					if(response.result.wc_image instanceof Array && response.result.wc_image.length > 0)  
 						_this.imgUrls.push.apply(_this.imgUrls, response.result.wc_image);
+						_this.sendImg.push.apply(_this.sendImg, response.result.wc_image);
 				}
 				else
 					this.message(true, response.msg, 'error');
