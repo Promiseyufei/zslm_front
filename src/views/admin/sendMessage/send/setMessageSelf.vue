@@ -48,7 +48,7 @@
                 <div class="bottomPage">
                     <el-button icon="el-icon-delete"> 删除</el-button>
                     <div>
-                        <singlePage :currentPage = "currentPage" @use="getUser" ref="useChild"></singlePage>
+                        <singlePage :currentPage="currentPage" :totalData="totalData" v-on:use="changePageNum"></singlePage>
                     </div>
                 </div>
                 <div class="selectFin">
@@ -59,10 +59,7 @@
                 <div class="operateFinalUp">
                     <el-button type="primary" @click="finial">完成！</el-button>
                 </div>
-
             </div>
-
-		    
     	</div>
     	
     </div>
@@ -81,32 +78,32 @@ export default {
                 width: "80px"
             },
             {
-                prop: "photo",
+                prop: "account",
                 lable: "手机号",
                 width: "100px"
             },
             {
-                prop: "account",
+                prop: "create_time",
                 lable: "账户创建时间",
                 width: "140px"
             },
             {
-                prop: "account",
+                prop: "update_time",
                 lable: "信息更新时间",
                 width: "140px"
             },
             {
-                prop: "account",
+                prop: "is_weixin",
                 lable: "微信",
                 width: "60px"
             },
             {
-                prop: "account",
+                prop: "is_weibo",
                 lable: "新浪微博",
                 width: "60px"
             },
             {
-                prop: "account",
+                prop: "head_portrait",
                 lable: "头像",
                 width: "60px"
             },
@@ -154,9 +151,9 @@ export default {
         // 表格默认数据
         tableData: [],
         //默认展示页数
-        currentPage: 4,
+        currentPage: 1,
         // 分页总数,默认值
-        totalData: 1234,
+        totalData: 0,
         multipleSelection:[]
       }
     },
@@ -184,24 +181,28 @@ export default {
             this.multipleSelection = val;
             // console.log(this.multipleSelection);
         },
-        //获取全部用户
-        getUser: function(res) {
-            let self = this;
-            if(res==null) {
-                res = 4;
+
+        //分页下标改变重新请求
+        changePageNum(pageNum) {
+            if(pageNum !== this.currentPage) {
+                this.currentPage = pageNum;
+                this.getUser();
             }
-            // console.log(res);
-            axios.post('/admin/news/getAllAccounts', {
+        },
+        //获取全部用户
+        getUser: function() {
+            let self = this;
+            this.post('/admin/news/getAllAccounts', {
                 pageCount: 100,
-                pageNumber: res
+                pageNumber: this.currentPage
             }).then((response) => {
-                var res = response.data;
-                if(res.code == 0) {
-                    self.totalData = res.data.count;
-                    self.tableData = res.data.data;
-                    self.$refs.useChild.childMethod(res.data.count);
-                    // self.message(true,"修改成功","success");
+                console.log(typeof response);
+                if(response.code == 0) {
+                    self.totalData = response.result.total;
+                    self.tableData = response.result.map;
                 }
+                else
+                    this.message(true, response.msg, "error");
             })
         },
     },

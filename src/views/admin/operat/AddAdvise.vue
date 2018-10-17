@@ -197,7 +197,6 @@ export default {
     },
     methods:{
 
-
         //从选中表格中删除指定的资讯
         delectSelect: function(row) {
             this.$refs.order.toggleRowSelection(row,false);

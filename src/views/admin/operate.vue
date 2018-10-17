@@ -132,6 +132,7 @@ export default {
 		methods:{
 				//获取图片file，并图片预览
 				changeUpload: function(file,fileList) {
+					console.log(file);
 					if(this.beforeAvatarUpload(file)) {
 							this.initialImgUrl = file.url;
 							this.file = file.raw;

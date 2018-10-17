@@ -10,7 +10,7 @@ export default {
 			pageSizes:[5,20,50],
 			page:{
 				page:1,//默认第一页
-				limit:100//默认显示一百条
+				limit:5//默认显示一百条
 			},
 		};
 	},

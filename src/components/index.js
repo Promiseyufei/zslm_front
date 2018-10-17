@@ -7,6 +7,7 @@ import OperateTable from  './admin/OperateTable.vue'
 import messageTable from  './admin/messageTable.vue'
 import userTable from  './admin/userTable.vue'
 import singlePage from  './admin/singlePage.vue'
+import editor from  './admin/editor.vue'
 
 export default {
     Test, 
@@ -17,5 +18,6 @@ export default {
     OperateTable,
     messageTable,
     userTable,
-    singlePage
+    singlePage,
+    editor
 }

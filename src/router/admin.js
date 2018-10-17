@@ -180,7 +180,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordHome'], resolve))
         },
         {
-            path: '/record/recordDetail',
+            path: '/record/recordDetail/:newsId',
             name: '消息管理-历史消息记录详情',
             component: resolve =>void(require(['@/views/admin/sendMessage/record/recordDetail'], resolve))
         },
@@ -205,7 +205,12 @@ let admin_router = {
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/userManagement/userCoupons'], resolve))
         },
-        //退款管理
+        {
+            path: '/usermanagement/userparticipateactivities',
+            name: '用户管理-关注活动',
+            component: resolve =>void(require(['@/views/admin/usermanagement/userParticipateActivities'], resolve))
+        },
+        //退款
         {
             path: '/refund/refundlist',
             name: '用户管理-退款管理',

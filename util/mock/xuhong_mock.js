@@ -129,7 +129,7 @@ Mock.mock('/admin/information/setAutomaticRecActivitys', {
 Mock.mock('/admin/operate/getAllPageListName',{
 	"code": 0,
 	"msg": Mock.mock('@cword(3, 5)'),
-	"data|6": [
+	"result|6": [
 		{
 			'id|+1': 0,
 			"name|+1": [
@@ -189,6 +189,15 @@ Mock.mock('/admin/operate/getInformPagingData',{
 * 上传一级页面的banner
 */
 Mock.mock('/admin/operate/createBannerAd',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)')
+})
+
+/* Operate
+* 运营管理模块——广告位管理
+* 确定修改权值
+*/
+Mock.mock('admin/operate/setBillboardWeight',{
 	"code": 0,
 	"msg": Mock.mock('@cword(3, 5)')
 })
@@ -291,6 +300,25 @@ Mock.mock('/admin/operate/getAppointRegionData',{
 			}
 		]
 })
+
+/* Operate
+* 运营管理模块——广告位推荐
+* 获得指定页面的广告
+*/
+Mock.mock('/admin/operate/getAppointPageBillboard',{
+	"code": 0,
+	"msg": Mock.mock('@cword(3, 5)'),
+	"result": [
+			{
+				"img": Mock.mock('@cword(3, 5)'),
+				"show_weight|1-100": 100,
+				"zx_name": Mock.mock('@cword(3, 5)'),
+				"information_type": Mock.mock('@cword(3, 5)'),
+				"create_time": Mock.mock('@now')
+			}
+		]
+})
+
 
 /* news
 * 信息管理模块——发信息

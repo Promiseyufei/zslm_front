@@ -44,29 +44,34 @@
 			<i class="el-icon-tickets"></i>
 			<p class="screen">数据列表</p>
 		</div>
+
+	  	<!-- 表格 -->
+	    <div class="file-table">
+		      <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
+		          <el-table-column type="selection" width="50"></el-table-column>
+		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
+		          <el-table-column label="展示权重" width="100">
+                    <template slot-scope="scope">
+                        <el-input id="inputID" @focus="getFocus(tableData[scope.$index].show_weight)"
+                                  v-on:blur="loseFocus(tableData[scope.$index].show_weight,scope.$index)"
+                                  v-model="tableData[scope.$index].show_weight">
+                        </el-input>
+                    </template>
+                </el-table-column>
+		          <el-table-column label="操作" width="220">
+		              <template slot-scope="scope">
+		                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+		                <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+		                <el-button type="text" size="small" @click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
+		              </template>
+		          </el-table-column>
+		          <div v-for="(val, index) in tableTop" :key="index">
+		            <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
+		            </el-table-column>
+		          </div>
+		      </el-table>
+	    </div>
 		<!-- 表格 -->
-		<div class="file-table">
-			  <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
-				  <el-table-column type="selection" width="50"></el-table-column>
-				  <el-table-column label="编号" prop="id" width="70"></el-table-column>
-				  <el-table-column label="展示权重" width="100">
-					<template slot-scope="scope">
-						<el-input id="inputID" @focus="getFocus(tableData[scope.$index].showweight)" v-on:blur="loseFocus(tableData[scope.$index].showweight,scope.$index)" v-model="tableData[scope.$index].showweight"></el-input>
-					</template>
-				</el-table-column>
-				  <el-table-column label="操作" width="220">
-					  <template slot-scope="scope">
-						<el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-						<el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-						<el-button type="text" size="small" @click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
-					  </template>
-				  </el-table-column>
-				  <div v-for="(val, index) in tableTop" :key="index">
-					<el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
-					</el-table-column>
-				  </div>
-			  </el-table>
-		</div>
 
 	    <!-- 分页 -->
 	    <div class="footer">
@@ -205,7 +210,7 @@
                             that.message(true,'删除失败','error');
                         }
                     }).catch(function (error) {
-
+                        that.message(true,'删除失败','error');
                     });
                 }, () => {
                     // console.log('this is catchback');
@@ -215,21 +220,6 @@
 	    	deleteRow(index, rows) {
 	      		// 删除前判断
                 let that = this;
-
-                    // axios.post('http://www.zslm.com/admin/files/deletefiles',{
-                    //     //后台参数，前台参数(传向后台)
-                    //     fileId: [rows[index].id],
-                    // }).then(function (response) {
-                    //     var res = response.data;
-                    //     if (res.code == 0) {
-                    //         that.query();
-                    //         that.message(true,'删除成功','success');
-                    //     }else{
-                    //         that.message(true,'删除失败','error');
-                    //     }
-                    // }).catch(function (error) {
-                    //
-                    // });
                     that.deleteRequest([rows[index].id]);
 
         		// 删除某一行
