@@ -3,136 +3,136 @@
         <div class="operateBox">
         <!-- 中间内容 -->
         <div>
-          <el-breadcrumb separator="/">
-            <el-breadcrumb-item>信息发布</el-breadcrumb-item>
-            <el-breadcrumb-item>院校专业</el-breadcrumb-item>
-            <el-breadcrumb-item>院校专业信息编辑</el-breadcrumb-item>
-          </el-breadcrumb>
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+                <el-breadcrumb-item>院校专业</el-breadcrumb-item>
+                <el-breadcrumb-item  class="selectedNavPublic">院校专业信息编辑</el-breadcrumb-item>
+            </el-breadcrumb>
 
-          <!-- 步骤条 -->
-          <div class="fileSteps">
-            <el-steps :active=".1" align-center>
-              <el-step title="院校专业信息"></el-step>
-              <el-step title="招生项目信息"></el-step>
-            </el-steps>
-          </div>
+            <!-- 步骤条 -->
+            <div class="fileSteps">
+                <el-steps :active=".1" align-center>
+                    <el-step title="院校专业信息"></el-step>
+                    <el-step title="招生项目信息"></el-step>
+                </el-steps>
+            </div>
           
-          <div>
-            <!-- 上传banner -->
-            <div class="operateUpfiles operateUp">
-              <div class="operateUpfilesLeft">
-                <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
-              </div>
-              <div class="operateUpfilesRight">
-                
-                <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
-                  <el-form-item>
-                    <el-button type="primary" @click="startChange">开始编辑</el-button>
-                  </el-form-item>
-                  <el-form-item label="院校专业名称">
-                    <el-input v-model="ruleForm.name" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="专业认证">
-                    <el-radio-group v-model="ruleForm.authentication" :disabled = "disabled">
-                        <el-radio label="AMBA">AMBA</el-radio>
-                        <el-radio label="EQUIS">EQUIS</el-radio>
-                        <el-radio label="AACSB">AACSB</el-radio>
-                        <el-radio label="CAMEA">CAMEA</el-radio>
-                      </el-radio-group>
-                  </el-form-item>
-                  <el-form-item label="院校性质">
-                    <el-radio-group v-model="ruleForm.type" :disabled = "disabled">
-                        <el-radio label="原985">原985</el-radio>
-                        <el-radio label="原211">原211</el-radio>
-                        <el-radio label="双一流">双一流</el-radio>
-                      </el-radio-group>
-                  </el-form-item>
-                  <el-form-item label="审批年限">
-                    <el-select v-model="ruleForm.year" placeholder="请选择活动区域" :disabled = "disabled">
-                      <el-option :label="1990+index" :value="1990+index" v-for="(item, index) in 29" :key="index"></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item label="活动省市">
-                      <el-select v-model="ruleForm.region" placeholder="请选择活动区域" :disabled = "disabled">
-						  <el-option-group v-for="(pro, index) in province" :key="index" :label="pro.name">
-							  <el-option v-for="(city, i) in pro.citys" :key="i" :label="city.name" :value="city.id"></el-option>
-						  </el-option-group>
-                          <!-- <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option> -->
-                      </el-select>
-                  </el-form-item>
-                  <el-form-item label="院校地址">
-                    <el-input v-model="ruleForm.address" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="资讯电话">
-                    <el-input v-model="ruleForm.tell" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="院校官网">
-                    <el-input v-model="ruleForm.web" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="招生专题">
-                    <el-input v-model="ruleForm.topic" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="所属院校名称">
-                    <el-input v-model="ruleForm.schoolName" :disabled = "disabled"></el-input>
-                  </el-form-item>
-                  <el-form-item label="专业类型">
-                      <el-select v-model="ruleForm.spaticalType" placeholder="请选择专业类型" :disabled = "disabled">
-                          <el-option :label="item.name" :value="item.id" v-for="(item, index) in major" :key="index"></el-option>
-                      </el-select>
-                  </el-form-item>
-                  <el-form-item label="官方微信">
-                    <div style="padding: 0 5px 5px 8px">
-                      <div class="add" @click.stop="addPic" cuort>
-                          <input type="file" id="upload" accept="image" @change="upload" style="display: none">
-                          <span style="color:#B2B2B2;" >添加图片</span>
-                      </div>
-                      <li class="show" v-for="(iu, index) in imgUrls" :key="index">
-                          <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
-                      </li>
-                    </div>
-                  </el-form-item>
-                  
-                  <el-form-item>
-                    <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
-                  </el-form-item>
-                </el-form>
-              </div>
-            </div>
-            <!-- 当前banner -->
-            <div class="operateUpfiles operateDown">
-              <div class="operateUpfilesLeft">
-                <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;页面优化信息</div>
-              </div>
-              <div class="operateUpfilesRight2">
-                <div class="messageBtn">
-                  <el-form ref="form" label-width="100px">
+            <div>
+                <!-- 上传banner -->
+                <div class="operateUpfiles operateUp">
+                <div class="operateUpfilesLeft">
+                    <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
+                </div>
+                <div class="operateUpfilesRight">
+                    
+                    <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
                     <el-form-item>
-                      <el-button type="primary" @click="startChange2">开始编辑</el-button>
+                        <el-button type="primary" @click="startChange">开始编辑</el-button>
                     </el-form-item>
-                    <el-form-item label="Title">
-                      <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                    <el-form-item label="院校专业名称">
+                        <el-input v-model="ruleForm.name" :disabled = "disabled"></el-input>
                     </el-form-item>
-                    <el-form-item label="Keywords">
-                      <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                    <el-form-item label="专业认证">
+                        <el-radio-group v-model="ruleForm.authentication" :disabled = "disabled">
+                            <el-radio label="AMBA">AMBA</el-radio>
+                            <el-radio label="EQUIS">EQUIS</el-radio>
+                            <el-radio label="AACSB">AACSB</el-radio>
+                            <el-radio label="CAMEA">CAMEA</el-radio>
+                        </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="Description">
-                      <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                    <el-form-item label="院校性质">
+                        <el-radio-group v-model="ruleForm.type" :disabled = "disabled">
+                            <el-radio label="原985">原985</el-radio>
+                            <el-radio label="原211">原211</el-radio>
+                            <el-radio label="双一流">双一流</el-radio>
+                        </el-radio-group>
                     </el-form-item>
+                    <el-form-item label="审批年限">
+                        <el-select v-model="ruleForm.year" placeholder="请选择活动区域" :disabled = "disabled">
+                        <el-option :label="1990+index" :value="1990+index" v-for="(item, index) in 29" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="活动省市">
+                        <el-select v-model="ruleForm.region" placeholder="请选择活动区域" :disabled = "disabled">
+                            <el-option-group v-for="(pro, index) in province" :key="index" :label="pro.name">
+                                <el-option v-for="(city, i) in pro.citys" :key="i" :label="city.name" :value="city.id"></el-option>
+                            </el-option-group>
+                            <!-- <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option> -->
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="院校地址">
+                        <el-input v-model="ruleForm.address" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="资讯电话">
+                        <el-input v-model="ruleForm.tell" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="院校官网">
+                        <el-input v-model="ruleForm.web" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="招生专题">
+                        <el-input v-model="ruleForm.topic" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="所属院校名称">
+                        <el-input v-model="ruleForm.schoolName" :disabled = "disabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="专业类型">
+                        <el-select v-model="ruleForm.spaticalType" placeholder="请选择专业类型" :disabled = "disabled">
+                            <el-option :label="item.name" :value="item.id" v-for="(item, index) in major" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="官方微信">
+                        <div style="padding: 0 5px 5px 8px">
+                        <div class="add" @click.stop="addPic" cuort>
+                            <input type="file" id="upload" accept="image" @change="upload" style="display: none">
+                            <span style="color:#B2B2B2;" >添加图片</span>
+                        </div>
+                        <li class="show" v-for="(iu, index) in imgUrls" :key="index">
+                            <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
+                        </li>
+                        </div>
+                    </el-form-item>
+                    
+                    <el-form-item>
+                        <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
+                    </el-form-item>
+                    </el-form>
+                </div>
+                </div>
+                <!-- 当前banner -->
+                <div class="operateUpfiles operateDown">
+                <div class="operateUpfilesLeft">
+                    <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;页面优化信息</div>
+                </div>
+                <div class="operateUpfilesRight2">
+                    <div class="messageBtn">
+                    <el-form ref="form" label-width="100px">
+                        <el-form-item>
+                        <el-button type="primary" @click="startChange2">开始编辑</el-button>
+                        </el-form-item>
+                        <el-form-item label="Title">
+                        <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                        </el-form-item>
+                        <el-form-item label="Keywords">
+                        <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                        </el-form-item>
+                        <el-form-item label="Description">
+                        <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                        </el-form-item>
 
-                    <el-form-item>
-                      <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
-                    </el-form-item>
-                  </el-form>  
-                </div>
-                <!-- 完成按钮 -->
-                <div class="operateFinalUp">
-                  <el-button type="primary" @click="jumpPage">下一步，编辑招生信息</el-button>
+                        <el-form-item>
+                        <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
+                        </el-form-item>
+                    </el-form>  
+                    </div>
+                    <!-- 完成按钮 -->
+                    <div class="operateFinalUp">
+                    <el-button type="primary" @click="jumpPage">下一步，编辑招生信息</el-button>
+                    </div>
+                    
                 </div>
                 
-              </div>
-              
+                </div>
             </div>
-          </div>
         </div>
         
         </div>
@@ -390,9 +390,23 @@ export default {
 };
 </script>
 <style>
-  /*
-  * 
-  */
+    /*
+    * 
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
 </style>
 
 <style scoped>
@@ -406,12 +420,14 @@ export default {
 */
 .fileSteps {
   /*margin: 20px 0;*/
-  width: 400px;
+  width: 600px;
   margin: 0 auto;
 }
 .fileSteps .el-steps--horizontal {
   margin: 20px 0;
 }
+
+
 
 /*
 * 
@@ -459,9 +475,6 @@ export default {
   padding: 50px 80px;
   width: 1170px;
   border-bottom: 1px solid #e4e4e4;
-}
-.operateUpfilesRight form {
-  margin-top: 50px;
 }
 .operateUpfilesRight button {
   float: right;
