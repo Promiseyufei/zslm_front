@@ -13,7 +13,7 @@ let admin_router = {
         {
             path: '/inf',
             name: '小块',
-            component: resolve =>void(require(['@/views/admin/information'], resolve))
+            component: resolve =>void(require(['@/views/admin/informaion'], resolve))
         },
 
         // 文件管理
@@ -204,11 +204,6 @@ let admin_router = {
             path: '/usermanagement/usercoupons',
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/userManagement/userCoupons'], resolve))
-        },
-        {
-            path: '/usermanagement/userparticipateactivities',
-            name: '用户管理-关注活动',
-            component: resolve =>void(require(['@/views/admin/usermanagement/userParticipateActivities'], resolve))
         },
         //退款
         {
