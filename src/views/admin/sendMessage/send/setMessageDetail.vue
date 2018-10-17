@@ -60,9 +60,6 @@
                 radio:'1',
                 shortMess:false,
                 stationMess:false,
-                // assisMess:'',
-                // adminMess:'',
-                // univerMess:'',
             };
         },
         methods: {
@@ -107,6 +104,7 @@
     .sendMess {
         display: flex;
         justify-content:center;
+        margin: 95px 0 100px;
     }
     .setUp {
         margin: 20px 0 0 180px;
