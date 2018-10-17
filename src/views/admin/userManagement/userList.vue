@@ -150,7 +150,7 @@
             },
             getOneUser:function(id){
                 let that = this;
-                axios.get('http://www.zslm.com/admin/accounts/getuser',{
+                axios.get('http://www.zslm.com/admin/accounts/getoneuser',{
                     params:{
                         id:id
                     }

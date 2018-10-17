@@ -33,10 +33,10 @@
                                 </el-form-item>
                                 <el-form-item label="活动类型">
                                     <el-select v-model="ruleForm.type" placeholder="请选择活动类型" :disabled = "disabled">
-                                        <el-option label="提前面试" value="1"></el-option>
-                                        <el-option label="招生宣讲" value="2"></el-option>
-                                        <el-option label="高精会议" value="3"></el-option>
-                                        <el-option label="讲座论坛" value="4"></el-option>
+                                        <el-option label="提前面试" value="0"></el-option>
+                                        <el-option label="招生宣讲" value="1"></el-option>
+                                        <el-option label="高精会议" value="2"></el-option>
+                                        <el-option label="讲座论坛" value="3"></el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="活动省市">
@@ -73,8 +73,9 @@
                                 
                                 <el-form-item label="报名状态">
                                     <el-select v-model="ruleForm.status" placeholder="全部" :disabled = "disabled">
-                                    <el-option label="可报名" value="jion"></el-option>
-                                    <el-option label="可设提醒" value="warn"></el-option>
+                                    <el-option label="未开始" value="0"></el-option>
+                                    <el-option label="进行中" value="1"></el-option>
+                                        <el-option label="已结束" value="2"></el-option>
                                     </el-select>
                                 </el-form-item>
                                 
@@ -119,7 +120,7 @@
                                 </el-form-item>
 
                                 <el-form-item>
-                                  <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
+                                  <el-button type="primary"  :disabled = "disabled2" @click="keySublimit">提交</el-button>
                                 </el-form-item>
                               </el-form>  
                             </div>
@@ -162,6 +163,9 @@ export default {
     },
     data() {
       return {
+
+          record:0,
+          string:'请选择',
         form: {
             Title: "",
             Keywords: "",
@@ -169,14 +173,14 @@ export default {
         },
         ruleForm: {
             name: "河南科技学院",
-            type: "提前面试",
-            region: "河南",
-            spaticalType: "大数据",
+            type: this.string,
+            region: this.string,
+            spaticalType: this.string,
             address: "河南省新乡市河南科技学院",
             time: "我们的招新活动将在2018年9月20日开始咯",
             startTime:"",
             endTime: "",
-            status: "可报名",
+            status: this.string,
         },
         // 活动ID
         id: 1,
@@ -196,9 +200,56 @@ export default {
       }
     },
     methods:{
+        /**
+         * info
+         * 初始化地区字典以及专业字典
+         */
+        info:function(){
+            let self = this;
+            axios.get('http://www.zslm.com/admin/information/getpageinfo')
+                .then(res=>{
+                    console.log(res)
+                    if(res.data.code == 0){
+                        self.province = res.data.result['provice'];
+                        self.major = res.data.result['major'];
+                    }else{
+
+                    }
+                })
+                .catch(error=>{
+
+                })
+
+
+        },
+
+        judgeSelect(){
+          if(this.ruleForm.type == this.string){
+                return '请选择活动类型';
+          }
+          if(this.ruleForm.region == this.string){
+              return '请选择省份';
+          }
+          if(this.ruleForm.spaticalType == this.string){
+              return '请选择专业';
+          }
+          if(this.ruleForm.status == this.string){
+              return '请选择状态';
+          }
+          return '';
+        },
         startChange3: function () {
             this.disabled3 = false;
             this.editor.$textElem.attr('contenteditable', true);
+        },
+        //将base64转换为文件
+        dataURLtoFile: function(dataurl, filename) {
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                while(n--){
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+            return new File([u8arr], filename, {type:mime});
         },
         startChange: function () {
             this.disabled = false;
@@ -208,9 +259,101 @@ export default {
         },
         // 提交表单数据
         projectSubmit: function() {
-            let self = this;
+
+            let judge = this.judgeSelect();
+            console.log(judge)
+            if(judge == ''){
+                let self = this;
+                let img = this.imgUrls;
+                img = this.dataURLtoFile(img[0],'uploadfile');
+                console.log(img)
+                var fd = new FormData();
+                fd.append('activeImg', img);
+                fd.append('activityName',self.ruleForm.name);
+                fd.append('activityType',self.ruleForm.type);
+                fd.append('majorType',self.ruleForm.spaticalType);
+                fd.append('province',self.ruleForm.region);
+                fd.append('address',self.ruleForm.address);
+                fd.append('beginTime',self.ruleForm.startTime[0]);
+                fd.append('endTime',self.ruleForm.startTime[1]);
+                fd.append('signUpState',self.ruleForm.status);
+                let imgFile = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+                let that = this;
+                axios.post('http://www.zslm.com/admin/information/createActivity',fd,imgFile)
+                    .then(res=>{
+                        if(res.data.code == 0){
+                            that.message(true,'上传成功','success');
+                            that.record = res.data.result
+
+                        }
+                    })
+            }else{
+                this.message(true,judge,'error');
+            }
             // 提交表单数据，没有找到相应的接口
         },
+
+        keySublimit:function(){
+          if(this.record == 0){
+              this.message(true,'请先创建活动','error');
+              return ;
+          }else if(this.form.Title == ''){
+              this.message(true,'error','请输入 title');
+              return ;
+          }else if(this.form.Keywords == ''){
+              this.message(true,'error','请输入 keywords');
+              return ;
+          }else if(this.form.Description == ''){
+              this.message(true,'error','请输入 description');
+              return ;
+          }
+
+          let that = this;
+          axios.post('http://www.zslm.com/admin/information/setkwt',{
+              id:that.record,
+              title:that.form.Title,
+              keywords:that.form.Keywords,
+              description:that.form.Description
+          }).then(res=>{
+              if(res.data.code == 0){
+                  that.message(true,'提交成功','success');
+              }else {
+                  that.message(true,'提交失败 请重试','error')
+              }
+          })
+              .catch(error=>{
+                  that.message(true,'提交失败 请重试','error')
+              })
+        },
+
+        inPost:function(){
+            let that = this;
+            if(this.record == 0){
+                this.message(true,'请先创建活动','error');
+                return ;
+            }else if(that.editor.txt.html() == ''){
+                this.message(true,'请输入内容','error');
+                return ;
+            }
+            axios.post('http://www.zslm.com/admin/information/setin',{
+                id:that.record,
+                introduce:that.editor.txt.html()
+            }).then(res=>{
+                if(res.data.code == 0){
+                    that.message(true,'提交成功','success');
+                }else {
+                    that.message(true,'提交失败 请重试','error')
+                }
+            })
+                .catch(error=>{
+                    that.message(true,'提交失败 请重试','error')
+                })
+        },
+
         // 跳转页面
         toAdvise: function() {
             this.$router.push('/message/advise/' + this.id);
@@ -218,9 +361,9 @@ export default {
         
         // 提交修改数据
         messageSubmit: function() {
-            console.log(this.editor.txt.html());
             this.disabled3 = true;
             this.editor.$textElem.attr('contenteditable', false);
+            this.inPost();
         },
         // 清空富文本编辑器内容
         messageEmpty: function() {
@@ -401,13 +544,14 @@ export default {
       },
     },
     mounted(){
-        this.province = this.getProvince();
-        this.getMajor();
+        // this.province = this.getProvince();
+        // this.getMajor();
         this.editor.customConfig.onchange = (html) => {
             this.editorContent = html;
         }
         this.editor.create();
         this.editor.$textElem.attr('contenteditable', false);
+        this.info();
     }
 };
 </script>

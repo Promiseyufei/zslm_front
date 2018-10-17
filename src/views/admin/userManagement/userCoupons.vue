@@ -16,18 +16,18 @@
 
         <div class="filesForm">
 
-            <el-form class="input" v-model="userFrom" label-width="80px" style="width: 100%">
+            <el-form class="input"  label-width="80px" style="width: 100%">
                 <el-form-item label="优惠券id">
-                    <el-input size="medium" placeholder="请输入优惠券id"></el-input>
+                    <el-input size="medium" placeholder="请输入优惠券id" v-model="cid"></el-input>
                 </el-form-item>
                 <el-form-item label="优惠券">
-                    <el-input size="medium" placeholder="请输入优惠券"></el-input>
+                    <el-input size="medium" placeholder="请输入优惠券" v-model="cname"></el-input>
                 </el-form-item>
                 <el-form-item label="昵称">
-                    <el-input size="medium" placeholder="请输入用户昵称"></el-input>
+                    <el-input size="medium" placeholder="请输入用户昵称" v-model="name"></el-input>
                 </el-form-item>
                 <el-form-item label="真实姓名">
-                    <el-input size="medium" placeholder="请输入用户姓名"></el-input>
+                    <el-input size="medium" placeholder="请输入用户姓名" v-model="realname"></el-input>
                 </el-form-item>
                 <el-form-item style="float: right;width: 200px">
                     <el-button class="query-button" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
@@ -62,7 +62,7 @@
 
         <!-- 分页 -->
         <div class="footer">
-            <Page :total="total" @pageChange="pageChange" @click.native = "query"></Page>
+            <Page :total="total" @pageChange="pageChange" ></Page>
         </div>
     </div>
 </template>
@@ -72,7 +72,11 @@
         name: "userFocusMajor",
         data(){
             return {
-                userFrom: '',
+                cid:'',
+                cname:'',
+                name:'',
+                realname:'',
+                Sorting:0,
                 sorting:[
                     { value:'0',label:'id升序' },
                     { value:'1',label:'id降序' }
@@ -83,12 +87,12 @@
                     {value: '选项三',label: '100条'},
                 ],
                 tableTop:[
-                    {type:'',prop:'couponsid',label:'优惠券id',width:150},
-                    {type:'',prop:'couponsname',label:'优惠券名称',width:150},
+                    {type:'',prop:'coupon_id',label:'优惠券id',width:150},
+                    {type:'',prop:'name',label:'优惠券名称',width:150},
                     {type:'',prop:'couponsinstitutions',label:'优惠券所属机构',width:300},
-                    {type:'',prop:'userid',label:'帐户ID',width:150},
-                    {type:'',prop:'username',label:'昵称',width:150},
-                    {type:'',prop:'userrealname',label:'真实姓名',width:150},
+                    {type:'',prop:'user_account_id',label:'帐户ID',width:150},
+                    {type:'',prop:'user_name',label:'昵称',width:150},
+                    {type:'',prop:'real_name',label:'真实姓名',width:150},
                 ],
                 tableData:[{
                     createtime:'2018-9-9',
@@ -100,29 +104,106 @@
                 /**分页**/
                 total:0,
                 searchContent:{
-                    page:'',
-                    limit:'',
+                    page:1,
+                    limit:5,
                 },
             }
         },
         methods:{
-            handleClick(val){
+            query:function () {
+                var that = this;
+                axios.get('http://www.zslm.com/admin/accounts/getcoupon',{
+                    //后台参数，前台参数(传向后台)
+                    params:{
+                        page: that.searchContent.page,
+                        pageSize: that.searchContent.limit,
+                        name: that.name,
+                        cname: that.major,
+                        cid:that.cid,
+                        realname: that.realname,
+                    }
+                })
+                    .then(function (response) {
+                        var res = response.data;
+                        console.log(res)
+                        if (res.code == 0) {
+                            that.tableData =res.result[0];
+                            that.total = 10;
+                        };
+                    })
+                    .catch(function (error) {
+                    });
+            },
+            //用户输入字符进行html解码
+            htmlDecode:function (text){
+                //1.首先动态创建一个容器标签元素，如DIV
+                var temp = document.createElement("div");
+                //2.然后将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
+                temp.innerHTML = text;
+                //3.最后返回这个元素的innerText(ie支持)或者textContent(火狐，google支持)，即得到经过HTML解码的字符串了。
+                var output = temp.innerText || temp.textContent;
+                temp = null;
+                return output;
+            },
+            getOneUser:function(id){
+                let that = this;
+                axios.get('http://www.zslm.com/admin/accounts/getcouponone',{
+                    params:{
+                        id:id
+                    }
+                }).then(res=>{
+                    if(res.code == 0){
+                        that.oneUserMsg = res.result.data;
+                        return 0;
+                    }
+                    else{
+                        return 1;
+                    }
+                }).catch(function (error) {
+                    return 1;
+                })
+            },
+            handleClick:function(val){
+                let that = this;
+                if(this.oneUserMsg == null){
+                    let requestJudge = this.getOneUser(val.user_account_id)
+                    if(requestJudge == 0){
+                        console.log(111)
+                    }
+                }
+                val.head_portrait='http://img5.imgtn.bdimg.com/it/u=415293130,2419074865&fm=27&gp=0.jpg'
+                val.user_name='test'
                 this.$alert('<div class="motai-body">' +
-                                '<div>' +
-                                        '<img class="motai-img" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538373522206&di=1f7c96f5122a88d5ec27217820edee17&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F267f9e2f07082838338d0915b599a9014c08f12b.jpg">' +
-                                        '<p class="motai-name"><b>star</b></p></div>' +
-                                '</div>' +
-                                '<div>' +
-                                    '<div class="motai-line">' +
-                                    '<div class="motai-line-title">test</div>' +
-                                    '<div class="motai-line-content">testtesttesttesttesttesttesttesttesttesttesttesttesttestte</br>sttesttesttesttesttest</div>' +
-                                '</div>' +
-                            '</div>',
+                    '<div>' +
+                    '<img class="motai-img" src="'+that.htmlDecode(val.head_portrait)+'">' +
+                    '<p class="motai-name"><b>'+that.htmlDecode(val.real_name)+'</b></p></div>' +
+                    '</div>' +
+                    '<div>' +
+                    '<div class="motai-line">' +
+                    '<div class="motai-line-title">test</div>' +
+                    '<div class="motai-line-content">testtesttesttesttesttesttesttesttesttesttesttesttesttestte</br>sttesttesttesttesttest</div>' +
+                    '</div>' +
+                    '</div>',
                     {
-                    dangerouslyUseHTMLString: true
-                });
+                        dangerouslyUseHTMLString: true
+                    });
+            },
+            pageChange(msg){
+
+                this.searchContent.page = msg.page;
+                this.searchContent.limit = msg.limit;
+                //分页改变时，更新表格数据
+                if (this.searchContent.page) {
+                    this.query();
+                };
+
             }
+        },
+        mounted(){
+            // this.getPage();
+            this.query();
         }
+
     }
 </script>
 <style>
