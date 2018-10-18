@@ -92,6 +92,10 @@
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
+                            <el-popover placement="top-start" title="标题" width="200" trigger="click" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+                                 <el-button slot="reference"><i class="el-icon-tickets" @click = "alertViewCoupons"></i></el-button>
+                                
+                            </el-popover>
                         </div>
                     </template>
                 </el-table-column>
@@ -147,7 +151,7 @@
                     {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
                     {name:'el-icon-delete', event:'singleDelete'},
                     {name:'el-icon-refresh', event:'timeUpdate'},
-                    {name:'el-icon-tickets', event:'alertViewCoupons'},
+                    // {name:'el-icon-tickets', event:'alertViewCoupons'},
                 ],
                 value:'',
                 name:'',
@@ -169,7 +173,7 @@
                       label: '100条'
                     }
                 ],
-                showModal:false
+                // visible:[{false}]
             }
         },
         methods:{
@@ -288,6 +292,15 @@
     }
     .majorlist-table .el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
         padding-left: 0;
+    }
+    .majorlist-table .el-button {
+        border: 1px solid #ffffff;
+        padding: 0 0 0 10px;
+        /*display: flex;*/
+        /*position: absolute;*/
+    }
+    .majorlist-table .el-button:focus, .el-button:hover {
+
     }
 </style>
 
