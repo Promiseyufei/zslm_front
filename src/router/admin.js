@@ -82,7 +82,7 @@ let admin_router = {
         },
         {
             path: '/message/activity',
-            name: '活动——编辑-活动信息',
+            name: 'messageActivity',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Activity'], resolve))
         },
         {
@@ -92,7 +92,7 @@ let admin_router = {
         },
         {
             path: '/message/advise/:id',
-            name: '活动——编辑-推荐信息',
+            name: 'messageAdvise',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Advise'], resolve))
         },
         {
@@ -192,12 +192,12 @@ let admin_router = {
         },
         {
             path: '/usermanagement/userlist',
-            name: '用户管理-关注院校',
+            name: '用户管理-用户列表',
             component: resolve =>void(require(['@/views/admin/userManagement/userList'], resolve))
         },
         {
             path: '/usermanagement/userParticipateActivities',
-            name: '用户管理-关注院校',
+            name: '用户管理-参与活动',
             component: resolve =>void(require(['@/views/admin/userManagement/userParticipateActivities'], resolve))
         },
         {

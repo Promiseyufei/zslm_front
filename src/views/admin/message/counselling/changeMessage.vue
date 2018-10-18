@@ -29,8 +29,8 @@
                                 <el-button type="primary" @click="startChange">开始编辑</el-button>
                             </el-form-item>
 
-                            <el-form-item label="资讯类型">
-                                <el-select v-model="counsellForm.region" placeholder="请选择活动区域" :disabled = "disabled">
+                            <el-form-item label="是否展示">
+                                <el-select v-model="counsellForm.show" placeholder="请选择" :disabled = "disabled">
                                     <el-option :label="item.type" :value="item.id" v-for="(item, index) in counsell_type" :key="index"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -45,6 +45,12 @@
                                 </el-select>
                             </el-form-item>
 
+                            <el-form-item label="总部">
+                                <el-select v-model="counsellForm.father" placeholder="请选择总部" :disabled = "disabled">
+                                    <el-option :label="item.coach_name" :value="item.id" v-for="(item, index) in coach" :key="index"></el-option>
+                                </el-select>
+                            </el-form-item>
+
                             <el-form-item label="联系电话">
                                 <el-input v-model="counsellForm.tell" :disabled = "disabled"></el-input>
                             </el-form-item>
@@ -56,25 +62,33 @@
                             <el-form-item label="网址">
                                 <el-input v-model="counsellForm.web" :disabled = "disabled"></el-input>
                             </el-form-item>
+
+                            <el-form-item label="logo名称">
+                                <el-input v-model="counsellForm.logo" :disabled = "disabled"></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="封面名称">
+                                <el-input v-model="counsellForm.cover" :disabled = "disabled"></el-input>
+                            </el-form-item>
                             
                             <el-form-item label="课程形式">
                                 <el-radio-group v-model="counsellForm.type" :disabled = "disabled">
-                                    <el-radio label="线上">线上</el-radio>
-                                    <el-radio label="线下">线下</el-radio>
+                                    <el-radio label="线上" :value="0">线上</el-radio>
+                                    <el-radio label="线下" :value="1">线下</el-radio>
                                 </el-radio-group>
                             </el-form-item>
 
                             <el-form-item label="优惠卷">
                                 <el-radio-group v-model="counsellForm.cheap" :disabled = "disabled">
-                                    <el-radio label="启用">启用</el-radio>
-                                    <el-radio label="禁用">禁用</el-radio>
+                                    <el-radio label="启用" :value="0">启用</el-radio>
+                                    <el-radio label="禁用" :value="1">禁用</el-radio>
                                 </el-radio-group>
                             </el-form-item>
 
                             <el-form-item label="退款保障">
                                 <el-radio-group v-model="counsellForm.refund" :disabled = "disabled">
-                                    <el-radio label="支持">支持</el-radio>
-                                    <el-radio label="不支持">不支持</el-radio>
+                                    <el-radio label="支持" :value="0">支持</el-radio>
+                                    <el-radio label="不支持" :value="1">不支持</el-radio>
                                 </el-radio-group>
                             </el-form-item>
 
@@ -91,7 +105,7 @@
                             </el-form-item> -->
                             
                             <el-form-item>
-                                <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
+                                <el-button type="primary" @click="postC" :disabled = "disabled">提交</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -167,15 +181,19 @@ export default {
                 Description: ""
             },
             counsellForm: {
-                counsell_type: "提前面试",
+                counsell_type: '请选择',
                 name: "河南科技学院",
                 region: "河南省",
                 tell: "18303612352",
                 address: "河南省新乡市河南科技学院",
                 web:"http://qinghua.cn",
-                type: "线上",
-                cheap: "启用",
-                refund: "支持",
+                type: 0,
+                cheap:0,
+                refund: 0,
+                father:0,
+                show:'',
+                logo:'',
+                cover:''
             },
             disabled: true,
             disabled2: true,
@@ -183,23 +201,16 @@ export default {
             counsell_type: [
                 {
                     id: 0,
-                    type: "提前面试"
+                    type: "展示"
                 },
                 {
                     id: 1,
-                    type: "招生宣讲"
-                },
-                {
-                    id: 2,
-                    type: "高精会议"
-                },
-                {
-                    id: 3,
-                    type: "讲座论坛"
-                },
+                    type: "不展示"
+                }
             ],
             // 省份字典
             province: [],
+            coach:[],
             // 富文本编辑器
             editorContent:'',
             editor: new WangEditor('#editor'),
@@ -207,6 +218,49 @@ export default {
         }
     },
     methods: {
+
+        info:function(){
+            let self = this;
+            this.fetch('/admin/information/getcoachinfo')
+                .then(res=>{
+                    console.log(res)
+                    if(res.code == 0){
+                        self.province = res.result['provice'];
+                        res.result['coach'].unshift({'id':0,'coach_name':'自主办校'})
+                        self.coach = res.result['coach'];
+                        console.log(self.coach)
+                    }else{
+
+                    }
+                })
+                .catch(error=>{
+
+                })
+        },
+        test:function(){
+
+        },
+        postC:function(){
+            let that = this;
+            this.post('/admin/information/createCoach',{
+                coach_name:that.counsellForm.name,
+                provice:that.counsellForm.region,
+                phone:that.counsellForm.tell,
+                address:that.counsellForm.address,
+                web_url:that.counsellForm.web,
+                father_id:that.counsellForm.father,
+                if_coupons:that.counsellForm.cheap,
+                if_back_money:that.counsellForm.refund,
+                cover_name:that.counsellForm.cover,
+                logo_name:that.counsellForm.logo,
+                is_show:that.counsellForm.show
+            }).
+            then(
+                res=>{
+
+                }
+            )
+        },
         startChange: function() {
             this.disabled = false;
         },
@@ -238,7 +292,7 @@ export default {
         
     },
     mounted(){
-        this.province = this.getProvince();
+        this.info();
 
         // 创建富文本编辑器
         this.editor.customConfig.onchange = (html) => {

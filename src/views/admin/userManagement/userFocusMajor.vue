@@ -16,6 +16,7 @@
                     text-decoration: none;"
                class="query-button"
                href="http://www.zslm.com/admin/accounts/createmajorexcel">
+                <!--需要配置域名-->
                 导出
             </a>
         </div>
@@ -119,18 +120,18 @@
         methods:{
             query:function () {
                 var that = this;
-                axios.get('http://www.zslm.com/admin/accounts/getmajoruser',{
+                this.fetch('/admin/accounts/getmajoruser',{
                     //后台参数，前台参数(传向后台)
-                    params:{
+
                         page: that.searchContent.page,
                         pageSize: that.searchContent.limit,
                         name: that.name,
                         major: that.major,
                         realname: that.realname,
-                    }
+
                 })
                     .then(function (response) {
-                        var res = response.data;
+                        var res = response;
                         if (res.code == 0) {
                             that.tableData =res.result[0];
                             that.total = 10;
@@ -152,13 +153,13 @@
             },
             getOneUser:function(id){
                 let that = this;
-                axios.get('http://www.zslm.com/admin/accounts/getmajorone',{
-                    params:{
+                this.fetch('/admin/accounts/getmajorone',{
+
                         id:id
-                    }
+
                 }).then(res=>{
                     if(res.code == 0){
-                        that.oneUserMsg = res.result.data;
+                        that.oneUserMsg = res.result;
                         return 0;
                     }
                     else{

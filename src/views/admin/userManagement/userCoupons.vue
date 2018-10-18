@@ -112,19 +112,19 @@
         methods:{
             query:function () {
                 var that = this;
-                axios.get('http://www.zslm.com/admin/accounts/getcoupon',{
+                this.fetch('/admin/accounts/getcoupon',{
                     //后台参数，前台参数(传向后台)
-                    params:{
+
                         page: that.searchContent.page,
                         pageSize: that.searchContent.limit,
                         name: that.name,
                         cname: that.major,
                         cid:that.cid,
                         realname: that.realname,
-                    }
+
                 })
                     .then(function (response) {
-                        var res = response.data;
+                        var res = response;
                         console.log(res)
                         if (res.code == 0) {
                             that.tableData =res.result[0];
@@ -147,13 +147,13 @@
             },
             getOneUser:function(id){
                 let that = this;
-                axios.get('http://www.zslm.com/admin/accounts/getcouponone',{
-                    params:{
+                this.fetch('/admin/accounts/getcouponone',{
+
                         id:id
-                    }
+
                 }).then(res=>{
                     if(res.code == 0){
-                        that.oneUserMsg = res.result.data;
+                        that.oneUserMsg = res.result;
                         return 0;
                     }
                     else{

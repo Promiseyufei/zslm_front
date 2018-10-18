@@ -207,6 +207,9 @@ export default {
           this.$refs.order.toggleRowSelection(row,true);
         },
 
+        handleClick(val){
+
+        },
         //获得需要添加的资讯的id数组
         handleSelectionChange(val) {
             this.tableData = val;

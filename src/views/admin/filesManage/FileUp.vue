@@ -218,9 +218,9 @@ export default {
                   }
               }
               console.log( self.fileList[0].raw)
-              axios.post('http://www.zslm.com/admin/files/upload',fd,imgFile)
+              this.post('/admin/files/upload',fd,imgFile)
               .then(function (response) {
-                var date = response.data;
+                var date = response;
                 if (date.code == 0) {
                   self.$message({
                     message: '上传成功',
