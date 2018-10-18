@@ -5,7 +5,7 @@
             <el-breadcrumb-item><div class="now-page">注册用户</div></el-breadcrumb-item>
         </el-breadcrumb>
         <div style="width: 1500px;margin: 0 auto 20px">
-            <el-button class="query-button" type="primary" icon="el-icon-upload2"  @click.native = "query" style="float: none">导出</el-button>
+            <el-button class="export-button" type="primary" icon="el-icon-upload2"  @click.native = "query" style="float: none">导出</el-button>
         </div>
         <div class="filesquery">
             <i class="el-icon-search"></i>
@@ -26,12 +26,10 @@
                     <el-input size="medium" placeholder="请输入用户姓名"></el-input>
                 </el-form-item>
                 <el-form-item style="float: right">
-                    <el-button class="query-button" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
+                    <el-button class="query-button" size="mini" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
                 </el-form-item>
             </el-form>
-
         </div>
-
         <div class="files-datalist">
             <i class="el-icon-tickets"></i>
             <p class="screen">数据列表</p>
@@ -43,10 +41,10 @@
             </div>
         </div>
         <div class="file-table">
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="tableData" border>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                        <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="el-icon-search"></i></el-button>
                     </template>
                 </el-table-column>
                 <div v-for="(val, index) in tableTop" :key="index">
@@ -83,19 +81,19 @@
                     {value: '选项三',label: '100条'},
                 ],
                 tableTop:[
-                    {type:'',prop:'user_account_id',label:'帐户ID',width:112},
-                    {type:'',prop:'create_time',label:'用户创建时间',width:202},
-                    {type:'',prop:'updatetime',label:'信息更新时间',width:202},
-                    {type:'',prop:'wechat',label:'微信',width:70},
-                    {type:'',prop:'wb',label:'微博',width:70},
-                    {type:'',prop:'head_portrait',label:'用户头像',width:100},
-                    {type:'',prop:'user_name',label:'昵称',width:100},
-                    {type:'',prop:'real_name',label:'真实姓名',width:100},
-                    {type:'',prop:'sex',label:'性别',width:70},
-                    {type:'',prop:'address',label:'常住地',width:100},
-                    {type:'',prop:'schooling_id',label:'最高学历',width:100},
-                    {type:'',prop:'graduate_school ',label:'毕业院校',width:100},
-                    {type:'',prop:'industry ',label:'所属行业',width:100},
+                    {type:'',prop:'user_account_id',label:'帐户ID',width:80},
+                    {type:'',prop:'create_time',label:'用户创建时间',width:120},
+                    {type:'',prop:'updatetime',label:'信息更新时间',width:160},
+                    {type:'',prop:'wechat',label:'微信',width:60},
+                    {type:'',prop:'wb',label:'微博',width:60},
+                    {type:'',prop:'head_portrait',label:'头像',width:60},
+                    {type:'',prop:'user_name',label:'昵称',width:180},
+                    {type:'',prop:'real_name',label:'真实姓名',width:80},
+                    {type:'',prop:'sex',label:'性别',width:60},
+                    {type:'',prop:'address',label:'常住地',width:80},
+                    {type:'',prop:'schooling_id',label:'最高学历',width:80},
+                    {type:'',prop:'graduate_school ',label:'毕业院校',width:160},
+                    {type:'',prop:'industry ',label:'所属行业',width:140},
                     {type:'',prop:'worked_year ',label:'工作年限',width:100},
                 ],
                 tableData:[{
@@ -206,6 +204,19 @@
     }
 </script>
 
+
+<style>
+    /*表格滚动条*/
+    .file-table .el-table--scrollable-x .el-table__body-wrapper {
+        overflow-x: hidden;
+    }
+    /*表头文字居中*/
+    .file-table .el-table td, .el-table th.is-leaf {
+        text-align: center;
+    }
+</style>
+
+
 <style scoped>
     /**当前面包屑**/
     .now-page{
@@ -216,6 +227,9 @@
     .el-form-item{
         display: inline-block;
         width: 20%;
+    }
+    .filesquery i, .files-datalist i {
+        margin: 0 10px 0;
     }
     .filesquery {
         width: 1500px;
@@ -232,7 +246,7 @@
         color: #666;
         font-family:'Tahoma';
     }
-    .dataquery-refresh {
+    .dataquery-refresh,.query-button {
         position: absolute;
         right: 10px;
         top: 10px;
@@ -242,7 +256,7 @@
         border-radius:0;
     }
 
-    .query-button{
+    .export-button{
         float: right;
         color: #666;
         background-color: #fff;
@@ -265,6 +279,9 @@
         background: #f3f3f3;
         margin: 0 auto;
     }
+    .file-table i {
+        font-size: 20px;
+    }
     .file-table {
         width: 1500px;
         margin: 0 auto;
@@ -275,7 +292,7 @@
         width: 1500px;
         display: flex;
         /*position: relative;*/
-        margin: 0 auto;
+        margin: 20px auto 0;
     }
 
     .footer {

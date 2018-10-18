@@ -90,7 +90,7 @@
                 editor:{},
                 editorContent:'',
                 carrier:-1,
-                textarea:''
+                textarea:'',
             };
         },
         // watch:{
@@ -184,6 +184,7 @@
     .sendMess {
         display: flex;
         justify-content:center;
+        margin: 95px 0 100px;
     }
     .setUp {
         margin: 20px 0 0 180px;

@@ -6,7 +6,7 @@
             <el-breadcrumb-item><div class="now-page">领优惠券</div></el-breadcrumb-item>
         </el-breadcrumb>
         <div style="width: 1500px;margin: 0 auto 20px">
-            <el-button class="query-button" type="primary" icon="el-icon-upload2"  @click.native = "query" style="float: none">导出</el-button>
+            <el-button class="export-button" type="primary" icon="el-icon-upload2"  @click.native = "query" style="float: none">导出</el-button>
         </div>
         <div class="filesquery">
             <i class="el-icon-search"></i>
@@ -30,7 +30,7 @@
                     <el-input size="medium" placeholder="请输入用户姓名" v-model="realname"></el-input>
                 </el-form-item>
                 <el-form-item style="float: right;width: 200px">
-                    <el-button class="query-button" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
+                    <el-button size="mini" class="query-button" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
                 </el-form-item>
             </el-form>
 
@@ -50,7 +50,7 @@
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                        <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="el-icon-search"></i></el-button>
                     </template>
                 </el-table-column>
                 <div v-for="(val, index) in tableTop" :key="index">
@@ -88,11 +88,11 @@
                 ],
                 tableTop:[
                     {type:'',prop:'coupon_id',label:'优惠券id',width:150},
-                    {type:'',prop:'name',label:'优惠券名称',width:150},
-                    {type:'',prop:'couponsinstitutions',label:'优惠券所属机构',width:300},
+                    {type:'',prop:'name',label:'优惠券名称',width:310},
+                    {type:'',prop:'couponsinstitutions',label:'优惠券所属机构',width:310},
                     {type:'',prop:'user_account_id',label:'帐户ID',width:150},
-                    {type:'',prop:'user_name',label:'昵称',width:150},
-                    {type:'',prop:'real_name',label:'真实姓名',width:150},
+                    {type:'',prop:'user_name',label:'昵称',width:230},
+                    {type:'',prop:'real_name',label:'真实姓名',width:230},
                 ],
                 tableData:[{
                     createtime:'2018-9-9',
@@ -207,6 +207,10 @@
     }
 </script>
 <style>
+    /*表头文字居中*/
+    .file-table .el-table td, .el-table th.is-leaf {
+        text-align: center;
+    }
     .motai-body{
         width: 80%;
         margin: 0 auto;
@@ -257,6 +261,9 @@
         display: inline-block;
         width: 20%;
     }
+    .filesquery i,.files-datalist i {
+        margin: 0 10px 0;
+    }
     .filesquery {
         width: 1500px;
         height: 50px;
@@ -272,7 +279,7 @@
         color: #666;
         font-family:'Tahoma';
     }
-    .dataquery-refresh {
+    .dataquery-refresh,.query-button {
         position: absolute;
         right: 10px;
         top: 10px;
@@ -282,7 +289,7 @@
         border-radius:0;
     }
 
-    .query-button{
+    .export-button{
         float: right;
         color: #666;
         background-color: #fff;
@@ -305,6 +312,10 @@
         background: #f3f3f3;
         margin: 0 auto;
     }
+    .file-table i {
+        font-size: 20px;
+        font-weight: 500;
+    }
     .file-table {
         width: 1500px;
         margin: 0 auto;
@@ -315,7 +326,7 @@
         width: 1500px;
         display: flex;
         /*position: relative;*/
-        margin: 0 auto;
+        margin: 20px auto 0;
     }
 
     .footer {
