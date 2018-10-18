@@ -6,7 +6,7 @@
             <el-breadcrumb-item><div class="now-page">参与活动</div></el-breadcrumb-item>
         </el-breadcrumb>
         <div style="width: 1500px;margin: 0 auto 20px">
-            <el-button class="query-button" type="primary" icon="el-icon-upload2"  @click.native = "query" style="float: none">导出</el-button>
+            <el-button class="export-button" type="primary" icon="el-icon-upload2"  @click.native = "query" style="float: none">导出</el-button>
         </div>
         <div class="filesquery">
             <i class="el-icon-search"></i>
@@ -16,7 +16,7 @@
 
         <div class="filesForm">
 
-                <el-form class="input" label-width="80px" style="width: 100%">
+                <el-form label-width="80px">
                     <el-form-item label="活动名称">
                         <el-input size="medium" placeholder="请输入院校专业" v-model="active"></el-input>
                     </el-form-item>
@@ -27,7 +27,7 @@
                         <el-input size="medium" placeholder="请输入用户姓名" v-model="realname"></el-input>
                     </el-form-item>
                     <el-form-item style="float: right">
-                        <el-button class="query-button" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
+                        <el-button size="mini" class="query-button" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
                     </el-form-item>
                 </el-form>
 
@@ -47,7 +47,7 @@
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                        <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="el-icon-search"></i></el-button>
                     </template>
                 </el-table-column>
                 <div v-for="(val, index) in tableTop" :key="index">
@@ -84,10 +84,11 @@
                     {value: '选项三',label: '100条'},
                 ],
                 tableTop:[
-                    {type:'',prop:'active_name',label:'活动名称',width:320},
-                    {type:'',prop:'user_account_id',label:'帐户ID',width:200},
-                    {type:'',prop:'user_name',label:'昵称',width:200},
-                    {type:'',prop:'real_name',label:'真实姓名',width:200},
+                    {type:'',prop:'active_name',label:'活动名称',width:280},
+                    {type:'',prop:'active_name',label:'参与类型',width:280},
+                    {type:'',prop:'user_account_id',label:'帐户ID',width:280},
+                    {type:'',prop:'user_name',label:'昵称',width:280},
+                    {type:'',prop:'real_name',label:'真实姓名',width:280},
                 ],
                 tableData:[{
                     active_name:'test',
@@ -199,15 +200,28 @@
     }
 </script>
 
+<style>
+    /*表头文字居中*/
+    .file-table .el-table td, .el-table th.is-leaf {
+        text-align: center;
+    }
+    .filesForm .el-form {
+        display: flex;
+    }
+</style>
+
 <style scoped>
     /**当前面包屑**/
     .now-page{
         padding-bottom: 3px;
         border-bottom: solid 1px #68c368;
-    }npm
+    }
     .el-form-item{
         display: inline-block;
         width: 20%;
+    }
+    .filesquery i,.files-datalist i {
+        margin: 0 10px 0;
     }
     .filesquery {
         width: 1500px;
@@ -224,7 +238,7 @@
         color: #666;
         font-family:'Tahoma';
     }
-    .dataquery-refresh {
+    .dataquery-refresh,.query-button {
         position: absolute;
         right: 10px;
         top: 10px;
@@ -234,7 +248,7 @@
         border-radius:0;
     }
 
-    .query-button{
+    .export-button{
         float: right;
         color: #666;
         background-color: #fff;
@@ -257,6 +271,9 @@
         background: #f3f3f3;
         margin: 0 auto;
     }
+    .file-table i {
+        font-size: 20px;
+    }
     .file-table {
         width: 1500px;
         margin: 0 auto;
@@ -265,9 +282,8 @@
 
     .filesForm {
         width: 1500px;
-        display: flex;
         /*position: relative;*/
-        margin: 0 auto;
+        margin: 20px auto 0;
     }
 
     .footer {

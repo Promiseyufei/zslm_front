@@ -116,7 +116,7 @@ export default [
                     {
                         "name":"文件上传",
                         "index":1,
-                        "url":"/filesManage/fileup"
+                        "url":"/SelectUnivers"
                     },
                     {
                         "name":"文件管理",

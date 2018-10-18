@@ -99,16 +99,11 @@
                     limit:10,
                 },
                 iconname:[
-                    // {name:'el-icon-search', event:'jumpFontMajorPage'},
-                    // {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
-                    // {name:'el-icon-delete', event:"delAppointMajor"},
-                    // {name:'el-icon-refresh', event:"updateMajorTime"},
-                    // {name:'el-icon-tickets', event:"alertSeeProject"},
                     {name:'el-icon-search'},
                     {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
                     {name:'el-icon-delete', event:"delAppointMajor"},
                     {name:'el-icon-refresh', event:"updateMajorTime"},
-                    {name:'el-icon-tickets'},
+                    {name:'el-icon-tickets', event:'alertSeeProject'},
                 ],
                 options: [
                     {value: 0,　label: '按权重升序'}, 

@@ -113,7 +113,7 @@ export default {
         }
       };
       return {
-
+        majorname: this.$route.params.majorname,
         isUpload:false,
         value2: '',
         rules: {

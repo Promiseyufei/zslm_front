@@ -60,8 +60,8 @@
                 </el-table-column>
 		          <el-table-column label="操作" width="220">
 		              <template slot-scope="scope">
-		                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-		                <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+		                <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+		                <el-button @click="view(scope.row)" type="text" size="small">查看</el-button>
 		                <el-button type="text" size="small" @click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
 		              </template>
 		          </el-table-column>
@@ -130,9 +130,8 @@
                     create_time: '',
 		        }],
 		        showweight:'',
-		        sels:[],
 		        disabled:true,
-		        multipleSelection:[],
+		        multipleSelection:[],//存放多选选中的ID
 		        /*分页*/
 		        total:0,
 		        searchContent:{
@@ -153,29 +152,27 @@
 	  		jumpPage:function() {
 	    		this.$router.push('/SelectUnivers');
 	    	},
-	  		//获得选中表格行的id
+	  		//获得多选中表格行的id
 	  		handleSelectionChange(val) {
 		    	this.multipleSelection = val;
-		    	// console.log(this.multipleSelection);
 		    },
 		    //批量删除表格内容
 		    BatchDelete: function(){
 		    	var that = this;
-		    	let selectId = [];
+		    	let selectId = [];//存放删除的数据
 		    	for (var i = 0; i < that.multipleSelection.length; i++) {
-		    		selectId.push( that.multipleSelection[i].id);
+		    		that.selectId.push(that.multipleSelection[i].id);
+		    		//删除数组——删除选择的行
+		    		selectId.splice(0,that.multipleSelection.length);
 		    	};
-		    	this.deleteRequest(selectId)
-
+		    	this.deleteRequest(selectId);
 		    },
 	      	toshow2(msg) {
 	        	this.msg = msg;
-	          // console.log(this.msg);
 	      	},
 	  		//获得焦点，储存原值
 	  		getFocus: function(val) {
 	  			this.showweight = val;
-	  			// console.log(val);
 	  		},
 	  		//失去焦点做判断
 	  		loseFocus:function(val,index) {
@@ -224,13 +221,20 @@
 	      		// 删除前判断
                 let that = this;
                     that.deleteRequest([rows[index].id]);
-
         		// 删除某一行
 
 	      	},
-	      	// 编辑、查看表格某一行
-	    	handleClick(row) {
-	        // console.log(row);
+	      	//查看表格某一行——弹出编辑文件信息框框
+	    	view(row) {
+	    		//当前行表格数据
+	    		var singledata = row;
+	        	// 此弹出框未给
+	    	},
+	    	//编辑表格某一行——跳到PDF文件预览界面
+	    	edit(row) {
+	    		//当前行表格数据
+	    		var singledata = row;
+	        	// 此页面未给
 	    	},
 	  		//动态更新文件管理首页的id
 	  		toshow: function (i) {
@@ -243,9 +247,9 @@
 	        	this.searchContent.page = msg.page;
 	        	this.searchContent.limit = msg.limit;
 	        	//分页改变时，更新表格数据
-	        	// if (this.searchContent.page) {
-	        		// this.query();
-	        	// };
+	        	if (this.searchContent.page) {
+	        		this.query();
+	        	};
 	        	// console.log(this.searchContent.page);
 	      	},
 	      	query: function (){
