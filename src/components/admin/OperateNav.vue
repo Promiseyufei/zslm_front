@@ -3,7 +3,7 @@
       <!-- 选项卡 -->
       <div class="operateNav">
         <el-radio-group v-model="radio">
-          <el-radio-button :label="list.name" v-for="(list, index) in Banner" :key = "index" @click.native="open(list.id)"></el-radio-button>
+          <el-radio-button :label="list.name" v-for="(list, index) in Banner" :key="index" @click.native="open(list.id)"></el-radio-button>
         </el-radio-group>
       </div>
     </div>
