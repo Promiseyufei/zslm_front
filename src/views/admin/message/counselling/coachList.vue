@@ -92,7 +92,6 @@
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
-                            <!-- <zen-modal v-if="showModal"></zen-modal> -->
                         </div>
                     </template>
                 </el-table-column>
@@ -103,27 +102,14 @@
             </el-table>
         </div>
         <div class="footer"> 
-            <el-button type="primary" size="mini" icon="el-icon-delete">删除</el-button>
+            <el-button type="primary" size="mini" icon="el-icon-delete">批量删除</el-button>
             <Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
         </div>
     </div>
 </template>
 
 <script>
-    //  Vue.component('zen-modal',{
-    //     template: `
-    //         <div class="modal is-active">
-    //           <div class="modal-background"></div>
-    //           <div class="modal-content">
-    //               <div class="box">
-    //                   <slot>默认模态框内容</slot>
-    //               </div>     
-    //           </div>
-    //           <button class="modal-close"></button>
-    //         </div>
-    //     `
-    // });
-    export default {
+    export default{
         data(){
             return{
                 /*分页*/
@@ -157,14 +143,13 @@
                     {label:'退款保障',width:'80'},
                 ],
                 iconname:[
-                    {name:'el-icon-search'},
+                    {name:'el-icon-search', event:'jumpCoachHomePage'},
                     {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
-                    {name:'el-icon-delete'},
-                    {name:'el-icon-refresh'},
-                    {name:'el-icon-tickets', event:'coupons'},
+                    {name:'el-icon-delete', event:'singleDelete'},
+                    {name:'el-icon-refresh', event:'timeUpdate'},
+                    {name:'el-icon-tickets', event:'alertViewCoupons'},
                 ],
                 value:'',
-                // input:'',
                 name:'',
                 type1:'',
                 type2:'',
@@ -184,7 +169,7 @@
                       label: '100条'
                     }
                 ],
-                // showModal:false
+                showModal:false
             }
         },
         methods:{
@@ -207,15 +192,28 @@
                     this.message(true, "浏览器版本不兼容", "error");
                 }
             },
+             //调到相应的辅导机构主页
+            jumpCoachHomePage() {
+                this.$router.push('');
+            },
             //跳转到辅导机构信息页面
             jumpMajorMsgPage(val) {
                 this.$router.push('/message/changeMessage');
-                console.log(123)
+            },
+            //表格单行删除，
+            singleDelete() {
+                var that = this;
+                that.confirm(true,'删除成功','确定删除');
             },
             //弹出框——查看优惠券
-            coupons() {
-                // this.showModal = true;
+            alertViewCoupons() {
+                console.log(123)
             },
+            //发布时间更新
+            timeUpdate() {
+                this.$message('发布时间更已新');
+            },
+
             // changeCount: function(val,index) {
             //   var re = /^[0-9]+.?[0-9]*$/;
             //   if (!re.test(val)) {
