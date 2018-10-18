@@ -13,7 +13,7 @@ let admin_router = {
         {
             path: '/inf',
             name: '小块',
-            component: resolve =>void(require(['@/views/admin/informaion'], resolve))
+            component: resolve =>void(require(['@/views/admin/information'], resolve))
         },
 
         // 文件管理

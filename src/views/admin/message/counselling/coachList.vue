@@ -91,7 +91,8 @@
                 <el-table-column label="操作" width="200">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
-                            <i v-for="(val, index) in iconname" :key="index" :class="val.name"></i>
+                            <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
+                            <!-- <zen-modal v-if="showModal"></zen-modal> -->
                         </div>
                     </template>
                 </el-table-column>
@@ -109,6 +110,19 @@
 </template>
 
 <script>
+    //  Vue.component('zen-modal',{
+    //     template: `
+    //         <div class="modal is-active">
+    //           <div class="modal-background"></div>
+    //           <div class="modal-content">
+    //               <div class="box">
+    //                   <slot>默认模态框内容</slot>
+    //               </div>     
+    //           </div>
+    //           <button class="modal-close"></button>
+    //         </div>
+    //     `
+    // });
     export default {
         data(){
             return{
@@ -144,10 +158,10 @@
                 ],
                 iconname:[
                     {name:'el-icon-search'},
-                    {name:'el-icon-edit-outline'},
+                    {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
                     {name:'el-icon-delete'},
                     {name:'el-icon-refresh'},
-                    {name:'el-icon-tickets'},
+                    {name:'el-icon-tickets', event:'coupons'},
                 ],
                 value:'',
                 // input:'',
@@ -170,6 +184,7 @@
                       label: '100条'
                     }
                 ],
+                // showModal:false
             }
         },
         methods:{
@@ -182,6 +197,24 @@
             },
             handleCurrentChange(val) {
                 this.currentRow = val;
+            },
+            //表格操作点击事件
+            clickEvent(eventName, row) {
+                if(this[eventName+""]) {
+                    this[eventName+""](row);
+                }
+                else {
+                    this.message(true, "浏览器版本不兼容", "error");
+                }
+            },
+            //跳转到辅导机构信息页面
+            jumpMajorMsgPage(val) {
+                this.$router.push('/message/changeMessage');
+                console.log(123)
+            },
+            //弹出框——查看优惠券
+            coupons() {
+                // this.showModal = true;
             },
             // changeCount: function(val,index) {
             //   var re = /^[0-9]+.?[0-9]*$/;
@@ -303,6 +336,7 @@
     }
     .majorlist-icon i {
         margin: 0 5px;
+        cursor: pointer;
     }
     .majorlist-icon {
         display: flex;

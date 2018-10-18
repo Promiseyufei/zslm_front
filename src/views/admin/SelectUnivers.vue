@@ -165,7 +165,7 @@
 	        			majorname:'',
 	        		},
 		        },
-	        	majorname:'',
+	        	majorname:' ',
 
 	        	//分页
 	        	count:0,
@@ -220,9 +220,10 @@
 		    //跳转页面按钮
 		    jumpPage:function() {
 		    	// if (this.majorname) {
-		    		// this.$router.push('/filesManage/fileup/' + "");
+		    		console.log(132);	
+		    		this.$router.push('/filesManage/fileup/'+this.majorname);
 		    	// }
-		    }
+		    },
 	    },
 	    mounted(){
 	    	this.getcity_info();
@@ -250,6 +251,9 @@
 		color: #409EFF;
 		background-color: #e9eef3;
 		border-left: 1px solid #e9eef3;
+	}
+	.SelectUnivers-majorname .el-radio-group {
+		/*font-size: 12px;*/
 	}
 	
 </style>
@@ -293,6 +297,7 @@
 		margin: 20px 0 40px 0;
 	}
 	.SelectUnivers-majorname {
+		/*height: 500px;*/
 		margin: 40px 0 0 45px;
 		display: flex;
     	flex-direction: column;
@@ -300,23 +305,17 @@
 	.SelectUnivers-city {
 		margin: 50px 0 0 50px;
 	}
-	.leftImg p {
-		position: relative;
-		left: 35px;
-	}
 	.leftImg i {
-		position: absolute;
-		left: 15px;
-		top: 17px;
+		margin: 0 10px 0;
 	}
 	.leftImg {
-		position: relative;
-		top: 50px;
+		margin: 50px 0 0;
 		color: #FFF;
 		font-size: 14px;
 		width: 200px;
 		height: 50px;
 		display: flex;
+		align-items:center;
 		background: url(../../assets/img/point.png) no-repeat;
 		background-size: 100% 100%;
 	}
@@ -343,6 +342,7 @@
 		border-left: 1px solid #fff;
 	}
 	.SelectUnivers-left {
+		z-index: 1;
 		width: 180px;
 		background-color: #fcfcfc;
 	}
