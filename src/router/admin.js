@@ -86,7 +86,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Activity'], resolve))
         },
         {
-            path: '/message/notice',
+            path: '/message/notice/:id',
             name: '消息通知',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/messageNotice'], resolve))
         },
@@ -94,6 +94,11 @@ let admin_router = {
             path: '/message/advise/:id',
             name: 'messageAdvise',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Advise'], resolve))
+        },
+        {
+            path: '/message/addActivity/:id',
+            name: 'addActive',
+            component: resolve =>void(require(['@/views/admin/message/activityInformation/AddAdvise'], resolve))
         },
         {
             path: '/message/hostuniversmajor',

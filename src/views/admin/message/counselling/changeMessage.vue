@@ -62,14 +62,6 @@
                             <el-form-item label="网址">
                                 <el-input v-model="counsellForm.web" :disabled = "disabled"></el-input>
                             </el-form-item>
-
-                            <el-form-item label="logo名称">
-                                <el-input v-model="counsellForm.logo" :disabled = "disabled"></el-input>
-                            </el-form-item>
-
-                            <el-form-item label="封面名称">
-                                <el-input v-model="counsellForm.cover" :disabled = "disabled"></el-input>
-                            </el-form-item>
                             
                             <el-form-item label="课程形式">
                                 <el-radio-group v-model="counsellForm.type" :disabled = "disabled">
@@ -91,7 +83,27 @@
                                     <el-radio label="不支持" :value="1">不支持</el-radio>
                                 </el-radio-group>
                             </el-form-item>
+                            <el-form-item label="院校logo">
+                                <div class="major_img">
+                                    <el-upload class="avatar-uploader" action="" :auto-upload="false" :on-change="changeLogoUpload" :multiple="false" :show-file-list="false">
+                                        <img v-if="majorLogoUrl" :src="majorLogoUrl" class="avatar" alt="院校logo">
+                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    </el-upload>
+                                </div>
+                            </el-form-item>
 
+
+                            <!-- 院校封面图 -->
+                            <el-form-item label="院校封面图">
+                                <div class="major_img">
+                                    <div id="major_cover_map">
+                                        <el-upload class="avatar-uploader" action="" :auto-upload="false" :on-change="changeCoverMapUpload" :multiple="false" :show-file-list="false">
+                                            <img v-if="majorCoverMapUrl" :src="majorCoverMapUrl" class="avatar" alt="院校封面图">
+                                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                        </el-upload>
+                                    </div>
+                                </div>
+                            </el-form-item>
                             <!--<el-form-item label="官方微信">
                                 <div style="padding: 0 5px 5px 8px">
                                     <div class="add" @click.stop="addPic" cuort>
@@ -133,7 +145,7 @@
                                 </el-form-item>
             
                                 <el-form-item>
-                                    <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
+                                    <el-button type="primary" @click="postK" :disabled = "disabled2">提交</el-button>
                                 </el-form-item>
                             </el-form>  
                         </div>
@@ -215,15 +227,17 @@ export default {
             editorContent:'',
             editor: new WangEditor('#editor'),
             id: 0,
+            majorLogoUrl:'',
+            majorLogoFile:null,
+            majorCoverMapUrl:'',
+            majorCoverMapFile:''
         }
     },
     methods: {
-
         info:function(){
             let self = this;
             this.fetch('/admin/information/getcoachinfo')
                 .then(res=>{
-                    console.log(res)
                     if(res.code == 0){
                         self.province = res.result['provice'];
                         res.result['coach'].unshift({'id':0,'coach_name':'自主办校'})
@@ -237,30 +251,83 @@ export default {
 
                 })
         },
-        test:function(){
+        changeLogoUpload: function(file,fileList) {
+            if(this.beforeAvatarUpload(file)) {
+                console.log(file.url);
+                this.majorLogoUrl = file.url;
+                this.majorLogoFile = file.raw;
+            }
+        },
+        changeCoverMapUpload: function(file, fileList) {
+            if(this.beforeAvatarUpload(file)) {
+                console.log(file.url);
+                this.majorCoverMapUrl = file.url;
+                this.majorCoverMapFile = file.raw;
+            }
+        },
+
+        //上传图片判断
+        beforeAvatarUpload(file) {
+            const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png';
+            const isLt2M = file.raw.size / 1024 / 1024 < 4;
+
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 4MB!');
+            }
+            return isJPG && isLt2M;
+        },
+
+        postK:function(){
+            let that = this;
+            this.post('/admin/information/createktd',{
+                id:that.id,
+                keywords:that.form.Keywords,
+                title:that.form.Title,
+                description:that.form.Description
+            }).then(res=>{
+
+            })
 
         },
         postC:function(){
             let that = this;
-            this.post('/admin/information/createCoach',{
-                coach_name:that.counsellForm.name,
-                provice:that.counsellForm.region,
-                phone:that.counsellForm.tell,
-                address:that.counsellForm.address,
-                web_url:that.counsellForm.web,
-                father_id:that.counsellForm.father,
-                if_coupons:that.counsellForm.cheap,
-                if_back_money:that.counsellForm.refund,
-                cover_name:that.counsellForm.cover,
-                logo_name:that.counsellForm.logo,
-                is_show:that.counsellForm.show
-            }).
+            var fd = new FormData();
+            let imgFile = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+            fd.append('coach_name',that.counsellForm.name);
+            fd.append('provice',that.counsellForm.region)
+            fd.append('phone',that.counsellForm.tell);
+            fd.append('address',that.counsellForm.address);
+            fd.append('web_url',that.counsellForm.web);
+            fd.append('father_id',that.counsellForm.father);
+            fd.append('if_coupons',that.counsellForm.cheap);
+            fd.append('if_back_money',that.counsellForm.refund);
+            fd.append('is_show',that.counsellForm.show);
+            fd.append('coachLogo',that.majorLogoFile);
+            fd.append('coachCover',that.majorCoverMapFile)
+            this.post('/admin/information/createCoach',fd,imgFile).
             then(
                 res=>{
-
+                    that.id = res.result
                 }
             )
         },
+        postD(){
+            let that = this;
+            this.post('/admin/information/created',{
+                id:that.id,
+                describe:that.editor.txt.html()
+            }).then(res=>{
+
+            })
+        },
+
         startChange: function() {
             this.disabled = false;
         },
@@ -276,6 +343,7 @@ export default {
             console.log(this.editor.txt.html());
             this.disabled3 = true;
             this.editor.$textElem.attr('contenteditable', false);
+            this.postD()
         },
         // 清空富文本编辑器内容
         messageEmpty: function() {
@@ -393,5 +461,27 @@ export default {
     margin: 20px 0;
     text-align: left;
 }
-
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+}
 </style>

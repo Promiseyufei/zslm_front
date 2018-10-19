@@ -193,7 +193,7 @@ export default {
     methods: {
         // 跳转到“活动列表”页面添加推荐活动
         adviseAdd: function() {
-          this.$router.push('/operate/addAdvise/' + this.id);
+          this.$router.push('/message/addActivity/' + this.id);
         },
         
         // 返回上一步
@@ -203,14 +203,14 @@ export default {
 
         // 跳转到消息通知页面
         toNotice: function() {
-            this.$router.push('/message/notice');
+            this.$router.push('/message/notice/'+this.id);
         },
 
         // 自动设置推荐活动
         setActivity: function() {
             let self = this;
             axios.post('/admin/information/setAutomaticRecActivitys', {
-                regionId: self.id
+                activityId: self.id
             })
             .then(function (response) {
                 // console.log("测试123");
@@ -223,8 +223,8 @@ export default {
         // 自动设置院校专业
         setCollege: function() {
             let self = this;
-            axios.post('/admin/information/setAutomaticRecActivitys', {
-                regionId: self.id
+            this.post('/admin/information/setAutomaticRecMajors', {
+                activityId: self.id
             })
             .then(function (response) {
                 // console.log("测试123");

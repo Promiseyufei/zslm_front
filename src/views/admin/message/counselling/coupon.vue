@@ -53,7 +53,7 @@
                             </el-form-item>
 
                             <el-form-item>
-                                <el-button type="primary" @click="" :disabled = "disabled">提交</el-button>
+                                <el-button type="primary" @click="postContent" :disabled = "disabled">提交</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -94,7 +94,7 @@
                                         </template>
                                         </el-table-column>
                                     <el-table-column
-                                        property="state"
+                                        property="is_show"
                                         label="展示状态"
                                         width="120">
                                         <template slot-scope="scope" >
@@ -104,16 +104,16 @@
                                         </template>
                                     </el-table-column>
                                         <el-table-column
-                                        property="pj_name"
+                                        property="coach_name"
                                         label="辅导机构名称">
                                     </el-table-column>
                                         <el-table-column
-                                        property="project_type"
+                                        property="name"
                                         label="优惠卷名称"
                                         width="100">
                                     </el-table-column>
                                     <el-table-column
-                                        property="name"
+                                        property="test"
                                         label="操作"
                                         width="200">
                                         <template slot-scope="scope">
@@ -143,6 +143,7 @@ export default {
     },
     data() {
         return {
+            id:0,
             disabled: true,
             form: {
                 Title: "123",
@@ -162,17 +163,30 @@ export default {
         }
     },
     methods: {
+
+        info:function(){
+            this.id = this.$route.params.id;
+            console.log(this.id)
+            let that = this;
+            this.fetch('/admin/information/getcoachcoupon',{
+                id:that.id
+            }).then(res=>{
+                if(res.code == 0){
+                    that.tableData = res.result;
+                }
+            })
+        },
         startChange: function() {
             this.disabled = false;
             this.editor.$textElem.attr('contenteditable', true);
         },
         //改变展示状的时候触发事件
         changeState: function(state,row) {
+            console.log(state)
             let self = this;
-            axios.post('/admin/information/setProjectState', {
-                projectId: row,
-                type: 1,
-                state: state
+            axios.post('/admin/information/updateshow', {
+                id: self.id,
+                state: state ? 0:1
             }).then((response) => {
                 var res = response.data;
                 if(res.code == 0) {
@@ -216,6 +230,13 @@ export default {
                 this.tableData[index].weight = this.TableValue;
             } else {
                 this.$emit('setInfoRelation',this.tableData[index].id, this.tableData[index].weight);
+                let that = this
+                this.post('/admin/information/updateweight',{
+                    id:that.id,
+                    weight : that.tableData[index].weight
+                }).then(res=>{
+
+                })
             }
         },
         // 清空所有优惠卷
@@ -238,6 +259,16 @@ export default {
                 }
             })
         },
+        postContent(){
+            let that = this;
+            this.post('/admin/information/createCoupon',{
+                coachId:this.id,
+                couponName:that.couponForm.name,
+                couponType:0,
+                context:that.couponForm.message,
+                couponcol:that.editor.txt.html()
+            })
+        },
         //返回上一页
         toBack: function() {
             this.$router.push('/message/coachList');
@@ -251,7 +282,7 @@ export default {
         },
     },
     mounted(){
-        this.getCoupon();
+        this.info();
 
         // 创建富文本编辑器
         this.editor.customConfig.onchange = (html) => {
