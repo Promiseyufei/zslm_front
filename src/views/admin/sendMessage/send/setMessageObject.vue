@@ -138,11 +138,11 @@ export default {
         },
         // 跳转到“院校列表”
         adviseAdd: function() {
-          this.$router.push('/message/hostuniversmajor');
+          this.$router.push('/send/sendMessage');
         },
-        //跳到活动页面
+        //跳到"选择活动"页面
         adviseAdd2: function() {
-            this.$router.push('/message/choiceactivity/'+"");
+            this.$router.push('/send/selectAcitity');
         },
         //删除单个活动
         activityDelete: function(index) {
@@ -163,6 +163,23 @@ export default {
 };
 </script>
 <style>
+    /*
+    * 步骤条
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
 </style>
 <style scoped>
     .operateBox {

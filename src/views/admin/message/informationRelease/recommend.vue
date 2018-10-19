@@ -219,7 +219,7 @@ export default {
     methods: {
         // 跳转到“院校专业”页面添加院校
         adviseAdd: function() {
-        //   this.$router.push('' + this.id);
+        //   this.$router.push('/send/sendMessage/' + this.id);
         },
         
         // 返回上一步
@@ -229,7 +229,7 @@ export default {
 
         // 跳转到消息通知页面
         toNotice: function() {
-            this.$router.push('/message/notice/' + this.id);
+            this.$router.push('/message/informationNotice/' + this.id);
         },
 
         //点击完成，跳转到资讯列表首页
@@ -394,9 +394,23 @@ export default {
 };
 </script>
 <style>
-  /*
-  * 
-  */
+    /*
+    * 步骤条
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
 </style>
 <style scoped>
     .operateBox {

@@ -179,6 +179,18 @@ let admin_router = {
             name: '消息管理-设置消息对象—手动选择的用户',
             component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageSelf'], resolve))
         },
+
+        {
+            path: '/send/sendMessage',
+            name: '消息管理-设置消息对象—选择院校',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/sendMessage'], resolve))
+        },
+        {
+            path: '/send/selectAcitity',
+            name: '消息管理-设置消息对象—选择活动',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/selectAcitity'], resolve))
+        },
+
         {
             path: '/send/setMessageDetail',
             name: '消息管理-编辑发送',

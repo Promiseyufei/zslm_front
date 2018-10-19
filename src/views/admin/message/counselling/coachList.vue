@@ -329,6 +329,8 @@
     .majorlist-table .el-button:focus, .el-button:hover {
 
     }
+
+    
     
 </style>
 
