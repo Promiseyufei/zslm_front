@@ -8,7 +8,7 @@
 						<el-breadcrumb-item class="selectedNavPublic">频道banner</el-breadcrumb-item>
 					</el-breadcrumb>
 					<!-- 选项卡 -->
-					<operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
+					<operateNav :Banner="banner" :radio2="radio2" @showbox="toshow" :i="i"></operateNav>
 					
 					<div class="operateUpfiles operateHeader">
 						<p>当前操作页面：<span>{{this.radio2}}</span></p>
@@ -239,7 +239,7 @@ export default {
 				},
 				setInfoRelation: function(id, weight, val, index) {
 					this.confirm(() => {
-						axios.post('/admin/operate/setBtWeight', {
+						this.post('/admin/operate/setBtWeight', {
 							bannerAdId: id,
 							weight:weight
 						}).then((response) => {
@@ -254,7 +254,7 @@ export default {
 
 				delBanner: function(res, row) {
 					this.confirm(() => {
-							axios.post('/admin/operate/deleteBannerAd', {
+							this.post('/admin/operate/deleteBannerAd', {
 								btId: res
 							}).then((response) => {
 								response = response.data;
@@ -274,13 +274,12 @@ export default {
 				// 获取所有一级页面名称
 				getInformationType: function() {
 					var self = this;
-					axios.post('/admin/operate/getIndexListName', {})
+					this.post('/admin/operate/getIndexListName', {})
 					.then(function (response) {
-						var response = response.data;
 						if (response.code == 0) {
-							self.banner = response.data;
-							self.radio2 = response.data[0].name;
-							self.i = response.data[0].id;
+							self.banner = response.result;
+							self.radio2 = response.result[0].name;
+							self.i = response.result[0].id;
 							self.getIndexBanner();
 						};
 					})
@@ -294,14 +293,13 @@ export default {
 				getIndexBanner: function() {
 				var self = this;
 				var load =this.openFullScreen2();
-				axios.post('/admin/operate/getIndexBanner', {
+				this.post('/admin/operate/getIndexBanner', {
 					indexId: self.i,
 					btType: 0
 				})
 				.then(function (response) {
-					var response = response.data;
 					if (response.code == 0) {
-					self.tableData3 = response.data;
+					self.tableData3 = response.result;
 					load.close();
 					};
 				})

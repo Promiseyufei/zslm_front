@@ -276,12 +276,9 @@ export default {
   padding-left: 20px;
 }
 .operateUpfilesRight {
-  padding: 50px 80px;
+  padding: 0 80px 50px;
   width: 1170px;
   border-bottom: 1px solid #e4e4e4;
-}
-.operateUpfilesRight form {
-  margin-top: 50px;
 }
 .operateUpfilesRight button {
   float: right;

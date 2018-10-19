@@ -4,7 +4,7 @@
         <div class="recordHomeBread">
             <el-breadcrumb separator="/">
               <el-breadcrumb-item>信息发布</el-breadcrumb-item>
-              <el-breadcrumb-item>院校专业</el-breadcrumb-item>
+              <el-breadcrumb-item  class="selectedNavPublic">院校专业</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
 
@@ -44,7 +44,7 @@
         <!-- 表格 -->
         <div class="recordHomeTable">
               <el-table :data="tableData" border style="width: 100%">
-                  <el-table-column label="操作" width="60">
+                  <el-table-column label="操作" width="210">
                       <template slot-scope="scope">
                           <div class="recordHome-icon">
                             <i @click="jumpPage(scope.row.id)" class="el-icon-search"></i>
