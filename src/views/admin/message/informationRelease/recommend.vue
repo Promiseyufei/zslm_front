@@ -203,7 +203,7 @@ export default {
 
         // 跳转到消息通知页面
         toNotice: function() {
-            this.$router.push('/message/informationNotice/' + this.id);
+            this.$router.push('/message/messageNotice/' + this.id);
         },
 
         //点击完成，跳转到资讯列表首页
