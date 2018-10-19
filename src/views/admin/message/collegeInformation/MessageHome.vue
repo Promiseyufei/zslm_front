@@ -316,7 +316,7 @@ export default {
         },
         putMajorExtendMsg() {
             this.post('/admin/information/updateMajorExtendMsg', {
-                majorId: this.majorId,
+                majorId: this.majorId || this.$route.params.majorId,
                 title: this.majorInfo.title,
                 keywords: this.majorInfo.keywords,
                 descciption: this.majorInfo.descciption

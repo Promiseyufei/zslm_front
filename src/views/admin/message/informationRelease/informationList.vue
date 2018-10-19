@@ -26,11 +26,28 @@
                 <el-form-item label="资讯标题" >
                     <el-input size="medium" v-model="informationTitle" placeholder="输入文件名称"></el-input>
                 </el-form-item>
-                <el-form-item v-for="(item, index) in input" :key="index" :label="item.title">
+
+
+                <el-form-item label="展示状态">
+                    <el-select size="medium" v-model="type1" placeholder="全部">
+                        <el-option label="展示" value="0" ></el-option>
+                        <el-option label="不展示" value="1" ></el-option>
+                        <el-option label="全部" value="2" ></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="推荐状态">
+                    <el-select size="medium" v-model="type2" placeholder="全部">
+                        <el-option label="推荐" value="0" ></el-option>
+                        <el-option label="不推荐" value="1" ></el-option>
+                        <el-option label="全部" value="2" ></el-option>
+                    </el-select>
+                </el-form-item>
+
+                <!-- <el-form-item v-for="(item, index) in input" :key="index" :label="item.title">
                     <el-select size="medium" v-model="item.content" placeholder="全部">
                       <el-option v-for="(select, index) in options" :key="index" :label="select.option" :value="select.value"></el-option>
                     </el-select>
-                </el-form-item>
+                </el-form-item> -->
             </el-form>
             <el-button size="mini" type="primary" icon="el-icon-search" class="informform-search" @click.native = "gettableInfo">查询</el-button>
         </div>
@@ -230,6 +247,7 @@
             }
         },
         mounted(){
+            this.getMajorPageOptions('post', '/')
             this.gettableInfo();
         },
     }

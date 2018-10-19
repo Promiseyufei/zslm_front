@@ -81,7 +81,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/MessageHome'], resolve))
         },
         {
-            path: '/message/universityMessage/:majorId?/:majorName?',
+            path: '/message/universityMessage/:majorId/:majorName/:proId?',
             name: '编辑-招生项目',
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/UniversityMessage'], resolve))
         },
@@ -126,7 +126,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/counselling/coupon'], resolve))
         },
         {
-            path: '/message/aboutActivity/:id',
+            path: '/message/aboutActivity/:id?',
             name: '辅导-新建/编辑——相关活动设置',
             component: resolve =>void(require(['@/views/admin/message/counselling/aboutActivity'], resolve))
         },
