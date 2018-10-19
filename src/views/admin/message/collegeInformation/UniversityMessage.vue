@@ -38,23 +38,23 @@
                                     </el-form-item>
                                 </div>
                                 
-                                <el-form-item label="院校专业名称">
-                                    <el-input v-model="universityForm.project" :disabled = "disabled"></el-input>
+                                <el-form-item label="招生项目名称">
+                                    <el-input v-model="universityForm.project_name" :disabled = "disabled"></el-input>
                                 </el-form-item>
                                 <el-form-item label="项目费用">
-                                    <el-input v-model="universityForm.free" :disabled = "disabled"></el-input>
+                                    <el-input v-model="universityForm.cost" :disabled = "disabled"></el-input>
                                 </el-form-item>
 
                                 <el-form-item label="费用筛选区间" prop="project">
                                     <el-col :span="6">
                                         <el-form-item>
-                                            <el-input v-model="universityForm.choice.low" style="width: 100%;" :disabled = "disabled"></el-input>
+                                            <el-input v-model="universityForm.min_cost" style="width: 100%;" :disabled = "disabled"></el-input>
                                         </el-form-item>
                                     </el-col>
                                     <el-col class="line" :span="2" text-align: center>至</el-col>
                                     <el-col :span="6">
                                         <el-form-item>
-                                            <el-input v-model="universityForm.choice.height" style="width: 100%;" :disabled = "disabled"></el-input>
+                                            <el-input v-model="universityForm.max_cost" style="width: 100%;" :disabled = "disabled"></el-input>
                                         </el-form-item>
                                     </el-col>
                                 </el-form-item>
@@ -62,7 +62,7 @@
                                 <el-form-item label="招生名额" prop="project" size="medium">
                                     <el-col :span="5">
                                         <el-form-item>
-                                            <el-input v-model="universityForm.number" :disabled = "disabled"></el-input>
+                                            <el-input v-model="universityForm.student_count" :disabled = "disabled"></el-input>
                                         </el-form-item>				                	
                                     </el-col>				                    
                                 </el-form-item>
@@ -75,65 +75,63 @@
                                 </el-form-item>
 
                                 <el-form-item label="学制">
-                                        <el-input v-model="universityForm.term" :disabled = "disabled"></el-input>
+                                        <el-input v-model="universityForm.eductional_systme" :disabled = "disabled"></el-input>
                                 </el-form-item>
 
                                 <el-form-item label="报考条件">
-                                        <el-input v-model="universityForm.item" :disabled = "disabled"></el-input>
+                                        <el-input v-model="universityForm.can_conditions" :disabled = "disabled"></el-input>
                                 </el-form-item>
 
                                 <el-form-item label="分数线描述">
-                                        <el-input v-model="universityForm.fraction" :disabled = "disabled"></el-input>
+                                        <el-input v-model="universityForm.score_describe" :disabled = "disabled"></el-input>
                                 </el-form-item>
 
                                 <el-form-item label="分数线类型">
-                                    <el-radio-group v-model="universityForm.fractionKind" :disabled = "disabled">
-                                        <el-radio label="A线"></el-radio>
-                                        <el-radio label="B线"></el-radio>
-                                        <el-radio label="自主划线"></el-radio>
+                                    <el-radio-group v-model="universityForm.score_type" :disabled = "disabled">
+                                        <el-radio v-for="(item, index) in fractionLineType" :key="index" :label="item.id">{{ item.name }}</el-radio>
                                     </el-radio-group>
                                 </el-form-item>
 
                                 <el-form-item label="统招模式">
-                                    <el-radio-group v-model="universityForm.fractionDay" :disabled = "disabled">
-                                        <el-radio label="全日制"></el-radio>
-                                        <el-radio label="非全日制"></el-radio>
-                                        <el-radio label="中外合作"></el-radio>
+                                    <el-radio-group v-model="universityForm.recruitment_pattern" :disabled = "disabled">
+                                        <el-radio v-for="(item, index) in unifiedRecruitPattern" :key="index" :label="item.id">{{ item.name }}</el-radio>
                                     </el-radio-group>
                                 </el-form-item>
 
                                 <el-form-item label="招生模式">
-                                    <el-input v-model="universityForm.recruitStudents" :disabled = "disabled"></el-input>
+                                    <el-input v-model="universityForm.enrollment_mode" :disabled = "disabled"></el-input>
                                 </el-form-item>
 
                                 <el-form-item label="毕业证书">
-                                    <el-input v-model="universityForm.graduation" :disabled = "disabled"></el-input>
+                                    <el-input v-model="universityForm.graduation_certificate" :disabled = "disabled"></el-input>
                                 </el-form-item>
 
                                 <el-form-item label="专业方向" class="collegeAddMajor" :disabled = "disabled">
                                     <el-tag
-                                        :key="tag"
+                                        :key="tag.id"
                                         v-for="tag in dynamicTags"
                                         closable
                                         :disable-transitions="false"
-                                        @close="handleClose(tag,disabled)">{{tag}}
+                                        @close="handleClose(tag,disabled)">{{tag.name}}
                                     </el-tag>
-                                    <el-input
-                                        class="input-new-tag"
-                                        v-if="inputVisible"
-                                        v-model="inputValue"
-                                        ref="saveTagInput"
-                                        size="small"
-                                        @keyup.enter.native="handleInputConfirm"
-                                        @blur="handleInputConfirm">
-                                    </el-input>
+
+                                    <el-autocomplete 
+                                        value-key="name" 
+                                        class="input-new-tag" 
+                                        v-if="inputVisible" 
+                                        ref="saveTagInput" 
+                                        size="small" 
+                                        @blur="handleInputConfirm" 
+                                        v-model="professionalDirection" 
+                                        :fetch-suggestions="querySearchAsync" 
+                                        @select="handleSelect" no-data-text="暂无专业方向信息"></el-autocomplete>
                                     <el-button v-else class="button-new-tag" size="small" @click="showInput" :disabled = "disabled">+ 添加</el-button>
                                     
                                 </el-form-item>
 
 
                                 <el-form-item>
-                                    <el-button type="primary" @click="test">提交</el-button>
+                                    <el-button type="primary" @click="putProjectMsg">提交</el-button>
                                 </el-form-item>		            
                             </el-form>
                         </div>
@@ -178,9 +176,7 @@
                                             label="展示状态"
                                             width="120">
                                             <template slot-scope="scope" >
-                                                <el-switch
-                                                    v-model="tableData[scope.$index].state" @click.native="changeState(tableData[scope.$index].state, scope.$index)">
-                                                </el-switch>
+                                                <el-switch v-model="tableData[scope.$index].is_show" @click.native="changeState(tableData[scope.$index].is_show, tableData[scope.$index].id)"></el-switch>
                                             </template>
                                         </el-table-column>
                                             <el-table-column
@@ -228,28 +224,18 @@
 	    },
 	    data(){
 	    	return{
-				universityForm: {
-					project:"xxx",
-					free:2.000,
-					choice:{
-						low:0,
-						height:10
-					},
-					number:20,
-					language:"chinese",
-					classStudent:"xxx",
-					term:"xxx",
-					item:"xxx",
-					fraction:1233,
-					fractionKind:1,
-					fractionDay:1,
-					recruitStudents:"xxx",
-					graduation:"xxx",
-					required: true
-				},
+                universityForm: {},
+
+                //分数线描述
+                fractionLineType: [],
+                professionalDirection:'',
+                //统招模式
+                unifiedRecruitPattern:[],
+                //专业方向
+                restaurants:[],
 				collegeInformation:"XX大学XX学院MBA专业",
                 disabled:true,
-                dynamicTags: ['标签一', '标签二', '标签三'],
+                dynamicTags: [],
                 inputVisible: false,
                 inputValue: '',
                 tableData: [],
@@ -258,17 +244,98 @@
                 majorId:0,
                 pageNum:1,
                 majorName:'',
-                total: 0
+                total: 0,
+                test: "0",
+                proId: 0
 	    	}
 	    },
 	    methods:{
-            test() {
-
+            putProjectMsg() {
+                let professional = [];
+                this.dynamicTags.forEach((item, index) => {
+                    professional[index] = item.id;
+                });
+                this.post('/admin/information/createProject', {
+                    majorId: this.majorId,
+                    projectName: this.universityForm.project_name,
+                    minCost: this.universityForm.min_cost,
+                    maxCost: this.universityForm.max_cost,
+                    cost: this.universityForm.cost,
+                    studentCount:this.universityForm.student_count,
+                    language:this.universityForm.language,
+                    classSituation:this.universityForm.class_situation,
+                    eductionalSystme: this.universityForm.eductional_systme,
+                    canConditions:this.universityForm.can_conditions,
+                    scoreDescribe:this.universityForm.score_describe,
+                    graduationCertificate:this.universityForm.graduation_certificate,
+                    recruitmentPattern:this.universityForm.recruitment_pattern,
+                    enrollmentMode:this.universityForm.enrollment_mode,
+                    professionalDirection:professional,
+                    scoreType:this.universityForm.score_type
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.proId = response.result;
+                        this.message(true, response.msg, 'success');
+                        // this.getAppointProject();
+                        this.$router.push('/message/universityMessage/' + this.majorId + '/' + this.majorName + '/' + this.proId);
+                    }
+                    else 
+                        this.message(true, response.msg, 'error');
+                })
+                // console.log(this.universityForm);
             },
+
+            //远程搜索
+            querySearchAsync(queryString, cb) {
+                var restaurants = this.restaurants;
+                var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+
+                clearTimeout(this.timeout);
+                this.timeout = setTimeout(() => {
+                cb(results);
+                }, 3000 * Math.random());
+            },
+            createStateFilter(queryString) {
+                return (state) => {
+                return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                };
+            },
+            handleSelect(item) {
+                console.log(item);
+                let isPush = false;
+                this.dynamicTags.forEach((val) => {
+                    if(val.id == item.id) {
+                        isPush = true;
+                    }
+                })
+                if(!isPush) this.dynamicTags.push(item);
+                this.inputVisible = false;
+                this.inputValue = '';
+            },
+
+
+
+
             changeCurrent(raw) {
                 this.pageNum = raw;
                 this.getProject();
 
+            },
+            deleteSingle(proId, row) {
+                this.confirm(() => {
+                   this.post('/admin/information/deleteAppointProject', {
+                       projectId: proId
+                   }).then((response) => {
+                        if(response.code == 0) {
+                            this.tableData.splice(this.tableData.indexOf(row), 1);
+                            this.message(true, response.msg, 'success');
+                        }
+                        else
+                            this.message(true, response.msg, 'error');
+                   })
+                }, () => {
+                    this.message(true, '已取消操作', 'info');
+                });
             },
             collegeFinish: function() {
                 this.$router.push('/message/universMajorList');
@@ -277,20 +344,9 @@
 	    		this.disabled = false;
             },
             //改变展示状的时候触发事件
-            changeState: function(state,row) {
-                console.log(row);
-                let self = this;
-                // console.log(state,row);
-                axios.post('/admin/information/setProjectState', {
-                    projectId: row,
-                    type: 1,
-                    state: state
-                }).then((response) => {
-                    var res = response.data;
-                    if(res.code == 0) {
-                        self.message(true,"修改成功","success");
-                    }
-                })
+            changeState: function(state,proId) {
+                let stateNum = state == true ? 0 : 1;
+                this.changeProjectState(proId, 1, stateNum);
             },
             // 删除专业方向标签
             handleClose(tag,disabled) {
@@ -310,20 +366,28 @@
             projectDelete: function() {
                 var table = this.tableData;
                 var arrayTableId = [];
-                for (var i = 0; i < table.length; i++) {
-                    arrayTableId.push(table[i].id);
-                };
-                console.log(arrayTableId);
+                table.forEach((item) => {
+                    arrayTableId.push(item.id);
+                });
                 if(arrayTableId.length < 1) {
-                    this.message(true, '没有要清空的数据', 'error');
-                    return;
+                        this.message(true, '没有要清空的数据');
+                        return;
                 }
-                axios.post('/deleteprojectDelete', {
-                    
-                }).then((response) => {
-                    if(response.code == 0) {
-                        this.tableData = [];
-                    }
+                this.confirm(() => {
+                    this.post('/admin/information/deleteAppointProject', {
+                            projectId: arrayTableId
+                    }).then((response) => {
+                        if(response.code == 0) {
+                                this.getProject();
+                                // this.tableData = [];
+                                this.message(true, response.msg, 'success');
+                        }
+                        else {
+                                this.message(true, response.msg, 'error');
+                        }
+                    })
+                }, () => {
+                        this.message(true, '已取消修改', 'info');
                 })
             },
 
@@ -383,11 +447,27 @@
                     this.$refs.saveTagInput.$refs.input.focus();
                 });
             },
-            // 添加成功，假如标签数组里
+            // 添加成功，加入标签数组里
             handleInputConfirm() {
-                let inputValue = this.inputValue;
+                let _this = this;
+                let isPush = false;
+                let inputValue = this.professionalDirection;
                 if (inputValue) {
-                    this.dynamicTags.push(inputValue);
+
+                    this.restaurants.forEach((item, key) => {
+                        if(item.name == inputValue) {
+                            let isRepeat = false;
+                            this.dynamicTags.forEach((val) => {
+                                if(item.id == val.id) isRepeat = true;
+                            });
+                            if(!isRepeat) _this.dynamicTags.push(item);
+                            else this.message(true, '该专业方向已被选中!', 'info');
+                            isPush = true;
+                        }
+                        else if((key == (_this.restaurants.length - 1)) && (isPush == false)) {
+                            this.message(true, '专业方向值只接受输入框提示的选项', 'info');
+                        }
+                    })
                 }
                 this.inputVisible = false;
                 this.inputValue = '';
@@ -401,25 +481,39 @@
                     majorId: this.majorId,
                     pageNum: this.pageNum
                 }).then((response) => {
-                    console.log(response);
                     if(response.code == 0) {
                         self.total = response.result.total;
                         self.tableData = response.result.data;
                     }
+                    else 
+                        this.message(true, response.msg, 'error');
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+            },
+            getAppointProject() {
+                this.post('/admin/information/getAppointIdProject', {
+                    proId: this.proId
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.universityForm = response.result;
+                        this.dynamicTags = response.result.professional_direction;
+                    }
+                })
             }
+
         },
         mounted() {
+            let _this = this;
             if(this.$route.params.majorId !== null && this.$route.params.majorId != 0) {
                 this.majorId = this.$route.params.majorId;
             }
             else {
-                this.message(true, '请指定所创建的招生项目的院校专业', 'error');
+                this.message(true, '请指changeProjectState所创建的招生项目的院校专业', 'error');
                 return;
             }
+
             if(this.$route.params.majorName !== null && this.$route.params.majorName !== '') {
                 this.majorName = this.$route.params.majorName;
             }
@@ -428,7 +522,30 @@
                 // return;
             }
 
+            if(this.$route.params.proId !== null && this.$route.params.proId !== '') {
+                this.proId = this.$route.params.proId;
+                this.getAppointProject();
+            }
+
             this.getProject();
+
+            this.getMajorPageOptions('post', '/admin/information/getFractionLineType', {}, (response) => {
+                response.code == 0 ? _this.fractionLineType = response.result : this.message(true, response.msg, 'error');
+            }, (response) => {
+                this.message(true, '未查询到分数线类型信息', 'error');
+            });
+
+            this.getMajorPageOptions('post', '/admin/information/getUnifiedRecruitPattern', {}, (response) => {
+                response.code == 0 ? _this.unifiedRecruitPattern = response.result : this.message(true, response.msg, 'error');
+            }, (response) => {
+                this.message(true, '未查询到统招模式信息', 'error');
+            });
+
+            this.getMajorPageOptions('post', '/admin/information/getMajorDirection', {}, (response) => {
+                response.code == 0 ? _this.restaurants = response.result : this.message(true, response.msg, 'error');
+            }, (response) => {
+                this.message(true, '未查询到专业方向信息', 'error');
+            })
         }
 	};
 </script>
