@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div>
+        <el-button type="primary" @click="startChange3">编辑</el-button>
+        <div class="messageBtn">
             <div id="editor">
                 <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
             </div>
@@ -74,6 +75,11 @@ export default {
 
     }
 
-
+    .messageBtn button{
+      float: right;
+    }
+    .operateUpfilesRight2 button {
+        margin-bottom: 20px;
+    }
 </style>
 

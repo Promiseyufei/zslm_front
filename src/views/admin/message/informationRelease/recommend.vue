@@ -29,18 +29,34 @@
                                 <el-button type="primary" @click="toNotice" plain>跳过</el-button>
                                 <el-button type="primary" @click="">设置</el-button>
                             </div>
-                            <!-- 主办院校logo -->
-                            <div class="messageSchool">
-                                <img src="../../../../assets/img/collegeLogo.png" alt="">
-                            </div>
 
-                            <!-- 院校名称 -->
-                            <p style="text-align: left;">{{messageSchool}}</p>
+                            <div class="shoolTotal">
+                                <div v-if="shoolCount.length==0">
+                                    <!-- 主办院校logo -->
+                                    <div class="messageSchool">
+                                        <img src="../../../../assets/img/collegeLogo.png" alt="">
+                                    </div>
+
+                                    <!-- 院校名称 -->
+                                    <p style="text-align: center;">未设置主办院校</p>
+                                </div>
+
+                                <div v-for="(item, index) in shoolCount" :key="index">
+                                    <!-- 主办院校logo -->
+                                    <div class="messageSchool">
+                                        <img v-bind:src="item.logo" alt="">
+                                    </div>
+
+                                    <!-- 院校名称 -->
+                                    <p style="text-align: center;">{{item.name}}</p>
+                                    <p style="text-align: center; color: #1ABC9C;cursor: pointer;" v-if="index >= 0" @click="deleteSchool(index)">删除</p>
+                                </div>
+                            </div>
                             
                         </div>
                     </div>
 
-                    <!-- 设置推荐活动 -->
+                    <!-- 设置推荐阅读 -->
                     <div class="operateUpfiles operateDown">
                         <div class="operateUpfilesLeft">
                             <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;设置推荐阅读</div>
@@ -53,7 +69,7 @@
                                 </el-radio-group>
                                 <div v-if="this.setSwitch == 2">
                                     <div class="messageUpfilesRight2Nav">
-                                        <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                                        <el-button type="info" plain @click="adviseRead"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
                                         <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                                     </div>
                                     <!-- 表格 -->
@@ -109,7 +125,17 @@ export default {
         // 上个页面传过来的参数（xx活动的id）
         id: this.$route.params.id,
         imageUrl: '',
-        messageSchool: "未设置主办院校",
+        //设置成功的主办院校：
+        shoolCount: [
+            // {
+            //     logo: require('../../../../assets/img/collegeLogo.png'),
+            //     name: "新乡医学院",
+            // },
+            // {
+            //     logo: require('../../../../assets/img/collegeLogo.png'),
+            //     name: "河南科技学院",
+            // },
+        ],
         setSwitch: 1,
         setSwitch2: 1,
         listTable: [
@@ -191,9 +217,9 @@ export default {
         }
     },
     methods: {
-        // 跳转到“活动列表”页面添加推荐活动
+        // 跳转到“院校专业”页面添加院校
         adviseAdd: function() {
-          this.$router.push('/operate/addAdvise/' + this.id);
+        //   this.$router.push('' + this.id);
         },
         
         // 返回上一步
@@ -203,12 +229,23 @@ export default {
 
         // 跳转到消息通知页面
         toNotice: function() {
-            this.$router.push('/message/messageNotice/' + this.id);
+            this.$router.push('/message/informationNotice/' + this.id);
+        },
+
+        //跳转到“选择资讯”页面，选择推荐阅读
+        adviseRead: function() {
+            // this.$router.push('');
         },
 
         //点击完成，跳转到资讯列表首页
         finish:function() {
             this.$router.push('/message/informationList');
+        },
+
+        //删除主办院校
+        deleteSchool: function(index) {
+            console.log(index);
+            this.shoolCount.splice(index);
         },
 
         // 自动设置推荐活动
@@ -414,6 +451,17 @@ export default {
       display: flex;
       justify-content: flex-end;
 
+    }
+
+    /*
+    * 设置主办院校
+    */
+    .shoolTotal {
+        display: flex;
+        justify-content:flex-start;
+    }
+    .shoolTotal>div {
+        margin: 20px 80px 0 20px;
     }
 
     /*

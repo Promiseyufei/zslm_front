@@ -8,7 +8,7 @@
             </el-breadcrumb>
         </div>
         <div class="messageSteps">
-            <el-steps :active=".1" align-center>
+            <el-steps :active="1.2" align-center>
               <el-step title="设置消息对象"></el-step>
               <el-step title="编辑消息内容"></el-step>
             </el-steps>
