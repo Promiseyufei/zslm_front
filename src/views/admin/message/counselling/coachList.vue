@@ -97,8 +97,7 @@
                         <div class="majorlist-icon">
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
                             <el-popover placement="top-start" title="标题" width="200" trigger="click" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-                                 <el-button slot="reference"><i class="el-icon-tickets" @click = "alertViewCoupons"></i></el-button>
-                                
+                                <i class="el-icon-tickets" @click = "alertViewCoupons" slot="reference"></i>
                             </el-popover>
                         </div>
                     </template>
@@ -330,6 +329,7 @@
     .majorlist-table .el-button:focus, .el-button:hover {
 
     }
+    
 </style>
 
 <!-- 局部样式 scoped -->

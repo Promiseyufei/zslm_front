@@ -15,6 +15,11 @@ let admin_router = {
             name: '小块',
             component: resolve =>void(require(['@/views/admin/information'], resolve))
         },
+        {
+            path: '/login',
+            name: '登录',
+            component: resolve =>void(require(['@/views/admin/login'], resolve))
+        },
 
         // 文件管理
         {
@@ -76,7 +81,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/MessageHome'], resolve))
         },
         {
-            path: '/message/universityMessage',
+            path: '/message/universityMessage/:majorId/:majorName/:proId?',
             name: '编辑-招生项目',
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/UniversityMessage'], resolve))
         },
@@ -126,7 +131,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/counselling/coupon'], resolve))
         },
         {
-            path: '/message/aboutActivity/:id',
+            path: '/message/aboutActivity/:id?',
             name: '辅导-新建/编辑——相关活动设置',
             component: resolve =>void(require(['@/views/admin/message/counselling/aboutActivity'], resolve))
         },

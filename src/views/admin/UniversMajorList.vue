@@ -75,6 +75,7 @@
                     <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width" >
                 </el-table-column>
                 </div>
+               
             </el-table>
         </div>
         <div class="footer"> 

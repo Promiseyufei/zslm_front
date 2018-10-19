@@ -6,7 +6,7 @@
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item>信息发布</el-breadcrumb-item>
                     <el-breadcrumb-item>辅导机构</el-breadcrumb-item>
-                    <el-breadcrumb-item>优惠卷设置</el-breadcrumb-item>
+                    <el-breadcrumb-item  class="selectedNavPublic">优惠卷设置</el-breadcrumb-item>
                 </el-breadcrumb>
 
                 <!-- 步骤条 -->
@@ -85,7 +85,7 @@ export default {
     methods: {
         // 跳转页面，跳到添加活动页面
         couponAdd: function() {
-            this.$router.push('/message/coupon/');
+            this.$router.push('/message/choiceactivity/');
         },
         //获得相关活动页面
         getActivity: function() {
@@ -178,9 +178,6 @@ export default {
   padding: 50px 80px;
   width: 1170px;
   border-bottom: 1px solid #e4e4e4;
-}
-.operateUpfilesRight form {
-  margin-top: 50px;
 }
 .operateUpfilesRight button {
   float: right;
