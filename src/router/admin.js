@@ -146,7 +146,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationList'], resolve))
         },
         {
-            path: '/message/changeInformation',
+            path: '/message/changeInformation/:infoId?',
             name: '信息发布-资讯发布-资讯内容编辑',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/changeInformation'], resolve))
         },

@@ -27,7 +27,7 @@
                         <div class="operateUpfilesRight">
                             <div class="messageBtn">
                                 <el-button type="primary" @click="toNotice" plain>跳过</el-button>
-                                <el-button type="primary" @click="">设置</el-button>
+                                <el-button type="primary" @click="test">设置</el-button>
                             </div>
 
                             <div class="shoolTotal">
@@ -229,12 +229,7 @@ export default {
 
         // 跳转到消息通知页面
         toNotice: function() {
-            this.$router.push('/message/informationNotice/' + this.id);
-        },
-
-        //跳转到“选择资讯”页面，选择推荐阅读
-        adviseRead: function() {
-            // this.$router.push('');
+            this.$router.push('/message/notice/' + this.id);
         },
 
         //点击完成，跳转到资讯列表首页
