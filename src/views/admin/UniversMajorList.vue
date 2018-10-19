@@ -210,10 +210,12 @@
             setMajorState(id, state, type, row) {
                 let _this = this;
                 this.confirm(() => {
+                    if(type == 0) state = state;
+                    else state = state ? 0 : 1;
                     _this.post('/admin/information/setMajorState', {
                         majorId: id,
                         type: type,
-                        state: state ? 0 : 1
+                        state: state
                     }).then((response) => {
                         (response.code == 0) ? this.message(true, response.msg, 'success'): this.message(true, response,msg, 'error');
                     });

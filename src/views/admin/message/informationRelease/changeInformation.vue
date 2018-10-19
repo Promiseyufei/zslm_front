@@ -30,41 +30,38 @@
                             </el-form-item>
 
                             <el-form-item label="资讯标题">
-                                <el-input v-model="informationForm.name" :disabled = "disabled"></el-input>
+                                <el-input v-model="infoMsg.zx_name" :disabled = "disabled"></el-input>
                             </el-form-item>
 
                             <el-form-item label="资讯类型">
-                                <el-select v-model="informationForm.region" placeholder="请选择活动区域" :disabled = "disabled">
-                                    <el-option :label="item.type" :value="item.id" v-for="(item, index) in counsell_type" :key="index"></el-option>
+                                <el-select v-model="infoMsg.z_type" placeholder="请选择活动区域" :disabled = "disabled">
+                                    <el-option :label="item.name" :value="item.id" v-for="(item, index) in counsellType" :key="index"></el-option>
                                 </el-select>
                             </el-form-item>
 
                             <el-form-item label="资讯来源">
-                                <el-input v-model="informationForm.address" :disabled = "disabled"></el-input>
+                                <el-input v-model="infoMsg.z_from" :disabled = "disabled"></el-input>
                             </el-form-item>
 
                             <el-form-item label="来源URL">
-                                <el-input v-model="informationForm.web" :disabled = "disabled"></el-input>
+                                <el-input v-model="infoMsg.from_url" :disabled = "disabled"></el-input>
                             </el-form-item>
 
                             <el-form-item label="资讯简介">
-                                <el-input type="textarea" v-model="informationForm.detial" :disabled = "disabled"></el-input>
+                                <el-input type="textarea" v-model="infoMsg.brief_introduction" :disabled = "disabled"></el-input>
                             </el-form-item>
                             
-                            <!--<el-form-item label="官方微信">
-                                <div style="padding: 0 5px 5px 8px">
-                                    <div class="add" @click.stop="addPic" cuort>
-                                        <input type="file" id="upload" accept="image" @change="upload" style="display: none">
-                                        <span style="color:#B2B2B2;" >添加图片</span>
-                                    </div>
-                                    <li class="show" v-for="(iu, index) in imgUrls">
-                                        <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
-                                    </li>
+                            <el-form-item label="资讯封面图">
+                                <div class="info_cover_img">
+                                    <el-upload class="avatar-uploader" action="" :auto-upload="false" :on-change="changeCoverMapUpload" :multiple="false" :show-file-list="false">
+                                        <img v-if="infoCoverUrl" :src="infoCoverUrl" class="avatar" alt="资讯封面">
+                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    </el-upload>
                                 </div>
-                            </el-form-item> -->
+                            </el-form-item>
                             
                             <el-form-item>
-                                <el-button type="primary" @click="" :disabled = "disabled">提交</el-button>
+                                <el-button type="primary" @click="putInfoMsg" :disabled = "disabled">提交</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -82,17 +79,17 @@
                                     <el-button type="primary" @click="startChange2">开始编辑</el-button>
                                 </el-form-item>
                                 <el-form-item label="Title">
-                                    <el-input v-model="form.Title" :disabled = "disabled2"></el-input>
+                                    <el-input v-model="infoMsg.title" :disabled = "disabled2"></el-input>
                                 </el-form-item>
                                 <el-form-item label="Keywords">
-                                    <el-input v-model="form.Keywords" :disabled = "disabled2"></el-input>
+                                    <el-input v-model="infoMsg.keywords" :disabled = "disabled2"></el-input>
                                 </el-form-item>
                                 <el-form-item label="Description">
-                                    <el-input v-model="form.Description" :disabled = "disabled2"></el-input>
+                                    <el-input v-model="infoMsg.description" :disabled = "disabled2"></el-input>
                                 </el-form-item>
             
                                 <el-form-item>
-                                    <el-button type="primary" @click="" :disabled = "disabled2">提交</el-button>
+                                    <el-button type="primary" @click="putInfoOtherMsg" :disabled = "disabled2">提交</el-button>
                                 </el-form-item>
                             </el-form>  
                         </div>
@@ -112,7 +109,7 @@
                             </div>
                             <div class="messageEditor">
                                 <el-button type="primary" plain :disabled = "disabled3" @click="messageEmpty">清空</el-button>
-                                <el-button type="primary" :disabled = "disabled3"  @click="messageSubmit">提交</el-button>
+                                <el-button type="primary" :disabled = "disabled3"  @click="putInfoTextMsg">提交</el-button>
                             </div>
                         </div>
                     </div>
@@ -134,11 +131,15 @@ export default {
     },
     data() {
         return {
+            infoId: 0,
+            infoCoverUrl:'',
+            infoCoverFile:{},
             form: {
                 Title: "123",
                 Keywords: "",
                 Description: ""
             },
+            infoMsg:{},
             informationForm: {
                 name: "河南科技学院",
                 counsell_type: "提前面试",
@@ -150,24 +151,7 @@ export default {
             disabled: true,
             disabled2: true,
             disabled3: true,
-            counsell_type: [
-                {
-                    id: 0,
-                    type: "提前面试"
-                },
-                {
-                    id: 1,
-                    type: "招生宣讲"
-                },
-                {
-                    id: 2,
-                    type: "高精会议"
-                },
-                {
-                    id: 3,
-                    type: "讲座论坛"
-                },
-            ],
+            counsellType: [],
             // 富文本编辑器
             editorContent:'',
             editor: new WangEditor('#editor'),
@@ -175,6 +159,28 @@ export default {
         }
     },
     methods: {
+
+        //捕获图片事件
+        changeCoverMapUpload: function(file, fileList) {
+            if(this.beforeAvatarUpload(file)) {
+                this.infoCoverUrl = file.url;
+                this.infoCoverFile = file.raw;
+            }
+        },        
+        //上传图片判断
+        beforeAvatarUpload(file) {
+            const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png';
+            const isLt2M = file.raw.size / 1024 / 1024 < 4;
+
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 4MB!');
+            }
+            return isJPG && isLt2M;
+        },
+
         startChange: function() {
             this.disabled = false;
         },
@@ -185,7 +191,7 @@ export default {
             this.disabled3 = false;
             this.editor.$textElem.attr('contenteditable', true);
         },
-        // 提交修改数据
+        // 提交修改数据提交修改数据
         messageSubmit: function() {
             console.log(this.editor.txt.html());
             this.disabled3 = true;
@@ -203,19 +209,128 @@ export default {
         toAdvise: function() {
             this.$router.push('/message/recommend/' + this.id);
         },
+        getAppointIdInfoMsg() {
+            let _this = this;
+            this.post('/admin/information/selectInfoReception', {
+                infoId: this.infoId
+            }).then((response) => {
+                if(response.code == 0) {
+                    _this.infoCoverUrl = response.result.z_image;
+                    _this.infoMsg = response.result;
+                    _this.editor.txt.html(response.result.z_text);
+                }
+                else
+                    this.message(true, "未查询到指定资讯的信息", 'error');
+                
+            })
+        },
+        // 创建富文本编辑器
+        createEditor() {
+            let _this = this;
+            this.editor.customConfig.onchange = (html) => {
+                _this.editorContent = html;
+            }
+            this.editor.create();
+            this.editor.$textElem.attr('contenteditable', false);
+        },
+        putInfoMsg() {
+            let formdata = new FormData();
+            formdata.append('infoName', this.infoMsg.zx_name);
+            formdata.append('infoType', this.infoMsg.z_type);
+            formdata.append('infoFrom', this.infoMsg.z_from);
+            formdata.append('infoFromUrl', this.infoMsg.from_url);
+            formdata.append('briefIntroduction', this.infoMsg.brief_introduction);
+            formdata.append('infoImage', this.infoCoverFile);
+
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+            this.post('/admin/information/createInfo', formdata, config).then((response) => {
+                if(response.code == 0) {
+                    this.infoId = response.result;
+                    this.message(true, response.msg, 'success');
+                    this.$router.push('/message/changeInformation/' + this.infoId);
+                }
+            })
+        },
+        putInfoOtherMsg() {
+            this.post('/admin/information/updateInfoExtendMsg', {
+                infoId: this.infoId || this.$route.params.infoId,
+                title: this.infoMsg.title,
+                keywords: this.infoMsg.keywords,
+                description: this.infoMsg.description
+            }).then((response) => {
+                if(response.code == 0) {
+                    this.getAppointIdInfoMsg();
+                    this.disabled2 = true;
+                    this.message(true, response.msg, 'success');
+                }
+                else 
+                    this.message(true, response.msg, 'error');
+            })
+        },
+        putInfoTextMsg() {
+            this.post('/admin/information/updateInfoTextMsg', {
+                infoId: this.infoId || this.$route.params.infoId,
+                text: this.editor.txt.html()
+            }).then((response) => {
+                if(response.code == 0) {
+                    this.getAppointIdInfoMsg();
+                    this.messageSubmit();
+                    this.message(true, response.msg, 'success');
+                }
+                else 
+                    this.message(true, response.msg, 'error');
+            })
+        }
+
         
     },
     mounted(){
-        // 创建富文本编辑器
-        this.editor.customConfig.onchange = (html) => {
-            this.editorContent = html;
+        this.createEditor();
+
+        if(this.$route.params.infoId != null && this.$route.params.infoId != '') {
+            this.infoId = this.$route.params.infoId;
+            this.getAppointIdInfoMsg();
         }
-        this.editor.create();
-        this.editor.$textElem.attr('contenteditable', false);
+
+        this.getMajorPageOptions('post', '/admin/information/getInfoType', {}, (response) => {
+            response.code == 0 ? this.counsellType = response.result : this.message(true, response.msg, 'error');
+        }, () => {
+            this.message(true, '未查询到资讯类型的信息', 'error')
+        })
     },
 };
 </script>
 <style>
+/* 封面图样式 */
+.info_cover_img .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.info_cover_img .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+.info_cover_img .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 198px;
+    height: 198px;
+    line-height: 178px;
+    text-align: center;
+}
+.info_cover_img .avatar {
+    width: 198px;
+    height: 198px;
+    display: block;
+}
+
+
 </style>
 <style scoped>
 .operateBox {
@@ -302,5 +417,6 @@ export default {
     margin: 20px 0;
     text-align: left;
 }
+
 
 </style>
