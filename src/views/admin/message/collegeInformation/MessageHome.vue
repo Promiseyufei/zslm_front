@@ -663,7 +663,7 @@ export default {
 </script>
 <style>
     /*
-    * 
+    * 步骤条
     */
     .fileSteps .is-text {
         width: 50px;

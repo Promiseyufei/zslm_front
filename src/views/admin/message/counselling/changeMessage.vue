@@ -6,7 +6,7 @@
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item>信息发布</el-breadcrumb-item>
                     <el-breadcrumb-item>辅导机构</el-breadcrumb-item>
-                    <el-breadcrumb-item>辅导机构信息编辑</el-breadcrumb-item>
+                    <el-breadcrumb-item  class="selectedNavPublic">辅导机构信息编辑</el-breadcrumb-item>
                 </el-breadcrumb>
 
                 <!-- 步骤条 -->
@@ -314,9 +314,7 @@ export default {
   width: 1170px;
   border-bottom: 1px solid #e4e4e4;
 }
-.operateUpfilesRight form {
-  margin-top: 50px;
-}
+
 .operateUpfilesRight button {
   float: right;
 }

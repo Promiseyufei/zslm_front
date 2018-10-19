@@ -2,10 +2,10 @@
     <div class="Select">
         <div class="choiceActivity-top">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">辅导机构</a></el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ path: '/' }">相关活动设置</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">选择活动</a></el-breadcrumb-item>
+              <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+              <el-breadcrumb-item>辅导机构</el-breadcrumb-item>
+              <el-breadcrumb-item>相关活动设置</el-breadcrumb-item>
+              <el-breadcrumb-item class="selectedNavPublic">选择活动</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="choiceActivity-button">
