@@ -4,7 +4,7 @@
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>消息管理</el-breadcrumb-item>
                 <el-breadcrumb-item>发消息</el-breadcrumb-item>
-                <el-breadcrumb-item>编辑消息内容</el-breadcrumb-item>
+                <el-breadcrumb-item  class="selectedNavPublic">编辑消息内容</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="messageSteps">

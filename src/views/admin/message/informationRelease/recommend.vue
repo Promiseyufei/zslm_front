@@ -474,9 +474,7 @@ export default {
         width: 1170px;
         border-bottom: 1px solid #e4e4e4;
     }
-    .operateUpfilesRight form {
-        margin-top: 50px;
-    }
+   
     .operateUpfilesRight button {
         float: right;
     }

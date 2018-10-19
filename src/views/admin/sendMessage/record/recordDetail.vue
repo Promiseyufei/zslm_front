@@ -4,7 +4,7 @@
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>消息管理</el-breadcrumb-item>
                 <el-breadcrumb-item>历史消息记录</el-breadcrumb-item>
-                <el-breadcrumb-item>详情</el-breadcrumb-item>
+                <el-breadcrumb-item  class="selectedNavPublic">详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="jumpPageBut">
@@ -198,6 +198,7 @@
         border-left: 1px solid #fff;
     }
     .historyDetail-left {
+        z-index: 1;
         width: 180px;
         background-color: #fcfcfc;
     }

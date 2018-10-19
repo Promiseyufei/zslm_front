@@ -5,7 +5,7 @@
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item>消息管理</el-breadcrumb-item>
                     <el-breadcrumb-item>发消息</el-breadcrumb-item>
-                    <el-breadcrumb-item>设置消息对象</el-breadcrumb-item>
+                    <el-breadcrumb-item  class="selectedNavPublic">设置消息对象</el-breadcrumb-item>
                 </el-breadcrumb>
 
                 <!-- 步骤条 -->

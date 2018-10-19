@@ -3,7 +3,7 @@
       <!-- 表格 -->
       <div class="operateTable">
         <template>
-          <el-table :data="tableData3"  border style="width: 100%">
+          <el-table :data="tableData3"  border style="width: 100%" :header-cell-style="getRowClass">
             <el-table-column
               v-for="(list,index) in listTable" 
               :prop="list.prop"

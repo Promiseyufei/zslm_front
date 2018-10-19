@@ -7,7 +7,7 @@
                 <el-breadcrumb-item>消息通知</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div class="messageSteps">
+        <div class="messageSteps fileSteps">
             <el-steps :active="3" align-center>
               <el-step title="活动信息"></el-step>
               <el-step title="推荐信息"></el-step>
@@ -104,7 +104,23 @@
 
 </script>
 <style>
-    
+    /*
+    * 步骤条
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
 </style>
 
 <style scoped>
@@ -179,6 +195,7 @@
     .messageSteps {
         width: 450px;
         margin: 0 auto;
+        margin-bottom: 20px;
     }
     .leftImg p {
         position: relative;
@@ -201,6 +218,7 @@
         background-size: 100% 100%;
     }
     .setMessDeta-right {
+        background: #fff;
         width: 1320px;
         border: 1px solid #DDD;
         border-left: 1px solid #fff;
