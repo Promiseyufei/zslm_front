@@ -70,9 +70,9 @@
                 <el-table-column label="操作" width="120">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
-                            <i class="el-icon-search"></i>
-                            <i class="el-icon-edit-outline"></i>
-                            <i class="el-icon-delete" @click.native.prevent="deleteRow(scope.$index, informationListtTable)"></i>
+                            <i class="el-icon-search" @click = "jumpInformDeta"></i>
+                            <i class="el-icon-edit-outline" @click = "jumpPage"></i>
+                            <i class="el-icon-delete" @click="deleteRow(scope.$index, informationListtTable)"></i>
                         </div>
                     </template>
                 </el-table-column>
@@ -147,13 +147,24 @@
             }
         },
         methods:{
+            //新建+表格编辑——页面跳转到资讯内容
             jumpPage:function(){
                 this.$router.push('/message/changeMessage');
             },
-            /*删除表格某一行*/
-            deleteRow(index, rows) {
-                rows.splice(index, 1);
+            //跳到相应的资讯详情页
+            jumpInformDeta(){
+              //此页面未给  
             },
+            deleteRow(index, rows) {
+                rows.splice(index, 1);//在页面上删除该行。请勿删！！！
+                console.log(123)
+            },
+            /*删除表格某一行*/
+            // deleteRow(index, rows) {
+            //     rows.splice(index, 1);
+            //     console.log(123)
+            // },
+            
             /*分页  获得当前页码和总页数*/
            pageChange(msg) {
                 this.searchContent.page = msg.page;

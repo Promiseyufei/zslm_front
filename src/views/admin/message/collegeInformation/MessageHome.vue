@@ -68,60 +68,81 @@
                     <el-form-item label="招生专题">
                         <el-input v-model="majorInfo.admissions_web" :disabled = "disabled"></el-input>
                     </el-form-item>
+
+                    <!-- 所属院校名称 -->
                     <el-form-item label="所属院校名称">
-                        <el-input v-model="majorInfo.school_id" :disabled = "disabled"></el-input>
+                        <!-- <el-input v-model="majorInfo.school_id" :disabled = "disabled"></el-input> -->
+                        <div class="school_name">
+                            <el-autocomplete v-model="majorInfo.school_id" :fetch-suggestions="querySearchAsync" @select="handleSelect" :disabled = "disabled" value-key="name"></el-autocomplete>
+                        </div>
                     </el-form-item>
+
+
                     <el-form-item label="专业类型">
                         <el-select v-model="majorInfo.z_type" placeholder="请选择专业类型" :disabled = "disabled">
                             <el-option :label="item.name" :value="item.id" v-for="(item, index) in major" :key="index"></el-option>
                         </el-select>
                     </el-form-item>
+
+                    <!-- 官方微信 -->
                     <el-form-item label="官方微信">
                         <div style="padding: 0 5px 5px 8px">
-                        <div class="add" @click.stop="addPic" cuort>
-                            <input type="file" id="upload" accept="image" @change="upload" style="display: none">
-                            <span style="color:#B2B2B2;">添加图片</span>
+                            <div class="add" @click.stop="addPic" cuort>
+                                <input type="file" id="upload" accept="image" @change="uploadWX" style="display: none">
+                                <span style="color:#B2B2B2;">添加图片</span>
+                            </div>
+                            <li class="show" v-for="(iu, index) in wximgUrls" :key="index">
+                                <div class="picture" @click="delImage(index, 'wx')" :style="'backgroundImage:url('+iu+')'"></div>
+                            </li>
                         </div>
-                        <li class="show" v-for="(iu, index) in imgUrls" :key="index">
-                            <div class="picture" @click="delImage(index)" :style="'backgroundImage:url('+iu+')'"></div>
-                        </li>
+                    </el-form-item>
+
+                    <!-- 官方微博 -->
+                    <el-form-item label="官方微博">
+                        <div style="paddding: 0 5px 5px 8px;">
+                            <div class="add" @click="addWBPic" cuort>
+                                    <input type="file" id="upload2" accept="image" @change="uploadWB" style="display: none">
+                                    <span style="color:#B2B2B2;">添加图片</span>
+                            </div>
+                            <li class="show" v-for="(iu, index) in wbimgUrls" :key="index">
+                                <div class="picture" @click="delImage(index, 'wb')" :style="'backgroundImage:url('+iu+')'"></div>
+                            </li>
                         </div>
                     </el-form-item>
                     
+
+                    <!-- 院校logo -->
+                    <el-form-item label="院校logo">
+                        <div class="major_img">
+                            <el-upload class="avatar-uploader" action="" :auto-upload="false" :on-change="changeLogoUpload" :multiple="false" :show-file-list="false">
+                                <img v-if="majorLogoUrl" :src="majorLogoUrl" class="avatar" alt="院校logo">
+                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                        </div>
+                    </el-form-item>
+                    
+
+                    <!-- 院校封面图 -->
+                    <el-form-item label="院校封面图">
+                        <div class="major_img">
+                            <div id="major_cover_map">
+                                <el-upload class="avatar-uploader" action="" :auto-upload="false" :on-change="changeCoverMapUpload" :multiple="false" :show-file-list="false">
+                                    <img v-if="majorCoverMapUrl" :src="majorCoverMapUrl" class="avatar" alt="院校封面图">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </div>
+                        </div>
+                    </el-form-item>
+
+
                     <el-form-item>
-                        <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
+                        <el-button type="primary" @click="putMajorMainMsg" :disabled = "disabled">提交</el-button>
                     </el-form-item>
                     </el-form>
                 </div>
                 </div>
             
                 <div>
-                    <!-- 上传banner -->
-                    <div class="operateUpfiles operateUp">
-                    <div class="operateUpfilesLeft">
-                        <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
-                    </div>
-                    <div class="operateUpfilesRight">
-                        
-                        <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
-                        <el-form-item>
-                            <el-button type="primary" @click="startChange">开始编辑</el-button>
-                        </el-form-item>
-                        <el-form-item label="Title">
-                        <el-input v-model="majorInfo.title" :disabled = "disabled2"></el-input>
-                        </el-form-item>
-                        <el-form-item label="Keywords">
-                        <el-input v-model="majorInfo.keywords" :disabled = "disabled2"></el-input>
-                        </el-form-item>
-                        <el-form-item label="Description">
-                        <el-input v-model="majorInfo.descciption" :disabled = "disabled2"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
-                        </el-form-item>
-                        </el-form>
-                    </div>
-                    </div>
                     <!-- 当前banner -->
                     <div class="operateUpfiles operateDown">
                     <div class="operateUpfilesLeft">
@@ -134,17 +155,17 @@
                             <el-button type="primary" @click="startChange2">开始编辑</el-button>
                             </el-form-item>
                             <el-form-item label="Title">
-                            <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                            <el-input v-model="majorInfo.title" :disabled = "disabled2"></el-input>
                             </el-form-item>
                             <el-form-item label="Keywords">
-                            <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                            <el-input v-model="majorInfo.keywords" :disabled = "disabled2"></el-input>
                             </el-form-item>
                             <el-form-item label="Description">
-                            <el-input v-model="form.name" :disabled = "disabled2"></el-input>
+                            <el-input v-model="majorInfo.descciption" :disabled = "disabled2"></el-input>
                             </el-form-item>
 
                             <el-form-item>
-                            <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
+                                <el-button type="primary" @click="putMajorExtendMsg" :disabled = "disabled2">提交</el-button>
                             </el-form-item>
                         </el-form>  
                         </div>
@@ -189,8 +210,12 @@ export default {
                 schoolName: "大数据",
                 school: "河南科技学院",
                 typeAll: "2"
-			},
-            imgUrls: [],
+            },
+            majorId: 0,
+            wximgUrls: [],
+            wbimgUrls: [],
+            wxSendImg:[],
+            wbSendImg:[],
             // 省份字典
             province: [],
             // 专业字典
@@ -198,25 +223,147 @@ export default {
 			//专业认证
 			majorAuthentication:[],
 			//院校性质
-			majorNature:[],
-			majorInfo:{},
-            isShow:true,
+            majorNature:[],
+            
+            //院校名称
+            restaurants:[],
+            majorInfo:{},
+            majorLogoFile:{},
+            majorCoverMapFile:{},
+            majorLogoUrl:'',
+            majorCoverMapUrl:'',
+            iswxShow:true,
+            dialogVisible:true,
+            iswbShow:true,
             disabled:true,
             disabled2:true,
+            timeout: null,
             fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
         }
     },
     watch: {
         ruleForm: function(val,oldval) {
-            console.log(123);
+            // console.log(123);
         }
     },
     methods:{
+
+        //获取logo图片file，并图片预览
+        changeLogoUpload: function(file,fileList) {
+            if(this.beforeAvatarUpload(file)) {
+                // console.log(file.url);
+                this.majorLogoUrl = file.url;
+                this.majorLogoFile = file.raw;
+            }
+        },
+        changeCoverMapUpload: function(file, fileList) {
+            if(this.beforeAvatarUpload(file)) {
+                // console.log(file.url);
+                this.majorCoverMapUrl = file.url;
+                this.majorCoverMapFile = file.raw;
+            }
+        },
+
+        //上传图片判断
+        beforeAvatarUpload(file) {
+            const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png';
+            const isLt2M = file.raw.size / 1024 / 1024 < 4;
+
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 4MB!');
+            }
+            return isJPG && isLt2M;
+        },
+
+		putMajorMainMsg() {
+			let formdata = new FormData();
+			formdata.append('majorName', this.majorInfo.z_name);
+			formdata.append('majorAuth', this.majorInfo.major_confirm_id);
+			formdata.append('majorNature', this.majorInfo.major_follow_id);
+			formdata.append('approval', this.majorInfo.access_year);
+            formdata.append('majorProvince', this.changeMajorProvince(this.majorInfo.province));
+			formdata.append('majorAddress', this.majorInfo.address);
+			formdata.append('phone', this.majorInfo.phone);
+			formdata.append('indexWeb', this.majorInfo.index_web);
+			formdata.append('admissionsWeb', this.majorInfo.admissions_web);
+			formdata.append('schoolId', this.changeMajorSchoolNameToId(this.majorInfo.school_id));
+            formdata.append('majorType', this.changeMajorType(this.majorInfo.z_type));
+			this.wxSendImg.forEach((item) => {
+				formdata.append('wcImage[]', item);
+            });
+            this.wbSendImg.forEach((item) => {
+                formdata.append('wbImage[]', item);
+            });
+            formdata.append('majorLogo', this.majorLogoFile);
+            formdata.append('majorCover', this.majorCoverMapFile);
+			let config = {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+			this.post('/admin/information/createMajor', formdata, config).then((response) => {
+				if(response.code == 0) {
+                    this.message(true, response.msg, 'success');
+                    setTimeout(() => {
+                        this.$router.push('/message/messageHome/' + response.result);
+                    }, 2000);
+                }
+                else this.message(true, response.msg, 'error');
+			});
+        },
+        putMajorExtendMsg() {
+            this.post('/admin/information/updateMajorExtendMsg', {
+                majorId: this.majorId,
+                title: this.majorInfo.title,
+                keywords: this.majorInfo.keywords,
+                descciption: this.majorInfo.descciption
+            }).then((response) => {
+                if(response.code == 0) {
+                    this.message(true, response.msg, 'success');
+                }
+                else 
+                    this.message(true, response.msg, 'error');
+            })
+        },
+
+		changeMajorType(typeName) {
+			this.major.forEach((item) => {
+				if(typeof(typeName) == 'String' && typeName == item.name) return item.id;
+			});
+			return typeName;
+		},
+		changeMajorProvince(majorProvinceName) {
+            let pro = '';
+			this.province.forEach((province) => {
+				province.citys.forEach((city) =>{
+					if((typeof(majorProvinceName) == 'String' && city.name == majorProvinceName) || (typeof(majorProvinceName) == 'number' && city.id == majorProvinceName)) {
+                        pro = ""+city.father_id + ',' + (""+city.id);
+                    }
+				})
+            });
+            return pro;
+        },
+        changeMajorSchoolNameToId(name) {
+            let id = 0;
+            this.restaurants.forEach((item) => {
+                if(item.name == name) {
+                    id =  item.id;
+                }
+            });
+            if(id == 0) {
+                this.message(true, '院校姓名只支持下方出现的模糊匹配中选择院校', 'warnning');
+            }
+            else
+                return id;
+        },
 		jumpPage:function(){
-			this.$router.push('/message/universityMessage');
+			this.$router.push('/message/universityMessage/' + this.majorId + '/' + this.majorInfo.z_name);
 		},
         test: function() {
-          console.log(this.province);
+        //   console.log(this.province);
         },
         startChange: function () {
             this.disabled = false;
@@ -226,31 +373,60 @@ export default {
         },
         //点击上传图片，弹出选择文件窗口
         addPic: function(e) {
-            $('input[type=file]').trigger('click');
+            $('#upload').trigger('click');
             return false;
         },
-        delImage: function(index) {
+        addWBPic: function(e) {
+            $('#upload2').trigger('click');
+            return false;
+        },
+        delImage: function(index, type) {
 			let vm = this;
 			this.confirm(() => {
-				vm.imgUrls.splice(index, 1);
-				vm.count--;
-				vm.count<3?vm.isShow = true:vm.isShow;
+                if(type == 'wx') {
+                    vm.wximgUrls.splice(index, 1);
+                    vm.wxcount--;
+                    vm.wxcount<3 ? vm.iswxShow = true : vm.iswxShow;
+                    this.wxSendImg.splice(index, 1);
+                }
+                else if(type == 'wb') {
+                    vm.wbimgUrls.splice(index, 1);
+                    vm.wbcount--;
+                    vm.wbcount<3 ? vm.iswbShow = true : vm.iswbShow;
+                    this.wbSendImg.splice(index, 1);
+                }
 				this.message(true, '图片删除成功', 'success');
 			}, () => {
 				this.message(true, '取消删除', 'info');
 			});
         },
-        upload (e) {
+        upload(e) {
             let files = e.target.files || e.dataTransfer.files;
             if (!files.length||this.count>2) {
-                return;
+                return false;
             }
-            this.imgPreview(files[0],e);
-            this.count++;
-            this.count>=3?this.isShow = false:this.isShow;
+            return files;
+        },
+        uploadWX(e) {
+            let files = this.upload(e);
+            if(files == false) return;
+            this.imgPreview(files[0],e, 'wx');
+            this.wxcount++;
+			this.wxcount>=3?this.iswxShow = false:this.iswxShow;
+			this.wxSendImg.push(files[0]);
             this.message(true,'图片添加成功','');
         },
-        imgPreview (file,e) {
+        uploadWB(e) {
+            let files = this.upload(e);
+            if(files == false) return;
+            
+            this.imgPreview(files[0],e, 'wb');
+            this.wbcount++;
+			this.wbcount>=3?this.iswbShow = false:this.iswbShow;
+			this.wbSendImg.push(files[0]);
+            this.message(true,'图片添加成功','');
+        },
+        imgPreview (file,e, type) {
             let self = this;
             let Orientation;
             //去获取拍照时的信息，解决拍出来的照片旋转问题
@@ -273,18 +449,25 @@ export default {
 					img.src = result;
                     //判断图片是否大于100K,是就直接上传，反之压缩图片
                     if (this.result.length <= (100 * 1024)) {
-						self.imgUrls.push(this.result);
+                        if(type == 'wx') {
+                            self.wximgUrls.push(this.result);
+                            console.log(self.wximgUrls);
+                        }  
+                        if(type == 'wb') {
+                            self.wbimgUrls.push(this.result);
+                            // console.log(self.wbimgUrls);
+                        }
                     }else {
 						img.onload = function () {
                             let data = self.compress(img,Orientation);
-							self.imgUrls.push(data);
                         }
                     }
                     e.target.value = null;
                 }
             }
 
-        },
+		},
+		
         rotateImg (img, direction,canvas) {
             //最小与最大旋转方向，图片旋转4次后回到原方向
             const min_step = 0;
@@ -347,8 +530,8 @@ export default {
 			let height = img.height;
 			//如果图片大于四百万像素，计算压缩比并将大小压至400万以下
 			let ratio;
-			if ((ratio = width * height / 4000000) > 1) {
-				console.log("大于400万像素")
+			if ((ratio = width * height / 4000000) > 1) {magor_logo_name
+				console.log("大于400万像素");
 				ratio = Math.sqrt(ratio);
 				width /= ratio;
 				height /= ratio;
@@ -397,43 +580,79 @@ export default {
 			let ndata = canvas.toDataURL('image/jpeg', 0.1);
 			tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
 			return ndata;
-	  },
+      },
+      
+    /**
+     * 远程搜索
+     */
+    querySearchAsync(queryString, cb) {
+        var restaurants = this.restaurants;
+        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
 
-	  dictionaries() {
-			let _this = this;
-			let dictionariesArr = [
-				{re:'post', url:'/admin/information/getMajorAuthentication', pa:{}, calls: (response) => {_this.majorAuthentication = response.result;}, errorMsg: '未查询到专业认证信息'},
-				{re:'post', url:'/admin/information/getMajorNature', pa:{}, calls: (response) => {_this.majorNature = response.result;}, errorMsg: '未查询到院校性质信息'},
-				{re:'post', url:'/admin/information/getMajorProvincesAndCities', pa:{}, calls: (response) => {_this.province = response.result[0];}, errorMsg: '未查询到省份信息'},
-				{re:'post', url:'/admin/information/getMajorType', pa:{}, calls: (response) => {_this.major = response.result;}, errorMsg: '未查询到专业类型'},
-			];
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            cb(results);
+        }, 3000 * Math.random());
+    },
+    createStateFilter(queryString) {
+        return (state) => {
+            return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
+    },
+    handleSelect(item) {
+        // console.log(item);
+    },     
 
-			dictionariesArr.forEach((item) => {
-				_this.getMajorPageOptions(item.re, item.url, item.pa, (response) => {
-					response.code == 0 ? item.calls(response) : this.message(true, response.msg, 'error');
-				}, (response) => {
-					this.message(true, item.errorMsg, 'error');
-				});
-			})
 
-	  }
+    //字典查询
+    dictionaries() {
+            let _this = this;
+            let dictionariesArr = [
+                {re:'post', url:'/admin/information/getMajorAuthentication', pa:{}, calls: (response) => {_this.majorAuthentication = response.result;}, errorMsg: '未查询到专业认证信息'},
+                {re:'post', url:'/admin/information/getMajorNature', pa:{}, calls: (response) => {_this.majorNature = response.result;}, errorMsg: '未查询到院校性质信息'},
+                {re:'post', url:'/admin/information/getMajorProvincesAndCities', pa:{}, calls: (response) => {_this.province = response.result[0];}, errorMsg: '未查询到省份信息'},
+                {re:'post', url:'/admin/information/getMajorType', pa:{}, calls: (response) => {_this.major = response.result;}, errorMsg: '未查询到专业类型'},
+            ];
+
+            dictionariesArr.forEach((item) => {
+                _this.getMajorPageOptions(item.re, item.url, item.pa, (response) => {
+                    response.code == 0 ? item.calls(response) : this.message(true, response.msg, 'error');
+                }, (response) => {
+                    this.message(true, item.errorMsg, 'error');
+                });
+            })
+    }
 
     },
     mounted(){
 
-		this.dictionaries();
-
 		let _this = this;
 
+        this.dictionaries();
+        
+        this.post('/admin/information/getAllSchoolName', {}).then((response) => {
+            if(response.code == 0) {
+                _this.restaurants = response.result;
+            }
+        })
+
 		if(this.$route.params.majorId != null) {
+            this.majorId = this.$route.params.majorId;
 			this.post('/admin/information/selectReception', {
 				majorId: this.$route.params.majorId
 			}).then((response) => {
-				console.log(response);
 				if(response.code == 0) {
-					_this.majorInfo = response.result;
-					if(response.result.wc_image instanceof Array && response.result.wc_image.length > 0)  
-						_this.imgUrls.push.apply(_this.imgUrls, response.result.wc_image);
+                    _this.majorInfo = response.result;
+                    _this.majorLogoUrl = response.result.magor_logo_name;
+                     _this.majorCoverMapUrl = response.result.major_cover_name;
+					if(response.result.wc_image instanceof Array && response.result.wc_image.length > 0) {
+                        _this.wximgUrls.push.apply(_this.wximgUrls, response.result.wc_image);
+						_this.wxSendImg.push.apply(_this.wxSendImg, response.result.wc_image);
+                    }
+                    if(response.result.wb_image instanceof Array && response.result.wb_image.length > 0) {
+                        _this.wbimgUrls.push.apply(_this.wbimgUrls, response.result.wb_image);
+						_this.wbSendImg.push.apply(_this.wbSendImg, response.result.wb_image);                        
+                    }
 				}
 				else
 					this.message(true, response.msg, 'error');
@@ -459,6 +678,42 @@ export default {
     }
     .fileSteps .el-step__line {
         top: 23px !important;
+    }
+
+
+    /* logo　+　封面 */
+    .major_img .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .major_img .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .major_img .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    #major_cover_map .avatar-uploader-icon {
+        width: 250px !important;
+    }
+    .major_img .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+    #major_cover_map .avatar {
+        width: 178px !important;
+    }
+
+    .school_name .el-input {
+        display: block;
     }
 </style>
 
@@ -600,5 +855,31 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+
+/* logo+封面
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+} */
 </style>
 

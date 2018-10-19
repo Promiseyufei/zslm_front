@@ -33,7 +33,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/UniversMajorList'], resolve))
         },
         {
-            path: '/filesManage/fileup/:majorname',
+            path: '/filesManage/fileup/:majorname?',
             name: '文件管理——上传文件',
             component: resolve =>void(require(['@/views/admin/filesManage/FileUp'], resolve))
         },
@@ -76,7 +76,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/MessageHome'], resolve))
         },
         {
-            path: '/message/universityMessage',
+            path: '/message/universityMessage/:majorId?/:majorName?',
             name: '编辑-招生项目',
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/UniversityMessage'], resolve))
         },
@@ -116,7 +116,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/counselling/changeMessage'], resolve))
         },
         {
-            path: '/message/coupon/:id',
+            path: '/message/coupon/:id?',
             name: '辅导-新建/编辑——优惠卷设置',
             component: resolve =>void(require(['@/views/admin/message/counselling/coupon'], resolve))
         },
@@ -205,7 +205,12 @@ let admin_router = {
             name: '用户管理-关注院校',
             component: resolve =>void(require(['@/views/admin/userManagement/userCoupons'], resolve))
         },
-        //退款管理
+        // {
+        //     path: '/usermanagement/userparticipateactivities',
+        //     name: '用户管理-关注活动',
+        //     component: resolve =>void(require(['@/views/admin/usermanagement/userParticipateActivities'], resolve))
+        // },
+        //退款
         {
             path: '/refund/refundlist',
             name: '用户管理-退款管理',

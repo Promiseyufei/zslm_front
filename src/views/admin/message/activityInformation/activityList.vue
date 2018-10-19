@@ -73,9 +73,9 @@
                 <el-table-column label="操作" width="120">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
-                            <i class="el-icon-search"></i>
-                            <i class="el-icon-edit-outline"></i>
-                            <i class="el-icon-delete"></i>
+                            <i class="el-icon-search" @click = "jumpActivityDet"></i>
+                            <i class="el-icon-edit-outline" @click = "jumpActivityInfo"></i>
+                            <i class="el-icon-delete" @click = "singleDele"></i>
                         </div>
                     </template>
                 </el-table-column>
@@ -146,9 +146,22 @@
             }
         },
         methods:{
+            //新建跳转页面——跳转到活动信息
             jumpPage:function(){
                 this.$router.push('/message/activity');
             },
+            //表格搜索——跳转到相应的活动详情页
+            jumpActivityDet:function(){
+                // 此页面未给
+            },
+            //表格编辑——跳转到活动信息页面
+            jumpActivityInfo:function(){
+                this.$router.push('/message/activity');
+            },
+            //表格删除——
+            singleDele:function(){
+            },
+            //分页
             pageChange(msg) {
                 this.searchContent.page = msg.page;
                 this.searchContent.limit = msg.limit;
@@ -250,6 +263,7 @@
     }
     .majorlist-icon i {
         margin: 0 5px;
+        cursor: pointer;
     }
     .majorlist-icon {
         display: flex;
