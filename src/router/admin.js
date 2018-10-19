@@ -15,6 +15,11 @@ let admin_router = {
             name: '小块',
             component: resolve =>void(require(['@/views/admin/information'], resolve))
         },
+        {
+            path: '/login',
+            name: '登录',
+            component: resolve =>void(require(['@/views/admin/login'], resolve))
+        },
 
         // 文件管理
         {

@@ -149,7 +149,7 @@
         methods:{
             //新建+表格编辑——页面跳转到资讯内容
             jumpPage:function(){
-                this.$router.push('/message/changeMessage');
+                this.$router.push('/message/changeInformation');
             },
             //跳到相应的资讯详情页
             jumpInformDeta(){

@@ -148,7 +148,7 @@
                 <!-- 完成按钮 -->
                 <div class="operateFinalUp">
                     <el-button type="primary" @click="toBack" plain>返回</el-button>
-                    <el-button type="primary" @click="toAdvise">下一步，相关活动设置</el-button>
+                    <el-button type="primary" @click="toAdvise">下一步，优惠卷设置</el-button>
                 </div>
             </div>
         </div>
