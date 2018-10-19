@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-radio-group style="display:flex;justify-content:center;">
-            <img src="../../assets/logo.png" alt="" style="height:60px;width:auto;">
+        <el-radio-group class="totalnav">
+            <img :src="src" alt="logo">
         </el-radio-group>
         <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="collapse" :unique-opened="unOpend">
             <el-submenu v-for="(item, index) in navigation" :key="index" :index="item.index + ''">
@@ -26,6 +26,16 @@
     width: 200px;
     min-height: 400px;
   }
+  .totalnav {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    height: 60px;
+    width:100%;
+  }
+  .totalnav img {
+      height: 30px;
+  }
 </style>
 
 <script>
@@ -33,8 +43,22 @@
     export default {
         data() {
             return {
+                src: require('../../assets/img/shortlogo.png'),
+                test:'1',
                 unOpend:false,
                 navigation: navigation
+            }
+        },
+        // filters: {
+        //     collapse: function (val) {
+        //         console.log(val);
+        //         return val == true ? '../../assets/logo.png' : '../../assets/img/wateUp.png'
+        //     }
+        // },
+        watch: {
+            collapse: function(val) {
+                console.log(val);
+                this.src = (val == true ? require('../../assets/img/shortlogo.png') : require('../../assets/img/longlogo.png'));
             }
         },
         methods: {
@@ -43,10 +67,14 @@
             },
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);
+
             },
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
             }
+        },
+        mounted() {
+            console.log(this.collapse);
         },
         props:['collapse']
     }

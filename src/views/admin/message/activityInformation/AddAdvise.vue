@@ -4,8 +4,9 @@
     	<div>
           <!-- 面包屑 -->
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item>运行管理</el-breadcrumb-item>
-            <el-breadcrumb-item>资讯频道首页推荐</el-breadcrumb-item>
+            <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+            <el-breadcrumb-item>活动信息</el-breadcrumb-item>
+              <el-breadcrumb-item>活动信息编辑</el-breadcrumb-item>
             <el-breadcrumb-item class="selectedNavPublic">添加推荐</el-breadcrumb-item>
           </el-breadcrumb>
 
@@ -24,12 +25,12 @@
           <div class="addadviseSelect">
               <div class="addadviseInput">
                   <el-form ref="form" :model="form" label-width="120px">
-                      <el-form-item label="资讯类型">
+                      <el-form-item label="活动类型">
                         <el-select v-model="form.region" clearable placeholder="全部">
                           <el-option :label="list.name" :value="list.id" v-for="(list,i) in banner" :key = "i"></el-option>
                         </el-select>
                       </el-form-item>
-                      <el-form-item label="资讯标题">
+                      <el-form-item label="活动名称">
                         <el-input v-model="form.message" placeholder="输入关键字"></el-input>
                       </el-form-item>
                   </el-form>
@@ -39,7 +40,7 @@
 
           <!-- 筛选头部 -->
           <div class="operateUpfiles operateHeader">
-            <p><i class="fa fa-bars"></i> 资讯列表</p>
+            <p><i class="fa fa-bars"></i> 活动列表</p>
           </div>
             <!-- 表格 -->
             <div class="operateTable">
@@ -81,7 +82,7 @@
 
             <!-- 已选资讯 -->
             <div class="operateUpfiles operateHeader">
-                <p><i class="fa fa-window-restore"></i> 已选资讯</p>
+                <p><i class="fa fa-window-restore"></i> 已选活动</p>
             </div>
 
             <!-- 选中状态 -->
@@ -128,7 +129,10 @@ export default {
             region: '',
             message: ''
           },
-          banner: [],
+          banner: [
+              {'id':0,'name':'展示'},
+              {'id':1,'name':'不展示'},
+          ],
           total: 0,
           count: 100,
           page: 1,
@@ -152,12 +156,12 @@ export default {
               },
               {
                 prop: "z_type",
-                lable: "资讯类型",
+                lable: "咨询类型",
                 width: "350px"
               },
               {
                 prop: 'name',
-                lable: '资讯标题',
+                lable: '咨询名称',
                 width: "354px"
               },
               {
@@ -268,7 +272,15 @@ export default {
         // 获取所有资讯类型
         getInformationType: function() {
           var self = this;
-          this.post('/admin/operate/getInformationType', {})
+          this.post('/admin/information/getActivityPageMessage', {
+              screenType:0,
+              activityState:3,
+              sortType:0,
+              screenState:self.form.region == '' ? 0 : self.form.region,
+              activityNameKeyword:self.form.message,
+              pageCount: self.count,
+              pageNumber: self.page - 1,
+          })
           .then(function (response) {
             if (response.code == 0) {
               self.banner = response.result;

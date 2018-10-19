@@ -2,8 +2,8 @@
     <div class="majorlist">
         <div class="majorlist-top">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">辅导机构</a></el-breadcrumb-item>
+              <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+              <el-breadcrumb-item>辅导机构</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
@@ -22,26 +22,30 @@
                 </el-form-item>
                 <el-form-item label="展示状态">
                     <el-select size="medium" v-model="type1" placeholder="全部">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                      <el-option label="展示" value="0"></el-option>
+                      <el-option label="不展示" value="1"></el-option>
+                        <el-option label="全部" value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="推荐状态">
                     <el-select size="medium" v-model="type2" placeholder="全部">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                      <el-option label="推荐" value="0"></el-option>
+                      <el-option label="不推荐" value="1"></el-option>
+                        <el-option label="全部" value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="优惠券" class="majorlist-formmini">
                     <el-select size="medium" v-model="type3" placeholder="全部">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                      <el-option label="支持" value="0"></el-option>
+                      <el-option label="不支持" value="1"></el-option>
+                        <el-option label="全部" value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="退款保障" class="majorlist-formmini">
                     <el-select size="medium" v-model="type4" placeholder="全部">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                      <el-option label="支持退款" value="0"></el-option>
+                      <el-option label="不支持退款" value="1"></el-option>
+                        <el-option label="全部" value="2"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -67,24 +71,24 @@
                 </el-table-column>
                 <el-table-column label="展示状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].showState" active-color="#999" inactive-color="#409eff"></el-switch>
+                        <el-switch v-model="majorlisttable[scope.$index].is_show" active-color="#999" inactive-color="#409eff"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="推荐状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].adviceState" active-color="#409eff" inactive-color="#999">
+                        <el-switch v-model="majorlisttable[scope.$index].is_recommend" active-color="#409eff" inactive-color="#999">
                         </el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="优惠券" width="80">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].discount" active-color="#409eff" inactive-color="#999">
+                        <el-switch v-model="majorlisttable[scope.$index].if_coupons" active-color="#409eff" inactive-color="#999">
                         </el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="退款保障" width="80">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].refund" active-color="#409eff" inactive-color="#999">
+                        <el-switch v-model="majorlisttable[scope.$index].if_back_money" active-color="#409eff" inactive-color="#999">
                         </el-switch>
                     </template>
                 </el-table-column>
@@ -93,8 +97,7 @@
                         <div class="majorlist-icon">
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
                             <el-popover placement="top-start" title="标题" width="200" trigger="click" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-                                 <el-button slot="reference"><i class="el-icon-tickets" @click = "alertViewCoupons"></i></el-button>
-                                
+                                <i class="el-icon-tickets" @click = "alertViewCoupons" slot="reference"></i>
                             </el-popover>
                         </div>
                     </template>
@@ -123,22 +126,26 @@
                     limit:'',
                 },
                 tableTop:[
-                  {prop:'name',label:'辅导机构名称',width:300},
-                  {prop:'project',label:'机构类型',width:80},
-                  {prop:'project',label:'活动省市',width:80},
-                  {prop:'project',label:'辅导形式',width:80},
-                  {prop:'time',label:'发布时间',width:160},
+                  {prop:'coach_name',label:'辅导机构名称',width:300},
+                  {prop:'father_id',label:'机构类型',width:80},
+                  {prop:'province',label:'活动区域',width:80},
+                  {prop:'coach_type',label:'辅导形式',width:80},
+                  {prop:'update_time',label:'发布时间',width:160},
                 ],
                 majorlisttable:[{
                   weight:'',
                   id:'',
-                  name:'',
-                  project:'',
-                  time:'',
-                  showState:'',
-                  adviceState:'',
+                    coach_name:'',
+                    province:'',
+                    update_time:'',
+                    coach_type:'',
+                    father_id:'',
                   discount:'',
                   refund:'',
+                    if_coupons:'',
+                    is_recommend:'',
+                    is_show:'',
+                    if_back_money:''
                 }],
                 tableSwitch:[
                     {label:'展示状态',width:'100'},
@@ -252,17 +259,37 @@
             },
             gettableInfo:function(){
                 var that = this;
-                axios.post('/message/coachList/gettableInfo',{
-                    // type: that.filesForm.type,
-                    // name1: that.filesForm.name1,
-                    // input: that.input,
+                this.post('admin/information/getPageCoachOrganize',{
+                    soachNameKeyword:'',
+                    showType:that.type1 != '' ? that.type1 : 2,
+                    recommendType:that.type2 != '' ? that.type2 : 2,
+                    couponsType:that.type3 != '' ? that.type3 : 2,
+                    moneyType:that.type4 != '' ? that.type4 : 2,
+                    sortType:0,
+                    pageCount:5,
+                    pageNumber:1
                 })
                 .then(function (response) {
                     // that.page++;
-                    var res = response.data;
+                    var res = response;
+
                     if (res.code == 0) {
-                        that.majorlisttable = res.data;
-                        that.total = res.total;
+                        for(let i in res.result[0]){
+                            if(res.result[0][i].father_id == 0){
+                                res.result[0][i].father_id = '总部'
+                            }else{
+                                res.result[0][i].father_id = '分部'
+                            }
+
+                            if(res.result[0][i].coach_type == 0)
+                                res.result[0][i].coach_type = '线上'
+                            else if(res.result[0][i].coach_type == 1)
+                                res.result[0][i].coach_type = '线下'
+                            else
+                                res.result[0][i].coach_type = '线上线下'
+                        }
+                        that.majorlisttable = res.result[0];
+                        that.total = res.result[1];
                     };
                 })
                 .catch(function (error) {
@@ -302,6 +329,7 @@
     .majorlist-table .el-button:focus, .el-button:hover {
 
     }
+    
 </style>
 
 <!-- 局部样式 scoped -->
