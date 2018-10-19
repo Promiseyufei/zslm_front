@@ -76,7 +76,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/MessageHome'], resolve))
         },
         {
-            path: '/message/universityMessage',
+            path: '/message/universityMessage/:majorId?/:majorName?',
             name: '编辑-招生项目',
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/UniversityMessage'], resolve))
         },

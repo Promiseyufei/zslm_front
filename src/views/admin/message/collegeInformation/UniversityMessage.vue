@@ -30,7 +30,7 @@
                                             院校专业名称
                                         </div>
                                         <div>
-                                            {{ collegeInformation }}
+                                            {{ majorName }}
                                         </div>
                                     </div>
                                     <el-form-item>
@@ -133,7 +133,7 @@
 
 
                                 <el-form-item>
-                                    <el-button type="primary" @click="">提交</el-button>
+                                    <el-button type="primary" @click="test">提交</el-button>
                                 </el-form-item>		            
                             </el-form>
                         </div>
@@ -174,7 +174,7 @@
                                             </template>
                                             </el-table-column>
                                         <el-table-column
-                                            property="state"
+                                            property="is_show"
                                             label="展示状态"
                                             width="120">
                                             <template slot-scope="scope" >
@@ -184,11 +184,11 @@
                                             </template>
                                         </el-table-column>
                                             <el-table-column
-                                            property="pj_name"
+                                            property="z_name"
                                             label="院校专业">
                                         </el-table-column>
                                             <el-table-column
-                                            property="project_type"
+                                            property="project_name"
                                             label="招生项目"
                                             width="100">
                                         </el-table-column>
@@ -203,6 +203,11 @@
                                         </el-table-column>									     
                                     </el-table>
                                 </el-form>
+                                
+                                <!-- 小型分页 -->
+                                <div class="block" style="">
+                                    <el-pagination background layout="prev, pager, next" @current-change="changeCurrent" :total="total"></el-pagination>
+                                </div>
                             </div>
 
                             <!-- 完成按钮 -->
@@ -250,9 +255,21 @@
                 tableData: [],
                 TableValue: 0,
                 id: 0,
+                majorId:0,
+                pageNum:1,
+                majorName:'',
+                total: 0
 	    	}
 	    },
 	    methods:{
+            test() {
+
+            },
+            changeCurrent(raw) {
+                this.pageNum = raw;
+                this.getProject();
+
+            },
             collegeFinish: function() {
                 this.$router.push('/message/universMajorList');
             },
@@ -261,6 +278,7 @@
             },
             //改变展示状的时候触发事件
             changeState: function(state,row) {
+                console.log(row);
                 let self = this;
                 // console.log(state,row);
                 axios.post('/admin/information/setProjectState', {
@@ -309,18 +327,50 @@
                 })
             },
 
-            // 鼠标失去焦点时触发事件，val=>当前input里面的值，index=>当前行的下标
-            changeCount: function(val,index) {
+            changeBlurTest(val, index) {
                 var re = /^[0-9]+.?[0-9]*$/;
                 if (!re.test(val)) {
                     this.message(true,'请输入数值','warning');
                     this.tableData[index].weight = this.TableValue;
+                    return false;
                 } else if (val<0||val>1000) {
                     this.message(true,'权值范围为0~100','warning');
                     this.tableData[index].weight = this.TableValue;
-                } else {
-                    this.$emit('setInfoRelation',this.tableData[index].id, this.tableData[index].weight);
+                    return false;
                 }
+                return true;
+            },
+            // 鼠标失去焦点时触发事件，val=>当前input里面的值，index=>当前行的下标
+            changeCount: function(val,index) {
+                this.confirm(() => {
+                    if(this.changeBlurTest(val, index)) {
+                        if(!this.changeProjectState(this.tableData[index].id, 0, val)) {
+                            this.tableData[index].weight = this.TableValue;
+                        }
+                    }
+                }, () => {
+                    this.tableData[index].weight = this.TableValue;
+                    this.message(true, '已取消操作', 'info');
+                })
+            },
+
+            changeProjectState(proId, type, state) {
+                let status = true;
+                this.post('/admin/information/setProjectState' , {
+                    projectId: proId,
+                    type:type,
+                    state: state
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.message(true, response.msg, 'success');
+                    }
+                    else {
+                        status = false;
+                        this.message(true, response.msg, 'error');
+                    }
+                })
+                return status;
+
             },
             
             handleClick: function (row) { 
@@ -342,18 +392,19 @@
                 this.inputVisible = false;
                 this.inputValue = '';
             },
+
             //得到所有的项目
             getProject: function() {
                 let self = this;
 
-                axios.post('/getProject', {
-                    
-                })
-                .then(function (response) {
-                    var res = response.data;
-                    if(res.code == 0) {
-                        self.tableData = res.data;
-                        console.log(self.tableData);
+                this.post('/admin/information/getAllProject', {
+                    majorId: this.majorId,
+                    pageNum: this.pageNum
+                }).then((response) => {
+                    console.log(response);
+                    if(response.code == 0) {
+                        self.total = response.result.total;
+                        self.tableData = response.result.data;
                     }
                 })
                 .catch(function (error) {
@@ -362,6 +413,21 @@
             }
         },
         mounted() {
+            if(this.$route.params.majorId !== null && this.$route.params.majorId != 0) {
+                this.majorId = this.$route.params.majorId;
+            }
+            else {
+                this.message(true, '请指定所创建的招生项目的院校专业', 'error');
+                return;
+            }
+            if(this.$route.params.majorName !== null && this.$route.params.majorName !== '') {
+                this.majorName = this.$route.params.majorName;
+            }
+            else {
+                this.message(true, '无法获得所创建的招生项目的院校专业名称', 'info');
+                // return;
+            }
+
             this.getProject();
         }
 	};
