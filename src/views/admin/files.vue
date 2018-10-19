@@ -187,7 +187,7 @@
 	            	//权重正确，将该行表格id传给后台
 	            	var that = this;
 
-                    axios.post('http://www.zslm.com/admin/files/updateweight',{
+                    this.post('/admin/files/updateweight',{
 			          //后台参数，前台参数(传向后台)
                         fileId: that.tableData[index].id,
                         weight: that.tableData[index].show_weight
@@ -198,11 +198,11 @@
             deleteRequest(filesId){
 	  		    let that = this;
                 this.confirm(() => {
-                    axios.post('http://www.zslm.com/admin/files/deletefiles',{
+                    this.post('/admin/files/deletefiles',{
                         //后台参数，前台参数(传向后台)
                         fileId: filesId,
                     }).then(function (response) {
-                        var res = response.data;
+                        var res = response;
                         if (res.code == 0) {
                             that.query();
                             that.message(true,'删除成功','success');
@@ -254,9 +254,9 @@
 	      	},
 	      	query: function (){
 	        	var that = this;
-	        	axios.get('http://www.zslm.com/admin/files/getuploadfile',{
+	        	this.fetch('/admin/files/getuploadfile',
 		          //后台参数，前台参数(传向后台)
-                    params:{
+                    {
                       page: that.searchContent.page,
                       pageSize: that.searchContent.limit,
                       fileName: that.filesName,
@@ -264,9 +264,9 @@
                       fileYear: that.fileYear,
                       fileType: that.fileType
                     }
-	        	})
+	        	)
 	        	.then(function (response) {
-	            	var res = response.data;
+	            	var res = response;
                     if (res.code == 0) {
                         console.log(res.result.data)
                         that.tableData =res.result.data;

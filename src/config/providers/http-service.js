@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.defaults.timeout = 5000;
 
-axios.defaults.baseURL = 'http://localhost:81/zslm_back/public';
+axios.defaults.baseURL = 'http://www.zslm.com';
 
 axios.interceptors.request.use(
     config => {

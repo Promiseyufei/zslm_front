@@ -85,7 +85,7 @@ export default {
     methods: {
         // 跳转页面，跳到添加活动页面
         couponAdd: function() {
-            this.$router.push('/message/coupon/');
+            this.$router.push('/message/choiceactivity/');
         },
         //获得相关活动页面
         getActivity: function() {

@@ -115,18 +115,16 @@
             query:function () {
 
                 var that = this;
-                axios.get('http://www.zslm.com/admin/accounts/getuser',{
+                this.fetch('/admin/accounts/getuser',{
                     //后台参数，前台参数(传向后台)
-                    params:{
                         page: that.searchContent.page,
                         pageSize: that.searchContent.limit,
                         name: that.name,
                         major: that.major,
                         realname: that.realname,
-                    }
                 })
                     .then(function (response) {
-                        var res = response.data;
+                        var res = response;
                         if (res.code == 0) {
                             that.tableData =res.result[0];
                             that.total = 10;
@@ -148,13 +146,12 @@
             },
             getOneUser:function(id){
                 let that = this;
-                axios.get('http://www.zslm.com/admin/accounts/getoneuser',{
-                    params:{
+                this.fetch('/admin/accounts/getoneuser',{
                         id:id
-                    }
+
                 }).then(res=>{
                     if(res.code == 0){
-                        that.oneUserMsg = res.result.data;
+                        that.oneUserMsg = res.result;
                         return 0;
                     }
                     else{

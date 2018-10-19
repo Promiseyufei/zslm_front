@@ -10,7 +10,7 @@
 
                 <!-- 步骤条 -->
                 <div class="fileSteps">
-                    <el-steps :active=".1" align-center>
+                    <el-steps :active="1" align-center>
                         <el-step title="活动信息"></el-step>
                         <el-step title="推荐信息"></el-step>
                         <el-step title="消息通知"></el-step>
@@ -72,7 +72,7 @@
                                 </el-form-item>
                                 
                                 <el-form-item label="报名状态">
-                                    <el-select v-model="ruleForm.status" placeholder="全部" :disabled = "disabled">
+                                    <el-select v-model="ruleForm.status" placeholder="请选择状态" :disabled = "disabled">
                                     <el-option label="未开始" value="0"></el-option>
                                     <el-option label="进行中" value="1"></el-option>
                                         <el-option label="已结束" value="2"></el-option>
@@ -135,14 +135,6 @@
                         <div class="operateUpfilesRight2">
                             <el-button type="primary" @click="startChange3">编辑</el-button>
                             <div class="messageBtn">
-                                <!-- <div id="editor">
-                                    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
-                                </div>
-                                <div class="messageEditor">
-                                    <el-button type="primary" plain :disabled = "disabled3" @click="messageEmpty">清空</el-button>
-                                    <el-button type="primary" :disabled = "disabled3"  @click="messageSubmit">提交</el-button>
-                                </div> -->
-
                                 <editor :disabled = "disabled3"></editor>
                             </div>
                         </div>
@@ -197,7 +189,7 @@ export default {
         disabled:true,
         disabled2:true,
         disabled3:true,
-        // editor: new WangEditor('#editor'),
+        editor: new WangEditor('#editor'),
         fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
       }
     },
@@ -209,12 +201,12 @@ export default {
          */
         info:function(){
             let self = this;
-            axios.get('http://www.zslm.com/admin/information/getpageinfo')
+            this.fetch('/admin/information/getpageinfo')
                 .then(res=>{
                     console.log(res)
-                    if(res.data.code == 0){
-                        self.province = res.data.result['provice'];
-                        self.major = res.data.result['major'];
+                    if(res.code == 0){
+                        self.province = res.result['provice'];
+                        self.major = res.result['major'];
                     }else{
 
                     }
@@ -227,17 +219,20 @@ export default {
         },
 
         judgeSelect(){
-          if(this.ruleForm.type == this.string){
+          if(this.ruleForm.type == this.string+'活动类型'){
                 return '请选择活动类型';
           }
-          if(this.ruleForm.region == this.string){
+          if(this.ruleForm.region == this.string+'活动区域'){
               return '请选择省份';
           }
-          if(this.ruleForm.spaticalType == this.string){
+          if(this.ruleForm.spaticalType == this.string+'专业类型'){
               return '请选择专业';
           }
-          if(this.ruleForm.status == this.string){
+          if(this.ruleForm.status == this.string+'状态'){
               return '请选择状态';
+          }
+          if(this.imgUrls.length == 0){
+              return '请选择图片';
           }
           return '';
         },
@@ -265,7 +260,7 @@ export default {
         projectSubmit: function() {
 
             let judge = this.judgeSelect();
-            console.log(judge)
+            alert(judge)
             if(judge == ''){
                 let self = this;
                 let img = this.imgUrls;
@@ -287,11 +282,11 @@ export default {
                     }
                 }
                 let that = this;
-                axios.post('http://www.zslm.com/admin/information/createActivity',fd,imgFile)
+                this.post('/admin/information/createActivity',fd,imgFile)
                     .then(res=>{
-                        if(res.data.code == 0){
+                        if(res.code == 0){
                             that.message(true,'上传成功','success');
-                            that.record = res.data.result
+                            that.record = res.result
 
                         }
                     })
@@ -317,13 +312,13 @@ export default {
           }
 
           let that = this;
-          axios.post('http://www.zslm.com/admin/information/setkwt',{
+          this.post('/admin/information/setkwt',{
               id:that.record,
               title:that.form.Title,
               keywords:that.form.Keywords,
               description:that.form.Description
           }).then(res=>{
-              if(res.data.code == 0){
+              if(res.code == 0){
                   that.message(true,'提交成功','success');
               }else {
                   that.message(true,'提交失败 请重试','error')
@@ -343,11 +338,11 @@ export default {
                 this.message(true,'请输入内容','error');
                 return ;
             }
-            axios.post('http://www.zslm.com/admin/information/setin',{
+            this.post('/admin/information/setin',{
                 id:that.record,
                 introduce:that.editor.txt.html()
             }).then(res=>{
-                if(res.data.code == 0){
+                if(res.code == 0){
                     that.message(true,'提交成功','success');
                 }else {
                     that.message(true,'提交失败 请重试','error')
@@ -360,7 +355,11 @@ export default {
 
         // 跳转页面
         toAdvise: function() {
-            this.$router.push('/message/advise/' + this.id);
+            if(this.record == 0){
+                this.message(true,'请先创建活动','error');
+                return;
+            }
+            this.$router.push('/message/advise/' + this.record);
         },
         
         // 提交修改数据

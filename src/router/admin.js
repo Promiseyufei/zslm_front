@@ -15,6 +15,11 @@ let admin_router = {
             name: '小块',
             component: resolve =>void(require(['@/views/admin/information'], resolve))
         },
+        {
+            path: '/login',
+            name: '登录',
+            component: resolve =>void(require(['@/views/admin/login'], resolve))
+        },
 
         // 文件管理
         {
@@ -82,18 +87,23 @@ let admin_router = {
         },
         {
             path: '/message/activity',
-            name: '活动——编辑-活动信息',
+            name: 'messageActivity',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Activity'], resolve))
         },
         {
-            path: '/message/notice',
+            path: '/message/notice/:id',
             name: '消息通知',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/messageNotice'], resolve))
         },
         {
             path: '/message/advise/:id',
-            name: '活动——编辑-推荐信息',
+            name: 'messageAdvise',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Advise'], resolve))
+        },
+        {
+            path: '/message/addActivity/:id',
+            name: 'addActive',
+            component: resolve =>void(require(['@/views/admin/message/activityInformation/AddAdvise'], resolve))
         },
         {
             path: '/message/hostuniversmajor',
@@ -121,7 +131,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/counselling/coupon'], resolve))
         },
         {
-            path: '/message/aboutActivity/:id',
+            path: '/message/aboutActivity/:id?',
             name: '辅导-新建/编辑——相关活动设置',
             component: resolve =>void(require(['@/views/admin/message/counselling/aboutActivity'], resolve))
         },
@@ -192,12 +202,12 @@ let admin_router = {
         },
         {
             path: '/usermanagement/userlist',
-            name: '用户管理-关注院校',
+            name: '用户管理-用户列表',
             component: resolve =>void(require(['@/views/admin/userManagement/userList'], resolve))
         },
         {
             path: '/usermanagement/userParticipateActivities',
-            name: '用户管理-关注院校',
+            name: '用户管理-参与活动',
             component: resolve =>void(require(['@/views/admin/userManagement/userParticipateActivities'], resolve))
         },
         {

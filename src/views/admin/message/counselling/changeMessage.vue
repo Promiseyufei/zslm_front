@@ -29,8 +29,8 @@
                                 <el-button type="primary" @click="startChange">开始编辑</el-button>
                             </el-form-item>
 
-                            <el-form-item label="资讯类型">
-                                <el-select v-model="counsellForm.region" placeholder="请选择活动区域" :disabled = "disabled">
+                            <el-form-item label="是否展示">
+                                <el-select v-model="counsellForm.show" placeholder="请选择" :disabled = "disabled">
                                     <el-option :label="item.type" :value="item.id" v-for="(item, index) in counsell_type" :key="index"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -42,6 +42,12 @@
                             <el-form-item label="所在省市">
                                 <el-select v-model="counsellForm.region" placeholder="请选择活动区域" :disabled = "disabled">
                                     <el-option :label="item.name" :value="item.id" v-for="(item, index) in province" :key="index"></el-option>
+                                </el-select>
+                            </el-form-item>
+
+                            <el-form-item label="总部">
+                                <el-select v-model="counsellForm.father" placeholder="请选择总部" :disabled = "disabled">
+                                    <el-option :label="item.coach_name" :value="item.id" v-for="(item, index) in coach" :key="index"></el-option>
                                 </el-select>
                             </el-form-item>
 
@@ -59,25 +65,45 @@
                             
                             <el-form-item label="课程形式">
                                 <el-radio-group v-model="counsellForm.type" :disabled = "disabled">
-                                    <el-radio label="线上">线上</el-radio>
-                                    <el-radio label="线下">线下</el-radio>
+                                    <el-radio label="线上" :value="0">线上</el-radio>
+                                    <el-radio label="线下" :value="1">线下</el-radio>
                                 </el-radio-group>
                             </el-form-item>
 
                             <el-form-item label="优惠卷">
                                 <el-radio-group v-model="counsellForm.cheap" :disabled = "disabled">
-                                    <el-radio label="启用">启用</el-radio>
-                                    <el-radio label="禁用">禁用</el-radio>
+                                    <el-radio label="启用" :value="0">启用</el-radio>
+                                    <el-radio label="禁用" :value="1">禁用</el-radio>
                                 </el-radio-group>
                             </el-form-item>
 
                             <el-form-item label="退款保障">
                                 <el-radio-group v-model="counsellForm.refund" :disabled = "disabled">
-                                    <el-radio label="支持">支持</el-radio>
-                                    <el-radio label="不支持">不支持</el-radio>
+                                    <el-radio label="支持" :value="0">支持</el-radio>
+                                    <el-radio label="不支持" :value="1">不支持</el-radio>
                                 </el-radio-group>
                             </el-form-item>
+                            <el-form-item label="院校logo">
+                                <div class="major_img">
+                                    <el-upload class="avatar-uploader" action="" :auto-upload="false" :on-change="changeLogoUpload" :multiple="false" :show-file-list="false">
+                                        <img v-if="majorLogoUrl" :src="majorLogoUrl" class="avatar" alt="院校logo">
+                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    </el-upload>
+                                </div>
+                            </el-form-item>
 
+
+                            <!-- 院校封面图 -->
+                            <el-form-item label="院校封面图">
+                                <div class="major_img">
+                                    <div id="major_cover_map">
+                                        <el-upload class="avatar-uploader" action="" :auto-upload="false" :on-change="changeCoverMapUpload" :multiple="false" :show-file-list="false">
+                                            <img v-if="majorCoverMapUrl" :src="majorCoverMapUrl" class="avatar" alt="院校封面图">
+                                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                        </el-upload>
+                                    </div>
+                                </div>
+                            </el-form-item>
                             <!--<el-form-item label="官方微信">
                                 <div style="padding: 0 5px 5px 8px">
                                     <div class="add" @click.stop="addPic" cuort>
@@ -91,7 +117,7 @@
                             </el-form-item> -->
                             
                             <el-form-item>
-                                <el-button type="primary" @click="test" :disabled = "disabled">提交</el-button>
+                                <el-button type="primary" @click="postC" :disabled = "disabled">提交</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -119,7 +145,7 @@
                                 </el-form-item>
             
                                 <el-form-item>
-                                    <el-button type="primary" @click="test" :disabled = "disabled2">提交</el-button>
+                                    <el-button type="primary" @click="postK" :disabled = "disabled2">提交</el-button>
                                 </el-form-item>
                             </el-form>  
                         </div>
@@ -148,7 +174,7 @@
                 <!-- 完成按钮 -->
                 <div class="operateFinalUp">
                     <el-button type="primary" @click="toBack" plain>返回</el-button>
-                    <el-button type="primary" @click="toAdvise">下一步，相关活动设置</el-button>
+                    <el-button type="primary" @click="toAdvise">下一步，优惠卷设置</el-button>
                 </div>
             </div>
         </div>
@@ -167,15 +193,19 @@ export default {
                 Description: ""
             },
             counsellForm: {
-                counsell_type: "提前面试",
+                counsell_type: '请选择',
                 name: "河南科技学院",
                 region: "河南省",
                 tell: "18303612352",
                 address: "河南省新乡市河南科技学院",
                 web:"http://qinghua.cn",
-                type: "线上",
-                cheap: "启用",
-                refund: "支持",
+                type: 0,
+                cheap:0,
+                refund: 0,
+                father:0,
+                show:'',
+                logo:'',
+                cover:''
             },
             disabled: true,
             disabled2: true,
@@ -183,30 +213,121 @@ export default {
             counsell_type: [
                 {
                     id: 0,
-                    type: "提前面试"
+                    type: "展示"
                 },
                 {
                     id: 1,
-                    type: "招生宣讲"
-                },
-                {
-                    id: 2,
-                    type: "高精会议"
-                },
-                {
-                    id: 3,
-                    type: "讲座论坛"
-                },
+                    type: "不展示"
+                }
             ],
             // 省份字典
             province: [],
+            coach:[],
             // 富文本编辑器
             editorContent:'',
             editor: new WangEditor('#editor'),
             id: 0,
+            majorLogoUrl:'',
+            majorLogoFile:null,
+            majorCoverMapUrl:'',
+            majorCoverMapFile:''
         }
     },
     methods: {
+        info:function(){
+            let self = this;
+            this.fetch('/admin/information/getcoachinfo')
+                .then(res=>{
+                    if(res.code == 0){
+                        self.province = res.result['provice'];
+                        res.result['coach'].unshift({'id':0,'coach_name':'自主办校'})
+                        self.coach = res.result['coach'];
+                        console.log(self.coach)
+                    }else{
+
+                    }
+                })
+                .catch(error=>{
+
+                })
+        },
+        changeLogoUpload: function(file,fileList) {
+            if(this.beforeAvatarUpload(file)) {
+                console.log(file.url);
+                this.majorLogoUrl = file.url;
+                this.majorLogoFile = file.raw;
+            }
+        },
+        changeCoverMapUpload: function(file, fileList) {
+            if(this.beforeAvatarUpload(file)) {
+                console.log(file.url);
+                this.majorCoverMapUrl = file.url;
+                this.majorCoverMapFile = file.raw;
+            }
+        },
+
+        //上传图片判断
+        beforeAvatarUpload(file) {
+            const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png';
+            const isLt2M = file.raw.size / 1024 / 1024 < 4;
+
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 4MB!');
+            }
+            return isJPG && isLt2M;
+        },
+
+        postK:function(){
+            let that = this;
+            this.post('/admin/information/createktd',{
+                id:that.id,
+                keywords:that.form.Keywords,
+                title:that.form.Title,
+                description:that.form.Description
+            }).then(res=>{
+
+            })
+
+        },
+        postC:function(){
+            let that = this;
+            var fd = new FormData();
+            let imgFile = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+            fd.append('coach_name',that.counsellForm.name);
+            fd.append('provice',that.counsellForm.region)
+            fd.append('phone',that.counsellForm.tell);
+            fd.append('address',that.counsellForm.address);
+            fd.append('web_url',that.counsellForm.web);
+            fd.append('father_id',that.counsellForm.father);
+            fd.append('if_coupons',that.counsellForm.cheap);
+            fd.append('if_back_money',that.counsellForm.refund);
+            fd.append('is_show',that.counsellForm.show);
+            fd.append('coachLogo',that.majorLogoFile);
+            fd.append('coachCover',that.majorCoverMapFile)
+            this.post('/admin/information/createCoach',fd,imgFile).
+            then(
+                res=>{
+                    that.id = res.result
+                }
+            )
+        },
+        postD(){
+            let that = this;
+            this.post('/admin/information/created',{
+                id:that.id,
+                describe:that.editor.txt.html()
+            }).then(res=>{
+
+            })
+        },
+
         startChange: function() {
             this.disabled = false;
         },
@@ -222,6 +343,7 @@ export default {
             console.log(this.editor.txt.html());
             this.disabled3 = true;
             this.editor.$textElem.attr('contenteditable', false);
+            this.postD()
         },
         // 清空富文本编辑器内容
         messageEmpty: function() {
@@ -238,7 +360,7 @@ export default {
         
     },
     mounted(){
-        this.province = this.getProvince();
+        this.info();
 
         // 创建富文本编辑器
         this.editor.customConfig.onchange = (html) => {
@@ -337,5 +459,27 @@ export default {
     margin: 20px 0;
     text-align: left;
 }
-
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+}
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+}
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+}
 </style>
