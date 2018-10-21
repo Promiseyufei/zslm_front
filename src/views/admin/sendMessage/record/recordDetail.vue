@@ -166,9 +166,10 @@
         text-align: left;
         margin: 10px 0 0 0;
     }
-    .Nav>div {
+    .Nav div {
         display: flex;
         text-align: right;
+        margin-bottom: 20px;
     }
     .rightUpCon {
         display: flex;
@@ -193,6 +194,7 @@
     }
     .historyDetail-right {
         width: 1320px;
+        background: #FFF;
         border: 1px solid #DDD;
         border-left: 1px solid #fff;
     }

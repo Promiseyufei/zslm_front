@@ -2,8 +2,8 @@
     <div class="majorlist">
         <div class="majorlist-top">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">辅导机构</a></el-breadcrumb-item>
+              <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+              <el-breadcrumb-item>辅导机构</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
@@ -328,6 +328,8 @@
     .footer .el-pagination[data-v-4e9eef01] {
         padding-right: 20px;
     }
+
+    
     
 </style>
 

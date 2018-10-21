@@ -3,8 +3,10 @@
     <el-container class="loginPage">
     <div class="behind">
         <div class="cover">
-            <div class="comLogo"></div>
-            <!--<img src="assets/img/LOGO.png" alt="" style="display: block;height: 238px;width: 136px;">-->
+            <div class="comLogo">
+                <img src="../../assets/img/shortlogo.png" alt="" style="display: block;">
+            </div>
+            
             <p>MBA Helper</p>
             <p>后台业务管理系统</p>
         </div>
@@ -159,12 +161,15 @@ p {
 }
 
 .comLogo {
-    background: #fff;
+    /* background: #fff; */
     margin-top: 20px;
     height: 80px;
     width: 170px;
     display: inline-block;
 }
-
+.comLogo img {
+    width: 70%;
+    margin: 0 auto;
+}
 </style>
       

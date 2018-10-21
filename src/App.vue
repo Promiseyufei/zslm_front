@@ -1,15 +1,15 @@
 <template>
     <div id="app">
-        <el-container >
+        <el-container :style="{ height: heighttt + 'px' } ">
             <el-aside width="auto">
                 <Navigation :collapse="isCollapse"></Navigation> 
             </el-aside>
             <el-container>
                 <el-header style="display:flex;align-items:center;justify-content:space-between;">
-                    <el-button type="primary" v-if="isCollapse" @click="isCollapse = !isCollapse">展开导航</el-button>
-                    <el-button type="primary" v-else @click="isCollapse = !isCollapse">关闭导航</el-button>
+                    <span v-if="isCollapse" @click="isCollapse = !isCollapse">展</span>
+                    <span v-else @click="isCollapse = !isCollapse">收</span>
                     
-                    <div>
+                    <div class="appNav">
                         <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
                         <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
                         <i class="fa fa-share fa-lg" aria-hidden="true"></i>
@@ -30,12 +30,16 @@
     export default {
         data() {
             return {
+                heighttt: window.screen.availHeight,
                 isCollapse: true
             };
         },
         methods: {
 
-        }
+        },
+        mounted() {
+            console.log(window.screen.availHeight);
+        },
     }
 
 </script>
@@ -52,13 +56,27 @@
     }
 
     .el-aside {
-      background-color: #D3DCE6;
+      background-color: #fff;
       color: #333;
+    }
+    .appNav i{
+        margin-right: 10px;
     }
 
     .el-header, .el-footer {
       background-color: #B3C0D1;
       color: #333;
+      padding: 0;
+    }
+    .el-header span {
+        height: 100%;
+        width: 20px;
+        line-height: 60px;
+        color: #e6e6e6;
+        background: #009fa0;
+        border-top-right-radius: 20px; 
+        border-bottom-right-radius: 20px; 
+        padding: 0 2px;
     }
     .el-col {
       border-radius: 4px;

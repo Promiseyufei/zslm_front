@@ -68,28 +68,27 @@
         </div>
 
         <el-dialog :visible.sync="dialogFormVisible">
-            <el-form style="margin-top: 20px" :rules="rules" :disabled="formdis">
-                <el-form-item label="审批结果"  prop="type" style="width: 100%">
+            <el-form :rules="rules" :disabled="formdis">
+                <el-form-item label="审批结果:"  prop="type" style="width: 100%">
                     <el-radio-group v-model="type">
                         <el-radio :label="3">通过</el-radio>
                         <el-radio :label="6">驳回</el-radio>
                     </el-radio-group>
                 </el-form-item>
-
-                    <el-form-item   label="审批意见" prop="desc" style="width: 100%">
-                        <el-input style="width: 100%"
-                                  type="textarea"
-                                  v-model="content" resize="none"
-                                  :autosize="{ minRows: 2, maxRows: 4}"></el-input>
-                    </el-form-item>
-                <el-form-item  label="流程状态"  prop="status" style="width: 100%;">
+                <el-form-item label="审批意见:" prop="desc" style="width: 100%">
+                    <el-input type="textarea" v-model="content" resize="none" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+                </el-form-item>
+                <!-- <el-form-item label="审批意见:" >
+                    <el-input type="textarea" v-model="form.desc"></el-input>
+                  </el-form-item> -->
+                <el-form-item  label="流程状态:"  prop="status" style="width: 100%;">
                     <el-radio-group v-model="status">
                         <el-radio :label="3">进行中</el-radio>
                         <el-radio :label="6">已结束</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <div style="display: flex;flex-direction: row-reverse">
-                    <el-button type="success" style="float: right" >提交</el-button>
+                    <el-button type="primary" style="float: right" >提交</el-button>
                 </div>
             </el-form>
         </el-dialog>
@@ -161,7 +160,18 @@
 .file-table .cell {
     font-size: 12px;
     text-align: center;
-}  
+}
+.el-dialog__header {
+    height: 50px !important;
+    padding: 0;
+    background: #f2f2f2;
+}
+.el-dialog__body {
+    padding: 20px 80px;
+}
+.el-textarea {
+    width: 80%;
+}
 </style>
 <style scoped>
     /**当前面包屑**/
@@ -171,8 +181,7 @@
     }
     .el-form-item{
         display: inline-block;
-        margin-top: 20px;
-        width: 20%;
+        /* width: 20%; */
     }
     .filesquery {
         width: 1500px;
@@ -197,6 +206,7 @@
         border:1px solid #CCC;
         border-radius:0;
     }
+    
 
     .query-button{
         color: #666;

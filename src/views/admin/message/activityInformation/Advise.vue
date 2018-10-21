@@ -29,13 +29,31 @@
                                 <el-button type="primary" @click="toNotice" plain>跳过</el-button>
                                 <el-button type="primary" @click="">设置</el-button>
                             </div>
-                            <!-- 主办院校logo -->
-                            <div class="messageSchool">
-                                <img src="../../../../assets/img/collegeLogo.png" alt="">
-                            </div>
 
-                            <!-- 院校名称 -->
-                            <p style="text-align: center;">{{messageSchool}}</p>
+                            <div class="shoolTotal">
+                                <div v-if="shoolCount.length==0">
+                                    <!-- 主办院校logo -->
+                                    <div class="messageSchool">
+                                        <img src="../../../../assets/img/collegeLogo.png" alt="">
+                                    </div>
+
+                                    <!-- 院校名称 -->
+                                    <p style="text-align: center;">未设置主办院校</p>
+                                </div>
+
+                                <div v-for="(item, index) in shoolCount" :key="index">
+                                    <!-- 主办院校logo -->
+                                    <div class="messageSchool">
+                                        <img v-bind:src="item.logo" alt="">
+                                    </div>
+
+                                    <!-- 院校名称 -->
+                                    <p style="text-align: center;">{{item.name}}</p>
+                                    <p style="text-align: center; color: #1ABC9C;cursor: pointer;" v-if="index >= 0" @click="deleteSchool(index)">删除</p>
+                                </div>
+                            </div>
+                            
+                            
                             
                         </div>
                     </div>
@@ -108,8 +126,13 @@ export default {
       return {
         // 上个页面传过来的参数（xx活动的id）
         id: this.$route.params.id,
+        shoolCount: [
+            // {
+            //     logo: require('../../../../assets/img/collegeLogo.png'),
+            //     name: "新乡医学院",
+            // },
+        ],
         imageUrl: '',
-        messageSchool: "未设置主办院校",
         setSwitch: 1,
         setSwitch2: 1,
         listTable: [
@@ -204,6 +227,12 @@ export default {
         // 跳转到消息通知页面
         toNotice: function() {
             this.$router.push('/message/notice/'+this.id);
+        },
+
+        //删除主办院校
+        deleteSchool: function(index) {
+            console.log(index);
+            this.shoolCount.splice(index);
         },
 
         // 自动设置推荐活动
@@ -384,6 +413,13 @@ export default {
     .messageBtn {
         display: flex;
         justify-content: space-between;
+    }
+
+    /*
+    * 设置主办院校
+    */
+    .shoolTotal>div {
+        margin: 20px 80px 0 20px;
     }
 
     /*
