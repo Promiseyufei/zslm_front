@@ -245,7 +245,6 @@
     }
     .motai-line-title{
         width: 100px !important;
->>>>>>> 6d9c54abfedb5f175ccfde68847e58fa69259be1
     }
 </style>
 
@@ -256,9 +255,6 @@
         padding-bottom: 3px;
         border-bottom: solid 1px #68c368;
     }
-
-    
-
     .el-form-item{
         display: inline-block;
         width: 20%;
@@ -326,7 +322,6 @@
     .filesForm {
         width: 1500px;
         display: flex;
-        /*position: relative;*/
         margin: 20px auto 0;
     }
 

@@ -6,8 +6,8 @@
             </el-aside>
             <el-container>
                 <el-header style="display:flex;align-items:center;justify-content:space-between;">
-                    <span v-if="isCollapse" @click="isCollapse = !isCollapse">展</span>
-                    <span v-else @click="isCollapse = !isCollapse">收</span>
+                    <span v-if="isCollapse" @click="isCollapse = !isCollapse"><i class="fa fa-bars"></i></span>
+                    <span v-else @click="isCollapse = !isCollapse"><i class="fa fa-bars"></i></span>
                     
                     <div class="appNav">
                         <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
@@ -45,13 +45,13 @@
 </script>
 
 <style scoped>
-
+    
     body {
       padding: 0;
       margin: 0;
     }
     .el-main {
-      background-color: #E9EEF3;
+      background-color: #fbfbfb;
       color: #333;
     }
 
@@ -60,22 +60,24 @@
       color: #333;
     }
     .appNav i{
-        margin-right: 10px;
+        margin-right: 20px;
+        color :#fdfdfd;
+        font-size: 18px;
     }
 
     .el-header, .el-footer {
-      background-color: #B3C0D1;
+      background-color: #1abc9c;
       color: #333;
       padding: 0;
     }
     .el-header span {
         height: 100%;
-        width: 20px;
+        width: 50px;
+        text-align: center;
         line-height: 60px;
-        color: #e6e6e6;
-        background: #009fa0;
-        border-top-right-radius: 20px; 
-        border-bottom-right-radius: 20px; 
+        color: #fff;
+        font-size: 25px;
+        background: #28d4b2;
         padding: 0 2px;
     }
     .el-col {
