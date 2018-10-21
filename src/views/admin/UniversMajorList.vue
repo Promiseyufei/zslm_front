@@ -43,7 +43,7 @@
             </el-select>
         </div>
         <div class="majorlist-table">
-            <el-table :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 100%">
+            <el-table :header-cell-style="{background:'#f9fafc'}" :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 100%">
                 <el-table-column type="selection" width="55"></el-table-column>1
                 <el-table-column label="编号" prop="id" width="100"></el-table-column>
                 <el-table-column label="展示权重" width="100">
@@ -79,6 +79,7 @@
             </el-table>
         </div>
         <div class="footer"> 
+            <el-button size="mini" icon="el-icon-delete" @click.native = "BatchDelete">删除</el-button>
             <Page :total="total" @pageChange="pageChange" ></Page>
         </div>
     </div>
@@ -94,7 +95,6 @@
                 type1:2,
                 type2:2,
                 cacheMajorWeight:'',
-                majorlisttable:[],
                 searchContent:{
                     page:1,
                     limit:10,
@@ -125,7 +125,9 @@
                   {prop:'z_name',label:'院校专业名称',width:580},
                   {prop:'student_project_count',label:'招生项目',width:100},
                   {prop:'update_time',label:'发布时间',width:160},
-                ],                
+                ],
+                majorlisttable:[],
+                multipleSelection:[],//存放多选选中的ID                
             }
         },
         methods:{
@@ -142,6 +144,19 @@
                     this.message(true, "浏览器版本不兼容", "error");
                 }
             },
+
+            //批量删除表格内容
+            BatchDelete: function(){
+                var that = this;
+                let selectId = [];//存放删除的数据
+                for (var i = 0; i < that.multipleSelection.length; i++) {
+                    that.selectId.push(that.multipleSelection[i].id);
+                    //删除数组——删除选择的行
+                    selectId.splice(0,that.multipleSelection.length);
+                };
+                // this.deleteRequest(selectId);
+            },
+
 
             //删除指定的院校专业
             delAppointMajor(val) {
@@ -301,8 +316,12 @@
     .majorlist-table .el-table th.is-leaf {
         text-align: center;
     }
+    .footer .el-button--mini, .el-button--mini.is-round {
+      margin: 0 0 0 20px;
+    }
+    /*分页右间距*/
     .footer .el-pagination[data-v-67d9ff78] {
-        margin: 10px 10px 10px 0;
+        padding-right: 20px;
     }
 </style>
 
@@ -331,6 +350,10 @@
         border: 1px solid #E4E4E4;
         text-align: right;
         width: 1500px;
+        height: 50px;
+        display: flex;
+        align-items:center;
+        justify-content:space-between;
         background-color: #fdfdfe;
         margin: 20px auto;
         /*padding: 10px;*/
@@ -384,13 +407,12 @@
         border-radius:0;
     }
     .majorlist-query i,.majorlist-list i {
-        padding: 0 0 0 10px;
+        margin: 0 10px 0 20px
     }
     .majorlist-query p,.majorlist-list p {
         font-size: 16px;
         color: #666;
         font-weight: bold;
-        padding: 0 10px;
     }
     .majorlist-query,.majorlist-list {
         position: relative;

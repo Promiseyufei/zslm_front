@@ -51,7 +51,7 @@
             </el-select>
         </div>
         <div class="majorlist-table">
-            <el-table :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 100%">
+            <el-table :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column label="编号" prop="id" width="100"></el-table-column>
                 <el-table-column label="展示权重" width="100">
@@ -102,10 +102,6 @@
                     page:'',
                     limit:'',
                 },
-                // currentPage4:2,
-                // msg:0,
-                // count:0,
-                // number:0,
                 tableTop:[
                   {prop:'name',label:'活动名称',width:380},
                   {prop:'project',label:'活动类型',width:80},
@@ -115,13 +111,13 @@
                   {prop:'time',label:'发布时间',width:160},
                 ],
                 majorlisttable:[{
-                  weight:'',
-                  id:'',
-                  name:'',
-                  project:'',
-                  time:'',
-                  value2:true,
-                  value3:'',
+                  // weight:'',
+                  // id:'',
+                  // name:'',
+                  // project:'',
+                  // time:'',
+                  // value2:'',
+                  // value3:'',
                 }],
                 value:'',
                 // input:'',
@@ -185,7 +181,7 @@
                     // that.page++;
                     var res = response.data;
                     if (res.code == 0) {
-                        that.majorlisttable = res.data;
+                        // that.majorlisttable = res.data;
                         that.total = res.total;
                         // that.weight = res.weight;
                         // that.id = res.id;
@@ -220,6 +216,10 @@
     }
     .majorlist-table .el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
         padding-left: 0;
+    }
+    /*分页右间距*/
+    .footer .el-pagination[data-v-714de402] {
+        padding-right: 20px;
     }
 </style>
 
@@ -308,7 +308,7 @@
         font-weight: bold;
     }
     .majorlist-query i,.majorlist-list i {
-        padding: 0 5px 0 10px;
+        margin: 0 10px 0 20px;
     }
     .majorlist-query,.majorlist-list {
         position: relative;

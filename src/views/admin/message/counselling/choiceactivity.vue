@@ -67,7 +67,7 @@
                         </el-option>
                     </el-select>
                 </div>
-                <el-table :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 1160px">
+                <el-table :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 1160px" :header-cell-style="{background:'#f9fafc'}">
                     <el-table-column type="selection" width="60"></el-table-column>
                     <el-table-column label="操作" width="80">
                         <template slot-scope="scope">
