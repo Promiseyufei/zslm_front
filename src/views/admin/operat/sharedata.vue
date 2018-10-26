@@ -161,15 +161,15 @@
 			
 	    	gettableInfo: function (){
 				var that = this;
-		        axios.get('http://www.zslm.com/admin/operate/getPagingData',{
-					params:{
+		        axios.post('http://www.zslm.com/admin/operate/getPagingData',{
+
                         pageNumber: that.currentSubscript,
                         pageCount: that.currentPage3,
                         sortType: 0,
                         riseOrDrop: that.selectedOptions2,
                         contentType: that.filesForm.type,
                         titleKeyword: that.filesForm.name1
-                    }
+
 
 		        })
 		        .then(function (response) {
@@ -186,7 +186,6 @@
 		        });
 	      },
 	    	handleCurrentChange(val) {
-				console.log(val);
 				this.currentRow = val;
 	      }
 	    },

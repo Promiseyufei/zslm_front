@@ -83,9 +83,9 @@
                 tableTop:[
                     {type:'',prop:'user_account_id',label:'帐户ID',width:80},
                     {type:'',prop:'create_time',label:'用户创建时间',width:120},
-                    {type:'',prop:'updatetime',label:'信息更新时间',width:160},
-                    {type:'',prop:'wechat',label:'微信',width:60},
-                    {type:'',prop:'wb',label:'微博',width:60},
+                    {type:'',prop:'update_time',label:'信息更新时间',width:160},
+                    {type:'',prop:'weixin',label:'微信',width:60},
+                    {type:'',prop:'weibo',label:'微博',width:60},
                     {type:'',prop:'head_portrait',label:'头像',width:60},
                     {type:'',prop:'user_name',label:'昵称',width:180},
                     {type:'',prop:'real_name',label:'真实姓名',width:80},
@@ -112,6 +112,13 @@
             }
         },
         methods:{
+            timestampToTime: function (timestamp) {
+                var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                var Y = date.getFullYear() + '-';
+                var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                var D = date.getDate() + ' ';
+                return Y + M + D;
+            },
             query:function () {
 
                 var that = this;
@@ -126,6 +133,13 @@
                     .then(function (response) {
                         var res = response;
                         if (res.code == 0) {
+                            for(let i in res.result[0]){
+                                    res.result[0][i].head_portrait = res.result[0][i].head_portrait == '' ? '无' : '有';
+                                    // console.log(that.timestampToTime( res.result[0][i].create_time))
+                                    res.result[0][i].create_time =that.timestampToTime( res.result[0][i].create_time);
+                                    res.result[0][i].update_time =that.timestampToTime( res.result[0][i].update_time);
+                            }
+                            console.log(res.result[0])
                             that.tableData =res.result[0];
                             that.total = 10;
                         };
