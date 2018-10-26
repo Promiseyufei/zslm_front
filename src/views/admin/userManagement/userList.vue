@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="file-table">
-            <el-table :data="tableData" border>
+            <el-table :data="tableData" border :header-cell-style="{background:'#f9fafc'}">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="el-icon-search"></i></el-button>
@@ -172,14 +172,18 @@
                 val.head_portrait='http://img5.imgtn.bdimg.com/it/u=415293130,2419074865&fm=27&gp=0.jpg'
                 val.user_name='test'
                 this.$alert('<div class="motai-body">' +
-                    '<div>' +
+                    '<div class="selfDetail">' +
                     '<img class="motai-img" src="'+that.htmlDecode(val.head_portrait)+'">' +
-                    '<p class="motai-name"><b>'+that.htmlDecode(val.real_name)+'</b></p></div>' +
+                    '<div class="selfDetailText"><span>'+that.htmlDecode(val.real_name) +'</span><div><i class="fa fa-mars"></i><i class="fa fa-mars"></i><i class="fa fa-mars"></i><i>北京</i></div></div></div>' +
                     '</div>' +
                     '<div>' +
                     '<div class="motai-line">' +
-                    '<div class="motai-line-title">test</div>' +
-                    '<div class="motai-line-content">testtesttesttesttesttesttesttesttesttesttesttesttesttestte</br>sttesttesttesttesttest</div>' +
+                    '<div class="motai-line-title">毕业院校:</div>' +
+                    '<div class="motai-line-content">我是李宏斌，我超级可爱～，我还喜欢看书～，有时候还很暖心～</div>' +
+                    '</div>' +
+                    '<div class="motai-line">' +
+                    '<div class="motai-line-title">毕业院校:</div>' +
+                    '<div class="motai-line-content">我是李宏斌，我超级可爱～，我还喜欢看书～，有时候还很暖心～</div>' +
                     '</div>' +
                     '</div>',
                     {
@@ -214,6 +218,34 @@
     .file-table .el-table td, .el-table th.is-leaf {
         text-align: center;
     }
+    .footer .el-pagination[data-v-e1c369b4] {
+        padding-right: 20px;
+    }
+    /* 头像 */
+    .motai-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 10px 10px;
+    }
+    .selfDetail {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .selfDetailText {
+        display: flex;
+        flex-direction: column;
+    }
+    .motai-line {
+        margin: 10px 10px;
+        display: flex;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+    .motai-line-title{
+        width: 100px !important;
+    }
 </style>
 
 
@@ -223,13 +255,12 @@
         padding-bottom: 3px;
         border-bottom: solid 1px #68c368;
     }
-
     .el-form-item{
         display: inline-block;
         width: 20%;
     }
     .filesquery i, .files-datalist i {
-        margin: 0 10px 0;
+        margin: 0 10px 0 20px;
     }
     .filesquery {
         width: 1500px;
@@ -291,7 +322,6 @@
     .filesForm {
         width: 1500px;
         display: flex;
-        /*position: relative;*/
         margin: 20px auto 0;
     }
 

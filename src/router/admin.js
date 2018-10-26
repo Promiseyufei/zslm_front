@@ -87,7 +87,7 @@ let admin_router = {
         },
         {
             path: '/message/activity',
-            name: 'messageActivity',
+            name: '活动-活动信息编辑',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Activity'], resolve))
         },
         {
@@ -97,7 +97,7 @@ let admin_router = {
         },
         {
             path: '/message/advise/:id',
-            name: 'messageAdvise',
+            name: '活动信息-活动信息编辑-推荐信息',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Advise'], resolve))
         },
         {
@@ -151,7 +151,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationList'], resolve))
         },
         {
-            path: '/message/changeInformation',
+            path: '/message/changeInformation/:infoId?',
             name: '信息发布-资讯发布-资讯内容编辑',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/changeInformation'], resolve))
         },
@@ -184,6 +184,18 @@ let admin_router = {
             name: '消息管理-设置消息对象—手动选择的用户',
             component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageSelf'], resolve))
         },
+
+        {
+            path: '/send/sendMessage',
+            name: '消息管理-设置消息对象—选择院校',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/sendMessage'], resolve))
+        },
+        {
+            path: '/send/selectAcitity',
+            name: '消息管理-设置消息对象—选择活动',
+            component: resolve =>void(require(['@/views/admin/sendMessage/send/selectAcitity'], resolve))
+        },
+
         {
             path: '/send/setMessageDetail',
             name: '消息管理-编辑发送',

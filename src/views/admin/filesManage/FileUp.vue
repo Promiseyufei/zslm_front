@@ -4,8 +4,8 @@
         <!-- 中间内容 -->
         <div>
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item>运行管理</el-breadcrumb-item>
-            <el-breadcrumb-item>广告位管理</el-breadcrumb-item>
+            <el-breadcrumb-item>文件管理</el-breadcrumb-item>
+            <el-breadcrumb-item>文件上传</el-breadcrumb-item>
           </el-breadcrumb>
 
           <!-- 步骤条 -->
@@ -335,6 +335,24 @@ export default {
   .operateUpfilesRight2 .has-gutter th {
     background-color: #EAEDF1 !important;
   }
+
+  /*
+    * 步骤条
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
 </style>
 
 <style scoped>

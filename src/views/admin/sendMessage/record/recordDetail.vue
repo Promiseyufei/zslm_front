@@ -42,7 +42,7 @@
                </div>
                <div class="line"></div> 
                <div class="rightLow" style="width:1170px;margin:0 auto;">
-                   <userTable :listTable="listTable" :tableData="tableData"></userTable>
+                   <userTable :listTable="listTable" :tableData="tableData" :header-cell-style="{background:'#f9fafc'}"></userTable>
                    <singlePage :currentPage="currentPage" :totalData="totalData" @use="changePageNum"></singlePage>
                </div>
             </div>
@@ -166,9 +166,10 @@
         text-align: left;
         margin: 10px 0 0 0;
     }
-    .Nav>div {
+    .Nav div {
         display: flex;
         text-align: right;
+        margin-bottom: 20px;
     }
     .rightUpCon {
         display: flex;
@@ -193,6 +194,7 @@
     }
     .historyDetail-right {
         width: 1320px;
+        background: #FFF;
         border: 1px solid #DDD;
         border-left: 1px solid #fff;
     }

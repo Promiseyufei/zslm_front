@@ -6,7 +6,7 @@
 			  <el-breadcrumb-item>选择院校专业</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
-		<div class="Select-steps">
+		<div class="fileSteps Select-steps">
 			<el-steps :active=".1" align-center>
 			  <el-step title="选择院校专业"></el-step>
 			  <el-step title="上传文件"></el-step>
@@ -255,6 +255,24 @@
 	.SelectUnivers-majorname .el-radio-group {
 		/*font-size: 12px;*/
 	}
+
+	/*
+    * 步骤条
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
 	
 </style>
 

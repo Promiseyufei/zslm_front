@@ -10,7 +10,7 @@
 
                 <!-- 步骤条 -->
                 <div class="fileSteps">
-                    <el-steps :active="1" align-center>
+                    <el-steps :active=".1" align-center>
                         <el-step title="活动信息"></el-step>
                         <el-step title="推荐信息"></el-step>
                         <el-step title="消息通知"></el-step>
@@ -133,10 +133,10 @@
                             <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;活动介绍信息</div>
                         </div>
                         <div class="operateUpfilesRight2">
-                            <el-button type="primary" @click="startChange3">编辑</el-button>
-                            <div class="messageBtn">
+                            <!-- <el-button type="primary" @click="startChange3">编辑</el-button> -->
+                            <!-- <div class="messageBtn"> -->
                                 <editor :disabled = "disabled3"></editor>
-                            </div>
+                            <!-- </div> -->
                         </div>
                     </div>
 
@@ -157,7 +157,6 @@ export default {
     },
     data() {
       return {
-
           record:0,
           string:'请选择',
         form: {
@@ -189,7 +188,7 @@ export default {
         disabled:true,
         disabled2:true,
         disabled3:true,
-        editor: new WangEditor('#editor'),
+        // editor: new WangEditor('#editor'),
         fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
       }
     },
@@ -672,16 +671,12 @@ export default {
     .operateUpfilesRight2 {
         text-align: right;
     }
-    .operateUpfilesRight2 button {
-        margin-bottom: 20px;
-    }
+    
     .operateFinalUp {
       text-align: center;
       margin: 95px 0 70px;
     }
-    .messageBtn button{
-      float: right;
-    }
+
 
     .submit-picture{
       color: #13ce66;

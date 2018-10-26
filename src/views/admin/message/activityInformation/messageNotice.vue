@@ -46,8 +46,13 @@
                        <div style="position: relative;">
                            <div class="upQuotes"><img src="../../../../assets/img/upQuotes.png"></div>
                            <div class="contentDetail">
+<<<<<<< HEAD
                                <p >{{content}}</p>
                                <el-button type="text">修改</el-button>
+=======
+                               <p>{{universName}}发布了一个新的活动，快去看看吧！</p>
+                               <el-button type="text" @click="modify">修改</el-button>
+>>>>>>> 9083c2e7e04455d364fa5e62f209db2fc0cbe896
                            </div>
                            <div class="lowQuotes"><img src="../../../../assets/img/lowQuotes.png"></div>
                        </div>
@@ -66,7 +71,7 @@
                            <div class="upQuotes"><img src="../../../../assets/img/upQuotes.png"></div>
                            <div class="contentDetail">
                                <p>{{sendMessage}}发布了一个新的活动，快去看看吧！</p>
-                               <el-button type="text">修改</el-button>
+                               <el-button type="text"  @click="modify">修改</el-button>
                            </div>
                            <div class="lowQuotes"><img src="../../../../assets/img/lowQuotes.png"></div>
                        </div>
@@ -98,6 +103,7 @@
             jumpPage:function() {
                 this.$router.push('/message/activityList');
             },
+
             addNewsFirst:function(){
                 let self = this;
                 this.post('/admin/information/sendActivityDynamic',
@@ -117,9 +123,25 @@
                         newOrDyna:1
                     }
                 )
+            },
+            modify() {
+                this.$prompt('', '', {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消',
+                  inputPattern: '',//输入框内容判断，前台要加吗？
+                  inputErrorMessage: '邮箱格式不正确'//判断提示语
+                }).then(({ value }) => {
+                  this.$message({
+                    type: 'success',
+                    message: '您已修改为: ' + value
+                  });
+                }).catch(() => {
+                  this.$message({
+                    type: 'info',
+                    message: '您已取消修改'
+                  });       
+                });
             }
-
-            
         },
         mounted(){
             this.activeId = this.$route.params.id;
