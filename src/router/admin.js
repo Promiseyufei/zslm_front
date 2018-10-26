@@ -102,12 +102,12 @@ let admin_router = {
         },
         {
             path: '/message/addActivity/:id',
-            name: 'addActive',
+            name: '活动信息-添加活动',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/AddAdvise'], resolve))
         },
         {
             path: '/message/addmajor/:id',
-            name: 'addActive',
+            name: '活动信息-添加院校',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/AddMajor'], resolve))
         },
         {
@@ -164,6 +164,11 @@ let admin_router = {
             path: '/message/informationNotice/:id',
             name: '信息发布-资讯发布-消息通知',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationNotice'], resolve))
+        },
+        {
+            path: '/message/adviseRead',
+            name: '信息发布——资讯发布-添加资讯推荐',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/adviseRead'], resolve))//添加资讯页面，与@/views/admin/operat/AddAdvise页面相同
         },
         
 
@@ -229,7 +234,7 @@ let admin_router = {
         },
         {
             path: '/usermanagement/usercoupons',
-            name: '用户管理-关注院校',
+            name: '用户管理-优惠卷',
             component: resolve =>void(require(['@/views/admin/userManagement/userCoupons'], resolve))
         },
         // {

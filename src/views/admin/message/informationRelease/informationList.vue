@@ -3,8 +3,8 @@
         <!-- 面包屑 -->
         <div class="informationList-crumb">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/' }">信息发布</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">资讯发布</a></el-breadcrumb-item>
+              <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+              <el-breadcrumb-item>资讯发布</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
 
