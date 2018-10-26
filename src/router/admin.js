@@ -106,6 +106,11 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/activityInformation/AddAdvise'], resolve))
         },
         {
+            path: '/message/addmajor/:id',
+            name: 'addActive',
+            component: resolve =>void(require(['@/views/admin/message/activityInformation/AddMajor'], resolve))
+        },
+        {
             path: '/message/hostuniversmajor',
             name: '活动-设置主办院校专业',
             component: resolve =>void(require(['@/views/admin/message/hostuniversmajor'], resolve))
