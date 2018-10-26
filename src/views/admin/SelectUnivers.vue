@@ -168,7 +168,7 @@
 	        	majorname:' ',
 
 	        	//分页
-	        	count:0,
+	        	count:19,//分页总数
 	        };
 	    },
 	    methods: {
