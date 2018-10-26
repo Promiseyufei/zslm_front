@@ -237,6 +237,10 @@ export default {
             this.$router.push('/message/informationList');
         },
 
+        adviseRead:function() {
+            this.$router.push('/message/adviseRead');
+        },
+
         //删除主办院校
         deleteSchool: function(index) {
             console.log(index);

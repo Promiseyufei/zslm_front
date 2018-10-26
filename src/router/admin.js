@@ -165,6 +165,11 @@ let admin_router = {
             name: '信息发布-资讯发布-消息通知',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationNotice'], resolve))
         },
+        {
+            path: '/message/adviseRead',
+            name: '信息发布——资讯发布-添加资讯推荐',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/adviseRead'], resolve))//添加资讯页面，与@/views/admin/operat/AddAdvise页面相同
+        },
         
 
 

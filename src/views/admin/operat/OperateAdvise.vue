@@ -4,7 +4,7 @@
         <!-- 中间内容 -->
         <div>
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item>运行管理</el-breadcrumb-item>
+            <el-breadcrumb-item>运营管理</el-breadcrumb-item>
             <el-breadcrumb-item  class="selectedNavPublic">资讯频道首页推荐</el-breadcrumb-item>
           </el-breadcrumb>
           <!-- 选项卡 -->
@@ -49,7 +49,7 @@
                   <el-button type="info" plain @click="operateDelete" size="small"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                 </div>
                 <!-- 表格 -->
-                <OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></OperateTable>
+                <OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise" @editFather="editeMothed"></OperateTable>
                 <!-- 完成按钮 -->
                 <div class="operateFinalUp">
                   <el-button type="primary">完成</el-button>
@@ -160,6 +160,12 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
+        },
+
+        //编辑表格内容弹出框
+        editeMothed:function(row) {
+            console.log("我是李闪磊，我很笨！！");
+            console.log(row);
         },
 
         // 得到所有的咨询推荐

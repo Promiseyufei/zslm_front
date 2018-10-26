@@ -64,7 +64,7 @@
 									<el-button type="info" plain @click="operateDelete" size="small"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
 								</div>
 								<!-- 表格 -->
-								<OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setInfoRelation" @del="delBanner"></OperateTable>
+								<OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setInfoRelation" @del="delBanner" @editFather="editeMothed"></OperateTable>
 								<!-- 完成按钮 -->
 								<div class="operateFinalUp">
 									<el-button type="primary">完成</el-button>
@@ -72,6 +72,20 @@
 
 							</div> 
 						</div>
+
+						<el-dialog
+							title="提示"
+							:visible.sync="dialogVisible"
+							width="30%"
+							:before-close="handleClose">
+							<span>这是一段信息</span>
+							<span slot="footer" class="dialog-footer">
+								<el-button @click="dialogVisible = false">取 消</el-button>
+								<el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+							</span>
+						</el-dialog>
+
+
 					</div>
 				</div>
 			</div>
@@ -85,6 +99,7 @@ export default {
 		},
 		data() {
 			return {
+					dialogVisible: false,
 					loading: false,
 					banner: [],
 					radio2: "",
@@ -138,6 +153,15 @@ export default {
 							this.file = file.raw;
 					}
 				},
+				
+				//点击关闭表格信息弹出框
+				handleClose: function(done) {
+					this.$confirm('确认关闭？')
+					.then(_ => {
+						done();
+					})
+					.catch(_ => {});
+				},
 
 				//上传图片判断
 				beforeAvatarUpload(file) {
@@ -151,6 +175,13 @@ export default {
 						this.$message.error('上传头像图片大小不能超过 4MB!');
 					}
 					return isJPG && isLt2M;
+				},
+
+				//编辑表格内容弹出框
+				editeMothed:function(row) {
+					console.log(row);
+					this.dialogVisible = true;
+
 				},
 
 				// 清空所有banner
