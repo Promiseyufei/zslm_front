@@ -70,7 +70,7 @@
                                 <div v-if="this.setSwitch == 2">
                                     <div class="messageUpfilesRight2Nav">
                                         <el-button type="info" plain @click="adviseRead"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
-                                        <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                                        <el-button type="info" plain @click="delAdvise"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                                     </div>
                                     <!-- 表格 -->
                                     <messageTable :tableData3="tableData" :isSelect="0" :listTable="listTable" @setInfoRelation="setInfoState" @del="delAdvise"></messageTable>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="operateUpfilesRight2">
                             <template>
-                                <el-radio-group v-model="setSwitch2" @change="valuechange">
+                                <el-radio-group v-model="setSwitch2" @change="valueReMajor">
                                     <el-radio :label="1">自动设置</el-radio>
                                     <el-radio :label="2">手动设置</el-radio>
                                 </el-radio-group>
@@ -127,7 +127,7 @@ export default {
         //设置成功的主办院校：
         shoolCount: [],
         setSwitch: 0,
-        setSwitch2: 1,
+        setSwitch2: 0,
         listTable: [
             {
                 prop: 'id',
@@ -193,8 +193,9 @@ export default {
         adviseAdd: function() {
           this.$router.push('/send/sendMessage/' + this.infoId);
         },
+        //跳转到推荐阅读添加页面
         adviseRead() {
-
+            this.$router.push('/message/setReRead/' + this.infoId);
         },
         pushInfoSelectMajor() {
             this.$router.push('/message/infoSelectMajor');
@@ -270,23 +271,31 @@ export default {
                 this.message(true, '已取消修改', 'info');
             }, '确定修改该资讯的权值吗？');
         },
-        delAdvise: function(res, row) {
-            // this.confirm(() => {
-            //     this.post('/admin/operate/deleteAppoinInformation', {
-            //         RegionId: this.i,
-            //         InformationId: res
-            //     }).then((response) => {
-            //         if(response.code == 0) {
-            //             this.tableData3.splice(this.tableData3.indexOf(row), 1);
-            //             this.message(true, response.msg, 'success');
-            //         }
-            //         else {
-            //             this.message(true, response.msg, 'error');
-            //         }
-            //     })
-            // }, () => {
-            //     this.message(true, '已取消修改', 'info')
-            // })
+
+        //取消推荐阅读
+        //直接调用后台接口清除字符串中的删除id，因为添加页面点击完成已经添加到数据库中，所以在手动设置模块展示的一定是在数据库中的信息，所以直接删除就ok
+        delAdvise: function(infoid, row) {
+            let type = null;
+            if(typeof infoid != null && typeof row != null) type = 0;
+            else if(typeof infoid == null && typeof row == null) type = 1;
+
+            this.confirm(() => {
+                this.post('/admin/information/delAppointInfoRecommendRead', {
+                    id: this.infoId,
+                    infoId: infoid
+                }).then((response) => {
+                    if(response.code == 0) {
+                        if(type == 0) {
+                            this.tableData.splice(this.tableData.indexOf(row), 1);
+                        }
+                        else if(type == 1) this.tableData = [];
+                        this.message(true, "删除成功", 'success');
+                    }
+                    else this.message(true, response.msg, 'error');
+                })
+            }, () => {
+                this.message(true, '已取消删除', 'info');
+            }, "确定取消该推荐阅读吗？");
         },
         // 清空所有推荐活动
         activityDelete: function() {
@@ -347,6 +356,24 @@ export default {
                         this.message(true, response.msg, 'error');
                     }
                 })
+            }
+        },
+        valueReMajor(res) {
+            let _this = this;
+            if(res == 1) {
+                this.confirm(() => {
+                    this.post('/admin/information/setAutoInfoRelationCollege', {
+                        infoId: this.infoId
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            this.message(true, "成功自动设置该资讯的推荐院校专业", 'success');
+                        }
+                        else   
+                            this.message(true, response.msg, 'error');
+                    });
+                }, () => {
+
+                }, '确定自动设置推荐院校专业吗？');
             }
         },
         // 上传院校logo

@@ -175,6 +175,11 @@ let admin_router = {
             name: '信息发布-资讯发布-选择相关院校',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/choiceRecommendMajor'], resolve))
         },
+        {
+            path: '/message/setReRead/:infoId?',
+            name: '信息发布-资讯发布-设置相关推荐阅读',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/setReRead'], resolve))
+        },
 
         
 
