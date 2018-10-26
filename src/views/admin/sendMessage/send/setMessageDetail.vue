@@ -48,7 +48,7 @@
                <!-- <div class="setUp"><el-button type="primary">设置</el-button></div> -->
                <div class="rightEditor"></div>
 
-                <div style="margin-bottom:30px;">
+                <div class="inputSendMessage">
                     <el-input
                     type="textarea"
                     autosize
@@ -195,6 +195,10 @@
 </style>
 
 <style scoped>
+    .inputSendMessage {
+        margin: 20px;
+    }
+
     .radi {
         display: flex;
         flex-direction:column ;
