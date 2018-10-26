@@ -56,7 +56,7 @@
                 </div>
         </div>
         <div class="file-table">
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="tableData" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="el-icon-search"></i></el-button>
@@ -216,6 +216,9 @@
     .file-table .el-table td, .el-table th.is-leaf {
         text-align: center;
     }
+    .footer .el-pagination[data-v-8955d66e] {
+        padding-right: 20px;
+    }
     .motai-body{
         width: 80%;
         margin: 0 auto;
@@ -264,7 +267,7 @@
         width: 20%;
     }
     .filesquery i, .files-datalist i {
-        margin: 0 10px 0;
+        margin: 0 10px 0 20px;
     }
     .filesquery {
         width: 1500px;

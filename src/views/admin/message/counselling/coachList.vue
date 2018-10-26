@@ -61,7 +61,7 @@
             </el-select>
         </div>
         <div class="majorlist-table">
-            <el-table :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 100%">
+            <el-table :header-cell-style="{background:'#f9fafc'}" :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 100%">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column label="编号" prop="id" width="100"></el-table-column>
                 <el-table-column label="展示权重" width="100">
@@ -109,7 +109,7 @@
             </el-table>
         </div>
         <div class="footer"> 
-            <el-button type="primary" size="mini" icon="el-icon-delete">批量删除</el-button>
+            <el-button size="mini" icon="el-icon-delete">删除</el-button>
             <Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
         </div>
     </div>
@@ -323,12 +323,13 @@
     .majorlist-table .el-button {
         border: 1px solid #ffffff;
         padding: 0 0 0 10px;
-        /*display: flex;*/
-        /*position: absolute;*/
     }
-    .majorlist-table .el-button:focus, .el-button:hover {
+    /*分页右间距*/
+    .footer .el-pagination[data-v-4e9eef01] {
+        padding-right: 20px;
+    }
 
-    }
+    
     
 </style>
 
@@ -374,7 +375,7 @@
         text-align: center;
     }
     .majorlist-icon i {
-        margin: 0 5px;
+        margin: 2px 5px;
         cursor: pointer;
     }
     .majorlist-icon {
@@ -420,7 +421,7 @@
         font-weight: bold;
     }
     .majorlist-query i,.majorlist-list i {
-        padding: 0 5px 0 10px;
+        margin: 0 10px 0 20px;
     }
     .majorlist-query,.majorlist-list {
         position: relative;

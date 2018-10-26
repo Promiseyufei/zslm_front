@@ -37,6 +37,9 @@ export default {
 .el-radio-button__inner {
   font-size: 12px !important;
 }
+.el-radio-button:first-child .el-radio-button__inner {
+    /*color: red;*/
+}
 </style>
 <style scoped>
 /*

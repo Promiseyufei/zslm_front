@@ -335,6 +335,24 @@ export default {
     display: block;
 }
 
+    /*
+    * 步骤条
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
+
 
 </style>
 <style scoped>

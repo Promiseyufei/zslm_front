@@ -34,7 +34,7 @@
 			</el-select>
 		</div>
 		<div class="datatable">
-			<el-table ref="singleTable" :data="Datatable" border @current-change="handleCurrentChange" style="width: 100%">
+			<el-table ref="singleTable" :data="Datatable" border @current-change="handleCurrentChange" style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
 				<div v-for="(val, index) in tableTop" :key="index">
 					<el-table-column :type="val.type" :property="val.property" :label="val.label" :width="val.width"></el-table-column>
 				</div>

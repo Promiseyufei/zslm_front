@@ -60,7 +60,7 @@
 
         <!-- 表格    需获得表格数据-->
         <div class="information-table">
-            <el-table :data="informationListtTable" @current-change="handleCurrentChange" border style="width: 100%">
+            <el-table :header-cell-style="{background:'#f9fafc'}" :data="informationListtTable" @current-change="handleCurrentChange" border style="width: 100%">
                 <el-table-column type="selection" width="60"></el-table-column>
                 <el-table-column label="编号" prop="id" width="100"></el-table-column>
                 <el-table-column label="展示权重" width="80">
@@ -297,6 +297,9 @@
     .footer .el-button--mini {
       margin: 0 0 0 20px;
     }
+    .footer .el-pagination[data-v-6c35a61f] {
+        padding-right: 20px;
+    }
     .information-table .el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
         padding-left: 0;
     }
@@ -390,7 +393,7 @@
         font-weight: bold;
     }
     .informationList-query i,.informationList-contentlist i {
-        padding: 0 5px 0 10px;
+        margin: 0 10px 0 20px;
     }
     .informationList-query,.informationList-contentlist {
         position: relative;

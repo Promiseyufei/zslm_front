@@ -7,7 +7,7 @@
                 <el-breadcrumb-item  class="selectedNavPublic">编辑消息内容</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div class="messageSteps">
+        <div class="fileSteps messageSteps">
             <el-steps :active="1.2" align-center>
               <el-step title="设置消息对象"></el-step>
               <el-step title="编辑消息内容"></el-step>
@@ -173,6 +173,24 @@
     }
     .radi .el-radio+.el-radio {
         margin: 10px 0 0 0;
+    }
+
+    /*
+    * 步骤条
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
     }
 </style>
 

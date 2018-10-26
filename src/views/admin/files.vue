@@ -2,7 +2,7 @@
 	<div class="filesAll">
 		<!-- 选项卡 -->
 		<div class="files-tab">
-		  <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>  
+		  <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i">{{allFilesCount}}</operateNav>  
 		  <el-button size="small" type="primary"  @click.native = "jumpPage" class="click">点击上传</el-button>
 		</div>
 
@@ -36,7 +36,7 @@
 					</el-form-item>
 				</el-form>  
 		   </div>
-		   <el-button class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button> 
+		   <el-button size="mini" class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button> 
 		</div>
 
 		<!-- 数据列表 -->
@@ -47,7 +47,7 @@
 
 	  	<!-- 表格 -->
 	    <div class="file-table">
-		      <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
+		      <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
 		          <el-table-column type="selection" width="50"></el-table-column>
 		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
 		          <el-table-column label="展示权重" width="100">
@@ -85,15 +85,17 @@
   		data() {
   	    	return {
   	    		/*选项卡*/
-  	    		banner:[
-    	          {id: 0,name: "全部文件"},
-    	          {id: 1,name: "招生简章"},
-    	          {id: 2,name: "其他文件"}
+  	    		banner: [
+    	          {id: 0,name: ""},
+    	          {id: 1,name: ""},
+    	          {id: 2,name: ""}
             	],
+            	allFilesCount:1000,
+            	recrIntroCount:200,
+            	otherFilesCount:7000,
             	radio2: "",
     			i: 0,//当前选项卡id
   	    		/*查询输入框*/
-
   	    		filesName:'',
   	    		fileType:2,
   	    		fileYear:'',
@@ -148,6 +150,12 @@
 	        // }
        	},
 	  	methods: {
+	  		//变量和字符串拼接——头部导航按钮内字体显示
+	  		adds:function() {
+	  				this.banner[0].name = `全部文件(${this.allFilesCount})`;
+	  				this.banner[1].name = `招生简介(${this.recrIntroCount})`;
+	  				this.banner[2].name = `其他文件(${this.otherFilesCount})`;
+	  		},
 	  		//跳转页面
 	  		jumpPage:function() {
 	    		this.$router.push('/SelectUnivers');
@@ -280,8 +288,8 @@
 	      	},
 	  	},
   		mounted(){
-	  		// this.getPage();
 	    	this.query();
+	    	this.adds();
 	  		this.radio2 = "全部文件";
 	  		console.log(this.radio2);
   		}
@@ -311,20 +319,21 @@
 	.footer .el-pagination[data-v-09f3e8a6] {
 		padding-right: 20px;
 	}
-</style>
-
-<style scoped>
-  	/*上传按钮*/
-  	.el-button--primary {
+	/*上传按钮*/
+  	.footer .el-button--primary {
 	  	padding: 9px 15px;
 	  	background-color: #1ABC9C;
 	  	border-color: #1ABC9C;
   	}
-  	.el-button--primary:hover {
+  	.footer .el-button--primary:hover {
 		background-color: #1ABC9C;
 		opacity: 0.8;
 		border-color: #1ABC9C;
   	}
+</style>
+
+<style scoped>
+  	
   	/* 表格样式 */
   	.file-table {
 		width: 1500px;
@@ -386,7 +395,7 @@
 		font-size: 12px;
   	}
 	.filesquery i,.files-datalist i {
-		padding: 0 5px 0 10px;
+		margin: 0 10px 0 20px;
 	}
   	.input {
 		display: flex;

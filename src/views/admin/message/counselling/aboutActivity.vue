@@ -6,7 +6,7 @@
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item>信息发布</el-breadcrumb-item>
                     <el-breadcrumb-item>辅导机构</el-breadcrumb-item>
-                    <el-breadcrumb-item  class="selectedNavPublic">优惠卷设置</el-breadcrumb-item>
+                    <el-breadcrumb-item  class="selectedNavPublic">相关活动设置</el-breadcrumb-item>
                 </el-breadcrumb>
 
                 <!-- 步骤条 -->
@@ -114,6 +114,23 @@ export default {
 };
 </script>
 <style>
+    /*
+    * 步骤条
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
 </style>
 <style scoped>
 .operateBox {

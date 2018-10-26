@@ -44,7 +44,7 @@
                 </div>
         </div>
         <div class="file-table">
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="tableData" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="el-icon-search"></i></el-button>
@@ -205,6 +205,9 @@
     .filesForm .el-form {
         display: flex;
     }
+    .footer .el-pagination[data-v-66072693] {
+        margin-right: 20px;
+    }
 </style>
 
 <style scoped>
@@ -218,7 +221,7 @@
         width: 20%;
     }
     .filesquery i,.files-datalist i {
-        margin: 0 10px 0;
+        margin: 0 10px 0 20px;
     }
     .filesquery {
         width: 1500px;
@@ -235,7 +238,7 @@
         color: #666;
         font-family:'Tahoma';
     }
-    .dataquery-refresh,.query-button {
+    .dataquery-refresh,.query-button[data-v-66072693] {
         position: absolute;
         right: 10px;
         top: 10px;
