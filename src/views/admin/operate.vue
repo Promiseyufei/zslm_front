@@ -74,7 +74,7 @@
 						</div>
 
 						<el-dialog
-							title="提示"
+							title="修改信息："
 							:visible.sync="dialogVisible"
 							width="30%"
 							:before-close="handleClose">
@@ -153,7 +153,7 @@ export default {
 							this.file = file.raw;
 					}
 				},
-				
+
 				//点击关闭表格信息弹出框
 				handleClose: function(done) {
 					this.$confirm('确认关闭？')
@@ -179,7 +179,7 @@ export default {
 
 				//编辑表格内容弹出框
 				editeMothed:function(row) {
-					console.log(row);
+
 					this.dialogVisible = true;
 
 				},

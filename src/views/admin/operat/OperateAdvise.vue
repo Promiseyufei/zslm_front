@@ -165,7 +165,7 @@ export default {
         //编辑表格内容弹出框
         editeMothed:function(row) {
             console.log("我是李闪磊，我很笨！！");
-            console.log(row);
+           
         },
 
         // 得到所有的咨询推荐

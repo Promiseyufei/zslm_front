@@ -67,7 +67,6 @@ export default {
 
         //表格编辑弹出框
         editMessage: function(row) {
-            console.log(row);
             this.$emit('editFather',row);
         },
         
@@ -76,7 +75,7 @@ export default {
         }
     },
     mounted(){
-      console.log(this.tableData3);
+    //   console.log(this.tableData3);
     }
 };
 </script>
