@@ -29,7 +29,7 @@
                             <el-button type="info" plain @click="test"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                         </div>
                         <!-- 表格 -->
-                        <messageTable :tableData3 = "tableData3" :listTable="listTable" @del="test"></messageTable>
+                        <messageTable :isSelect="1" :tableData3 = "tableData3" :listTable="listTable" @del="test"></messageTable>
                         <!-- 完成按钮 -->
                         <div class="operateFinalUp">
                             <el-button type="primary" @click="couponFinish">完成</el-button>

@@ -82,7 +82,7 @@
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
                             <i class="el-icon-search" @click = "jumpInformDeta"></i>
-                            <i class="el-icon-edit-outline" @click = "jumpPage"></i>
+                            <i class="el-icon-edit-outline" @click="jumpPage(informationListtTable[scope.$index].id)"></i>
                             <i class="el-icon-delete" @click="deleteRow(informationListtTable[scope.$index])"></i>
                         </div>
                     </template>
@@ -210,8 +210,9 @@
             },
     
             //新建+表格编辑——页面跳转到资讯内容
-            jumpPage:function(){
-                this.$router.push('/message/changeInformation');
+            jumpPage:function(infoId){
+                typeof infoId == undefined ? this.$router.push('/message/changeInformation') : this.$router.push('/message/changeInformation/' + infoId);
+                
             },
             //跳到相应的资讯详情页
             jumpInformDeta(){

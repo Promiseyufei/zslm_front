@@ -27,7 +27,7 @@
                         <div class="operateUpfilesRight">
                             <div class="messageBtn">
                                 <el-button type="primary" @click="toNotice" plain>跳过</el-button>
-                                <el-button type="primary" @click="test">设置</el-button>
+                                <el-button type="primary" @click="pushInfoSelectMajor">设置</el-button>
                             </div>
 
                             <div class="shoolTotal">
@@ -73,7 +73,7 @@
                                         <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                                     </div>
                                     <!-- 表格 -->
-                                    <messageTable :tableData3 = "tableData" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
+                                    <messageTable :tableData3="tableData" :isSelect="0" :listTable="listTable" @setInfoRelation="setInfoState" @del="delAdvise"></messageTable>
                                 </div>
                             </template>
                         </div>
@@ -96,7 +96,7 @@
                                         <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                                     </div>
                                     <!-- 表格 -->
-                                    <messageTable :tableData3 = "tableData2" :listTable="listTable2" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
+                                    <messageTable :tableData3 = "tableData2" :listTable="listTable2" @setInfoRelation="setInfoState" @del="delAdvise"></messageTable>
                                 </div>
                             </template>
                         </div>
@@ -122,21 +122,11 @@ export default {
     },
     data() {
       return {
-        // 上个页面传过来的参数（xx活动的id）
-        id: this.$route.params.id,
+        info: 0,
         imageUrl: '',
         //设置成功的主办院校：
-        shoolCount: [
-            // {
-            //     logo: require('../../../../assets/img/collegeLogo.png'),
-            //     name: "新乡医学院",
-            // },
-            // {
-            //     logo: require('../../../../assets/img/collegeLogo.png'),
-            //     name: "河南科技学院",
-            // },
-        ],
-        setSwitch: 1,
+        shoolCount: [],
+        setSwitch: 0,
         setSwitch2: 1,
         listTable: [
             {
@@ -145,17 +135,17 @@ export default {
                 width: "210px"
             },
             {
-                prop: "weight",
+                prop: "show_weight",
                 lable: "展示顺序",
                 width: "80px"
             },
             {
-                prop: "activity_type",
+                prop: "info_type",
                 lable: "资讯类型",
                 width: "210px"
             },
             {
-                prop: "active_name",
+                prop: "zx_name",
                 lable: "资讯标题",
                 width: "319px"
             },
@@ -198,33 +188,21 @@ export default {
         tableData2: []
       }
     },
-    watch: {
-        setSwitch: function(val,oldval) {
-            if(val == 1&&oldval!=val) {
-                this.setActivity();
-            }
-            if(val == 2&&oldval!=val) {
-                this.getAdviseName();
-            }
-        },
-        setSwitch2: function(val,oldval) {
-            if(val == 1&&oldval!=val) {
-                this.setCollege();
-            }
-            if(val == 2&&oldval!=val) {
-                this.getAdviseCollege();
-            }
-        }
-    },
     methods: {
         // 跳转到“院校专业”页面添加院校
         adviseAdd: function() {
-        //   this.$router.push('/send/sendMessage/' + this.id);
+          this.$router.push('/send/sendMessage/' + this.infoId);
+        },
+        adviseRead() {
+
+        },
+        pushInfoSelectMajor() {
+            this.$router.push('/message/infoSelectMajor');
         },
         
         // 返回上一步
         toBack: function() {
-            this.$router.push('/message/changeInformation');
+            this.$router.push('/message/changeInformation/' + this.infoId);
         },
 
         // 跳转到消息通知页面
@@ -243,34 +221,6 @@ export default {
             this.shoolCount.splice(index);
         },
 
-        // 自动设置推荐活动
-        setActivity: function() {
-            let self = this;
-            axios.post('/admin/information/setAutomaticRecActivitys', {
-                regionId: self.id
-            })
-            .then(function (response) {
-                // console.log("测试123");
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
-
-        // 自动设置院校专业
-        setCollege: function() {
-            let self = this;
-            axios.post('/admin/information/setAutomaticRecActivitys', {
-                regionId: self.id
-            })
-            .then(function (response) {
-                // console.log("测试123");
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
-        
         // 得到所有的推荐活动
         getAdviseName: function() {
             var self = this;
@@ -307,19 +257,18 @@ export default {
             });
         },
 
-        setOpAd: function(id, weight) {
-            console.log(123);
-            // this.confirm(() => {
-            //     this.post('/admin/operate/setAppoinInformationWeight', {
-            //         informationId: id,
-            //         weight:weight
-            //     }).then((response) => {
-            //         (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
-            //     })
-            // }, () => {
-            //     this.tableData3[index].show_weight = this.TableValue;
-            //     this.message(true, '已取消修改', 'info');
-            // })
+        setInfoState: function(id, weight) {
+            this.confirm(() => {
+                this.post('/admin/information/setAppointInfoState', {
+                    infoId: id,
+                    type: 0,
+                    state: weight
+                }).then((response) => {
+                    (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+                })
+            }, () => {
+                this.message(true, '已取消修改', 'info');
+            }, '确定修改该资讯的权值吗？');
         },
         delAdvise: function(res, row) {
             // this.confirm(() => {
@@ -368,7 +317,37 @@ export default {
             this.disabled2 = false;
         },
         valuechange: function(res) {
-            console.log(res);
+            let _this = this;
+            //自动设置
+            if(res == 1) {
+                this.confirm(() => {
+                    this.post('/admin/information/setAutomaticRecInfos', {
+                        infoId: this.infoId
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            this.message(true, "成功自动设置该资讯的推荐阅读", 'success');
+                        }
+                        else {
+                            this.message(true, response.msg, 'error');
+                        }
+                    })
+                }, () => {
+                    this.message(true, "已取消自动设置该资讯的推荐阅读", 'info');
+                }, '确定自动设置推荐阅读吗？');
+            }
+            //手动设置
+            else if(res == 2) {
+                this.post('/admin/information/getAppointInfoRecommendRead', {
+                    infoId: this.infoId
+                }).then((response) => {
+                    if(response.code == 0) {
+                        _this.tableData = response.result;
+                    }
+                    else {
+                        this.message(true, response.msg, 'error');
+                    }
+                })
+            }
         },
         // 上传院校logo
         handleAvatarSuccess(res, file) {
@@ -388,8 +367,10 @@ export default {
         }
     },
     mounted() {
-        this.setActivity();
-        this.setCollege();
+        if(this.$route.params.infoId != null) {
+            this.infoId = this.$route.params.infoId;
+        }
+        
     },
 };
 </script>

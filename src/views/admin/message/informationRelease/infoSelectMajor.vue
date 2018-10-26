@@ -2,14 +2,14 @@
 	<div class="Select">
 		<div class="Select-top">
 			<el-breadcrumb separator="/">
+			  <el-breadcrumb-item>信息发布</el-breadcrumb-item>
 			  <el-breadcrumb-item>资讯发布</el-breadcrumb-item>
-			  <el-breadcrumb-item>选择院校专业</el-breadcrumb-item>
+              <el-breadcrumb-item>设置相关学院</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
-		<div class="Select-steps">
+		<div class="fileSteps Select-steps">
 			<el-steps :active=".1" align-center>
 			  <el-step title="选择院校专业"></el-step>
-			  <el-step title="上传文件"></el-step>
 			</el-steps>
 		</div>
 		<div class="SelectUnivers">
@@ -67,77 +67,7 @@
 	</div>
 </template>
 <script>
-	const buttons = [
-			    	{	
-			    		butregion:'华北',
-			    		city:[
-				    		{name:'北京'},
-				    		{name:'天津'},
-						    {name:'河北'},
-						    {name:'山西'},
-						    {name:'内蒙古'}
-			    		]
-			    	},
-		        	{
-		        		butregion:'东北',
-		        		city:[
-				    		{name:'辽宁'},
-				    		{name:'吉林'},
-						    {name:'黑龙江'},
-			    		]
-		        	},
-		        	{
-		        		butregion:'华东',
-		        		city:[
-				    		{name:'上海'},
-				    		{name:'江苏'},
-						    {name:'浙江'},
-						    {name:'江西'},
-						    {name:'安微'},
-						    {name:'福建'},
-						    {name:'山东'}
-			    		]
-		        	},
-		        	{
-		        		butregion:'中南',
-		        		city:[
-				    		{name:'河南'},
-				    		{name:'湖北'},
-						    {name:'湖南'},
-						    {name:'广东'},
-						    {name:'广西'},
-						    {name:'海南'}
-			    		]
-		        	},
-		        	{
-		        		butregion:'西南',
-		        		city:[
-				    		{name:'重庆'},
-				    		{name:'四川'},
-						    {name:'贵州'},
-						    {name:'云南'},
-						    {name:'西藏'}
-			    		]
-		        	},
-		        	{
-		        		butregion:'西北',
-		        		city:[
-				    		{name:'陕西'},
-				    		{name:'甘肃'},
-						    {name:'青海'},
-						    {name:'宁夏'},
-						    {name:'新疆'}
-			    		]
-		        	},
-		        	{
-		        		butregion:'港澳台',
-		        		city:[
-				    		{name:'香港'},
-				    		{name:'澳门'},
-						    {name:'台湾'},
-			    		]
-		        	},
-	        	];
+    import buttons from '../../../../config/province.js';
 	export default {
 	    data() {
 	        return {
@@ -146,8 +76,8 @@
 	        	butname:'',
 
 	        	//默认选择所有城市
-	        	checkboxGroup1: ['北京','天津','河北','山西','内蒙古','辽宁','吉林','黑龙江','上海','江苏','浙江','江西','安微','福建','山东','河南','湖北','湖南','广东','广西','海南','重庆','四川','贵州','云南','西藏','陕西','甘肃','青海','宁夏','新疆','香港','澳门','台湾'],
-	        	button: buttons,//从const buttons 引入
+	        	checkboxGroup1: [],
+	        	button: buttons,
 
 	        	//院校专业
 	        	onecityName:'',
@@ -255,6 +185,24 @@
 	.SelectUnivers-majorname .el-radio-group {
 		/*font-size: 12px;*/
 	}
+
+	/*
+    * 步骤条
+    */
+    .fileSteps .is-text {
+        width: 50px;
+        height: 50px;
+    }
+    .fileSteps .is-finish .is-text {
+        background: #1ABC9C; 
+        color: #fff;
+    }
+    .fileSteps .el-step__icon-inner {
+        font-size: 20px;
+    }
+    .fileSteps .el-step__line {
+        top: 23px !important;
+    }
 	
 </style>
 
