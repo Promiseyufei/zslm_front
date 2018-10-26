@@ -207,7 +207,12 @@ export default {
         },
         // 跳转到推荐内容设置页面
         toAdvise: function() {
-            this.$router.push('/message/recommend/' + this.id);
+            if(this.$route.params.infoId != null) {
+                this.$router.push('/message/recommend/' + this.$route.params.infoId);
+            }
+            else 
+                this.message(true, 'error', 'error');
+            
         },
         getAppointIdInfoMsg() {
             let _this = this;

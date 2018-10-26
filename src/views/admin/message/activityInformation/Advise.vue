@@ -75,7 +75,7 @@
                                         <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                                     </div>
                                     <!-- 表格 -->
-                                    <messageTable :tableData3 = "tableData" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
+                                    <messageTable :tableData3 = "tableData" :isSelect="1" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
                                 </div>
                             </template>
                         </div>
