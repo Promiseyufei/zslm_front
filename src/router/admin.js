@@ -151,7 +151,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/informationRelease/changeInformation'], resolve))
         },
         {
-            path: '/message/recommend/:id',
+            path: '/message/recommend/:infoId',
             name: '信息发布-资讯发布-推荐信息',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/recommend'], resolve))
         },
@@ -160,6 +160,12 @@ let admin_router = {
             name: '信息发布-资讯发布-消息通知',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationNotice'], resolve))
         },
+        {
+            path: '/message/choReMajor',
+            name: '信息发布-资讯发布-选择相关院校',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/choiceRecommendMajor'], resolve))
+        },
+
         
 
 
