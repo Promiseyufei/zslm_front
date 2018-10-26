@@ -5,8 +5,8 @@
           <!-- 面包屑 -->
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>信息发布</el-breadcrumb-item>
-            <el-breadcrumb-item>活动信息</el-breadcrumb-item>
-              <el-breadcrumb-item>活动信息编辑</el-breadcrumb-item>
+            <el-breadcrumb-item>院校信息</el-breadcrumb-item>
+              <el-breadcrumb-item>院校信息编辑</el-breadcrumb-item>
             <el-breadcrumb-item class="selectedNavPublic">添加推荐</el-breadcrumb-item>
           </el-breadcrumb>
 
@@ -25,12 +25,12 @@
           <div class="addadviseSelect">
               <div class="addadviseInput">
                   <el-form ref="form" :model="form" label-width="120px">
-                      <el-form-item label="活动类型">
-                        <el-select v-model="form.region" clearable placeholder="全部">
+                      <el-form-item label="是否展示">
+                        <el-select v-model="form.region" clearable placeholder="请选择">
                           <el-option :label="list.name" :value="list.id" v-for="(list,i) in banner" :key = "i"></el-option>
                         </el-select>
                       </el-form-item>
-                      <el-form-item label="活动名称">
+                      <el-form-item label="专业名称">
                         <el-input v-model="form.message" placeholder="输入关键字"></el-input>
                       </el-form-item>
                   </el-form>
@@ -40,7 +40,7 @@
 
           <!-- 筛选头部 -->
           <div class="operateUpfiles operateHeader">
-            <p><i class="fa fa-bars"></i> 活动列表</p>
+            <p><i class="fa fa-bars"></i> 专业列表</p>
           </div>
             <!-- 表格 -->
             <div class="operateTable">
@@ -155,18 +155,18 @@ export default {
                 width: "250px"
               },
               {
-                prop: "active_name",
-                lable: "活动名称",
+                prop: "z_name",
+                lable: "专业名称",
                 width: "350px"
               },
               {
-                prop: 'title',
-                lable: '活动标题',
+                prop: 'weight',
+                lable: '展示权重',
                 width: "354px"
               },
               {
-                prop: "create_time",
-                lable: "上传时间",
+                prop: "update_time",
+                lable: "更新时间",
                 width: "350px"
               }
           ],
@@ -213,9 +213,9 @@ export default {
           }
           this.confirm(() => {
             var load = this.openFullScreen2();
-            this.post('/admin/information/setManualRecActivitys', {
+            this.post('/admin/information/setManualRecMajors', {
                 activityId: parseInt(this.id),
-                activityArr: this.infoIdArr
+                majorArr: this.infoIdArr
             }).then((response) => {
               load.close();
               console.log(typeof response);
@@ -250,20 +250,20 @@ export default {
         // 获取所有资讯类型
         getInformationType: function() {
           var self = this;
-          this.post('/admin/information/getActivityPageMessage', {
+          this.post('/admin/information/getMajorPageMessage', {
               screenType:0,
               activityState:3,
               sortType:0,
               screenState:self.form.region == '' ? 0 : self.form.region,
-              activityNameKeyword:self.form.message,
+              majorNameKeyword:self.form.message,
               pageCount: self.count,
               pageNumber: self.page - 1,
           })
               .then(function (response) {
                   // response = response.data;
                   if (response.code == 0) {
-                      self.tableData3 = response.result[0];
-                      self.total = response.result[1];
+                      self.tableData3 = response.result['get_page_msg'];
+                      self.total = response.result['count'];
                   }else {
                       self.message(true, response.msg, 'error');
                   }

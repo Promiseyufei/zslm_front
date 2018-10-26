@@ -76,11 +76,11 @@
                                 </el-radio-group>
                                 <div v-if="this.setSwitch2 == 2">
                                     <div class="messageUpfilesRight2Nav">
-                                        <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                                        <el-button type="info" plain @click="majorAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
                                         <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                                     </div>
                                     <!-- 表格 -->
-                                    <messageTable :tableData3 = "tableData2" :listTable="listTable2" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
+                                    <messageTable1 :tableData3 = "tableData2" :listTable="listTable2" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable1>
                                 </div>
                             </template>
                         </div>
@@ -119,12 +119,12 @@ export default {
                 width: "210px"
             },
             {
-                prop: "weight",
+                prop: "show_weight",
                 lable: "展示顺序",
                 width: "80px"
             },
             {
-                prop: "activity_type",
+                prop: "active_type",
                 lable: "活动类型",
                 width: "210px"
             },
@@ -153,17 +153,17 @@ export default {
                 width: "80px"
             },
             {
-                prop: "activity_type",
-                lable: "活动类型",
+                prop: "province",
+                lable: "活动省市",
                 width: "210px"
             },
             {
-                prop: "active_name",
-                lable: "活动名称",
+                prop: "z_name",
+                lable: "专业名称",
                 width: "319px"
             },
             {
-                prop: "create_time",
+                prop: "update_time",
                 lable: "发布时间",
                 width: "210px"
             }
@@ -178,7 +178,7 @@ export default {
                 this.setActivity();
             }
             if(val == 2&&oldval!=val) {
-                this.getAdviseName();
+
             }
         },
         setSwitch2: function(val,oldval) {
@@ -186,16 +186,32 @@ export default {
                 this.setCollege();
             }
             if(val == 2&&oldval!=val) {
-                this.getAdviseCollege();
+
             }
         }
     },
     methods: {
         // 跳转到“活动列表”页面添加推荐活动
+        info:function(){
+            let self = this;
+            this.fetch('/admin/information/getguanlian',{
+                id: parseInt(self.id)
+            }).then(res=>{
+                if(res.code == 0){
+                    self.tableData = res.result[0];
+                    self.tableData2 = res.result[1];
+                }
+            })
+        },
+
         adviseAdd: function() {
           this.$router.push('/message/addActivity/' + this.id);
         },
-        
+
+        majorAdd: function() {
+            this.$router.push('/message/AddMajor/' + this.id);
+        },
+
         // 返回上一步
         toBack: function() {
             this.$router.push('/message/activity');
@@ -271,18 +287,17 @@ export default {
         },
 
         setOpAd: function(id, weight) {
-            console.log(123);
-            // this.confirm(() => {
-            //     this.post('/admin/operate/setAppoinInformationWeight', {
-            //         informationId: id,
-            //         weight:weight
-            //     }).then((response) => {
-            //         (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
-            //     })
-            // }, () => {
-            //     this.tableData3[index].show_weight = this.TableValue;
-            //     this.message(true, '已取消修改', 'info');
-            // })
+            this.confirm(() => {
+                this.post('/admin/operate/ ', {
+                    informationId: id,
+                    weight:weight
+                }).then((response) => {
+                    (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+                })
+            }, () => {
+                this.tableData3[index].show_weight = this.TableValue;
+                this.message(true, '已取消修改', 'info');
+            })
         },
         delAdvise: function(res, row) {
             // this.confirm(() => {
@@ -348,11 +363,17 @@ export default {
               this.$message.error('上传头像图片大小不能超过 2MB!');
             }
             return isJPG && isLt2M;
+        },
+        changeCount:function(val,index){
+            console.log(1)
+        },
+
+        del(){
+            console.log(111111)
         }
     },
     mounted() {
-        this.setActivity();
-        this.setCollege();
+        this.info();
     },
 };
 </script>

@@ -46,13 +46,13 @@
                        <div style="position: relative;">
                            <div class="upQuotes"><img src="../../../../assets/img/upQuotes.png"></div>
                            <div class="contentDetail">
-                               <p>{{universName}}发布了一个新的活动，快去看看吧！</p>
+                               <p >{{content}}</p>
                                <el-button type="text">修改</el-button>
                            </div>
                            <div class="lowQuotes"><img src="../../../../assets/img/lowQuotes.png"></div>
                        </div>
                        <div>
-                           <el-button type="primary">发送</el-button>
+                           <el-button type="primary"  @click="addNewsFirst">发送</el-button>
                        </div>
                    </div>
                </div>
@@ -71,7 +71,7 @@
                            <div class="lowQuotes"><img src="../../../../assets/img/lowQuotes.png"></div>
                        </div>
                        <div>
-                           <el-button type="primary">发送</el-button>
+                           <el-button type="primary" @click="addNewsSecond">发送</el-button>
                        </div>
                    </div>
                </div>
@@ -89,16 +89,40 @@
                 //设置消息类型
                 universName:'',
                 sendMessage:'',
+                content:'test',
+                majorId:1,
+                activeId:0
             };
         },
         methods: {
             jumpPage:function() {
                 this.$router.push('/message/activityList');
             },
+            addNewsFirst:function(){
+                let self = this;
+                this.post('/admin/information/sendActivityDynamic',
+                        {
+                            activityId:parseInt(self.activeId),
+                            majorId:parseInt(self.majorId),
+                            newOrDyna:0
+                        }
+                )
+            },
+            addNewsSecond(){
+                let self = this;
+                this.post('/admin/information/sendActivityDynamic',
+                    {
+                        activityId:parseInt(self.activeId),
+                        majorId:parseInt(self.majorId),
+                        newOrDyna:1
+                    }
+                )
+            }
+
             
         },
         mounted(){
-            // this.getcityInfo();
+            this.activeId = this.$route.params.id;
         }
     }
 
