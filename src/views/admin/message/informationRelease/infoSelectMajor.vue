@@ -37,7 +37,7 @@
                     <div class="SelectUnivers-city">
                         <el-checkbox-group v-model="checkboxGroup1" v-for="(vals,index) in button" :key="index">
                             <div class="region">{{vals.butregion}}</div>
-                            <el-checkbox-button v-model="butname" @click.native="clickCity"
+                            <el-checkbox-button v-model="butname"
                                                 v-for="(val,indexs) in vals.city" :key="indexs" :label="val.name">
                                 {{val.name}}
                             </el-checkbox-button>
@@ -48,23 +48,17 @@
                 <!-- 院校专业名称 -->
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{onecityName}}</div>
-                    <!--<el-radio-group v-for="(vals,val) in oneCity" :key="val" v-model="majorname">-->
-                        <!--<el-radio-button v-for="(val,vals) in vals.line" :key="vals"-->
-                                         <!--:label="val.z_name"></el-radio-button>-->
-                    <!--</el-radio-group>-->
-                    <el-radio-group v-for="(cityline, index) in oneCity" v-model="one" :key="index">
-                        <el-radio-button v-for="(city, key) in cityline"
-                                        :key="key"
-                                         :label="city.z_name" @click.native="selectCity(city.id)"></el-radio-button>
-                    </el-radio-group>
+                    <div>
+                        <el-checkbox-group v-model="one" v-for="(vals,index) in oneCity" :key="index">
+                            <el-checkbox-button v-for="(val,indexs) in vals" :key="indexs" :label="val">{{val.z_name}}</el-checkbox-button>
+                        </el-checkbox-group>
+                    </div>
                 </div>
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{twocityName}}</div>
-                    <el-radio-group v-for="(cityline, index) in twoCity" v-model="one" :key="index">
-                        <el-radio-button v-for="(city,key) in cityline"
-                                            :key="key"
-                                         :label="city.z_name" @click.native="selectCity(city.id)"></el-radio-button>
-                    </el-radio-group>
+                    <el-checkbox-group v-model="one" v-for="(vals,index) in twoCity" :key="index">
+                        <el-checkbox-button v-for="(val,indexs) in vals" :key="indexs" :label="val">{{val.z_name}}</el-checkbox-button>
+                    </el-checkbox-group>
                 </div>
                 <div class="ellipsis">……</div>
                 <div class="page">
@@ -79,7 +73,7 @@
             </div>
         </div>
         <div class="footer">
-            <span class="Selected" v-if="this.majorname">当前已选择：<span class="majorname">{{majorname}}</span></span>
+            <span class="Selected" v-if="this.selectname">当前已选择：<span class="majorname">{{selectname}}</span></span>
         </div>
         <div class="jumpPage">
             <el-button v-if="type == 0" type="primary" @click.native="jumpPage">设置为推荐院校</el-button>
@@ -89,14 +83,15 @@
     </div>
 </template>
 <script>
-	import buttons from '../../../../config/province.js';
+    import buttons from '../../../../config/province.js';
     export default {
         data() {
             return {
-				infoId:0,
-				type:null,
+                infoId:0,
+                type:null,
                 //查询条件
-                one:'',
+                one:[],
+                selectname:'',
                 page:1,
                 UniversMajorName: '',
                 butname: '',
@@ -106,8 +101,11 @@
                     '浙江省', '江西省', '安微省', '福建省', '山东省', '河南省', '湖北省', '湖南省', '广东省', '广西省', '海南省',
                     '重庆市', '四川省', '贵州省', '云南省', '西藏', '陕西省', '甘肃省', '青海省', '宁夏省', '新疆省', '香港市', '澳门市', '台湾省'],
                 test: ['河南省'],
-                button: buttons,
-
+                button: buttons,//从const buttons 引入
+                checkboxGroupIndex : {'北京市':0, '天津市':1, '河北省':2, '山西省':3, '内蒙古':4, '辽宁省':5, '吉林省':6, '黑龙江省':7, '上海市':8, '江苏省':9,
+                    '浙江省':10, '江西省':11, '安微省':12, '福建省':13, '山东省':14, '河南省':15, '湖北省':16, '湖南省':17, '广东省':18, '广西省':19, '海南省':20,
+                    '重庆市':21, '四川省':22, '贵州省':23, '云南省':24, '西藏':25, '陕西省':26, '甘肃省':27, '青海省':28, '宁夏省':29, '新疆省':30,
+                    '香港市':31, '澳门市':32, '台湾省':33},
                 //院校专业
                 onecityName: '',
                 twocityName: '',
@@ -131,13 +129,15 @@
             };
         },
         methods: {
+            //初次进入页面，获取的院校专业
             //点击城市按钮
             clickCity: function () {
                 var that = this;
             },
 
-            selectCity:function(val){
+            selectCity:function(val,name){
                 this.majorname = val;
+                this.selectname = name;
             },
             //点击搜索按钮
             search: function () {
@@ -146,18 +146,33 @@
             //点击全部按钮
             allCity: function () {
                 var that = this;
-                axios.post('/admin/SelectUnivers/clickgetcity-info', {
-                    //后台参数，前台参数(传向后台)
-                    butname: that.butname,
-                })
+
                 that.checkboxGroup1 = ['北京市', '天津市', '河北省', '山西省', '内蒙古', '辽宁省', '吉林省', '黑龙江省', '上海市', '江苏省',
                     '浙江省', '江西省', '安微省', '福建省', '山东省', '河南省', '湖北省', '湖南省', '广东省', '广西省', '海南省',
                     '重庆市', '四川省', '贵州省', '云南省', '西藏', '陕西省', '甘肃省', '青海省', '宁夏省', '新疆省', '香港市', '澳门市', '台湾省']
             },
 
+            paixu(){
+
+                for(var i = 0;i<this.checkboxGroup1.length;i++){
+
+                    for(var j=i+1;j<this.checkboxGroup1.length;j++){
+
+                        if(this.checkboxGroupIndex[this.checkboxGroup1[i]]>this.checkboxGroupIndex[this.checkboxGroup1[j]]){
+                            let test = this.checkboxGroup1[i];
+                            this.checkboxGroup1[i] = this.checkboxGroup1[j];
+                            this.checkboxGroup1[j] = test;
+                        }
+                    }
+                }
+            },
+
             searchMajor(){
                 this.count = Math.ceil(this.checkboxGroup1.length/2);
-                console.log(this.checkboxGroup1.length)
+                this.oneCity = [];
+                this.twoCity = [];
+                this.paixu();
+
                 this.getMajor();
             },
             handleCurrentChange(val){
@@ -167,7 +182,6 @@
             getMajor: function () {
 
                 let searchs = [];
-
                     this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
                     this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
 
@@ -190,7 +204,6 @@
 
                     }
                     that.oneCity = majors;
-                    console.log(that.oneCity)
                     first_index = 0;
                     majors = new Array();
                     majors[first_index] = new Array();
@@ -208,10 +221,49 @@
             },
             //跳转页面按钮
             jumpPage: function () {
-                // if (this.majorname) {
+                let arr = [];
+                this.one.forEach((item) => {
+                    arr.push(item.id);
+                });
+                if(arr.length < 1) {
+                    this.message(true, '未选中院校专业', 'info');
+                    return false;
+                }
+                //设置推荐院校
+                if(this.type == 0) {
+                    this.confirm(() => {
+                        this.post('/admin/information/setManualInfoRelationCollege', {
+                            infoId: this.infoId,
+                            majorArr: arr
+                        }).then((response) => {
+                            if(response.code == 0) {
+                                this.message(true, response.msg, 'success');
+                            }
+                            else this.message(true, response.msg, 'error');
+                        })
+                    }, () => {
+                        this.message(true, '已取消设置', 'info');
+                    }, '确定设置选中院校专业为该资讯的推荐院校吗？');
+                }
+                //设置相关院校专业
+                else if(this.type == 1) {
+                    this.confirm(() => {
+                        this.post('/admin/information/setAppointRelationCollege', {
+                            infoId: this.infoId,
+                            majorIdArr: arr
+                        }).then((response) => {
+                            if(response.code == 0) {
+                                this.message(true, response.msg, 'success');
+                            }
+                            else this.message(true, response.msg, 'error');
+                        })
+                    }, () => {
+                        this.message(true, '已取消设置', 'info');
+                    }, '确定设置选中院校专业为该资讯的相关院校吗？');
+                }
 
-                this.$router.push('/filesManage/fileup/' + this.majorname);
-                // }
+                this.$router.push('/message/recommend/' + this.infoId);
+
             },
         },
         mounted() {
@@ -415,3 +467,4 @@
         margin: 0 auto;
     }
 </style>
+

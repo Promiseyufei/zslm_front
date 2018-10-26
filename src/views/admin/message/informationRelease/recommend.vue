@@ -43,12 +43,12 @@
                                 <div v-for="(item, index) in shoolCount" :key="index">
                                     <!-- 主办院校logo -->
                                     <div class="messageSchool">
-                                        <img v-bind:src="item.logo" alt="">
+                                        <img v-bind:src="item.magor_logo_name" alt="暂无">
                                     </div>
 
                                     <!-- 院校名称 -->
-                                    <p style="text-align: center;">{{item.name}}</p>
-                                    <p style="text-align: center; color: #1ABC9C;cursor: pointer;" v-if="index >= 0" @click="deleteSchool(index)">删除</p>
+                                    <p style="text-align: center;">{{item.z_name}}</p>
+                                    <p style="text-align: center; color: #1ABC9C;cursor: pointer;" v-if="index >= 0" @click="deleteSchool(item.id, index)">删除</p>
                                 </div>
                             </div>
                             
@@ -221,7 +221,11 @@ export default {
 
         //删除主办院校
         deleteSchool: function(index) {
-            console.log(index);
+            // this.confirm(() => {
+            //     this.post('/')
+            // }, () => {
+            //     this.message(true, '取消设置', 'info');
+            // }, '确定取消当前相关院校专业?');
             this.shoolCount.splice(index);
         },
 
@@ -444,12 +448,24 @@ export default {
               this.$message.error('上传头像图片大小不能超过 2MB!');
             }
             return isJPG && isLt2M;
+        },
+        getInfoRelevantMajor() {
+            this.post('/admin/information/getAppointInfoRelevantMajor', {
+                infoId: this.infoId,
+            }).then((response) => {
+                console.log(response);
+                if(response.code == 0) {
+                    this.shoolCount = response.result;
+                }
+                else this.message(true, response.msg, 'error');
+            });
         }
     },
     mounted() {
         if(this.$route.params.infoId != null) {
             this.infoId = this.$route.params.infoId;
         }
+        this.getInfoRelevantMajor();
         
     },
 };
