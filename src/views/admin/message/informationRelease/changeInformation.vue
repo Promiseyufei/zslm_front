@@ -211,7 +211,7 @@ export default {
                 this.$router.push('/message/recommend/' + this.$route.params.infoId);
             }
             else 
-                this.message(true, 'error', 'error');
+                this.message(true, '请先完成当前资讯的创建', 'info');
             
         },
         getAppointIdInfoMsg() {

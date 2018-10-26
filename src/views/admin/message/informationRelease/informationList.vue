@@ -10,7 +10,7 @@
 
         <!-- 新建按钮 -->
         <div class="informationList-newbuild">
-            <el-button type="primary" size="medium" @click.native = "jumpPage">新建</el-button>
+            <el-button type="primary" size="medium" @click="jumpPage(0)">新建</el-button>
         </div>
 
         <!-- 筛选查询   刷新按钮需要获得表格数据-->
@@ -211,8 +211,12 @@
     
             //新建+表格编辑——页面跳转到资讯内容
             jumpPage:function(infoId){
-                typeof infoId == undefined ? this.$router.push('/message/changeInformation') : this.$router.push('/message/changeInformation/' + infoId);
-                
+                if(infoId < 1) {
+                    this.$router.push('/message/changeInformation')
+                }
+                else {
+                    this.$router.push('/message/changeInformation/' + infoId);
+                }
             },
             //跳到相应的资讯详情页
             jumpInformDeta(){

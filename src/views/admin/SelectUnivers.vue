@@ -50,15 +50,17 @@
                         <!--<el-radio-button v-for="(val,vals) in vals.line" :key="vals"-->
                                          <!--:label="val.z_name"></el-radio-button>-->
                     <!--</el-radio-group>-->
-                    <el-radio-group v-for="cityline in oneCity" v-model="one">
-                        <el-radio-button v-for="city in cityline"
+                    <el-radio-group v-for="(cityline, index) in oneCity" v-model="one" :key="index">
+                        <el-radio-button v-for="(city, key) in cityline"
+                                        :key="key"
                                          :label="city.z_name" @click.native="selectCity(city.id)"></el-radio-button>
                     </el-radio-group>
                 </div>
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{twocityName}}</div>
-                    <el-radio-group v-for="cityline in twoCity" v-model="one">
-                        <el-radio-button v-for="city in cityline"
+                    <el-radio-group v-for="(cityline, index) in twoCity" v-model="one" :key="index">
+                        <el-radio-button v-for="(city,key) in cityline"
+                                            :key="key"
                                          :label="city.z_name" @click.native="selectCity(city.id)"></el-radio-button>
                     </el-radio-group>
                 </div>
@@ -194,26 +196,6 @@
             };
         },
         methods: {
-            //初次进入页面，获取的院校专业
-            getcity_info: function () {
-                var that = this;
-                axios.post('/admin/SelectUnivers/getcity-info', {
-                    //后台参数，前台参数(传向后台)
-                    butname: that.butname,
-                })
-                    .then(function (response) {
-                        var res = response.data;
-                        if (res.code == 0) {
-                            that.onecityName = res.onecityName;
-                            that.twocityName = res.twocityName;
-                            that.oneCity = res.oneCity;
-                            that.twoCity = res.twoCity;
-                        }
-                        ;
-                    })
-                    .catch(function (error) {
-                    });
-            },
             //点击城市按钮
             clickCity: function () {
                 var that = this;
