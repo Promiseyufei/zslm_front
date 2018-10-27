@@ -73,15 +73,34 @@
 							</div> 
 						</div>
 
+						<!-- 表格模态框 -->
 						<el-dialog
-							title="修改信息："
+							title="编辑图片信息："
 							:visible.sync="dialogVisible"
 							width="30%"
 							:before-close="handleClose">
-							<span>这是一段信息</span>
+							<div>
+								<el-form :model="tableFormInformation" :rules="rules" ref="tableFormInformation" label-width="100px" class="demo-ruleForm">
+									<el-form-item label="图片编号" prop="id">
+										<span>{{tableFormInformation.id}}</span>
+									</el-form-item>
+
+									<el-form-item label="图片名称" prop="img">
+									  	<el-input v-model="tableFormInformation.img"></el-input>
+									</el-form-item>
+									
+									<el-form-item label="图片描述" prop="re_alt">
+										<el-input v-model="tableFormInformation.re_alt"></el-input>
+									</el-form-item>
+
+									<el-form-item label="图片URL" prop="re_url">
+										<el-input v-model="tableFormInformation.re_url"></el-input>
+									</el-form-item>
+								</el-form>
+							</div>
 							<span slot="footer" class="dialog-footer">
 								<el-button @click="dialogVisible = false">取 消</el-button>
-								<el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+								<el-button type="primary" @click="submitTableForm">确 定</el-button>
 							</span>
 						</el-dialog>
 
@@ -99,6 +118,20 @@ export default {
 		},
 		data() {
 			return {
+					tableFormInformation: {},
+					rules: {
+						img: [
+							{ required: true, message: '请输入图片名称', trigger: 'blur' },
+							{ min: 3, max: 7, message: '长度在 3 到 7 个字符', trigger: 'blur' }
+						],
+						re_alt: [
+							{ required: true, message: '请输入图片描述', trigger: 'blur' },
+							{ min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+						],
+						re_url: [
+							{ required: true, message: '请输入图片url', trigger: 'blur' },
+						],
+					},
 					dialogVisible: false,
 					loading: false,
 					banner: [],
@@ -145,6 +178,11 @@ export default {
 				}
 		},
 		methods:{
+				//编辑操作，修改表格信息
+				submitTableForm: function() {
+					console.log("假装修改成功！！！");
+				},
+
 				//获取图片file，并图片预览
 				changeUpload: function(file,fileList) {
 					console.log(file);
@@ -179,9 +217,8 @@ export default {
 
 				//编辑表格内容弹出框
 				editeMothed:function(row) {
-
+					this.tableFormInformation = row;
 					this.dialogVisible = true;
-
 				},
 
 				// 清空所有banner

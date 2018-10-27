@@ -66,13 +66,45 @@
 									<el-button type="info" plain @click="operateDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
 								</div>
 								<!-- 表格 -->
-								<OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setAdWeight" @del="delAd"></OperateTable>
+								<OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setAdWeight" @del="delAd" @editFather="editeMothed"></OperateTable>
 								<!-- 完成按钮 -->
 								<div class="operateFinalUp">
 									<el-button type="primary">完成</el-button>
 								</div>
 							</div> 
 						</div>
+
+						<!-- 表格模态框 -->
+						<el-dialog
+							title="编辑图片信息："
+							:visible.sync="dialogVisible"
+							width="30%"
+							:before-close="handleClose">
+							<div>
+								<el-form :model="tableFormInformation" :rules="rules" ref="tableFormInformation" label-width="100px" class="demo-ruleForm">
+									<el-form-item label="图片编号" prop="id">
+										<span>{{tableFormInformation.id}}</span>
+									</el-form-item>
+
+									<el-form-item label="图片名称" prop="img">
+									  	<el-input v-model="tableFormInformation.img"></el-input>
+									</el-form-item>
+									
+									<el-form-item label="图片描述" prop="re_alt">
+										<el-input v-model="tableFormInformation.re_alt"></el-input>
+									</el-form-item>
+
+									<el-form-item label="图片URL" prop="re_url">
+										<el-input v-model="tableFormInformation.re_url"></el-input>
+									</el-form-item>
+								</el-form>
+							</div>
+							<span slot="footer" class="dialog-footer">
+								<el-button @click="dialogVisible = false">取 消</el-button>
+								<el-button type="primary" @click="submitTableForm">确 定</el-button>
+							</span>
+						</el-dialog>
+
 					</div>
 					
 
@@ -89,6 +121,21 @@ export default {
 		},
 		data() {
 			return {
+				tableFormInformation: {},
+				rules: {
+					img: [
+						{ required: true, message: '请输入图片名称', trigger: 'blur' },
+						{ min: 3, max: 7, message: '长度在 3 到 7 个字符', trigger: 'blur' }
+					],
+					re_alt: [
+						{ required: true, message: '请输入图片描述', trigger: 'blur' },
+						{ min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+					],
+					re_url: [
+						{ required: true, message: '请输入图片url', trigger: 'blur' },
+					],
+				},
+				dialogVisible: false,
 				loading: false,
 				banner: [],
 				radio2: "",
@@ -153,7 +200,28 @@ export default {
 						this.tableData3[index].show_weight = val;
 						this.message(true, '已取消修改', 'info');
 					})
-			  	},
+				},
+
+				//编辑操作，修改表格信息
+				submitTableForm: function() {
+					console.log("假装修改成功！！！");
+				},
+				  
+				//点击关闭表格信息弹出框
+				handleClose: function(done) {
+					this.$confirm('确认关闭？')
+					.then(_ => {
+						done();
+					})
+					.catch(_ => {});
+				},
+
+				//编辑表格内容弹出框
+				editeMothed:function(row) {
+					console.log(row);
+					this.tableFormInformation = row;
+					this.dialogVisible = true;
+				},
    
 				//删除指定的广告
 				delAd: function(id, row) {
