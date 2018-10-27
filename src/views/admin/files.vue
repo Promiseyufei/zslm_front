@@ -60,7 +60,13 @@
                 </el-table-column>
 		          <el-table-column label="操作" width="220">
 		              <template slot-scope="scope">
-		                <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+		              	<el-popover
+						  placement="right"
+						  width="400"
+						  trigger="click">
+						  	<div>123</div>
+		                	<el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+						</el-popover>
 		                <el-button @click="view(scope.row)" type="text" size="small">查看</el-button>
 		                <el-button type="text" size="small" @click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
 		              </template>
