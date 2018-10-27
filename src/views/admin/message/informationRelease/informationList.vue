@@ -10,7 +10,7 @@
 
         <!-- 新建按钮 -->
         <div class="informationList-newbuild">
-            <el-button type="primary" size="medium" @click.native = "jumpPage">新建</el-button>
+            <el-button type="primary" size="medium" @click="jumpPage(0)">新建</el-button>
         </div>
 
         <!-- 筛选查询   刷新按钮需要获得表格数据-->
@@ -43,11 +43,6 @@
                         <el-option v-for="(item, index) in infoType"  :label="item.name" :value="item.id" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
-                <!-- <el-form-item v-for="(item, index) in input" :key="index" :label="item.title">
-                    <el-select size="medium" v-model="item.content" placeholder="全部">
-                      <el-option v-for="(select, index) in options" :key="index" :label="select.option" :value="select.value"></el-option>
-                    </el-select>
-                </el-form-item> -->
             </el-form>
             <el-button size="mini" type="primary" icon="el-icon-search" class="informform-search" @click.native = "gettableInfo">查询</el-button>
         </div>
@@ -87,7 +82,7 @@
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
                             <i class="el-icon-search" @click = "jumpInformDeta"></i>
-                            <i class="el-icon-edit-outline" @click = "jumpPage"></i>
+                            <i class="el-icon-edit-outline" @click="jumpPage(informationListtTable[scope.$index].id)"></i>
                             <i class="el-icon-delete" @click="deleteRow(informationListtTable[scope.$index])"></i>
                         </div>
                     </template>
@@ -215,8 +210,13 @@
             },
     
             //新建+表格编辑——页面跳转到资讯内容
-            jumpPage:function(){
-                this.$router.push('/message/changeInformation');
+            jumpPage:function(infoId){
+                if(infoId < 1) {
+                    this.$router.push('/message/changeInformation')
+                }
+                else {
+                    this.$router.push('/message/changeInformation/' + infoId);
+                }
             },
             //跳到相应的资讯详情页
             jumpInformDeta(){

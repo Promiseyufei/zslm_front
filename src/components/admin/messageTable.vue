@@ -22,7 +22,7 @@
               label="操作"
               width="140">
               <template slot-scope="scope">
-                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                <el-button v-if="isSelect" @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                 <el-button type="text" size="small" @click="deleteSingle(scope.row.id, scope.row)">取消推荐</el-button>
               </template>
             </el-table-column>
@@ -38,10 +38,10 @@ export default {
     },
     data() {
       return {
-          TableValue: 0,
+          TableValue: 0
         }
     },
-    props:["tableData3","listTable"],
+    props:["tableData3","listTable", "isSelect"],
     methods:{
 
         // 表单获得焦点触发事件

@@ -156,14 +156,29 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/informationRelease/changeInformation'], resolve))
         },
         {
-            path: '/message/recommend/:id',
+            path: '/message/recommend/:infoId',
             name: '信息发布-资讯发布-推荐信息',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/recommend'], resolve))
         },
         {
-            path: '/message/informationNotice/:id',
+            path: '/message/infoSelectMajor/:infoId?/:type?',
+            name: '信息发布-资讯发布-选择院校专业',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/infoSelectMajor'], resolve))
+        },
+        {
+            path: '/message/informationNotice/:infoId?',
             name: '信息发布-资讯发布-消息通知',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationNotice'], resolve))
+        },
+        {
+            path: '/message/choReMajor',
+            name: '信息发布-资讯发布-选择相关院校',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/choiceRecommendMajor'], resolve))
+        },
+        {
+            path: '/message/setReRead/:infoId?',
+            name: '信息发布-资讯发布-设置相关推荐阅读',
+            component: resolve =>void(require(['@/views/admin/message/informationRelease/setReRead'], resolve))
         },
         {
             path: '/message/adviseRead',
