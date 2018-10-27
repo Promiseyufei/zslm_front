@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div>
-            消息管理～发消息～设置消息对象～选择活动页面～
+    	<div>
+    		添加咨讯，相同页面~
 
-            
-        </div>
-        
+		    
+    	</div>
+    	
     </div>
 </template>
 
@@ -14,9 +14,9 @@ export default {
     components: {
     },
     data() {
-        return {
+      return {
 
-        }
+      }
     },
     methods: {
 

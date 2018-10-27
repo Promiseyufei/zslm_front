@@ -46,13 +46,8 @@
                        <div style="position: relative;">
                            <div class="upQuotes"><img src="../../../../assets/img/upQuotes.png"></div>
                            <div class="contentDetail">
-<<<<<<< HEAD
-                               <p >{{content}}</p>
-                               <el-button type="text">修改</el-button>
-=======
                                <p>{{universName}}发布了一个新的活动，快去看看吧！</p>
                                <el-button type="text" @click="modify">修改</el-button>
->>>>>>> 9083c2e7e04455d364fa5e62f209db2fc0cbe896
                            </div>
                            <div class="lowQuotes"><img src="../../../../assets/img/lowQuotes.png"></div>
                        </div>
