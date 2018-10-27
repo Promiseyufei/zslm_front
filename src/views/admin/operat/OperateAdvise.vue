@@ -2,63 +2,64 @@
     <div>
     	<div class="operateBox">
         <!-- 中间内容 -->
-        <div>
-          <el-breadcrumb separator="/">
-            <el-breadcrumb-item>运营管理</el-breadcrumb-item>
-            <el-breadcrumb-item  class="selectedNavPublic">资讯频道首页推荐</el-breadcrumb-item>
-          </el-breadcrumb>
-          <!-- 选项卡 -->
-          <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
-          <div class="operateUpfiles operateHeader">
-            <p>当前操作页面：<span>{{this.radio2}}</span></p>
-            <el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
-          </div>
-          
-          <div v-loading="loading"
-            element-loading-text="拼命加载中"
-            element-loading-spinner="el-icon-loading">
-            <!-- 上传banner -->
-            <div class="operateUpfiles operateUp">
-              <div class="operateUpfilesLeft">
-                <div><i class="fa fa-pencil fa-fw FA-3X"></i>&nbsp;推荐区名称</div>
-              </div>
-              <div class="operateUpfilesRight">
-                <!-- 提交表单 -->
-                <div>
-                  <el-form label-width="100px">
-                    <el-form-item label="推荐区名称" width="80px">
-                      <el-input v-model="adviseName" placeholder="输入推荐区名称" v-bind:disabled="dis"></el-input>
-                      <span class="adviseNameChange" @click="adviseClickChange" v-bind:style="{ display: disp }">更改</span>
-                    </el-form-item>
-
-                    <el-form-item>
-                      <el-button type="primary" @click="adviseNameSubmit">确定</el-button>
-                    </el-form-item>
-                  </el-form>
+            <div>
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item>运营管理</el-breadcrumb-item>
+                    <el-breadcrumb-item  class="selectedNavPublic">资讯频道首页推荐</el-breadcrumb-item>
+                </el-breadcrumb>
+                <!-- 选项卡 -->
+                <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
+                <div class="operateUpfiles operateHeader">
+                    <p>当前操作页面：<span>{{this.radio2}}</span></p>
+                    <el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
                 </div>
-              </div>
-            </div>
-            <!-- 当前banner -->
-            <div class="operateUpfiles operateDown">
-              <div class="operateUpfilesLeft">
-                <div><i class="fa fa-wrench fa-fw FA-3X"></i>&nbsp;设置推荐资讯</div>
-              </div>
-              <div class="operateUpfilesRight2">
-                <div class="operateUpfilesRight2Nav">
-                  <el-button type="info" plain @click="adviseAdd" size="small"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
-                  <el-button type="info" plain @click="operateDelete" size="small"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
-                </div>
-                <!-- 表格 -->
-                <OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise" @editFather="editeMothed"></OperateTable>
-                <!-- 完成按钮 -->
-                <div class="operateFinalUp">
-                  <el-button type="primary">完成</el-button>
-                </div>
-              </div> 
-            </div>
             
-          </div>
-        </div>
+                <div v-loading="loading"
+                    element-loading-text="拼命加载中"
+                    element-loading-spinner="el-icon-loading">
+                    <!-- 上传banner -->
+                    <div class="operateUpfiles operateUp">
+                        <div class="operateUpfilesLeft">
+                            <div><i class="fa fa-pencil fa-fw FA-3X"></i>&nbsp;推荐区名称</div>
+                        </div>
+                        <div class="operateUpfilesRight">
+                            <!-- 提交表单 -->
+                            <div>
+                                <el-form label-width="100px">
+                                    <el-form-item label="推荐区名称" width="80px">
+                                        <el-input v-model="adviseName" placeholder="输入推荐区名称" v-bind:disabled="dis"></el-input>
+                                        <span class="adviseNameChange" @click="adviseClickChange" v-bind:style="{ display: disp }">更改</span>
+                                    </el-form-item>
+
+                                    <el-form-item>
+                                        <el-button type="primary" @click="adviseNameSubmit">确定</el-button>
+                                    </el-form-item>
+                                </el-form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 当前banner -->
+                    <div class="operateUpfiles operateDown">
+                        <div class="operateUpfilesLeft">
+                            <div><i class="fa fa-wrench fa-fw FA-3X"></i>&nbsp;设置推荐资讯</div>
+                        </div>
+                        <div class="operateUpfilesRight2">
+                            <div class="operateUpfilesRight2Nav">
+                                <el-button type="info" plain @click="adviseAdd" size="small"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
+                                <el-button type="info" plain @click="operateDelete" size="small"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                            </div>
+                            <!-- 表格 -->
+                            <AdviseTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></AdviseTable>
+                            <!-- 完成按钮 -->
+                            <div class="operateFinalUp">
+                                <el-button type="primary">完成</el-button>
+                            </div>
+                        </div> 
+                    </div>
+
+
+                </div>
+            </div>
         
     	</div>
     	
@@ -77,14 +78,14 @@ export default {
         adviseName2: "",
         loading: false,
         banner: [
-          {
-            id: 1,
-            name: "区域一"
-          },
-          {
-            id: 2,
-            name: "区域二"
-          }
+            {
+                id: 1,
+                name: "区域一"
+            },
+            {
+                id: 2,
+                name: "区域二"
+            }
         ],
         radio2: "",
         src: "",
@@ -160,12 +161,6 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
-        },
-
-        //编辑表格内容弹出框
-        editeMothed:function(row) {
-            console.log("我是李闪磊，我很笨！！");
-           
         },
 
         // 得到所有的咨询推荐
