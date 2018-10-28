@@ -50,14 +50,6 @@
                         <el-radio-button v-for="city in cityline"
                                          :label="city.z_name" @click.native="selectCity(city.id,city.z_name)"></el-radio-button>
                     </el-radio-group>
-                    <!--<div>-->
-                        <!--<el-checkbox-group v-model="one" v-for="(vals,index) in oneCity" :key="index">-->
-                            <!--<el-checkbox-button-->
-                                                <!--v-for="(val,indexs) in vals" :key="indexs" :label="val.z_name">-->
-                                <!--{{val.z_name}}-->
-                            <!--</el-checkbox-button>-->
-                        <!--</el-checkbox-group>-->
-                    <!--</div>-->
                 </div>
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{twocityName}}</div>
@@ -66,12 +58,6 @@
                                          :label="city.z_name" @click.native="selectCity(city.id,city.z_name)"></el-radio-button>
                     </el-radio-group>
 
-                    <!--<el-checkbox-group v-model="one" v-for="(vals,index) in twoCity" :key="index">-->
-                        <!--<el-checkbox-button-->
-                                <!--v-for="(val,indexs) in vals" :key="indexs" :label="val.z_name" >-->
-                            <!--{{val.z_name}}-->
-                        <!--</el-checkbox-button>-->
-                    <!--</el-checkbox-group>-->
                 </div>
                 <div class="ellipsis">……</div>
                 <div class="page">

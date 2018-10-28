@@ -257,7 +257,7 @@
             },
             // 跳转到消息通知页面
             toNotice: function () {
-                this.$router.push('/message/notice/' + this.id+'/'+this.majorid);
+                this.$router.push('/active/selectUnivers/' + this.id);
             },
 
             getImg: function () {
