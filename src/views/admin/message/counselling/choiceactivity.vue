@@ -15,7 +15,7 @@
             <div class="choiceActivity-left">
                 <div class="leftImg">
                     <i class="el-icon-view"></i>
-                    <p>选择院校专业</p>
+                    <p>选择活动</p>
                 </div>
             </div>
             <div class="choiceActivity-right">
@@ -274,8 +274,7 @@
     }
     .page {
         text-align: right;
-        background-color: #e9eef3;
-        margin: 20px 70px 40px 0;
+        margin: 20px 75px 40px 0;
     }
     .leftImg p {
         position: relative;
