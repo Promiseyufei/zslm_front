@@ -34,7 +34,7 @@
                             </div>
                             <div class="selectMajor" v-for="(list,index) in majorData" :key="index">
                                 <span @click="majorDelete(index)">删除</span>
-                                <p>{{list.name}}</p>
+                                <p>{{list.z_name}}</p>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                             </div>
                             <div class="selectMajor" v-for="(list,index) in activityData" :key="index">
                                 <span @click="activityDelete(index)">删除</span>
-                                <p>{{list.name}}</p>
+                                <p>{{list.active_name}}</p>
                             </div>
                         </div>
                     </div>
@@ -68,8 +68,8 @@
                         </div>
                         <div class="operateUpfilesRight">
                             <template>
-                                <el-radio v-model="radio" label="1">关注了以上任一院校【或】参与了以上任一活动</el-radio>
-                                <el-radio v-model="radio" label="2">关注了以上任一院校【且】参与了以上任一活动</el-radio>
+                                <el-radio v-model="radio" label=1>关注了以上任一院校【或】参与了以上任一活动</el-radio>
+                                <el-radio v-model="radio" label=2>关注了以上任一院校【且】参与了以上任一活动</el-radio>
                             </template>
 
                             <!-- 完成按钮 -->
@@ -96,45 +96,46 @@ export default {
     },
     data() {
         return {
-            majorData: [
-                // {
-                //     id: 123,
-                //     name: "河南科技大学",
-                // },
-                // {
-                //     id: 456,
-                //     name: "新乡医学院",
-                // },
-                // {
-                //     id: 99,
-                //     name: "清华大学",
-                // },
-            ],
-            activityData: [
-                // {
-                //     id: 123,
-                //     name: "我要上天！！",
-                // },
-                // {
-                //     id: 456,
-                //     name: "今天我好好学习了，✌️，开心",
-                // },
-                // {
-                //     id: 99,
-                //     name: "加油",
-                // },
-            ],
-            radio: "1",
-                
+            majorData: [],
+            activityData: [],
+            radio: 0,
         }
     },
     methods: {
         test:function() {
-            
+            let arr = new Array();
+            arr['semajor'] = this.majorData;
+            arr['seactivity'] = this.activityData;
+            arr['type'] = this.radio;
+            arr.push("2");
+
+            this.$router.push({name:'/send/sendHome', params: {seTwo: arr}});
+            // this.post('/admin/news/batchScreenAccounts', {
+            //     majorIdArr:
+            //     activityIdArr:
+            //     condition:
+            // })
+
         },
+        judge() {
+            if(this.radio == 0) {
+                this.message(true, '请选择关系类型', 'info');
+                return false;
+            }
+            else {
+                
+                if((this.majorData.length < 1 || this.activityData.length < 1) && (this.radio == 2 || this.radio == "2")) {
+                    this.message(true, '若需要满足且的关系，需要同时选择院校专业和活动');
+                    return false;
+                }
+                return true;
+            }
+        },
+
+
         //删除单个院校
         majorDelete: function(index) {
-            this.majorData.pop(index);
+            this.majorData.splice(index, 1);
         },
         // 跳转到“院校列表”
         adviseAdd: function() {
@@ -146,19 +147,24 @@ export default {
         },
         //删除单个活动
         activityDelete: function(index) {
-            this.activityData.pop(index);
+            this.activityData.splice(index, 1);
         },
         //清空所有学校
         objectDelete:function() {
-
+            this.majorData = [];
         },
         //清空所有活动
         objectDelete2:function() {
-
+            this.activityData = [];
         },
     },
     mounted(){
-
+        if(typeof this.$route.params.seMajor != undefined || typeof this.$route.params.seMajor != 'undefined') {
+            this.majorData = this.$route.params.seMajor;
+        }
+        if(typeof this.$route.params.seActivity != undefined || typeof this.$route.params.seActivity != 'undefined') {
+            this.activityData = this.$route.params.seActivity;
+        }
     },
 };
 </script>

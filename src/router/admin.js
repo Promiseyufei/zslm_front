@@ -194,9 +194,10 @@ let admin_router = {
             name: '/send/sendHome',
             component: resolve =>void(require(['@/views/admin/sendMessage/send/sendHome'], resolve))
         },
+        //消息管理-设置消息对象—特定行为的用户
         {
             path: '/send/setMessageObject',
-            name: '消息管理-设置消息对象—特定行为的用户',
+            name: '/send/setMessageObject',
             component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageObject'], resolve))
         },
         {
