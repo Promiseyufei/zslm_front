@@ -26,7 +26,7 @@
                         </div>
                         <div class="operateUpfilesRight">
                             <div class="messageBtn">
-                                <el-button type="primary" @click="toNotice" plain>跳过</el-button>
+                                <el-button type="primary" @click="toM" plain>跳过</el-button>
                                 <el-button type="primary" @click="toNotice">设置</el-button>
                             </div>
 
@@ -117,7 +117,7 @@
                     <!-- 按钮 -->
                     <div class="operateFinalUp">
                         <el-button type="primary" @click="toBack" plain>返回上一步</el-button>
-                        <el-button type="primary" @click="toNotice">下一步，消息通知</el-button>
+                        <el-button type="primary" @click="toM">下一步，消息通知</el-button>
                         <el-button type="primary" @click="">完成！</el-button>
                     </div>
 
@@ -256,6 +256,11 @@
                 alert(111)
             },
             // 跳转到消息通知页面
+
+            toM:function(){
+
+                this.$router.push('/message/notice/' + this.id+'/'+this.majorid);
+            },
             toNotice: function () {
                 this.$router.push('/active/selectUnivers/' + this.id);
             },
@@ -345,61 +350,61 @@
             },
 
             setOpAd: function (weight, val) {
-                let that = this;
-
-                this.$confirm('操作需谨慎, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    that.post('/admin/information/updateActivityWeight',{
-                        //后台参数，前台参数(传向后台)
-                        id: that.tableData[val].id,
-                        showWeight: weight
-                    }).then(res=>{
-                        if (res.code == 0){
-                            that.message(true,'删除成功','success');
-                        }else{
-                            that.message(true,'删除失败','error');
-                            // that.majorlisttable[index].show_weight = that.showweight;
-                        }
-
-                    })
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消修改'
-                    });
-                });
+                // let that = this;
+                // console.log(that)
+                // this.post('/admin/information/updateActivityWeight',{
+                //     //后台参数，前台参数(传向后台)
+                //     id: that.tableData[weight].id,
+                //     showWeight: val
+                // }).then(res=>{
+                //     if (res.code == 0){
+                //         that.message(true,'删除成功','success');
+                //     }else{
+                //         that.message(true,'删除失败','error');
+                //     }
+                //
+                // })
+                // this.$confirm('操作需谨慎, 是否继续?', '提示', {
+                //     confirmButtonText: '确定',
+                //     cancelButtonText: '取消',
+                //     type: 'warning'
+                // }).then(() => {
+                //
+                // }).catch(() => {
+                //     this.$message({
+                //         type: 'info',
+                //         message: '已取消修改'
+                //     });
+                // });
             },
 
             setOpM(weight, val){
-                let that = this;
-
-                this.$confirm('操作需谨慎, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    that.post('/admin/information/updateActivityWeight',{
-                        //后台参数，前台参数(传向后台)
-                        id: that.tableData[val].id,
-                        showWeight: weight
-                    }).then(res=>{
-                        if (res.code == 0){
-                            that.message(true,'删除成功','success');
-                        }else{
-                            that.message(true,'删除失败','error');
-                            // that.majorlisttable[index].show_weight = that.showweight;
-                        }
-
-                    })
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消修改'
-                    });
-                });
+                // let that = this;
+                //
+                // this.$confirm('操作需谨慎, 是否继续?', '提示', {
+                //     confirmButtonText: '确定',
+                //     cancelButtonText: '取消',
+                //     type: 'warning'
+                // }).then(() => {
+                //     that.post('/admin/information/updateActivityWeight',{
+                //         //后台参数，前台参数(传向后台)
+                //         id: that.tableData[val].id,
+                //         showWeight: weight
+                //     }).then(res=>{
+                //         if (res.code == 0){
+                //             that.message(true,'删除成功','success');
+                //         }else{
+                //             that.message(true,'删除失败','error');
+                //             // that.majorlisttable[index].show_weight = that.showweight;
+                //         }
+                //
+                //     })
+                // }).catch(() => {
+                //     this.$message({
+                //         type: 'info',
+                //         message: '已取消修改'
+                //     });
+                // });
             },
             delAdvise: function (res, row) {
                 // this.confirm(() => {

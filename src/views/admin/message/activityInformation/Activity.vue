@@ -146,9 +146,18 @@
                             <div><i class="fa fa-glass fa-fw FA-3X"></i>&nbsp;活动介绍信息</div>
                         </div>
                         <div class="operateUpfilesRight2">
-                            <!-- <el-button type="primary" @click="startChange3">编辑</el-button> -->
-                            <!-- <div class="messageBtn"> -->
-                            <editor :disabled3="disabled3"></editor>
+                             <el-button type="primary" @click="startChange3">编辑</el-button>
+                    <!---->
+                            <div class="messageBtn">
+                                <div id="editor">
+                                    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+                                </div>
+                                <div class="messageEditor">
+                                    <el-button type="primary" plain :disabled="disabled3" @click="messageEmpty">清空
+                                    </el-button>
+                                    <el-button type="primary" :disabled="disabled3" @click="messageSubmit">提交</el-button>
+                                </div>
+                            </div>
                             <!-- </div> -->
                         </div>
                     </div>

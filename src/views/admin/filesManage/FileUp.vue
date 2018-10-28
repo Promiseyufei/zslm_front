@@ -194,7 +194,6 @@ export default {
         },
         // 点击上传图片按钮
         submitForm: function (formName) {
-            // console.log(self.fileList[0].file)
           var self = this;
           this.$refs[formName].validate((valid) => {
             // 判断表单是否符合填写要求

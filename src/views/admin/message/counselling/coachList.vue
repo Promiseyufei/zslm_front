@@ -105,15 +105,8 @@
                         <div class="majorlist-icon">
 
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
-<<<<<<< HEAD
-
                             <i class="el-icon-edit-outline"   @click="jumpPage(majorlisttable[scope.$index].id)" slot="reference"></i>
                             <i class="el-icon-delete"   @click="deleteRow(scope.$index, majorlisttable)" slot="reference"></i>
-                            <el-popover placement="top-start" title="标题" width="200" trigger="click" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-
-                                <i class="el-icon-tickets" @click = "alertViewCoupons" slot="reference"></i>
-                            </el-popover>
-=======
                             <i class="el-icon-tickets" @click = "dialogTableVisible = true" slot="reference"></i>
                             <el-dialog title="查看招生项目" :visible.sync="dialogTableVisible" class="dialog">
                               <el-table :data="gridData"  border>
@@ -137,7 +130,6 @@
                                 </el-table-column>
                               </el-table>
                             </el-dialog>
->>>>>>> 957b61cda149e8abda7a2c73eeeb5635a47fc21d
                         </div>
                     </template>
                 </el-table-column>
@@ -231,7 +223,7 @@
             }
         },
         methods:{
-<<<<<<< HEAD
+
 
             loseFocus:function(val,index) {
                 var re = /^[0-9]+.?[0-9]*$/;
@@ -383,15 +375,7 @@
 
             jumpPage:function(id){
                 this.$router.push('/message/changeMessage/'+id);
-=======
-            //表格编辑-查找-跳到优惠券设置页面
-            jumpItemInfo:function() {
-                this.$router.push('/message/coupon/'+"");
-            },
-            //新建-跳转到辅导机构信息编辑页面
-            jumpPage:function(){
-                this.$router.push('/message/changeMessage');
->>>>>>> 957b61cda149e8abda7a2c73eeeb5635a47fc21d
+
             },
             pageChange(msg) {
                 this.searchContent.page = msg.page;
