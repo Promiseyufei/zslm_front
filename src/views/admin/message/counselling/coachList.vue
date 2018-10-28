@@ -105,6 +105,7 @@
                         <div class="majorlist-icon">
 
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
+<<<<<<< HEAD
 
                             <i class="el-icon-edit-outline"   @click="jumpPage(majorlisttable[scope.$index].id)" slot="reference"></i>
                             <i class="el-icon-delete"   @click="deleteRow(scope.$index, majorlisttable)" slot="reference"></i>
@@ -112,6 +113,31 @@
 
                                 <i class="el-icon-tickets" @click = "alertViewCoupons" slot="reference"></i>
                             </el-popover>
+=======
+                            <i class="el-icon-tickets" @click = "dialogTableVisible = true" slot="reference"></i>
+                            <el-dialog title="查看招生项目" :visible.sync="dialogTableVisible" class="dialog">
+                              <el-table :data="gridData"  border>
+                                <el-table-column property="id" label="编号" width="80"></el-table-column>
+                                <el-table-column property="name" label="展示顺序" width="100">
+                                    <template slot-scope="scope">
+                                        <el-input v-model="gridData[scope.$index].showInput" @focus="focusMajorWeigthCount(gridData[scope.$index].showInput)" v-on:blur="changeMajorWeight(gridData[scope.$index].id, gridData[scope.$index].showInput, scope.$index)"></el-input>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column property="name" label="展示状态" width="100">
+                                    <template slot-scope="scope">
+                                        <el-switch v-model="gridData[scope.$index].if_recommended" @change="setMajorState(gridData[scope.$index].id, gridData[scope.$index].if_recommended, 2, scope.$index)">
+                                        </el-switch>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column property="address" label="招生项目"></el-table-column>
+                                <el-table-column property="address" label="操作" width="140">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-search"  @click="jumpItemInfo"></i>
+                                    </template>
+                                </el-table-column>
+                              </el-table>
+                            </el-dialog>
+>>>>>>> 957b61cda149e8abda7a2c73eeeb5635a47fc21d
                         </div>
                     </template>
                 </el-table-column>
@@ -132,6 +158,16 @@
     export default{
         data(){
             return{
+                /*模态框*/
+                dialogTableVisible: false,
+                 gridData: [    //表格
+                    {
+                      id: 0,
+                      showInput: 0,
+                      showState: true,
+                      item:'',
+                    }, 
+                ],
                 /*分页*/
                 multipleSelection:[],
                 total:0,
@@ -147,15 +183,15 @@
                   {prop:'update_time',label:'发布时间',width:160},
                 ],
                 majorlisttable:[{
-                  weight:'',
-                  id:'',
+                    weight:'',
+                    id:'',
                     coach_name:'',
                     province:'',
                     update_time:'',
                     coach_type:'',
                     father_id:'',
-                  discount:'',
-                  refund:'',
+                    discount:'',
+                    refund:'',
                     if_coupons:'',
                     is_recommend:'',
                     is_show:'',
@@ -170,7 +206,6 @@
                 iconname:[
                     {name:'el-icon-search', event:'jumpCoachHomePage'},
                     {name:'el-icon-refresh', event:'timeUpdate'},
-                    // {name:'el-icon-tickets', event:'alertViewCoupons'},
                 ],
                 value:'',
                 name:'',
@@ -196,6 +231,7 @@
             }
         },
         methods:{
+<<<<<<< HEAD
 
             loseFocus:function(val,index) {
                 var re = /^[0-9]+.?[0-9]*$/;
@@ -347,6 +383,15 @@
 
             jumpPage:function(id){
                 this.$router.push('/message/changeMessage/'+id);
+=======
+            //表格编辑-查找-跳到优惠券设置页面
+            jumpItemInfo:function() {
+                this.$router.push('/message/coupon/'+"");
+            },
+            //新建-跳转到辅导机构信息编辑页面
+            jumpPage:function(){
+                this.$router.push('/message/changeMessage');
+>>>>>>> 957b61cda149e8abda7a2c73eeeb5635a47fc21d
             },
             pageChange(msg) {
                 this.searchContent.page = msg.page;
@@ -515,6 +560,9 @@
 
 <!-- 局部样式 scoped -->
 <style scoped>
+    .dialog i {
+        font-size: 20px;
+    }
     .majorlist-formmini {
         width: 180px;
     }

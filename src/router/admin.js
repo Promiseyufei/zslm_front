@@ -168,12 +168,12 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/informationRelease/recommend'], resolve))
         },
         {
-            path: '/message/infoSelectMajor',
+            path: '/message/infoSelectMajor/:infoId?/:type?',
             name: '信息发布-资讯发布-选择院校专业',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/infoSelectMajor'], resolve))
         },
         {
-            path: '/message/informationNotice/:id',
+            path: '/message/informationNotice/:infoId?',
             name: '信息发布-资讯发布-消息通知',
             component: resolve =>void(require(['@/views/admin/message/informationRelease/informationNotice'], resolve))
         },

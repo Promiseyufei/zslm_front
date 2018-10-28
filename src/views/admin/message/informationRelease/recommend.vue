@@ -5,7 +5,6 @@
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item>信息发布</el-breadcrumb-item>
                     <el-breadcrumb-item>资讯发布</el-breadcrumb-item>
-                    <el-breadcrumb-item>资讯内容推荐</el-breadcrumb-item>
                     <el-breadcrumb-item>推荐信息</el-breadcrumb-item>
                 </el-breadcrumb>
 
@@ -44,12 +43,12 @@
                                 <div v-for="(item, index) in shoolCount" :key="index">
                                     <!-- 主办院校logo -->
                                     <div class="messageSchool">
-                                        <img v-bind:src="item.logo" alt="">
+                                        <img v-bind:src="item.magor_logo_name" alt="暂无">
                                     </div>
 
                                     <!-- 院校名称 -->
-                                    <p style="text-align: center;">{{item.name}}</p>
-                                    <p style="text-align: center; color: #1ABC9C;cursor: pointer;" v-if="index >= 0" @click="deleteSchool(index)">删除</p>
+                                    <p style="text-align: center;">{{item.z_name}}</p>
+                                    <p style="text-align: center; color: #1ABC9C;cursor: pointer;" v-if="index >= 0" @click="deleteSchool(item.id, index)">删除</p>
                                 </div>
                             </div>
                             
@@ -93,10 +92,10 @@
                                 <div v-if="this.setSwitch2 == 2">
                                     <div class="messageUpfilesRight2Nav">
                                         <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
-                                        <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                                        <el-button type="info" plain @click="delReMajor"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                                     </div>
                                     <!-- 表格 -->
-                                    <messageTable :tableData3 = "tableData2" :listTable="listTable2" @setInfoRelation="setInfoState" @del="delAdvise"></messageTable>
+                                    <messageTable :tableData3="tableData2" :listTable="listTable2" @setInfoRelation="setMajorState" @del="delReMajor"></messageTable>
                                 </div>
                             </template>
                         </div>
@@ -122,7 +121,7 @@ export default {
     },
     data() {
       return {
-        info: 0,
+        infoId: 0,
         imageUrl: '',
         //设置成功的主办院校：
         shoolCount: [],
@@ -164,17 +163,17 @@ export default {
                 width: "210px"
             },
             {
-                prop: "weight",
+                prop: "show_weight",
                 lable: "展示顺序",
                 width: "80px"
             },
             {
-                prop: "activity_type",
+                prop: "province",
                 lable: "院校省市",
                 width: "210px"
             },
             {
-                prop: "active_name",
+                prop: "z_name",
                 lable: "院校专业名称",
                 width: "319px"
             },
@@ -191,14 +190,14 @@ export default {
     methods: {
         // 跳转到“院校专业”页面添加院校
         adviseAdd: function() {
-          this.$router.push('/send/sendMessage/' + this.infoId);
+          this.$router.push('/message/infoSelectMajor/' + this.infoId + '/' + 0);
         },
         //跳转到推荐阅读添加页面
         adviseRead() {
             this.$router.push('/message/setReRead/' + this.infoId);
         },
         pushInfoSelectMajor() {
-            this.$router.push('/message/infoSelectMajor');
+            this.$router.push('/message/infoSelectMajor/' + this.infoId + '/' + 1);
         },
         
         // 返回上一步
@@ -208,7 +207,7 @@ export default {
 
         // 跳转到消息通知页面
         toNotice: function() {
-            this.$router.push('/message/informationNotice/' + this.id);
+            this.$router.push('/message/informationNotice/' + this.infoId);
         },
 
         //点击完成，跳转到资讯列表首页
@@ -222,7 +221,11 @@ export default {
 
         //删除主办院校
         deleteSchool: function(index) {
-            console.log(index);
+            // this.confirm(() => {
+            //     this.post('/')
+            // }, () => {
+            //     this.message(true, '取消设置', 'info');
+            // }, '确定取消当前相关院校专业?');
             this.shoolCount.splice(index);
         },
 
@@ -275,6 +278,19 @@ export default {
                 this.message(true, '已取消修改', 'info');
             }, '确定修改该资讯的权值吗？');
         },
+        setMajorState(id, weight) {
+            this.confirm(() => {
+                this.post('/admin/information/setMajorState', {
+                    majorId: id,
+                    type: 0,
+                    state: weight
+                }).then((response) => {
+                    (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+                })
+            }, () => {
+                this.message(true, '已取消修改', 'info');
+            }, '确定修改该院校专业的权值吗？');           
+        },
 
         //取消推荐阅读
         //直接调用后台接口清除字符串中的删除id，因为添加页面点击完成已经添加到数据库中，所以在手动设置模块展示的一定是在数据库中的信息，所以直接删除就ok
@@ -286,7 +302,8 @@ export default {
             this.confirm(() => {
                 this.post('/admin/information/delAppointInfoRecommendRead', {
                     id: this.infoId,
-                    infoId: infoid
+                    infoId: infoid,
+                    type: 0
                 }).then((response) => {
                     if(response.code == 0) {
                         if(type == 0) {
@@ -300,6 +317,30 @@ export default {
             }, () => {
                 this.message(true, '已取消删除', 'info');
             }, "确定取消该推荐阅读吗？");
+        },
+        delReMajor(majorId, row) {
+            let type = null;
+            if(typeof majorId != null && typeof row != null) type = 0;
+            else if(typeof majorId == null && typeof row == null) type = 1;
+
+            this.confirm(() => {
+                this.post('/admin/information/delAppointInfoRecommendRead', {
+                    id: this.infoId,
+                    infoId: majorId,
+                    type: 1
+                }).then((response) => {
+                    if(response.code == 0) {
+                        if(type == 0) {
+                            this.tableData2.splice(this.tableData2.indexOf(row), 1);
+                        }
+                        else if(type == 1) this.tableData2 = [];
+                        this.message(true, "删除成功", 'success');
+                    }
+                    else this.message(true, response.msg, 'error');
+                })
+            }, () => {
+                this.message(true, '已取消删除', 'info');
+            }, "确定取消该推荐阅读吗？");           
         },
         // 清空所有推荐活动
         activityDelete: function() {
@@ -379,6 +420,18 @@ export default {
 
                 }, '确定自动设置推荐院校专业吗？');
             }
+            //手动设置
+            else if(res == 2) {
+                this.post('/admin/information/getAppointInfoRecommendMajor', {
+                    infoId: this.infoId
+                }).then((response) => {
+                    if(response.code == 0) {
+                        _this.tableData2 = response.result
+                    }
+                    else 
+                        this.message(true, response.msg, 'error');
+                })
+            }
         },
         // 上传院校logo
         handleAvatarSuccess(res, file) {
@@ -395,12 +448,24 @@ export default {
               this.$message.error('上传头像图片大小不能超过 2MB!');
             }
             return isJPG && isLt2M;
+        },
+        getInfoRelevantMajor() {
+            this.post('/admin/information/getAppointInfoRelevantMajor', {
+                infoId: this.infoId,
+            }).then((response) => {
+                console.log(response);
+                if(response.code == 0) {
+                    this.shoolCount = response.result;
+                }
+                else this.message(true, response.msg, 'error');
+            });
         }
     },
     mounted() {
         if(this.$route.params.infoId != null) {
             this.infoId = this.$route.params.infoId;
         }
+        this.getInfoRelevantMajor();
         
     },
 };
