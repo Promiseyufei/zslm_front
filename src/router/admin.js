@@ -32,6 +32,8 @@ let admin_router = {
             name: '选择院校专业',
             component: resolve =>void(require(['@/views/admin/SelectUnivers'], resolve))
         },
+
+
         {
             path: '/UniversMajorList',
             name: '选择院校专业',
@@ -86,17 +88,22 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/collegeInformation/UniversityMessage'], resolve))
         },
         {
-            path: '/message/activity',
+            path: '/message/activity/:actId',
             name: '活动-活动信息编辑',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Activity'], resolve))
         },
         {
-            path: '/message/notice/:id',
+            path: '/message/notice/:id/:mid',
             name: '消息通知',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/messageNotice'], resolve))
         },
         {
-            path: '/message/advise/:id',
+            path: '/active/selectUnivers/:actid',
+            name: '选择院校专业',
+            component: resolve =>void(require(['@/views/admin/message/activityInformation/selectMajor'], resolve))
+        },
+        {
+            path: '/message/advise/:id/:major',
             name: '活动信息-活动信息编辑-推荐信息',
             component: resolve =>void(require(['@/views/admin/message/activityInformation/Advise'], resolve))
         },
@@ -126,7 +133,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/message/counselling/coachList'], resolve))
         },
         {
-            path: '/message/changeMessage',
+            path: '/message/changeMessage/:cid',
             name: '辅导-新建/编辑——基本信息',
             component: resolve =>void(require(['@/views/admin/message/counselling/changeMessage'], resolve))
         },
@@ -264,7 +271,7 @@ let admin_router = {
             component: resolve =>void(require(['@/views/admin/refund/refundList'], resolve))
         },
         {
-            path: '/refund/refunddetails',
+            path: '/refund/refunddetails/:id',
             name: '用户管理-退款详情',
             component: resolve =>void(require(['@/views/admin/refund/refundDetails'], resolve))
         },

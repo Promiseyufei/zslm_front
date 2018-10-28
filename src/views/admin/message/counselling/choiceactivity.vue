@@ -98,8 +98,8 @@
                 /*分页*/
                 total: 0,
                 searchContent:{
-                    page:'',
-                    limit:'',
+                    page:1,
+                    limit:5,
                 },
                 /*当前选择*/
                 majorname:'',
@@ -134,13 +134,13 @@
                 /*表格循环*/
                 tableTop:[
                     {prop:'id',label:'编号',width:80},
-                    {prop:'adviceState',label:'推荐状态',width:80},
-                    {prop:'showState',label:'显示状态',width:80},
-                    {prop:'activityName',label:'活动名称',width:380},
-                    {prop:'activityType',label:'活动类型',width:80},
-                    {prop:'activityCity',label:'活动省市',width:80},
-                    {prop:'mainUnivers',label:'主办院校',width:160},
-                    {prop:'joinType',label:'报名状态',width:80},
+                    {prop:'recommended_state',label:'推荐状态',width:80},
+                    {prop:'show_state',label:'显示状态',width:80},
+                    {prop:'active_name',label:'活动名称',width:380},
+                    {prop:'active_type',label:'活动类型',width:80},
+                    {prop:'province',label:'活动省市',width:80},
+                    {prop:'recommended_state',label:'主办院校',width:160},
+                    {prop:'sign_up_state',label:'报名状态',width:80},
                 ],
                 /*表格数据*/
                 majorlisttable:[{
@@ -168,9 +168,16 @@
             },
             gettableInfo: function(){
                     var that = this;
-                    axios.post('/admin/choiceactivity/getcityInfo',{
-                    //后台参数，前台参数(传向后台)
-                    // butname: that.butname,
+                    this.fetch('/admin/information/getActivityAll',{
+                        soachNameKeyword:that.activityname,
+                        showType:that.showstate != '' ? parseInt(that.type1) : 2,
+                        recommendedState:that.advicestate != '' ? parseInt(that.advicestate): 2,
+                        activityState:that.activitystate != '' ? parseInt(that.activitystate) : 2,
+                        activityType:that.activitytype,
+                        provice:that.activitycity,
+                        sortType:0,
+                        pageCount:that.searchContent.limit,
+                        pageNumber:that.searchContent.page
                     })
                     .then(function(response) {
                         var res = response.data;

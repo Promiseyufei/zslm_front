@@ -51,12 +51,12 @@
                                          :label="city.z_name" @click.native="selectCity(city.id,city.z_name)"></el-radio-button>
                     </el-radio-group>
                     <!--<div>-->
-                        <!--<el-checkbox-group v-model="one" v-for="(vals,index) in oneCity" :key="index">-->
-                            <!--<el-checkbox-button-->
-                                                <!--v-for="(val,indexs) in vals" :key="indexs" :label="val.z_name">-->
-                                <!--{{val.z_name}}-->
-                            <!--</el-checkbox-button>-->
-                        <!--</el-checkbox-group>-->
+                    <!--<el-checkbox-group v-model="one" v-for="(vals,index) in oneCity" :key="index">-->
+                    <!--<el-checkbox-button-->
+                    <!--v-for="(val,indexs) in vals" :key="indexs" :label="val.z_name">-->
+                    <!--{{val.z_name}}-->
+                    <!--</el-checkbox-button>-->
+                    <!--</el-checkbox-group>-->
                     <!--</div>-->
                 </div>
                 <div class="SelectUnivers-majorname">
@@ -67,10 +67,10 @@
                     </el-radio-group>
 
                     <!--<el-checkbox-group v-model="one" v-for="(vals,index) in twoCity" :key="index">-->
-                        <!--<el-checkbox-button-->
-                                <!--v-for="(val,indexs) in vals" :key="indexs" :label="val.z_name" >-->
-                            <!--{{val.z_name}}-->
-                        <!--</el-checkbox-button>-->
+                    <!--<el-checkbox-button-->
+                    <!--v-for="(val,indexs) in vals" :key="indexs" :label="val.z_name" >-->
+                    <!--{{val.z_name}}-->
+                    <!--</el-checkbox-button>-->
                     <!--</el-checkbox-group>-->
                 </div>
                 <div class="ellipsis">……</div>
@@ -80,7 +80,7 @@
                                    :page-size="1"
                                    :total="count"
                                    @current-change="handleCurrentChange"
-                                  >
+                    >
                     </el-pagination>
                 </div>
             </div>
@@ -170,6 +170,7 @@
         data() {
             return {
                 //查询条件
+                actid:0,
                 one:[],
                 selectname:'',
                 page:1,
@@ -259,11 +260,13 @@
                 this.page = val;
                 this.getMajor();
             },
+
+
             getMajor: function () {
 
                 let searchs = [];
-                    this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
-                    this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
+                this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
+                this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
 
                 let that = this
                 this.fetch('/admin/files/getmajorbypro', {
@@ -305,12 +308,13 @@
                  * this.one 数组记录了选中的值
                  */
                 // console.log(this.one)
-                this.$router.push('/filesManage/fileup/' + this.majorname);
+                this.$router.push('/message/advise/'+this.actid+'/' + this.majorname);
 
             },
         },
         mounted() {
             // this.getMajor();
+            this.actid = this.$route.params.actid
         }
     }
 
@@ -437,7 +441,7 @@
         height: 50px;
         display: flex;
         align-items: center;
-        background: url(../../assets/img/point.png) no-repeat;
+        background: url(../../../../assets/img/point.png) no-repeat;
         background-size: 100% 100%;
     }
 

@@ -46,18 +46,15 @@
                        <div style="position: relative;">
                            <div class="upQuotes"><img src="../../../../assets/img/upQuotes.png"></div>
                            <div class="contentDetail">
-<<<<<<< HEAD
+
                                <p >{{content}}</p>
-                               <el-button type="text">修改</el-button>
-=======
-                               <p>{{universName}}发布了一个新的活动，快去看看吧！</p>
-                               <el-button type="text" @click="modify">修改</el-button>
->>>>>>> 9083c2e7e04455d364fa5e62f209db2fc0cbe896
+                               <el-button type="text" @click="change()" >修改</el-button>
+
                            </div>
                            <div class="lowQuotes"><img src="../../../../assets/img/lowQuotes.png"></div>
                        </div>
                        <div>
-                           <el-button type="primary"  @click="addNewsFirst">发送</el-button>
+                           <el-button type="primary"  @click="addNewsFirst" :disabled="contentdis">发送</el-button>
                        </div>
                    </div>
                </div>
@@ -70,13 +67,13 @@
                        <div style="position: relative;">
                            <div class="upQuotes"><img src="../../../../assets/img/upQuotes.png"></div>
                            <div class="contentDetail">
-                               <p>{{sendMessage}}发布了一个新的活动，快去看看吧！</p>
+                               <p>{{sendMessage}}</p>
                                <el-button type="text"  @click="modify">修改</el-button>
                            </div>
                            <div class="lowQuotes"><img src="../../../../assets/img/lowQuotes.png"></div>
                        </div>
                        <div>
-                           <el-button type="primary" @click="addNewsSecond">发送</el-button>
+                           <el-button type="primary" @click="addNewsSecond"  :disabled="sendMessagedis">发送</el-button>
                        </div>
                    </div>
                </div>
@@ -93,8 +90,10 @@
             return {
                 //设置消息类型
                 universName:'',
-                sendMessage:'',
-                content:'test',
+                contentdis:false,
+                sendMessage:'请输入信息',
+                sendMessagedis:false,
+                content:'请输入信息',
                 majorId:1,
                 activeId:0
             };
@@ -110,9 +109,18 @@
                         {
                             activityId:parseInt(self.activeId),
                             majorId:parseInt(self.majorId),
-                            newOrDyna:0
+                            newOrDyna:0,
+                            contents:self.content
                         }
-                )
+                ).then(res=>{
+                    if(res.code == 0){
+                        self.message(true,'修改成功')
+                        self.contentdis = true;
+                    }else{
+                        self.message(true,'修改成功','error')
+                    }
+
+                })
             },
             addNewsSecond(){
                 let self = this;
@@ -120,9 +128,18 @@
                     {
                         activityId:parseInt(self.activeId),
                         majorId:parseInt(self.majorId),
-                        newOrDyna:1
+                        newOrDyna:1,
+                        contents:self.sendMessage
                     }
-                )
+                ).then(res=>{
+                    if(res.code == 0){
+                        self.message(true,'修改成功')
+                        self.sendMessagedis = true;
+                    }else{
+                        self.message(true,'修改成功','error')
+                    }
+
+                })
             },
             modify() {
                 this.$prompt('', '', {
@@ -131,6 +148,7 @@
                   inputPattern: '',//输入框内容判断，前台要加吗？
                   inputErrorMessage: '邮箱格式不正确'//判断提示语
                 }).then(({ value }) => {
+                    this.sendMessage = value
                   this.$message({
                     type: 'success',
                     message: '您已修改为: ' + value
@@ -142,9 +160,30 @@
                   });       
                 });
             }
+            ,
+            change() {
+                this.$prompt('', '', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    inputPattern: '',//输入框内容判断，前台要加吗？
+                    inputErrorMessage: '邮箱格式不正确'//判断提示语
+                }).then(({ value }) => {
+                    this.content = value
+                    this.$message({
+                        type: 'success',
+                        message: '您已修改为: ' + value
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '您已取消修改'
+                    });
+                });
+            }
         },
         mounted(){
             this.activeId = this.$route.params.id;
+            this.majorId = this.$route.params.mid
         }
     }
 

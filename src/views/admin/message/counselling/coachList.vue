@@ -61,42 +61,55 @@
             </el-select>
         </div>
         <div class="majorlist-table">
-            <el-table :header-cell-style="{background:'#f9fafc'}" :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 100%">
+            <el-table :header-cell-style="{background:'#f9fafc'}" :data="majorlisttable"
+                      @selection-change="handleSelectionChange" @current-change="handleCurrentChange" border style="width: 100%">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column label="编号" prop="id" width="100"></el-table-column>
                 <el-table-column label="展示权重" width="100">
                     <template slot-scope="scope">
-                        <el-input v-model="majorlisttable[scope.$index].weight"></el-input>
+                        <el-input @focus="getFocus(majorlisttable[scope.$index].weight)"
+                                  v-on:blur="loseFocus(majorlisttable[scope.$index].weight,scope.$index)"
+                                  v-model="majorlisttable[scope.$index].weight"></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column label="展示状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].is_show" active-color="#999" inactive-color="#409eff"></el-switch>
+                        <el-switch v-model="majorlisttable[scope.$index].is_show"
+                                   @change="changeStatusOne(scope.$index,majorlisttable[scope.$index].is_show)"
+                                   active-color="#999" inactive-color="#409eff"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="推荐状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].is_recommend" active-color="#409eff" inactive-color="#999">
-                        </el-switch>
+                        <el-switch v-model="majorlisttable[scope.$index].is_recommend"
+                                   @change="changeStatusTwo(scope.$index,majorlisttable[scope.$index].is_recommend)"
+                                   active-color="#999" inactive-color="#409eff"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="优惠券" width="80">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].if_coupons" active-color="#409eff" inactive-color="#999">
-                        </el-switch>
+                        <el-switch v-model="majorlisttable[scope.$index].if_coupons"
+                                   @change="changeStatusThree(scope.$index,majorlisttable[scope.$index].if_coupons)"
+                                   active-color="#999" inactive-color="#409eff"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="退款保障" width="80">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].if_back_money" active-color="#409eff" inactive-color="#999">
-                        </el-switch>
+                        <el-switch v-model="majorlisttable[scope.$index].if_back_money"
+                                   @change="changeStatusFour(scope.$index,majorlisttable[scope.$index].if_back_money)"
+                                   active-color="#999" inactive-color="#409eff"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="200">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
+
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
+
+                            <i class="el-icon-edit-outline"   @click="jumpPage(majorlisttable[scope.$index].id)" slot="reference"></i>
+                            <i class="el-icon-delete"   @click="deleteRow(scope.$index, majorlisttable)" slot="reference"></i>
                             <el-popover placement="top-start" title="标题" width="200" trigger="click" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+
                                 <i class="el-icon-tickets" @click = "alertViewCoupons" slot="reference"></i>
                             </el-popover>
                         </div>
@@ -109,7 +122,7 @@
             </el-table>
         </div>
         <div class="footer"> 
-            <el-button size="mini" icon="el-icon-delete">删除</el-button>
+            <el-button size="mini" icon="el-icon-delete" @click="BatchDelete">删除</el-button>
             <Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
         </div>
     </div>
@@ -120,6 +133,7 @@
         data(){
             return{
                 /*分页*/
+                multipleSelection:[],
                 total:0,
                 searchContent:{
                     page:'',
@@ -155,8 +169,6 @@
                 ],
                 iconname:[
                     {name:'el-icon-search', event:'jumpCoachHomePage'},
-                    {name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
-                    {name:'el-icon-delete', event:'singleDelete'},
                     {name:'el-icon-refresh', event:'timeUpdate'},
                     // {name:'el-icon-tickets', event:'alertViewCoupons'},
                 ],
@@ -184,8 +196,157 @@
             }
         },
         methods:{
-            jumpPage:function(){
-                this.$router.push('/message/changeMessage');
+
+            loseFocus:function(val,index) {
+                var re = /^[0-9]+.?[0-9]*$/;
+                if (!re.test(val)) {
+                    this.message(true,'请输入数值','warning');
+                    this.majorlisttable[index].weight = this.showweight;
+                } else if (val<0||val>1000) {
+                    this.message(true,'权值范围为0~100','warning');
+                    this.majorlisttable[index].weight = this.showweight;
+                } else {
+                    //权重正确，将该行表格id传给后台
+                    var that = this;
+                    if(val != that.showweight){
+                        this.confirm(() => {
+                            this.post('/admin/information/updateCoachWeight',{
+                                //后台参数，前台参数(传向后台)
+                                id: that.majorlisttable[index].id,
+                                weight: that.majorlisttable[index].weight
+                            }).then(res=>{
+                                if (res.code == 0){
+                                    that.message(true,'删除成功','success');
+                                }else{
+                                    that.message(true,'删除失败','error');
+                                    that.majorlisttable[index].weight = that.showweight;
+                                }
+
+                            })
+                        }, () => {
+
+                            that.majorlisttable[index].show_weight = that.showweight;
+                        },'确定修改么', '需要注意的操作');
+                    }else{
+                        this.majorlisttable[index].showweight = this.showweight;
+                    }
+
+
+                }
+            },
+
+            changeStatusOne(index,val){
+                let that = this;
+                let id = that.majorlisttable[index].id
+                this.confirm(() => {
+                    this.post('/admin/information/updateCoachShow',{
+                        //后台参数，前台参数(传向后台)
+                        id:id,
+                        state:val ? 0 : 1
+                    }).then(res=>{
+                        if (res.code == 0){
+                            that.message(true,'修改成功','success');
+                        }else{
+                            that.message(true,'修改失败','error');
+                            that.majorlisttable[index].is_show = !val;
+                        }
+
+                    })
+                }, () => {
+                    that.majorlisttable[index].is_show = !val;
+                },'确定修改么', '需要注意的操作');
+            },
+
+            changeStatusTwo(index,val){
+                let that = this;
+                let id = that.majorlisttable[index].id
+                this.confirm(() => {
+                    this.post('/admin/information/updateCoachRec',{
+                        //后台参数，前台参数(传向后台)
+                        id:id,
+                        state:val ? 0 : 1
+                    }).then(res=>{
+                        if (res.code == 0){
+                            that.message(true,'修改成功','success');
+                        }else{
+                            that.message(true,'修改失败','error');
+                            that.majorlisttable[index].is_recommend = !val;
+                        }
+
+                    })
+                }, () => {
+                    that.majorlisttable[index].is_recommend = !val;
+                },'确定修改么', '需要注意的操作');
+            },
+
+            changeStatusThree(index,val){
+                let that = this;
+                let id = that.majorlisttable[index].id
+                this.confirm(() => {
+                    this.post('/admin/information/updateCoachRec',{
+                        //后台参数，前台参数(传向后台)
+                        id:id,
+                        state:val ? 0 : 1
+                    }).then(res=>{
+                        if (res.code == 0){
+                            that.message(true,'修改成功','success');
+                        }else{
+                            that.message(true,'修改失败','error');
+                            that.majorlisttable[index].if_coupons = !val;
+                        }
+
+                    })
+                }, () => {
+                    that.majorlisttable[index].if_coupons = !val;
+                },'确定修改么', '需要注意的操作');
+            },
+
+            changeStatusThree(index,val){
+                let that = this;
+                let id = that.majorlisttable[index].id
+                this.confirm(() => {
+                    this.post('/admin/information/updateCoachCon',{
+                        //后台参数，前台参数(传向后台)
+                        id:id,
+                        state:val ? 0 : 1
+                    }).then(res=>{
+                        if (res.code == 0){
+                            that.message(true,'修改成功','success');
+                        }else{
+                            that.message(true,'修改失败','error');
+                            that.majorlisttable[index].if_coupons = !val;
+                        }
+
+                    })
+                }, () => {
+                    that.majorlisttable[index].if_coupons = !val;
+                },'确定修改么', '需要注意的操作');
+            },
+
+            changeStatusFour(index,val){
+                let that = this;
+                let id = that.majorlisttable[index].id
+                this.confirm(() => {
+                    this.post('/admin/information/updateCoachTui',{
+                        //后台参数，前台参数(传向后台)
+                        id:id,
+                        state:val ? 0 : 1
+                    }).then(res=>{
+                        if (res.code == 0){
+                            that.message(true,'修改成功','success');
+                        }else{
+                            that.message(true,'修改失败','error');
+                            that.majorlisttable[index].if_back_money = !val;
+                        }
+
+                    })
+                }, () => {
+                    that.majorlisttable[index].if_back_money = !val;
+                },'确定修改么', '需要注意的操作');
+            },
+
+            jumpPage:function(id){
+                this.$router.push('/message/changeMessage/'+id);
             },
             pageChange(msg) {
                 this.searchContent.page = msg.page;
@@ -224,35 +385,6 @@
             timeUpdate() {
                 this.$message('发布时间更已新');
             },
-
-            // changeCount: function(val,index) {
-            //   var re = /^[0-9]+.?[0-9]*$/;
-            //   if (!re.test(val)) {
-            //     this.message(true,'请输入数值','warning');
-            //     this.tableData3[index].show_weight = this.inputval;
-            //     // console.log(this.show_weight[index]);
-            //   } else if (val<0||val>1000) {
-            //     this.message(true,'权值范围为0~100','warning');
-            //     this.tableData3[index].show_weight = this.inputval;
-            //   } else {
-            //     this.$confirm('此操作将修改该图片的权值, 是否继续?', '提示', {
-            //       confirmButtonText: '确定',
-            //       cancelButtonText: '取消',
-            //       type: 'warning'
-            //     }).then(() => {
-            //       this.$message({
-            //         type: 'success',
-            //         message: '修改成功!'
-            //       });
-            //     }).catch(() => {
-            //       this.tableData3[index].show_weight = this.inputval;
-            //       this.$message({
-            //         type: 'info',
-            //         message: '已取消修改'
-            //       });          
-            //     });
-            //   }
-            // },
             focusCount:function(){
                 this.input = val;
                 console.log(this.TableValue);
@@ -275,6 +407,12 @@
 
                     if (res.code == 0) {
                         for(let i in res.result[0]){
+
+                            res.result[0][i].is_show =   res.result[0][i].is_show == 0 ? true :false;
+                            res.result[0][i].if_coupons =   res.result[0][i].if_coupons == 0 ? true :false;
+                            res.result[0][i].is_recommend =   res.result[0][i].is_recommend == 0 ? true :false;
+                            res.result[0][i].if_back_money =   res.result[0][i].if_back_money == 0 ? true :false;
+
                             if(res.result[0][i].father_id == 0){
                                 res.result[0][i].father_id = '总部'
                             }else{
@@ -295,7 +433,49 @@
                 .catch(function (error) {
                     // console.log(error);
                 });
-            }
+            },
+
+            BatchDelete: function(){
+                var that = this;
+                let selectId = [];//存放删除的数据
+                for (var i = 0; i < that.multipleSelection.length; i++) {
+                    selectId.push(that.multipleSelection[i].id);
+                };
+                this.deleteRequest(selectId);
+            },
+
+            deleteRow(index, rows) {
+                // 删除前判断
+                let that = this;
+
+                that.deleteRequest([rows[index].id]);
+                // 删除某一行
+
+            },
+            deleteRequest(filesId){
+                let that = this;
+                this.confirm(() => {
+                    this.post('/admin/information/deleteAppointCoach',{
+                        //后台参数，前台参数(传向后台)
+                        coachId: filesId,
+                    }).then(function (response) {
+                        var res = response;
+                        if (res.code == 0) {
+                            that.gettableInfo();
+                            that.message(true,'删除成功','success');
+                        }else{
+                            that.message(true,'删除失败','error');
+                        }
+                    }).catch(function (error) {
+                        that.message(true,'删除失败','error');
+                    });
+                }, () => {
+                },'确定删除吗', '危险操作');
+            },
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+
         },
         mounted(){
             this.gettableInfo();

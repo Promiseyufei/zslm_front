@@ -22,20 +22,23 @@
                 </el-form-item>
                 <el-form-item label="展示状态">
                     <el-select size="medium" v-model="type1" placeholder="全部">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                      <el-option label="展示" value="0"></el-option>
+                      <el-option label="不展示" value="1"></el-option>
+                        <el-option label="全部" value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="推荐状态">
                     <el-select size="medium" v-model="type2" placeholder="全部">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                      <el-option label="推荐" value="0"></el-option>
+                      <el-option label="不推荐" value="1"></el-option>
+                        <el-option label="全部" value="2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="活动状态">
                     <el-select size="medium" v-model="type3" placeholder="全部">
-                      <el-option label="区域一" value="shanghai"></el-option>
-                      <el-option label="区域二" value="beijing"></el-option>
+                      <el-option label="不可报名" value="0"></el-option>
+                      <el-option label="可报名" value="1"></el-option>
+                        <el-option label="全部" value="2"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -51,22 +54,27 @@
             </el-select>
         </div>
         <div class="majorlist-table">
-            <el-table :data="majorlisttable" @current-change="handleCurrentChange" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
+            <el-table :data="majorlisttable" @selection-change="handleSelectionChange" @current-change="handleCurrentChange" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column label="编号" prop="id" width="100"></el-table-column>
                 <el-table-column label="展示权重" width="100">
                     <template slot-scope="scope">
-                        <el-input v-model="majorlisttable[scope.$index].weight"></el-input>
+                        <el-input @focus="getFocus(majorlisttable[scope.$index].show_weight)"
+                                  v-on:blur="loseFocus(majorlisttable[scope.$index].show_weight,scope.$index)"
+                                v-model="majorlisttable[scope.$index].show_weight"></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column label="展示状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].value2"></el-switch>
-                    </template>
+                        <el-switch v-model="majorlisttable[scope.$index].show_state"
+                                   @change="changeStatusOne(scope.$index,majorlisttable[scope.$index].show_state)">
+                        </el-switch>
+                    </template>changeStatusTwo
                 </el-table-column>
                 <el-table-column label="推荐状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].value3" active-color="#999" inactive-color="#409eff">
+                        <el-switch v-model="majorlisttable[scope.$index].recommended_state" active-color="#999" inactive-color="#409eff"
+                            @change="changeStatusTwo(scope.$index,majorlisttable[scope.$index].recommended_state)">
                         </el-switch>
                     </template>
                 </el-table-column>
@@ -74,8 +82,8 @@
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
                             <i class="el-icon-search" @click = "jumpActivityDet"></i>
-                            <i class="el-icon-edit-outline" @click = "jumpActivityInfo"></i>
-                            <i class="el-icon-delete" @click = "singleDele"></i>
+                            <i class="el-icon-edit-outline" @click = "jumpActivityInfo(majorlisttable[scope.$index].id)"></i>
+                            <i class="el-icon-delete" @click="deleteRow(scope.$index, majorlisttable)"></i>
                         </div>
                     </template>
                 </el-table-column>
@@ -86,8 +94,8 @@
             </el-table>
         </div>
         <div class="footer"> 
-            <el-button size="mini" icon="el-icon-delete">删除</el-button>
-            <Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
+            <el-button size="mini" icon="el-icon-delete" @click="BatchDelete">删除</el-button>
+            <Page :total="total" @pageChange="pageChange" ></Page>
         </div>
     </div>
 </template>
@@ -97,27 +105,21 @@
         data(){
             return{
                 /*分页*/
+                multipleSelection:[],
                 total:0,
                 searchContent:{
-                    page:'',
-                    limit:'',
+                    page:1,
+                    limit:5,
                 },
                 tableTop:[
-                  {prop:'name',label:'活动名称',width:380},
-                  {prop:'project',label:'活动类型',width:80},
-                  {prop:'project',label:'活动省市',width:80},
-                  {prop:'project',label:'主办院校',width:160},
-                  {prop:'project',label:'报名状态',width:80},
-                  {prop:'time',label:'发布时间',width:160},
+                  {prop:'active_name',label:'活动名称',width:380},
+                  {prop:'name',label:'活动类型',width:80},
+                  {prop:'province',label:'活动省市',width:80},
+                  {prop:'z_name',label:'主办院校',width:160},
+                  {prop:'sign_up_state',label:'报名状态',width:80},
+                  {prop:'create_time',label:'发布时间',width:160},
                 ],
                 majorlisttable:[{
-                  // weight:'',
-                  // id:'',
-                  // name:'',
-                  // project:'',
-                  // time:'',
-                  // value2:'',
-                  // value3:'',
                 }],
                 value:'',
                 // input:'',
@@ -125,6 +127,7 @@
                 type1:'',
                 type2:'',
                 type3:'',
+                showweight:0,
                 options: [
                     {
                       value: '选项1',
@@ -144,15 +147,15 @@
         methods:{
             //新建跳转页面——跳转到活动信息
             jumpPage:function(){
-                this.$router.push('/message/activity');
+                this.$router.push('/message/activity/0');
             },
             //表格搜索——跳转到相应的活动详情页
             jumpActivityDet:function(){
                 // 此页面未给
             },
             //表格编辑——跳转到活动信息页面
-            jumpActivityInfo:function(){
-                this.$router.push('/message/activity');
+            jumpActivityInfo:function(id){
+                this.$router.push('/message/activity/'+id);
             },
             //表格删除——
             singleDele:function(){
@@ -161,33 +164,174 @@
             pageChange(msg) {
                 this.searchContent.page = msg.page;
                 this.searchContent.limit = msg.limit;
+                this.gettableInfo();
             },
             handleCurrentChange(val) {
                 this.currentRow = val;
             },
-            
+
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+
+            changeStatusOne(index,val){
+                let that = this;
+                 let id = that.majorlisttable[index].id
+                this.confirm(() => {
+                    this.post('/admin/information/updateActivityShow',{
+                        //后台参数，前台参数(传向后台)
+                        id:id,
+                        rec:val ? 0 : 1
+                    }).then(res=>{
+                        if (res.code == 0){
+                            that.message(true,'修改成功','success');
+                        }else{
+                            that.message(true,'修改失败','error');
+                            that.majorlisttable[index].show_state = !val;
+                        }
+
+                    })
+                }, () => {
+                    that.majorlisttable[index].show_state = !val;
+                },'确定修改么', '需要注意的操作');
+            },
+
+            changeStatusTwo(index,val){
+                console.log(val)
+                let that = this;
+                let id = that.majorlisttable[index].id
+                this.confirm(() => {
+                    this.post('/admin/information/updateActivityRec',{
+                        //后台参数，前台参数(传向后台)
+                        id:id,
+                        rec:val ? 0 : 1
+                    }).then(res=>{
+                        if (res.code == 0){
+                            that.message(true,'修改成功','success');
+                        }else{
+                            that.message(true,'修改失败','error');
+                            that.majorlisttable[index].recommended_state = !val;
+                        }
+
+                    })
+                }, () => {
+                    that.majorlisttable[index].recommended_state = !val;
+                },'确定修改么', '需要注意的操作');
+            },
+
+            BatchDelete: function(){
+                var that = this;
+                let selectId = [];//存放删除的数据
+                for (var i = 0; i < that.multipleSelection.length; i++) {
+                    selectId.push(that.multipleSelection[i].id);
+                };
+                this.deleteRequest(selectId);
+            },
+
+            deleteRow(index, rows) {
+                // 删除前判断
+                let that = this;
+                console.log(rows)
+                that.deleteRequest([rows[index].id]);
+                // 删除某一行
+
+            },
+            deleteRequest(filesId){
+                let that = this;
+                this.confirm(() => {
+                    this.post('/admin/information/deleteActivity',{
+                        //后台参数，前台参数(传向后台)
+                        activityId: filesId,
+                    }).then(function (response) {
+                        var res = response;
+                        if (res.code == 0) {
+                            that.gettableInfo();
+                            that.message(true,'删除成功','success');
+                        }else{
+                            that.message(true,'删除失败','error');
+                        }
+                    }).catch(function (error) {
+                        that.message(true,'删除失败','error');
+                    });
+                }, () => {
+                },'确定删除吗', '危险操作');
+            },
+
+
+            getFocus: function(val) {
+                this.showweight = val;
+            },
+
+            loseFocus:function(val,index) {
+                var re = /^[0-9]+.?[0-9]*$/;
+                if (!re.test(val)) {
+                    this.message(true,'请输入数值','warning');
+                    this.majorlisttable[index].show_weight = this.showweight;
+                } else if (val<0||val>1000) {
+                    this.message(true,'权值范围为0~100','warning');
+                    this.majorlisttable[index].show_weight = this.showweight;
+                } else {
+                    //权重正确，将该行表格id传给后台
+                    var that = this;
+                    if(val != that.showweight){
+                        this.confirm(() => {
+                            this.post('/admin/information/updateActivityWeight',{
+                                //后台参数，前台参数(传向后台)
+                                id: that.majorlisttable[index].id,
+                                showWeight: that.majorlisttable[index].show_weight
+                            }).then(res=>{
+                                if (res.code == 0){
+                                    that.message(true,'删除成功','success');
+                                }else{
+                                    that.message(true,'删除失败','error');
+                                    that.majorlisttable[index].show_weight = that.showweight;
+                                }
+
+                            })
+                        }, () => {
+
+                            that.majorlisttable[index].show_weight = that.showweight;
+                        },'确定修改么', '需要注意的操作');
+                    }else{
+                        this.majorlisttable[index].showweight = this.showweight;
+                    }
+
+
+                }
+            },
+
             focusCount:function(){
                 this.input = val;
                 console.log(this.TableValue);
             },
+
             gettableInfo:function(){
                 var that = this;
-                axios.post('/message/activityList/gettable-info',{
-                    // type: that.filesForm.type,
-                    // name1: that.filesForm.name1,
-                    // input: that.input,
+                console.log(that.searchContent.page)
+                this.post('/admin/information/getActivityPageMessage',{
+                    soachNameKeyword:'',
+                    showType:that.type1 != '' ? parseInt(that.type1) : 2,
+                    recommendedState:that.type2 != '' ? parseInt(that.type2): 2,
+                    activityState:that.type3 != '' ? parseInt(that.type3) : 2,
+                    sortType:0,
+                    pageCount:that.searchContent.limit,
+                    pageNumber:that.searchContent.page
                 })
                 .then(function (response) {
                     // that.page++;
-                    var res = response.data;
+                    var res = response;
                     if (res.code == 0) {
-                        // that.majorlisttable = res.data;
-                        that.total = res.total;
-                        // that.weight = res.weight;
-                        // that.id = res.id;
-                        // that.input = res.input;
-                        console.log(that.id);
-                    };
+                        for(let i in res.result[0]){
+                            res.result[0][i].show_state = res.result[0][i].show_state == 0 ? true : false;
+                            res.result[0][i].recommended_state = res.result[0][i].recommended_state == 0 ? true : false;
+                        }
+                        console.log(res.result[0])
+                        that.majorlisttable = res.result[0];
+                        that.total = res.result[1];
+                    }else{
+                        that.majorlisttable = [];
+                        that.total = 0;
+                    }
                 })
                 .catch(function (error) {
                     // console.log(error);

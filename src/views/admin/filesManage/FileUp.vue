@@ -58,8 +58,8 @@
                     </el-form-item>
                     <el-form-item label="文件类型" prop="resource">
                       <el-radio-group v-model="ruleForm.resource">
-                        <el-radio label="招生简章"></el-radio>
-                        <el-radio label="其他文件"></el-radio>
+                        <el-radio :label="0">招生简章</el-radio>
+                        <el-radio :label="1">其他文件</el-radio>
                       </el-radio-group>
                     </el-form-item>
                     <el-form-item label="院校展示" prop="delivery">
@@ -206,12 +206,14 @@ export default {
               };
 
               var fd = new FormData()
+
                 fd.append('uploadFile', self.fileList[0].raw)
-                fd.append('isShow',0)
+                fd.append('isShow',self.ruleForm.delivery ? 1 : 0)
                 fd.append('fileName',self.ruleForm.name)
                 fd.append('fileDescribe',self.ruleForm.message)
-                fd.append('fileYear',123124)
-                fd.append('fileType',1)
+                fd.append('fileYear',self.ruleForm.url.toString().split(' ')[3])
+                fd.append('fileType',self.ruleForm.resource)
+                fd.append('majorId',self.$route.params.majorname)
               let imgFile = {
                   headers: {
                       'Content-Type': 'multipart/form-data'

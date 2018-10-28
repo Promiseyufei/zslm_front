@@ -250,7 +250,7 @@ export default {
         // 获取所有资讯类型
         getInformationType: function() {
           var self = this;
-          this.post('/admin/information/getActivityPageMessage', {
+          this.post('/admin/information/getActivityMessage', {
               screenType:0,
               activityState:3,
               sortType:0,
