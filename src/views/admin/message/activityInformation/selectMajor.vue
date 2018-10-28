@@ -46,22 +46,17 @@
                 <!-- 院校专业名称 -->
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{onecityName}}</div>
-                    <<el-radio-group v-for="cityline in oneCity" v-model="one">
+                    <el-radio-group v-for="cityline in oneCity" v-model="one">
                         <el-radio-button v-for="city in cityline"
                                          :label="city.z_name" @click.native="selectCity(city.id,city.z_name)"></el-radio-button>
-
                     </el-radio-group>
-
                 </div>
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{twocityName}}</div>
                     <el-radio-group v-for="cityline in twoCity" v-model="one">
                         <el-radio-button v-for="city in cityline"
                                          :label="city.z_name" @click.native="selectCity(city.id,city.z_name)"></el-radio-button>
-
                     </el-radio-group>
-
-
                 </div>
                 <div class="ellipsis">……</div>
                 <div class="page">
@@ -70,7 +65,7 @@
                                    :page-size="1"
                                    :total="count"
                                    @current-change="handleCurrentChange"
-                                  >
+                    >
                     </el-pagination>
                 </div>
             </div>
@@ -160,6 +155,7 @@
         data() {
             return {
                 //查询条件
+                actid:0,
                 one:[],
                 selectname:'',
                 page:1,
@@ -249,11 +245,13 @@
                 this.page = val;
                 this.getMajor();
             },
+
+
             getMajor: function () {
 
                 let searchs = [];
-                    this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
-                    this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
+                this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
+                this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
 
                 let that = this
                 this.fetch('/admin/files/getmajorbypro', {
@@ -295,12 +293,13 @@
                  * this.one 数组记录了选中的值
                  */
                 // console.log(this.one)
-                this.$router.push('/filesManage/fileup/' + this.majorname);
+                this.$router.push('/message/advise/'+this.actid+'/' + this.majorname);
 
             },
         },
         mounted() {
             // this.getMajor();
+            this.actid = this.$route.params.actid
         }
     }
 
@@ -427,7 +426,7 @@
         height: 50px;
         display: flex;
         align-items: center;
-        background: url(../../assets/img/point.png) no-repeat;
+        background: url(../../../../assets/img/point.png) no-repeat;
         background-size: 100% 100%;
     }
 

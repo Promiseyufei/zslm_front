@@ -15,20 +15,20 @@
         <div class="filesForm">
             <el-form v-model="userFrom" label-width="80px">
                 <el-form-item label="手机号">
-                    <el-input size="medium" placeholder="请输入手机号"></el-input>
+                    <el-input v-model="phone"  size="medium" placeholder="请输入手机号"></el-input>
                 </el-form-item>
                 <el-form-item label="真实姓名">
-                    <el-input size="medium" placeholder="请输入用户姓名"></el-input>
+                    <el-input v-model="name" size="medium" placeholder="请输入用户姓名"></el-input>
                 </el-form-item>
-                <el-form-item label="真实姓名">
-                    <el-select v-model="Sorting" placeholder="处理结果">
+                <el-form-item label="处理结果">
+                    <el-select v-model="type" placeholder="请选择">
                         <el-option v-for="(item,index) in sorting" :key="index" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="真实姓名">
-                    <el-select v-model="Sorting" placeholder="流程状态">
-                        <el-option v-for="(item,index) in sorting" :key="index" :label="item.label" :value="item.value">
+                <el-form-item label="流程状态">
+                    <el-select v-model="type1" placeholder="请选择">
+                        <el-option v-for="(item,index) in sorting1" :key="index" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -45,7 +45,7 @@
             <el-table :data="tableData" border style="width: 100%" :header-cell-style="getRowClass">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="jumpPage"
+                        <el-button @click="jumpPage(scope.row.id)"
                                    type="text"
                                    icon="el-icon-search">
                         </el-button>
@@ -71,8 +71,8 @@
             <el-form :rules="rules" :disabled="formdis">
                 <el-form-item label="审批结果:"  prop="type" style="width: 100%">
                     <el-radio-group v-model="type">
-                        <el-radio :label="3">通过</el-radio>
-                        <el-radio :label="6">驳回</el-radio>
+                        <el-radio :label="1">通过</el-radio>
+                        <el-radio :label="2">驳回</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="审批意见:" prop="desc" style="width: 100%">
@@ -83,12 +83,12 @@
                   </el-form-item> -->
                 <el-form-item  label="流程状态:"  prop="status" style="width: 100%;">
                     <el-radio-group v-model="status">
-                        <el-radio :label="3">进行中</el-radio>
-                        <el-radio :label="6">已结束</el-radio>
+                        <el-radio :label="0">进行中</el-radio>
+                        <el-radio :label="1">已结束</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <div style="display: flex;flex-direction: row-reverse">
-                    <el-button type="primary" style="float: right" >提交</el-button>
+                    <el-button type="primary" style="float: right" @click="sublimit" >提交</el-button>
                 </div>
             </el-form>
         </el-dialog>
@@ -100,10 +100,24 @@
         name: "userFocusMajor",
         data(){
             return {
+                phone:'',
+                name:'',
+                type:3,
+                type1:2,
                 userFrom: '',
+                formdis:true,
+                content:'',
+                status:0,
                 sorting:[
-                    { value:'0',label:'id升序' },
-                    { value:'1',label:'id降序' }
+                    { value:0,label:'未审批' },
+                    { value:1,label:'通过' },
+                    { value:2,label:'驳回' },
+                    { value:3,label:'全部' }
+                ],
+                sorting1:[
+                    { value:0,label:'进行中' },
+                    { value:1,label:'已结束' },
+                    { value:2,label:'全部' }
                 ],
                 sort:[
                     {value: '选项一',label: '10条'},
@@ -111,19 +125,19 @@
                     {value: '选项三',label: '100条'},
                 ],
                 tableTop:[
-                    {type:'',prop:'refundid',label:'退款申请ID',width:112},
-                    {type:'',prop:'userid',label:'提交帐号ID',width:112},
-                    {type:'',prop:'useraccount',label:'提交帐号',width:112},
-                    {type:'',prop:'organization',label:'辅导机构名称',width:120},
+                    {type:'',prop:'id',label:'退款申请ID',width:112},
+                    {type:'',prop:'account_id',label:'提交帐号ID',width:112},
+                    {type:'',prop:'user_account',label:'提交帐号',width:112},
+                    {type:'',prop:'coach_name',label:'辅导机构名称',width:120},
                     {type:'',prop:'classname',label:'课程名称',width:100},
-                    {type:'',prop:'money',label:'申请金额',width:100},
-                    {type:'',prop:'couponsid',label:'优惠券ID',width:100},
-                    {type:'',prop:'createtime',label:'报名日期',width:100},
-                    {type:'',prop:'updatetime',label:'提交申请时间',width:150},
-                    {type:'',prop:'photo ',label:'联系电话',width:100},
+                    {type:'',prop:'apply_refund_money',label:'申请金额',width:100},
+                    {type:'',prop:'coupon_id',label:'优惠券ID',width:100},
+                    {type:'',prop:'create_time',label:'报名日期',width:100},
+                    {type:'',prop:'update_time',label:'提交申请时间',width:150},
+                    {type:'',prop:'phone',label:'联系电话',width:100},
                     {type:'',prop:'payment',label:'收款方式',width:100},
-                    {type:'',prop:'state ',label:'流程状态',width:100},
-                    {type:'',prop:'result ',label:'审批结果',width:100},
+                    {type:'',prop:'process_status',label:'流程状态',width:100},
+                    {type:'',prop:'approve_status',label:'审批结果',width:100},
                 ],
                 tableData:[{
                     createtime:'2018-9-9',
@@ -135,24 +149,117 @@
                 /**分页**/
                 total:0,
                 searchContent:{
-                    page:'',
-                    limit:'',
+                    page:1,
+                    limit:5,
                 },
                 dialogFormVisible :false,
                 rules:{
                     type :[ { required: true, message: '请选择审核结果', trigger: 'blur' }],
-                    desc:[{ required: true, message: '请输入审核意见', trigger: 'blur' }],
-                    status :[ { required: true, message: '请选择流程状态', trigger: 'blur' }]
                 },
+                selectId:0
             }
         },
         methods:{
+
+            pageChange(msg){
+
+                this.searchContent.page = msg.page;
+                this.searchContent.limit = msg.limit;
+                //分页改变时，更新表格数据
+                if (this.searchContent.page) {
+                    this.query();
+                };
+
+            },
+            sublimit:function(){
+                var that = this;
+
+                this.post('/admin/refund/setApproveStatus',{
+                    refundId: that.selectId,
+                    approveStatus: that.type,
+                    stat: that.status,
+                    approveContext: that.content,
+
+                }).then(res=>{
+                    if(res.code == 0){
+                        that.message(true,'修改成功','success')
+                        that.query();
+                    }else{
+                        that.message(true,'修改失败','error')
+                    }
+                })
+            },
+            query:function () {
+                var that = this;
+                this.post('/admin/refund/getrefund',{
+                    //后台参数，前台参数(传向后台)
+                    // phone:'',
+                    // name:'',
+                    // type:3,
+                    // type1:2,
+                    pageNumber: that.searchContent.page,
+                    pageCount: that.searchContent.limit,
+                    keyWord: that.name,
+                    screenState: that.type,
+                    type2: that.type1,
+                    phone: that.phone,
+
+                })
+                    .then(function (response) {
+                        var res = response;
+                        if (res.code == 0) {
+                            for(let i in res.result[0]){
+
+                                res.result[0][i].create_time = that.timestampToTime(res.result[0][i].create_time)
+                                res.result[0][i].update_time = that.timestampToTime(res.result[0][i].update_time)
+
+                                res.result[0][i].process_status = res.result[0][i].process_status == 0 ? '进行中' : '已结束'
+
+                                if(res.result[0][i].approve_status == 0)
+                                    res.result[0][i].approve_status = '未审批'
+                                else if(res.result[0][i].approve_status == 1)
+                                    res.result[0][i].approve_status = '通过'
+                                else
+                                    res.result[0][i].approve_status = '驳回'
+
+                                res.result[0][i].payment = '支付宝'
+                            }
+                            that.tableData =res.result[0];
+                            that.total = res.result[1];
+                        };
+                    })
+                    .catch(function (error) {
+                    });
+            },
+
+            timestampToTime: function (timestamp) {
+                var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+                var Y = date.getFullYear() + '-';
+                var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                var D = date.getDate() + ' ';
+                return Y + M + D;
+            },
+
             handleClick(val){
+
+                if(val.process_status == '进行中' && val.approve_status == '未审批'){
+
+                    this.formdis = false
+                    this.selectId = val.id
+                }else{
+                    this.content = val.approve_context
+                    this.type = 1
+                    this.status = 1
+                }
                 this.dialogFormVisible = true
             },
-            jumpPage:function() {
-                this.$router.push('/refund/refunddetails');
+            jumpPage:function(val) {
+                this.$router.push('/refund/refunddetails/'+val);
             }
+        },
+        mounted(){
+            // this.getPage();
+            this.query();
         }
     }
 </script>
