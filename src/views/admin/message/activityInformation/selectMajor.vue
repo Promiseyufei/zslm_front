@@ -2,15 +2,14 @@
     <div class="Select">
         <div class="Select-top">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item>消息管理</el-breadcrumb-item>
-                <el-breadcrumb-item>发消息</el-breadcrumb-item>
-				<el-breadcrumb-item>特定行为用户</el-breadcrumb-item>
-				<el-breadcrumb-item>按关注院校发消息</el-breadcrumb-item>
+                <el-breadcrumb-item>文件上传</el-breadcrumb-item>
+                <el-breadcrumb-item>选择院校专业</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="fileSteps Select-steps">
             <el-steps :active=".1" align-center>
                 <el-step title="选择院校专业"></el-step>
+                <el-step title="上传文件"></el-step>
             </el-steps>
         </div>
         <div class="SelectUnivers">
@@ -47,26 +46,26 @@
                 <!-- 院校专业名称 -->
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{onecityName}}</div>
-                    <div>
-                        <el-checkbox-group v-model="one" v-for="(vals,index) in oneCity" :key="index">
-                            <el-checkbox-button v-for="(val,indexs) in vals" :key="indexs" :label="val">{{val.z_name}}</el-checkbox-button>
-                        </el-checkbox-group>
-                    </div>
+                    <el-radio-group v-for="cityline in oneCity" v-model="one">
+                        <el-radio-button v-for="city in cityline"
+                                         :label="city.z_name" @click.native="selectCity(city.id,city.z_name)"></el-radio-button>
+                    </el-radio-group>
                 </div>
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{twocityName}}</div>
-                    <el-checkbox-group v-model="one" v-for="(vals,index) in twoCity" :key="index">
-                        <el-checkbox-button v-for="(val,indexs) in vals" :key="indexs" :label="val">{{val.z_name}}</el-checkbox-button>
-                    </el-checkbox-group>
+                    <el-radio-group v-for="cityline in twoCity" v-model="one">
+                        <el-radio-button v-for="city in cityline"
+                                         :label="city.z_name" @click.native="selectCity(city.id,city.z_name)"></el-radio-button>
+                    </el-radio-group>
                 </div>
-                <!-- <div class="ellipsis">……</div> -->
+                <div class="ellipsis">……</div>
                 <div class="page">
                     <el-pagination background layout="prev, pager, next"
                                    :current-page="page"
                                    :page-size="1"
                                    :total="count"
                                    @current-change="handleCurrentChange"
-                                  >
+                    >
                     </el-pagination>
                 </div>
             </div>
@@ -75,19 +74,88 @@
             <span class="Selected" v-if="this.selectname">当前已选择：<span class="majorname">{{selectname}}</span></span>
         </div>
         <div class="jumpPage">
-            <el-button type="primary" @click.native="jumpPage">完成添加</el-button>
+            <el-button type="primary" @click.native="jumpPage">下一步，上传文件</el-button>
         </div>
 
     </div>
 </template>
 <script>
-    import buttons from '../../../../config/province.js';
+    const buttons = [
+        {
+            butregion: '华北',
+            city: [
+                {name: '北京市'},
+                {name: '天津市'},
+                {name: '河北省'},
+                {name: '山西省'},
+                {name: '内蒙古'}
+            ]
+        },
+        {
+            butregion: '东北省',
+            city: [
+                {name: '辽宁省'},
+                {name: '吉林省'},
+                {name: '黑龙江省'},
+            ]
+        },
+        {
+            butregion: '华东',
+            city: [
+                {name: '上海市'},
+                {name: '江苏省'},
+                {name: '浙江省'},
+                {name: '江西省'},
+                {name: '安微省'},
+                {name: '福建省'},
+                {name: '山东省'}
+            ]
+        },
+        {
+            butregion: '中南',
+            city: [
+                {name: '河南省'},
+                {name: '湖北省'},
+                {name: '湖南省'},
+                {name: '广东省'},
+                {name: '广西省'},
+                {name: '海南省'}
+            ]
+        },
+        {
+            butregion: '西南',
+            city: [
+                {name: '重庆市'},
+                {name: '四川省'},
+                {name: '贵州省'},
+                {name: '云南省'},
+                {name: '西藏'}
+            ]
+        },
+        {
+            butregion: '西北',
+            city: [
+                {name: '陕西省'},
+                {name: '甘肃省'},
+                {name: '青海省'},
+                {name: '宁夏省'},
+                {name: '新疆省'}
+            ]
+        },
+        {
+            butregion: '港澳台',
+            city: [
+                {name: '香港市'},
+                {name: '澳门市'},
+                {name: '台湾省'},
+            ]
+        },
+    ];
     export default {
         data() {
             return {
-                infoId:0,
-                type:null,
                 //查询条件
+                actid:0,
                 one:[],
                 selectname:'',
                 page:1,
@@ -177,11 +245,13 @@
                 this.page = val;
                 this.getMajor();
             },
+
+
             getMajor: function () {
 
                 let searchs = [];
-                    this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
-                    this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
+                this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
+                this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
 
                 let that = this
                 this.fetch('/admin/files/getmajorbypro', {
@@ -219,26 +289,17 @@
             },
             //跳转页面按钮
             jumpPage: function () {
+                /**
+                 * this.one 数组记录了选中的值
+                 */
                 // console.log(this.one)
-                let arr = [];
-                this.one.forEach((item) => {
-                    arr.push({
-                        id:item.id,
-                        z_name :item.z_name
-                    });
-                });
-                if(arr.length < 1) {
-                    this.message(true, '未选中院校专业', 'info');
-                }
-                else {
-                    this.$router.push({name:'/send/setMessageObject', params: {seMajor: this.one}});
-                }
-
+                this.$router.push('/message/advise/'+this.actid+'/' + this.majorname);
 
             },
         },
         mounted() {
-
+            // this.getMajor();
+            this.actid = this.$route.params.actid
         }
     }
 
@@ -437,4 +498,3 @@
         margin: 0 auto;
     }
 </style>
-

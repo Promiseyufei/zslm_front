@@ -25,7 +25,7 @@
                     <div class="logincode">
                         <el-input placeholder="请输入验证码" v-model="ruleForm.verification" class="loginInput verification" type="text"
                             prefix-icon="fa fa-key self-fa-lg"></el-input>
-                        <img src="../../assets/img/verification.png" alt="" height="40">    
+                        <img @click="change" :src="response" alt="aa" height="40">    
                     </div>
                 <!-- <div class="verification"><img alt="" width="158" height="76"></div> -->
                 </el-form-item>
@@ -45,6 +45,7 @@ export default {
     
     data() {
     return {
+        response:'',
         ruleForm: {
         name: '',
         password: '',
@@ -67,6 +68,10 @@ export default {
     };
     },
     methods: {
+
+        change() {
+            this.response = 'http://localhost:81/zslm_back/public/login/admin/captcha/' +  Math.random();
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
             if (valid) {
@@ -77,6 +82,9 @@ export default {
             }
             });
         },
+    },
+    mounted:function() {
+        this.change();
     }
 }
 </script>

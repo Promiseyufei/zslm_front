@@ -90,7 +90,9 @@
                                         label="展示顺序"
                                         width="100">
                                         <template slot-scope="scope" >
-                                            <el-input v-model="tableData[scope.$index].weight" @focus="focusCount(tableData[scope.$index].weight)" v-on:blur="changeCount(tableData[scope.$index].weight, scope.$index)"></el-input>
+                                            <el-input @focus="getFocus(tableData[scope.$index].weight)"
+                                                      v-on:blur="loseFocus(tableData[scope.$index].weight,scope.$index)"
+                                                      v-model="tableData[scope.$index].weight"></el-input>
                                         </template>
                                         </el-table-column>
                                     <el-table-column
@@ -159,6 +161,7 @@ export default {
             TableValue: 0,
             // 富文本编辑器
             editorContent:'',
+            showweight:0,
             editor: new WangEditor('#editor'),
         }
     },
@@ -168,7 +171,7 @@ export default {
             this.id = this.$route.params.id;
             console.log(this.id)
             let that = this;
-            this.fetch('/admin/information/getcoachcoupon',{
+            this.fetch('/admin/information/getcoubycoach',{
                 id:that.id
             }).then(res=>{
                 if(res.code == 0){
@@ -267,6 +270,13 @@ export default {
                 couponType:0,
                 context:that.couponForm.message,
                 couponcol:that.editor.txt.html()
+            }).then(res=>{
+                if(res.code == 0){
+                    that.message(true,'提交成功','success')
+                    that.info();
+                }else{
+                    that.message(true,'提交失败','error')
+                }
             })
         },
         //返回上一页
@@ -279,6 +289,65 @@ export default {
         },
         collegeFinish: function() {
             this.$router.push('/message/universMajorList');
+        },
+        loseFocus:function(val,index) {
+            var re = /^[0-9]+.?[0-9]*$/;
+            if (!re.test(val)) {
+                this.message(true,'请输入数值','warning');
+                this.tableData[index].weight = this.showweight;
+            } else if (val<0||val>1000) {
+                this.message(true,'权值范围为0~100','warning');
+                this.tableData[index].weight = this.showweight;
+            } else {
+                //权重正确，将该行表格id传给后台
+                var that = this;
+                if(val != that.showweight){
+                    this.confirm(() => {
+                        this.post('/admin/information/updateCoachWeight',{
+                            //后台参数，前台参数(传向后台)
+                            id: that.tableData[index].id,
+                            weight: that.tableData[index].weight
+                        }).then(res=>{
+                            if (res.code == 0){
+                                that.message(true,'删除成功','success');
+                            }else{
+                                that.message(true,'删除失败','error');
+                                that.majorlisttable[index].weight = that.showweight;
+                            }
+
+                        })
+                    }, () => {
+
+                        that.majorlisttable[index].show_weight = that.showweight;
+                    },'确定修改么', '需要注意的操作');
+                }else{
+                    this.majorlisttable[index].showweight = this.showweight;
+                }
+
+
+            }
+        },
+
+        changeStatusOne(index,val){
+            let that = this;
+            let id = that.majorlisttable[index].id
+            this.confirm(() => {
+                this.post('/admin/information/updateCoachShow',{
+                    //后台参数，前台参数(传向后台)
+                    id:id,
+                    state:val ? 0 : 1
+                }).then(res=>{
+                    if (res.code == 0){
+                        that.message(true,'修改成功','success');
+                    }else{
+                        that.message(true,'修改失败','error');
+                        that.majorlisttable[index].is_show = !val;
+                    }
+
+                })
+            }, () => {
+                that.majorlisttable[index].is_show = !val;
+            },'确定修改么', '需要注意的操作');
         },
     },
     mounted(){

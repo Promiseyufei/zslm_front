@@ -44,7 +44,7 @@
             <el-table :data="tableData" border :header-cell-style="{background:'#f9fafc'}">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="el-icon-search"></i></el-button>
+                        <el-button  type="text" size="small"><i class="el-icon-search"></i></el-button>
                     </template>
                 </el-table-column>
                 <div v-for="(val, index) in tableTop" :key="index">
