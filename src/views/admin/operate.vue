@@ -311,7 +311,7 @@ export default {
 							bannerAdId: id,
 							weight:weight
 						}).then((response) => {
-							response = response.data;
+							// response = response.data;
 							(response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
 						})
 					}, () => {
@@ -325,7 +325,7 @@ export default {
 							this.post('/admin/operate/deleteBannerAd', {
 								btId: res
 							}).then((response) => {
-								response = response.data;
+								// response = response.data;
 								if(response.code == 0) {
 									this.tableData3.splice(this.tableData3.indexOf(row), 1);
 									this.message(true, response.msg, 'success');
