@@ -230,13 +230,12 @@ export default {
             return false;
           }
           this.confirm(() => {
-            var load = this.openFullScreen2();
+            // var load = this.openFullScreen2();
             this.post('/admin/operate/addAppoinInformations', {
               appointId: this.id,
               informArr: this.infoIdArr
             }).then((response) => {
-              load.close();
-              console.log(typeof response);
+
               if(response.code == 0) {
                   this.infoIdArr = [];
                   this.tableData = [];
@@ -248,7 +247,7 @@ export default {
             })
           }, () => {
               this.message(true, '已取消修改', 'info');
-              load.close();
+              // load.close();
           })
 
         },
@@ -282,7 +281,7 @@ export default {
         // 获取咨询列表添加分页数据
         getIndexInfo: function() {
           var self = this;
-          var load = this.openFullScreen2();
+          // var load = this.openFullScreen2();
           this.post('/admin/operate/getInformPagingData', {
             informationTypeId: self.form.region == '' ? 0 : self.form.region,
             titleKeyword: self.form.message,
@@ -298,10 +297,10 @@ export default {
             }else {
               self.message(true, response.msg, 'error');
             }
-            load.close();
+            // load.close();
           })
           .catch(function (error) {
-            load.close();
+            // load.close();
           });
         }
     },

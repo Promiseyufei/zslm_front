@@ -3,7 +3,10 @@ let front_router = {
         {
             path: '/front',
             name: '首页',
-            component: resolve =>void(require(['@/views/front/index'], resolve))
+            component: resolve =>void(require(['@/front'], resolve)),
+            children: [
+                
+            ]
         }
     ]
 }
