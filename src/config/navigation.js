@@ -47,7 +47,7 @@ export default [
                     {
                         "name":"用户列表",
                         "index":2.1,
-                        "url":"/usermanagement/userlist"
+                        "url":"/admin/usermanagement/userlist"
                     }
                 ]
             },
@@ -57,17 +57,17 @@ export default [
                     {
                         "name":"关注院校",
                         "index":2.2,
-                        "url":"/usermanagement/userfocusmajor"
+                        "url":"/admin/usermanagement/userfocusmajor"
                     },
                     {
                         "name":"参与活动",
                         "index":2.3,
-                        "url":"/usermanagement/userParticipateActivities"
+                        "url":"/admin/usermanagement/userParticipateActivities"
                     },
                     {
                         "name":"领优惠卷",
                         "index":2.4,
-                        "url":"/usermanagement/usercoupons"
+                        "url":"/admin/usermanagement/usercoupons"
                     }
                 ]
             }
@@ -84,22 +84,22 @@ export default [
                     {
                         "name":"院校专业",
                         "index":3.1,
-                        "url":"/message/universMajorList"
+                        "url":"/admin/message/universMajorList"
                     },
                     {
                         "name":"活动信息",
                         "index":3.2,
-                        "url":"/message/activityList"
+                        "url":"/admin/message/activityList"
                     },
                     {
                         "name":"辅导机构",
                         "index":3.3,
-                        "url":"/message/coachList"
+                        "url":"/admin/message/coachList"
                     },
                     {
                         "name":"资讯发布",
                         "index":3.4,
-                        "url":"/message/informationList"
+                        "url":"/admin/message/informationList"
                     },
                 ]
             },
@@ -116,12 +116,12 @@ export default [
                     {
                         "name":"文件上传",
                         "index":1,
-                        "url":"/SelectUnivers"
+                        "url":"/admin/SelectUnivers"
                     },
                     {
                         "name":"文件管理",
                         "index":2,
-                        "url":"/files"
+                        "url":"/admin/files"
                     }
                 ]
             }
@@ -139,7 +139,7 @@ export default [
                     {
                         "name":"发消息",
                         "index":5.1,
-                        "url":"/send/sendHome"
+                        "url":"/admin/send/sendHome"
                     }
                 ]
             },
@@ -149,7 +149,7 @@ export default [
                     {
                         "name":"历史记录",
                         "index":5.2,
-                        "url":"/record/recordHome"
+                        "url":"/admin/record/recordHome"
                     }
                 ]
             },
@@ -166,17 +166,17 @@ export default [
                     {
                         "name":"频道Banner",
                         "index":6.1,
-                        "url":"/operate"
+                        "url":"/admin/operate"
                     },
                     {
                         "name":"资讯首页推荐",
                         "index":6.2,
-                        "url":"/operate/advise"
+                        "url":"/admin/operate/advise"
                     },
                     {
                         "name":"广告位管理",
                         "index":6.3,
-                        "url":"/operate/ad"
+                        "url":"/admin/operate/ad"
                     }
                 ]
             },
@@ -186,7 +186,7 @@ export default [
                     {
                         "name":"分享数据",
                         "index":6.4,
-                        "url":"/operate/sharedata"
+                        "url":"/admin/operate/sharedata"
                     }
                 ]
             }
@@ -203,7 +203,7 @@ export default [
                     {
                         "name":"退款管理",
                         "index":7.1,
-                        "url":"/refund/refundlist"
+                        "url":"/admin/refund/refundlist"
                     },
                     // {
                     //     "name":"退款管理",
@@ -225,12 +225,12 @@ export default [
                     {
                         "name":"模考管理",
                         "index":8.1,
-                        "url":"/operate"
+                        "url":"/admin/operate"
                     },
                     {
                         "name":"模考管理",
                         "index":8.2,
-                        "url":"/operate"
+                        "url":"/admin/operate"
                     }
                 ]
             }
