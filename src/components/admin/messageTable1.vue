@@ -55,12 +55,12 @@ export default {
             var re = /^[0-9]+.?[0-9]*$/;
             if (!re.test(val)) {
                 this.message(true,'请输入数值','warning');
-                this.tableData3[index].show_weight = this.TableValue;
+                this.tableData3[index].weight = this.TableValue;
             } else if (val<0||val>1000) {
                 this.message(true,'权值范围为0~100','warning');
-                this.tableData3[index].show_weight = this.TableValue;
+                this.tableData3[index].weight = this.TableValue;
             } else {
-                this.$emit('setInfoRelation',this.tableData3[index].id, this.tableData3[index].show_weight);
+                this.$emit('setInfoRelation',this.tableData3[index].id, this.tableData3[index].weight);
             }
         },
 

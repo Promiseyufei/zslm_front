@@ -1,42 +1,42 @@
 <template>
-<div id="app">
-    <el-container class="loginPage">
-    <div class="behind">
-        <div class="cover">
-            <div class="comLogo">
-                <img src="../../assets/img/shortlogo.png" alt="" style="display: block;">
+    <div>
+        <el-container class="loginPage">
+        <div class="behind">
+            <div class="cover">
+                <div class="comLogo">
+                    <img src="../../assets/img/shortlogo.png" alt="" style="display: block;">
+                </div>
+                
+                <p>MBA Helper</p>
+                <p>后台业务管理系统</p>
             </div>
-            
-            <p>MBA Helper</p>
-            <p>后台业务管理系统</p>
+            <el-container class="above">
+                <el-form class="loginForm" :model="ruleForm" :rules="rules" ref="ruleForm">
+                    <el-form-item prop="name">
+                        <el-input placeholder="请输入用户名称" v-model="ruleForm.name" class="loginInput" type="text"
+                                prefix-icon="fa fa-user self-fa-lg" adijos>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item prop="password">
+                    <el-input placeholder="请输入登录密码" v-model="ruleForm.password" class="loginInput" type="password"
+                                prefix-icon="fa fa-lock self-fa-lg"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="verification">
+                        <div class="logincode">
+                            <el-input placeholder="请输入验证码" v-model="ruleForm.verification" class="loginInput verification" type="text"
+                                prefix-icon="fa fa-key self-fa-lg"></el-input>
+                            <img @click="change" :src="response" alt="aa" height="40">    
+                        </div>
+                    <!-- <div class="verification"><img alt="" width="158" height="76"></div> -->
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button class="loginBtn" @click="submitForm('ruleForm')">登录</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-container>
         </div>
-        <el-container class="above">
-            <el-form class="loginForm" :model="ruleForm" :rules="rules" ref="ruleForm">
-                <el-form-item prop="name">
-                    <el-input placeholder="请输入用户名称" v-model="ruleForm.name" class="loginInput" type="text"
-                            prefix-icon="fa fa-user self-fa-lg" adijos>
-                    </el-input>
-                </el-form-item>
-                <el-form-item prop="password">
-                <el-input placeholder="请输入登录密码" v-model="ruleForm.password" class="loginInput" type="password"
-                            prefix-icon="fa fa-lock self-fa-lg"></el-input>
-                </el-form-item>
-                <el-form-item prop="verification">
-                    <div class="logincode">
-                        <el-input placeholder="请输入验证码" v-model="ruleForm.verification" class="loginInput verification" type="text"
-                            prefix-icon="fa fa-key self-fa-lg"></el-input>
-                        <img src="../../assets/img/verification.png" alt="" height="40">    
-                    </div>
-                <!-- <div class="verification"><img alt="" width="158" height="76"></div> -->
-                </el-form-item>
-                <el-form-item>
-                    <el-button class="loginBtn" @click="submitForm('ruleForm')">登录</el-button>
-                </el-form-item>
-            </el-form>
         </el-container>
     </div>
-    </el-container>
-</div>
 </template>
 
 <script>
@@ -45,6 +45,7 @@ export default {
     
     data() {
     return {
+        response:'',
         ruleForm: {
         name: '',
         password: '',
@@ -67,6 +68,10 @@ export default {
     };
     },
     methods: {
+
+        change() {
+            this.response = 'http://localhost:81/zslm_back/public/login/admin/captcha/' +  Math.random();
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
             if (valid) {
@@ -77,6 +82,9 @@ export default {
             }
             });
         },
+    },
+    mounted:function() {
+        this.change();
     }
 }
 </script>

@@ -57,10 +57,50 @@
                                   v-model="tableData[scope.$index].show_weight">
                         </el-input>
                     </template>
-                </el-table-column>
+                  </el-table-column>
 		          <el-table-column label="操作" width="220">
 		              <template slot-scope="scope">
-		                <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+		              	<el-button @click="dialogFormVisible = true" type="text" size="small">编辑</el-button>
+		              	<!-- 模态框 -->
+		              	<el-dialog title="编辑文件信息" :visible.sync="dialogFormVisible" class="dialog">
+							<el-form :model="form">
+								<div class="dialogText">文件编号：{{form.fileId}}</div>
+								<el-form-item label="文件名称" :label-width="formLabelWidth">
+						        	<el-input v-model="form.name" autocomplete="off"></el-input>
+						    	</el-form-item>
+						    	<div class="dialogRadio">
+						    		<div>文件类型</div>
+						    		<el-radio-group v-model="radio2">
+										<el-radio :label="3">招生简章</el-radio>
+								    	<el-radio :label="6">其他文件</el-radio>
+									</el-radio-group>
+						    	</div>
+						    	<el-form-item label="年份信息" :label-width="formLabelWidth">
+						        	<el-input v-model="form.yearInfo" autocomplete="off"></el-input>
+						    	</el-form-item>
+						    	<el-form-item label="文件描述" :label-width="formLabelWidth">
+						        	<el-input v-model="form.fileDesc" autocomplete="off"></el-input>
+						    	</el-form-item>
+						    	<div class="dialogSwitch">
+						    		<div>是否展示</div>
+						    		<el-tooltip :content="'Switch value: ' + value5" placement="top">
+										<el-switch
+										    v-model="value5"
+										    active-color="#13ce66"
+										    inactive-color="#ff4949"
+										    active-value="100"
+										    inactive-value="0">
+										</el-switch>
+									</el-tooltip>
+						    	</div>
+						    	
+							</el-form>
+							<div slot="footer" class="dialog-footer">
+						    	<el-button @click="dialogFormVisible = false">取 消</el-button>
+						    	<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+						  	</div>
+						</el-dialog>
+
 		                <el-button @click="view(scope.row)" type="text" size="small">查看</el-button>
 		                <el-button type="text" size="small" @click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
 		              </template>
@@ -84,6 +124,17 @@
     export default {
   		data() {
   	    	return {
+  	    		/*模态框*/
+  	    		dialogFormVisible: false,
+  	    		form: {
+  	    		 	fileId:0,
+		         	name: '',
+		         	fileDesc: '',
+		         	yearInfo: '',
+		        },
+		        formLabelWidth: '120px',
+		        radio2:3,
+		        value5: '100',
   	    		/*选项卡*/
   	    		banner: [
     	          {id: 0,name: ""},
@@ -150,6 +201,9 @@
 	        // }
        	},
 	  	methods: {
+	  		// opendialog:function(){    //代开模态框
+		   //    this.dialogVisible = false 
+		   //  },
 	  		//变量和字符串拼接——头部导航按钮内字体显示
 	  		adds:function() {
 	  				this.banner[0].name = `全部文件(${this.allFilesCount})`;
@@ -242,6 +296,7 @@
 	    	edit(row) {
 	    		//当前行表格数据
 	    		var singledata = row;
+	    		console.log(123)
 	        	// 此页面未给
 	    	},
 	  		//动态更新文件管理首页的id
@@ -300,6 +355,10 @@
 
 <!-- 全局样式 -->
 <style>
+	.dia {
+		width: 100px;
+		height: 100px;
+	}
 	/*表格滚动条*/
 	.file-table .el-table--scrollable-x .el-table__body-wrapper {
 		overflow-x: hidden;
@@ -307,6 +366,31 @@
 	.file-table .el-input__inner {
 		width: 60px;
 		text-align: center;
+	}
+	/*模态框*/
+	.dialog .el-dialog__header {
+	    padding: 20px 20px 10px;
+	    text-align: left;
+	    background: #f2f2f2;
+	    color: #333;
+	    font-size: 14px;
+	    font-weight: bolder;
+	}
+	.dialog .el-input__inner {
+		width: 440px;
+		text-align: left;
+	}
+	.dialog .el-input {
+		width: 450px;
+	}
+	.dialog .el-form-item {
+		width: 600px;
+	}
+	.dialog .el-radio-group {
+		margin-left: 36px;
+	}
+	.dialog .el-switch__core {
+		margin-left: 36px;
 	}
 	/*表头文本居中*/
 	.file-table .el-table th.is-leaf {
@@ -333,7 +417,20 @@
 </style>
 
 <style scoped>
-  	
+	.dialogRadio,.dialogSwitch,.dialogText {
+		text-align: left;
+	}
+	.dialogText {
+		margin: 0 0 10px 20px;
+	}
+	.dialogRadio,.dialogSwitch {
+		display: flex;
+		align-items:center;
+		margin-left: 50px;
+	}
+	.dialogRadio {
+		margin-bottom: 20px;
+	}
   	/* 表格样式 */
   	.file-table {
 		width: 1500px;

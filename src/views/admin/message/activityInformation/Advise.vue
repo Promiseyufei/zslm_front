@@ -16,7 +16,7 @@
                         <el-step title="推荐信息"></el-step>
                         <el-step title="消息通知"></el-step>
                     </el-steps>
-                </div> 
+                </div>
 
                 <div>
                     <!-- 招生项目信息 -->
@@ -26,19 +26,19 @@
                         </div>
                         <div class="operateUpfilesRight">
                             <div class="messageBtn">
-                                <el-button type="primary" @click="toNotice" plain>跳过</el-button>
-                                <el-button type="primary" @click="">设置</el-button>
+                                <el-button type="primary" @click="toM" plain>跳过</el-button>
+                                <el-button type="primary" @click="toNotice">设置</el-button>
                             </div>
 
                             <div class="shoolTotal">
                                 <div v-if="shoolCount.length==0">
                                     <!-- 主办院校logo -->
                                     <div class="messageSchool">
-                                        <img src="../../../../assets/img/collegeLogo.png" alt="">
+                                        <img :src="img" alt="">
                                     </div>
 
                                     <!-- 院校名称 -->
-                                    <p style="text-align: center;">未设置主办院校</p>
+                                    <p style="text-align: center;">{{ this.zname}}</p>
                                 </div>
 
                                 <div v-for="(item, index) in shoolCount" :key="index">
@@ -49,12 +49,12 @@
 
                                     <!-- 院校名称 -->
                                     <p style="text-align: center;">{{item.name}}</p>
-                                    <p style="text-align: center; color: #1ABC9C;cursor: pointer;" v-if="index >= 0" @click="deleteSchool(index)">删除</p>
+                                    <p style="text-align: center; color: #1ABC9C;cursor: pointer;" v-if="index >= 0"
+                                       @click="deleteSchool(index)">删除</p>
                                 </div>
                             </div>
-                            
-                            
-                            
+
+
                         </div>
                     </div>
 
@@ -71,11 +71,16 @@
                                 </el-radio-group>
                                 <div v-if="this.setSwitch == 2">
                                     <div class="messageUpfilesRight2Nav">
-                                        <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
-                                        <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                                        <el-button type="info" plain @click="adviseAdd"><i
+                                                class="fa fa-plus fa-fw fa-lg"></i>添加
+                                        </el-button>
+                                        <el-button type="info" plain @click="activityDelete"><i
+                                                class="fa fa-trash-o fa-fw fa-lg"></i>清空
+                                        </el-button>
                                     </div>
                                     <!-- 表格 -->
-                                    <messageTable :tableData3 = "tableData" :isSelect="1" :listTable="listTable" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
+                                    <messageTable :tableData3="tableData" :isSelect="1" :listTable="listTable"
+                                                  @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
                                 </div>
                             </template>
                         </div>
@@ -94,11 +99,16 @@
                                 </el-radio-group>
                                 <div v-if="this.setSwitch2 == 2">
                                     <div class="messageUpfilesRight2Nav">
-                                        <el-button type="info" plain @click="majorAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
-                                        <el-button type="info" plain @click="activityDelete"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                                        <el-button type="info" plain @click="majorAdd"><i
+                                                class="fa fa-plus fa-fw fa-lg"></i>添加
+                                        </el-button>
+                                        <el-button type="info" plain @click="activityDelete"><i
+                                                class="fa fa-trash-o fa-fw fa-lg"></i>清空
+                                        </el-button>
                                     </div>
                                     <!-- 表格 -->
-                                    <messageTable1 :tableData3 = "tableData2" :listTable="listTable2" @setInfoRelation="setOpAd" @del="delAdvise"></messageTable1>
+                                    <messageTable1 :tableData3="tableData2" :listTable="listTable2"
+                                                   @setInfoRelation="setOpM" @del="delAdvise"></messageTable1>
                                 </div>
                             </template>
                         </div>
@@ -107,304 +117,374 @@
                     <!-- 按钮 -->
                     <div class="operateFinalUp">
                         <el-button type="primary" @click="toBack" plain>返回上一步</el-button>
-                        <el-button type="primary" @click="toNotice">下一步，消息通知</el-button>
+                        <el-button type="primary" @click="toM">下一步，消息通知</el-button>
                         <el-button type="primary" @click="">完成！</el-button>
                     </div>
 
-                </div> 
+                </div>
             </div>
         </div>
-        
+
     </div>
 </template>
 
 <script>
-export default {
-    components: {
-    },
-    data() {
-      return {
-        // 上个页面传过来的参数（xx活动的id）
-        id: this.$route.params.id,
-        shoolCount: [
-            // {
-            //     logo: require('../../../../assets/img/collegeLogo.png'),
-            //     name: "新乡医学院",
-            // },
-        ],
-        imageUrl: '',
-        setSwitch: 1,
-        setSwitch2: 1,
-        listTable: [
-            {
-                prop: 'id',
-                lable: '编号',
-                width: "210px"
-            },
-            {
-                prop: "show_weight",
-                lable: "展示顺序",
-                width: "80px"
-            },
-            {
-                prop: "active_type",
-                lable: "活动类型",
-                width: "210px"
-            },
-            {
-                prop: "active_name",
-                lable: "活动名称",
-                width: "319px"
-            },
-            {
-                prop: "create_time",
-                lable: "发布时间",
-                width: "210px"
-            }
-        ],
-        // 表格默认数据
-        tableData: [],
-        listTable2: [
-            {
-                prop: 'id',
-                lable: '编号',
-                width: "210px"
-            },
-            {
-                prop: "weight",
-                lable: "展示顺序",
-                width: "80px"
-            },
-            {
-                prop: "province",
-                lable: "活动省市",
-                width: "210px"
-            },
-            {
-                prop: "z_name",
-                lable: "专业名称",
-                width: "319px"
-            },
-            {
-                prop: "update_time",
-                lable: "发布时间",
-                width: "210px"
-            }
-        ],
-        // 表格默认数据
-        tableData2: []
-      }
-    },
-    watch: {
-        setSwitch: function(val,oldval) {
-            if(val == 1&&oldval!=val) {
-                this.setActivity();
-            }
-            if(val == 2&&oldval!=val) {
-
+    export default {
+        components: {},
+        data() {
+            return {
+                // 上个页面传过来的参数（xx活动的id）
+                zname:'',
+                id: this.$route.params.id,
+                majorid: this.$route.params.major,
+                img:'',
+                shoolCount: [
+                    // {
+                    //     logo: require('../../../../assets/img/collegeLogo.png'),
+                    //     name: "新乡医学院",
+                    // },
+                ],
+                imageUrl: '',
+                setSwitch: 1,
+                setSwitch2: 1,
+                listTable: [
+                    {
+                        prop: 'id',
+                        lable: '编号',
+                        width: "210px"
+                    },
+                    {
+                        prop: "show_weight",
+                        lable: "展示顺序",
+                        width: "80px"
+                    },
+                    {
+                        prop: "active_type",
+                        lable: "活动类型",
+                        width: "210px"
+                    },
+                    {
+                        prop: "active_name",
+                        lable: "活动名称",
+                        width: "319px"
+                    },
+                    {
+                        prop: "create_time",
+                        lable: "发布时间",
+                        width: "210px"
+                    }
+                ],
+                // 表格默认数据
+                tableData: [],
+                listTable2: [
+                    {
+                        prop: 'id',
+                        lable: '编号',
+                        width: "210px"
+                    },
+                    {
+                        prop: "weight",
+                        lable: "展示顺序",
+                        width: "80px"
+                    },
+                    {
+                        prop: "province",
+                        lable: "活动省市",
+                        width: "210px"
+                    },
+                    {
+                        prop: "z_name",
+                        lable: "专业名称",
+                        width: "319px"
+                    },
+                    {
+                        prop: "update_time",
+                        lable: "发布时间",
+                        width: "210px"
+                    }
+                ],
+                // 表格默认数据
+                tableData2: []
             }
         },
-        setSwitch2: function(val,oldval) {
-            if(val == 1&&oldval!=val) {
-                this.setCollege();
-            }
-            if(val == 2&&oldval!=val) {
-
-            }
-        }
-    },
-    methods: {
-        // 跳转到“活动列表”页面添加推荐活动
-        info:function(){
-            let self = this;
-            this.fetch('/admin/information/getguanlian',{
-                id: parseInt(self.id)
-            }).then(res=>{
-                if(res.code == 0){
-                    self.tableData = res.result[0];
-                    self.tableData2 = res.result[1];
+        watch: {
+            setSwitch: function (val, oldval) {
+                if (val == 1 && oldval != val) {
+                    this.setActivity();
                 }
-            })
-        },
+                if (val == 2 && oldval != val) {
 
-        adviseAdd: function() {
-          this.$router.push('/message/addActivity/' + this.id);
-        },
+                }
+            },
+            setSwitch2: function (val, oldval) {
+                if (val == 1 && oldval != val) {
+                    this.setCollege();
+                }
+                if (val == 2 && oldval != val) {
 
-        majorAdd: function() {
-            this.$router.push('/message/AddMajor/' + this.id);
+                }
+            }
         },
-
-        // 返回上一步
-        toBack: function() {
-            this.$router.push('/message/activity');
-        },
-
-        // 跳转到消息通知页面
-        toNotice: function() {
-            this.$router.push('/message/notice/'+this.id);
-        },
-
-        //删除主办院校
-        deleteSchool: function(index) {
-            console.log(index);
-            this.shoolCount.splice(index);
-        },
-
-        // 自动设置推荐活动
-        setActivity: function() {
-            let self = this;
-            axios.post('/admin/information/setAutomaticRecActivitys', {
-                activityId: self.id
-            })
-            .then(function (response) {
-                // console.log("测试123");
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
-
-        // 自动设置院校专业
-        setCollege: function() {
-            let self = this;
-            this.post('/admin/information/setAutomaticRecMajors', {
-                activityId: self.id
-            })
-            .then(function (response) {
-                // console.log("测试123");
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
-        
-        // 得到所有的推荐活动
-        getAdviseName: function() {
-            var self = this;
-            //   var load = this.openFullScreen2();
-            axios.post('/admin/information/getAllActivitys', {
-                regionId: self.id
-            })
-            .then(function (response) {
-                var res = response.data;
-                if (res.code == 0) {
-                    self.tableData = res.data;
-                };
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
-
-        // 得到所有的推荐院校专业
-        getAdviseCollege: function() {
-            var self = this;
-            //   var load = this.openFullScreen2();
-            axios.post('/admin/information/getAllCollege', {
-                regionId: self.id
-            })
-            .then(function (response) {
-                var res = response.data;
-                if (res.code == 0) {
-                    self.tableData2 = res.data;
-                };
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
-
-        setOpAd: function(id, weight) {
-            this.confirm(() => {
-                this.post('/admin/operate/ ', {
-                    informationId: id,
-                    weight:weight
-                }).then((response) => {
-                    (response.code == 0) ? this.message(true, response.msg, 'success') : this.message(true, response.msg, 'error');
+        methods: {
+            // 跳转到“活动列表”页面添加推荐活动
+            info: function () {
+                let self = this;
+                this.fetch('/admin/information/getguanlian', {
+                    id: parseInt(self.id)
+                }).then(res => {
+                    if (res.code == 0) {
+                        self.tableData = res.result[0];
+                        self.tableData2 = res.result[1];
+                    }
                 })
-            }, () => {
-                this.tableData3[index].show_weight = this.TableValue;
-                this.message(true, '已取消修改', 'info');
-            })
-        },
-        delAdvise: function(res, row) {
-            // this.confirm(() => {
-            //     this.post('/admin/operate/deleteAppoinInformation', {
-            //         RegionId: this.i,
-            //         InformationId: res
-            //     }).then((response) => {
-            //         if(response.code == 0) {
-            //             this.tableData3.splice(this.tableData3.indexOf(row), 1);
-            //             this.message(true, response.msg, 'success');
-            //         }
-            //         else {
-            //             this.message(true, response.msg, 'error');
-            //         }
-            //     })
-            // }, () => {
-            //     this.message(true, '已取消修改', 'info')
-            // })
-        },
-        // 清空所有推荐活动
-        activityDelete: function() {
-            var table = this.tableData3;
-            var arrayTableId = [];
-            for (var i = 0; i < table.length; i++) {
-                arrayTableId.push(table[i].id);
-            };
-            if(arrayTableId.length < 1) {
-                this.message(true, '没有要清空的数据', 'error');
-                return;
-            }
-            this.post('/admin/operate/deleteAppoinInformation', {
-                RegionId: this.id,
-                InformationId : arrayTableId
-            }).then((response) => {
-                if(response.code == 0) {
-                    this.tableData3 = [];
-                    this.message(true, response.msg, 'success');
+            },
+
+            adviseAdd: function () {
+                this.$router.push('/message/addActivity/' + this.id);
+            },
+
+            majorAdd: function () {
+                this.$router.push('/message/AddMajor/' + this.id);
+            },
+
+            // 返回上一步
+            toBack: function () {
+                this.$router.push('/message/activity');
+            },
+
+            setInfoRelation(index,val){
+                alert(111)
+            },
+            // 跳转到消息通知页面
+
+            toM:function(){
+
+                this.$router.push('/message/notice/' + this.id+'/'+this.majorid);
+            },
+            toNotice: function () {
+                this.$router.push('/active/selectUnivers/' + this.id);
+            },
+
+            getImg: function () {
+                let that = this;
+                this.fetch('/admin/information/getimg', {
+                    id: this.majorid
+                }).then(
+                    res=>{
+                       that.zname = res.result.z_name
+                        that.img = res.img;
+                    }
+                )
+            },
+
+            //删除主办院校
+            deleteSchool: function (index) {
+                console.log(index);
+                this.shoolCount.splice(index);
+            },
+
+            // 自动设置推荐活动
+            setActivity: function () {
+                let self = this;
+                axios.post('/admin/information/setAutomaticRecActivitys', {
+                    activityId: self.id
+                })
+                    .then(function (response) {
+                        // console.log("测试123");
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+
+            // 自动设置院校专业
+            setCollege: function () {
+                let self = this;
+                this.post('/admin/information/setAutomaticRecMajors', {
+                    activityId: self.id
+                })
+                    .then(function (response) {
+                        // console.log("测试123");
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+
+            // 得到所有的推荐活动
+            getAdviseName: function () {
+                var self = this;
+                //   var load = this.openFullScreen2();
+                axios.post('/admin/information/getAllActivitys', {
+                    regionId: self.id
+                })
+                    .then(function (response) {
+                        var res = response.data;
+                        if (res.code == 0) {
+                            self.tableData = res.data;
+                        }
+                        ;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+
+            // 得到所有的推荐院校专业
+            getAdviseCollege: function () {
+                var self = this;
+                //   var load = this.openFullScreen2();
+                axios.post('/admin/information/getAllCollege', {
+                    regionId: self.id
+                })
+                    .then(function (response) {
+                        var res = response.data;
+                        if (res.code == 0) {
+                            self.tableData2 = res.data;
+                        }
+                        ;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            },
+
+            setOpAd: function (weight, val) {
+                // let that = this;
+                // console.log(that)
+                // this.post('/admin/information/updateActivityWeight',{
+                //     //后台参数，前台参数(传向后台)
+                //     id: that.tableData[weight].id,
+                //     showWeight: val
+                // }).then(res=>{
+                //     if (res.code == 0){
+                //         that.message(true,'删除成功','success');
+                //     }else{
+                //         that.message(true,'删除失败','error');
+                //     }
+                //
+                // })
+                // this.$confirm('操作需谨慎, 是否继续?', '提示', {
+                //     confirmButtonText: '确定',
+                //     cancelButtonText: '取消',
+                //     type: 'warning'
+                // }).then(() => {
+                //
+                // }).catch(() => {
+                //     this.$message({
+                //         type: 'info',
+                //         message: '已取消修改'
+                //     });
+                // });
+            },
+
+            setOpM(weight, val){
+                // let that = this;
+                //
+                // this.$confirm('操作需谨慎, 是否继续?', '提示', {
+                //     confirmButtonText: '确定',
+                //     cancelButtonText: '取消',
+                //     type: 'warning'
+                // }).then(() => {
+                //     that.post('/admin/information/updateActivityWeight',{
+                //         //后台参数，前台参数(传向后台)
+                //         id: that.tableData[val].id,
+                //         showWeight: weight
+                //     }).then(res=>{
+                //         if (res.code == 0){
+                //             that.message(true,'删除成功','success');
+                //         }else{
+                //             that.message(true,'删除失败','error');
+                //             // that.majorlisttable[index].show_weight = that.showweight;
+                //         }
+                //
+                //     })
+                // }).catch(() => {
+                //     this.$message({
+                //         type: 'info',
+                //         message: '已取消修改'
+                //     });
+                // });
+            },
+            delAdvise: function (res, row) {
+                // this.confirm(() => {
+                //     this.post('/admin/operate/deleteAppoinInformation', {
+                //         RegionId: this.i,
+                //         InformationId: res
+                //     }).then((response) => {
+                //         if(response.code == 0) {
+                //             this.tableData3.splice(this.tableData3.indexOf(row), 1);
+                //             this.message(true, response.msg, 'success');
+                //         }
+                //         else {
+                //             this.message(true, response.msg, 'error');
+                //         }
+                //     })
+                // }, () => {
+                //     this.message(true, '已取消修改', 'info')
+                // })
+            },
+            // 清空所有推荐活动
+            activityDelete: function () {
+                var table = this.tableData;
+                var arrayTableId = [];
+                for (var i = 0; i < table.length; i++) {
+                    arrayTableId.push(table[i].id);
                 }
-                else this.message(true, response.msg, 'error');
-            })
-        },
-        startChange: function () {
-            this.disabled = false;
-        },
-        startChange2: function () {
-            this.disabled2 = false;
-        },
-        valuechange: function(res) {
-            console.log(res);
-        },
-        // 上传院校logo
-        handleAvatarSuccess(res, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
-        },
-        beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
-            const isLt2M = file.size / 1024 / 1024 < 2;
+                ;
+                if (arrayTableId.length < 1) {
+                    this.message(true, '没有要清空的数据', 'error');
+                    return;
+                }
+                this.post('/admin/operate/deleteAppoinInformation', {
+                    RegionId: this.id,
+                    InformationId: arrayTableId
+                }).then((response) => {
+                    if (response.code == 0) {
+                        this.tableData = [];
+                        this.message(true, response.msg, 'success');
+                    }
+                    else this.message(true, response.msg, 'error');
+                })
+            },
+            startChange: function () {
+                this.disabled = false;
+            },
+            startChange2: function () {
+                this.disabled2 = false;
+            },
+            valuechange: function (res) {
+                console.log(res);
+            },
+            // 上传院校logo
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
 
-            if (!isJPG) {
-              this.$message.error('上传头像图片只能是 JPG 格式!');
-            }
-            if (!isLt2M) {
-              this.$message.error('上传头像图片大小不能超过 2MB!');
-            }
-            return isJPG && isLt2M;
-        },
-        changeCount:function(val,index){
-            console.log(1)
-        },
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
+            changeCount: function (val, index) {
+                console.log(1)
+            },
 
-        del(){
-            console.log(111111)
-        }
-    },
-    mounted() {
-        this.info();
-    },
-};
+            del() {
+                console.log(111111)
+            }
+        },
+        mounted() {
+            this.info();
+            this.getImg();
+        },
+    };
 </script>
 <style>
     /*
@@ -414,13 +494,16 @@ export default {
         width: 50px;
         height: 50px;
     }
+
     .fileSteps .is-finish .is-text {
-        background: #1ABC9C; 
+        background: #1ABC9C;
         color: #fff;
     }
+
     .fileSteps .el-step__icon-inner {
         font-size: 20px;
     }
+
     .fileSteps .el-step__line {
         top: 23px !important;
     }
@@ -439,7 +522,7 @@ export default {
     /*
     * 设置主办院校
     */
-    .shoolTotal>div {
+    .shoolTotal > div {
         margin: 20px 80px 0 20px;
     }
 
@@ -453,17 +536,20 @@ export default {
         height: 178px;
         line-height: 178px;
         text-align: center;
-        border: 1px dashed #d9d9d9; 
+        border: 1px dashed #d9d9d9;
     }
+
     .avatar-uploader-icon:hover {
         border-color: #409EFF;
     }
+
     .messageSchool {
         margin: 15px 0 20px;
         display: flex;
         justify-content: center;
         overflow: hidden;
     }
+
     .messageSchool img {
         max-width: 178px;
         max-height: 178px;
@@ -473,12 +559,13 @@ export default {
     * 富文本编辑器
     */
     #editor {
-      text-align: left;
+        text-align: left;
     }
+
     .messageEditor {
-      margin-top: 20px;
-      display: flex;
-      justify-content: flex-end;
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
 
     }
 
@@ -490,6 +577,7 @@ export default {
         width: 400px;
         margin: 0 auto;
     }
+
     .fileSteps .el-steps--horizontal {
         margin: 20px 0;
     }
@@ -503,6 +591,7 @@ export default {
         display: flex;
         flex-direction: row;
     }
+
     .operateHeader .el-button {
         width: 80px;
         height: 30px;
@@ -512,18 +601,22 @@ export default {
         padding: 0;
         margin: 10px;
     }
+
     .operateUp {
         border-bottom: none;
     }
+
     .operateDown {
         border-top: none;
     }
+
     .operateUpfilesLeft {
         background-color: #fcfcfc;
         border-right: 1px solid #e4e4e4;
         width: 159px;
     }
-    .operateUpfilesLeft>div {
+
+    .operateUpfilesLeft > div {
         background: url(../../../../assets/img/point.png) no-repeat;
         position: relative;
         top: 50px;
@@ -535,14 +628,17 @@ export default {
         align-items: center;
         padding-left: 20px;
     }
+
     .operateUpfilesRight {
         padding: 50px 80px;
         width: 1170px;
         border-bottom: 1px solid #e4e4e4;
     }
+
     .operateUpfilesRight form {
         margin-top: 50px;
     }
+
     .operateUpfilesRight button {
         float: right;
     }
@@ -551,9 +647,10 @@ export default {
     * 右边当前banner内容样式
     */
     .operateUpfilesRight2 {
-      padding: 50px 80px;
-      width: 1170px;
+        padding: 50px 80px;
+        width: 1170px;
     }
+
     .messageUpfilesRight2Nav {
         margin: 20px 0 0;
         display: flex;
@@ -563,12 +660,14 @@ export default {
         color: #666;
         font-size: 14px;
     }
+
     .operateFinalUp {
-      text-align: center;
-      margin: 95px 0 70px;
+        text-align: center;
+        margin: 95px 0 70px;
     }
-    .messageBtn button{
-      float: right;
+
+    .messageBtn button {
+        float: right;
     }
 
 </style>

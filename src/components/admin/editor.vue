@@ -36,7 +36,7 @@ export default {
     methods: {
         //改变富文本编辑器是否可编辑
         startChange3: function () {
-            this.disabled3 = false;
+            // this.disabled3 = false;
             this.editor.$textElem.attr('contenteditable', true);
         },
         // 提交修改数据

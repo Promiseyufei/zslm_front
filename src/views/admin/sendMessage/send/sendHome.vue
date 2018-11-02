@@ -43,22 +43,42 @@
                                <div class="sendNav">
                                     <span>消息对象类型：</span>
                                     <div>
-                                        <p>全部用户</p>
+                                        <p>特定行为的用户（关注院校、参与活动）</p>
                                     </div>
                                </div>
                                <div class="sendNav">
                                     <span>关注院校：</span>
                                     <div>
-                                        <p>院校名称1</p>
-                                        <p>院校名称2</p>
-                                        <p>院校名称3</p>
+                                        <template v-for="(ma, index) in seMajor">
+                                            <p :key="index">{{ ma.z_name }}</p>
+                                        </template>
+                                        <!-- <p>院校名称2</p>
+                                        <p>院校名称3</p> -->
+                                    </div>
+                               </div>
+                               <div class="sendNav">
+                                    <span>关注活动：</span>
+                                    <div>
+                                        <template v-for="(a, index) in seAc">
+                                            <p :key="index">{{ a.active_name }}</p>
+                                        </template>
+                                        <!-- <p>活动名称1</p>
+                                        <p>活动名称1</p> -->
                                     </div>
                                </div>
                                <div class="sendNav">
                                     <span>关系类型：</span>
-                                    <div>
-                                        <p>关注了以上任意一种院校</p>
-                                    </div>
+                                    <template v-if="toType == 1">
+                                        <div>
+                                            <p>关注了以上任意一种院校【或】参与以上任意活动</p>
+                                        </div>
+                                    </template>
+                                    <template v-else-if="toType == 2">
+                                        <div>
+                                            <p>关注了以上任意一种院校【且】参与以上任意活动</p>
+                                        </div>
+                                    </template>
+
                                </div>
                                <hr>
                            </div>
@@ -93,6 +113,9 @@ export default {
     data() {
       return {
         radio: "",
+        seMajor:[],
+        seAc:[],
+        toType:0,
         listTable: [
             {
                 prop: 'id',
@@ -194,6 +217,9 @@ export default {
                 this.currentPage = pageNum;
                 this.getUser();
             }
+            else if(this.radio == "2") {
+
+            }
             else if(this.radio == "3") {
                 console.log(this.table2);
                 if(this.table2.length <= this.size) {
@@ -237,6 +263,33 @@ export default {
             this.table2.pop();
             // this.table2[key] = null;
             // console.log(this.table2);
+        },
+
+        batchScreenUser() {
+            // console.log(this.seAc);
+            let majorIdArr = [];
+            let acIdArr = [];
+            if(this.seAc != undefined && this.seAc.length > 0)
+                this.seAc.forEach((item) => {
+                    acIdArr.push(item.id);
+                });
+            if(this.seMajor != undefined && this.seMajor.length > 0)
+                this.seMajor.forEach((item) => {
+                    majorIdArr.push(item.id);
+                });
+
+            this.post('/admin/news/batchScreenAccounts', {
+                majorIdArr:majorIdArr,
+                activityIdArr: acIdArr,
+                condition: this.toType == 1 ? 1 : 0,
+                pageCount: this.size,
+                pageNumber:this.currentPage
+            }).then((response) => {
+                if(response.code == 0) {
+                    this.table1 = response.result;
+                }
+                else this.message(true, response.msg, 'error');
+            })
         }
     },
     
@@ -249,6 +302,16 @@ export default {
             this.totalData = setArray.length;
             tt == "2" ? this.table1 = setArray : (tt == "3" ? this.table2 = setArray : this.table2 = this.table2);
             this.changePageNum(1);
+        }
+        if(this.$route.params.seTwo != undefined) {
+            let seArray = this.$route.params.seTwo;
+            let t = seArray.pop();
+            this.seMajor = seArray['semajor'] != undefined ? seArray['semajor'] : [];
+            this.seAc = seArray['seactivity'] != undefined ? seArray['seactivity'] : [];
+            this.toType = seArray['type'];
+            console.log(seArray);
+            this.batchScreenUser();
+            this.radio = t;
         }
         
     },
