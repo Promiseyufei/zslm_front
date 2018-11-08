@@ -10,6 +10,7 @@ import messageTable1 from  './admin/messageTable1.vue'
 import userTable from  './admin/userTable.vue'
 import singlePage from  './admin/singlePage.vue'
 import editor from  './admin/editor.vue'
+import homeBtn from  './front/homeBtn.vue'
 
 export default {
     Test, 
@@ -23,5 +24,7 @@ export default {
     userTable,
     singlePage,
     editor,
-    messageTable1
+    messageTable1,
+
+    homeBtn
 }

@@ -1,6 +1,6 @@
 <template>
     <div>
-      <p>this is front.vue</p>
+      <!-- <p>this is front.vue</p> -->
       <router-view/>
     </div>
 </template>
