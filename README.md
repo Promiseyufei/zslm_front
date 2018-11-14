@@ -32,9 +32,12 @@ npm test
 >>>         common      公共组件
 >>>         front       前台公共组件
 >>>         index.js    公共组件入口文件
->>     config      
+>>     config
+>>>         providers
+>>>>            http-service.js axios请求二次封装      
 >>>         filters.js  公共过滤器
 >>>         methods.js  公共方法
+>>>         navigation.js  后台管理员右侧导航栏定义
 >>     router      
 >>>         admin.js    后台管理路由定义文件
 >>>         front.js    前台页面路由定义文件
@@ -43,6 +46,8 @@ npm test
 >>>         admin       后台管理页面组件
 >>>         front       前台页面组件
 >>     App.vue         挂载组件
+>>     admin.vue       后台路由出口
+>>     front.vue       前台路由出口
 >>     main.js         入口文件 
 > static              静态文件存放处
 >>     css           
