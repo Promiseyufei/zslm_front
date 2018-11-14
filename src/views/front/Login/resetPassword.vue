@@ -1,0 +1,204 @@
+<!-- 密码重置 -->
+<template>
+	<div class="updataPass">
+		<div class="header">账号安全</div>
+		<el-form :model="resetPass" status-icon :rules="rules" 
+		ref="resetPass" class="demo-ruleForm">
+			<div class="content">
+				<el-form-item prop="phoneNumber">
+					<el-input v-model="resetPass.phoneNumber" placeholder="账号"></el-input>
+				</el-form-item>
+				<div class="codeNumber">
+					<el-form-item prop="codeNumber">
+						<el-input v-model="resetPass.codeNumber" placeholder="验证码"></el-input>
+					</el-form-item>
+					<el-button type="primary" @click="getCodenumber">{{btntxt}}</el-button>
+				</div>
+				<el-form-item prop="pass">
+					<el-input type="password" v-model="resetPass.pass" 
+					placeholder="新密码" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item prop="checkPass">
+					<el-input type="password" v-model="resetPass.checkPass" 
+					placeholder="再次输入" autocomplete="off"></el-input>
+				</el-form-item>
+				<div class="button">
+					<el-button type="primary" @click="submission">确定</el-button>
+					<el-button>返回</el-button>
+				</div>
+			</div>
+		</el-form>
+	</div>
+</template>
+
+<script>
+	export default {
+		data(){
+			var validatephoneNumber = (rule, value, callback) => {
+        		if (value === '') {
+          			callback(new Error('请输入手机号'));
+        		} else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.resetPass.phoneNumber))){
+        			callback(new Error('请输入正确的手机号！'));
+        		} else {
+          			// if (this.resetPass.phoneNumber !== '') {
+            			// this.$refs.resetPass.validateField('phoneNumber');
+          	   		// }  
+          			callback();
+        		}	
+      		};
+	      	var validatecodeNumber = (rule, value, callback) => {
+        		if (value === '') {
+          			callback(new Error('请输入验证码'));
+        		} else {
+          			// if (this.resetPass.codeNumber !== '') {
+            			// this.$refs.resetPass.validateField('codeNumber');
+          	   		// }
+          			callback();
+        		}	
+      		};
+      		var validatePass = (rule, value, callback) => {
+        		if (value === '') {
+          			callback(new Error('请输入密码'));
+        		} else {
+          			// if (this.resetPass.pass !== '') {
+            			// this.$refs.resetPass.validateField('pass');
+          	   		// }
+          			callback();
+        		}	
+      		};
+      		var validatecheckPass = (rule, value, callback) => {
+        		if (value === '') {
+          			callback(new Error('请再次输入密码'));
+        		} else if (value !== this.resetPass.pass) {
+          			callback(new Error('两次输入密码不一致!'));
+        		} else {
+          			callback();
+        		}
+      		};
+			return{
+				//输入框
+				resetPass: {
+					phoneNumber:'',
+					codeNumber:'',
+					pass:'',
+					checkPass:'',
+				},
+				rules: {
+					phoneNumber: [
+		            	{ validator: validatephoneNumber, trigger: 'blur' }
+		          	],
+		          	codeNumber: [
+		            	{ validator: validatecodeNumber, trigger: 'blur' }
+		          	],
+		        	pass: [
+		            	{ validator: validatePass, trigger: 'blur' }
+		          	],
+		          	checkPass: [
+		            	{ validator: validatecheckPass, trigger: 'blur' }
+		          	],
+		        },
+				//验证码
+				btntxt:"获取验证码",
+		        disabled:false,
+		        time:0,
+			}
+		},
+		methods:{
+			//确定修改按钮
+			submission:function(){
+				this.$refs.resetPass.validate((valid) => {
+          		if (valid) {
+            		alert('您已成功注册!');
+          		} else {
+            		// console.log('error submit!!');
+            		return false;
+          }
+        });
+			},
+			//获取验证码方法
+			getCodenumber:function(){
+            	//手机号正则判断
+            	if(this.phoneNumber==''){
+                	alert("手机号不能为空！");
+                	return;
+            	} if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.phoneNumber))){
+            		alert("请输入正确的手机号！");
+            	} else {
+            		alert("验证码已发送，请注意查收")
+            	}
+            	this.time=60;
+            	this.disabled=true;
+            	this.timer();
+        	},
+        	//倒计时方法
+        	timer:function () {
+            	if (this.time > 0) {
+                	this.time--;
+                 	this.btntxt=this.time;
+                 	setTimeout(this.timer, 800);
+             	} else{
+                	this.time=0;
+                	this.btntxt="获取验证码";
+                	this.disabled=false;
+             }
+        	}
+		},
+		mounted() {
+
+		}  
+	}
+</script>
+
+
+<!-- 全局样式 -->
+<style>
+	.content .el-button--primary {
+		height: 40px;
+    	width: 160px;
+    	background-color: #ffb957;
+    	border-color: #ffb957
+	}
+	.button .el-button--primary[data-v-056c4480] {
+		height: 36px;
+		line-height: 13px;
+	}
+	.button .el-button+.el-button {
+		width: 160px;
+		height: 36px;
+		line-height: 13px;
+	}
+	.content .el-input {
+		width: 341px;
+	}
+	.codeNumber .el-input {
+		width: 160px;
+	}
+
+</style>
+
+
+<!-- 局部样式 -->
+<style scoped>
+	.codeNumber,.button {
+		display: flex;
+		justify-content:space-between;
+	}
+	.content {
+		width: 341px;
+		margin: 40px auto;
+	}
+	.header {
+		background: #009fa0;
+		color: #fff;
+		text-align: center;
+		height: 70px;
+		line-height: 70px;
+		font-size: 22px;
+		/*#ffb957 黄色按钮*/
+	}
+	.updataPass {
+		width: 955px;
+		margin:50px auto;
+	}
+
+</style>
