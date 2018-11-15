@@ -5,7 +5,9 @@ let front_router = {
             name: '前台',
             component: resolve =>void(require(['@/front'],resolve)),
             children: [
-                {
+
+                //登录
+                {	
                 	path:'Login/loginRoute',
                 	name:'用户登录',
                 	component:resolve =>void(require(['@/views/front/Login/loginRoute'],resolve)),
@@ -25,8 +27,13 @@ let front_router = {
                 },
                 {
                 	path: '/resetPassword',
-            		name: '首页',
+            		name: '重置密码',
             		component: resolve =>void(require(['@/views/front/Login/resetPassword'], resolve)),
+            	},
+            	{
+                	path: '/register',
+            		name: '注册会员',
+            		component: resolve =>void(require(['@/views/front/Login/register'], resolve)),
             	},
                 // 首页
                 {
