@@ -30,11 +30,11 @@
 	    					<el-checkbox v-model="checked">同意用户协议</el-checkbox>
 	    				</div>
 	    				<div class="threeLogin">
-	    					<div class="fastIn">快捷登录</div>
+	    					<div class="fastIn">快捷账号登录</div>
 	    					<div class="logonIn">
-	    						<i class="el-icon-search"></i>
-	    						<div> | </div>
-	    						<i class="el-icon-search"></i>
+	    						<div class="xinlang"></div>
+	    						<div class="diviLine">|</div>
+	    						<div class="weixin"></div>
 	    					</div>
 	    				</div>
 	    			</el-card>
@@ -66,14 +66,15 @@
             	if(this.phoneNumber==''){
                 	alert("手机号不能为空！");
                 	return;
-            	} if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.phoneNumber))){
+            	} if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
             		alert("请输入正确的手机号！");
             	} else {
-            		alert("验证码已发送，请注意查收")
+            		alert("验证码已发送，请注意查收");
+            		this.time=60;
+	            	this.disabled=true;
+	            	this.timer();
             	}
-            	this.time=60;
-            	this.disabled=true;
-            	this.timer();
+            	
         	},
         	//倒计时方法
         	timer:function () {
@@ -184,6 +185,10 @@
 	.fastIn {
 		margin-bottom: 15px;
 	}
+	.logonIn div {
+		width: 21px;
+		height: 19px;
+	}
 	.logonIn {
 		display: flex;
 	}
@@ -191,7 +196,7 @@
 		display: flex;
 		justify-content:space-between;
 		width: 340px;
-		margin: 22px auto 27px;
+		margin: 25px auto 35px;
 		font-size: 14px;
 		font-weight: normal;
 		font-stretch: normal;
@@ -201,6 +206,17 @@
 	.box-card {
 		width: 412px;
 		height: 460px;
+	}
+	.weixin {
+		width: 21px;
+		background: url(../../../assets/img/weixin.png) no-repeat;
+		background-size: 100% 100%;
+	}
+	.xinlang {
+		width: 23px;
+		margin: 0 20px 0 0;
+		background: url(../../../assets/img/xinlang.png) no-repeat;
+		background-size: 100% 100%;
 	}
 	.loginPicture {
 		width: 966px;
@@ -220,7 +236,7 @@
 		justify-content:center;
 		align-items:center;
 		width: 412px;
-		height: 110px;
+		height: 100px;
 		font-size: 14px;
 		background-color: #fcfcfc;
 		border-radius: 0px 0px 5px 5px;

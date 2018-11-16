@@ -7,10 +7,10 @@
 			</el-input>
 	    </div> -->
     	<div class="passwordInput">
-      		<el-input placeholder="请输入密码" 
+      		<el-input type="password" id="password" placeholder="请输入密码" 
 	      	prefix-icon="el-icon-message" v-model="password" ref="demo">
 			</el-input>
-	  		<i class="el-icon-view"></i>
+	  		<i class="el-icon-view" @click="showOr"></i>
       </div>
     </div>
 </template>
@@ -23,12 +23,22 @@
 			}
 		},
 		methods:{
-			test:function() {
-				// console.log(this.$refs.demo.value)
+			//将数据存到vuex中
+			store:function() {
+				this.$store.commit('setPassword', this.password);			
+			},
+			//密码是否可见
+			showOr:function() {
+				let showOr = document.getElementById("password")
+				if (showOr.type=="password") {
+					showOr.type = "text";
+				} else{
+					showOr.type = "password";
+				}
 			}
 		},
 		mounted() {
-			this.test()
+			this.store();
 		}
 	}
 </script>
@@ -65,5 +75,6 @@
 		top: 5px;
 		right: 23px;
 		color: #ffb957;
+		cursor: pointer;
 	}
 </style>

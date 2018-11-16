@@ -46,9 +46,7 @@
 			};
 		},
 		methods:{
-			// parentLisen(data) {    
-                //data 是子组件传过来的值
-            // },
+            //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
 		    	// console.log(keyPath);
 		    	let active = key;
@@ -56,28 +54,15 @@
 					// this.parentLisen();
 		    		this.$router.push({
 		    			path:'/front/Login/loginRoute/shortMessage',
-		    			name:'短信登录',
-		    			params:{
-		    				name:'用户手机号',
-		    				dataObj:this.phoneNumber
-		    			},
+		    			// name:'短信登录',
+		    			// params:{
+		    			// 	name:'用户手机号',
+		    			// 	dataObj:this.phoneNumber
+		    			// },
 		    		});
 		    	} else {	//到账号登录
 		    		this.$router.push('/front/Login/loginRoute/accountNumber');
 		    	}
-		    },
-		    //到短信登录
-		    shortMessage:function() {
-		    	// console.log(this.$route.params.phoneNumber)
-		    	// this.$router.push({
-		    	// 	path:'/front/Login/loginRoute/shortMessage',
-		    	// 	name:'短信登录',
-		    	// 	params:{
-		    	// 		name:'用户手机号',
-		    	// 		dataObj:this.phoneNumber
-		    	// 	},
-		    	// });
-		    	// console.log(this.$route.params.phoneNumber)
 		    },
 		    //到账号登录页面
 		    accountNumber:function() {
@@ -86,7 +71,10 @@
 		    },
 		    //登录按钮
 		    login: function() {
-				// console.log(this.$refs.demo)
+		    	//短信登录页面的验证码
+				 console.log(this.$store.state.setTestcode)
+				//账号登录页面的密码
+				 console.log(this.$store.state.setPassword)
 		    }
 		},
 		watch:{
@@ -96,7 +84,7 @@
 		},
 		mounted() {
 			//默认显示账号登录
-			this.accountNumber();
+			// this.accountNumber();
 		}
 	}
 </script>

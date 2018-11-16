@@ -29,12 +29,10 @@
 			}
 		},
 		methods:{
-			//子组件向父组件传参
-			// chilCall:function() {
-			// 	let data = this.testCode;
-			// 	console.log(data);
-   //              this.$emit('parentLisen', data);
-   //          },
+			//将数据存到vuex中
+			store:function() {
+				this.$store.commit('setTestcode', this.testCode);			
+			},
 			//存储父路由传过来的参数
 			getParams: function() {
 				let routeParams = this.$route.params.dataObj;
@@ -52,14 +50,15 @@
             	if(this.phoneNumber==''){
                 	alert("手机号不能为空！");
                 	return;
-            	} if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.phoneNumber))){
+            	} if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
             		alert("请输入正确的手机号！");
             	} else {
-            		alert("验证码已发送，请注意查收")
+            		alert("验证码已发送，请注意查收");
+            		this.time=60;
+	            	this.disabled=true;
+	            	this.timer();
             	}
-            	this.time=60;
-            	this.disabled=true;
-            	this.timer();
+            	
         	},
         	//倒计时方法
         	timer:function () {
@@ -78,6 +77,7 @@
 			// '$route':'getParams'
 		},
 		mounted() {
+			this.store();
 			// this.chilCall
 			// this.getParams()
 		}
