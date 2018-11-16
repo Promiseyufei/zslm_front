@@ -209,12 +209,20 @@
 	}
 	.weixin {
 		width: 21px;
+		height: 19px;
 		background: url(../../../assets/img/weixin.png) no-repeat;
 		background-size: 100% 100%;
 	}
+	.diviLine {
+		width: 1px;
+		height: 13px;
+		margin-top: 3px;
+		background-color: #c7c7c7;
+	}
 	.xinlang {
 		width: 23px;
-		margin: 0 20px 0 0;
+		height: 19px;
+		margin: 0 9px 0 0;
 		background: url(../../../assets/img/xinlang.png) no-repeat;
 		background-size: 100% 100%;
 	}

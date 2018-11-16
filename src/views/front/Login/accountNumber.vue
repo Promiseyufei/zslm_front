@@ -52,12 +52,14 @@
 		border-radius: 0;
 	}*/
 	.passwordInput .el-input {
-		width: 372px;
+		width: 340px;
+		margin-left: 37px;
 	}
 	.passwordInput .el-input__icon {
 		color: #ffb957;
 	}
 	.passwordInput .el-input__inner {
+		width: 340px;
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
 		border-radius: 0;
@@ -68,12 +70,14 @@
 <!-- 局部样式 -->
 <style scoped>
 	.passwordInput {
+		/*width: 340px;*/
+		/*margin: 0 auto;*/
 		position: absolute;
 	}
 	.passwordInput i {
 		position: relative;
 		top: 5px;
-		right: 23px;
+		right: 30px;
 		color: #ffb957;
 		cursor: pointer;
 	}
