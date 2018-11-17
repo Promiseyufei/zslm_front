@@ -26,15 +26,43 @@ let front_router = {
                 	]
                 },
                 {
-                	path: '/resetPassword',
+                	path: 'resetPassword',
             		name: '重置密码',
-            		component: resolve =>void(require(['@/views/front/Login/resetPassword'], resolve)),
+            		component: resolve =>void(require(['@/views/front/Login/resetPassword'], resolve))
             	},
             	{
-                	path: '/register',
+                	path: 'register',
             		name: '注册会员',
-            		component: resolve =>void(require(['@/views/front/Login/register'], resolve)),
+            		component: resolve =>void(require(['@/views/front/Login/register'], resolve))
             	},
+            	//一级导航
+            	{
+                    path: 'firstMenuRouter',
+                    name: '一级导航',
+                    component: resolve =>void(require(['@/views/front/firstMenu/firstMenuRouter'], resolve)),
+                    children: [
+                    	{
+		                    path: 'selectCollege',
+		                    name: '选院校',
+		                    component: resolve =>void(require(['@/views/front/firstMenu/selectCollege'], resolve))
+		                },
+		                {
+		                    path: 'lookActivity',
+		                    name: '找活动',
+		                    component: resolve =>void(require(['@/views/front/firstMenu/lookActivity'], resolve))
+		                },
+		                {
+		                    path: 'viewInformation',
+		                    name: '找资讯',
+		                    component: resolve =>void(require(['@/views/front/firstMenu/viewInformation'], resolve))
+		                },
+		                {
+		                    path: 'searchCoach',
+		                    name: '搜辅导',
+		                    component: resolve =>void(require(['@/views/front/firstMenu/searchCoach'], resolve))
+		                },
+                    ]
+                },
                 // 首页
                 {
                     path: 'index',
@@ -42,26 +70,7 @@ let front_router = {
                     component: resolve =>void(require(['@/views/front/index'], resolve))
                 },
                 //主页面，包括选院校、找活动、找资讯、搜辅导
-                {
-                    path: 'selectCollege',
-                    name: '选院校',
-                    component: resolve =>void(require(['@/views/front/firstMenu/selectCollege'], resolve))
-                },
-                {
-                    path: 'lookActivity',
-                    name: '找活动',
-                    component: resolve =>void(require(['@/views/front/firstMenu/lookActivity'], resolve))
-                },
-                {
-                    path: 'viewInformation',
-                    name: '找资讯',
-                    component: resolve =>void(require(['@/views/front/firstMenu/viewInformation'], resolve))
-                },
-                {
-                    path: 'searchCoach',
-                    name: '搜辅导',
-                    component: resolve =>void(require(['@/views/front/firstMenu/searchCoach'], resolve))
-                },
+                
                 //小分页
                 {
                     path: 'singleCollage/:id?',
