@@ -92,12 +92,13 @@
 		height: 44px;
 		position: relative;
 		left: 235px;
-    	bottom: 40px;
+    	bottom: 10px;
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
 	.codeInput .el-input__inner {
 		width: 200px;
+		position: absolute;
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
 		border-radius: 0;
@@ -115,7 +116,6 @@
 		width: 340px;
 		/*display: flex;*/
 		/*justify-content:space-between;*/
-		position: absolute;
 		margin-left: 37px;
 	}
 	

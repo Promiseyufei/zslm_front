@@ -129,7 +129,7 @@
 		margin: 30px 0 0;
 	}
 	.login .el-button--primary {
-		margin-top: 110px;
+		margin-top: 30px;
 		width: 345px;
 		height: 44px;
 		background-color:  #ffb957;

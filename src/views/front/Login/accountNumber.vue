@@ -46,11 +46,6 @@
 
 <!-- 全局样式 -->
 <style>
-	/*.phoneInput .el-input__inner {
-		border: 0;
-		border-bottom: solid 1px #e6e6e6;
-		border-radius: 0;
-	}*/
 	.passwordInput .el-input {
 		width: 340px;
 		margin-left: 37px;
@@ -59,6 +54,7 @@
 		color: #ffb957;
 	}
 	.passwordInput .el-input__inner {
+		position: absolute;
 		width: 340px;
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
@@ -70,14 +66,13 @@
 <!-- 局部样式 -->
 <style scoped>
 	.passwordInput {
-		/*width: 340px;*/
-		/*margin: 0 auto;*/
-		position: absolute;
+		/*position: absolute;*/
 	}
 	.passwordInput i {
+		height: 62px;
 		position: relative;
-		top: 5px;
-		right: 30px;
+		top: 30px;
+		right: 40px;
 		color: #ffb957;
 		cursor: pointer;
 	}
