@@ -91,33 +91,32 @@
 		width: 105px;
 		height: 44px;
 		position: relative;
-		left: 268px;
-    	bottom: 40px;
+		left: 235px;
+    	bottom: 10px;
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
 	.codeInput .el-input__inner {
+		width: 200px;
+		position: absolute;
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
 		border-radius: 0;
-		width: 250px;
 	}
 	.codeInput .el-button--primary.is-disabled, .el-button--primary.is-disabled:active, .el-button--primary.is-disabled:focus, .el-button--primary.is-disabled:hover {
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
-	/*.phoneInput .el-input__inner {
-		border: 0;
-		border-bottom: solid 1px #e6e6e6;
-		border-radius: 0;
-	}*/
 </style>
 
 
 <!-- 局部样式 -->
 <style scoped>
 	.codeInput {
-		position: absolute;
+		width: 340px;
+		/*display: flex;*/
+		/*justify-content:space-between;*/
+		margin-left: 37px;
 	}
 	
 </style>

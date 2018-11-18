@@ -22,12 +22,12 @@
 	    					<div><el-checkbox v-model="checked">自动登录</el-checkbox></div>
 	    					<div><span>忘记密码</span> | <span class="register">注册</span></div>
 	    				</div>
-	    				<div style="text-align: center;">
+	    				<div class="threeLogin" style="text-align: center;">
 	    					<div class="fastIn">快捷登录</div>
 	    					<div class="logonIn">
-	    						<i class="el-icon-search"></i>
-	    						<div> | </div>
-	    						<i class="el-icon-search"></i>
+	    						<div class="xinlang"></div>
+	    						<div class="diviLine"></div>
+	    						<div class="weixin"></div>
 	    					</div>
 	    				</div>
 	    			</el-card>
@@ -92,6 +92,20 @@
 
 <!-- 全局样式 -->
 <style>
+	.center .el-menu-item {
+		font-size: 18px;
+		font-weight: normal;
+		font-stretch: normal;
+	}
+	.center .el-menu--horizontal {
+		margin: 37px auto 0;
+		width: 340px;
+		display: flex;
+		justify-content: space-between;
+	}
+	.center .el-card__body {
+		padding: 0;
+	}
 	.phoneInput .el-input__inner {
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
@@ -115,8 +129,8 @@
 		margin: 30px 0 0;
 	}
 	.login .el-button--primary {
-		margin-top: 110px;
-		width: 372px;
+		margin-top: 30px;
+		width: 345px;
 		height: 44px;
 		background-color:  #ffb957;
 		border-color:  #ffb957;
@@ -131,8 +145,47 @@
 
 <!-- 局部样式 -->
 <style scoped>
+	.login {
+		width: 345px;
+		margin: 0 auto;
+	}
+	.phoneInput {
+		width: 340px;
+		margin: 0 auto;
+	}
+	.weixin {
+		width: 21px;
+		height: 19px;
+		margin: 0 0 0 14px;
+		background: url(../../../assets/img/weixin.png) no-repeat;
+		background-size: 100% 100%;
+	}
+	.diviLine {
+		width: 1px;
+		height: 13px;
+		margin-top: 3px;
+		background-color: #c7c7c7;
+	}
+	.xinlang {
+		width: 23px;
+		height: 19px;
+		margin: 0 9px 0 0;
+		background: url(../../../assets/img/xinlang.png) no-repeat;
+		background-size: 100% 100%;
+	}
 	.fastIn {
 		margin-bottom: 15px;
+		font-size: 14px;
+	}
+	.threeLogin {
+		width: 412px;
+		height: 100px;
+		background-color: #fcfcfc;
+		border-radius: 0px 0px 5px 5px;
+		display: flex;
+		flex-direction:column;
+		justify-content:center;
+		align-items:center;
 	}
 	.logonIn {
 		display: flex;
@@ -145,16 +198,17 @@
 		color: #6e6e6e;
 	}
 	.other {
+		width: 345px;
 		display: flex;
 		justify-content:space-between;
-		margin: 10px 0 35px;
+		margin: 10px auto 35px;
 		font-size: 14px;
 		color: #6e6e6e;
 		cursor: pointer;
 	}
 	.box-card {
 		width: 412px;
-		height: 460px;
+		height: 488px;
 		/*margin-right: 100px;*/
 	}
 	.loginPicture {
