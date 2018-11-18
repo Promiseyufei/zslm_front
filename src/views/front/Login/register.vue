@@ -14,7 +14,7 @@
 	    				<div class="phoneInput">
 	    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
 							</el-input>
-	    				</div>
+	    				</div>`
 	    				<div class="codeInput">
 					      	<el-input placeholder="请输入验证码" 
 						      prefix-icon="el-icon-message" v-model="testCode">
