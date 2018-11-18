@@ -15,7 +15,6 @@ let front_router = {
                 		{
                 			path:'accountNumber',
                 			name: '账号登录',
-                			// name: 'accountNumber',
                 			component:resolve =>void(require(['@/views/front/Login/accountNumber'],resolve))
                 		},
                 		{

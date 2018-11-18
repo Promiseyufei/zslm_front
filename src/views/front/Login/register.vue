@@ -1,5 +1,4 @@
 <!-- 注册页面 -->
-<!-- 登录总部 -->
 <template>
     	<div>
     		<div class="center">

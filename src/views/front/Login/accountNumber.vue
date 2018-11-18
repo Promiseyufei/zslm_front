@@ -1,11 +1,6 @@
 <!-- 账号登录 -->
 <template>
     <div>
-		<!-- <div class="phoneInput">
-	    	<el-input placeholder="请输入您的账号" 
-	    	prefix-icon="el-icon-mobile-phone" v-model="accountNumber">
-			</el-input>
-	    </div> -->
     	<div class="passwordInput">
       		<el-input type="password" id="password" placeholder="请输入密码" 
 	      	prefix-icon="el-icon-message" v-model="password" ref="demo">
