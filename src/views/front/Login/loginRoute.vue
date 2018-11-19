@@ -39,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				active:'1',
+				active:'2',
 				phoneNumber:'',
 				checked:'',
 				password:''
@@ -104,7 +104,6 @@
 		    },
 		    //登录按钮
 		    login: function() {
-		    	// console.log(8888)
 		    	if (this.active==1) { //账号登录
 		    		if(this.phoneNumber==''){
             			this.$message('手机号不能为空！');
