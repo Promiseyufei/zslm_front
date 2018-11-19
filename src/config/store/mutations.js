@@ -7,6 +7,11 @@ export const mutations= {
 	setTestcode(state, t) {
 		state.setTestcode = t;
 		// console.log(state.setTestCode);
+	},
+
+	//修改state中的loginStatus
+	changeLoginStatus(state, param) {
+		state.loginStatus[param.name] = param.val;
 	}
     
 }

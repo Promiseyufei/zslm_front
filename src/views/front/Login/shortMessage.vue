@@ -1,11 +1,6 @@
 <!-- 短信登录 -->
 <template>
     <div>
-    	<!-- <div class="phoneInput">
-	    	<el-input placeholder="请输入手机号" 
-	    	prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
-			</el-input>
-	    </div> -->
     	<div class="codeInput">
 	      	<el-input placeholder="请输入验证码" 
 		      prefix-icon="el-icon-message" v-model="testCode">
@@ -34,16 +29,16 @@
 				this.$store.commit('setTestcode', this.testCode);			
 			},
 			//存储父路由传过来的参数
-			getParams: function() {
-				let routeParams = this.$route.params.dataObj;
-				this.phoneNumber = routeParams;
-				// console.log(this.phoneNumber)
-				// console.log(123)
-			},
+			// getParams: function() {
+			// 	let routeParams = this.$route.params.dataObj;
+			// 	this.phoneNumber = routeParams;
+			// 	console.log(this.phoneNumber)
+			// 	// console.log(123)
+			// },
 			//获取验证码方法
 			sendcode:function(){
 				//调用父路由传参数方法
-				this.getParams();
+				// this.getParams();
 				// console.log(this.phoneNumber)
 				// console.log(this.$route.params.dataObj)
             	//手机号正则判断

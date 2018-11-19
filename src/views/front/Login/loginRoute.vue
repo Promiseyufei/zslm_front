@@ -14,7 +14,12 @@
 	    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
 							</el-input>
 	    				</div>
+
+						
 	    				<router-view/>
+
+
+
 	    				<div class="login">
 	    					<el-button type="primary" @click="login">登录</el-button>
 	    				</div>
@@ -45,29 +50,34 @@
 				password:''
 			};
 		},
+		watch: {
+			phoneNumber(phone,oldPhone) {
+				this.$store.commit('userPhone', phone);
+			}
+		},
 		methods:{
             //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
-		    	// console.log(keyPath);
-		    	let active = key;
-		    	if (active == 2) {	//到短信登录
-					// this.parentLisen();
-		    		this.$router.push({
-		    			path:'/front/Login/loginRoute/shortMessage',
-		    			// name:'短信登录',
-		    			// params:{
-		    			// 	name:'用户手机号',
-		    			// 	dataObj:this.phoneNumber
-		    			// },
-		    		});
-		    	} else {	//到账号登录
-		    		this.$router.push('/front/Login/loginRoute/accountNumber');
-		    	}
-		    },
-		    //到账号登录页面
-		    accountNumber:function() {
-		    	this.$router.push('/front/Login/loginRoute/accountNumber');
-                // console.log(this.$refs.demo.value)
+				this.active = key;
+				if (this.active == 1) {
+					this.$router.push('/front/Login/loginRoute/accountNumber');
+				} else {	
+					this.$router.push('/front/Login/loginRoute/shortMessage');
+				}
+				// if(this.$store.state.loginStatus['activeKey'] != key) {
+				// 	if(this.$store.state.loginStatus['activeKey'] == 2) 
+				// 		this.$router.push('/front/Login/loginRoute/shortMessage');
+				// 	else 
+				// 		this.$router.push('/front/Login/loginRoute/accountNumber');
+				// }
+				// else {
+				// 	if (this.active == 2) {
+				// 		this.$router.push('/front/Login/loginRoute/shortMessage');
+				// 	} else {	
+				// 		this.$router.push('/front/Login/loginRoute/accountNumber');
+				// 	}
+				// }
+				// this.$store.commit('changeLoginStatus',{name:'activeKey',val: key});
 		    },
 		    //登录按钮
 		    login: function() {
@@ -77,14 +87,8 @@
 				 console.log(this.$store.state.setPassword)
 		    }
 		},
-		watch:{
-			// active:function(val,oldVal) {
-			// 	console.log(12)
-			// }
-		},
 		mounted() {
-			//默认显示账号登录
-			// this.accountNumber();
+
 		}
 	}
 </script>
