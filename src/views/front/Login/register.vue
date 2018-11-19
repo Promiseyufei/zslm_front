@@ -1,5 +1,4 @@
 <!-- 注册页面 -->
-<!-- 登录总部 -->
 <template>
     	<div>
     		<div class="center">
@@ -9,13 +8,17 @@
 	    				mode="horizontal" @select="handleSelect" v-model="active"
 	    				text-color="#333" active-text-color="#009fa0">
 	    					<el-menu-item index="1">免费成为会员</el-menu-item>
-	    					<!-- <el-menu-item index="2">短信登录</el-menu-item> -->
 	    				</el-menu>
 	    				<div class="phoneInput">
 	    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
 							</el-input>
+<<<<<<< HEAD
+	    				</div>
+	    				<div class="registerCodeinput">
+=======
 	    				</div>`
 	    				<div class="codeInput">
+>>>>>>> 628943a8d9090832ca0c09ae94c8f6a19dca5a61
 					      	<el-input placeholder="请输入验证码" 
 						      prefix-icon="el-icon-message" v-model="testCode">
 							</el-input>
@@ -23,17 +26,17 @@
 							    {{btntxt}}
 							</el-button>
 				      	</div>
-	    				<div class="login">
+	    				<div class="registerLogin">
 	    					<el-button type="primary" @click="register">成为会员</el-button>
 	    				</div>
-	    				<div class="other">
+	    				<div class="greeUser">
 	    					<el-checkbox v-model="checked">同意用户协议</el-checkbox>
 	    				</div>
-	    				<div class="threeLogin">
-	    					<div class="fastIn">快捷账号登录</div>
-	    					<div class="logonIn">
+	    				<div class="registerThreeLogin">
+	    					<div class="registerFastIn">快捷账号登录</div>
+	    					<div class="registerLogonIn">
 	    						<div class="xinlang"></div>
-	    						<div class="diviLine">|</div>
+	    						<div class="registerDiviLine">|</div>
 	    						<div class="weixin"></div>
 	    					</div>
 	    				</div>
@@ -64,12 +67,11 @@
 			sendcode:function(){
             	//手机号正则判断
             	if(this.phoneNumber==''){
-                	alert("手机号不能为空！");
-                	return;
-            	} if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
-            		alert("请输入正确的手机号！");
+            		this.$message('手机号不能为空！');
+            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
+            		this.$message('请输入正确的手机号！');
             	} else {
-            		alert("验证码已发送，请注意查收");
+            		this.$message('验证码已发送，请注意查收~');
             		this.time=60;
 	            	this.disabled=true;
 	            	this.timer();
@@ -92,6 +94,17 @@
 		    //注册按钮
 		    register: function() {
 				// console.log(this.$refs.demo)
+				if(this.phoneNumber==''){
+					this.$message('手机号不能为空！');
+            		// this.message(true,'手机号不能为空！','warning');
+                	return;
+            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
+            		this.$message('请输入正确的手机号！');
+            		// this.message(true,'请输入正确的手机号！','warning');
+            	} else if(this.testCode=='') {
+            		this.$message('验证码不能为空！');
+            		// this.message(true,'验证码不能为空！','warning');
+            	}
 		    }
 		},
 		watch:{
@@ -108,20 +121,20 @@
 	.center .el-card__body {
 		padding: 0;
 	}
-	.codeInput .el-button--primary {
+	.registerCodeinput .el-button--primary {
 		width: 108px;
 		height: 44px;
 		margin-top: 25px;
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
-	.codeInput .el-input__inner {
+	.registerCodeinput .el-input__inner {
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
 		border-radius: 0;
 		width: 219px;
 	}
-	.codeInput .el-button--primary.is-disabled, .el-button--primary.is-disabled:active, .el-button--primary.is-disabled:focus, .el-button--primary.is-disabled:hover {
+	.registerCodeinput .el-button--primary.is-disabled, .el-button--primary.is-disabled:active, .el-button--primary.is-disabled:focus, .el-button--primary.is-disabled:hover {
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
@@ -134,7 +147,7 @@
 		display: flex;
 	    justify-content: center;
 	    width: 340px;
-	    margin: 0 auto;
+	    margin: 37px auto 0;
 	}
 	.box-card .el-menu-item {
 		font-family: MicrosoftYaHei-Bold;
@@ -154,7 +167,7 @@
 	.box-card .el-input {
 		margin: 30px 0 0;
 	}
-	.login .el-button--primary {
+	.registerLogin .el-button--primary {
 		margin-top: 35px;
 		width: 345px;
 		height: 44px;
@@ -162,7 +175,7 @@
 		border-color:  #ffb957;
 		font-size: 14px;
 	}
-	.login .el-button--primary:hover {
+	.registerLogin .el-button--primary:hover {
 		background-color:  #000;
 		border-color:  #000;
 	}
@@ -172,27 +185,27 @@
 <!-- 局部样式 -->
 <style scoped>
 	
-	.phoneInput,.login {
+	.phoneInput,.registerLogin {
 		width: 340px;
 		margin: 0 auto;
 	}
-	.codeInput {
+	.registerCodeinput {
 		width: 340px;
 		margin: 0 auto;
 		display: flex;
 		justify-content:space-between;
 	}
-	.fastIn {
+	.registerFastIn {
 		margin-bottom: 15px;
 	}
-	.logonIn div {
+	.registerLogonIn div {
 		width: 21px;
 		height: 19px;
 	}
-	.logonIn {
+	.registerLogonIn {
 		display: flex;
 	}
-	.other {
+	.greeUser {
 		display: flex;
 		justify-content:space-between;
 		width: 340px;
@@ -205,7 +218,7 @@
 	}
 	.box-card {
 		width: 412px;
-		height: 460px;
+		height: 490px;
 	}
 	.weixin {
 		width: 21px;
@@ -213,11 +226,10 @@
 		background: url(../../../assets/img/weixin.png) no-repeat;
 		background-size: 100% 100%;
 	}
-	.diviLine {
+	.registerDiviLine {
 		width: 1px;
-		height: 13px;
-		margin-top: 3px;
-		background-color: #c7c7c7;
+		height: 10px;
+		color: #c7c7c7;
 	}
 	.xinlang {
 		width: 23px;
@@ -238,7 +250,7 @@
 		justify-content:center;
 		margin: 100px 0;
 	}
-	.threeLogin {
+	.registerThreeLogin {
 		display: flex;
 		flex-direction:column;
 		justify-content:center;
