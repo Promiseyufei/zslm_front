@@ -1,16 +1,11 @@
 <!-- 短信登录 -->
 <template>
     <div>
-    	<!-- <div class="phoneInput">
-	    	<el-input placeholder="请输入手机号" 
-	    	prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
-			</el-input>
-	    </div> -->
     	<div class="codeInput">
 	      	<el-input placeholder="请输入验证码" 
 		      prefix-icon="el-icon-message" v-model="testCode">
 			</el-input>
-			<el-button type="primary"  :disabled="disabled" @click="sendcode">
+			<el-button  type="primary"  :disabled="disabled" @click="sendcode">
 			    {{btntxt}}
 			</el-button>
       	</div>
@@ -21,7 +16,7 @@
 	export default {
 		data() {
 			return {
-				phoneNumber:'',
+				// phoneNumber:'',
 				testCode:'',
 				btntxt:"获取验证码",
 		        disabled:false,
@@ -43,17 +38,20 @@
 			//获取验证码方法
 			sendcode:function(){
 				//调用父路由传参数方法
-				this.getParams();
+				// this.getParams();
 				// console.log(this.phoneNumber)
 				// console.log(this.$route.params.dataObj)
             	//手机号正则判断
-            	if(this.phoneNumber==''){
-                	alert("手机号不能为空！");
+            	if(this.$store.state.setPhoneNumber==''){
+            		this.$message('手机号不能为空！');
+                	// alert("手机号不能为空！");
                 	return;
-            	} if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
-            		alert("请输入正确的手机号！");
+            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
+            		this.$message('请输入正确的手机号！');
+            		// alert("请输入正确的手机号！");
             	} else {
-            		alert("验证码已发送，请注意查收");
+            		this.$message('验证码已发送，请注意查收');
+            		// alert("验证码已发送，请注意查收");
             		this.time=60;
 	            	this.disabled=true;
 	            	this.timer();
@@ -91,13 +89,13 @@
 		width: 105px;
 		height: 44px;
 		position: relative;
-		left: 235px;
+		left: 270px;
     	bottom: 10px;
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
 	.codeInput .el-input__inner {
-		width: 200px;
+		width: 219px;
 		position: absolute;
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
@@ -116,7 +114,7 @@
 		width: 340px;
 		/*display: flex;*/
 		/*justify-content:space-between;*/
-		margin-left: 37px;
+		/*margin-left: 37px;*/
 	}
 	
 </style>

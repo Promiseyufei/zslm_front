@@ -7,6 +7,9 @@ export const mutations= {
 	setTestcode(state, t) {
 		state.setTestcode = t;
 		// console.log(state.setTestCode);
+	},
+	setPhoneNumber(state, h) {
+		state.setPhoneNumber = h;
 	}
     
 }

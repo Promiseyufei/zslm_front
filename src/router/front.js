@@ -25,12 +25,12 @@ let front_router = {
                 	]
                 },
                 {
-                	path: 'resetPassword',
+                	path: 'Login/resetPassword',
             		name: '重置密码',
             		component: resolve =>void(require(['@/views/front/Login/resetPassword'], resolve))
             	},
             	{
-                	path: 'register',
+                	path: 'Login/register',
             		name: '注册会员',
             		component: resolve =>void(require(['@/views/front/Login/register'], resolve))
             	},

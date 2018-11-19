@@ -13,12 +13,12 @@
 					</el-tabs>
 		        </div>
     		</div>
-	        <!-- <div class="logoInto">
+	        <div class="logoInto">
 	        	<i class="el-icon-search"></i>
 	        	<el-badge :value="200" :max="10" class="item">
 				  <img src="../../../assets/img/messageLogo.png">
 				</el-badge>
-	        </div> -->
+	        </div>
     	</div>
     	<router-view/>
         <div class="footer"></div>
@@ -36,38 +36,25 @@ export default {
     },
     methods: {
     	handleClick(tab, event) {
-        	console.log(this.activeName);
+        	// console.log(this.activeName);
         	if (this.activeName==1) {
         		this.$router.push({
-		    			// path:'/front/firstMenu/firstMenuRouter/selectCollege',
+		    			path:'/front/firstMenuRouter/selectCollege',
 		    		});
-        		console.log(123)
-        	} else if (this.activeName==1) {
+        	} else if (this.activeName==2) {
         		this.$router.push({
-		    			// path:'/front/firstMenu/firstMenuRouter/lookActivity',
+		    			path:'/front/firstMenuRouter/lookActivity',
 		    		});
-        	};
+        	} else if(this.activeName==3) {
+        		this.$router.push({
+		    			path:'/front/firstMenuRouter/viewInformation',
+		    		});
+        	} else if(this.activeName==4) {
+        		this.$router.push({
+		    			path:'/front/firstMenuRouter/searchCoach',
+		    		});
+        	} 
       	},
-    	// selectCollege:function(){
-    	// 	this.$router.push({
-		   //  			path:'/front/firstMenu/firstMenuRouter/selectCollege',
-		   //  		});
-    	// },
-    	// lookActivity:function(){
-    	// 	this.$router.push({
-		   //  			path:'/front/firstMenu/firstMenuRouter/lookActivity',
-		   //  		});
-    	// },
-    	// viewInformation:function(){
-    	// 	this.$router.push({
-		   //  			path:'/front/firstMenu/firstMenuRouter/viewInformation',
-		   //  		});
-    	// },
-    	// searchCoach:function(){
-    	// 	this.$router.push({
-		   //  			path:'/front/firstMenu/firstMenuRouter/searchCoach',
-		   //  		});
-    	// }
     },
     mounted(){
 
@@ -79,32 +66,42 @@ export default {
 
 
 <style scoped>
-	/*.logoInto i {
+	.logoInto i {
 		width: 21px;
 	    height: 21px;
 	    font-size: 24px;
 	    color: #009FA1;
-	}*/
-	.logoInto {
-		width: 20%;
-		margin-right: 300px;
 	}
+	
 	.firstMenu {
 		width: 70%;
 	}
 	.logoPicture {
+		width: 166px;
+	}
+	.logoInto {
 		width: 30%;
 	}
 	.headLeft {
-		width: 80%;
+		width: 70%;
 		display: flex;
-		justify-content:space-between;
+		justify-content:center;
 	}
 	.head {
-		width: 60%;
+		width: 1300;
 		margin: 25px auto;
 		display: flex;
 		overflow: hidden;
 		justify-content:space-between;
+	}
+	/** iPad **/
+	@media only screen and (min-width: 768px) and (max-width: 1024px) {
+		
+	}
+	/** iPhone **/
+	@media only screen and (min-width: 320px) and (max-width: 767px) {
+		.head {
+			width: 340px;
+		}
 	}
 </style>
