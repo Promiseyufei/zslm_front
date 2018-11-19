@@ -1,7 +1,7 @@
 <!-- 登录总部 -->
 <template>
     	<div>
-    		<div class="center">
+    		<div class="loginRouterCenter">
     			<div class="loginPicture"><img src="../../../assets/img/login.png"></div>
 				<el-card class="boxCard">
     				<el-menu :default-active="active" class="el-menu-demo" 
@@ -31,35 +31,6 @@
     					</div>
     				</div>
     			</el-card>
-    			<!-- <div class="loginPicture"></div> -->
-    				<!-- <el-card class="box-card">
-	    				<el-menu :default-active="active" class="el-menu-demo" 
-	    				mode="horizontal" @select="handleSelect" v-model="active"
-	    				text-color="#333" active-text-color="#009fa0">
-	    					<el-menu-item index="1">账号登录</el-menu-item>
-	    					<el-menu-item index="2">短信登录</el-menu-item>
-	    				</el-menu>
-	    				<div class="phoneInput">
-	    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
-							</el-input>
-	    				</div>
-	    				<router-view/>
-	    				<div class="login">
-	    					<el-button type="primary" @click="login">登录</el-button>
-	    				</div>
-	    				<div class="other">
-	    					<div><el-checkbox v-model="checked">自动登录</el-checkbox></div>
-	    					<div><span @click="resetPass">忘记密码</span> | <span class="register" @click="register">注册</span></div>
-	    				</div>
-	    				<div class="threeLogin" style="text-align: center;">
-	    					<div class="fastIn">快捷登录</div>
-	    					<div class="logonIn">
-	    						<div class="xinlang"></div>
-	    						<div class="diviLine"></div>
-	    						<div class="weixin"></div>
-	    					</div>
-	    				</div>
-	    			</el-card> -->
     		</div>
     	</div>
 </template>
@@ -98,6 +69,7 @@
 		    			// },
 		    			
 		    		});
+		    		
 		    	} else {	//到账号登录
 		    		this.$router.push('/front/Login/loginRoute/accountNumber');
 		    	}
@@ -114,6 +86,12 @@
 		    			path:'/front/Login/register',
 		    		});
 		    	}
+				// this.active = key;
+				// if (this.active == 1) {
+				// 	this.$router.push('/front/Login/loginRoute/accountNumber');
+				// } else {	
+				// 	this.$router.push('/front/Login/loginRoute/shortMessage');
+				// }
 				// this.active = key;
 				// if (this.active == 1) {
 				// 	this.$router.push('/front/Login/loginRoute/accountNumber');
@@ -138,15 +116,15 @@
 		    //登录按钮
 		    login: function() {
 		    	if (this.active==1) { //账号登录
-		    		if(this.phoneNumber==''){
-            			this.$message('手机号不能为空！');
-	            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
-	            		this.$message('请输入正确的手机号！');
-	            	} else if(this.$store.state.setPassword==''){
-	            		this.$message('请输入密码！');
-	            	} else {
-	            		this.$message('登录成功~');
-	            	}
+		    		// if(this.phoneNumber==''){
+        //     			this.$message('手机号不能为空！');
+	       //      	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
+	       //      		this.$message('请输入正确的手机号！');
+	       //      	} else if(this.$store.state.setPassword==''){
+	       //      		this.$message('请输入密码！');
+	       //      	} else {
+	       //      		this.$message('登录成功~');
+	       //      	}
 		    	} else if(this.active==2) { //短信登录
 		    		if(this.phoneNumber==''){
             			this.$message('手机号不能为空！');
@@ -163,24 +141,28 @@
 				//默认显示账号登录&&显示账号登录路由
 				this.handleSelect();
 			}
+		    }
+		},
+		mounted() {
+		}
 	}
 </script>
 
 
 <!-- 全局样式 -->
 <style>
-	.center .el-menu-item {
+	.loginRouterCenter .el-menu-item {
 		font-size: 18px;
 		font-weight: normal;
 		font-stretch: normal;
 	}
-	.center .el-menu--horizontal {
+	.loginRouterCenter .el-menu--horizontal {
 		margin: 37px 0 0 37px;
 		width: 340px;
 		display: flex;
 		justify-content: space-between;
 	}
-	.center .el-card__body {
+	.loginRouterCenter .el-card__body {
 		padding: 0;
 	}
 	.phoneInput .el-input__inner {
@@ -295,7 +277,7 @@
 		/*background: url(../../../assets/img/login.png) no-repeat;*/
         /*background-size: 100% 100%;*/
 	}
-	.center {
+	.loginRouterCenter {
 		/*width: 1903px;*/
 		display: flex;
 		justify-content:center;
