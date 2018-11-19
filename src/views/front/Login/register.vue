@@ -12,13 +12,8 @@
 	    				<div class="phoneInput">
 	    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
 							</el-input>
-<<<<<<< HEAD
-	    				</div>
-	    				<div class="registerCodeinput">
-=======
 	    				</div>`
 	    				<div class="codeInput">
->>>>>>> 628943a8d9090832ca0c09ae94c8f6a19dca5a61
 					      	<el-input placeholder="请输入验证码" 
 						      prefix-icon="el-icon-message" v-model="testCode">
 							</el-input>

@@ -2,37 +2,6 @@
 <template>
     	<div>
     		<div class="center">
-<<<<<<< HEAD
-    			<div class="loginPicture"><img src="../../../assets/img/login.png"></div>
-				<el-card class="boxCard">
-    				<el-menu :default-active="active" class="el-menu-demo" 
-    					mode="horizontal" @select="handleSelect" v-model="active"
-    					text-color="#333" active-text-color="#009fa0">
-    					<el-menu-item index="1">账号登录</el-menu-item>
-    					<el-menu-item index="2">短信登录</el-menu-item>
-    				</el-menu>
-    				<div class="phoneInput">
-    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
-						</el-input>
-    				</div>
-    				<router-view/>
-    				<div class="login">
-    					<el-button type="primary" @click="login">登录</el-button>
-    				</div>
-    				<div class="other">
-    					<div><el-checkbox v-model="checked">自动登录</el-checkbox></div>
-    					<div><span @click="resetPass">忘记密码</span> | <span class="register" @click="register">注册</span></div>
-    				</div>
-    				<div class="threeLogin" style="text-align: center;">
-    					<div class="fastIn">快捷登录</div>
-    					<div class="logonIn">
-    						<div class="xinlang"></div>
-    						<div class="diviLine"></div>
-    						<div class="weixin"></div>
-    					</div>
-    				</div>
-    			</el-card>
-=======
     			<div class="loginPicture"></div>
     				<el-card class="box-card">
 	    				<el-menu :default-active="active" class="el-menu-demo" 
@@ -67,7 +36,6 @@
 	    					</div>
 	    				</div>
 	    			</el-card>
->>>>>>> 628943a8d9090832ca0c09ae94c8f6a19dca5a61
     		</div>
     	</div>
 </template>
@@ -94,35 +62,6 @@
 			},
             //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
-<<<<<<< HEAD
-		    	let active = key;
-		    	if (active == 2) {	//到短信登录
-					// this.parentLisen();
-		    		this.$router.push({
-		    			path:'/front/Login/loginRoute/shortMessage',
-		    			// name:'短信登录',
-		    			// params:{
-		    			// 	name:'用户手机号',
-		    			// 	dataObj:this.phoneNumber
-		    			// },
-		    			
-		    		});
-		    	} else {	//到账号登录
-		    		this.$router.push('/front/Login/loginRoute/accountNumber');
-		    	}
-		    },
-		    //跳转到重置密码页面
-		    resetPass:function() {
-		    	this.$router.push({
-		    			path:'/front/Login/resetPassword',
-		    		});
-		    },
-		    //跳转到注册页面
-		    register:function() {
-		    	this.$router.push({
-		    			path:'/front/Login/register',
-		    		});
-=======
 				this.active = key;
 				if (this.active == 1) {
 					this.$router.push('/front/Login/loginRoute/accountNumber');
@@ -143,7 +82,6 @@
 				// 	}
 				// }
 				// this.$store.commit('changeLoginStatus',{name:'activeKey',val: key});
->>>>>>> 628943a8d9090832ca0c09ae94c8f6a19dca5a61
 		    },
 		    //登录按钮
 		    login: function() {
@@ -171,12 +109,6 @@
 		    }
 		},
 		mounted() {
-<<<<<<< HEAD
-			//默认显示账号登录&&显示账号登录路由
-			this.handleSelect();
-=======
-
->>>>>>> 628943a8d9090832ca0c09ae94c8f6a19dca5a61
 		}
 	}
 </script>
