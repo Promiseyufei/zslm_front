@@ -70,7 +70,7 @@
                                 <p>商学院认证的最新MBA招生项目</p>
                                 <p>信息确保真实</p>
                             </div>
-                            <homeBtn class="self" text="查看全部院校"></homeBtn>
+                            <homeBtn class="homeBtn self" text="查看全部院校"></homeBtn>
                         </div>
                     </div>
                 </div>
@@ -81,49 +81,100 @@
                 <div class="indexBlockMessage">
                     <!-- 搜辅导----header -->
                     <div>
-                        <div class="selectHeader">
+                        <div class="selectHeader blackHeader">
                             <p><span></span><strong>INSTITUTUONS</strong><span></span></p>
                             <strong>搜辅导</strong>
                         </div>
                     </div>
                     <!-- 搜辅导----单个辅导机构小块块 -->
                     <div class="singleCollegeBox">
-                        <div class="singleCollege" v-for="(temp,index) in college" :key="index" @click = "toJumpCollege(temp.id)">
-                            <img :src="temp.img" alt="">
-                            
-                            <div class="hover">
+                        <div class="selectInformationHearder">
+                            <div class="selectInformationLeft"> 
+                                <img src="../../assets/img/sitanfu.jpg" alt="">
                                 <div>
-                                    <img :src="temp.backImg" alt="" class="indeximg">
-                                </div>
-                                <div class="singleCollegeHover">
-                                    <div class="singleCollegeHeader">
-                                        <img :src="temp.img" alt="">
-                                        <div>
-                                            <img src="../../assets/img/aacsb.jpg" alt="">
-                                            <img src="../../assets/img/camea.png" alt="">
+                                    <div class="selectInformationLeftimg">
+                                        <img src="../../assets/img/sheke.png" alt="">
+                                    </div>
+                                    <div class="selectInformationLeftMessage">
+                                        <div class="collegeName">
+                                            <p>YaHei</p>
+                                            <p>点击进入院校主页<i class="fa fa-long-arrow-right"></i></p>
+                                        </div>
+                                        <div class="selectInformationSign">
+                                            <img src="../../assets/img/money.png" alt="">
+                                            <img src="../../assets/img/return.png" alt="">
                                         </div>
                                     </div>
-                                    
-                                    <div class="collegeName">
-                                        <p>{{temp.name}}</p>
-                                        <p>点击进入院校主页<i class="fa fa-long-arrow-right"></i></p>
+                                </div>
+                            </div>
+                            <div class="selectInformationRight">
+                                <div class="selectInformationLittle" v-for="(item, index) in 2" :key="index">
+                                    <img src="../../assets/img/sitanfu.jpg" alt="">
+                                    <div>
+                                        <div class="selectInformationLeftimg">
+                                            <img src="../../assets/img/dongfang.png" alt="">
+                                        </div>
+                                        <div class="selectInformationLeftMessage">
+                                            <div class="collegeName">
+                                                <p>YaHei</p>
+                                                <p>点击进入院校主页<i class="fa fa-long-arrow-right"></i></p>
+                                            </div>
+                                            <div class="selectInformationSign">
+                                                <img src="../../assets/img/money.png" alt="">
+                                                <img src="../../assets/img/return.png" alt="">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="singleCollege listMedo">
-                            <div class="listTxt">
-                                <p>为您网罗国内知名院校</p>
-                                <p>商学院认证的最新MBA招生项目</p>
-                                <p>信息确保真实</p>
+                        <div class="selectInformationFooter">
+                            <div>
+                                <p>全国N个省市，M个辅导机构</p>
+                                <p>领优惠卷更实惠，退款保障更放心！</p>
                             </div>
-                            <homeBtn class="self" text="查看全部院校"></homeBtn>
+                            <yellowBtn class="yellowBtn" text="查看全部辅导机构"></yellowBtn>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- 找活动模块 -->
+            <div class="indexBlockMessageBox">
+                <div class="indexBlockMessage">
+                    <!-- 找活动----header -->
+                    <div>
+                        <div class="selectHeader">
+                            <p><span></span><strong>ACTIVITY</strong><span></span></p>
+                            <strong>找活动</strong>
+                        </div>
+                    </div>
+                    <!-- 找活动----三个活动小块块 -->
+                    <div class="singleCollegeBox">
+                        <div>
+                            <div>
 
+                            </div>
+                            <div>
+                                <div>
+                                    <h3>2019聚英计划第一批提前面试申请时间表（武汉）</h3>
+                                    <div>
+                                        <span><i class=""></i>武汉</span>
+                                        <span><i class=""></i>5月15日-8月23日</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="selectInformationFooter Footerblack">
+                            <div>
+                                <p>全国N个省市，M个辅导机构</p>
+                                <p>领优惠卷更实惠，退款保障更放心！</p>
+                            </div>
+                            <homeBtn class="homeBtn" text="查看更多活动"></homeBtn>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     	</div>
     </div>
@@ -132,6 +183,7 @@
 <script>
 export default {
     components: {
+        
     },
     data() {
       return {
@@ -309,6 +361,7 @@ export default {
         background-size: auto 100%;
         background-color: #6e6e6e90;
     }
+    
 
     /* 选院校模块样式 */
     .indexBlockMessageBox {
@@ -322,7 +375,7 @@ export default {
         margin: 5% auto 5%;
     }
     .selectHeader {
-        width: 260px;
+        width: 350px;
         margin: 0 auto;
         text-align: center;
     }
@@ -449,6 +502,132 @@ export default {
         font-size: 18px;
     }
 
+
+    /*搜辅导页面*/
+    .blackHeader>p>span {
+        color: #ffb957;
+        border: 2px solid #ffb957;
+    }
+    .blackHeader>p>strong {
+        color: #fff;
+    }
+    .blackHeader>strong {
+        color: #fff;
+    }
+    .selectInformationHearder {
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+        justify-content: center;
+    }
+    .selectInformationLeft {
+        width: 955px;
+        height: 460px;
+        position: relative;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+    .selectInformationLeft>img {
+        min-width: 100%;
+        height: 100%;
+    }
+    .selectInformationLeft>div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(56, 60, 61, 0.5);
+        width: 100%;
+        height: 100%;
+    }
+    .selectInformationLeftimg {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .selectInformationLeft:hover .selectInformationLeftimg{
+        height: 75%;
+        background: rgba(56, 60, 61, 0.8);
+    }
+    
+    .selectInformationLeftimg>img {
+        width: 37%;
+    }
+    .selectInformationLeftMessage {
+        background-color: #ffb957;
+        display: flex;
+        justify-content: space-between;
+        height: 25%;
+        margin: 0;
+        padding: 0;
+    }
+    .selectInformationSign {
+        padding: 20px 30px;
+    }
+    .selectInformationSign>img {
+        margin-left: 5px;
+    }
+    .selectInformationRight {
+        width: 305px;
+        margin-left: 20px;
+        
+    }
+    .selectInformationLittle {
+        width: 100%;
+        height: 220px;
+        position: relative;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+    
+    .selectInformationLittle>img {
+        min-width: 100%;
+        max-height: 100%;
+    }
+    .selectInformationLittle>div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(56, 60, 61, 0.5);
+        width: 100%;
+        height: 100%;
+    }
+    .selectInformationLittle:hover .selectInformationLeftimg{
+        height: 55%;
+        background: rgba(56, 60, 61, 0.8);
+    }
+    .selectInformationLittle .selectInformationLeftMessage {
+        height: 55%;
+    }
+    .selectInformationLittle .selectInformationLeftimg>img {
+        width: 45%;
+    }
+    .selectInformationFooter {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .selectInformationFooter>div {
+        margin-top: 3%;
+        width: 305px;
+    }
+    .yellowBtn {
+        margin-top: 3%;
+    }
+    .selectInformationFooter p {
+        color: #fff;
+        font-size: 14px;
+        font-weight: lighter;
+        line-height: 1.75em;
+    }
+    .Footerblack p {
+        color: #000;
+    }
+
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
         /* 选院校模块 */
@@ -467,13 +646,35 @@ export default {
         .selectHeader>strong {
             font-size: 20px;
         }
-
-
+        .selectInformationLeft {
+            width: 305px;
+            height: 220px;
+        }
+        .selectInformationRight {
+            margin-left: 0;
+        }
+        .selectInformationFooter {
+            justify-content: center;
+        }
+        .yellowBtn {
+            margin-top: 5%;
+            width: 241px;
+        }
     }
 
     /* Small devices (portrait tablets and large phones, 600px and up) */
-    @media only screen and (min-width: 600px) {
-        
+    @media only screen and (max-width: 1200px) and (min-width: 600px) {
+        .selectInformationLeft {
+            width: 305px;
+            height: 220px;
+        }
+        .selectInformationFooter {
+            justify-content: center;
+        }
+        .yellowBtn {
+            margin-top: 5%;
+            width: 241px;
+        }
     }
 
     /* Medium devices (landscape tablets, 768px and up) */
