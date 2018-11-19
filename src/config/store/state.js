@@ -3,14 +3,5 @@ export const state = {
 	setPassword:'',
 	setTestcode:'',
 	setPhoneNumber:'',
-	// loginStatus: {
-	// 	activeKey: 1,
-	// },
-	// user: {
-	// 	//存变量
-	// 	userPhone:'',
-	// 	setPassword:'',
-	// 	setTestcode:''
-	// }
     
 }
