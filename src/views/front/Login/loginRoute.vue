@@ -20,7 +20,7 @@
     				</div>
     				<div class="other">
     					<div><el-checkbox v-model="checked">自动登录</el-checkbox></div>
-    					<div><span @click="resetPass">忘记密码</span> | <span class="register" @click="register">注册</span></div>
+    					<div><span @click="resetPass">忘记密码</span> | <span class="register"@click="register">注册</span></div>
     				</div>
     				<div class="threeLogin" style="text-align: center;">
     					<div class="fastIn">快捷登录</div>
@@ -48,7 +48,7 @@
 		watch: {
 			phoneNumber(phone,oldPhone) {
 				this.$store.commit('userPhone', phone);
-			}
+			},
 		},
 		methods:{
 			//将数据存到vuex中
@@ -58,20 +58,10 @@
             //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
 		    	let active = key;
-		    	if (active == 2) {	//到短信登录
-					// this.parentLisen();
-		    		this.$router.push({
-		    			path:'/front/Login/loginRoute/shortMessage',
-		    			// name:'短信登录',
-		    			// params:{
-		    			// 	name:'用户手机号',
-		    			// 	dataObj:this.phoneNumber
-		    			// },
-		    			
-		    		});
-		    		
-		    	} else {	//到账号登录
+		    	if (active == 1) {	//到短信登录
 		    		this.$router.push('/front/Login/loginRoute/accountNumber');
+		    	} else {	//到账号登录
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	}
 		    },
 		    //跳转到重置密码页面
@@ -85,7 +75,6 @@
 		    	this.$router.push({
 		    			path:'/front/Login/register',
 		    		});
-		    	}
 				// this.active = key;
 				// if (this.active == 1) {
 				// 	this.$router.push('/front/Login/loginRoute/accountNumber');
@@ -115,16 +104,17 @@
 		    },
 		    //登录按钮
 		    login: function() {
+		    	// console.log(8888)
 		    	if (this.active==1) { //账号登录
-		    		// if(this.phoneNumber==''){
-        //     			this.$message('手机号不能为空！');
-	       //      	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
-	       //      		this.$message('请输入正确的手机号！');
-	       //      	} else if(this.$store.state.setPassword==''){
-	       //      		this.$message('请输入密码！');
-	       //      	} else {
-	       //      		this.$message('登录成功~');
-	       //      	}
+		    		if(this.phoneNumber==''){
+            			this.$message('手机号不能为空！');
+	            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
+	            		this.$message('请输入正确的手机号！');
+	            	} else if(this.$store.state.setPassword==''){
+	            		this.$message('请输入密码！');
+	            	} else {
+	            		this.$message('登录成功~');
+	            	}
 		    	} else if(this.active==2) { //短信登录
 		    		if(this.phoneNumber==''){
             			this.$message('手机号不能为空！');
@@ -140,10 +130,7 @@
 			mounted() {
 				//默认显示账号登录&&显示账号登录路由
 				this.handleSelect();
-			}
-		    }
-		},
-		mounted() {
+			},
 		}
 	}
 </script>
