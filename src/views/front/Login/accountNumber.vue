@@ -14,14 +14,15 @@
 	export default {
 		data() {
 			return {
-				password:13,
+				password:'',
+			}
+		},
+		watch: {
+			password(pass, oldpass) {
+				this.$store.commit('setPassword', pass);
 			}
 		},
 		methods:{
-			//将数据存到vuex中
-			store:function() {
-				this.$store.commit('setPassword', this.password);			
-			},
 			//密码是否可见
 			showOr:function() {
 				let showOr = document.getElementById("password")
@@ -33,7 +34,7 @@
 			}
 		},
 		mounted() {
-			this.store();
+			// this.store();
 		}
 	}
 </script>

@@ -29,12 +29,12 @@
 				this.$store.commit('setTestcode', this.testCode);			
 			},
 			//存储父路由传过来的参数
-			getParams: function() {
-				let routeParams = this.$route.params.dataObj;
-				this.phoneNumber = routeParams;
-				// console.log(this.phoneNumber)
-				// console.log(123)
-			},
+			// getParams: function() {
+			// 	let routeParams = this.$route.params.dataObj;
+			// 	this.phoneNumber = routeParams;
+			// 	console.log(this.phoneNumber)
+			// 	// console.log(123)
+			// },
 			//获取验证码方法
 			sendcode:function(){
 				//调用父路由传参数方法

@@ -2,6 +2,7 @@
 <template>
     	<div>
     		<div class="center">
+<<<<<<< HEAD
     			<div class="loginPicture"><img src="../../../assets/img/login.png"></div>
 				<el-card class="boxCard">
     				<el-menu :default-active="active" class="el-menu-demo" 
@@ -31,6 +32,42 @@
     					</div>
     				</div>
     			</el-card>
+=======
+    			<div class="loginPicture"></div>
+    				<el-card class="box-card">
+	    				<el-menu :default-active="active" class="el-menu-demo" 
+	    				mode="horizontal" @select="handleSelect" v-model="active"
+	    				text-color="#333" active-text-color="#009fa0">
+	    					<el-menu-item index="1">账号登录</el-menu-item>
+	    					<el-menu-item index="2">短信登录</el-menu-item>
+	    				</el-menu>
+	    				<div class="phoneInput">
+	    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
+							</el-input>
+	    				</div>
+
+						
+	    				<router-view/>
+
+
+
+	    				<div class="login">
+	    					<el-button type="primary" @click="login">登录</el-button>
+	    				</div>
+	    				<div class="other">
+	    					<div><el-checkbox v-model="checked">自动登录</el-checkbox></div>
+	    					<div><span>忘记密码</span> | <span class="register">注册</span></div>
+	    				</div>
+	    				<div class="threeLogin" style="text-align: center;">
+	    					<div class="fastIn">快捷登录</div>
+	    					<div class="logonIn">
+	    						<div class="xinlang"></div>
+	    						<div class="diviLine"></div>
+	    						<div class="weixin"></div>
+	    					</div>
+	    				</div>
+	    			</el-card>
+>>>>>>> 628943a8d9090832ca0c09ae94c8f6a19dca5a61
     		</div>
     	</div>
 </template>
@@ -45,6 +82,11 @@
 				password:''
 			};
 		},
+		watch: {
+			phoneNumber(phone,oldPhone) {
+				this.$store.commit('userPhone', phone);
+			}
+		},
 		methods:{
 			//将数据存到vuex中
 			store:function() {
@@ -52,6 +94,7 @@
 			},
             //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
+<<<<<<< HEAD
 		    	let active = key;
 		    	if (active == 2) {	//到短信登录
 					// this.parentLisen();
@@ -79,6 +122,28 @@
 		    	this.$router.push({
 		    			path:'/front/Login/register',
 		    		});
+=======
+				this.active = key;
+				if (this.active == 1) {
+					this.$router.push('/front/Login/loginRoute/accountNumber');
+				} else {	
+					this.$router.push('/front/Login/loginRoute/shortMessage');
+				}
+				// if(this.$store.state.loginStatus['activeKey'] != key) {
+				// 	if(this.$store.state.loginStatus['activeKey'] == 2) 
+				// 		this.$router.push('/front/Login/loginRoute/shortMessage');
+				// 	else 
+				// 		this.$router.push('/front/Login/loginRoute/accountNumber');
+				// }
+				// else {
+				// 	if (this.active == 2) {
+				// 		this.$router.push('/front/Login/loginRoute/shortMessage');
+				// 	} else {	
+				// 		this.$router.push('/front/Login/loginRoute/accountNumber');
+				// 	}
+				// }
+				// this.$store.commit('changeLoginStatus',{name:'activeKey',val: key});
+>>>>>>> 628943a8d9090832ca0c09ae94c8f6a19dca5a61
 		    },
 		    //登录按钮
 		    login: function() {
@@ -105,14 +170,13 @@
 		    	}
 		    }
 		},
-		watch:{
-			// active:function(val,oldVal) {
-			// 	console.log(12)
-			// }
-		},
 		mounted() {
+<<<<<<< HEAD
 			//默认显示账号登录&&显示账号登录路由
 			this.handleSelect();
+=======
+
+>>>>>>> 628943a8d9090832ca0c09ae94c8f6a19dca5a61
 		}
 	}
 </script>
