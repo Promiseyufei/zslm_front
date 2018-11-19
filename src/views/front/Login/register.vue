@@ -13,8 +13,6 @@
 	    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
 							</el-input>
 	    				</div>
-	    				<!-- <div class="registerCodeinput">
-	    				</div> -->
 	    				<div class="registerCodeinput">
 					      	<el-input placeholder="请输入验证码" 
 						      prefix-icon="el-icon-message" v-model="testCode">
@@ -24,10 +22,10 @@
 							</el-button>
 				      	</div>
 	    				<div class="registerLogin">
-	    					<el-button type="primary" @click="register">成为会员</el-button>
+	    					<el-button type="primary" @click="register" :disabled="disabled2">成为会员</el-button>
 	    				</div>
 	    				<div class="greeUser">
-	    					<el-checkbox v-model="checked">同意用户协议</el-checkbox>
+	    					<el-checkbox v-model="checked" @click="agree">同意用户协议</el-checkbox>
 	    				</div>
 	    				<div class="registerThreeLogin">
 	    					<div class="registerFastIn">快捷账号登录</div>
@@ -52,6 +50,7 @@
 				checked:'',
 				btntxt:"获取验证码",
 		        disabled:false,
+		        disabled2:true,
 		        time:0,
 			};
 		},
@@ -73,7 +72,6 @@
 	            	this.disabled=true;
 	            	this.timer();
             	}
-            	
         	},
         	//倒计时方法
         	timer:function () {
@@ -87,20 +85,26 @@
                 	this.disabled=false;
              }
         	},
-		    
+		    //同意用户协议
+		    agree:function(){
+		    	if(this.checked==true) {
+		    		console.log(123);
+		    		this.disabled2=false;
+		    	} else if(this.checked=='') {
+		    		console.log(456);
+		    		this.disabled2=true;
+		    	}
+		    },
 		    //注册按钮
 		    register: function() {
+		    	console.log(this.checked)
 				// console.log(this.$refs.demo)
 				if(this.phoneNumber==''){
 					this.$message('手机号不能为空！');
-            		// this.message(true,'手机号不能为空！','warning');
-                	return;
             	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
             		this.$message('请输入正确的手机号！');
-            		// this.message(true,'请输入正确的手机号！','warning');
             	} else if(this.testCode=='') {
             		this.$message('验证码不能为空！');
-            		// this.message(true,'验证码不能为空！','warning');
             	}
 		    }
 		},
@@ -108,6 +112,7 @@
 			// }
 		},
 		mounted() {
+			// this.agree();
 		}
 	}
 </script>

@@ -39,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				active:'2',
+				active:'1',
 				phoneNumber:'',
 				checked:'',
 				password:''
@@ -49,14 +49,24 @@
 			phoneNumber(phone,oldPhone) {
 				this.$store.commit('userPhone', phone);
 			},
+			active: function(newVal,oldVal) {
+				// console.log(newVal)
+				// if (newVal==1) { //到账号登录页面手机号清空
+				// 	this.phoneNumber='';
+				// } else{ //到短信登录页面手机号清空
+				// 	this.phoneNumber='';
+				// }
+			}
 		},
 		methods:{
 			//将数据存到vuex中
 			store:function() {
-				this.$store.commit('setPhoneNumber', this.phoneNumber);			
+				this.$store.commit('setPhoneNumber', this.phoneNumber);	
 			},
             //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
+				this.active = key;
+				sessionStorage.setItem("active",key);
 		    	let active = key;
 		    	if (active == 1) {	//到短信登录
 		    		this.$router.push('/front/Login/loginRoute/accountNumber');
@@ -64,6 +74,28 @@
 		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	}
 		    },
+		    //短信登录页面
+		    accountNumber:function() {
+		    	if (sessionStorage.getItem("active")) {
+		    		this.active=sessionStorage.getItem("active")
+		    		if (this.active==1) {
+		    			this.$router.push('/front/Login/loginRoute/accountNumber');
+		    		} else{
+		    			this.$router.push('/front/Login/loginRoute/shortMessage');
+		    		}
+		    	} else{
+		    		if (this.active==1) {
+		    			this.$router.push('/front/Login/loginRoute/accountNumber');
+		    		} else{
+		    			this.$router.push('/front/Login/loginRoute/shortMessage');
+		    		}
+		    	}
+		    	
+		    },
+		    //账号登录页面——刷新
+		    // shortMessage:function() {
+		    	// this.$router.push('/front/Login/loginRoute/shortMessage');
+		    // },
 		    //跳转到重置密码页面
 		    resetPass:function() {
 		    	this.$router.push({
@@ -104,6 +136,7 @@
 		    },
 		    //登录按钮
 		    login: function() {
+		    	console.log(this.$store.state.setTestcode);
 		    	if (this.active==1) { //账号登录
 		    		if(this.phoneNumber==''){
             			this.$message('手机号不能为空！');
@@ -126,10 +159,12 @@
 	            	}
 		    	}
 		    },
-			mounted() {
+			
+		},
+		mounted(){
 				//默认显示账号登录&&显示账号登录路由
-				this.handleSelect();
-			},
+				this.accountNumber();
+				this.store()
 		}
 	}
 </script>

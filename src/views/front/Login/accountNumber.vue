@@ -23,6 +23,7 @@
 			}
 		},
 		methods:{
+
 			//密码是否可见
 			showOr:function() {
 				let showOr = document.getElementById("password")
@@ -32,9 +33,6 @@
 					showOr.type = "password";
 				}
 			}
-		},
-		mounted() {
-			// this.store();
 		}
 	}
 </script>

@@ -23,7 +23,7 @@
 					placeholder="再次输入" autocomplete="off"></el-input>
 				</el-form-item>
 				<div class="button">
-					<el-button type="primary" @click="submission">确定</el-button>
+					<el-button type="primary" @cl ick="submission">确定</el-button>
 					<el-button>返回</el-button>
 				</div>
 			</div>
