@@ -1,5 +1,5 @@
 <template>
-    <span>{{text}}
+    <span  class="yellowBtn">{{text}}
         <img src="../../assets/img/white.png" alt="">
     </span>
 </template>

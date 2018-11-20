@@ -132,7 +132,7 @@
                                 <p>全国N个省市，M个辅导机构</p>
                                 <p>领优惠卷更实惠，退款保障更放心！</p>
                             </div>
-                            <yellowBtn class="yellowBtn" text="查看全部辅导机构"></yellowBtn>
+                            <yellowBtn text="查看全部辅导机构"></yellowBtn>
                         </div>
                     </div>
                 </div>
@@ -194,7 +194,7 @@
                                 <p>全国N个省市，M个辅导机构</p>
                                 <p>领优惠卷更实惠，退款保障更放心！</p>
                             </div>
-                            <homeBtn class="homeBtn" text="查看更多活动"></homeBtn>
+                            <homeBtn text="查看更多活动"></homeBtn>
                         </div>
                     </div>
                 </div>
@@ -288,7 +288,7 @@
                             </div>
                         </div>
                         <div class="selectInformationFooter memberFooter">
-                            <homeBtn class="homeBtn" text="免费注册，成为会员"></homeBtn>
+                            <homeBtn text="免费注册，成为会员"></homeBtn>
                         </div>
                     </div>
                 </div>
@@ -414,13 +414,13 @@ export default {
         //跳到相应的模块，分别为（选校校，找活动，找资讯，搜辅导）
         toJump: function(index) {
             if(index==1) {
-                this.$router.push('/front/selectCollege');
+                this.$router.push('/front/firstMenuRouter/selectCollege');
             }else if(index==2) {
-                this.$router.push('/front/lookActivity');
+                this.$router.push('/front/firstMenuRouter/lookActivity');
             }else if(index==3) {
-                this.$router.push('/front/viewInformation');
+                this.$router.push('/front/firstMenuRouter/viewInformation');
             }else {
-                this.$router.push('/front/searchCoach');
+                this.$router.push('/front/firstMenuRouter/searchCoach');
             }
         },
         //跳到相应的单个院校
@@ -465,8 +465,8 @@ export default {
             this.mes[this.index].style.backgroundColor = "#ffb957";
         },
     },
-    computed: {
-
+    destroyed: function () {
+        clearInterval(this.timer);
     },
     mounted(){
         var wrap = document.querySelector(".wrap");
@@ -702,6 +702,7 @@ export default {
         flex-wrap: wrap;
         justify-content: center;
         margin: 10% 0 3%;
+        cursor: pointer;
     }
     .indexBigBlock>div {
         margin: 2%;
@@ -743,17 +744,18 @@ export default {
         margin: 5% auto 5%;
     }
     .selectHeader {
-        width: 350px;
         margin: 0 auto;
         text-align: center;
     }
     .selectHeader>p {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
     }
     .selectHeader>p>span {
         color: #009fa0;
+        display: inline-block;
+        margin: 0 20px;
         width: 30px;
         border: 2px solid #009fa0;
     }

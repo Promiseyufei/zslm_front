@@ -1,5 +1,5 @@
 <template>
-    <span @mouseover="selectStyle()" @mouseout="outStyle()">{{text}}
+    <span @mouseover="selectStyle()" @mouseout="outStyle()"  class="homeBtn">{{text}}
         <img :src="src" alt="">
     </span>
 </template>
@@ -41,7 +41,7 @@ export default {
         background-color: #009fa0;
         color: #fff;
     }
-    .yellowBtn {
+    /* .yellowBtn {
         padding: 15px 30px;
         border-radius: 5px;
         border: 2px solid #fff;
@@ -50,7 +50,7 @@ export default {
     .yellowBtn:hover {
         background-color: #ffb957;
         border: 2px solid #ffb957;
-    }
+    } */
     img {
         width: 25px;
         margin-left: 3px;
