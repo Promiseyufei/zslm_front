@@ -124,7 +124,8 @@
 		    },
 		    //登录按钮
 		    login: function() {
-		    	console.log(this.$store.state.setTestcode);
+				console.log(this.$store.state.setPhoneNumber)
+		    	// console.log(this.$store.state.setTestcode);
 		    	if (this.active==1) { //账号登录
 		    		if(this.phoneNumber==''){
             			this.$message('手机号不能为空！');
@@ -132,6 +133,8 @@
 	            		this.$message('请输入正确的手机号！');
 	            	} else if(this.$store.state.setPassword==''){
 	            		this.$message('请输入密码！');
+
+
 	            	} else {
 	            		this.$message('登录成功~');
 	            	}
@@ -142,6 +145,7 @@
 	            		this.$message('请输入正确的手机号！');
 	            	} else if(this.$store.state.setTestcode==''){
 	            		this.$message('请输入验证码！');
+	            		// console.log(this.$store.state.setTestcode)
 	            	} else {
 	            		this.$message('登录成功~');
 	            	}
@@ -152,7 +156,8 @@
 		mounted(){
 				//默认显示账号登录&&显示账号登录路由
 				this.accountNumber();
-				this.store()
+				this.store();
+				// this.login();
 		}
 	}
 </script>
