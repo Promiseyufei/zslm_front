@@ -35,6 +35,7 @@ export default {
         border-radius: 5px;
         text-align: center;
         color: #009fa0;
+        cursor: pointer;
     }
     .homeBtn:hover {
         background-color: #009fa0;

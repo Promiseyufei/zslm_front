@@ -200,6 +200,100 @@
                 </div>
             </div>
 
+            <!-- 看资讯模块 -->
+            <div class="indexBlockMessageBox black">
+                <div class="indexBlockMessage">
+                    <!-- 看资讯----header -->
+                    <div>
+                        <div class="selectHeader blackHeader">
+                            <p><span></span><strong>INFORMATION</strong><span></span></p>
+                            <strong>看资讯</strong>
+                        </div>
+                    </div>
+                    <!-- 看资讯----单个辅导机构小块块 -->
+                    <div class="singleCollegeBox">
+                        <div class="selectInformationHearder informationDiv">
+                            <div class="lookinformation" v-for="(item,index) in 2">
+                                <img src="../../assets/img/infor.jpg" alt="">
+                                <div class="lookinforMessage">
+                                    <h3>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h3>
+                                    <div>
+                                        <p><i class="fa fa-calendar"></i>2018.8.31</p>
+                                        <p><i class="fa fa-map-marker"></i>专硕联盟</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lookinformation little" v-for="(item,index) in 2">
+                                <img src="../../assets/img/infor.jpg" alt="">
+                                <div class="lookinforMessage">
+                                    <h3>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h3>
+                                    <div>
+                                        <p><i class="fa fa-calendar"></i>2018.8.31</p>
+                                        <p><i class="fa fa-map-marker"></i>专硕联盟</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lookinformationBig big" v-for="(item,index) in 2">
+                                <div class="lookinforMessage">
+                                    <h3>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h3>
+                                    <p>在教育资源方面，2017年，全国共有普通搞笑2914所育资源方面，2017年，全国共有普育资源方面，2017年，全国共有普育资源方面，2017年，全国共有普育资源方面，2017年，全国共有普育资源方面，2017年，全国共有普</p>
+                                    <div>
+                                        <p><i class="fa fa-calendar"></i>2018.8.31</p>
+                                        <p><i class="fa fa-map-marker"></i>专硕联盟</p>
+                                    </div>
+                                </div>
+                                <img src="../../assets/img/infor.jpg" alt="">
+                            </div>
+                            <div class="lookinformation" v-for="(item,index) in 2">
+                                <img src="../../assets/img/infor.jpg" alt="">
+                                <div class="lookinforMessage">
+                                    <h3>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h3>
+                                    <div>
+                                        <p><i class="fa fa-calendar"></i>2018.8.31</p>
+                                        <p><i class="fa fa-map-marker"></i>专硕联盟</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="selectInformationFooter">
+                            <div>
+                                <p>重量级资讯</p>
+                                <p>前沿信息尽在掌握</p>
+                            </div>
+                            <yellowBtn class="yellowBtn" text="查看更多资讯"></yellowBtn>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 会员模块 -->
+            <div class="indexBlockMessageBox">
+                <div class="indexBlockMessage">
+                    <!-- 会员模块----header -->
+                    <div>
+                        <div class="selectHeader">
+                            <p><span></span><strong>立即加入会员</strong><span></span></p>
+                            <strong>享受更多便捷服务</strong>
+                        </div>
+                    </div>
+                    <!-- 服务----单个服务小块块 -->
+                    <div class="singleCollegeBox">
+                        <div class="memberServe">
+                            <div v-for="(item,index) in member">
+                                <div>
+                                    <img :src="item.logo" alt="">
+                                </div>
+                                <span>{{item.name}}</span>
+                                <p>{{item.detail}}</p>
+                            </div>
+                        </div>
+                        <div class="selectInformationFooter memberFooter">
+                            <homeBtn class="homeBtn" text="免费注册，成为会员"></homeBtn>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     	</div>
     </div>
 </template>
@@ -211,6 +305,33 @@ export default {
     },
     data() {
       return {
+        member:[
+            {
+                logo: require("../../assets/img/coach2.png"),
+                name: "优惠卷",
+                detail: "报名培训班享受会员专属优惠价！折扣多多！"
+            },
+            {
+                logo: require("../../assets/img/return2.png"),
+                name: "退款管理",
+                detail: "会员享受辅导班10天内无条件退款保障！"
+            },
+            {
+                logo: require("../../assets/img/remind.png"),
+                name: "活动提醒",
+                detail: "感兴趣的活动，小助手来提醒你不怕错过！"
+            },
+            {
+                logo: require("../../assets/img/attention.png"),
+                name: "关注院校",
+                detail: "心仪的院校，任何风吹草动，第一时间全知道！"
+            },
+            {
+                logo: require("../../assets/img/helper.png"),
+                name: "个人助手",
+                detail: "备考全程陪伴，重要事件时时提醒，不耽误事儿！"
+            }
+        ],
         activity: [
             {
                 name:"商学院MBA2019年提前面试第四批",
@@ -405,6 +526,115 @@ export default {
         margin: 0;
         padding: 0;
     }
+
+    /*
+    看资讯样式
+    */
+    .memberServe {
+        display: flex;
+        text-align: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .memberServe span {
+        display: inline-block;
+        color: #009fa0;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 26px 0 10px;
+    }
+    .memberServe p {
+        color: rgb(56, 59, 61);
+        font-size: 14px;
+    }
+    .memberServe>div {
+        width: 206px;
+        margin: 20px;
+    }
+    .memberServe>div>div {
+        width: 100%;
+        height: 128px;
+        text-align: center;
+    }
+    .memberServe>div>div>img {
+        width: 128px;
+    }
+    .memberFooter {
+        justify-content: center !important;
+    }
+
+
+    .little {
+        display: none;
+    }
+    .lookinformation {
+        width: 305px;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    
+    .lookinformation>img {
+        width: 100%;
+        height: 170px;
+        display: block;
+    }
+    .lookinforMessage {
+        background-color: #fff;
+        padding: 20px;
+        height: 127px;
+        position: relative;
+    }
+    .lookinforMessage>h3 {
+        margin: 0;
+        padding: 0;
+        font-size: 18px;
+        line-height: 1.55em;
+        font-weight: normal;
+        color: #383b3d;
+    }
+    .lookinforMessage>div {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        color: #383b3d;
+        font-size: 14px;
+        opacity: 0.7;
+        display: flex;
+        justify-content: space-between;
+    }
+    .lookinforMessage>div>p {
+        margin-right: 20px;
+    }
+    .lookinforMessage>div>p>i {
+        margin-right: 5px;
+    }
+    .lookinformationBig {
+        width: 610px;
+        display: flex;
+        flex-wrap: wrap;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    .lookinformationBig .lookinforMessage {
+        width: 265px;
+        height: 297px;
+    }
+    .lookinformationBig .lookinforMessage>p {
+        font-size: 12px;
+        color: rgb(56, 59, 61);
+        line-height: 1.8em;
+        margin-top: 23px;
+    }
+    .lookinformationBig img {
+        width: 305px;
+        height: 337px;
+    }
+    .informationDiv>div {
+        margin: 10px;
+    }
+
+
+
     /* header>nav */
     .indexHeaderbig {
         overflow: hidden;
@@ -811,6 +1041,8 @@ export default {
         color: #000;
     }
 
+    
+
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
         /* 选院校模块 */
@@ -854,6 +1086,12 @@ export default {
         .singActivitybox {
             margin-left: 0;
         }
+        .big {
+            display: none;
+        }
+        .little {
+            display: block;
+        }
     }
 
     /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -872,6 +1110,12 @@ export default {
         .selectInformationFooter .homeBtn {
             margin-top: 5%;
             width: 241px;
+        }
+        .big {
+            display: none;
+        }
+        .little {
+            display: block;
         }
     }
 
@@ -1004,8 +1248,8 @@ export default {
         cursor: pointer;
     }
     .homeContainer .buttons b.on{
-        background-color: #19ab95;
-        border: 1px solid #19ab95;
+        background-color: #ffb957;
+        border: 1px solid #ffb957;
     }
 </style>
 
