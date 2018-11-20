@@ -33,6 +33,7 @@ export default {
         padding: 15px 30px;
         border: 2px solid #009fa0;
         border-radius: 5px;
+        text-align: center;
         color: #009fa0;
     }
     .homeBtn:hover {

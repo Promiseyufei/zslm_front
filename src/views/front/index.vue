@@ -151,16 +151,41 @@
                     </div>
                     <!-- 找活动----三个活动小块块 -->
                     <div class="singleCollegeBox">
-                        <div>
-                            <div>
-
+                        <div class="selectActivity">
+                            <div class="homeContainer">
+                                <div class="wrap" style="left: -955px;">
+                                    <img src="../../assets/img/sitanfu.jpg" alt="">
+                                    <img src="../../assets/img/banner1.jpg" alt="">
+                                    <img src="../../assets/img/sitanfu.jpg" alt="">
+                                    <img src="../../assets/img/sitanfu.jpg" alt="">
+                                    <img src="../../assets/img/banner1.jpg" alt="">
+                                </div>
+                                <div class="buttons">
+                                    <b class="on"></b>
+                                    <b></b>
+                                    <b></b>
+                                </div>
+                                <div class="wrapCover">
+                                    <div class="wrapCover1">
+                                        <span>招生宣讲</span>
+                                        <h3>{{activity[index].name}}</h3>
+                                    </div>
+                                    <div class="wrapCover2">
+                                        <p><i class="fa fa-map-marker"></i>{{activity[index].province}}</p>
+                                        <p><i class="fa fa-calendar"></i>{{activity[index].time}}</p>
+                                        <div>
+                                            <img :src="activity[index].logo" alt="">
+                                            <span>{{activity[index].school}}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <div>
-                                    <h3>2019聚英计划第一批提前面试申请时间表（武汉）</h3>
-                                    <div>
-                                        <span><i class=""></i>武汉</span>
-                                        <span><i class=""></i>5月15日-8月23日</span>
+                            <div class="singActivitybox">
+                                <div class="singActivity selectMessage" v-for="(item,indd) in activity">
+                                    <h3>{{item.name}}</h3>
+                                    <div class="singActivityspan">
+                                        <span><i class="fa fa-map-marker"></i>{{item.province}}</span>
+                                        <span><i class="fa fa-calendar"></i>{{item.time}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -187,6 +212,37 @@ export default {
     },
     data() {
       return {
+        activity: [
+            {
+                name:"商学院MBA2019年提前面试第四批",
+                type:1,
+                province:"武汉",
+                time: "5月15日-8月23日",
+                school: "广东外语外贸大学",
+                logo: require("../../assets/img/college.png")
+            },
+            {
+                name:"2019聚英计划第一批提前面试申请时间表（武汉）",
+                type:1,
+                province:"武汉",
+                time: "6月15日-8月23日",
+                school: "河南科技大学",
+                logo: require("../../assets/img/college.png")
+            },
+            {
+                name:"2018聚英计划第一批提前面试申请时间表（武汉）",
+                type:1,
+                province:"武汉",
+                time: "7月15日-8月23日",
+                school: "北京大学",
+                logo: require("../../assets/img/college.png")
+            },
+        ],
+        wrap: document.querySelector(".wrap"),
+        timer: null,
+        index: 0,
+        dots: document.getElementsByTagName("b"),
+        mes: document.getElementsByClassName("selectMessage"),
         college: [
             {
                 id: 1,
@@ -251,9 +307,92 @@ export default {
         toJumpCollege: function(id) {
             this.$router.push('/front/singleCollage/'+id);
         },
+
+        next_pic: function() {
+            this.index++;
+            if(this.index > 2){
+                this.index = 0;
+            }
+            this.showCurrentDot();
+            var newLeft;
+            if(this.wrap.style.left === "-3820px"){
+                newLeft = -1910;
+            }else{
+                newLeft = parseInt(this.wrap.style.left)-955;
+            }
+            this.wrap.style.left = newLeft + "px";
+        },
+        prev_pic: function() {
+            this.index--;
+            if(this.index < 0){
+                this.index = 2;
+            }
+            this.showCurrentDot();
+            var newLeft;
+            if(this.wrap.style.left === "0px"){
+                newLeft = -3820;
+            }else{
+                newLeft = parseInt(this.wrap.style.left)+955;
+            }
+            this.wrap.style.left = newLeft + "px";
+        },
+        showCurrentDot: function () {
+            for(var i = 0, len = this.dots.length; i < len; i++){
+                this.dots[i].className = "";
+                this.mes[i].style.backgroundColor = "#009fa0";
+            }
+            this.dots[this.index].className = "on";
+            this.mes[this.index].style.backgroundColor = "#ffb957";
+        },
+    },
+    computed: {
+
     },
     mounted(){
+        var wrap = document.querySelector(".wrap");
+        this.wrap = wrap;
+        var dots = document.getElementsByTagName("b");
+        this.dots = dots;
+        var messsa= document.getElementsByClassName("selectMessage");
+        this.mes = messsa;
+        var self = this;
 
+        
+
+        clearInterval(self.timer);
+        self.timer = setInterval(function () {
+            self.next_pic();
+        },1000);
+        var container = document.querySelector(".homeContainer");
+        container.onmouseenter = function () {
+            clearInterval(self.timer);
+        }
+        container.onmouseleave = function () {
+            clearInterval(self.timer);
+            self.timer = setInterval(function () {
+                self.next_pic();
+            },1000);
+        }
+        // var self = this;
+        for (var i = 0, len = self.dots.length; i < len; i++){
+            (function(i){
+                self.dots[i].onclick = function () {
+                    console.log(i);
+                    var dis = self.index - i;
+                    if(self.index == 2 && parseInt(self.wrap.style.left)!==-2865){
+                        dis = dis - 3;   
+                    }
+                    //和使用prev和next相同，在最开始的照片5和最终的照片1在使用时会出现问题，导致符号和位数的出错，做相应地处理即可
+                    if(self.index == 0 && parseInt(self.wrap.style.left)!== -955){
+                        dis = 3 + dis;
+                    }
+                    self.wrap.style.left = (parseInt(self.wrap.style.left) + dis * 955)+"px";
+                    self.index = i;
+                    self.showCurrentDot();
+                }
+            })(i);
+        }
+        
     },
 };
 </script>
@@ -501,6 +640,48 @@ export default {
         margin-bottom: 15px;
         font-size: 18px;
     }
+    .singActivity {
+        height: 97px;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 10px 15px;
+        position: relative;
+        font-weight: lighter;
+    }
+    .singActivity>h3 {
+        margin: 0;
+        text-align: left;
+        line-height: 1.75em;
+        padding: 0;
+        font-size: 16px;
+        font-weight: lighter;
+    }
+    .singActivityspan {
+        position: absolute;
+        width: 285px;
+        bottom: 15px;
+        left: 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .singActivityspan i {
+        margin-right: 7px;
+    }
+    .singActivitybox {
+        margin-top: 20px;
+        width: 305px;
+        background-color: #009fa0;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-left: 15px;
+    }
+    .selectActivity {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .selectMessage {
+        background-color: #ffb957;
+    }
 
 
     /*搜辅导页面*/
@@ -615,7 +796,10 @@ export default {
         margin-top: 3%;
         width: 305px;
     }
-    .yellowBtn {
+    .selectInformationFooter .yellowBtn {
+        margin-top: 3%;
+    }
+    .selectInformationFooter .homeBtn {
         margin-top: 3%;
     }
     .selectInformationFooter p {
@@ -656,9 +840,20 @@ export default {
         .selectInformationFooter {
             justify-content: center;
         }
-        .yellowBtn {
+        .selectInformationFooter .yellowBtn {
             margin-top: 5%;
             width: 241px;
+        }
+        .selectInformationFooter .homeBtn {
+            margin-top: 5%;
+            width: 241px;
+        }
+        .selectActivity {
+            width: 300px;
+            overflow: hidden;
+        }
+        .singActivitybox {
+            margin-left: 0;
         }
     }
 
@@ -671,7 +866,11 @@ export default {
         .selectInformationFooter {
             justify-content: center;
         }
-        .yellowBtn {
+        .selectInformationFooter .yellowBtn {
+            margin-top: 5%;
+            width: 241px;
+        }
+        .selectInformationFooter .homeBtn {
             margin-top: 5%;
             width: 241px;
         }
@@ -702,6 +901,112 @@ export default {
         .indexBigBlock img {
             width: 80%;
         }
+    }
+
+
+    /*
+    轮播图样式
+    */
+    .homeContainer {
+        position: relative;
+        width: 955px;
+        height: 350px;
+        margin-top: 20px;
+        overflow: hidden;
+    }
+    .homeContainer .wrap {
+        position: absolute;
+        width: 5730px;
+        height: 350px;
+        z-index: 1;
+    }
+    .homeContainer .wrap img {
+        float: left;
+        width: 955px;
+    }
+    .homeContainer .buttons {
+        position: absolute;
+        right: 0;
+        bottom:20px;
+        width: 100%;
+        height: 10px;
+        z-index: 3;
+        text-align: center;
+    }
+    .wrapCover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 265px;
+        height: 310px;
+        padding: 20px;
+        color: #fff;
+        background-color: rgba(56, 59, 61, 0.9);
+        z-index: 2;
+    }
+    .wrapCover1{
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+    .wrapCover2 {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+    }
+    .wrapCover1>span {
+        font-size: 12px;
+        background-color: #009fa0;
+        border-radius: 60px;
+        font-weight: lighter;
+        padding: 1px 8px;
+        line-height: 1.1;
+    }
+    .wrapCover1>h3 {
+        font-size: 24px;
+        font-weight: lighter;
+        /* margin-bottom: 70px; */
+    }
+    .wrapCover2>p {
+        font-size: 14px;
+        font-weight: lighter;
+        line-height: 1.9;
+        margin: 15px 0;
+    }
+    .wrapCover2>p>i {
+        margin-right: 7px;
+    }
+    .wrapCover2>div {
+        width: 265px;
+        padding: 15px 0 10px;
+        border-top: 1px solid #fff;
+        display: flex;
+        align-items: center;
+    }
+    .wrapCover2>div>img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .wrapCover2>div>span {
+        font-size: 14px;
+        font-weight: lighter;
+    }
+    .homeContainer .buttons b {
+        margin-left: 5px;
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        text-align: center;
+        color:white;
+        cursor: pointer;
+    }
+    .homeContainer .buttons b.on{
+        background-color: #19ab95;
+        border: 1px solid #19ab95;
     }
 </style>
 

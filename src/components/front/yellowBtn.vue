@@ -22,6 +22,7 @@ export default {
 
 <style scoped>
     .yellowBtn {
+        text-align: center;
         padding: 15px 30px;
         border-radius: 5px;
         border: 2px solid #fff;
