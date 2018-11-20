@@ -1,6 +1,13 @@
 export const state = {
 	//存变量
-	setPassword:'',
-	setTestcode:'',
-	setPhoneNumber:'',
+	loginStatus: {
+		activeKey:'1'
+	},
+
+	//用户信息
+	userInfo: {
+		userPhone:'',
+		userPassword:'',
+		smsCode:'',
+	}
 }

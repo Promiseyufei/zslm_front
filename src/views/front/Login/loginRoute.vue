@@ -16,11 +16,11 @@
     				</div>
     				<router-view/>
     				<div class="login">
-    					<el-button type="primary" @click="login">登录</el-button>
+    					<el-button type="primary" @click="loginTest">登录</el-button>
     				</div>
     				<div class="other">
     					<div><el-checkbox v-model="checked">自动登录</el-checkbox></div>
-    					<div><span @click="resetPass">忘记密码</span> | <span class="register"@click="register">注册</span></div>
+    					<div><span @click="resetPass">忘记密码</span> | <span class="register" @click="register">注册</span></div>
     				</div>
     				<div class="threeLogin" style="text-align: center;">
     					<div class="fastIn">快捷登录</div>
@@ -47,89 +47,75 @@
 		},
 		watch: {
 			phoneNumber(phone,oldPhone) {
-				this.$store.commit('userPhone', phone);
+				this.$store.commit('changeUserInfo', {name:'userPhone', val:phone});
 			},
 		},
 		methods:{
-			//将数据存到vuex中
-			store:function() {
-				this.$store.commit('setPhoneNumber', this.phoneNumber);			
-			},
             //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
-		    	let active = key;
-		    	if (active == 1) {	//到短信登录
-		    		this.$router.push('/front/Login/loginRoute/accountNumber');
-		    	} else {	//到账号登录
-		    		this.$router.push('/front/Login/loginRoute/shortMessage');
-		    	}
+				this.active = key;
+				this.active == '1' ? this.$router.push('/front/Login/loginRoute/accountNumber') : this.$router.push('/front/Login/loginRoute/shortMessage');
 		    },
 		    //跳转到重置密码页面
 		    resetPass:function() {
-		    	this.$router.push({
-		    			path:'/front/Login/resetPassword',
-		    		});
+		    	this.$router.push('/front/Login/resetPassword');
 		    },
 		    //跳转到注册页面
 		    register:function() {
-		    	this.$router.push({
-		    			path:'/front/Login/register',
-		    		});
-				// this.active = key;
-				// if (this.active == 1) {
-				// 	this.$router.push('/front/Login/loginRoute/accountNumber');
-				// } else {	
-				// 	this.$router.push('/front/Login/loginRoute/shortMessage');
-				// }
-				// this.active = key;
-				// if (this.active == 1) {
-				// 	this.$router.push('/front/Login/loginRoute/accountNumber');
-				// } else {	
-				// 	this.$router.push('/front/Login/loginRoute/shortMessage');
-				// }
-				// if(this.$store.state.loginStatus['activeKey'] != key) {
-				// 	if(this.$store.state.loginStatus['activeKey'] == 2) 
-				// 		this.$router.push('/front/Login/loginRoute/shortMessage');
-				// 	else 
-				// 		this.$router.push('/front/Login/loginRoute/accountNumber');
-				// }
-				// else {
-				// 	if (this.active == 2) {
-				// 		this.$router.push('/front/Login/loginRoute/shortMessage');
-				// 	} else {	
-				// 		this.$router.push('/front/Login/loginRoute/accountNumber');
-				// 	}
-				// }
-				// this.$store.commit('changeLoginStatus',{name:'activeKey',val: key});
+		    	this.$router.push('/front/Login/register');
 		    },
 		    //登录按钮
-		    login: function() {
+		    loginTest: function() {
 		    	if (this.active==1) { //账号登录
 		    		if(this.phoneNumber==''){
             			this.$message('手机号不能为空！');
 	            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
 	            		this.$message('请输入正确的手机号！');
-	            	} else if(this.$store.state.setPassword==''){
+	            	} else if(this.$store.state.userInfo['userPassword'] == ''){
 	            		this.$message('请输入密码！');
 	            	} else {
-	            		this.$message('登录成功~');
+	            		this.login(this.returnParams(0));
 	            	}
 		    	} else if(this.active==2) { //短信登录
 		    		if(this.phoneNumber==''){
             			this.$message('手机号不能为空！');
 	            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
 	            		this.$message('请输入正确的手机号！');
-	            	} else if(this.$store.state.setTestcode==''){
+	            	} else if(this.$store.state.userInfo['smsCode'] == ''){
 	            		this.$message('请输入验证码！');
 	            	} else {
-	            		this.$message('登录成功~');
+	            		this.login(this.returnParams(0));
 	            	}
 		    	}
-		    },
-			mounted() {
-				//默认显示账号登录&&显示账号登录路由
-				this.handleSelect();
 			},
+			login(params) {
+				this.post('/login/front/login', params).then((response) => {
+					if(response.code == 0) {
+						this.message(true, response.msg, 'success');
+					}
+					else if(response.code == 1) this.message(true, response.msg, 'info');
+					else if(response.code == 3) {
+						this.confirm(() => {
+							this.login(this.returnParams(1));
+						}, () => {
+							this.message(true, '取消成功', 'info');
+						}, '是否同意自动注册?');
+					}
+				})
+			},
+			returnParams(agree) {
+				return this.active == '1' ? {
+					userPhone: this.phoneNumber,
+					userPassword: this.$store.state.userInfo['userPassword'],
+					type: 0,
+					agree: agree
+				} : {
+					userPhone: this.phoneNumber,
+					smsCode: this.$store.state.userInfo['smsCode'],
+					type: 1,
+					agree: agree
+				}
+			}
 		}
 	}
 </script>

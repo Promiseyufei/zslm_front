@@ -19,7 +19,7 @@
 		},
 		watch: {
 			password(pass, oldpass) {
-				this.$store.commit('setPassword', pass);
+				this.$store.commit('changeUserInfo', {name: 'userPassword', val: pass});
 			}
 		},
 		methods:{
@@ -32,9 +32,6 @@
 					showOr.type = "password";
 				}
 			}
-		},
-		mounted() {
-			// this.store();
 		}
 	}
 </script>

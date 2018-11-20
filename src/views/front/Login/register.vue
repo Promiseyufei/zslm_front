@@ -17,14 +17,14 @@
 	    				</div> -->
 	    				<div class="registerCodeinput">
 					      	<el-input placeholder="请输入验证码" 
-						      prefix-icon="el-icon-message" v-model="testCode">
+						      prefix-icon="el-icon-message" v-model="smsCode">
 							</el-input>
 							<el-button type="primary"  :disabled="disabled" @click="sendcode">
 							    {{btntxt}}
 							</el-button>
 				      	</div>
 	    				<div class="registerLogin">
-	    					<el-button type="primary" @click="register">成为会员</el-button>
+	    					<el-button type="primary" @click="registerTest">成为会员</el-button>
 	    				</div>
 	    				<div class="greeUser">
 	    					<el-checkbox v-model="checked">同意用户协议</el-checkbox>
@@ -48,7 +48,7 @@
 			return {
 				active:'1',
 				phoneNumber:'',
-				testCode:'',
+				smsCode:'',
 				checked:'',
 				btntxt:"获取验证码",
 		        disabled:false,
@@ -62,52 +62,60 @@
 		    },
 		    //获取验证码方法
 			sendcode:function(){
-            	//手机号正则判断
+				//手机号正则判断
             	if(this.phoneNumber==''){
             		this.$message('手机号不能为空！');
             	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
             		this.$message('请输入正确的手机号！');
             	} else {
-            		this.$message('验证码已发送，请注意查收~');
-            		this.time=60;
-	            	this.disabled=true;
-	            	this.timer();
+					this.sendSmsCode(this.phoneNumber);
             	}
             	
         	},
-        	//倒计时方法
-        	timer:function () {
-            	if (this.time > 0) {
-                	this.time--;
-                 	this.btntxt=this.time;
-                 	setTimeout(this.timer, 800);
-             	} else{
-                	this.time=0;
-                	this.btntxt="获取验证码";
-                	this.disabled=false;
-             }
-        	},
 		    
 		    //注册按钮
-		    register: function() {
-				// console.log(this.$refs.demo)
+		    registerTest: function() {
 				if(this.phoneNumber==''){
 					this.$message('手机号不能为空！');
-            		// this.message(true,'手机号不能为空！','warning');
                 	return;
             	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
-            		this.$message('请输入正确的手机号！');
-            		// this.message(true,'请输入正确的手机号！','warning');
-            	} else if(this.testCode=='') {
-            		this.$message('验证码不能为空！');
-            		// this.message(true,'验证码不能为空！','warning');
+					this.$message('请输入正确的手机号！');
+					return;
+            	} else if(this.smsCode=='') {
+					this.$message('验证码不能为空！');
+					return;
             	}
-		    }
+			},
+			register() {
+				this.post('/login/front/register', this.returnParams(0)).then((response) => {
+					if(response.code == 2) {
+						this.message(true, '该手机号已注册');
+					}
+					else if(response.code == 3) {
+						this.confirm(() => {
+							this.register(this.returnParams(1));
+						}, () => {
+							this.message(true, '已取消注册', 'info');
+						}, '是否注册?');
+					}
+					else if(response.code == 0) {
+						this.message(true, '注册成功，默认密码为手机号后六位~', 'success');
+					}
+				})
+			},
+			returnParams(agree) {
+				return {
+					userPhone: this.phoneNumber,
+					smsCode: this.smsCode,
+					agree: agree
+				}
+			}
 		},
 		watch:{
 			// }
 		},
 		mounted() {
+			if(this.$store.state.userInfo['userPhone'] !== '') this.phoneNumber = this.$store.state.userInfo['userPhone'];
 		}
 	}
 </script>

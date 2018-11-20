@@ -51,7 +51,7 @@
 		methods:{
 			//确定修改按钮
 			submission:function(){
-				if(this.resetPass.phoneNumber==''){
+				if(this.resetPass.phoneNumber=='') {
             		this.$message('手机号不能为空！');
 	            } else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.resetPass.phoneNumber))){
 	            	this.$message('请输入正确的手机号！');
@@ -64,40 +64,37 @@
             	} else if (this.resetPass.checkPass!=this.resetPass.pass) {
             		this.$message('密码不一致！');
             	} else {
-            		this.$message('密码已修改~');
+					this.confirm(() => {
+						this.post('/login/front/resetUserPassWord', {
+							userPhone: 		this.resetPass.phoneNumber,
+							smsCode: 		this.resetPass.codeNumber,
+							newPass: 		this.resetPass.pass,
+							againNewPass: 	this.resetPass.checkPass
+						}).then((response) => {
+							if(response.code == 0) this.message(true, '保存成功', 'success');
+							else {
+								this.message(true, response.msg, 'info');
+							}
+						});
+					}, () => {
+						this.message(true, '取消保存', 'info');
+					}, '确定保存密码吗？');
+
             	}
 			},
+
 			//获取验证码方法
 			getCodenumber:function(){
             	//手机号正则判断
-            	if(this.resetPass.phoneNumber==''){
+            	if(this.resetPass.phoneNumber=='') {
             		this.$message('手机号不能为空！');
 	            } else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.resetPass.phoneNumber))){
 	            	this.$message('请输入正确的手机号！');
 	            } else {
-            		this.$message('验证码已发送，请注意查收');
-            		this.time=60;
-            		this.disabled=true;
-            		this.timer();
+            		this.sendSmsCode(this.resetPass.phoneNumber);
             	}
-            	
         	},
-        	//倒计时方法
-        	timer:function () {
-            	if (this.time > 0) {
-                	this.time--;
-                 	this.btntxt=this.time;
-                 	setTimeout(this.timer, 800);
-             	} else{
-                	this.time=0;
-                	this.btntxt="获取验证码";
-                	this.disabled=false;
-             }
-        	}
-		},
-		mounted() {
-
-		}  
+		}
 	}
 </script>
 
