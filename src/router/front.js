@@ -6,11 +6,11 @@ let front_router = {
             name: '前台',
             component: resolve =>void(require(['@/front'],resolve)),
             children: [
-				{
-					path:'test',
-					name: '这是测试在组件样式用的',
-					component: resolve => void(require(['@/views/front/logoInto/search'], resolve))
-				},
+								{
+									path:'test',
+									name: '这是测试在组件样式用的',
+									component: resolve => void(require(['@/views/front/logoInto/search'], resolve))
+								},
                 //登录
                 {	
                 	path:'Login/loginRoute',

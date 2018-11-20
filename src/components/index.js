@@ -13,7 +13,8 @@ import editor from  './admin/editor.vue'
 import homeBtn from  './front/homeBtn.vue'
 import searchHeader from './front/searchHeader.vue'
 import yellowBtn from './front/yellowBtn.vue'
-
+import Article from './front/article.vue'
+import mbaArticle from './front/mba.vue'
 export default {
     Test, 
     Test2,
@@ -30,5 +31,6 @@ export default {
     homeBtn,
     searchHeader,
     yellowBtn,
-    homeBtn
+    Article,
+    mbaArticle
 }
