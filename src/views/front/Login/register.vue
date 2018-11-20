@@ -22,7 +22,7 @@
 							</el-button>
 				      	</div>
 	    				<div class="registerLogin">
-	    					<el-button type="primary" @click="register" :disabled="disabled2">成为会员</el-button>
+	    					<el-button type="primary" @click="register" :disabled="comeVip">成为会员</el-button>
 	    				</div>
 	    				<div class="greeUser">
 	    					<el-checkbox v-model="checked" @click="agree">同意用户协议</el-checkbox>
@@ -47,10 +47,10 @@
 				active:'1',
 				phoneNumber:'',
 				testCode:'',
-				checked:'',
+				checked:false,
 				btntxt:"获取验证码",
 		        disabled:false,
-		        disabled2:true,
+		        comeVip:true,
 		        time:0,
 			};
 		},
@@ -86,30 +86,39 @@
              }
         	},
 		    //同意用户协议
-		    agree:function(){
-		    	if(this.checked==true) {
-		    		console.log(123);
-		    		this.disabled2=false;
-		    	} else if(this.checked=='') {
-		    		console.log(456);
-		    		this.disabled2=true;
-		    	}
+		    agree: function(){
+		    	//初始未选中，值为false
+		    	// console.log(this.checked)
 		    },
 		    //注册按钮
 		    register: function() {
-		    	console.log(this.checked)
-				// console.log(this.$refs.demo)
-				if(this.phoneNumber==''){
-					this.$message('手机号不能为空！');
-            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
-            		this.$message('请输入正确的手机号！');
-            	} else if(this.testCode=='') {
-            		this.$message('验证码不能为空！');
-            	}
+				if (this.checked==true) { //同意用户协议
+					this.comeVip=false;   //注册按钮可用
+					if(this.phoneNumber==''){
+						this.$message('手机号不能为空！');
+	            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
+	            		this.$message('请输入正确的手机号！');
+	            	} else if(this.testCode=='') {
+	            		this.$message('验证码不能为空！');
+	            	} else {
+	            		this.$message('您已成为会员~');
+	            	}
+				} else if(this.checked==false) { //未同意用户协议
+					this.comeVip=true;			 //注册按钮不可用
+					this.$message('请查看用户协议！');
+				}
+				
 		    }
 		},
 		watch:{
-			// }
+			//监听this.checked——选中"同意用户协议"，"成为会员按钮可用"
+			checked:function(oldVal,newVal) {
+				if (newVal==true) {
+					this.comeVip=false;
+				} else {
+					this.comeVip=false;
+				}
+			}
 		},
 		mounted() {
 			// this.agree();

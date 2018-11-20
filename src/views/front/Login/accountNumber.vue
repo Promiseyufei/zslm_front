@@ -23,7 +23,6 @@
 			}
 		},
 		methods:{
-
 			//密码是否可见
 			showOr:function() {
 				let showOr = document.getElementById("password")

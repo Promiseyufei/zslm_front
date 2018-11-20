@@ -47,16 +47,8 @@
 		},
 		watch: {
 			phoneNumber(phone,oldPhone) {
-				this.$store.commit('userPhone', phone);
+				this.$store.commit('userPhone',phone);
 			},
-			active: function(newVal,oldVal) {
-				// console.log(newVal)
-				// if (newVal==1) { //到账号登录页面手机号清空
-				// 	this.phoneNumber='';
-				// } else{ //到短信登录页面手机号清空
-				// 	this.phoneNumber='';
-				// }
-			}
 		},
 		methods:{
 			//将数据存到vuex中
@@ -92,10 +84,6 @@
 		    	}
 		    	
 		    },
-		    //账号登录页面——刷新
-		    // shortMessage:function() {
-		    	// this.$router.push('/front/Login/loginRoute/shortMessage');
-		    // },
 		    //跳转到重置密码页面
 		    resetPass:function() {
 		    	this.$router.push({
