@@ -39,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				active:'2',
+				active:'1',
 				phoneNumber:'',
 				checked:'',
 				password:''
@@ -55,6 +55,24 @@
 			handleSelect(key, keyPath) {
 				this.active = key;
 				this.active == '1' ? this.$router.push('/front/Login/loginRoute/accountNumber') : this.$router.push('/front/Login/loginRoute/shortMessage');
+		    },
+		    //短信登录页面
+		    accountNumber:function() {
+		    	if (sessionStorage.getItem("active")) {
+		    		this.active=sessionStorage.getItem("active")
+		    		if (this.active==1) {
+		    			this.$router.push('/front/Login/loginRoute/accountNumber');
+		    		} else{
+		    			this.$router.push('/front/Login/loginRoute/shortMessage');
+		    		}
+		    	} else{
+		    		if (this.active==1) {
+		    			this.$router.push('/front/Login/loginRoute/accountNumber');
+		    		} else{
+		    			this.$router.push('/front/Login/loginRoute/shortMessage');
+		    		}
+		    	}
+		    	
 		    },
 		    //跳转到重置密码页面
 		    resetPass:function() {

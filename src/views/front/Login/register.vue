@@ -13,8 +13,6 @@
 	    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
 							</el-input>
 	    				</div>
-	    				<!-- <div class="registerCodeinput">
-	    				</div> -->
 	    				<div class="registerCodeinput">
 					      	<el-input placeholder="请输入验证码" 
 						      prefix-icon="el-icon-message" v-model="smsCode">
@@ -24,10 +22,10 @@
 							</el-button>
 				      	</div>
 	    				<div class="registerLogin">
-	    					<el-button type="primary" @click="registerTest">成为会员</el-button>
+	    					<el-button type="primary" @click="registerTest" :disabled="comeVip">成为会员</el-button>
 	    				</div>
 	    				<div class="greeUser">
-	    					<el-checkbox v-model="checked">同意用户协议</el-checkbox>
+	    					<el-checkbox v-model="checked" @click="agree">同意用户协议</el-checkbox>
 	    				</div>
 	    				<div class="registerThreeLogin">
 	    					<div class="registerFastIn">快捷账号登录</div>
@@ -52,6 +50,7 @@
 				checked:'',
 				btntxt:"获取验证码",
 		        disabled:false,
+		        comeVip:true,
 		        time:0,
 			};
 		},
@@ -70,7 +69,6 @@
             	} else {
 					this.sendSmsCode(this.phoneNumber);
             	}
-            	
         	},
 		    
 		    //注册按钮
@@ -112,7 +110,14 @@
 			}
 		},
 		watch:{
-			// }
+			//监听this.checked——选中"同意用户协议"，"成为会员按钮可用"
+			checked:function(oldVal,newVal) {
+				if (newVal==true) {
+					this.comeVip=false;
+				} else {
+					this.comeVip=false;
+				}
+			}
 		},
 		mounted() {
 			if(this.$store.state.userInfo['userPhone'] !== '') this.phoneNumber = this.$store.state.userInfo['userPhone'];

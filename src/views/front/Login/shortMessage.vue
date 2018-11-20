@@ -5,7 +5,7 @@
 	      	<el-input placeholder="请输入验证码" 
 		      prefix-icon="el-icon-message" v-model="smsCode">
 			</el-input>
-			<el-button  type="primary"  :disabled="disabled" @click="sendcode">
+			<el-button  type="primary" :disabled="disabled" @click="sendcode">
 			    {{btntxt}}
 			</el-button>
       	</div>

@@ -11,6 +11,9 @@ export const mutations= {
 	setPhoneNumber(state, h) {
 		state.setPhoneNumber = h;
 	},
+	setActive(state, a) {
+		state.setPhoneNumber = a;
+	},
 	//修改state中的loginStatus
 	changeLoginStatus(state, param) {
 		state.loginStatus[param.name] = param.val;
