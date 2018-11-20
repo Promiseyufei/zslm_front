@@ -11,6 +11,7 @@ import userTable from  './admin/userTable.vue'
 import singlePage from  './admin/singlePage.vue'
 import editor from  './admin/editor.vue'
 import homeBtn from  './front/homeBtn.vue'
+import searchHeader from './front/searchHeader.vue'
 import yellowBtn from './front/yellowBtn.vue'
 
 export default {
@@ -26,6 +27,8 @@ export default {
     singlePage,
     editor,
     messageTable1,
+    homeBtn,
+    searchHeader,
     yellowBtn,
     homeBtn
 }

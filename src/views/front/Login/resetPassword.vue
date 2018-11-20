@@ -2,7 +2,7 @@
 <template>
 	<div class="updataPass">
 		<div class="header">账号安全</div>
-		<el-form :model="resetPass" status-icon :rules="rules" 
+		<el-form :model="resetPass" status-icon 
 		ref="resetPass" class="demo-ruleForm">
 			<div class="content">
 				<el-form-item prop="phoneNumber">
@@ -34,47 +34,6 @@
 <script>
 	export default {
 		data(){
-			var validatephoneNumber = (rule, value, callback) => {
-        		if (value === '') {
-          			callback(new Error('请输入手机号'));
-        		} else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.resetPass.phoneNumber))){
-        			callback(new Error('请输入正确的手机号！'));
-        		} else {
-          			// if (this.resetPass.phoneNumber !== '') {
-            			// this.$refs.resetPass.validateField('phoneNumber');
-          	   		// }  
-          			callback();
-        		}	
-      		};
-	      	var validatecodeNumber = (rule, value, callback) => {
-        		if (value === '') {
-          			callback(new Error('请输入验证码'));
-        		} else {
-          			// if (this.resetPass.codeNumber !== '') {
-            			// this.$refs.resetPass.validateField('codeNumber');
-          	   		// }
-          			callback();
-        		}	
-      		};
-      		var validatePass = (rule, value, callback) => {
-        		if (value === '') {
-          			callback(new Error('请输入密码'));
-        		} else {
-          			// if (this.resetPass.pass !== '') {
-            			// this.$refs.resetPass.validateField('pass');
-          	   		// }
-          			callback();
-        		}	
-      		};
-      		var validatecheckPass = (rule, value, callback) => {
-        		if (value === '') {
-          			callback(new Error('请再次输入密码'));
-        		} else if (value !== this.resetPass.pass) {
-          			callback(new Error('两次输入密码不一致!'));
-        		} else {
-          			callback();
-        		}
-      		};
 			return{
 				//输入框
 				resetPass: {
@@ -83,20 +42,6 @@
 					pass:'',
 					checkPass:'',
 				},
-				rules: {
-					phoneNumber: [
-		            	{ validator: validatephoneNumber, trigger: 'blur' }
-		          	],
-		          	codeNumber: [
-		            	{ validator: validatecodeNumber, trigger: 'blur' }
-		          	],
-		        	pass: [
-		            	{ validator: validatePass, trigger: 'blur' }
-		          	],
-		          	checkPass: [
-		            	{ validator: validatecheckPass, trigger: 'blur' }
-		          	],
-		        },
 				//验证码
 				btntxt:"获取验证码",
 		        disabled:false,
@@ -106,52 +51,61 @@
 		methods:{
 			//确定修改按钮
 			submission:function(){
-				this.$refs.resetPass.validate((valid) => {
-          		if (valid) {
-            		alert('您已成功注册!');
-          		} else {
-            		// console.log('error submit!!');
-            		return false;
-          }
-        });
+				if(this.resetPass.phoneNumber=='') {
+            		this.$message('手机号不能为空！');
+	            } else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.resetPass.phoneNumber))){
+	            	this.$message('请输入正确的手机号！');
+	            } else if(this.resetPass.codeNumber=='') {
+            		this.$message('请输入验证码');
+            	} else if(this.resetPass.pass=='') {
+            		this.$message('请输入密码');
+            	} else if(this.resetPass.checkPass=='') {
+            		this.$message('请确认密码');
+            	} else if (this.resetPass.checkPass!=this.resetPass.pass) {
+            		this.$message('密码不一致！');
+            	} else {
+					this.confirm(() => {
+						this.post('/login/front/resetUserPassWord', {
+							userPhone: 		this.resetPass.phoneNumber,
+							smsCode: 		this.resetPass.codeNumber,
+							newPass: 		this.resetPass.pass,
+							againNewPass: 	this.resetPass.checkPass
+						}).then((response) => {
+							if(response.code == 0) this.message(true, '保存成功', 'success');
+							else {
+								this.message(true, response.msg, 'info');
+							}
+						});
+					}, () => {
+						this.message(true, '取消保存', 'info');
+					}, '确定保存密码吗？');
+
+            	}
 			},
+
 			//获取验证码方法
 			getCodenumber:function(){
             	//手机号正则判断
-            	if(this.phoneNumber==''){
-                	alert("手机号不能为空！");
-                	return;
-            	} if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.phoneNumber))){
-            		alert("请输入正确的手机号！");
-            	} else {
-            		alert("验证码已发送，请注意查收")
+            	if(this.resetPass.phoneNumber=='') {
+            		this.$message('手机号不能为空！');
+	            } else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.resetPass.phoneNumber))){
+	            	this.$message('请输入正确的手机号！');
+	            } else {
+            		this.sendSmsCode(this.resetPass.phoneNumber);
             	}
-            	this.time=60;
-            	this.disabled=true;
-            	this.timer();
         	},
-        	//倒计时方法
-        	timer:function () {
-            	if (this.time > 0) {
-                	this.time--;
-                 	this.btntxt=this.time;
-                 	setTimeout(this.timer, 800);
-             	} else{
-                	this.time=0;
-                	this.btntxt="获取验证码";
-                	this.disabled=false;
-             }
-        	}
-		},
-		mounted() {
-
-		}  
+		}
 	}
 </script>
 
 
 <!-- 全局样式 -->
 <style>
+	.updataPass .el-input__inner {
+		background-color: #f5f5f5;
+		font-size: 14px;
+		color: #6e6e6e;
+	}
 	.content .el-button--primary {
 		height: 40px;
     	width: 160px;

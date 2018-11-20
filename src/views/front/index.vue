@@ -1,7 +1,6 @@
 <template>
     <div>
     	<div>
-
             <!-- header -->
             <div class="indexHeaderbig">
                 <div class="indexHeaderbox">
