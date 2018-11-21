@@ -296,7 +296,6 @@
 	    	edit(row) {
 	    		//当前行表格数据
 	    		var singledata = row;
-	    		console.log(123)
 	        	// 此页面未给
 	    	},
 	  		//动态更新文件管理首页的id

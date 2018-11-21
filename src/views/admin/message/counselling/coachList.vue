@@ -223,8 +223,6 @@
             }
         },
         methods:{
-
-
             loseFocus:function(val,index) {
                 var re = /^[0-9]+.?[0-9]*$/;
                 if (!re.test(val)) {

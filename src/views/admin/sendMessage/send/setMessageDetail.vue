@@ -138,8 +138,10 @@
                         }).then((response) => {
                             console.log(response);
                             if(response.code == 0) {
-                                console.log(response);
+                                this.message(true, response.msg, 'success');
                             }
+                            else 
+                                this.message(true, response.msg, 'error');
                         })
                     // }, () => {
                         // this.message(true, "已取消发送", 'info');

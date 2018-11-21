@@ -22,6 +22,44 @@ export default {
 
 
     /**
+     * 
+     * @param {String} phoneNumber 手机号码 
+     */
+    sendSmsCode(phoneNumber) {
+
+        this.time=60;
+        this.disabled=true;
+        this.timer();
+
+        this.fetch('/login/front/sendSmsCode', {
+            userPhone: phoneNumber
+        }).then((response) => {
+            if(response.code == 0) {
+                this.$message('验证码已发送，请注意查收');
+            }
+            else {
+                this.message(true, response.msg, 'info');
+            }
+        })
+    },
+
+    /**
+     * 发送短信时进行倒计时
+     */
+    timer:function () {
+        if (this.time > 0) {
+            this.time--;
+            this.btntxt=this.time;
+            setTimeout(this.timer, 800);
+        } else{
+            this.time=0;
+            this.btntxt="重新发送";
+            this.disabled=false;
+        }
+    },
+
+
+    /**
      * 时间戳转换为时间
      * @param timestamp 10位时间戳
      * @return {string} YYYY-MM-DD时间格式

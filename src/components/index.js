@@ -10,7 +10,12 @@ import messageTable1 from  './admin/messageTable1.vue'
 import userTable from  './admin/userTable.vue'
 import singlePage from  './admin/singlePage.vue'
 import editor from  './admin/editor.vue'
-
+import homeBtn from  './front/homeBtn.vue'
+import searchHeader from './front/searchHeader.vue'
+import yellowBtn from './front/yellowBtn.vue'
+import Article from './front/article.vue'
+import mbaArticle from './front/mba.vue'
+import hearderBanner from './front/headerBanner.vue'
 export default {
     Test, 
     Test2,
@@ -23,5 +28,13 @@ export default {
     userTable,
     singlePage,
     editor,
-    messageTable1
+    messageTable1,
+    homeBtn,
+    searchHeader,
+    yellowBtn,
+    Article,
+    mbaArticle,
+    homeBtn,
+    hearderBanner
+
 }

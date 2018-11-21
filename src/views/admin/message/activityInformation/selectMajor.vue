@@ -46,16 +46,16 @@
                 <!-- 院校专业名称 -->
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{onecityName}}</div>
-                    <el-radio-group v-for="cityline in oneCity" v-model="one">
-                        <el-radio-button v-for="city in cityline"
-                                         :label="city.z_name" @click.native="selectCity(city.id,city.z_name)"></el-radio-button>
+                    <el-radio-group v-for="(cityline, i) in oneCity" v-model="one" :key="i">
+                        <el-radio-button v-for="(city, k) in cityline"
+                                         :label="city.z_name" @click.native="selectCity(city.id,city.z_name)" :key="k"></el-radio-button>
                     </el-radio-group>
                 </div>
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{twocityName}}</div>
-                    <el-radio-group v-for="cityline in twoCity" v-model="one">
-                        <el-radio-button v-for="city in cityline"
-                                         :label="city.z_name" @click.native="selectCity(city.id,city.z_name)"></el-radio-button>
+                    <el-radio-group v-for="(cityline, i) in twoCity" v-model="one" :key="i">
+                        <el-radio-button v-for="(city, k) in cityline"
+                                         :label="city.z_name" @click.native="selectCity(city.id,city.z_name)" :key="k"></el-radio-button>
                     </el-radio-group>
                 </div>
                 <div class="ellipsis">……</div>

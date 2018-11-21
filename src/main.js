@@ -11,6 +11,8 @@ import $ from 'jquery'
 //引入font-awesome4.7.0
 import 'font-awesome/css/font-awesome.min.css'
 
+//引入vuex
+import store from './config/store'
 
 //引入element-ui
 import ElementUI from 'element-ui'
@@ -32,7 +34,7 @@ window.axios = axios
 import Exif from 'exif-js'
 window.Exif = Exif
 
-
+//使用wangeditor
 import WangEditor from 'wangeditor'
 window.WangEditor = WangEditor
 
@@ -73,6 +75,7 @@ Object.keys(httpServer).forEach((key) => {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>'
