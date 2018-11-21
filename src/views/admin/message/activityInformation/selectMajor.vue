@@ -74,7 +74,7 @@
             <span class="Selected" v-if="this.selectname">当前已选择：<span class="majorname">{{selectname}}</span></span>
         </div>
         <div class="jumpPage">
-            <el-button type="primary" @click.native="jumpPage">下一步，上传文件</el-button>
+            <el-button type="primary" @click.native="jumpPage">下一步</el-button>
         </div>
 
     </div>

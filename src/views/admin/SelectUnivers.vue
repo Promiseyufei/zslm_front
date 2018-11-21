@@ -63,7 +63,7 @@
 
 
                 </div>
-                <div class="ellipsis">……</div>
+                <div class="ellipsis"></div>
                 <div class="page">
                     <el-pagination background layout="prev, pager, next"
                                    :current-page="page"
