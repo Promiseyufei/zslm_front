@@ -1,5 +1,5 @@
 <template>
-    <span>{{text}}
+    <span  class="yellowBtn">{{text}}
         <img src="../../assets/img/white.png" alt="">
     </span>
 </template>
@@ -27,6 +27,7 @@ export default {
         border-radius: 5px;
         border: 2px solid #fff;
         color: #fff;
+        cursor: pointer;
     }
     .yellowBtn:hover {
         background-color: #ffb957;

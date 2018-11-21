@@ -24,15 +24,45 @@
 		        <div v-show="mobileIcon" class="mobileIcon"><img src="../../../assets/img/messageLogo.png"></div>
     		</div>
 	        <div class="logoInto" v-show="logoInto">
-	        		<i class="el-icon-search"></i>
+	        		<div><i class="el-icon-search"></i></div>
 		        	<el-badge :value="200" :max="10" class="item">
 					  <img src="../../../assets/img/messageLogo.png">
 					</el-badge>
-					<i class="el-icon-question"></i>
+					<div><i class="el-icon-question"></i></div>
 	        </div>
     	</div>
     	<router-view/>
-        <div class="footer"></div>
+        <div class="footer">
+        	<div class="footerTop">
+        		<div class="footerLogo"><img src="../../../assets/img/MBA.png"></div>
+        		<div class="footerMenu">
+        			<div>
+        				<ul>
+        					<li @click="aboutUs">关于我们</li>
+        					<li @click="helpCenter">帮助中心</li>
+        					<li @click="lawStatement">法律声明</li>
+        				</ul>
+        			</div>
+        			<div>
+        				<ul>
+        					<li @click="userList">用户条款</li>
+        					<li @click="problemBack">问题反馈</li>
+        				</ul>
+        			</div>
+        		</div>
+        		<div class="footerAddres">
+	        		<div class="footerAddresOne">
+	        			<p><span><i class="el-icon-phone"></i></span>010-56980320</p>
+	        		</div>
+        			<p>周一至周五 9:00-18:00</p>
+        			<p>北京荣美福地科技有限公司</p>
+        		</div>
+        	</div>
+        	<div class="footerBott">
+        		<div><p>© MBA Helper 2018</p></div>
+        		<div><p>京ICP备13040890号-1</p></div>
+        	</div>
+        </div>
     </div>
 </template>
 
@@ -49,7 +79,7 @@
 	        }
 	    },
 	    methods: {
-	    	//组件自带——key为选中的当前页面ID
+	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
 		    	// console.log(key, keyPath);
 		    	if (key==1) {
@@ -70,11 +100,32 @@
 			    		});
 	        	}
 		    },
+		    //footer——跳到关于我们
+		    aboutUs:function() {
+
+		    },
+		    //footer——跳到帮助中心
+		    helpCenter:function() {
+
+		    },
+		    //footer——跳到法律声明
+		    lawStatement:function() {
+
+		    },
+		    //footer——跳到用户条款
+		    userList:function() {
+
+		    },
+		    //footer——跳到问题反馈
+		    problemBack:function() {
+
+		    },
+
 	    },
 	    mounted(){
 	    	//手机端改变样式
 	    	let w = document.documentElement.offsetWidth || document.body.offsetWidth;
-			if(w < 992){
+			if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
 				this.firstMenu = false;
 				this.logoInto = false;
 				this.mobileIcon = true;
@@ -85,11 +136,14 @@
 </script>
 <style>
 	.logoInto .el-badge {
-		margin: 0 55px 0 35px;
+		margin: 0 55px 15px 35px;
+	}
+	.el-dropdown-menu__item--divided:before, .el-menu, .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
+		background-color: #f5f5f5;
 	}
 	.firstMenu .el-menu--horizontal>.el-menu-item.is-active {
 		border-bottom: 0;
-		border-bottom-color: #fff;
+		border-bottom-color: #f5f5f5;
 		font-weight: bold;
 	}
 	.firstMenu .el-menu--horizontal>.el-menu-item {
@@ -102,13 +156,78 @@
 	}
 	.firstMenu .el-menu--horizontal {
 		border-bottom: 0;
+		background-color: #f5f5f5;
 	}
 
 
 </style>
 
-
 <style scoped>
+	.footerBott p {
+		opacity: 0.65;
+		color: rgb(255, 255, 255);
+		font-size: 12px;
+	}
+	.footerBott {
+		width: 1280px;
+		margin-top: 31px;
+		display: flex;
+		justify-content:space-between;
+	} 
+	.footerAddres span {
+		margin-right: 12px; 
+	}
+    .footerAddres p {
+    	color: rgb(255, 255, 255);
+    	font-size: 23px;
+    }
+	.footerAddres>p {
+		font-size: 12px;
+	    font-weight: bold;
+	    color: rgb(255, 255, 255);
+	    margin-top: 9px;
+	}
+	.footerAddres {
+		width: 198.2px;
+		text-align: right;
+	}
+	.footerMenu div {
+		margin-right: 78px;
+	}
+	.footerMenu li:hover {
+		opacity: 0.7;
+	}
+	.footerMenu li {
+		color: rgb(255, 255, 255);
+		margin-bottom: 11px;
+		font-size: 14px;
+		cursor: pointer;
+	}
+	.footerMenu {
+		display: flex;
+		justify-content:start;
+		width: 761.8px;
+	}
+	.footerLogo img {
+		width: 166px;
+	}
+	.footerLogo {
+		width: 320px;
+	}
+	.footerTop {
+		display: flex;
+		justify-content:space-between;
+	}
+	.footer {
+		display: flex;
+		flex-direction: column ;
+		align-items:center;
+		justify-content:center;
+		margin: 60px 0 0;
+		width: 100%;
+		height: 251px;
+		background-color: rgb(56, 59, 61);
+	} 
 	.logoInto i {
 		width: 21px;
 	    height: 21px;
@@ -142,7 +261,7 @@
 		overflow-x: hidden;
 		justify-content:start;
 	}
-	/** iPad **/
+	/** PC **/
 	@media only screen and (min-width: 1024px) and (max-width:1300px) {
 		.head {
 			width: 1000px;
