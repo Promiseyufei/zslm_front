@@ -3,7 +3,7 @@
     <div>
     	<div class="codeInput">
 	      	<el-input placeholder="请输入验证码" 
-		      prefix-icon="el-icon-message" v-model="testCode">
+		      prefix-icon="el-icon-message" v-model="smsCode">
 			</el-input>
 			<el-button  type="primary" :disabled="disabled" @click="sendcode">
 			    {{btntxt}}
@@ -16,55 +16,31 @@
 	export default {
 		data() {
 			return {
-				// phoneNumber:'',
-				testCode:'',
+				smsCode:'',
 				btntxt:"获取验证码",
 		        disabled:false,
 		        time:0,
 			}
 		},
 		methods:{
-			//将数据存到vuex中
-			store:function() {
-				this.$store.commit('setTestcode', this.testCode);			
-			},
 			//获取验证码方法
 			sendcode:function(){
-            	//手机号正则判断
-            	console.log(this.$store.state.setPhoneNumber)
-            	if(this.$store.state.setPhoneNumber==''){
+            	if(this.$store.state.userInfo['userPhone'] == ''){
             		this.$message('手机号不能为空！');
-            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.$store.state.setPhoneNumber))){
-            		this.$message('请输入正确的手机号！');
+                	return;
+            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.$store.state.userInfo['userPhone']))){
+					this.$message('请输入正确的手机号！');
+					return;
             	} else {
-            		this.$message('验证码已发送，请注意查收');
-            		this.time=60;
-	            	this.disabled=true;
-	            	this.timer();
+					this.sendSmsCode(this.$store.state.userInfo['userPhone']);
             	}
-            	
         	},
-        	//倒计时方法
-        	timer:function () {
-            	if (this.time > 0) {
-                	this.time--;
-                 	this.btntxt=this.time;
-                 	setTimeout(this.timer, 800);
-             	} else{
-                	this.time=0;
-                	this.btntxt="获取验证码";
-                	this.disabled=false;
-             }
-        	}
 		},
 		watch: {
-			// '$route':'getParams'
+			smsCode(smscode, oldcode) {
+				this.$store.commit('changeUserInfo', {name: 'smsCode', val: smscode});
+			}
 		},
-		mounted() {
-			this.store();
-			// this.chilCall
-			// this.getParams()
-		}
 	}
 </script>
 
