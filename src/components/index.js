@@ -15,6 +15,7 @@ import searchHeader from './front/searchHeader.vue'
 import yellowBtn from './front/yellowBtn.vue'
 import Article from './front/article.vue'
 import mbaArticle from './front/mba.vue'
+import hearderBanner from './front/headerBanner.vue'
 export default {
     Test, 
     Test2,
@@ -32,5 +33,8 @@ export default {
     searchHeader,
     yellowBtn,
     Article,
-    mbaArticle
+    mbaArticle,
+    homeBtn,
+    hearderBanner
+
 }
