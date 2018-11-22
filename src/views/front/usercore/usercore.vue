@@ -1,74 +1,26 @@
 <template>
-    <div>
+    <div style="height: 0">
             <div class="container-fluid c-section section_bUBpNL">
                 <div class="row c-row row_EaN5GL">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 c-column column_Pmqzmn">
-                        <div class="c-div div_v60iAm ggwei">
-                            <div class="container c-container container_T7sUlN huodong geren" >
-                                <div class="c-div div_sS15pC huodong">
-                                    <div class="c-div div_9HK05B yuan">
-                                        <div class="c-inlineblock c-imageblock imageblock_JtO0xa yuan"
-                                             mode="scaleToFill"
-                                             src="http://qty83k.creatby.com/materials/2771/origin/dfcbeb92f5c5e039d67f280a7bd3b330_origin.png"
-                                             style="background-size:
-                                          100% 100%; background-position:   0% 0%;
-                                          background-repeat:   no-repeat;
-                                           background-image: url(http://qty83k.creatby.com/materials/2771/origin/dfcbeb92f5c5e039d67f280a7bd3b330_origin.png); ">
-
-                                        </div>
-                                    </div>
-                                    <div class="c-div div_SjIrYp biaotizhong">
-                                        <div class="c-div div_mjNmSC" style="height: 20px">
-                                            <div class="c-div div_nc26mD yellow huodong"></div>
-                                            <h1 class="c-heading heading_D4pPFr fanbai zhongwen huodong">用户名称</h1>
-                                            <div class="c-div div_nc26mD yellow huodong"></div>
-                                        </div>
-                                        <div class="c-div div_IIlwIU juzhong">
-                                            <img class="c-image image_tCkiDX"
-                                                 src="http://qty83k.creatby.com/materials/2771/origin/c46972a7e1c58ac43fd3dec69815dec1_origin.png">
-                                            <h1 class="c-heading heading_3hU4sb bold shier white">上海市</h1>
-                                            <h1 class="c-heading heading_3hU4sb bold shier">&nbsp;·&nbsp;静安区</h1>
-                                        </div>
-                                    </div>
-                                    <div class="row c-row row_IBfFmS geren">
-                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 c-column column_G7ZEcz">
-                                            <div class="c-div div_But3Va danshu geren">
-                                                <h1 class="c-heading heading_58QPWV center shuzi">8</h1>
-                                                <h1 class="c-heading heading_58QPWV small center geren">关注院校</h1>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 c-column column_G7ZEcz">
-                                            <div class="c-div div_But3Va danshu geren">
-                                                <h1 class="c-heading heading_58QPWV center shuzi">25</h1>
-                                                <h1 class="c-heading heading_58QPWV small center geren">参加活动</h1>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 c-column column_G7ZEcz">
-                                            <div class="c-div div_But3Va danshu geren">
-                                                <h1 class="c-heading heading_58QPWV center shuzi">36</h1>
-                                                <h1 class="c-heading heading_58QPWV small center geren">收到提醒</h1>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 c-column column_G7ZEcz">
-                                            <div class="c-div div_But3Va danshu geren">
-                                                <h1 class="c-heading heading_58QPWV center shuzi">18</h1>
-                                                <h1 class="c-heading heading_58QPWV small center geren">可用优惠券</h1>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="clear: both"></div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 c-column column_Pmqzmn" style="margin-bottom: 25px">
+                        <userInfomation user_name="test" colleges="2" provices="上海" citys="浦东" actives="3" ding="2" coupons="5"></userInfomation>
+                        <userList></userList>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_aLEhx8">
+                        <user-college></user-college>
+                        <user-college></user-college>
                     </div>
                 </div>
+
             </div>
+
     </div>
 </template>
 <style scoped>
     *{
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
     }
     h1 {
         display: block;
@@ -91,7 +43,7 @@
         font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
     }
     img, p, h1, h2, h3, h4, h5, h6 {
-        -webkit-transform: translate3d(0,0,0);
+           -webkit-transform: translate3d(0,0,0);
         transform: translate3d(0,0,0);
     }
     h1, .h1 {
@@ -130,28 +82,38 @@
     }
     html {
         font-size: 15px;
-        -webkit-font-smoothing: antialiased;
+          -webkit-font-smoothing: antialiased;
     }
     html {
-        -webkit-font-smoothing: antialiased;
+          -webkit-font-smoothing: antialiased;
     }
     html {
         font-size: 10px;
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
+          -webkit-tap-highlight-color: rgba(0,0,0,0);
     }
     html {
         font-family: sans-serif;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
     }
+
+    a {
+        color: #428bca;
+        text-decoration: none;
+    }
+
+    a {
+        background: 0 0;
+    }
+
     :before, :after {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
     :before, :after {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
 
@@ -167,8 +129,8 @@
         padding-left: 15px;
     }
 
-    .col-xs-12 {
-        width: 100%;
+    .col-xs-3 {
+        width: 25%;
     }
 
     .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6,
@@ -248,365 +210,46 @@
         word-spacing: normal;
     }
 
-    .c-imageblock {
-        width: 100px;
-        height: 100px;
-    }
-
-    .c-inlineblock {
-        display: inline-block;
-    }
-
-    .div_v60iAm.ggwei {
-        padding-left: 0px;
-        padding-right: 0px;
-        margin-bottom: 20px;
-    }
-
-    .div_v60iAm {
-        background-color: rgb(255, 255, 255);
-        border-radius: 5px;
-        border-style: none;
-        padding-left: 30px;
-        padding-right: 30px;
-        transform: rotate(0deg) scale(1) translate(0%, 0%);
-        transition: All 0.3s ease;
-        -ms-transform: rotate(0deg) scale(1) translate(0%, 0%);
-        -o-transform: rotate(0deg) scale(1) translate(0%, 0%);
-        -moz-transform: rotate(0deg) scale(1) translate(0%, 0%);
-        -webkit-transform: rotate(0deg) scale(1) translate(0%, 0%);
-        -ms-transition: All 0.3s ease;
-        -o-transition: All 0.3s ease;
-        -moz-transition: All 0.3s ease;
-        -webkit-transition: All 0.3s ease;
-    }
-
-    .container_T7sUlN.huodong.geren {
-        height: auto;
-        background-image: url(http://qty83k.creatby.com/materials/2771/origin/b19b1963dc8e4cb49519512fb0fef1cb_origin.jpg);
-    }
-
-    .container_T7sUlN.huodong {
-        width: auto;
-        height: 350px;
-        padding-bottom: 0px;
-    }
-
-    .container_T7sUlN {
-        width: 1280px;
-        background-image: url(http://qty83k.creatby.com/materials/2771/origin/924aa58…_origin.jpg);
-        background-size: cover;
-        background-position: 50% 50%;
-        height: 360px;
-        padding-left: 0;
-        padding-right: 0;
-        border-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-    }
-
-
-
-    .div_sS15pC.huodong {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        padding-bottom: 25px;
-    }
-
-    .div_sS15pC {
-        background-color: rgba(56, 59, 61, 0.85);
-        height: 100%;
-        text-align: center;
-        padding-top: 40px;
-        border-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-    }
-
-    .div_9HK05B.yuan {
-        width: 108px;
-        height: 108px;
-        border-radius: 70px;
-        border-bottom-right-radius: 70px;
-        border-bottom-left-radius: 70px;
-        border-top-right-radius: 70px;
-        border-top-left-radius: 70px;
-    }
-
-    .div_9HK05B {
-        width: 130px;
-        height: 130px;
-        margin-left: auto;
-        margin-right: auto;
-        position: relative;
-        background-color: rgba(255, 255, 255, 0.1);
-        margin-bottom: 30px;
-        border-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-    }
-
-    .div_SjIrYp.biaotizhong {
-        margin-bottom: 0px;
-    }
-    .div_SjIrYp {
-        margin-bottom: 80px;
+    .column_aLEhx8 {
         padding-left: 10px;
         padding-right: 10px;
-        min-height: auto;
     }
 
-    .row_IBfFmS.geren {
-        margin-top: 10px;
+
+
+
+
+    a:-webkit-any-link {
+        color: -webkit-link;
+        cursor: pointer;
+        text-decoration: none;
     }
 
-    .row_IBfFmS {
-        margin-top: 29px;
-        min-height: auto;
+
+    a:hover, a:focus {
+        text-decoration: none;
+    }
+    a:hover, a:focus {
+        color: #2a6496;
+        text-decoration: underline;
+    }
+    a:active, a:hover {
+        outline: 0;
     }
 
-    .div_sS15pC.huodong {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        padding-bottom: 25px;
+    initHide:not(.c-hideHolder) {
+        display: none !important;
     }
 
-    .div_sS15pC {
-        background-color: rgba(56, 59, 61, 0.85);
-        height: 100%;
-        text-align: center;
-        padding-top: 40px;
-        border-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-    }
 
-    .imageblock_JtO0xa.yuan {
-        border-radius: 70px;
-        width: 98px;
-        height: 98px;
-    }
 
-    .imageblock_JtO0xa {
-        width: 120px;
-        height: 120px;
-        border-radius: 5px;
-        border-color: rgba(255, 255, 255, 0.1);
-        border-width: 5px;
-        background-color: rgb(255, 255, 255);
-        border-style: none;
-        margin-top: auto;
-        margin-bottom: auto;
-        left: 0px;
-        right: 0px;
-        top: 0px;
-        bottom: 0px;
-        position: absolute;
+    label {
         display: inline-block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .div_SjIrYp.biaotizhong {
-        margin-bottom: 0px;
-    }
-
-    .div_SjIrYp {
-        margin-bottom: 80px;
-        padding-left: 10px;
-        padding-right: 10px;
-        min-height: auto;
-    }
-
-    .div_mjNmSC {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        min-height: auto;
-    }
-
-    .heading_D4pPFr.fanbai.zhongwen.huodong {
-        font-size: 20px;
-        margin-left: 14px;
-        margin-right: 14px;
-    }
-
-    .heading_D4pPFr.fanbai.zhongwen {
-        font-size: 28px;
-    }
-    .heading_D4pPFr.fanbai {
-        color: #fcfcfc;
-    }
-    .heading_D4pPFr {
-        text-align: center;
-        text-transform: uppercase;
-        font-family: Roboto;
-        font-weight: bold;
-        color: rgb(110, 110, 110);
-        margin: 0px 23px;
-        font-size: 31px;
-        line-height: 1em;
-    }
-
-    .div_nc26mD.yellow.huodong {
-        width: 18px;
-        height: 4px;
-    }
-
-    .div_nc26mD.yellow {
-        background-color: rgb(255, 185, 87);
-        width: 26px;
-        height: 4px;
-    }
-    .div_nc26mD {
-        width: 28px;
-        height: 5px;
-        min-height: auto;
-        background-color: rgba(0,159,160,1);
-    }
-
-    .div_IIlwIU.juzhong {
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        margin-top: 17px;
-        margin-bottom: 30px;
-    }
-
-    .div_IIlwIU {
-        min-height: auto;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        margin-left: 0px;
-    }
-
-    .image_tCkiDX {
-        margin-right: 6px;
-        display: inline-block;
-    }
-
-    .heading_3hU4sb.bold.shier.white {
-        opacity: 1;
-    }
-
-    .heading_3hU4sb.bold.shier {
-        font-size: 12px;
-    }
-    .heading_3hU4sb.bold {
-        font-weight: bold;
-    }
-    .heading_3hU4sb {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        font-size: 14px;
-        color: rgb(255, 255, 255);
-        opacity: 0.7;
-    }
-
-    .c-image {
-        height: auto;
-        width: auto;
         max-width: 100%;
-        display: inline-block;
+        margin-bottom: 5px;
+        font-weight: 700;
     }
 
-    .column_G7ZEcz {
-        padding-left: 0;
-        padding-right: 0;
-        min-height: auto;
-    }
-
-    .div_But3Va.danshu.geren {
-        background-image: url(http://qty83k.creatby.com/materials/2771/origin/9945ea5cff0e597ecf02a416a947575d_origin.png);
-    }
-
-    .div_But3Va.danshu {
-        background-image: url("http://qty83k.creatby.com/materials/2771/origin/3aa75931ffba5b972751d11f226237e0_origin.png");
-        background-repeat: no-repeat;
-        background-position-x: 100%;
-        background-position-y: 50%;
-    }
-    .div_But3Va {
-        min-height: auto;
-    }
-    .heading_58QPWV.center.shuzi {
-        color: rgb(255, 185, 87);
-        font-weight: bold;
-        font-family: Roboto;
-        font-size: 22px;
-        width: auto;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-    }
-    .heading_58QPWV {
-        color: rgb(110, 110, 110);
-        font-size: 14px;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        line-height: 1.5em;
-        font-weight: normal;
-        margin-right: 0px;
-        width: 70px;
-        text-align: left;
-    }
-
-    .heading_58QPWV.small {
-        font-size: 12px;
-        margin-right: 0px;
-        width: 70px;
-        margin-bottom: 0px;
-    }
-
-
-    small, .small {
-        font-size: 85%;
-    }
-
-    .heading_58QPWV.small.center.geren {
-        color: rgb(255, 255, 255);
-        opacity: 0.7;
-    }
-
-    .heading_58QPWV.small.center {
-        width: auto;
-        text-align: center;
-        margin-top: 0px;
-    }
 
     .clearfix:before, .clearfix:after, .dl-horizontal dd:before, .dl-horizontal dd:after, .container:before, .container:after, .container-fluid:before, .container-fluid:after, .row:before, .row:after, .form-horizontal .form-group:before, .form-horizontal .form-group:after, .btn-toolbar:before, .btn-toolbar:after, .btn-group-vertical>.btn-group:before, .btn-group-vertical>.btn-group:after, .nav:before, .nav:after, .navbar:before, .navbar:after, .navbar-header:before, .navbar-header:after, .navbar-collapse:before, .navbar-collapse:after, .pager:before, .pager:after, .panel-body:before, .panel-body:after, .modal-footer:before, .modal-footer:after {
         display: table;
@@ -616,13 +259,17 @@
         clear: both;
     }
     :before, :after {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
 
     @media (max-width: 991px){
         .column_Pmqzmn {
+            width: 100%;
+        }
+
+        .row_EaN5GL {
             width: 100%;
         }
     }
@@ -631,50 +278,66 @@
         * {
             background-attachment: initial !important;
         }
+
+
     }
+
+
     @media (min-width: 1200px) {
+
         .col-lg-3 {
             width: 25%;
         }
-    }
 
-    @media (min-width: 1200px) {
         .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
             float: left;
         }
+
+        .col-lg-6 {
+            width: 50%;
+        }
+        .col-lg-9 {
+            width: 75%;
+        }
     }
 
+
     @media (min-width: 992px) {
+
         .col-md-3 {
             width: 25%;
         }
-    }
 
-    @media (min-width: 992px) {
         .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
             float: left;
         }
-    }
 
-    @media (min-width: 768px) {
-        .col-sm-3 {
-            width: 25%;
+        .col-md-6 {
+            width: 50%;
         }
     }
 
     @media (min-width: 768px) {
+
         .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
             float: left;
         }
+
+
+        .col-sm-6 {
+            width: 50%;
+        }
+
+    }
+
+    @media (min-width: 1200px) {
+
     }
 
     @media (min-width: 1200px) {
         .c-container {
             width: 940px;
         }
-    }
-
-    @media (min-width: 1200px) {
         .container {
             width: 1170px;
         }
@@ -694,6 +357,56 @@
 
 
 </style>
+
+<style>
+    body{
+        background-color: #f5f5f5;
+    }
+    .el-carousel__container{
+        height: 440px;
+    }
+    .el-carousel__button{
+        width: 1em;
+        height: 1em;
+        border-radius: .5em;
+    }
+    .el-carousel__indicator{
+        padding: 0 3px 16px;
+    }
+
+    .el-carousel__arrow{
+        height: 0px;
+    }
+    [class*=" el-icon-"], [class^=el-icon-]{
+        font-size:26px;
+        font-weight: bolder;
+        line-height:0px;
+    }
+    .el-carousel__arrow--left{
+        left: 20px;
+    }
+    .el-carousel__arrow--right{
+        right: 20px;
+    }
+    .sowingContent[data-v-2912dfba]{
+        border-radius: 5px;
+    }
+
+    @media (max-width: 991px){
+        .el-carousel__container {
+            min-height: auto;
+        }
+        .sowingMap[data-v-2912dfba]{
+            width: 100%;
+        }
+        [class*=" el-icon-"], [class^=el-icon-]{
+            font-size: 0px;
+        }
+        .sowingContent[data-v-2912dfba]{
+            border-radius: 0px;
+        }
+    }
+</style>
 <script>
     export default {
         data() {
@@ -701,6 +414,11 @@
                 // isCollapse: true,
             };
         },
-        methods: {}
+        methods: {},
+        mounted(){
+            let divs = document.getElementsByTagName("div")
+            divs[1].style.height = 0;
+            divs[2].style.height = 0;
+        }
     }
 </script>
