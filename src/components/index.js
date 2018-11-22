@@ -11,6 +11,7 @@ import userTable from  './admin/userTable.vue'
 import singlePage from  './admin/singlePage.vue'
 import editor from  './admin/editor.vue'
 import homeBtn from  './front/homeBtn.vue'
+import activityBox from './front/activityBox.vue'
 
 export default {
     Test, 
@@ -26,5 +27,6 @@ export default {
     editor,
     messageTable1,
 
-    homeBtn
+    homeBtn,
+    activityBox
 }
