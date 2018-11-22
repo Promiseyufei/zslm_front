@@ -83,6 +83,9 @@
 					this.$message('验证码不能为空！');
 					return;
             	}
+            	else {
+            		this.register();
+            	}
 			},
 			register() {
 				this.post('/login/front/register', this.returnParams(0)).then((response) => {
