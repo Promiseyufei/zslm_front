@@ -16,6 +16,7 @@ import yellowBtn from './front/yellowBtn.vue'
 import Article from './front/article.vue'
 import mbaArticle from './front/mba.vue'
 import hearderBanner from './front/headerBanner.vue'
+import radioButton from './front/radioButton.vue'
 export default {
     Test, 
     Test2,
@@ -35,6 +36,6 @@ export default {
     Article,
     mbaArticle,
     homeBtn,
-    hearderBanner
-
+    hearderBanner,
+    radioButton
 }

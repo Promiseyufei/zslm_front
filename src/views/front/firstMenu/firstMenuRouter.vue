@@ -32,7 +32,7 @@
 	        </div>
     	</div>
     	<router-view/>
-        <div class="footer">
+        <div class="footer" v-show="footer">
         	<div class="footerTop">
         		<div class="footerLogo"><img src="../../../assets/img/MBA.png"></div>
         		<div class="footerMenu">
@@ -76,6 +76,7 @@
 	        	firstMenu:true,
 	        	logoInto:true,
 	        	mobileIcon:false,
+	        	footer:true,
 	        }
 	    },
 	    methods: {
@@ -129,6 +130,7 @@
 				this.firstMenu = false;
 				this.logoInto = false;
 				this.mobileIcon = true;
+				this.footer = false;
 			}
 
 		    },
@@ -137,6 +139,7 @@
 <style>
 	.logoInto .el-badge {
 		margin: 0 55px 15px 35px;
+		/*margin: 0 55px 0 35px;*/
 	}
 	.el-dropdown-menu__item--divided:before, .el-menu, .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
 		background-color: #f5f5f5;
@@ -223,7 +226,7 @@
 		flex-direction: column ;
 		align-items:center;
 		justify-content:center;
-		margin: 60px 0 0;
+		margin: 160px 0 0;
 		width: 100%;
 		height: 251px;
 		background-color: rgb(56, 59, 61);
@@ -290,11 +293,11 @@
 			height: 30px;
 		}
 		.headLeft {
-			width: 340px;
+			width: 100%;
 			padding: 0 10px;
 		}
 		.head {
-			width: 340px;
+			width: 100%;
 		}
 		.logoPicture {
 			width: 100%;
