@@ -1,5 +1,6 @@
 <template>
     <div>
+        <hearderBanner enName="COLLEGES" name="选院校"></hearderBanner>
         <!-- 活动列表模块 -->
         <div class="activityList">
             <div class="activityListBox">

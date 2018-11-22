@@ -1,39 +1,37 @@
 <!-- 注册页面 -->
-<!-- 登录总部 -->
 <template>
     	<div>
     		<div class="center">
-    			<div class="loginPicture"></div>
+    				<div class="loginPicture"></div>
     				<el-card class="box-card">
 	    				<el-menu :default-active="active" class="el-menu-demo" 
 	    				mode="horizontal" @select="handleSelect" v-model="active"
 	    				text-color="#333" active-text-color="#009fa0">
 	    					<el-menu-item index="1">免费成为会员</el-menu-item>
-	    					<!-- <el-menu-item index="2">短信登录</el-menu-item> -->
 	    				</el-menu>
 	    				<div class="phoneInput">
 	    					<el-input placeholder="请输入手机号" prefix-icon="el-icon-mobile-phone" v-model="phoneNumber">
 							</el-input>
 	    				</div>
-	    				<div class="codeInput">
+	    				<div class="registerCodeinput">
 					      	<el-input placeholder="请输入验证码" 
-						      prefix-icon="el-icon-message" v-model="testCode">
+						      prefix-icon="el-icon-message" v-model="smsCode">
 							</el-input>
 							<el-button type="primary"  :disabled="disabled" @click="sendcode">
 							    {{btntxt}}
 							</el-button>
 				      	</div>
-	    				<div class="login">
-	    					<el-button type="primary" @click="register">成为会员</el-button>
+	    				<div class="registerLogin">
+	    					<el-button type="primary" @click="registerTest" :disabled="comeVip">成为会员</el-button>
 	    				</div>
-	    				<div class="other">
-	    					<el-checkbox v-model="checked">同意用户协议</el-checkbox>
+	    				<div class="greeUser">
+	    					<el-checkbox v-model="checked" @click="agree">同意用户协议</el-checkbox>
 	    				</div>
-	    				<div class="threeLogin">
-	    					<div class="fastIn">快捷账号登录</div>
-	    					<div class="logonIn">
+	    				<div class="registerThreeLogin">
+	    					<div class="registerFastIn">快捷账号登录</div>
+	    					<div class="registerLogonIn">
 	    						<div class="xinlang"></div>
-	    						<div class="diviLine">|</div>
+	    						<div class="registerDiviLine">|</div>
 	    						<div class="weixin"></div>
 	    					</div>
 	    				</div>
@@ -48,10 +46,11 @@
 			return {
 				active:'1',
 				phoneNumber:'',
-				testCode:'',
+				smsCode:'',
 				checked:'',
 				btntxt:"获取验证码",
 		        disabled:false,
+		        comeVip:true,
 		        time:0,
 			};
 		},
@@ -62,42 +61,69 @@
 		    },
 		    //获取验证码方法
 			sendcode:function(){
-            	//手机号正则判断
+				//手机号正则判断
             	if(this.phoneNumber==''){
-                	alert("手机号不能为空！");
-                	return;
-            	} if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
-            		alert("请输入正确的手机号！");
+            		this.$message('手机号不能为空！');
+            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
+            		this.$message('请输入正确的手机号！');
             	} else {
-            		alert("验证码已发送，请注意查收");
-            		this.time=60;
-	            	this.disabled=true;
-	            	this.timer();
+					this.sendSmsCode(this.phoneNumber);
             	}
-            	
-        	},
-        	//倒计时方法
-        	timer:function () {
-            	if (this.time > 0) {
-                	this.time--;
-                 	this.btntxt=this.time;
-                 	setTimeout(this.timer, 800);
-             	} else{
-                	this.time=0;
-                	this.btntxt="获取验证码";
-                	this.disabled=false;
-             }
         	},
 		    
 		    //注册按钮
-		    register: function() {
-				// console.log(this.$refs.demo)
-		    }
+		    registerTest: function() {
+				if(this.phoneNumber==''){
+					this.$message('手机号不能为空！');
+                	return;
+            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.phoneNumber))){
+					this.$message('请输入正确的手机号！');
+					return;
+            	} else if(this.smsCode=='') {
+					this.$message('验证码不能为空！');
+					return;
+            	}
+            	else {
+            		this.register();
+            	}
+			},
+			register() {
+				this.post('/login/front/register', this.returnParams(0)).then((response) => {
+					if(response.code == 2) {
+						this.message(true, '该手机号已注册');
+					}
+					else if(response.code == 3) {
+						this.confirm(() => {
+							this.register(this.returnParams(1));
+						}, () => {
+							this.message(true, '已取消注册', 'info');
+						}, '是否注册?');
+					}
+					else if(response.code == 0) {
+						this.message(true, '注册成功，默认密码为手机号后六位~', 'success');
+					}
+				})
+			},
+			returnParams(agree) {
+				return {
+					userPhone: this.phoneNumber,
+					smsCode: this.smsCode,
+					agree: agree
+				}
+			}
 		},
 		watch:{
-			// }
+			//监听this.checked——选中"同意用户协议"，"成为会员按钮可用"
+			checked:function(oldVal,newVal) {
+				if (newVal==true) {
+					this.comeVip=false;
+				} else {
+					this.comeVip=false;
+				}
+			}
 		},
 		mounted() {
+			if(this.$store.state.userInfo['userPhone'] !== '') this.phoneNumber = this.$store.state.userInfo['userPhone'];
 		}
 	}
 </script>
@@ -108,20 +134,20 @@
 	.center .el-card__body {
 		padding: 0;
 	}
-	.codeInput .el-button--primary {
+	.registerCodeinput .el-button--primary {
 		width: 108px;
 		height: 44px;
 		margin-top: 25px;
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
-	.codeInput .el-input__inner {
+	.registerCodeinput .el-input__inner {
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
 		border-radius: 0;
 		width: 219px;
 	}
-	.codeInput .el-button--primary.is-disabled, .el-button--primary.is-disabled:active, .el-button--primary.is-disabled:focus, .el-button--primary.is-disabled:hover {
+	.registerCodeinput .el-button--primary.is-disabled, .el-button--primary.is-disabled:active, .el-button--primary.is-disabled:focus, .el-button--primary.is-disabled:hover {
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
@@ -129,12 +155,13 @@
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
 		border-radius: 0;
+		/*margin-left: 37px;*/
 	}
 	.box-card .el-menu--horizontal {
 		display: flex;
 	    justify-content: center;
 	    width: 340px;
-	    margin: 0 auto;
+	    margin: 37px auto 0;
 	}
 	.box-card .el-menu-item {
 		font-family: MicrosoftYaHei-Bold;
@@ -154,7 +181,7 @@
 	.box-card .el-input {
 		margin: 30px 0 0;
 	}
-	.login .el-button--primary {
+	.registerLogin .el-button--primary {
 		margin-top: 35px;
 		width: 345px;
 		height: 44px;
@@ -162,7 +189,7 @@
 		border-color:  #ffb957;
 		font-size: 14px;
 	}
-	.login .el-button--primary:hover {
+	.registerLogin .el-button--primary:hover {
 		background-color:  #000;
 		border-color:  #000;
 	}
@@ -172,27 +199,27 @@
 <!-- 局部样式 -->
 <style scoped>
 	
-	.phoneInput,.login {
+	.phoneInput,.registerLogin {
 		width: 340px;
 		margin: 0 auto;
 	}
-	.codeInput {
+	.registerCodeinput {
 		width: 340px;
 		margin: 0 auto;
 		display: flex;
 		justify-content:space-between;
 	}
-	.fastIn {
+	.registerFastIn {
 		margin-bottom: 15px;
 	}
-	.logonIn div {
+	.registerLogonIn div {
 		width: 21px;
 		height: 19px;
 	}
-	.logonIn {
+	.registerLogonIn {
 		display: flex;
 	}
-	.other {
+	.greeUser {
 		display: flex;
 		justify-content:space-between;
 		width: 340px;
@@ -205,7 +232,7 @@
 	}
 	.box-card {
 		width: 412px;
-		height: 460px;
+		height: 490px;
 	}
 	.weixin {
 		width: 21px;
@@ -213,11 +240,10 @@
 		background: url(../../../assets/img/weixin.png) no-repeat;
 		background-size: 100% 100%;
 	}
-	.diviLine {
+	.registerDiviLine {
 		width: 1px;
-		height: 13px;
-		margin-top: 3px;
-		background-color: #c7c7c7;
+		height: 10px;
+		color: #c7c7c7;
 	}
 	.xinlang {
 		width: 23px;
@@ -238,7 +264,7 @@
 		justify-content:center;
 		margin: 100px 0;
 	}
-	.threeLogin {
+	.registerThreeLogin {
 		display: flex;
 		flex-direction:column;
 		justify-content:center;
