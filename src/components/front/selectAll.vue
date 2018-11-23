@@ -141,13 +141,7 @@ export default {
 .publicRowRight span {
     flex-shrink:0;
 }
-.coachLittleshort {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 50%;
-    margin-bottom: 15px;
-}
+
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 1200px) {

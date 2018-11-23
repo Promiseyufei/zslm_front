@@ -73,7 +73,7 @@
 <script>
 export default {
     components: {
-        
+
     },
     data() {
         return {
@@ -139,7 +139,13 @@ export default {
 <style>
 </style>
 <style scoped>
-
+.coachLittleshort {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+    margin-bottom: 15px;
+}
 .coachLittleshort>strong {
     background-color: #ffb957;
     border-radius: 50%;
