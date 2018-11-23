@@ -20,6 +20,32 @@ export default {
         });
     },
 
+    /**
+     * 登录成功后本地保存用户的状态
+     */
+    saveUserState(userName, userPhone) {
+        userName = typeof userName == 'undefined' ? 'user' : userName;
+        userPhone = typeof userPhone == 'undefined' ? '0' : userPhone;
+        var d = new Date();
+        d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        console.info(userName + "=" + '111' + "; " + expires);
+        document.cookie = userName + "=" + userPhone + "; " + expires;
+    },
+
+    /**
+     * 获得本地用户登录状态
+     * @param {String} userName 
+     */
+    getUserState(userName) {
+        typeof userName == 'undefined' ? 'user' : userName;
+        var arr, reg = new RegExp("(^| )" + userName + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg)) {
+            return arr[2] == '0' ? null : arr[2];
+        }
+        else
+            return null;
+    },
 
     /**
      * 
