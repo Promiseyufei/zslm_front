@@ -19,9 +19,13 @@ import hearderBanner from './front/headerBanner.vue'
 import radioButton from './front/radioButton.vue'
 import subPage from './front/subPage.vue'
 import activityBox from './front/activityBox.vue'
+import activityPage from './front/activityPage.vue'
 import userInfomation from './front/userinformation.vue'
 import userList from './front/userList.vue'
 import userCollege from './front/userCollege.vue'
+import searchLablePageHead from './front/searchLablePageHead.vue'
+import searchSearchInput from './front/searchSearchInput.vue'
+import searchMajorModular from './front/searchMajorModular'
 export default {
     Test, 
     Test2,
@@ -42,9 +46,14 @@ export default {
     mbaArticle,
     hearderBanner,
     radioButton,
+    activityBox,
+    activityPage,
     subPage,
     activityBox,
     userInfomation,
     userList,
-    userCollege
+    userCollege,
+    searchLablePageHead,
+    searchSearchInput,
+    searchMajorModular
 }
