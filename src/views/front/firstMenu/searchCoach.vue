@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div class="bigBox">
+        <div class="bigBox" v-bind:style="minHeight= heig + 'px' ">
             <!-- header -->
             <hearderBanner enName="INSTITUTIONS" name="搜辅导"></hearderBanner>
 
             <!-- 辅导机构小块块 -->
             <div class="singlecoachBig">
                 <div class="singlecoachbox">
-                    <div class="singlecoach" v-for="(item,index) in 9">
+                    <div class="singlecoach" v-for="(item,index) in coachlist" @click="jump(item.id)">
                         <div class="singlecoachtop">
                             <img src="../../../assets/img/xindongfang.png" alt="">
                         </div>
-                        <span>新东方</span>
+                        <span>{{item.coach_name}}</span>
                         <div class="singlecoachHoverbig"> 
                             <div class="singlecoachHoverbox" :class="index%4==2||index%4==3 ? 'activeClass' : ''">
                                 <div class="singlecoachHover" v-if="index%4==0||index%4==1">
@@ -19,19 +19,19 @@
                                         <img src="../../../assets/img/xindongfangwhite.png" alt="">
                                     </div>
                                     <div class="singlecoachspan">
-                                        <span>新东方</span>
+                                        <span>{{item.coach_name}}</span>
                                         <span>
-                                            <img src="../../../assets/img/money2.png" alt="">
-                                            <img src="../../../assets/img/return3.png" alt="">
+                                            <img src="../../../assets/img/money2.png" alt="" v-if="item.if_coupons==0">
+                                            <img src="../../../assets/img/return3.png" alt="" v-if="item.if_back_money==0">
                                         </span>
                                     </div>
                                 </div>
                                 <div class="littleCollage2" v-if="index%4==2||index%4==3">
-                                    <p class="coachHeader">25个分校</p>
+                                    <p class="coachHeader">{{item.son_coachs.length}}个分校</p>
                                     <div class="coachLittle">
-                                        <div class="coachLittleshort" v-for="(intem,index) in 13">
-                                            <strong>1</strong>
-                                            <span>新东方北京分校</span>
+                                        <div class="coachLittleshort" v-for="(list,dd) in item.son_coachs">
+                                            <strong>{{dd+1}}</strong>
+                                            <span>{{list.coach_name}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -40,19 +40,19 @@
                                         <img src="../../../assets/img/xindongfangwhite.png" alt="">
                                     </div>
                                     <div class="singlecoachspan">
-                                        <span>新东方</span>
+                                        <span>{{item.coach_name}}</span>
                                         <span>
-                                            <img src="../../../assets/img/money2.png" alt="">
-                                            <img src="../../../assets/img/return3.png" alt="">
+                                            <img src="../../../assets/img/money2.png" alt="" v-if="item.if_coupons==0">
+                                            <img src="../../../assets/img/return3.png" alt="" v-if="item.if_back_money==0">
                                         </span>
                                     </div>
                                 </div>
                                 <div class="littleCollage" v-if="index%4==0||index%4==1">
-                                    <p class="coachHeader">25个分校</p>
+                                    <p class="coachHeader">{{item.son_coachs.length}}个分校</p>
                                     <div class="coachLittle">
-                                        <div class="coachLittleshort" v-for="(intem,index) in 13">
-                                            <strong>1</strong>
-                                            <span>新东方北京分校</span>
+                                        <div class="coachLittleshort" v-for="(list,dd) in item.son_coachs">
+                                            <strong>{{dd+1}}</strong>
+                                            <span>{{list.coach_name}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -74,13 +74,37 @@ export default {
     data() {
         return {
             tive:true,
+            coachlist: [],
+            heig: 0,
         }
     },
     methods: {
-
+        jump: function(id) {
+            this.$router.push('/front/singleCoach/'+id);
+        },
+        getCoach: function() {
+            var that = this;
+            axios.post('/front/coach/getcoach',{
+                provice: "全部",
+                coach_type: 3,
+                coach_name: "",
+                if_back: 2,
+                if_coupon: 2,
+                page: 1,
+                page_size: 8
+            }).then(function (response) {
+                    var res = response.data;
+                    if (res.code == 0) {
+                        that.coachlist = res.data;
+                    }
+            }).catch(function (error) {
+            });
+        }
     },
     mounted(){
-
+        this.getCoach();
+        this.heig = window.screen.height;
+        console.log(this.heig);
     },
 };
 </script>
@@ -145,6 +169,7 @@ export default {
     top: 0;
     left: 0;
     z-index: 2;
+    border-radius: 5px;
 }
 .activeClass {
     top: 0;
@@ -172,6 +197,7 @@ export default {
     background-color: #fff;
     margin: 10px;
     position: relative;
+    border-radius: 5px;
 }
 .singlecoachHoverbig {
     display: none;
@@ -204,6 +230,8 @@ export default {
     height: 50px;
     line-height: 50px;
     background-color: rgba(56, 59, 61, 0.8);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 .singlecoachspan {
     width: 100%;

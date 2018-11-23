@@ -82,7 +82,6 @@
 	    methods: {
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
-		    	// console.log(key, keyPath);
 		    	if (key==1) {
 	        		this.$router.push({
 			    			path:'/front/firstMenuRouter/selectCollege',
@@ -226,7 +225,6 @@
 		flex-direction: column;
 		align-items:center;
 		justify-content:center;
-		margin: 60px 0 0;
 		width: 100%;
 		height: 251px;
 		background-color: rgb(56, 59, 61);
@@ -266,6 +264,9 @@
 	}
 	/** PC **/
 	@media only screen and (min-width: 1024px) and (max-width:1300px) {
+		.footerBott {
+            width: 900px;
+        }
 		.footerMenu {
 			width: 400px;
 		}

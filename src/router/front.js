@@ -114,6 +114,11 @@ let front_router = {
                     name: '首页-单个院校',
                     component: resolve => void(require(['@/views/front/detailPage/singleCollage'], resolve))
                 },
+                {
+                    path: 'singleCoach/:id?',
+                    name: '单个辅导机构',
+                    component: resolve => void(require(['@/views/front/detailPage/singleCoach'], resolve))
+                },
 
             ]
         }
