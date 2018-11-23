@@ -1,8 +1,26 @@
 <template>
     <div>
-        <div class="bigBox" v-bind:style="minHeight= heig + 'px' ">
+        <div class="bigBox">
             <!-- header -->
             <hearderBanner enName="INSTITUTIONS" name="搜辅导"></hearderBanner>
+
+            <!-- 筛选框 -->
+            <div class="publicRowboxbig">
+                <div class="publicRowbox">
+                    <div class="publicRow" v-for="(item,index) in list">
+                        <span>热门地区</span>
+                        <div class="publicRowRight">
+                            <div class="publiccheckbox">
+                                <el-checkbox-group v-model="checkboxGroup1">
+                                    <el-checkbox-button v-for="(city,ind) in item.cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
+                                </el-checkbox-group>
+                            </div>
+                            <span @click="getMore">查看更多</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
 
             <!-- 辅导机构小块块 -->
             <div class="singlecoachBig">
@@ -73,12 +91,41 @@ export default {
     },
     data() {
         return {
+            list: [],
+            checkboxGroup1: ['上海2'],
             tive:true,
             coachlist: [],
-            heig: 0,
+            hei:0,
         }
     },
     methods: {
+        getRoot: function() {
+            var that = this;
+            axios.get('/mulu',{
+                provice: "全部",
+                coach_type: 3,
+                coach_name: "",
+                if_back: 2,
+                if_coupon: 2,
+                page: 1,
+                page_size: 8
+            }).then(function (response) {
+                    var res = response.data;
+                    if (res.code == 0) {
+                        that.list = res.list;
+                    }
+            }).catch(function (error) {
+            });
+        },
+        getMore:function() {
+            // var hh = this.$refs.publiccheckbox;
+            // console.log(this.hei);
+            // if(hh.offsetHeight==this.hei) {
+            //     hh.style.height = "40px";
+            // }else {
+            //     hh.style.height = this.hei+"px";
+            // }
+        },
         jump: function(id) {
             this.$router.push('/front/singleCoach/'+id);
         },
@@ -103,14 +150,52 @@ export default {
     },
     mounted(){
         this.getCoach();
-        this.heig = window.screen.height;
-        console.log(this.heig);
+        this.getRoot();
+        var hh = document.getElementsByClassName("publiccheckbox");
+        console.log(hh[0]);
+        // this.hei = hh.offsetHeight;
+        // console.log(hh.offsetHeight);
     },
 };
 </script>
 <style>
 </style>
 <style scoped>
+.publicRowboxbig {
+    display: flex;
+    justify-content: center;
+}
+.publicRowbox {
+    width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    margin: 0 10px;
+}
+.publicRow {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.publicRow>span {
+    width: 100px;
+}
+.publicRowRight {
+    display: flex;
+    flex-grow:1;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.publicRowRight>div {
+    display: flex;
+    justify-content: space-between;
+}
+.publicRowRight>span {
+    width: 100px;
+}
 .coachLittleshort {
     display: flex;
     justify-content: flex-start;

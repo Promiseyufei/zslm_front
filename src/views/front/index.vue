@@ -69,7 +69,7 @@
                                 <p>商学院认证的最新MBA招生项目</p>
                                 <p>信息确保真实</p>
                             </div>
-                            <homeBtn class="homeBtn self" text="查看全部院校"></homeBtn>
+                            <homeBtn class="homeBtn self" text="查看全部院校" @click.native="toJump(1)"></homeBtn>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                                 <p>全国N个省市，M个辅导机构</p>
                                 <p>领优惠卷更实惠，退款保障更放心！</p>
                             </div>
-                            <yellowBtn text="查看全部辅导机构"></yellowBtn>
+                            <yellowBtn text="查看全部辅导机构" @click.native="toJump(4)"></yellowBtn>
                         </div>
                     </div>
                 </div>
@@ -194,7 +194,7 @@
                                 <p>全国N个省市，M个辅导机构</p>
                                 <p>领优惠卷更实惠，退款保障更放心！</p>
                             </div>
-                            <homeBtn text="查看更多活动"></homeBtn>
+                            <homeBtn text="查看更多活动" @click.native="toJump(2)"></homeBtn>
                         </div>
                     </div>
                 </div>
@@ -260,7 +260,7 @@
                                 <p>重量级资讯</p>
                                 <p>前沿信息尽在掌握</p>
                             </div>
-                            <yellowBtn class="yellowBtn" text="查看更多资讯"></yellowBtn>
+                            <yellowBtn class="yellowBtn" text="查看更多资讯"  @click.native="toJump(3)"></yellowBtn>
                         </div>
                     </div>
                 </div>
@@ -288,7 +288,7 @@
                             </div>
                         </div>
                         <div class="selectInformationFooter memberFooter">
-                            <homeBtn text="免费注册，成为会员"></homeBtn>
+                            <homeBtn text="免费注册，成为会员" @click.native="jump"></homeBtn>
                         </div>
                     </div>
                 </div>
@@ -411,6 +411,9 @@ export default {
       }
     },
     methods: {
+        jump:function() {
+            this.$router.push('/front/Login/register');
+        },
         //跳到相应的模块，分别为（选校校，找活动，找资讯，搜辅导）
         toJump: function(index) {
             if(index==1) {
