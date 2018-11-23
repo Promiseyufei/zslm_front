@@ -43,6 +43,7 @@ import Mock from 'mockjs'
 window.Mock = Mock
 require('../util/mock/xuhong_mock.js')
 require('../util/mock/youqiqin_mock.js')
+require('../util/mock/sunjifeng.js')
 Vue.config.productionTip = false
 
 

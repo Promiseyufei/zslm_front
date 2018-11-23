@@ -10,7 +10,6 @@
             </div>
         </div>
 
-
     </div>
 </template>
 
@@ -46,7 +45,7 @@ export default {
     margin-top: 0px;
     margin-bottom: 10px;
 }
-h1 {
+#search_activity h1 {
     min-width: 10px;
     min-height: 10px;
 }

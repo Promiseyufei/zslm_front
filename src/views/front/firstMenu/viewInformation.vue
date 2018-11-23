@@ -3,7 +3,7 @@
         <!--轮播图-->
         <div class="sowingMap">
             <el-carousel trigger="click" :height="myWidth" class="sowingContent" :interval="5000" arrow="always">
-                <el-carousel-item v-for="item in rotationPicture">
+                <el-carousel-item v-for="(item, index) in rotationPicture" :key="index">
                     <img :src="item.z_image" alt="" class="picture-header">
                 </el-carousel-item>
             </el-carousel>
