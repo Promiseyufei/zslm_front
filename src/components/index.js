@@ -18,6 +18,7 @@ import mbaArticle from './front/mba.vue'
 import hearderBanner from './front/headerBanner.vue'
 import radioButton from './front/radioButton.vue'
 import activityBox from './front/activityBox.vue'
+import activityPage from './front/activityPage.vue'
 
 export default {
     Test, 
@@ -40,5 +41,6 @@ export default {
     homeBtn,
     hearderBanner,
     radioButton,
-    activityBox
+    activityBox,
+    activityPage
 }

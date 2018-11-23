@@ -465,7 +465,7 @@ Mock.mock('/admin/messageNotice/getcityInfo',{
 			"content|3":'@cword(1,10)',
 		},
 	],
-	"data|4": [{
+	"2|4": [{
 				'id':'@integer(1,10)',
 				'account': '@integer(1,10)' ,
 				'nickname': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
@@ -481,5 +481,6 @@ Mock.mock('/admin/messageNotice/getcityInfo',{
 	"totalData":'@integer(200,3000)',
 	
 })
+
 
 

@@ -280,6 +280,6 @@
 		display: flex;
 		justify-content:center;
 		margin: 100px 0;
-		overflow-x:hidden;
+		overflow:hidden;
 	}
 </style>
