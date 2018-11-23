@@ -3,12 +3,17 @@
             <div class="container-fluid c-section section_bUBpNL">
                 <div class="row c-row row_EaN5GL">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 c-column column_Pmqzmn" style="margin-bottom: 25px">
-                        <userInfomation user_name="test" colleges="2" provices="上海" citys="浦东" actives="3" ding="2" coupons="5"></userInfomation>
+                        <userInfomation :user_name="this.userName"
+                                        :colleges="this.userCollege"
+                                        :provices="this.userProvice"
+                                        :citys="this.userCity"
+                                        :actives="this.userActive"
+                                        :ding="this.userNews"
+                                        :coupons="this.userCoupon"></userInfomation>
                         <userList></userList>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_aLEhx8">
-                        <user-college></user-college>
-                        <user-college></user-college>
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_aLEhx8" v-for="(item,index) in this.majors">
+                        <user-college :data="item"></user-college>
                     </div>
                 </div>
 
@@ -412,13 +417,53 @@
         data() {
             return {
                 // isCollapse: true,
+                id:1,
+                userName:'',
+                userProvice:'',
+                userCity:'',
+                userCollege:0,
+                userActive:0,
+                userNews:0,
+                userCoupon:0,
+                page:1,
+                page_size:3,
+                majors:null
             };
         },
-        methods: {},
+        methods: {
+
+            info(){
+                let self = this;
+                this.fetch('http://www.zslm.com/front/usercore/getuserinfo?id='+self.id)
+                    .then(res=>{
+                        if(res.code == 0){
+                            let result = res.result[0];
+                            self.userName = result.user_name;
+                            self.userProvice = result.provice
+                            self.userCity = result.city
+                            self.userCollege = result.majorCount;
+                            self.userActive = result.activeCount;
+                            self.userNews = result.newCount;
+                            self.userCoupon = result.couponCount;
+                        }
+                    })
+            },
+            getMajor(){
+                let self = this;
+                this.fetch('http://www.zslm.com/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
+                    .then(res=>{
+                        if(res.code == 0){
+                            this.majors = res.result;
+                        }
+                    })
+            }
+        },
         mounted(){
             let divs = document.getElementsByTagName("div")
             divs[1].style.height = 0;
             divs[2].style.height = 0;
+            this.info();
+            this.getMajor();
         }
     }
 </script>
