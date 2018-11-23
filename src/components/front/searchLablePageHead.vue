@@ -105,4 +105,11 @@ export default {
     border-bottom-width: 2px;
     color: #009fa0;
 }
+.search_label_page_head .textlink_jH6Kkn:first-child{
+    font-weight: bold;
+    border-style: none none solid;
+    border-bottom-color: rgb(0, 159, 160);
+    border-bottom-width: 3px;
+    color: #009fa0;
+}
 </style>

@@ -43,8 +43,7 @@
         },
 
         mounted(){
-            console.log("_______3")
-            console.log(this.inforArticle)
+
         }
     }
 </script>

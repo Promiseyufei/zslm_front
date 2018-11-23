@@ -77,8 +77,20 @@ Mock.mock('/front/consult/getConsultType',{
     "code":0,
     "data":[
         {
+            'id':0,
+            'name':'ALL'
+        },
+        {
             'id':1,
-            'name':'sss'
+            'name':'MBA分析'
+        },
+        {
+            'id':2,
+            'name':'MBA分析'
+        },
+        {
+            'id':3,
+            'name':'MBA分析'
         },
     ]
 })

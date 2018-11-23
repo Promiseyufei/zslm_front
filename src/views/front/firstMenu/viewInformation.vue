@@ -12,7 +12,7 @@
         <div class="content clearfloat">
             <div class="float-left">
                 <div class="navigation">
-                    <searchLablePageHead></searchLablePageHead>
+                    <searchLablePageHead v-if="kind.length" :names="kind"></searchLablePageHead>
                 </div>
 
                 <div class="article-cont">
@@ -120,20 +120,28 @@ export default {
                 }
             ],
             /*
-            * 推荐你阅读
+            * 推荐阅读
             * */
-            page:0,
+            page:1,
             information:[],
             industryTatol:1,
             /*
             * 行业报告
             * */
-            businessPage:0,
+            businessPage:1,
             informbusiness:[],
             businessTatol:1,
 
             kind:[],    //导航栏的种类
-            kindClick:1
+            kindClick:'',
+
+            /*
+            *MBA文章
+            *
+            * */
+            mbaPage:0,
+            mbaTatol:1,
+            mbaInformation:[]
         }
     },
     methods: {
@@ -153,12 +161,11 @@ export default {
         * 推荐阅读刷新
         * */
         refresh: function (data) {
-            console.log(this.page)
             this.page++;
             if (this.page>this.industryTatol){
                 this.page = 0;
             }
-            this.presentation();
+            this.readtation();
         },
         /*
         * 行业报告刷新
@@ -207,9 +214,9 @@ export default {
         * */
         readtation: function () {
             let _this = this;
-            axios.get('/front/consult/getRecommendRead?pageNumber='+_this.page)
+            _this.kindClick = _this.kind[0].name
+            axios.get('/front/consult/getRecommendRead?infoTypeId='+_this.kindClick+'&pageNumber='+j+'&pageCount='+h)
                 .then(response => {
-                    console.log(response.data);
                     if(response.data.code == 0){
                         _this.information=response.data.data.info;
                         _this.industryTatol = response.data.data.count;
@@ -219,6 +226,23 @@ export default {
                     console.log(response)
                 });
         },
+        /*
+        * mba文章
+        * */
+        mbatation: function () {
+            let _this = this;
+            axios.get('/front/consult/getConsultListInfo?pageNumber='+_this.page)
+                .then(response => {
+                    if(response.data.code == 0){
+                        _this.information=response.data.data.info;
+                        _this.industryTatol = response.data.data.count;
+                    }
+                })
+                .catch(error => function (error) {
+                    console.log(response)
+                });
+        },
+
         /*
         * 导航类型
         * */
@@ -234,11 +258,13 @@ export default {
                     console.log(response)
                 });
         }
+
     },
     mounted(){
         this.rotationChart();
         this.readtation();
         this.presentation();
+        this.navigationKind();
     },
 };
 </script>
