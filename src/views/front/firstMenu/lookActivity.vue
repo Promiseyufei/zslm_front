@@ -100,7 +100,6 @@ export default {
 <style>
 </style>
 <style scoped>
-
     .activityList{
         width: 100%;
         overflow: hidden;

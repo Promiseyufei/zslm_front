@@ -5,21 +5,21 @@
             <div id="content">
                 <div id="head-choiced">
                     <div id="head-left">
-                        行业报告
+                        {{ titles }}
                     </div>
-                    <div id="head-right">
-                        <a href="">
+                    <div id="head-right" @click="refresh">
+                        <a>
                             <i class="fa fa-repeat">&nbsp;换一换</i>
                         </a>
                     </div>
                 </div>
-                <div class="content-article" v-for="item in infor">
+                <div class="content-article" v-for="(item,index) in infor" :key="index">
                     <div id="title-article">
-                        <div><a href="">{{ item.title }}</a></div>
-                        <div id="time">{{ item.time }}</div>
+                        <div class="font-style"><a href="">{{ item.zx_name }}</a></div>
+                        <div class="time">{{ item.create_time }}</div>
                     </div>
                     <div id="picture">
-                        <img src="../../assets/img/picture.jpg" alt="">
+                        <img :src="item.z_image" alt="">
                     </div>
                 </div>
             </div>
@@ -32,12 +32,20 @@
         data() {
             return{
                 infor: this.inforArticle,
+                titles: this.title
             }
         },
-        props:["inforArticle"],
+        props:["inforArticle","title"],
         methods:{
-
+            refresh: function () {
+                this.$emit('refreshs');
+            }
         },
+
+        mounted(){
+            console.log("_______3")
+            console.log(this.inforArticle)
+        }
     }
 </script>
 
@@ -46,6 +54,9 @@
 </style>
 
 <style scoped>
+    a{
+        cursor: pointer;
+    }
     .artile-content{
         width: 300px;
         height: 498px;
@@ -140,8 +151,8 @@
     #title-article a:hover{
         color: #2a6496;
     }
-    #time{
-
+    .time{
+        text-align: left;
         padding-top: 6px;
         font-family: MicrosoftYaHei;
         font-size: 12px;
@@ -158,6 +169,9 @@
         -webkit-transform: rotate(0deg) scale(1) translate(0%,0%);
         transform: rotate(0deg) scale(1) translate(0%,0%);
         transition: All 0.3s ease;
+    }
+    .font-style{
+        text-align: left;
     }
     @media (max-width: 991px){
         .artile-content{

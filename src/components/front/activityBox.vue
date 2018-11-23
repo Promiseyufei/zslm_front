@@ -148,7 +148,7 @@ export default {
     /*单个活动块儿上部图片*/
     .activityImg{
         height: 191px;
-        background-image: url("../../assets/img/activityTitle.jpg");
+        background-image: url("../../assets/img/activitytitle.jpg");
         background-position: 50% 50%;
         background-size: cover;
         border-radius: 0px 5px 0px 5px;
