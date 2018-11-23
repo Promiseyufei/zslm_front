@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!--大兄弟组建未完成-->
+        <!--大兄弟组建完成-->
         <div class="artile-content">
             <div id="content">
                 <div id="head-choiced">

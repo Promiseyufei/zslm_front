@@ -66,3 +66,19 @@ Mock.mock('/front/consult/getRecommendRead?type=1&pageNumber=0',{
         ],
     }
 })
+
+
+/*
+* /front/consult/getConsultType
+* 导航类型
+* */
+
+Mock.mock('/front/consult/getConsultType',{
+    "code":0,
+    "data":[
+        {
+            'id':1,
+            'name':'sss'
+        },
+    ]
+})

@@ -3,7 +3,7 @@
         <!--轮播图-->
         <div class="sowingMap">
             <el-carousel trigger="click" :height="myWidth" class="sowingContent" :interval="5000" arrow="always">
-                <el-carousel-item v-for="(item,index) in rotationPicture">
+                <el-carousel-item v-for="(item,index) in rotationPicture" :key="index">
                     <img :src="item.z_image" alt="" class="picture-header">
                 </el-carousel-item>
             </el-carousel>
@@ -12,14 +12,7 @@
         <div class="content clearfloat">
             <div class="float-left">
                 <div class="navigation">
-                    <!--<ul>-->
-                        <!--<li><a href="">ALL</a></li>-->
-                        <!--<li><a href="">MBA分析</a></li>-->
-                        <!--<li><a href="">MBA招生</a></li>-->
-                        <!--<li><a href="">MBA备考</a></li>-->
-                        <!--<li><a href="">MBA词典</a></li>-->
-                        <!--<li><a href="">行业报告</a></li>-->
-                    <!--</ul>-->
+                    <searchLablePageHead></searchLablePageHead>
                 </div>
 
                 <div class="article-cont">
@@ -139,7 +132,8 @@ export default {
             informbusiness:[],
             businessTatol:1,
 
-            kind:[]
+            kind:[],    //导航栏的种类
+            kindClick:1
         }
     },
     methods: {
@@ -155,6 +149,9 @@ export default {
                 console.log(error);
             });
         },
+        /*
+        * 推荐阅读刷新
+        * */
         refresh: function (data) {
             console.log(this.page)
             this.page++;
@@ -163,6 +160,9 @@ export default {
             }
             this.presentation();
         },
+        /*
+        * 行业报告刷新
+        * */
         refreshBusiness: function (data) {
             this.businessPage++;
             if (this.businessPage>this.industryTatol){
@@ -219,6 +219,21 @@ export default {
                     console.log(response)
                 });
         },
+        /*
+        * 导航类型
+        * */
+        navigationKind:function () {
+            let _this = this;
+            axios.get('/front/consult/getConsultType')
+                .then(response => {
+                    if(response.data.code == 0){
+                        _this.kind = response.data.data;
+                    }
+                })
+                .catch(error => function (error) {
+                    console.log(response)
+                });
+        }
     },
     mounted(){
         this.rotationChart();
