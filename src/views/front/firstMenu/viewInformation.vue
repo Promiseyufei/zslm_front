@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="content-information">
+        <!--轮播图-->
         <div class="sowingMap">
             <el-carousel trigger="click" :height="myWidth" class="sowingContent" :interval="5000" arrow="always">
                 <el-carousel-item v-for="item in 4" :key="item">
@@ -7,7 +8,8 @@
                 </el-carousel-item>
             </el-carousel>
         </div>
-        <div class="content">
+        <!--mba导航栏-->
+        <div class="content clearfloat">
             <div class="float-left">
                 <div class="navigation">
                     <!--<ul>-->
@@ -21,14 +23,52 @@
                 </div>
 
                 <div class="article-cont">
-                    <mbaArticle></mbaArticle>
+                    <mbaArticle :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
                 </div>
             </div>
             <!--右边的的文章-->
             <div class="float-right">
-                <Article :inforArticle="information"></Article>
+                <Article @refreshs="refresh" :inforArticle="information"></Article>
+                <div class="advertisement">
+                    <img src="../../../assets/img/advertisement.png" alt="">
+                </div>
+                <div class="advertisement">
+                    <img src="../../../assets/img/advertisementB.png" alt="">
+                </div>
+                <Article @click="" :inforArticle="information"></Article>
             </div>
         </div>
+        <!--<div class="footer">-->
+            <!--<div class="foot-content">-->
+                <!--<div class="clearfloat foot-head">-->
+                    <!--<div class="foot-left">-->
+                        <!--<img src="../../../assets/img/foot.png" alt="">-->
+                    <!--</div>-->
+                    <!--<div class="float-middle">-->
+                        <!--<ul>-->
+                            <!--<li><a href="">关于我们</a></li>-->
+                            <!--<li><a href="">用户条款</a></li>-->
+                            <!--<li><a href="">帮助中心</a></li>-->
+                            <!--<li><a href="">问题反馈</a></li>-->
+                            <!--<li><a href="">法律声明</a></li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <!--<div class="float-right">-->
+                        <!--<i class="fa fa-phone" id="phone-font" aria-hidden="true">&nbsp;&nbsp;&nbsp;010-56980320</i>-->
+                        <!--<i class="font-foot">周一至周五 9:00-18:00</i>-->
+                        <!--<i class="font-foot">北京荣美福地科技有限公司</i>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="clearfloat foot-icon">-->
+                    <!--<p>-->
+                        <!--© MBA Helper 2018-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--京ICP备13040890号-1-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -40,6 +80,51 @@ export default {
     data() {
         return {
             myWidth: window.innerWidth>767? 440+"px": window.innerWidth*(440/1280)+"px",
+            picture:[],
+            homepage:[
+                {
+                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
+                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
+                    time:"2018.8.31",
+                    author:"专硕联盟",
+                    img:"",
+                    link:"",
+                }
+            ],
+            shortpage:[
+                {
+                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
+                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
+                    time:"2018.8.31",
+                    author:"专硕联盟",
+                    img:"",
+                    link:"",
+                },
+                {
+                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
+                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
+                    time:"2018.8.31",
+                    author:"专硕联盟",
+                    img:"",
+                    link:"",
+                },
+                {
+                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
+                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
+                    time:"2018.8.31",
+                    author:"专硕联盟",
+                    img:"",
+                    link:"",
+                },
+                {
+                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
+                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
+                    time:"2018.8.31",
+                    author:"专硕联盟",
+                    img:"",
+                    link:"",
+                }
+            ],
             information:[
                 {
                     title:"2018年度北京地区MBA招生项目分析报告",
@@ -65,7 +150,21 @@ export default {
         }
     },
     methods: {
-
+        sowingMap:function () {
+            axios({
+                method:'post',
+                url:'/oooooo',
+            })
+            .then(function (response) {
+//                for
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+        refresh: function (data) {
+            console.log(90)
+        }
     },
     mounted(){
 
@@ -74,6 +173,10 @@ export default {
 </script>
 
 <style scoped>
+    .content-information{
+        background-color: #f5f5f5;
+        padding-top: 30px;
+    }
     .el-carousel__item h3 {
         color: #475669;
         font-size: 18px;
@@ -93,7 +196,6 @@ export default {
     .sowingMap{
         width: 1280px;
         margin: auto;
-        margin-top: 30px;
     }
     .content{
         margin: auto;
@@ -114,72 +216,216 @@ export default {
     .float-right{
         float: right;
         width: 305px;
+        text-align: right;
+    }
+    .float-right > i{
+        display: block;
+        width: 100%;
+        margin-bottom: 12px;
     }
     #article-cont{
         width: 100%;
         margin-top: 11px;
     }
+    /*-----------foot-----------*/
+    .footer{
+        width: 100%;
+        height: 249px;
+        background-color: #383b3d;
+        /*margin-top: 105px;*/
+        display: flex;
+        align-items:center;
+    }
+    .clearfloat::after{
+        display:block;
+        clear:both;content:"";
+        visibility:hidden;
+        height:0;
+    }
+    .foot-content{
+        width: 1280px;
+        margin: auto;
+        height: 156px;
+    }
+    .foot-left{
+        float: left;
+    }
+    .foot-left{
+        width: 166px;
+        margin-right: 99px;
+    }
+    .foot-left > img{
+        width: 100%;
+    }
+    .float-right{
+        float: right;
+    }
+    .float-middle{
+        width: 280px;
+        float: left;
+    }
+    .float-middle > ul >li{
+        list-style: none;
+        margin-bottom: 15px;
+        width: 140px;
+        float: left;
+        text-align: center;
+    }
+    .float-middle > ul >li > a{
+        font-family: MicrosoftYaHei;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        color: #ffffff;
+        text-decoration: none;
+    }
+    #phone-font{
+        font-size: 24px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 22px;
+        letter-spacing: 0px;
+        color: #ffffff;
+    }
+    .font-foot{
+        font-family: MicrosoftYaHei-Bold;
+        font-size: 12px;
+        font-weight: normal;
+        letter-spacing: 0px;
+        color: #ffffff;
+    }
+    .foot-icon{
+        width: 100%;
+        margin-top: 36px;
+    }
+    .foot-icon > p{
+        font-family: MicrosoftYaHei;
+        font-size: 12px;
+        font-weight: normal;
+        font-stretch: normal;
+        letter-spacing: 0px;
+        color: #ffffff;
+        opacity: 0.65;
+    }
+    .foot-icon > p:first-child{
+        float: left;
+    }
+    .foot-icon > p:last-child{
+        float: right;
+    }
+    .foot-head{
+        padding-top: 15px;
+    }
+    .float-middle > ul > li > a:hover {
+        color: #cecece;
+    }
+    /*-----------foot-----------*/
+    .advertisement{
+        border-radius: 3px;
+        width: 305px;
+        height: 188px;
+        margin-bottom: 14px;
+        margin-top: 14px;
+    }
+    .advertisement img{
+        width: 100%;
+        height: 100%;
+    }
+    .advertisement img:hover{
+        box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
+        -webkit-transition: All 0.3s ease;
+        -webkit-transform: rotate(0deg) scale(1) translate(0%,0%);
+        transform: rotate(0deg) scale(1) translate(0%,0%);
+        transition: All 0.3s ease;
+    }
     @media (max-width: 991px){
         .content{
             width: 95%;
+            margin-bottom: 30px;
         }
         .float-left{
             width: 100%;
         }
         .float-right{
-            margin-top: 25px    ;
+            margin-top: 25px;
             width: 100%;
         }
         .sowingMap{
             width: 100%;
         }
+        .foot-left,.float-right,.foot-icon{
+            width: 100%;
+            text-align: center;
+        }
+        .foot-left img{
+            width: 40%;
+        }
+        .foot-content,.footer{
+            height: auto;
+        }
+        .foot-content{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .foot-icon p{
+            width: 100%;
+            margin-bottom: 9px;
+        }
+        .float-middle{
+            display: none;
+        }
+        .advertisement{
+            width: 100%;
+            height: auto;
+        }
     }
 </style>
 
 <style>
-    body{
-        background-color: #f5f5f5;
-    }
-    .el-carousel__container{
+
+    .sowingMap .el-carousel__container{
         height: 440px;
     }
-    .el-carousel__button{
+    .sowingMap .el-carousel__button{
         width: 1em;
         height: 1em;
         border-radius: .5em;
     }
-    .el-carousel__indicator{
+    .sowingMap .el-carousel__indicator{
         padding: 0 3px 16px;
     }
 
-    .el-carousel__arrow{
+    .sowingMap .el-carousel__arrow{
         height: 0px;
     }
-    [class*=" el-icon-"], [class^=el-icon-]{
+    .sowingMap [class*=" el-icon-"], [class^=el-icon-]{
         font-size:26px;
         font-weight: bolder;
         line-height:0px;
     }
-    .el-carousel__arrow--left{
+    .sowingMap .el-carousel__arrow--left{
         left: 20px;
     }
-    .el-carousel__arrow--right{
+    .sowingMap .el-carousel__arrow--left:hover,.sowingMap .el-carousel__arrow--right:hover{
+        color: #009fa0;
+    }
+    .sowingMap .el-carousel__arrow--right{
         right: 20px;
     }
-    .sowingContent[data-v-2912dfba]{
+    .sowingMap .sowingContent[data-v-2912dfba]{
         border-radius: 5px;
     }
     @media (max-width: 991px){
-        .el-carousel__container {
+        .sowingMap .el-carousel__container {
             min-height: auto;
         }
-        .sowingMap[data-v-2912dfba]{
+        .sowingMap .sowingMap[data-v-2912dfba]{
             width: 100%;
         }
-        [class*=" el-icon-"], [class^=el-icon-]{
+        .sowingMap [class*=" el-icon-"], [class^=el-icon-]{
             font-size: 0px;
         }
-        .sowingContent[data-v-2912dfba]{
+        .sowingMap .sowingContent[data-v-2912dfba]{
             border-radius: 0px;
         }
     }
