@@ -1,0 +1,73 @@
+* {
+  margin:0;
+  padding:0;
+}
+a{
+  text-decoration: none;
+}
+.homeContainer {
+  position: relative;
+  width: 800px;
+  height: 200px;
+  overflow: hidden;
+}
+.homeContainer .wrap {
+  position: absolute;
+  width: 4800px;
+  height: 200px;
+  z-index: 1;
+}
+.homeContainer .wrap img {
+  float: left;
+  width: 800px;
+}
+.homeContainer .buttons {
+  position: absolute;
+  right: 270px;
+  bottom:20px;
+  width: 150px;
+  height: 10px;
+  z-index: 2;
+}
+.homeContainer .buttons span {
+  margin-left: 5px;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  text-align: center;
+  color:white;
+  cursor: pointer;
+}
+.homeContainer .buttons span.on{
+  background-color: #19ab95;
+  border: 1px solid #19ab95;
+}
+.homeContainer .arrow {
+  position: absolute;
+  top: 35%;
+  color: rgba(0,0,0,0);
+  
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-position: 30.5% 35.5%;
+  border-radius: 50%;
+  z-index: 2;
+  display: none;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: rgba(0,0,0,0.2);
+}
+.homeContainer .arrow_left {
+  left: 10px;
+  background-image: url(../img/direct.png);
+}
+.homeContainer .arrow_right {
+  right: 10px;
+  background-image: url(../img/nextB.png);
+}
+.homeContainer:hover .arrow {
+  display: block;
+}

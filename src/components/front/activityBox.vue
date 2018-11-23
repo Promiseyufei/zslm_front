@@ -1,0 +1,313 @@
+<template>
+	 <!-- 单个活动块 -->
+    <div class="activityBox">
+    <div>
+        <!-- 头部图片及状态 -->
+        <div class="activityImg">
+            <p>未开始</p>
+        </div>
+        <!-- 中间活动内容：标题、地址、时间 -->
+        <div class="activityDetail">
+            <div class="activityTitle">
+                <p>2019聚英计划第一批提前面试申请时间表（武汉）</p>
+            </div>
+            <div class="activityAddressTime">
+                <div class="activityAddress">
+                    <img src="../../assets/img/position.png">
+                    <span>武汉</span>
+                </div>
+                <div class="activityTime">
+                    <img src="../../assets/img/calendar.png">
+                    <span>5月15日~8月23日</span>
+                </div>
+            </div>
+        </div>
+        <!-- 底部：承办学校、主题 -->
+        <div class="activityManager">
+            <div class="line"></div>
+            <div class="managerSchoolTitle">
+                <div class="managerSchool">
+                    <img src="../../assets/img/college1.jpg">
+                    <span>广东外语外贸大学</span>
+                </div>
+                <p class="managerTitle">
+                    招生宣讲
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            
+        };
+    },
+    methods:{
+        
+    },
+    props: "",
+    mounted(){
+        
+    }
+}
+</script>
+
+<style>
+
+</style>
+
+<style scoped>
+	p, span{
+        font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
+    }
+    /*单个活动块儿的属性：大小、背景色等*/
+    .activityBox{
+        width: 25%;
+        /*height: 370px;*/
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 20px;
+        /*包括边框和padding的大小*/
+        box-sizing: border-box;
+        min-height: 80px;
+    }
+    .activityBox>div{
+        background-color: #ffffff;
+        border-radius: 5px;
+    }
+    /*鼠标悬浮单个活动块儿时的效果*/
+    .activityBox>div:hover{
+        box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+    }
+    
+    /*单个活动块儿上部图片*/
+    .activityImg{
+        height: 191px;
+        background-image: url("../../assets/img/activityTitle.jpg");
+        background-position: 50% 50%;
+        background-size: cover;
+        border-radius: 0px 5px 0px 5px;
+    }
+
+    /*单个活动块儿上部图片上的标签及字体样式*/
+    .activityImg>p{
+        width: 84px;
+        height: 34px;
+        box-sizing: border-box;
+        margin: 0 0 0 auto;
+        border-radius: 0px 5px 0px 5px;
+        font-size: 14px;
+        color: #fff;
+        /*padding: 9px 21px 10px 21px; 原有大小*/
+        padding: 7px 21px 10px 21px; /*更合适*/
+        /*颜色会根据状态不同而变化*/
+        background-color: #ffb957;
+    }
+
+    /*单个活动块儿中间部位：包括活动标题、地址、日期*/
+    .activityDetail{
+        /*未按照原psd格式图片设计，根据原型图设计*/
+        padding: 10px 15px 0 15px;
+        cursor: pointer;
+        min-height: 80px;
+    }
+
+    /*单个活动块儿：活动标题样式*/
+    .activityTitle>p{
+        /*防止文字过少时（单行）样式混乱*/
+        min-width: auto;
+        min-height: 56px;
+        /*防止文字过多时样式混乱*/
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+
+        font-size: 16px;
+        color: #6f6f6f;
+        line-height: 1.75em;
+        margin: 0 0 10px;
+    }
+
+    /*单个活动块儿的地址和时间，分为一块div*/
+    .activityAddressTime{
+        min-height: auto;
+        display: flex;
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+        -webkit-box-pack: justify;
+        margin-top: 19px;
+    }
+
+    /*地址、时间内部布局样式*/
+    .activityAddress, .activityTime{
+        display: flex;
+        align-items: center;
+        min-height: auto;
+    }
+
+    .activityAddressTime img{
+        margin-right: 6px;
+        display: inline-block;
+        height: auto;
+        width: auto;
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    .activityAddressTime span{
+        font-size: 14px;
+        color: #606060;
+        opacity: 0.7;
+        font-weight: 500;
+        line-height: 1.1;
+        min-height: 10px;
+        min-width: 10px;
+    }
+
+    /*单个活动块儿底部布局*/
+    .activityManager{
+        min-height: auto;
+        margin-top: 23px;
+        padding: 0px 15px 10px;
+    }
+
+    /*分割线样式*/
+    .activityManager .line{
+        background-color: rgba(239,239,239,1);
+        min-height: auto;
+        height: 1px;
+    }   
+
+    /*底部块儿中的：学校和主题*/
+    .managerSchoolTitle{
+        display: flex;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+        -webkit-box-align: center;
+        align-items: center;
+        margin-top: 10px;
+        min-height: auto;
+
+        /*font-size: 12px;*/
+    }
+
+    .managerSchool{
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+
+        margin-top: 0;
+        margin-bottom: 0;
+        min-height: auto;
+    }
+
+    .managerSchool>img{
+        width: 24px;
+        height: 24px;
+        background-color: #ffb957;
+        border-radius: 50%;
+        margin-right: 11px;
+    }
+
+    .managerSchool span{
+        line-height: 28px;
+        color: #6f6f6f;
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 1.1;
+    }
+
+    .managerSchoolTitle .managerTitle{
+        border-radius: 60px;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.1;
+        padding: 3px 8px;
+        margin: 0 0 0 auto;
+        -webkit-box-flex: 0;
+        flex: 0 1 auto;
+        -ms-flex: 0 1 auto;
+        text-align: left;
+        /*颜色可变*/
+        background-color: #aaa;
+    }
+
+
+    /* Extra small devices (phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+        .activityBox{
+            width: 100%;
+        }
+        .activityManager .line{
+            height: 1px;
+            width: 100%;
+        }
+        .activityAddressTime span{
+            font-size: 12px;
+        }
+        .activityTitle>p{
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+    }
+
+    /* Small devices (portrait tablets and large phones, 600px and up) */
+    @media only screen and (min-width: 600px) {
+        .activityBox{
+            width: 100%;
+        }
+        .activityManager .line{
+            height: 1px;
+            width: 100%;
+        }
+        .activityAddressTime span{
+            font-size: 12px;
+        }
+        .activityTitle>p{
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+    }
+
+    /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (min-width: 768px) {
+        .activityBox{
+            width: 25%;
+        }
+       .activityTitle>p{
+            margin-bottom: 0;
+       }
+       .activityManager .line{
+            /*分割线就没了，根据原型图网页样式*/
+            height: 0;
+       }
+    } 
+
+    /* Large devices (laptops/desktops, 992px and up) */
+    @media only screen and (min-width: 992px) {
+        .activityTitle>p{
+        	font-size: 16px;
+        }
+        .activityAddressTime span{
+        	font-size: 14px;
+        }
+        .activityManager .line{
+            height: 1px;
+       }
+    } 
+
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+    @media only screen and (min-width: 1200px) {
+        
+    }
+</style>

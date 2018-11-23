@@ -1,7 +1,66 @@
 <template>
     <div>
-        <div>
-            搜辅导页面还没写～～～～～哇哈哈，我要举报，红斌是大笨蛋～
+        <div class="bigBox">
+            <!-- header -->
+            <hearderBanner enName="INSTITUTIONS" name="搜辅导"></hearderBanner>
+
+            <!-- 辅导机构小块块 -->
+            <div class="singlecoachBig">
+                <div class="singlecoachbox">
+                    <div class="singlecoach" v-for="(item,index) in 9">
+                        <div class="singlecoachtop">
+                            <img src="../../../assets/img/xindongfang.png" alt="">
+                        </div>
+                        <span>新东方</span>
+                        <div class="singlecoachHoverbig"> 
+                            <div class="singlecoachHoverbox" :class="index%4==2||index%4==3 ? 'activeClass' : ''">
+                                <div class="singlecoachHover" v-if="index%4==0||index%4==1">
+                                    <div class="singlecoachtop2">
+                                        <img src="../../../assets/img/xindongfangwhite.png" alt="">
+                                    </div>
+                                    <div class="singlecoachspan">
+                                        <span>新东方</span>
+                                        <span>
+                                            <img src="../../../assets/img/money2.png" alt="">
+                                            <img src="../../../assets/img/return3.png" alt="">
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="littleCollage2" v-if="index%4==2||index%4==3">
+                                    <p class="coachHeader">25个分校</p>
+                                    <div class="coachLittle">
+                                        <div class="coachLittleshort" v-for="(intem,index) in 13">
+                                            <strong>1</strong>
+                                            <span>新东方北京分校</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="singlecoachHover" v-if="index%4==2||index%4==3">
+                                    <div class="singlecoachtop2">
+                                        <img src="../../../assets/img/xindongfangwhite.png" alt="">
+                                    </div>
+                                    <div class="singlecoachspan">
+                                        <span>新东方</span>
+                                        <span>
+                                            <img src="../../../assets/img/money2.png" alt="">
+                                            <img src="../../../assets/img/return3.png" alt="">
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="littleCollage" v-if="index%4==0||index%4==1">
+                                    <p class="coachHeader">25个分校</p>
+                                    <div class="coachLittle">
+                                        <div class="coachLittleshort" v-for="(intem,index) in 13">
+                                            <strong>1</strong>
+                                            <span>新东方北京分校</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
         
@@ -14,7 +73,7 @@ export default {
     },
     data() {
         return {
-
+            tive:true,
         }
     },
     methods: {
@@ -28,7 +87,140 @@ export default {
 <style>
 </style>
 <style scoped>
+.coachLittleshort {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+    margin-bottom: 15px;
+}
 
+.coachLittleshort>strong {
+    background-color: #ffb957;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 11px;
+}
 
-
+.coachLittle {
+    display: flex;
+    flex-wrap: wrap;
+    width: 604px;
+    overflow-y: scroll;
+    height: 160px;
+    margin-left: 47px;
+    margin-top: 45px;
+    font-size: 14px;
+    font-weight: normal;
+    color: rgb(255, 255, 254);
+}
+.coachLittle::-webkit-scrollbar {
+    display: none;
+}
+.littleCollage {
+    margin: 15px 0;
+    border-left: 1px solid #ffb957;
+}
+.littleCollage2 {
+    margin: 15px 0;
+    border-right: 1px solid #ffb957;
+}
+.coachHeader {
+    color: #ffb957;
+    margin-left: 47px;
+    margin-top: 25px;
+}
+.singlecoachHoverbox {
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    background-color: rgba(56, 59, 61, 0.95);
+    width: 955px;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+.activeClass {
+    top: 0;
+    left: -650px;
+}
+.singlecoachHover {
+    width: 305px;
+}
+.bigBox {
+    background-color: rgb(245, 245, 245);
+}
+.singlecoachBig {
+    display: flex;
+    justify-content: center;
+}
+.singlecoachbox {
+    width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+.singlecoach {
+    width: 305px;
+    background-color: #fff;
+    margin: 10px;
+    position: relative;
+}
+.singlecoachHoverbig {
+    display: none;
+}
+.singlecoach:hover .singlecoachHoverbig {
+    display: block;
+}
+.singlecoachtop2 {
+    width: 100%;
+    z-index: 2;
+} 
+.singlecoachtop,.singlecoachtop2 {
+    width: 100%;
+    height: 253px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.singlecoachtop>img {
+    width: 40%;
+}
+.singlecoachtop2>img {
+    width: 40%;
+}
+.singlecoach>span {
+    display: inline-block;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    background-color: rgba(56, 59, 61, 0.8);
+}
+.singlecoachspan {
+    width: 100%;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    line-height: 50px;
+}
+.singlecoachspan>span {
+    margin: 0 20px;
+    color: #ffb957;
+    display: flex;
+    align-items: center;
+}
+.singlecoachspan>span>img {
+    margin-left: 10px;
+}
 </style>

@@ -13,7 +13,14 @@ import editor from  './admin/editor.vue'
 import homeBtn from  './front/homeBtn.vue'
 import searchHeader from './front/searchHeader.vue'
 import yellowBtn from './front/yellowBtn.vue'
-
+import Article from './front/article.vue'
+import mbaArticle from './front/mba.vue'
+import hearderBanner from './front/headerBanner.vue'
+import radioButton from './front/radioButton.vue'
+import activityBox from './front/activityBox.vue'
+import userInfomation from './front/userinformation.vue'
+import userList from './front/userList.vue'
+import userCollege from './front/userCollege.vue'
 export default {
     Test, 
     Test2,
@@ -30,5 +37,12 @@ export default {
     homeBtn,
     searchHeader,
     yellowBtn,
-    homeBtn
+    Article,
+    mbaArticle,
+    hearderBanner,
+    radioButton,
+    activityBox,
+    userInfomation,
+    userList,
+    userCollege
 }

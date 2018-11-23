@@ -18,6 +18,7 @@ export const mutations= {
 	changeLoginStatus(state, param) {
 		state.loginStatus[param.name] = param.val;
 	},
+	
 	changeUserInfo(state, param) {
 		state.userInfo[param.name] = param.val;
 	}

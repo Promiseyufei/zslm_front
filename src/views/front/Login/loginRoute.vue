@@ -55,10 +55,14 @@
 			handleSelect(key, keyPath) {
 				this.active = key;
 				this.active == '1' ? this.$router.push('/front/Login/loginRoute/accountNumber') : this.$router.push('/front/Login/loginRoute/shortMessage');
+				//存变量
+				sessionStorage.setItem("active",key);
 		    },
-		    //短信登录页面
+		    //刷新登录不变
 		    accountNumber:function() {
+		    	// console.log(sessionStorage.getItem("active"));
 		    	if (sessionStorage.getItem("active")) {
+		    		//取变量
 		    		this.active=sessionStorage.getItem("active")
 		    		if (this.active==1) {
 		    			this.$router.push('/front/Login/loginRoute/accountNumber');
@@ -105,7 +109,7 @@
 	            		this.login(this.returnParams(0));
 	            	}
 		    	}
-			},
+		    },
 			login(params) {
 				this.post('/login/front/login', params).then((response) => {
 					if(response.code == 0) {
@@ -135,8 +139,10 @@
 					agree: agree
 				}
 			}
+			
 		},
 		mounted() {
+			this.accountNumber();
 		}
 	}
 </script>
@@ -275,6 +281,6 @@
 		display: flex;
 		justify-content:center;
 		margin: 100px 0;
-		overflow-x:hidden;
+		overflow:hidden;
 	}
 </style>

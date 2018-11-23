@@ -63,7 +63,7 @@
 
 
                 </div>
-                <div class="ellipsis">……</div>
+                <div class="ellipsis"></div>
                 <div class="page">
                     <el-pagination background layout="prev, pager, next"
                                    :current-page="page"
@@ -250,7 +250,6 @@
                 this.getMajor();
             },
             getMajor: function () {
-
                 let searchs = [];
                     this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
                     this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
