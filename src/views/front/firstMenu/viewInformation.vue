@@ -3,8 +3,8 @@
         <!--轮播图-->
         <div class="sowingMap">
             <el-carousel trigger="click" :height="myWidth" class="sowingContent" :interval="5000" arrow="always">
-                <el-carousel-item v-for="item in 4" :key="item">
-                    <img src="" alt="">
+                <el-carousel-item v-for="item in rotationPicture">
+                    <img :src="item.z_image" alt="" class="picture-header">
                 </el-carousel-item>
             </el-carousel>
         </div>
@@ -28,14 +28,14 @@
             </div>
             <!--右边的的文章-->
             <div class="float-right">
-                <Article @refreshs="refresh" :inforArticle="information"></Article>
+                <Article @refreshs="refresh" v-if="information.length" :inforArticle="information"></Article>
                 <div class="advertisement">
                     <img src="../../../assets/img/advertisement.png" alt="">
                 </div>
                 <div class="advertisement">
                     <img src="../../../assets/img/advertisementB.png" alt="">
                 </div>
-                <Article @click="" :inforArticle="information"></Article>
+                <Article @refreshs="refresh" v-if="information.length" :inforArticle="information"></Article>
             </div>
         </div>
         <!--<div class="footer">-->
@@ -81,6 +81,8 @@ export default {
         return {
             myWidth: window.innerWidth>767? 440+"px": window.innerWidth*(440/1280)+"px",
             picture:[],
+            rotationPicture:[],
+            page:0,
             homepage:[
                 {
                     title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
@@ -125,28 +127,7 @@ export default {
                     link:"",
                 }
             ],
-            information:[
-                {
-                    title:"2018年度北京地区MBA招生项目分析报告",
-                    time: "2014.12.18",
-                    img:"../../assets/img/picture.jpg"
-                },
-                {
-                    title:"2018年度北京地区MBA招生项目分析报告",
-                    time: "2014.12.18",
-                    img:"../../assets/img/picture.jpg"
-                },
-                {
-                    title:"2018年度北京地区MBA招生项目分析报告",
-                    time: "2014.12.18",
-                    img:"../../assets/img/picture.jpg"
-                },
-                {
-                    title:"2018年度北京地区MBA招生项目分析报告",
-                    time: "2014.12.18",
-                    img:"../../assets/img/picture.jpg"
-                },
-            ]
+            information:[]
         }
     },
     methods: {
@@ -163,16 +144,52 @@ export default {
             });
         },
         refresh: function (data) {
-            console.log(90)
-        }
+            console.log(this.page)
+//            this.page++;
+//            if (this.page>this.information.tatol){
+//                this.page = 0;
+//            }
+            this.presentation();
+        },
+        rotationChart: function () {
+            let _this = this;
+            axios.get('/front/consult/getConsultListBroadcast')
+                .then(response => {
+                    if(response.data.code == 0){
+                        _this.rotationPicture=response.data.data;
+                    }
+                })
+                .catch(error => function (error) {
+                    console.log(response)
+                });
+        },
+        presentation: function () {
+            let _this = this;
+            axios.get('/front/consult/getRecommendRead?pageNumber='+_this.page)
+                .then(response => {
+                    console.log(response.data);
+                    if(response.data.code == 0){
+                        _this.information=response.data.data;
+
+                    }
+                })
+                .catch(error => function (error) {
+                    console.log(response)
+                });
+        },
     },
     mounted(){
-
+        this.rotationChart();
+        this.presentation();
     },
 };
 </script>
 
 <style scoped>
+    .picture-header{
+        width: 100%;
+        height: 100%;
+    }
     .content-information{
         background-color: #f5f5f5;
         padding-top: 30px;

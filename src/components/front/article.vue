@@ -15,11 +15,11 @@
                 </div>
                 <div class="content-article" v-for="item in infor">
                     <div id="title-article">
-                        <div class="font-style"><a href="">{{ item.title }}</a></div>
-                        <div class="time">{{ item.time }}</div>
+                        <div class="font-style"><a href="">{{ item.zx_name }}</a></div>
+                        <div class="time">{{ item.create_time }}</div>
                     </div>
                     <div id="picture">
-                        <img :src="item.img" alt="">
+                        <img :src="item.z_image" alt="">
                     </div>
                 </div>
             </div>
@@ -40,6 +40,11 @@
                 this.$emit('refreshs');
             }
         },
+
+        mounted(){
+            console.log("_______3")
+            console.log(this.inforArticle)
+        }
     }
 </script>
 
