@@ -35,7 +35,6 @@ export default {
     yellowBtn,
     Article,
     mbaArticle,
-    homeBtn,
     hearderBanner,
     radioButton
 }
