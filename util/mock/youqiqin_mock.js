@@ -483,3 +483,26 @@ Mock.mock('/admin/messageNotice/getcityInfo',{
 })
 
 
+
+
+
+
+
+/*font-radioButton
+*选院校
+*获取按钮值
+*/
+Mock.mock('/front/colleges/getmajor',{
+	"code":0,
+	"allMajorname|25":[
+		{"z_name":'@cword(2)'}
+	],
+	// "Name|3":[
+	// 	{	
+	// 		"line|5":[
+	// 			{"majorname":'@cword(6)'}
+	// 		]
+	// 	},
+	// ]
+	
+})

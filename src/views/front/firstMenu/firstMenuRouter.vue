@@ -52,7 +52,7 @@
         		</div>
         		<div class="footerAddres">
 	        		<div class="footerAddresOne">
-	        			<p><span><i class="el-icon-phone"></i></span>010-56980320</p>
+	        			<p><span><i class="fa fa-phone"></i></span>010-56980320</p>
 	        		</div>
         			<p>周一至周五 9:00-18:00</p>
         			<p>北京荣美福地科技有限公司</p>
@@ -82,7 +82,6 @@
 	    methods: {
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
-		    	// console.log(key, keyPath);
 		    	if (key==1) {
 	        		this.$router.push({
 			    			path:'/front/firstMenuRouter/selectCollege',
@@ -138,15 +137,15 @@
 </script>
 <style>
 	.logoInto .el-badge {
-		margin: 0 55px 15px 35px;
+		margin: 0 55px 0 35px;
 		/*margin: 0 55px 0 35px;*/
 	}
 	.el-dropdown-menu__item--divided:before, .el-menu, .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
-		background-color: #f5f5f5;
+		background-color: #fff;
 	}
 	.firstMenu .el-menu--horizontal>.el-menu-item.is-active {
 		border-bottom: 0;
-		border-bottom-color: #f5f5f5;
+		border-bottom-color: #fff;
 		font-weight: bold;
 	}
 	.firstMenu .el-menu--horizontal>.el-menu-item {
@@ -159,7 +158,7 @@
 	}
 	.firstMenu .el-menu--horizontal {
 		border-bottom: 0;
-		background-color: #f5f5f5;
+		background-color: #fff;
 	}
 
 
@@ -223,10 +222,10 @@
 	}
 	.footer {
 		display: flex;
-		flex-direction: column ;
+		flex-direction: column;
 		align-items:center;
 		justify-content:center;
-		margin: 160px 0 0;
+		margin: 60px 0 0;
 		width: 100%;
 		height: 251px;
 		background-color: rgb(56, 59, 61);
@@ -266,6 +265,12 @@
 	}
 	/** PC **/
 	@media only screen and (min-width: 1024px) and (max-width:1300px) {
+		.footerBott {
+            width: 900px;
+        }
+		.footerMenu {
+			width: 400px;
+		}
 		.head {
 			width: 1000px;
 		}
@@ -275,6 +280,12 @@
 	}
 	/** iPad **/
 	@media only screen and (min-width: 768px) and (max-width: 1023px) {
+		.footerLogo {
+			width: 200px;
+		}
+		.footerMenu {
+			width: 280px;
+		}
 		.mobileIcon {
 			width: 30px;
 			height: 30px;

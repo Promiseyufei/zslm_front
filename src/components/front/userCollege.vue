@@ -8,16 +8,16 @@
                     </div>
                     <div class="c-div div_mnG0wo">
                         <div class="c-div div_oLhlRV">
-                            <h1 class="c-heading heading_IH2VnY">北京大学光华管理学院MBA</h1>
-                            <label class="c-label label_OVUgJH">北京</label>
-                            <label class="c-label label_OVUgJH">MBA</label>
+                            <h1 class="c-heading heading_IH2VnY">{{ data.z_name }}</h1>
+                            <label class="c-label label_OVUgJH">{{ data.province }}</label>
+                            <label class="c-label label_OVUgJH">{{ data.city }}</label>
                         </div>
                         <div class="c-div cs-repeatable div_sfz9WV">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
+                            <img class="c-image image_2pnGPP" v-show="equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
+                            <img class="c-image image_2pnGPP" v-show="aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                            <img class="c-image image_2pnGPP" v-show="two" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
+                            <img class="c-image image_2pnGPP" v-show="nine" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
+                            <img class="c-image image_2pnGPP" v-show="both29" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
                         </div>
                     </div>
                 </div>
@@ -26,60 +26,33 @@
             <div class="c-div div_Sd6WRB">
                 <div v-show="classShow" class="c-div div_PiRYSQ" data-c_e_id="div_354d2bc5">
             <div class="row c-row row_EsvYjt guanzhu" data-c_e_id="row_a53619dd">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_WvUK7W">
-                    <div class="c-div div_zpfJlh"><h1 class="c-heading heading_gviHAE">国际MBA项目-全日制</h1>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_WvUK7W"  v-for="(item,index) in data.product">
+                    <div class="c-div div_zpfJlh"><h1 class="c-heading heading_gviHAE">{{ item.project_name }}</h1>
                         <div class="c-div div_XXPhAx"><div class="row c-row row_JUft7v">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_mFWPbx">
-                                <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/6704701da17821d6beda8ba3bb60eea7_origin.png"><h1 class="c-heading heading_58QPWV">学费</h1><h1 class="c-heading heading_58QPWV bold">18.8万</h1></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_UYw0gx">
+                                <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/6704701da17821d6beda8ba3bb60eea7_origin.png">
+                                <h1 class="c-heading heading_58QPWV">学费</h1>
+                                <h1 class="c-heading heading_58QPWV bold">{{item.cost}}</h1>
+                            </div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_UYw0gx">
                             <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/20269a716dff64d3b9774b0a59b58d49_origin.png">
                             <h1 class="c-heading heading_58QPWV">授课语言</h1>
-                            <h1 class="c-heading heading_58QPWV bold">英文</h1>
+                            <h1 class="c-heading heading_58QPWV bold">{{ item.language }}</h1>
                         </div></div><div class="c-div div_0oZzVH">
                             <div class="c-div div_eQPG16">
                                 <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/d7d842b4a1e4f923dec499e431c2091d_origin.png"><h1 class="c-heading heading_58QPWV">授课语言</h1>
                             </div>
-                            <p class="c-paragraph heading_58QPWV bold">全日制共100名</p>
+                            <p class="c-paragraph heading_58QPWV bold">{{ item.student_count }}</p>
                         </div><div class="c-div div_0oZzVH">
                             <div class="c-div div_eQPG16">
                                 <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/a2a111bd9f722160447a7dc496916b1b_origin.png">
                                 <h1 class="c-heading heading_58QPWV">班级情况</h1>
                             </div>
-                            <p class="c-paragraph heading_58QPWV bold">国际班</p>
+                            <p class="c-paragraph heading_58QPWV bold">{{ item.class_situation }}</p>
                         </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_k5dtwn">
-                    <div class="c-div div_zpfJlh">
-                        <h1 class="c-heading heading_gviHAE">国际MBA项目-全日制</h1>
-                        <div class="c-div div_XXPhAx">
-                            <div class="row c-row row_JUft7v">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_mFWPbx">
-                                    <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/6704701da17821d6beda8ba3bb60eea7_origin.png">
-                                    <h1 class="c-heading heading_58QPWV">学费</h1>
-                                    <h1 class="c-heading heading_58QPWV bold">18.8万</h1>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_UYw0gx">
-                                    <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/20269a716dff64d3b9774b0a59b58d49_origin.png">
-                                    <h1 class="c-heading heading_58QPWV">授课语言</h1>
-                                    <h1 class="c-heading heading_58QPWV bold">英文</h1>
-                                </div></div><div class="c-div div_0oZzVH">
-                            <div class="c-div div_eQPG16">
-                                <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/d7d842b4a1e4f923dec499e431c2091d_origin.png">
-                                <h1 class="c-heading heading_58QPWV">授课语言</h1>
-                            </div>
-                            <p class="c-paragraph heading_58QPWV bold">全日制共100名</p>
-                        </div>
-                            <div class="c-div div_0oZzVH">
-                                <div class="c-div div_eQPG16">
-                                    <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/a2a111bd9f722160447a7dc496916b1b_origin.png">
-                                    <h1 class="c-heading heading_58QPWV">班级情况</h1>
-                                </div>
-                                <p class="c-paragraph heading_58QPWV bold">国际班</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div >
+
             </div>
             <a class="btn c-button button_LsM2yn123 quguan jinruzhuye" type="button">进入院校主页</a>
         </div>
@@ -586,6 +559,7 @@
     .column_WvUK7W {
         padding-left: 5px;
         padding-right: 5px;
+        margin-bottom: 10px;
     }
 
     .div_zpfJlh {
@@ -822,7 +796,16 @@
             return{
                 classShow:false,
                 show:true,
-                notShow:false
+                notShow:false,
+                datas:null,
+                equis:false,
+                aascb:false,
+                //211
+                two:false,
+                //985
+                nine:false,
+                //双一流
+                both29:false,
             }
         },
         methods:{
@@ -832,9 +815,26 @@
                 this.notShow = !this.notShow;
             }
         },
-        props:["logo","majorName","provices","type","colleges","actives","ding","coupons"],
+        props:["data"],
         mounted(){
 
-        }
+            let self = this;
+            console.log(this.data)
+            this.datas = this.data
+            if(this.datas.major_follow_id == '原985')
+                self.nine= true;
+            else if(this.datas.major_follow_id=='原211')
+                self.two = true;
+            else
+                self.both29 = true;
+
+            if(this.datas.major_confirm_id == 'AASCB')
+                this.aascb = true;
+            else{
+                this.equis = true;
+                console.log(232)
+            }
+        },
+
     }
 </script>
