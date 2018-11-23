@@ -44,7 +44,7 @@
                 //页面宽度
                 let w = document.documentElement.offsetWidth || document.body.offsetWidth;
                 if (w<768) {
-                    div.offsetHeight==53?div.style.height="320px":div.style.height="53px";
+                    div.offsetHeight==53?div.style.height="450px":div.style.height="53px";
                 } else {
                     div.offsetHeight==53?div.style.height="150px":div.style.height="53px";
                 }
@@ -107,7 +107,7 @@
     }
     .radioButton .el-col-8 {
         width: 1280px;
-        height: 371px;
+        height: 471px;
         padding-bottom: 60px;
     }
     
@@ -141,6 +141,7 @@
     .overHidden {
         overflow: hidden; 
         display: flex;
+        justify-content:space-between;
     }
     .radioButton {
         width:1280px;
@@ -161,14 +162,14 @@
         }
         .overHidden {
             width: 950px;
+
         }
         .radioButton .el-col-8 {
-            width: 1000px;
-            margin: 0 0 0 10px;
+            width: 100%;
             overflow: hidden; 
         }
         .radioButton {
-            width: 100%;
+            width: 90%;
             overflow: hidden;
         }
     }
@@ -202,23 +203,29 @@
         .allButton {
             height: 53px;
         }
+        .hiddenButton {
+            width: 80px;
+        }
         .allButton .el-radio-button__inner {
             font-size: 12px;
             padding: 5px;
         }
         .allButton {
-            width: 350px;
+            /*width: 350px;*/
         }
         .majorType {
-            width: 50px;
+            margin-right: 20px;
+        }
+        .majorType {
+            width: 60px;
             font-size: 12px;
         }
         .allButton .el-radio-group {
-            width: 150px;
+            width: 70%;
         }
         .overHidden {
             width: 100%;
-            margin: 0 auto;
+            /*margin: 0 auto;*/
         }
         .radioButton .el-col-8 {
             width: 95%;
