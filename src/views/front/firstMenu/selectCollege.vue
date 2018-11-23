@@ -21,7 +21,7 @@
                             <div class="specificInform" v-for="(t,index) in allMajorname" :key="index">
                                 <p class="international">国际</p>
                                 <div class="moneyType">
-                                    <p><span><i class="el-icon-caret-bottom"></i></span>学费<span class="money">18.8万</span></p>
+                                    <p><span><i class="fa fa-jpy"></i></span>学费<span class="money">18.8万</span></p>
                                     <p class="teach"><span><i class="el-icon-caret-bottom"></i></span>授课语言<span class="type">英文</span></p>
                                 </div>
                                 <p class="interval"><span><i class="el-icon-caret-bottom"></i></span>授课语言<span class="bold">全日制共100名</span></p>
@@ -103,6 +103,7 @@ export default {
     }
     .diffeCollege .el-col-8 {
         width: 1280px;
+        margin-bottom: 60px;
     }
     .selectCollegeSearch .el-input__inner {
         border-radius: 60px;
