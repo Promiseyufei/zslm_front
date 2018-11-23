@@ -38,14 +38,15 @@ window.Exif = Exif
 import WangEditor from 'wangeditor'
 window.WangEditor = WangEditor
 
-//使用mock
-// import Mock from 'mockjs'
-// window.Mock = Mock
-// require('../util/mock/xuhong_mock.js')
-// require('../util/mock/youqiqin_mock.js')
-// require('../util/mock/tnt_mock.js')
-// require('../util/mock/sunjifeng.js')
+
+import Mock from 'mockjs'
+window.Mock = Mock
+require('../util/mock/xuhong_mock.js')
+require('../util/mock/youqiqin_mock.js')
+require('../util/mock/tnt_mock.js')
+require('../util/mock/sunjifeng.js')
 Vue.config.productionTip = false
+
 
 
 //加载公共组件
@@ -67,10 +68,10 @@ Object.keys(methods).forEach((key)=>{
 })
 
 //二次封装axios
-import httpServer from './config/providers/http-service.js'
-Object.keys(httpServer).forEach((key) => {
-  Vue.prototype[key] = httpServer[key];
-})
+// import httpServer from './config/providers/http-service.js'
+// Object.keys(httpServer).forEach((key) => {
+//   Vue.prototype[key] = httpServer[key];
+// })
 
 
 

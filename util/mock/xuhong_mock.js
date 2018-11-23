@@ -26,6 +26,29 @@ Mock.mock('/front/coach/getcoach', {
 	"count": 100,
 })
 
+Mock.mock('/mulu', {
+	"code":0,
+	"list|10":[
+		{
+			"type": Mock.mock('@cword(2, 4)'),
+			"cities|24":[
+				{
+					"name":Mock.mock('@cword(2, 4)'),
+				}
+			],
+			"fif":"查看更多"
+		}
+	],
+	// "Name|3":[
+	// 	{	
+	// 		"line|5":[
+	// 			{"majorname":'@cword(6)'}
+	// 		]
+	// 	},
+	// ]
+	
+})
+
 /* Operate
 * 运营管理模块——首页
 * 获取所有资讯类型
