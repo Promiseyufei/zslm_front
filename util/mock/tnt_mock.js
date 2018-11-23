@@ -6,8 +6,8 @@
 Mock.mock('/front/activity/getActivity',{
 	"code":0,
 	"data": [{
-		'count':45,
-		'info|45':[{
+		'count':500,
+		'info|500':[{
 			'id':'@integer(1,10)',
 			'active_name':'@cword(18)',
 			'province':[{
@@ -21,6 +21,30 @@ Mock.mock('/front/activity/getActivity',{
 			'z_name':'@cword(8)',
 			'start_state':'@integer(0,2)',
 		}],
+	}],
+	// "totalData":'@integer(200,3000)',
+})
+
+/*activity
+活动列表页——获取全部专业类型
+*/
+Mock.mock('/front/colleges/getCollegesType',{
+	"code":0,
+	"data|6": [{
+		id:'@integer(1,10)',
+		name:"TTTT",
+	}],
+	// "totalData":'@integer(200,3000)',
+})
+
+/*activity
+活动列表页——获取全部活动的类型
+ */
+Mock.mock('/front/activity/getActivityType',{
+	"code":0,
+	"data|8": [{
+		id:'@integer(1,10)',
+		name:"DDDD",
 	}],
 	// "totalData":'@integer(200,3000)',
 })

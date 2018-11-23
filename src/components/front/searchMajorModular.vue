@@ -180,4 +180,67 @@ export default {
     border: 1px solid transparent;
     border-radius: 4px;
 }
+
+
+@media (max-width: 767px) {
+    .search_major_modular .div_BMsaOd {
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 767px) {
+    .div_BMsaOd .div_ARD2As {
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+}
+@media (max-width: 767px) {
+    .div_BMsaOd .imageblock_VRWtPr {
+        width: 108px;
+        height: 108px;
+    }
+}
+@media (max-width: 767px) {
+    .div_mnG0wo .div_oLhlRV {
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+}
+@media (max-width: 767px) {
+    .div_oLhlRV .heading_IH2VnY {
+        font-size: 18px;
+        margin-bottom: 14px;
+        width: 100%;
+        text-align: center;
+        margin-top: 17px;
+    }
+}
+@media (max-width: 767px) {
+    .div_mnG0wo .div_sfz9WV {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+}
+@media (max-width: 767px) {
+    .div_BMsaOd .button_LsM2yn123.duibi {
+        margin-top: 26px;
+        width: 100%;
+    }
+}
+
+
+
+
 </style>

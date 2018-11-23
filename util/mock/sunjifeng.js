@@ -94,3 +94,22 @@ Mock.mock('/front/consult/getConsultType',{
         },
     ]
 })
+
+/*
+* mba文章
+* */
+
+Mock.mock('/front/consult/getRecommendRead',{
+    "code":0,
+    "data|9":[
+        {
+            'id':1,
+            'zx_name':'xxx',
+            'brief_introduction':'咨询简介',
+            'create_time':'创建时间',
+            'z_image':'咨询封面',
+            'author':'ssss'
+        },
+
+    ]
+})

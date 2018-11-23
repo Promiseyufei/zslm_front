@@ -81,11 +81,33 @@ export default {
     max-width: 800px;
     border-style: none;
     font-size: 16px;
-    background-image: url('http://qty83k.creatby.com/materials/2771/origin/060001c…_origin.png');
+    background-image: url('http://qty83k.creatby.com/materials/2771/origin/060001cc8b7b4418f3207641bcd5a90b_origin.png');
     background-repeat: no-repeat;
     background-position: 0% 50%;
     padding-left: 30px;
     padding-right: 0px;
 }
+.div_v60iAm:hover {
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
+    transform: rotate(0deg) scale(1) translate(0%,0%);
+    transition: All 0.3s ease;
+    -ms-transform: rotate(0deg) scale(1) translate(0%,0%);
+    -o-transform: rotate(0deg) scale(1) translate(0%,0%);
+    -moz-transform: rotate(0deg) scale(1) translate(0%,0%);
+    -webkit-transform: rotate(0deg) scale(1) translate(0%,0%);
+    -ms-transition: All 0.3s ease;
+    -o-transition: All 0.3s ease;
+    -moz-transition: All 0.3s ease;
+    -webkit-transition: All 0.3s ease;
+}
+@media (max-width: 767px) {
+    .search_search_input .div_v60iAm.biaoqian {
+        padding-left: 10px;
+        padding-right: 10px;
+        overflow: scroll;
+        overflow-y: hidden;
+    }
+}
+
 
 </style>

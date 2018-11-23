@@ -36,6 +36,14 @@
                 <!-- 右边主要部分 -->
                 <div class="row_right row_padding">
                     <searchSearchInput></searchSearchInput>
+
+                    <div class="advertisement">
+                        <img src="../../../assets/img/advertisement.png" alt="">
+                    </div>
+                    <div class="advertisement">
+                        <img src="../../../assets/img/advertisementB.png" alt="">
+                    </div>
+                    <Article @refreshs="refresh" v-if="information.length" :inforArticle="information"></Article>
                 </div>
             </div>
         </div>
@@ -48,13 +56,37 @@
 export default {
     data() {
         return {
+            page:0,
+            information:[],
             names: [
-                {name:'院校', selected_prop_value:null, url:'/front/search/major'}, 
+                 {name:'院校', selected_prop_value:null, url:'/front/search/major'},
                 {name:'咨询', selected_prop_value:null, url:'/front/search/info'}, 
                 {name:'辅导', selected_prop_value:null, url:'/front/search/coach'}, 
                 {name:'活动', selected_prop_value:null, url:'/front/search/activity'}
             ]
         }
+    },
+    methods: {
+        refresh: function (data) {
+            this.presentation();
+        },
+        presentation: function () {
+            let _this = this;
+            axios.get('/front/consult/getRecommendRead?pageNumber='+_this.page)
+                .then(response => {
+                    console.log(response.data);
+                    if(response.data.code == 0){
+                        _this.information=response.data.data;
+
+                    }
+                })
+                .catch(error => function (error) {
+                    console.log(response)
+                });
+        },
+    },
+    mounted() {
+        this.presentation()
     }
 }
 </script>
@@ -89,7 +121,7 @@ export default {
     padding-left: 0px;
     padding-right: 0px;
 }
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
     .container_tPJRDM {
         width: auto;
     }
@@ -99,7 +131,7 @@ export default {
     .c-container {
         width: 940px;
     }
-}
+} */
 .mianbao .div_PHerR2 {
     min-height: auto;
     display: -webkit-box;
@@ -193,5 +225,73 @@ export default {
         width: 25%;
     }
 }
+
+
+.advertisement{
+    border-radius: 3px;
+    width: 305px;
+    height: 188px;
+    margin-bottom: 14px;
+    margin-top: 14px;
+}
+.advertisement img{
+    width: 100%;
+    height: 100%;
+}
+.advertisement img:hover{
+    box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
+    -webkit-transition: All 0.3s ease;
+    -webkit-transform: rotate(0deg) scale(1) translate(0%,0%);
+    transform: rotate(0deg) scale(1) translate(0%,0%);
+    transition: All 0.3s ease;
+}
+
+
+@media (max-width: 767px) {
+    .search .section_bUBpNL.mianbao {
+        padding-top: 25px;
+        padding-bottom: 10px;
+    }
+}
+@media (max-width: 767px) {
+    .search .section_bUBpNL {
+        padding-bottom: 30px;
+    }
+}
+@media (max-width: 767px) {
+    * {
+        background-attachment: initial !important;
+    }
+}
+@media (max-width: 767px) {
+    .search .section_bUBpNL {
+        padding-bottom: 30px;
+    }
+}
+@media (max-width: 991px) {
+    .section_bUBpNL .row_EaN5GL {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 991px) {
+    .section_bUBpNL .row_padding {
+        width: 100%;
+    }
+}
+@media (max-width: 767px) {
+    .advertisement {
+        width: 100%;
+        height: auto;
+    }
+}
+
+
+
+
+
+
+
 
 </style>

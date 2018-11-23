@@ -1,7 +1,7 @@
 <template>
     <div class="search_label_page_head">
         <div class="c-div div_v60iAm biaoqian">
-            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': item.selected_prop_value === index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="#">{{ item.name }}</a>
+            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': item.selected_prop_value === index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="javaScript:void(0)">{{ item.name }}</a>
 
         </div>
     </div>
@@ -23,9 +23,8 @@ export default {
             return true;
         },
         testClick(item, index) {
-            console.log(item);
-            this.$router.push(item.url);
-            // this.$emit('labelHeadClick', item);
+//            this.$router.push(item.url);
+             this.$emit('labelHeadClick', item);
             if(this.forCancelStyle())
                 this.Names[index].selected_prop_value = index;
             
@@ -77,6 +76,13 @@ export default {
     border-width: 3px;
     font-weight: bold;
 }
+.search_label_page_head .textlink_jH6Kkn.xuanzhong:first-child {
+    color: rgb(0, 159, 160);
+    border-style: none none solid;
+    border-color: rgb(0, 159, 160);
+    border-width: 3px;
+    font-weight: bold;
+}
 .search_label_page_head .textlink_jH6Kkn {
     font-size: 16px;
     color: rgb(49, 49, 49);
@@ -105,6 +111,28 @@ export default {
     border-bottom-width: 2px;
     color: #009fa0;
 }
+@media (max-width: 767px) {
+    .search_label_page_head .div_v60iAm.biaoqian {
+        padding-left: 10px;
+        padding-right: 10px;
+        overflow: scroll;
+        overflow-y: hidden;
+    }
+}
+@media (max-width: 767px) {
+    .search_label_page_head .textlink_jH6Kkn.xuanzhong {
+        font-size: 12px;
+        margin-right: 13px;
+    }
+}
+@media (max-width: 767px) {
+    .search_label_page_head .textlink_jH6Kkn {
+        margin-right: 15px;
+        font-size: 12px;
+    }
+}
+
+
 .search_label_page_head .textlink_jH6Kkn:first-child{
     font-weight: bold;
     border-style: none none solid;
@@ -112,4 +140,5 @@ export default {
     border-bottom-width: 3px;
     color: #009fa0;
 }
+
 </style>

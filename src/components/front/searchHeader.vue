@@ -1,11 +1,11 @@
 <template>
-    <div class="container-fluid c-section">
-        <div class="container-le">
+    <div class="container-fluid c-section ">
+        <div class="container-le container">
             <div class="div_bylQak">
                 <div class="div_deTdJq">
                     <img class="c-image image_scKtnN" src="http://qty83k.creatby.com/materials/2771/origin/437685aa5222171157aa611ea23ed4e9_origin.png">
                     <div class="div_sbhhz7">
-                        <a class="textlink_0sqQZd" href="#" iactive="True">选院校</a>
+                        <a class="textlink_0sqQZd" href="#" iactive="False">选院校</a>
                         <div class="c-div div_9IrVVF"></div>
                         <a class="textlink_0sqQZd" href="#" iactive="True">找活动</a>
                         <div class="c-div div_9IrVVF"></div>
@@ -14,12 +14,17 @@
                         <a class="textlink_0sqQZd" href="#" iactive="True">搜辅导</a>
                     </div>
                 </div>
-                <div class="div_frZK1h" style="margin-right: 20rem;">
+                <div class="div_frZK1h" style="margin-right: 17rem;">
                     <div class="imageblock_IdAeHA c-action-click" style="background-size: 100% 100%; background-position: 0% 0%; background-repeat: no-repeat; background-image: url(http://o3bnyc.creatby.com/diazo/images/image-placeholder.svg);"></div>
                     <div class="c-div div_9IrVVF"></div>
                     <img class="c-image image_1XmLsk tixing c-action-click" src="http://qty83k.creatby.com/materials/2771/origin/83908f46282768d9baf1123cc53ee7cf_origin.png">
                     <img class="c-image image_1XmLsk c-action-click" src="http://qty83k.creatby.com/materials/2771/origin/060001cc8b7b4418f3207641bcd5a90b_origin.png">
                 </div>
+                <!-- <div class="c-div div_TquOe2">
+                    <div class="c-div div_ejhvlr"></div>
+                    <div class="c-div div_ejhvlr"></div>
+                    <div class="c-div div_ejhvlr"></div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -90,7 +95,7 @@ a {
 .c-image {
     height: auto;
     width: auto;
-    max-width: 100%;
+    /* max-width: 100%; */
     display: inline-block;
 }
 .div_sbhhz7 {
@@ -148,5 +153,39 @@ a {
 .tixing {
     margin-right: 0px;
 }
+@media (max-width: 767px) {
+    * {
+        background-attachment: initial !important;
+    }
+}
+@media (max-width: 991px) {
+    .div_TquOe2 {
+        min-height: auto;
+        height: 30px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        width: 30px;
+    }
+}
+@media (max-width: 991px) {
+    .div_ejhvlr {
+        width: 100%;
+        min-height: auto;
+        height: 2px;
+        background-color: rgb(107, 107, 107);
+    }
+}
+
+
+
+
 </style>
 

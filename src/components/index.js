@@ -25,8 +25,9 @@ import userList from './front/userList.vue'
 import userCollege from './front/userCollege.vue'
 import searchLablePageHead from './front/searchLablePageHead.vue'
 import searchSearchInput from './front/searchSearchInput.vue'
-import searchMajorModular from './front/searchMajorModular'
 import selectAll from './front/selectAll'
+import searchMajorModular from './front/searchMajorModular.vue'
+import searchCoachBox from './front/searchCoachBox.vue'
 export default {
     Test, 
     Test2,
@@ -57,5 +58,6 @@ export default {
     searchLablePageHead,
     searchSearchInput,
     searchMajorModular,
-    selectAll
+    selectAll,
+    searchCoachBox
 }
