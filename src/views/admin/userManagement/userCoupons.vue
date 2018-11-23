@@ -6,7 +6,18 @@
             <el-breadcrumb-item><div class="now-page">领优惠券</div></el-breadcrumb-item>
         </el-breadcrumb>
         <div style="width: 1500px;margin: 0 auto 20px">
-            <el-button class="export-button" type="primary" icon="el-icon-upload2"  @click.native = "query" style="float: none">导出</el-button>
+            <a style="display: block;
+                    float: none;
+                    width: 80px;
+                    height: 30px;
+                    text-align: center;
+                    line-height: 30px;
+                    text-decoration: none;"
+               class="export-button"
+               href="http://www.zslm.com/admin/accounts/createCouponExcel">
+                <!--需要配置域名-->
+                导出
+            </a>
         </div>
         <div class="filesquery">
             <i class="el-icon-search"></i>
