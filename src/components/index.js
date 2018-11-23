@@ -21,6 +21,9 @@ import activityBox from './front/activityBox.vue'
 import userInfomation from './front/userinformation.vue'
 import userList from './front/userList.vue'
 import userCollege from './front/userCollege.vue'
+import searchLablePageHead from './front/searchLablePageHead.vue'
+import searchSearchInput from './front/searchSearchInput.vue'
+import searchMajorModular from './front/searchMajorModular'
 export default {
     Test, 
     Test2,
@@ -44,5 +47,8 @@ export default {
     activityBox,
     userInfomation,
     userList,
-    userCollege
+    userCollege,
+    searchLablePageHead,
+    searchSearchInput,
+    searchMajorModular
 }

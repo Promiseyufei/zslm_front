@@ -1,13 +1,12 @@
 <template>
     <div>
-      <!-- <p>this is front.vue</p> -->
-      <router-view/>
+        aaa
     </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+    
 }
 </script>
 
