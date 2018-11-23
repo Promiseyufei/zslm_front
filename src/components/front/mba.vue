@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div class="content-son" v-for="(item, index) in mbaShort" :key="index">
+                <div class="content-son" v-for="(item,index) in mbaShort" :key="index">
                     <div class="article-con-posiion clearfloat">
                         <div class="son-left">
                             <img src="../../assets/img/picture.jpg" alt="未加载">
