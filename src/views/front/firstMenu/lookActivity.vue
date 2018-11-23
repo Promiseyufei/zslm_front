@@ -1,8 +1,26 @@
 <template>
     <div>
         <hearderBanner enName="COLLEGES" name="选院校"></hearderBanner>
+        <!-- 搜索框 -->
+       <!--  <div class="activityCollege">
+            <div class="selectCollegeSearch">
+                <el-input
+                    placeholder="请输入关键字搜索"
+                    suffix-icon="el-icon-search"
+                    v-model="keyword">
+                </el-input>
+            </div>
+        </div> -->
         <!-- 活动列表模块 -->
         <div class="activityList">
+            <div class="search">
+                <el-input
+                    placeholder=" 复旦大学    北京大学"
+                    suffix-icon="el-icon-search"
+                    v-model="keyword">
+                </el-input>
+            </div>
+            <radioButton></radioButton>
             <div class="activityListBox">
                 <!-- 单个活动块 -->
                 <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox>
@@ -259,6 +277,18 @@ export default {
 };
 </script>
 <style>
+/*搜索框*/
+.search .el-input__inner {
+    font-size: 14px;
+    border-radius: 60px;
+    height: 32px;
+}
+.search>div{
+    width: 306px;
+}
+.search .el-input__icon{
+    line-height: 0;
+}
 </style>
 <style scoped>
     .activityList{
@@ -276,11 +306,23 @@ export default {
         min-height: auto;
         margin-bottom: 20px;
     }
+
+    /*搜索框*/
+    .search {
+        width: 1300px;
+        margin: 37px auto 49px;
+    }
     
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
         .activityListBox{
             background-attachment: initial !important;
+        }
+        .search{
+            width: 95%;
+        }
+        .search>div{
+            width: 100%;
         }
     }
 
@@ -288,6 +330,12 @@ export default {
     @media only screen and (min-width: 600px) {
         .activityListBox{
             background-attachment: initial !important;
+        }
+        .search{
+            width: 95%;
+        }
+        .search>div{
+            width: 100%;
         }
     }
 
@@ -298,7 +346,12 @@ export default {
 
     /* Large devices (laptops/desktops, 992px and up) */
     @media only screen and (min-width: 992px) {
-        
+        .search{
+            width: 1300px;
+        }
+        .search>div{
+            width: 306px;
+        }
     } 
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -306,6 +359,7 @@ export default {
         .activityListBox{
             width: 1300px;
         }
+
     }   
 
 </style>
