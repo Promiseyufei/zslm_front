@@ -2,6 +2,34 @@
 * 运营管理模块——首页
 * 获取所有资讯类型
 */
+Mock.mock('/front/coach/getcoach', {
+	"code": 0,
+	'msg': Mock.mock('@cword(3, 5)'),
+	"data|12": [
+		{
+			'id|+1': 0,
+			"coach_name": Mock.mock('@cword(3, 5)'),
+			"province": Mock.mock('@cword(2, 3)'),
+			"if_coupons": 0,
+			"if_back_money": 0,
+			"cover_name": "1540718814-5bd580de207fe-coach.png",
+			"cover_alt": null,
+			"logo_name": "1540718814-5bd580de20853-coach.png",
+			"logo_alt": null,
+			"son_coachs|77":[
+				{
+					"coach_name": Mock.mock('@cword(3, 5)'),
+				}
+			]
+    	}
+	],
+	"count": 100,
+})
+
+/* Operate
+* 运营管理模块——首页
+* 获取所有资讯类型
+*/
 Mock.mock('/admin/operate/getIndexListName', {
 	"code": 0,
 	'msg': Mock.mock('@cword(3, 5)'),
