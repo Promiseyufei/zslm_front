@@ -2,7 +2,7 @@
     <div>
         <div class="content-whole">
             <div class="content-whole-article">
-                <div class="content-head clearfloat" v-for="(item, index) in mbaHead" :key="index">
+                <div class="content-head clearfloat" v-for="(item, index) in mbaHead">
                     <div class="head-left">
                             <img :src="item.z_image" alt="未加载">
                     </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div class="content-son" v-for="(item,index) in mbaShort" :key="index">
+                <div class="content-son" v-for="(item,index) in mbaShort">
                     <div class="article-con-posiion clearfloat">
                         <div class="son-left">
                             <img :src="item.z_image" alt="未加载">

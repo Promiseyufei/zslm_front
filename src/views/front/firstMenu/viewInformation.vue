@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="article-cont">
-                    <mbaArticle @addAtricle="addArticle" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
+                    <mbaArticle @addAtricle="addArticle" v-if="homepage.length" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
                 </div>
             </div>
             <!--右边的的文章-->
@@ -206,11 +206,12 @@ export default {
                         if (_this.mbaJudge){
                             for(let i in response.result.info ){
                                 if (i == 0){
-                                    _this.homepage.push(response.result.info[i])
+                                    _this.homepage.push(response.result.info[i]);
                                 }else {
                                     _this.shortpage.push(response.result.info[i]);
                                 }
                             }
+                            console.log(_this.shortpage)
                         }else {
                             for(let i in response.result.info ){
                                 _this.shortpage.push(response.result.info[i]);
