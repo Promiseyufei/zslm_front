@@ -32,13 +32,157 @@ export default {
             count:0,//筛选后活动总数
 
             info:[],//活动信息
+
+            // 筛选块列表数据
+            activitySelect:[{
+                allMajorType:[],//所有专业类型的id数组
+                allProvince:[
+                    {
+                        id:1,
+                        name:"北京"
+                    },
+                    {
+                        id:2,
+                        name:"天津"
+                    },
+                    {
+                        id:3,
+                        name:"上海"
+                    },
+                    {
+                        id:4,
+                        name:"重庆"
+                    },
+                    {
+                        id:5,
+                        name:"河北"
+                    },
+                    {
+                        id:1,
+                        name:"北京"
+                    },
+                    {
+                        id:6,
+                        name:"山西"
+                    },
+                    {
+                        id:7,
+                        name:"台湾"
+                    },
+                    {
+                        id:8,
+                        name:"辽宁"
+                    },
+                    {
+                        id:9,
+                        name:"吉林"
+                    },
+                    {
+                        id:10,
+                        name:"黑龙江"
+                    },
+                    {
+                        id:11,
+                        name:"江苏"
+                    },
+                    {
+                        id:12,
+                        name:"浙江"
+                    },
+                    {
+                        id:13,
+                        name:"安微"
+                    },
+                    {
+                        id:14,
+                        name:"福建"
+                    },
+                    {
+                        id:15,
+                        name:"江西"
+                    },
+                    {
+                        id:16,
+                        name:"山东"
+                    },
+                    {
+                        id:17,
+                        name:"河南"
+                    },
+                ],//所有省份数组
+                allActivityType:[],//所有活动类型的id数组
+                studyCost:[
+                    {
+                        id:0,
+                        name:"未开始"
+                    },
+                    {
+                        id:1,
+                        name:"进行中"
+                    },
+                    {
+                        id:2,
+                        name:"已结束"
+                    },
+                ],//活动状态
+                gradeLine:[
+                    {
+                        id:1,
+                        name:"一月"
+                    },
+                    {
+                        id:2,
+                        name:"二月"
+                    },
+                    {
+                        id:3,
+                        name:"三月"
+                    },
+                    {
+                        id:4,
+                        name:"四月"
+                    },
+                    {
+                        id:5,
+                        name:"五月"
+                    },
+                    {
+                        id:6,
+                        name:"六月"
+                    },
+                    {
+                        id:7,
+                        name:"七月"
+                    },
+                    {
+                        id:8,
+                        name:"八月"
+                    },
+                    {
+                        id:9,
+                        name:"九月"
+                    },
+                    {
+                        id:10,
+                        name:"十月"
+                    },
+                    {
+                        id:11,
+                        name:"十一月"
+                    },
+                    {
+                        id:12,
+                        name:"十二月"
+                    },
+                ],//时间1-12月
+            }],
         }
     },
     methods: {
         // 活动列表页---通过筛选条件获得的活动列表数据
         getActivityList:function(){
             var self = this;
-            axios.get('/front/activity/getActivity',{
+            this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
                 province:self.province,
                 majorType:self.majorType,
@@ -47,15 +191,51 @@ export default {
                 activityDate:self.activityDate,
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
-            }).then(function (response) {
-                let res = response.data;
+            }).then(function (res) {
+                // let res = response.data;
                 if(res.code == 0){
                     // console.log(res.data[0].info);
                     self.count = res.data[0].count;
                     // console.log(self.count);
                     self.info = res.data[0].info;
-                    self.message(true, "活动列表加载成功", 'success');
+                    // self.message(true, "活动列表加载成功", 'success');
+                }
+                else{
+                    self.message(true, "加载失败，请重试", 'info');
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
 
+        // 在活动列表页————筛选部分————获得活动的专业字典
+        getCollegesType:function(){
+            var self = this;
+            this.fetch('/front/colleges/getCollegesType',{
+               
+            }).then(function (res) {
+                // console.log(res);
+                if(res.code == 0){
+                    self.activitySelect.allMajorType = res.result;
+                    // console.log(self.activitySelect.allMajorType);
+                }
+                else{
+                    self.message(true, "加载失败，请重试", 'info');
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
+
+        // 在活动列表页————筛选部分————获得活动的类型字典
+        getActivityType:function(){
+            var self = this;
+            this.fetch('/front/activity/getActivityType',{
+               
+            }).then(function (res) {
+                if(res.code == 0){
+                    self.activitySelect.allActivityType = res.result;
+                    // console.log(self.activitySelect.allActivityType);
                 }
                 else{
                     self.message(true, "加载失败，请重试", 'info');
@@ -70,29 +250,10 @@ export default {
             this.getActivityList();
         },
 
-        // 活动列表页筛选部分---获得活动的专业类型字典
-        getActivityType:function(){
-            var self = this;
-            axios.get('/front/colleges/getCollegesType',{
-                
-            })
-            .then(res=>{
-                console.log(res.data);
-                if(res.code == 0){
-                    // self.count = res.data.count;
-                    // self.info = res.data.info;
-                    // self.message(true, "活动列表加载成功", 'success');
-                }
-                else{
-                    self.message(true, "加载失败，请重试", 'info');
-                }
-            })
-            .catch(function(error){
-                console.log("error");
-            });
-        }
     },
     mounted(){
+        this.getCollegesType();
+        this.getActivityType();
         this.getActivityList();
     },
 };

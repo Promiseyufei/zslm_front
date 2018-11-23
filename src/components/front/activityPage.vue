@@ -66,7 +66,7 @@ export default {
     /*分页样式*/
     .apartPage{
         margin-top: 56px;
-        margin-bottom: 20px;
+        margin-bottom: 76px;
         text-align: center;
     }
 
