@@ -97,6 +97,7 @@
 						}, '是否注册?');
 					}
 					else if(response.code == 0) {
+						this.saveUserState('user', this.phoneNumber);
 						this.message(true, '注册成功，默认密码为手机号后六位~', 'success');
 					}
 				})
