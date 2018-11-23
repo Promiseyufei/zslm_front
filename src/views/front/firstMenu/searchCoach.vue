@@ -5,22 +5,7 @@
             <hearderBanner enName="INSTITUTIONS" name="搜辅导"></hearderBanner>
 
             <!-- 筛选框 -->
-            <div class="publicRowboxbig">
-                <div class="publicRowbox">
-                    <div class="publicRow" v-for="(item,index) in list">
-                        <span>热门地区</span>
-                        <div class="publicRowRight">
-                            <div class="publiccheckbox">
-                                <el-checkbox-group v-model="checkboxGroup1">
-                                    <el-checkbox-button v-for="(city,ind) in item.cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
-                                </el-checkbox-group>
-                            </div>
-                            <span @click="getMore">查看更多</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+            <selectAll :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectAll>
 
             <!-- 辅导机构小块块 -->
             <div class="singlecoachBig">
@@ -88,17 +73,21 @@
 <script>
 export default {
     components: {
+        
     },
     data() {
         return {
             list: [],
-            checkboxGroup1: ['上海2'],
-            tive:true,
+            checkboxGroup1: [["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"]],
             coachlist: [],
-            hei:0,
         }
     },
     methods: {
+        //每次子组件改变时，父组件就会改变
+        change: function(checkboxGroup) {
+            console.log(checkboxGroup);
+        },
+        //得到筛选框二维数组
         getRoot: function() {
             var that = this;
             axios.get('/mulu',{
@@ -117,18 +106,11 @@ export default {
             }).catch(function (error) {
             });
         },
-        getMore:function() {
-            // var hh = this.$refs.publiccheckbox;
-            // console.log(this.hei);
-            // if(hh.offsetHeight==this.hei) {
-            //     hh.style.height = "40px";
-            // }else {
-            //     hh.style.height = this.hei+"px";
-            // }
-        },
+        //跳转辅导机构详情页
         jump: function(id) {
             this.$router.push('/front/singleCoach/'+id);
         },
+        //得到所有筛选过的辅导机构列表
         getCoach: function() {
             var that = this;
             axios.post('/front/coach/getcoach',{
@@ -151,58 +133,12 @@ export default {
     mounted(){
         this.getCoach();
         this.getRoot();
-        var hh = document.getElementsByClassName("publiccheckbox");
-        console.log(hh[0]);
-        // this.hei = hh.offsetHeight;
-        // console.log(hh.offsetHeight);
     },
 };
 </script>
 <style>
 </style>
 <style scoped>
-.publicRowboxbig {
-    display: flex;
-    justify-content: center;
-}
-.publicRowbox {
-    width: 1300px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
-    margin: 0 10px;
-}
-.publicRow {
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-.publicRow>span {
-    width: 100px;
-}
-.publicRowRight {
-    display: flex;
-    flex-grow:1;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-.publicRowRight>div {
-    display: flex;
-    justify-content: space-between;
-}
-.publicRowRight>span {
-    width: 100px;
-}
-.coachLittleshort {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 50%;
-    margin-bottom: 15px;
-}
 
 .coachLittleshort>strong {
     background-color: #ffb957;

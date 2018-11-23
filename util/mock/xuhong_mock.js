@@ -31,7 +31,7 @@ Mock.mock('/mulu', {
 	"list|10":[
 		{
 			"type": Mock.mock('@cword(2, 4)'),
-			"cities|12":[
+			"cities|24":[
 				{
 					"name":Mock.mock('@cword(2, 4)'),
 				}

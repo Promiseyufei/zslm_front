@@ -26,6 +26,7 @@ import userCollege from './front/userCollege.vue'
 import searchLablePageHead from './front/searchLablePageHead.vue'
 import searchSearchInput from './front/searchSearchInput.vue'
 import searchMajorModular from './front/searchMajorModular'
+import selectAll from './front/selectAll'
 export default {
     Test, 
     Test2,
@@ -55,5 +56,6 @@ export default {
     userCollege,
     searchLablePageHead,
     searchSearchInput,
-    searchMajorModular
+    searchMajorModular,
+    selectAll
 }
