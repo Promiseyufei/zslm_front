@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="article-cont">
-                    <mbaArticle @addAtricle="addArticle" v-if="homepage.length" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
+                    <mbaArticle @addAtricle="addArticle" v-if="judge" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
                 </div>
             </div>
             <!--右边的的文章-->
@@ -101,7 +101,8 @@ export default {
             mbaTatol:1,
             mbaInformation:[],
             pageCount:9,
-            mbaJudge:true
+            mbaJudge:true,
+            judge:true
         }
     },
     methods: {
@@ -204,6 +205,10 @@ export default {
                 .then((response) => {
                     if(response.code == 0){
                         if (_this.mbaJudge){
+                            if (response.result.info.length==0)
+                                _this.judge =false;
+                            else
+                                _this.judge = true;
                             for(let i in response.result.info ){
                                 if (i == 0){
                                     _this.homepage.push(response.result.info[i]);
@@ -217,8 +222,10 @@ export default {
                                 _this.shortpage.push(response.result.info[i]);
                             }
                         }
+
                         _this.industryTatol = response.result.count;
                     }
+                    console.log(_this.homepage.length+"=========")
                 })
                 .catch(error => function (error) {
                     console.log(response)
