@@ -3,7 +3,7 @@
         <!--轮播图-->
         <div class="sowingMap">
             <el-carousel trigger="click" :height="myWidth" class="sowingContent" :interval="5000" arrow="always">
-                <el-carousel-item v-for="item in rotationPicture">
+                <el-carousel-item v-for="(item,index) in rotationPicture">
                     <img :src="item.z_image" alt="" class="picture-header">
                 </el-carousel-item>
             </el-carousel>
@@ -28,14 +28,14 @@
             </div>
             <!--右边的的文章-->
             <div class="float-right">
-                <Article @refreshs="refresh" v-if="information.length" :inforArticle="information"></Article>
+                <Article @refreshs="refreshBusiness" v-if="informbusiness.length" title="行业报告" :inforArticle="informbusiness"></Article>
                 <div class="advertisement">
                     <img src="../../../assets/img/advertisement.png" alt="">
                 </div>
                 <div class="advertisement">
                     <img src="../../../assets/img/advertisementB.png" alt="">
                 </div>
-                <Article @refreshs="refresh" v-if="information.length" :inforArticle="information"></Article>
+                <Article @refreshs="refresh" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
             </div>
         </div>
         <!--<div class="footer">-->
@@ -82,7 +82,6 @@ export default {
             myWidth: window.innerWidth>767? 440+"px": window.innerWidth*(440/1280)+"px",
             picture:[],
             rotationPicture:[],
-            page:0,
             homepage:[
                 {
                     title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
@@ -127,7 +126,20 @@ export default {
                     link:"",
                 }
             ],
-            information:[]
+            /*
+            * 推荐你阅读
+            * */
+            page:0,
+            information:[],
+            industryTatol:1,
+            /*
+            * 行业报告
+            * */
+            businessPage:0,
+            informbusiness:[],
+            businessTatol:1,
+
+            kind:[]
         }
     },
     methods: {
@@ -145,12 +157,23 @@ export default {
         },
         refresh: function (data) {
             console.log(this.page)
-//            this.page++;
-//            if (this.page>this.information.tatol){
-//                this.page = 0;
-//            }
+            this.page++;
+            if (this.page>this.industryTatol){
+                this.page = 0;
+            }
             this.presentation();
         },
+        refreshBusiness: function (data) {
+            this.businessPage++;
+            if (this.businessPage>this.industryTatol){
+                this.businessPage = 0;
+            }
+            this.presentation();
+        },
+        /*
+        *
+        * 轮播图
+        * */
         rotationChart: function () {
             let _this = this;
             axios.get('/front/consult/getConsultListBroadcast')
@@ -163,14 +186,33 @@ export default {
                     console.log(response)
                 });
         },
+        /*
+        * 行业报告
+        * */
         presentation: function () {
+            let _this = this;
+            axios.get('/front/consult/getRecommendRead?type=1&pageNumber='+_this.page)
+                .then(response => {
+                    if(response.data.code == 0){
+                        _this.businessTatol = response.data.data.count;
+                        _this.informbusiness=response.data.data.info;
+                    }
+                })
+                .catch(error => function (error) {
+                    console.log(response)
+                });
+        },
+        /*
+        * 推荐阅读
+        * */
+        readtation: function () {
             let _this = this;
             axios.get('/front/consult/getRecommendRead?pageNumber='+_this.page)
                 .then(response => {
                     console.log(response.data);
                     if(response.data.code == 0){
-                        _this.information=response.data.data;
-
+                        _this.information=response.data.data.info;
+                        _this.industryTatol = response.data.data.count;
                     }
                 })
                 .catch(error => function (error) {
@@ -180,6 +222,7 @@ export default {
     },
     mounted(){
         this.rotationChart();
+        this.readtation();
         this.presentation();
     },
 };
@@ -217,6 +260,7 @@ export default {
     .content{
         margin: auto;
         margin-top: 29px;
+        padding-bottom: 150px;
         width: 1280px;
     }
     .float-left{
@@ -398,8 +442,12 @@ export default {
     }
 </style>
 
-<style>
-
+<style >
+    .sowingMap [class*=" el-icon-"], [class^=el-icon-]{
+        font-size:26px;
+        font-weight: bolder;
+        line-height:0px;
+    }
     .sowingMap .el-carousel__container{
         height: 440px;
     }
@@ -415,11 +463,7 @@ export default {
     .sowingMap .el-carousel__arrow{
         height: 0px;
     }
-    .sowingMap [class*=" el-icon-"], [class^=el-icon-]{
-        font-size:26px;
-        font-weight: bolder;
-        line-height:0px;
-    }
+
     .sowingMap .el-carousel__arrow--left{
         left: 20px;
     }

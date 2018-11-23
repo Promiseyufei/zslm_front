@@ -5,7 +5,7 @@
             <div id="content">
                 <div id="head-choiced">
                     <div id="head-left">
-                        行业报告
+                        {{ titles }}
                     </div>
                     <div id="head-right" @click="refresh">
                         <a>
@@ -13,7 +13,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="content-article" v-for="item in infor">
+                <div class="content-article" v-for="(item,index) in infor" :key="index">
                     <div id="title-article">
                         <div class="font-style"><a href="">{{ item.zx_name }}</a></div>
                         <div class="time">{{ item.create_time }}</div>
@@ -32,9 +32,10 @@
         data() {
             return{
                 infor: this.inforArticle,
+                titles: this.title
             }
         },
-        props:["inforArticle"],
+        props:["inforArticle","title"],
         methods:{
             refresh: function () {
                 this.$emit('refreshs');
