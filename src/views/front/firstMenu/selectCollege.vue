@@ -97,8 +97,9 @@ export default {
         color: #a4a4a4;
     }
     .diffeCollege [class*=" el-icon-"], [class^=el-icon-] {
-        width: 19px;
-        height: 19px;
+        font-size: 14px;
+        /*width: 19px;*/
+        /*height: 19px;*/
         margin-right: 8px;
     }
     .diffeCollege .el-col-8 {

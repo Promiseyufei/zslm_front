@@ -39,15 +39,12 @@ import WangEditor from 'wangeditor'
 window.WangEditor = WangEditor
 
 //使用mock
-import Mock from 'mockjs'
-window.Mock = Mock
-require('../util/mock/xuhong_mock.js')
-require('../util/mock/youqiqin_mock.js')
-<<<<<<< HEAD
-require('../util/mock/sunjifeng.js')
-=======
->>>>>>> 2ac8e7077a0e542535dd252120298c8822e1c7f1
-Vue.config.productionTip = false
+// import Mock from 'mockjs'
+// window.Mock = Mock
+// require('../util/mock/xuhong_mock.js')
+// require('../util/mock/youqiqin_mock.js')
+// require('../util/mock/sunjifeng.js')
+// Vue.config.productionTip = false
 
 
 //加载公共组件

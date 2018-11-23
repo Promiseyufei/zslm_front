@@ -225,7 +225,6 @@
 		flex-direction: column;
 		align-items:center;
 		justify-content:center;
-		/*margin: 60px 0 0;*/
 		width: 100%;
 		height: 251px;
 		background-color: rgb(56, 59, 61);
