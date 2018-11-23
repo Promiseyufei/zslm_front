@@ -1,4 +1,4 @@
- 
+
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
@@ -44,7 +44,7 @@ window.WangEditor = WangEditor
 // require('../util/mock/xuhong_mock.js')
 // require('../util/mock/youqiqin_mock.js')
 // require('../util/mock/tnt_mock.js')
-
+// require('../util/mock/sunjifeng.js')
 Vue.config.productionTip = false
 
 

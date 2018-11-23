@@ -2,7 +2,7 @@
     <div>
         <div class="content-whole">
             <div class="content-whole-article">
-                <div class="content-head clearfloat" v-for="(item,indexs) in mbaHead" >
+                <div class="content-head clearfloat" v-for="(item, index) in mbaHead" :key="index">
                     <div class="head-left">
                         <img src="../../assets/img/personal.jpg" alt="未加载">
                     </div>

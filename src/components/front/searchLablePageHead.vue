@@ -105,4 +105,33 @@ export default {
     border-bottom-width: 2px;
     color: #009fa0;
 }
+@media (max-width: 767px) {
+    .search_label_page_head .div_v60iAm.biaoqian {
+        padding-left: 10px;
+        padding-right: 10px;
+        overflow: scroll;
+        overflow-y: hidden;
+    }
+}
+@media (max-width: 767px) {
+    .search_label_page_head .textlink_jH6Kkn.xuanzhong {
+        font-size: 12px;
+        margin-right: 13px;
+    }
+}
+@media (max-width: 767px) {
+    .search_label_page_head .textlink_jH6Kkn {
+        margin-right: 15px;
+        font-size: 12px;
+    }
+}
+
+
+.search_label_page_head .textlink_jH6Kkn:first-child{
+    font-weight: bold;
+    border-style: none none solid;
+    border-bottom-color: rgb(0, 159, 160);
+    border-bottom-width: 3px;
+    color: #009fa0;
+}
 </style>

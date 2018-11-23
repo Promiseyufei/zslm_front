@@ -7,7 +7,7 @@
             <!-- 辅导机构小块块 -->
             <div class="singlecoachBig">
                 <div class="singlecoachbox">
-                    <div class="singlecoach" v-for="(item,index) in coachlist" @click="jump(item.id)">
+                    <div class="singlecoach" v-for="(item,index) in coachlist" @click="jump(item.id)" :key="index">
                         <div class="singlecoachtop">
                             <img src="../../../assets/img/xindongfang.png" alt="">
                         </div>
@@ -29,7 +29,7 @@
                                 <div class="littleCollage2" v-if="index%4==2||index%4==3">
                                     <p class="coachHeader">{{item.son_coachs.length}}个分校</p>
                                     <div class="coachLittle">
-                                        <div class="coachLittleshort" v-for="(list,dd) in item.son_coachs">
+                                        <div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
                                             <strong>{{dd+1}}</strong>
                                             <span>{{list.coach_name}}</span>
                                         </div>
@@ -50,7 +50,7 @@
                                 <div class="littleCollage" v-if="index%4==0||index%4==1">
                                     <p class="coachHeader">{{item.son_coachs.length}}个分校</p>
                                     <div class="coachLittle">
-                                        <div class="coachLittleshort" v-for="(list,dd) in item.son_coachs">
+                                        <div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
                                             <strong>{{dd+1}}</strong>
                                             <span>{{list.coach_name}}</span>
                                         </div>
