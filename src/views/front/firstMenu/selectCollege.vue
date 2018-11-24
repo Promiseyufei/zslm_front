@@ -59,33 +59,33 @@
                                 <div class="joinContrast"><el-button>+ 加入对比</el-button></div>
                             </div>
                             <div class="forThree">
-                                <div class="specificInform" v-if="all.product.length == 2 && all.product[0] instanceof Array" v-for="(t,index) in all.product[0]">
-                                    <p class="international">{{t.project_name}}</p>
-                                    <div class="moneyType">
-                                        <div style="display:flex;align-items:center;margin:0 44px 0 0;">
-                                            <div style="margin:2px 0 0 0;"><img src="../../../assets/img/smoney.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>
-                                        </div>
-                                        <div style="display:flex;align-items:center;">
-                                            <div style="margin:3px 0 0 0;"><img src="../../../assets/img/class.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>
-                                        </div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;margin:15px 0;">
-                                            <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;">
-                                            <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>
-                                    </div>
-                                </div>
+                                <!--<div class="specificInform" v-if="all.product.length == 2 && all.product[0] instanceof Array" v-for="(t,index) in all.product[0]">-->
+                                    <!--<p class="international">{{t.project_name}}</p>-->
+                                    <!--<div class="moneyType">-->
+                                        <!--<div style="display:flex;align-items:center;margin:0 44px 0 0;">-->
+                                            <!--<div style="margin:2px 0 0 0;"><img src="../../../assets/img/smoney.png"></div>-->
+                                            <!--<div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>-->
+                                            <!--<div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>-->
+                                        <!--</div>-->
+                                        <!--<div style="display:flex;align-items:center;">-->
+                                            <!--<div style="margin:3px 0 0 0;"><img src="../../../assets/img/class.png"></div>-->
+                                            <!--<div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>-->
+                                            <!--<div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div style="display:flex;align-items:center;margin:15px 0;">-->
+                                            <!--<div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>-->
+                                            <!--<div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>-->
+                                            <!--<div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>-->
+                                    <!--</div>-->
+                                    <!--<div style="display:flex;align-items:center;">-->
+                                            <!--<div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>-->
+                                            <!--<div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>-->
+                                            <!--<div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
-                                <div class="specificInform" v-else v-for="(t,index) in all.product" :key="index">
+                                <div class="specificInform" v-for="(t,index) in all.showProduct" :key="index">
                                     <p class="international">{{t.project_name}}</p>
                                     <div class="moneyType">
                                         <div style="display:flex;align-items:center;margin:0 44px 0 0;">
@@ -111,6 +111,35 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="forThree" v-show="productShow">
+                                <div class="specificInform" v-for="(t,index) in all.missPorduct" :key="index">
+                                    <p class="international">{{t.project_name}}</p>
+                                    <div class="moneyType">
+                                        <div style="display:flex;align-items:center;margin:0 44px 0 0;">
+                                            <div style="margin:2px 0 0 0;"><img src="../../../assets/img/smoney.png"></div>
+                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
+                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>
+                                        </div>
+                                        <div style="display:flex;align-items:center;">
+                                            <div style="margin:3px 0 0 0;"><img src="../../../assets/img/class.png"></div>
+                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
+                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex;align-items:center;margin:15px 0;">
+                                        <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
+                                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
+                                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>
+                                    </div>
+                                    <div style="display:flex;align-items:center;">
+                                        <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
+                                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
+                                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
 <!--                             <div class="collegeInform" v-show="moreMajor" v-for="(m,index) in allMajorname" :key="index">
                                 <div class="forY">
                                     <div class="forX" v-for="(m,index) in upMajorname" :key="index">
@@ -150,7 +179,7 @@
                     </el-card>
                 </el-col>
             </div>
-        </div>  
+        </div>
     </div>
 </template>
 
@@ -171,9 +200,10 @@ export default {
                 money_order:0,
                 score_type:'',
                 enrollment_mode:'',
-                project_count:1,
+                project_count:0,
                 page:1,
                 page_size:3,
+                productShow:false,
             /*按钮参数*/
             viewMoreButt:'查看更多',
             majorInform:[],
@@ -245,33 +275,39 @@ export default {
                     page: that.page,
                     page_size: that.page_size,
                 }).then(function (response) {
-                        let res = response.result;
+                        let res = response.result[0];
                         if (response.code==0) {
                             that.majorInform=res;
+                            that.count = response.result[1];
                             that.majorInform.forEach((item,index) => {
-                            that.majorInform[index].product = that.spliceArr(item.product, 2);
+                                that.majorInform[index].showProduct = item.product.slice(0,3);
+                                that.majorInform[index].missPorduct = item.product.slice(3);
                             });
                             // for (var i = 0; i < this.page_size.length; i++) {
                             //     console.log(res[i].major_follow_id)
                             // }
                             // console.log(that.majorInform[0].product);
-                        } 
-                        
+                        }
+
                 }).catch(function (error) {
                 });
         },
         //加载更多院校信息
         viewMore:function() {
-            if (this.moreMajor==false) {
+
+            if (!this.moreMajor) {
                 this.moreMajor = true;
                 //改变字体及icon名字
                 this.viewMoreButt = '收起';
                 $("#moreButton").attr("class","el-icon-caret-top")
+                this.productShow = true;
             } else {
                 //改变字体及icon名字
                 // console.log(456)
                 this.viewMoreButt = '查看更多';
                 $("#moreButton").attr("class","el-icon-caret-bottom")
+                this.productShow = false;
+                this.moreMajor = false;
             }
         },
         //点击热度改变颜色
@@ -395,7 +431,7 @@ export default {
             height: 7px;
         }
         .topBott {
-            margin: 0 0 6px 5px; 
+            margin: 0 0 6px 5px;
             display: flex;
             flex-direction:column;
             justify-content:center;
@@ -456,8 +492,8 @@ export default {
         .specificInform {
             width: 375px;
             padding: 30px 0 30px 25px;
-            margin: 0 10px 10px 0; 
-            background-color: #f5f5f5; 
+            margin: 0 10px 10px 0;
+            background-color: #f5f5f5;
             border-radius: 5px;
         }
         .forY {
@@ -477,7 +513,7 @@ export default {
             opacity: 0.06;
             margin: 50px auto;
         }
-    /*不同院校——院校信息*/ 
+    /*不同院校——院校信息*/
 
 
     /*不同院校——图片信息*/
@@ -1085,7 +1121,7 @@ export default {
 
 
     @media (max-width: 767px){
-        
+
         * {
             background-attachment: initial !important;
         }
@@ -1241,7 +1277,7 @@ export default {
             width: 90%;
             /*margin-left: 10px;*/
         }
-        
+
         .selectCollegeSearch {
             margin: 49px auto 44px;
             /*margin-left: 10px;*/
@@ -1278,7 +1314,7 @@ export default {
         }
         .diffeCollege {
             width: 100%;
-            overflow:hidden; 
+            overflow:hidden;
         }
         .diffeCollege .el-col-8{
             width: 720px;
@@ -1339,7 +1375,7 @@ export default {
         .forY,.forThree {
             flex-direction:column;
             justify-content:center;
-            
+
         }
         .diffeCollege {
             width: 100%;
