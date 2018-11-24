@@ -59,13 +59,12 @@
             <a class="c-textlink textlink_wzNM3e dakai c-action-click"
                data-c_act_id="M_ab06ccb710e44532|M_126530613a6d5d52"
                data-c_e_id="textlink_d64f3c03"
-               href="#"
                style="color: rgb(160, 160, 160);"
                 v-show="show"
                 @click="showProject">查看招生项目</a>
             <a class="c-textlink c-initHide textlink_wzNM3e c-action-click"
                data-c_act_id="act_f7495771|M_102cb8b558cc53ad"
-               data-c_e_id="textlink5e28ab3f" href="#"
+               data-c_e_id="textlink5e28ab3f"
                style="color: rgb(160, 160, 160);"
                v-show="notShow"
                 @click="showProject">收起</a>
