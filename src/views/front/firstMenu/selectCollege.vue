@@ -59,32 +59,6 @@
                                 <div class="joinContrast"><el-button>+ 加入对比</el-button></div>
                             </div>
                             <div class="forThree">
-                                <!--<div class="specificInform" v-if="all.product.length == 2 && all.product[0] instanceof Array" v-for="(t,index) in all.product[0]">-->
-                                    <!--<p class="international">{{t.project_name}}</p>-->
-                                    <!--<div class="moneyType">-->
-                                        <!--<div style="display:flex;align-items:center;margin:0 44px 0 0;">-->
-                                            <!--<div style="margin:2px 0 0 0;"><img src="../../../assets/img/smoney.png"></div>-->
-                                            <!--<div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>-->
-                                            <!--<div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>-->
-                                        <!--</div>-->
-                                        <!--<div style="display:flex;align-items:center;">-->
-                                            <!--<div style="margin:3px 0 0 0;"><img src="../../../assets/img/class.png"></div>-->
-                                            <!--<div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>-->
-                                            <!--<div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div style="display:flex;align-items:center;margin:15px 0;">-->
-                                            <!--<div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>-->
-                                            <!--<div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>-->
-                                            <!--<div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>-->
-                                    <!--</div>-->
-                                    <!--<div style="display:flex;align-items:center;">-->
-                                            <!--<div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>-->
-                                            <!--<div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>-->
-                                            <!--<div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-
                                 <div class="specificInform" v-for="(t,index) in all.showProduct" :key="index">
                                     <p class="international">{{t.project_name}}</p>
                                     <div class="moneyType">
@@ -139,38 +113,6 @@
                                 </div>
 
                             </div>
-
-<!--                             <div class="collegeInform" v-show="moreMajor" v-for="(m,index) in allMajorname" :key="index">
-                                <div class="forY">
-                                    <div class="forX" v-for="(m,index) in upMajorname" :key="index">
-                                        <div class="specificInform">
-                                            <p class="international">{{m.project_name}}</p>
-                                            <div class="moneyType">
-                                            <div style="display:flex;align-items:center;margin:0 44px 0 0;">
-                                                <div style="margin:2px 0 0 0;"><img src="../../../assets/img/smoney.png"></div>
-                                                <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
-                                                <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{m.cost}}</div>
-                                            </div>
-                                            <div style="display:flex;align-items:center;">
-                                                <div style="margin:2px 0 0 0;"><img src="../../../assets/img/class.png"></div>
-                                                <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
-                                                <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{m.language}}</div>
-                                            </div>
-                                            </div>
-                                            <div style="display:flex;align-items:center;margin:15px 0;">
-                                                    <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
-                                                    <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
-                                                    <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{m.student_count}}</div>
-                                            </div>
-                                            <div style="display:flex;align-items:center;">
-                                                    <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
-                                                    <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
-                                                    <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{m.class_situation}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                             <div class="viewMore">
                                 <div class="updateInform">信息更新时间：{{update_time}}</div>
                                 <div class="moreInform" @click="viewMore">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
@@ -288,24 +230,15 @@ export default {
                     page: that.page,
                     page_size: that.page_size,
                 }).then(function (response) {
-                    // console.log(response);
                         let res = response.result[0];
-                        // console.log(res)
                         if (response.code==0) {
-                            // console.log(res[0])
                             console.log(res)
                             that.count =response.result[1];
                             that.majorInform=res;
-                            
                             that.majorInform.forEach((item,index) => {
                                 that.majorInform[index].showProduct = item.product.slice(0,3);
                                 that.majorInform[index].missPorduct = item.product.slice(3);
                             });
-
-                            // for (var i = 0; i < this.page_size.length; i++) {
-                            //     console.log(res[i].major_follow_id)
-                            // }
-                            // console.log(that.majorInform[0].product);
                         }
 
                 }).catch(function (error) {
@@ -313,20 +246,16 @@ export default {
         },
         //加载更多院校信息
         viewMore:function() {
-
-            if (!this.moreMajor) {
-                this.moreMajor = true;
+            if (!this.productShow) {
                 //改变字体及icon名字
+                this.productShow = true;
                 this.viewMoreButt = '收起';
                 $("#moreButton").attr("class","el-icon-caret-top")
-                this.productShow = true;
-            } else {
+            } else if(this.productShow) {
+                this.productShow = false;
                 //改变字体及icon名字
-                // console.log(456)
                 this.viewMoreButt = '查看更多';
                 $("#moreButton").attr("class","el-icon-caret-bottom")
-                this.productShow = false;
-                this.moreMajor = false;
             }
         },
         //点击热度改变颜色
@@ -477,6 +406,7 @@ export default {
         }
         .forThree {
             display: flex;
+            flex-wrap:wrap;
         }
         .moneyType p,.state,.interval {
             font-size: 14px;

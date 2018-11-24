@@ -15,9 +15,11 @@
             <div class="activityListBox">
                 <!-- 单个活动块 -->
                 <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox>
-                
             </div>
-            <activityPage :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage>
+            <activityPage class="pcPage" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage>
+            <div class="phoneLeadBtn">
+                <el-button class="leadBtn" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
+            </div>
         </div>
     </div>
 </template>
@@ -28,6 +30,11 @@ export default {
     },
     data() {
         return {
+            // 下垃加载按钮
+            loadingBtnText:'加载更多',
+            disabled:false,
+            loading:false,
+
             keyword:'',//搜索关键字
 
             //已选择的列表数据
@@ -289,13 +296,20 @@ export default {
         }
     },
     methods: {
+        // 滑动加载按钮
+         getPage(){
+            this.loading = true;
+            this.pageNumber++;
+            this.getActivityList();
+        },
+
         // 活动列表页---通过筛选条件获得的活动列表数据
         getActivityList:function(){
             var self = this;
             // console.log(self.activitySelected[0].province);
-            console.log("=======");
-            console.log(self.pageCount);
-            console.log(self.pageNumber);
+            // console.log("=======");
+            // console.log(self.pageCount);
+            // console.log(self.pageNumber);
             this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
                 province:self.activitySelected[0].province,
@@ -306,8 +320,9 @@ export default {
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
-                console.log("------");
-                console.log(res);
+                self.loading = false;
+                // console.log("------");
+                // console.log(res);
                 // let res = response.data;
                 if(res.code == 0){
                     self.count = res.result.count;
@@ -316,6 +331,13 @@ export default {
                 }
                 else{
                     self.message(true, "加载失败，请重试", 'info');
+                }
+                // console.log(self.pageNumber*self.pageCount);
+                // console.log("-----");
+                // console.log(self.count);
+                if( self.pageNumber*self.pageCount >= self.count){
+                    self.disabled = true;
+                    self.loadingBtnText = "已经到底了";
                 }
             }).catch(function(error){
                 console.log("error");
@@ -393,6 +415,18 @@ export default {
 }
 </style>
 <style scoped>
+    .phoneLeadBtn{
+        margin-bottom: 10px; 
+        margin-left: 10px;
+        margin-right: 10px;
+        text-align: center;   
+    }
+    .phoneLeadBtn .leadBtn{
+        color: #fff;
+        background-color: #009fa0;
+        width: 100%;
+    }
+
     .activityList{
         width: 100%;
         overflow: hidden;
@@ -426,6 +460,9 @@ export default {
         .search>div{
             width: 100%;
         }
+        .pcPage{
+            display: none;
+        }
     }
 
     /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -439,11 +476,19 @@ export default {
         .search>div{
             width: 100%;
         }
+        .pcPage{
+            display: none;
+        }
     }
 
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
-        
+        .pcPage{
+            display: block;
+        }
+        .phoneLeadBtn .leadBtn{
+            display: none;
+        }
     } 
 
     /* Large devices (laptops/desktops, 992px and up) */
@@ -454,6 +499,7 @@ export default {
         .search>div{
             width: 306px;
         }
+        
     } 
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
