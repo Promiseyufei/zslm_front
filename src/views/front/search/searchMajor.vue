@@ -20,7 +20,7 @@ export default {
     methods: {                                                                          
         getMajor() {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
             this.fetch('/front/colleges/getcollegebyname', {
-                name: this.$store.state.search['keyword'],
+                name: this.keyword,
                 page: this.pageNumber,
                 page_size: this.pageCount
             }).then((response) => {
@@ -30,22 +30,22 @@ export default {
                 else this.message(true, response.msg, 'info'); 
             })
         },
-        getChangeUrl(url) {
-            var arr=url.split("/");
-            arr.shift();
-            if(arr.length !== 3)
-                arr.pop();  
-            var str = '/';
-            arr.forEach((item => {
-                str += (item + '/');
-            }));
-            return str;
-        }
+        // getChangeUrl(url) {
+        //     var arr=url.split("/");
+        //     arr.shift();
+        //     if(arr.length !== 3)
+        //         arr.pop();  
+        //     var str = '/';
+        //     arr.forEach((item => {
+        //         str += (item + '/');
+        //     }));
+        //     return str;
+        // }
     },
     mounted() {
         if(typeof this.$route.params.keyword != 'undefined') {
             this.keyword = this.$route.params.keyword;
-            this.$store.commit('changeSearch', {name:'keyword', val: this.$route.params.keyword});
+            // this.$store.commit('changeSearch', {name:'keyword', val: this.$route.params.keyword});
         }
         this.$store.commit('changeSearch', {name:'nowUrl', val: this.getChangeUrl(this.$route.path)});
         this.getMajor();
