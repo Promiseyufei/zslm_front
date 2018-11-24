@@ -28,6 +28,7 @@ import searchSearchInput from './front/searchSearchInput.vue'
 import selectAll from './front/selectAll'
 import searchMajorModular from './front/searchMajorModular.vue'
 import searchCoachBox from './front/searchCoachBox.vue'
+import tag from './front/tag.vue'
 export default {
     Test, 
     Test2,
@@ -59,5 +60,6 @@ export default {
     searchSearchInput,
     searchMajorModular,
     selectAll,
-    searchCoachBox
+    searchCoachBox,
+    tag
 }

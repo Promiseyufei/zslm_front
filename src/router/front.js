@@ -11,6 +11,12 @@ let front_router = {
                     name: '这是测试在组件样式用的',
                     component: resolve => void(require(['@/views/front/logoInto/search'], resolve))
                 },
+                {
+                    path: 'testtwo',
+                    name: '这！也是！测试在组件样式用的',
+                    component: resolve => void(require(['@/views/front/firstMenu/test'], resolve))
+                },
+
                 //登录
                 {
                     path: 'Login/loginRoute',

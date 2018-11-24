@@ -150,6 +150,9 @@
                     </el-card>
                 </el-col>
             </div>
+            <!-- 分页 -->
+            <activityPage :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum"></activityPage>
+            <!-- 分页 -->
         </div>  
     </div>
 </template>
@@ -174,6 +177,7 @@ export default {
                 project_count:1,
                 page:1,
                 page_size:3,
+                count:0,
             /*按钮参数*/
             viewMoreButt:'查看更多',
             majorInform:[],
@@ -206,6 +210,11 @@ export default {
         }
     },
     methods: {
+        //分页请求
+        changePageNum:function(pageNum) {
+            this.page = pageNum;
+            this.getmajorInform();
+        },
         //搜索框失去焦点——传搜索内容
         search:function() {
             let that = this;
@@ -247,6 +256,7 @@ export default {
                 }).then(function (response) {
                         let res = response.result;
                         if (response.code==0) {
+                            this.count = res.count;
                             that.majorInform=res;
                             that.majorInform.forEach((item,index) => {
                             that.majorInform[index].product = that.spliceArr(item.product, 2);
