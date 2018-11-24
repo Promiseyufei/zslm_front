@@ -12,9 +12,13 @@
                                         :coupons="this.userCoupon"></userInfomation>
                         <userList></userList>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_aLEhx8" v-for="(item,index) in this.majors">
-                        <user-college :data="item"></user-college>
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_aLEhx8" >
+                        <div v-for="(item,index) in this.majors">
+                             <user-college :data="item"></user-college>
+                        </div>
+                        <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
                     </div>
+
                 </div>
 
             </div>
@@ -218,6 +222,7 @@
     .column_aLEhx8 {
         padding-left: 10px;
         padding-right: 10px;
+        padding-bottom: 50px;
     }
 
 
@@ -274,6 +279,9 @@
             width: 100%;
         }
 
+        .column_aLEhx8 {
+            width: 100%;
+        }
         .row_EaN5GL {
             width: 100%;
         }
@@ -427,14 +435,17 @@
                 userCoupon:0,
                 page:1,
                 page_size:3,
-                majors:null
+                majors:[],
+                loading:false,
+                disabled:false,
+                loadingBtnText:'加载更多'
             };
         },
         methods: {
 
             info(){
                 let self = this;
-                this.fetch('http://www.zslm.com/front/usercore/getuserinfo?id='+self.id)
+                this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/usercore/getuserinfo?id='+self.id)
                     .then(res=>{
                         if(res.code == 0){
                             let result = res.result[0];
@@ -450,12 +461,24 @@
             },
             getMajor(){
                 let self = this;
-                this.fetch('http://www.zslm.com/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
+                this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
                     .then(res=>{
                         if(res.code == 0){
-                            this.majors = res.result;
+                            let data = res.result;
+                            for(let i in data){
+                                self.majors.push(data[i])
+                            }
+                        }else{
+                            self.disabled = true;
+                            self.loadingBtnText = "已经到底了"
                         }
                     })
+            },
+            getPage(){
+                this.loading = true;
+                this.page++;
+                this.getMajor();
+                this.loading = false;
             }
         },
         mounted(){

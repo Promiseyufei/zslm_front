@@ -12,11 +12,11 @@
         <div class="content clearfloat">
             <div class="float-left">
                 <div class="navigation">
-                    <searchLablePageHead v-if="kind.length" :names="kind"></searchLablePageHead>
+                    <searchLablePageHead @labelHeadClick="choiceHead" v-if="kind.length" :names="kind"></searchLablePageHead>
                 </div>
 
                 <div class="article-cont">
-                    <mbaArticle :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
+                    <mbaArticle @addAtricle="addArticle" v-if="judge" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
                 </div>
             </div>
             <!--右边的的文章-->
@@ -75,96 +75,46 @@ export default {
             myWidth: window.innerWidth>767? 440+"px": window.innerWidth*(440/1280)+"px",
             picture:[],
             rotationPicture:[],
-            homepage:[
-                {
-                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
-                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
-                    time:"2018.8.31",
-                    author:"专硕联盟",
-                    img:"",
-                    link:"",
-                }
-            ],
-            shortpage:[
-                {
-                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
-                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
-                    time:"2018.8.31",
-                    author:"专硕联盟",
-                    img:"",
-                    link:"",
-                },
-                {
-                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
-                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
-                    time:"2018.8.31",
-                    author:"专硕联盟",
-                    img:"",
-                    link:"",
-                },
-                {
-                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
-                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
-                    time:"2018.8.31",
-                    author:"专硕联盟",
-                    img:"",
-                    link:"",
-                },
-                {
-                    title:"浙江：这里产浙商，也教你经商︱浙江MBA项目分析",
-                    content:"当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基",
-                    time:"2018.8.31",
-                    author:"专硕联盟",
-                    img:"",
-                    link:"",
-                }
-            ],
+            homepage:[],
+            shortpage:[],
             /*
             * 推荐阅读
             * */
-            page:1,
+            page:0,
             information:[],
             industryTatol:1,
             /*
             * 行业报告
             * */
-            businessPage:1,
+            businessPage:0,
             informbusiness:[],
             businessTatol:1,
 
             kind:[],    //导航栏的种类
-            kindClick:'',
+            kindClick:0,
 
             /*
             *MBA文章
             *
             * */
-            mbaPage:0,
+            mbaPage:1,
             mbaTatol:1,
-            mbaInformation:[]
+            mbaInformation:[],
+            pageCount:9,
+            mbaJudge:true,
+            judge:true
         }
     },
     methods: {
-        sowingMap:function () {
-            axios({
-                method:'post',
-                url:'/oooooo',
-            })
-            .then(function (response) {
-//                for
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
         /*
         * 推荐阅读刷新
         * */
         refresh: function (data) {
             this.page++;
-            if (this.page>this.industryTatol){
+            if (this.page*4 >=this.industryTatol){
                 this.page = 0;
             }
+
             this.readtation();
         },
         /*
@@ -172,7 +122,7 @@ export default {
         * */
         refreshBusiness: function (data) {
             this.businessPage++;
-            if (this.businessPage>this.industryTatol){
+            if (this.businessPage*4>=this.industryTatol){
                 this.businessPage = 0;
             }
             this.presentation();
@@ -183,10 +133,10 @@ export default {
         * */
         rotationChart: function () {
             let _this = this;
-            axios.get('/front/consult/getConsultListBroadcast')
-                .then(response => {
-                    if(response.data.code == 0){
-                        _this.rotationPicture=response.data.data;
+            this.fetch('/front/consult/getConsultListBroadcast')
+                .then((response) => {
+                    if(response.code == 0){
+                        _this.rotationPicture=response.result;
                     }
                 })
                 .catch(error => function (error) {
@@ -198,11 +148,14 @@ export default {
         * */
         presentation: function () {
             let _this = this;
-            axios.get('/front/consult/getRecommendRead?type=1&pageNumber='+_this.page)
-                .then(response => {
-                    if(response.data.code == 0){
-                        _this.businessTatol = response.data.data.count;
-                        _this.informbusiness=response.data.data.info;
+            this.fetch('/front/consult/getRecommendRead',{
+                type:1,
+                pageNumber:_this.businessPage
+            })
+                .then((response) => {
+                    if(response.code == 0){
+                        _this.businessTatol = response.result.count;
+                        _this.informbusiness=response.result.info;
                     }
                 })
                 .catch(error => function (error) {
@@ -214,29 +167,65 @@ export default {
         * */
         readtation: function () {
             let _this = this;
-            _this.kindClick = _this.kind[0].name
-            axios.get('/front/consult/getRecommendRead?infoTypeId='+_this.kindClick+'&pageNumber='+j+'&pageCount='+h)
-                .then(response => {
-                    if(response.data.code == 0){
-                        _this.information=response.data.data.info;
-                        _this.industryTatol = response.data.data.count;
-                    }
-                })
-                .catch(error => function (error) {
-                    console.log(response)
-                });
+            this.fetch('/front/consult/getRecommendRead',{
+                pageNumber:_this.page
+            }).then((response) => {
+                if(response.code == 0){
+                    _this.information=response.result.info;
+                    _this.industryTatol = response.result.count;
+                }
+            })
+            .catch(error => function (error) {
+                console.log(response)
+            });
         },
+        /*
+        *
+        * 导航栏的选择
+        * */
+        choiceHead: function (item) {
+            this.mbaJudge = true;
+            this.kindClick = item.id;
+            this.mbaPage = 1;
+            this.homepage.length = 0;
+            this.shortpage.length = 0;
+            this.mbatation();
+        },
+
         /*
         * mba文章
         * */
         mbatation: function () {
             let _this = this;
-            axios.get('/front/consult/getConsultListInfo?pageNumber='+_this.page)
-                .then(response => {
-                    if(response.data.code == 0){
-                        _this.information=response.data.data.info;
-                        _this.industryTatol = response.data.data.count;
+            this.fetch('/front/consult/getConsultListInfo',{
+                infoTypeId:_this.kindClick,
+                pageNumber:_this.mbaPage,
+                pageCount:_this.pageCount
+            })
+                .then((response) => {
+                    if(response.code == 0){
+                        if (_this.mbaJudge){
+                            if (response.result.info.length==0)
+                                _this.judge =false;
+                            else
+                                _this.judge = true;
+                            for(let i in response.result.info ){
+                                if (i == 0){
+                                    _this.homepage.push(response.result.info[i]);
+                                }else {
+                                    _this.shortpage.push(response.result.info[i]);
+                                }
+                            }
+                            console.log(_this.shortpage)
+                        }else {
+                            for(let i in response.result.info ){
+                                _this.shortpage.push(response.result.info[i]);
+                            }
+                        }
+
+                        _this.industryTatol = response.result.count;
                     }
+                    console.log(_this.homepage.length+"=========")
                 })
                 .catch(error => function (error) {
                     console.log(response)
@@ -244,14 +233,29 @@ export default {
         },
 
         /*
+        *
+        * mba添加文章
+        * */
+        addArticle: function () {
+            let _this=this;
+            _this.mbaJudge =false;
+            _this.mbaPage++;
+            if (_this.mbaPage*_this.pageCount>=_this.industryTatol){
+                return false;
+            }
+            _this.mbatation();
+        },
+
+        /*
         * 导航类型
         * */
         navigationKind:function () {
             let _this = this;
-            axios.get('/front/consult/getConsultType')
-                .then(response => {
-                    if(response.data.code == 0){
-                        _this.kind = response.data.data;
+            this.fetch('/front/consult/getConsultType')
+                .then((response) => {
+                    if(response.code == 0){
+                        _this.kind = response.result;
+                        _this.kindClick = _this.kind[0].name;
                     }
                 })
                 .catch(error => function (error) {
@@ -261,10 +265,11 @@ export default {
 
     },
     mounted(){
+        this.navigationKind();
         this.rotationChart();
         this.readtation();
         this.presentation();
-        this.navigationKind();
+        this.mbatation();
     },
 };
 </script>

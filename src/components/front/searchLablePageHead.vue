@@ -1,7 +1,7 @@
 <template>
     <div class="search_label_page_head">
         <div class="c-div div_v60iAm biaoqian">
-            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': item.selected_prop_value === index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="#">{{ item.name }}</a>
+            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': item.selected_prop_value === index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="javaScript:void(0)">{{ item.name }}</a>
 
         </div>
     </div>
@@ -23,9 +23,8 @@ export default {
             return true;
         },
         testClick(item, index) {
-            console.log(item);
-            this.$router.push(item.url);
-            // this.$emit('labelHeadClick', item);
+//            this.$router.push(item.url);
+             this.$emit('labelHeadClick', item);
             if(this.forCancelStyle())
                 this.Names[index].selected_prop_value = index;
             
@@ -71,6 +70,13 @@ export default {
     -webkit-transition: All 0.3s ease;
 }
 .search_label_page_head .textlink_jH6Kkn.xuanzhong {
+    color: rgb(0, 159, 160);
+    border-style: none none solid;
+    border-color: rgb(0, 159, 160);
+    border-width: 3px;
+    font-weight: bold;
+}
+.search_label_page_head .textlink_jH6Kkn.xuanzhong:first-child {
     color: rgb(0, 159, 160);
     border-style: none none solid;
     border-color: rgb(0, 159, 160);
@@ -134,4 +140,5 @@ export default {
     border-bottom-width: 3px;
     color: #009fa0;
 }
+
 </style>

@@ -61,7 +61,7 @@ export default {
             keyword:'',
             information:[],
             names: [
-                {name:'院校', selected_prop_value:null, url:'/front/search/major'}, 
+                 {name:'院校', selected_prop_value:null, url:'/front/search/major'},
                 {name:'咨询', selected_prop_value:null, url:'/front/search/info'}, 
                 {name:'辅导', selected_prop_value:null, url:'/front/search/coach'}, 
                 {name:'活动', selected_prop_value:null, url:'/front/search/activity'}
