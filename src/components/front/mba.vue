@@ -2,23 +2,23 @@
     <div>
         <div class="content-whole">
             <div class="content-whole-article">
-                <div class="content-head clearfloat">
+                <div class="content-head clearfloat" v-for="(item, index) in mbaHead">
                     <div class="head-left">
-                        <img src="../../assets/img/personal.jpg" alt="未加载">
+                            <img :src="item.z_image" alt="未加载">
                     </div>
                     <div class="head-right">
                         <h1 class="head-title">
-                            浙江：这里产浙商，也教你经商︱浙江MBA项目分析
+                            {{ item.zx_name }}
                         </h1>
                         <p class="head-paragraph">
-                            当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基
+                            {{ item.brief_introduction }}
                         </p>
                         <div class="icon-head">
                             <i class="fa fa-calendar position">
-                                2018.8.31
+                                {{ item.create_time }}
                             </i>
                             <i class="fa fa-paper-plane">
-                                专硕联盟
+                                {{ item.publisher }}
                             </i>
                         </div>
                         <div class="button">
@@ -27,27 +27,34 @@
                     </div>
                 </div>
 
-                <div class="content-son clearfloat">
-                    <div class="son-left">
-                        <img src="../../assets/img/picture.jpg" alt="未加载">
-                    </div>
-                    <div class="son-right">
-                        <div>
-                            <h1 class="son-title">
-                                浙江：这里产浙商，也教你经商︱浙江MBA项目分析
-                            </h1>
-                            <p class="head-paragraph">
-                                当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基因。2017年浙江GDP为51768亿元，全国第四，人均GDP全国第三...                        </p>
-                            <div class="icon-head">
-                                <i class="fa fa-calendar position">
-                                    2018.8.31
-                                </i>
-                                <i class="fa fa-paper-plane">
-                                    专硕联盟
-                                </i>
+                <div class="content-son" v-for="(item,index) in mbaShort">
+                    <div class="article-con-posiion clearfloat">
+                        <div class="son-left">
+                            <img :src="item.z_image" alt="未加载">
+                        </div>
+                        <div class="son-right">
+                            <div>
+                                <h1 class="son-title">
+                                    {{ item.zx_name }}
+                                </h1>
+                                <p class="head-paragraph">
+                                    {{ item.brief_introduction }}
+                                </p>
+                                <div class="icon-head">
+                                    <i class="fa fa-calendar position">
+                                        {{ item.create_time }}
+                                    </i>
+                                    <i class="fa fa-paper-plane">
+                                        {{ item.publisher }}
+                                    </i>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="button-div">
+                    <a @click="addAtricle" class="load-button">加载更多</a>
                 </div>
             </div>
         </div>
@@ -57,13 +64,16 @@
     export default{
         data(){
             return{
-
+                mbaHead:this.headArticle,
+                mbaShort:this.shortArticles
             }
         },
         methods:{
-
+            addAtricle:function () {
+                this.$emit('addAtricle');
+            }
         },
-        props:["headArticle,shortArticles"],
+        props:["headArticle","shortArticles"],
         mounted(){
 
         }
@@ -71,9 +81,14 @@
 </script>
 
 <style scoped>
+    a{
+        cursor: pointer;
+        cursor: hand;
+    }
     .content-whole{
         width: 100%;
         background-color: #ffffff;
+        padding-bottom: 44px;
     }
     .content-whole:hover{
         box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
@@ -104,7 +119,7 @@
         width: 418px;
         position: relative;
     }
-    .clearfloat:after{
+    .clearfloat::after{
         display:block;
         clear:both;content:"";
         visibility:hidden;
@@ -132,7 +147,7 @@
     }
     .icon-head>i{
         color: #383b3d;
-        opacity: 0.7;
+        opacity: 0.6;
         font-size: 14px;
     }
     .icon-head > .position{
@@ -146,20 +161,24 @@
     }
     .content-son{
         display:flex;
-        justify-content: space-between;
         align-items:center;
         height: 219px;
         border-top: 1px solid rgb(239, 239, 239);
         cursor:hand;
         cursor:pointer;
     }
+    .article-con-posiion{
+        width: 100%;
+    }
     .son-left{
         width: 188px;
+        margin-bottom: 17px;
     }
     .son-left > img {
         width: 100%;
         height: 140px;
         border-radius: 3px;
+        float: left;
     }
     .son-right{
         height: 140px;
@@ -175,6 +194,60 @@
         line-height: 25px;
         letter-spacing: 0px;
         color: rgb(72, 72, 72);
+    }
+    .load-button{
+        display: block;
+        border-radius: 3px;
+        width: 100%;
+        height: 100%;
+        background-color: #f5f5f5;
+        border: solid 1px #bfbfbf;
+        text-align: center;
+        line-height: 62px;
+    }
+    .load-button:hover{
+        background-color: rgb(255, 185, 87);
+        color: #ffffff;
+    }
+    .button-div{
+        width: 100%;
+        height: 62px;
+        margin-top: 64px;
+
+    }
+    .button-div > a{
+        font-family: MicrosoftYaHei;
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        letter-spacing: 0px;
+        color: #6e6e6e;
+        text-decoration: none;
+    }
+    @media (max-width: 991px){
+        .head-left{
+            width: 100%;
+            margin-bottom: 16px;
+        }
+        .head-right{
+            width: 100%;
+            height: 291px;
+        }
+        .content-son{
+            height: auto;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .son-left{
+            width: 100%;
+        }
+        .son-right{
+            width: 100%;
+            height: auto;
+        }
+        .son-left > img{
+            margin-bottom: 17px;
+        }
     }
 </style>
 

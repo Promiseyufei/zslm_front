@@ -465,7 +465,7 @@ Mock.mock('/admin/messageNotice/getcityInfo',{
 			"content|3":'@cword(1,10)',
 		},
 	],
-	"data|4": [{
+	"2|4": [{
 				'id':'@integer(1,10)',
 				'account': '@integer(1,10)' ,
 				'nickname': '@date("yyyy"+"年")'+'@cword(11)'+'.pdf',
@@ -482,4 +482,26 @@ Mock.mock('/admin/messageNotice/getcityInfo',{
 	
 })
 
+
+
+
+
+/*font-radioButton
+*选院校
+*获取按钮值
+*/
+Mock.mock('/front/colleges/getmajor',{
+	"code":0,
+	"allMajorname|25":[
+		{"z_name":'@cword(2)'}
+	],
+	// "Name|3":[
+	// 	{	
+	// 		"line|5":[
+	// 			{"majorname":'@cword(6)'}
+	// 		]
+	// 	},
+	// ]
+	
+})
 

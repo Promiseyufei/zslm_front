@@ -78,6 +78,33 @@ let front_router = {
                     name: '首页',
                     component: resolve => void(require(['@/views/front/index'], resolve))
                 },
+                {
+                    path: 'search',
+                    name: '搜索页面',
+                    component: resolve => void(require(['@/views/front/search/search'], resolve)),
+                    children: [
+                        {
+                            path:'major',
+                            name:'搜索页面的院校专业详情',
+                            component: resolve => void(require(['@/views/front/search/searchMajor'], resolve)),
+                        },
+                        {
+                            path: 'activity',
+                            name: '搜索页面的活动详情',
+                            component: resolve => void(require(['@/views/front/search/searchActivity'], resolve)),
+                        },
+                        {
+                            path: 'info',
+                            name: '搜索页面的咨询详情',
+                            component: resolve => void(require(['@/views/front/search/searchInfo'], resolve)),
+                        },
+                        {
+                            path: 'coach',
+                            name: '搜索页面的辅导机构详情',
+                            component: resolve => void(require(['@/views/front/search/searchCoach'], resolve)),
+                        }
+                    ]
+                },
 
 
 
@@ -86,6 +113,11 @@ let front_router = {
                     path: 'singleCollage/:id?',
                     name: '首页-单个院校',
                     component: resolve => void(require(['@/views/front/detailPage/singleCollage'], resolve))
+                },
+                {
+                    path: 'singleCoach/:id?',
+                    name: '单个辅导机构',
+                    component: resolve => void(require(['@/views/front/detailPage/singleCoach'], resolve))
                 },
 
             ]

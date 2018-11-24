@@ -113,6 +113,7 @@
 			login(params) {
 				this.post('/login/front/login', params).then((response) => {
 					if(response.code == 0) {
+						this.saveUserState('user', this.phoneNumber);
 						this.message(true, response.msg, 'success');
 					}
 					else if(response.code == 1) this.message(true, response.msg, 'info');
@@ -280,6 +281,6 @@
 		display: flex;
 		justify-content:center;
 		margin: 100px 0;
-		overflow-x:hidden;
+		overflow:hidden;
 	}
 </style>
