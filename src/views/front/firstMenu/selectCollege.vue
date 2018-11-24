@@ -7,7 +7,7 @@
                     <el-input
                         placeholder="复旦大学   北京大学"
                         suffix-icon="el-icon-search"
-                        v-model="z_name" @blur.prevent="search()">
+                        v-model="z_name" @keyup.enter="search">
                     </el-input>
                 </div>
             </div>
@@ -36,7 +36,7 @@
             <div class="diffeCollege">
                 <el-col :span="8">
                     <el-card shadow="hover">
-                        <div class="allInforma" v-for="(all,index) in majorInform" :key="index">
+                        <!-- <div class="allInforma" :ref="'allInforma' + index" v-for="(all,index) in majorInform" :key="index">
                             <div class="c-div div_BMsaOd guanzhu" style="margin-bottom:30px;align-items:flex-end;">
                                 <div class="c-div div_ARD2As">
                                     <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url(http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png); ">
@@ -85,8 +85,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="forThree" v-show="productShow">
-                                <div class="specificInform" v-for="(t,index) in all.missPorduct" :key="index">
+                            <div class="forThree" style="display: none;" :ref="'forThree' + index">
+                                <div class="specificInform" v-for="(t,k) in all.missPorduct" :key="index">
                                     <p class="international">{{t.project_name}}</p>
                                     <div class="moneyType">
                                         <div style="display:flex;align-items:center;margin:0 44px 0 0;">
@@ -115,9 +115,13 @@
                             </div>
                             <div class="viewMore">
                                 <div class="updateInform">信息更新时间：{{update_time}}</div>
-                                <div class="moreInform" @click="viewMore">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
+                                <div class="moreInform" @click="viewMore(index)" :ref="'moreInform' + index">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
                             </div>
-                        </div>
+                        </div> -->
+
+                        <!-- 每个院校情况组件 -->
+                        <selectCollegeItem v-for="(all, index) in majorInform" :key="index" :collegeInfo="all"></selectCollegeItem>
+                        <!-- 每个院校情况组件 -->
                     </el-card>
                 </el-col>
             </div>
@@ -137,28 +141,29 @@ export default {
     },
     data() {
         return {
+            missPorduct:[],
+            showProduct:[],
             /*按钮参数*/
-                provice:'',
-                z_type:'',
-                z_name:'',
-                professional_direction:'',
-                major_order:0,
-                min:0,
-                max:1000000,
-                money_order:0,
-                score_type:'',
-                enrollment_mode:'',
-                project_count:0,
-                page:1,
-                page_size:3,
-                count:10,
-                productShow:false,
-
+            provice:'',
+            z_type:'',
+            z_name:'',
+            professional_direction:'',
+            major_order:0,
+            min:0,
+            max:1000000,
+            money_order:0,
+            score_type:'',
+            enrollment_mode:'',
+            project_count:0,
+            page:1,
+            page_size:3,
+            count:10,
+            productShow:false,
             /*按钮参数*/
             viewMoreButt:'查看更多',
             majorInform:[],
             nature:null,
-            equis:true,
+            equis:false,
             aascb:false,
             //211
             two:false,
@@ -166,22 +171,8 @@ export default {
             nine:false,
             //双一流
             both29:false,
-            // searchContent:'',
             moreMajor:false,
-            /*院校信息*/
-            allMajorname:[
-                {project_name:'',student_count:'',cost:'',language:'',class_situation:'',count:[]},
-                // {project_name:'项目名称',student_count:'招生名额',cost:'项目费用',language:'课程语言',class_situation:'班级情况',count:[]},
-                // {project_name:'项目名称',student_count:'招生名额',cost:'项目费用',language:'课程语言',class_situation:'班级情况',count:[]},
-            ],
             update_time:1996,
-            upMajorname:[
-                {project_name:'项目名称',cost:'招生名额',language:'课程语言',class_situation:'班级情况',student_count:'项目费用',count:[]},
-
-                {project_name:'项目名称',student_count:'招生名额',cost:'项目费用',language:'课程语言',class_situation:'班级情况',count:[]},
-
-                {project_name:'项目名称',student_count:'招生名额',cost:'项目费用',language:'课程语言',class_situation:'班级情况',count:[]},
-            ]
              /*院校信息*/
         }
     },
@@ -193,25 +184,9 @@ export default {
         },
         //搜索框失去焦点——传搜索内容
         search:function() {
-            let that = this;
-            axios.get('/front/colleges/getmajor',{
-                    //搜索内容
-                    z_name: that.z_name,
-                }).then(function (response) {
-                        // var res = response.data;
-                        // console.log(res.allMajorname)
-                        // if (res.code == 0) {
-                        //     that.allMajorname =res.allMajorname;
-                        // }
-                }).catch(function (error) {
-                });
-
+            this.getmajorInform();
         },
-        //排序
-        sort:function(){
-
-        },
-        //院校信息
+        //获得院校信息
         getmajorInform:function(){
             let that = this;
             this.fetch('/front/colleges/getmajor',{
@@ -232,65 +207,76 @@ export default {
                 }).then(function (response) {
                         let res = response.result[0];
                         if (response.code==0) {
-                            console.log(res)
+                            // console.log(res)
                             that.count =response.result[1];
                             that.majorInform=res;
                             that.majorInform.forEach((item,index) => {
                                 that.majorInform[index].showProduct = item.product.slice(0,3);
                                 that.majorInform[index].missPorduct = item.product.slice(3);
                             });
+                            // 院校性质标签是否显示
+                            if(res[0].major_follow_id == '原985')
+                                self.nine= true;
+                            else if(res[0].major_follow_id=='原211')
+                                self.two = true;
+                            else
+                                self.both29 = true;
+                            if (res[0].major_confirm_id=='AASCB') {
+                                this.aascb = true;
+                            } else {
+                                this.equis = true;
+                            }
                         }
 
                 }).catch(function (error) {
                 });
         },
-        //加载更多院校信息
-        viewMore:function() {
-            if (!this.productShow) {
-                //改变字体及icon名字
-                this.productShow = true;
-                this.viewMoreButt = '收起';
-                $("#moreButton").attr("class","el-icon-caret-top")
-            } else if(this.productShow) {
-                this.productShow = false;
-                //改变字体及icon名字
-                this.viewMoreButt = '查看更多';
-                $("#moreButton").attr("class","el-icon-caret-bottom")
-            }
-        },
-        //点击热度改变颜色
+        //点击热度改变颜色，排序
         changeHot:function() {
                 let hotTop = document.getElementById('hotTop');
                 let hotBottom = document.getElementById('hotBottom');
-                console.log(hotTop.style.color)
+                // console.log(hotTop.style.color)
                 if (hotTop.style.color=='rgb(191, 191, 191)'&&hotBottom.style.color=='rgb(191, 191, 191)'){
-                    //首次点击热度，升序
+                    //首次点击热度，升序，1为升序
+                    this.major_order = 1;
+                    this.getmajorInform();
                     hotTop.style.color= '#009fa0';//绿色rgb(0, 159, 160)
                     hotBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
                 } else if(hotTop.style.color=='rgb(0, 159, 160)'&& hotBottom.style.color=='rgb(191, 191, 191)') {
-                    //再次点击，降序
+                    //再次点击，降序，0为降序
+                    this.major_order = 0;
+                    this.getmajorInform();
                     hotTop.style.color='#bfbfbf';
                     hotBottom.style.color= '#009fa0';
                 } else if (hotTop.style.color=='rgb(191, 191, 191)'||hotBottom.style.color=='rgb(0, 159, 160)') {
-                    //循环点击
+                    //循环点击，升序，1为升序
+                    this.major_order = 1;
+                    this.getmajorInform();
                     hotBottom.style.color= '#bfbfbf';
                     hotTop.style.color='#009fa0';
                 }
         },
+        //点击费用改变颜色，排序
         changeMoney:function() {
                 let hotTop = document.getElementById('moneyTop');
                 let hotBottom = document.getElementById('moneyBottom');
                 console.log(hotTop.style.color)
                 if (moneyTop.style.color=='rgb(191, 191, 191)'&& moneyBottom.style.color=='rgb(191, 191, 191)'){
-                    //首次点击热度，升序
+                    //首次点击费用，升序，1为升序
+                    this.money_order = 1;
+                    this.getmajorInform();
                     moneyTop.style.color='#009fa0';//绿色rgb(0, 159, 160)
                     moneyBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
                 } else if(moneyTop.style.color=='rgb(0, 159, 160)'&& moneyBottom.style.color=='rgb(191, 191, 191)') {
-                    //再次点击，降序
+                    //再次点击费用，降序，0为降序
+                    this.money_order = 0;
+                    this.getmajorInform();
                     moneyTop.style.color='#bfbfbf';
                     moneyBottom.style.color= '#009fa0';
                 } else if (moneyTop.style.color=='rgb(191, 191, 191)'||moneyBottom.style.color=='rgb(0, 159, 160)') {
-                    //循环点击
+                    //循环点击，升序，1为升序
+                    this.money_order = 1;
+                    this.getmajorInform();
                     moneyBottom.style.color= '#bfbfbf';
                     moneyTop.style.color='#009fa0';
                 }
@@ -298,9 +284,6 @@ export default {
     },
     mounted(){
         this.getmajorInform();
-        // this.viewMore()
-
-        // this.nature = this.data;
         // console.log(123)
 
     },

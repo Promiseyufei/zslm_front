@@ -29,6 +29,7 @@ import selectAll from './front/selectAll'
 import searchMajorModular from './front/searchMajorModular.vue'
 import searchCoachBox from './front/searchCoachBox.vue'
 import tag from './front/tag.vue'
+import selectCollegeItem from './front/selectCollegeItem.vue'
 export default {
     Test, 
     Test2,
@@ -61,5 +62,6 @@ export default {
     searchMajorModular,
     selectAll,
     searchCoachBox,
-    tag
+    tag,
+    selectCollegeItem
 }
