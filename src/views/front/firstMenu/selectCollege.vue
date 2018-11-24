@@ -275,9 +275,10 @@ export default {
                     page: that.page,
                     page_size: that.page_size,
                 }).then(function (response) {
-                        let res = response.result;
+                        let res = response.result[0];
                         if (response.code==0) {
                             that.majorInform=res;
+                            that.count = response.result[1];
                             that.majorInform.forEach((item,index) => {
                                 that.majorInform[index].showProduct = item.product.slice(0,3);
                                 that.majorInform[index].missPorduct = item.product.slice(3);
