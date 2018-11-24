@@ -1,41 +1,58 @@
 <template>
-	 <!-- 单个活动块 -->
-    <div class="activityBox">
-    <div>
-        <!-- 头部图片及状态 -->
-        <div class="activityImg">
-            <p>未开始</p>
-        </div>
-        <!-- 中间活动内容：标题、地址、时间 -->
-        <div class="activityDetail">
-            <div class="activityTitle">
-                <p>2019聚英计划第一批提前面试申请时间表（武汉）</p>
-            </div>
-            <div class="activityAddressTime">
-                <div class="activityAddress">
-                    <img src="../../assets/img/position.png">
-                    <span>武汉</span>
-                </div>
-                <div class="activityTime">
-                    <img src="../../assets/img/calendar.png">
-                    <span>5月15日~8月23日</span>
-                </div>
-            </div>
-        </div>
-        <!-- 底部：承办学校、主题 -->
-        <div class="activityManager">
-            <div class="line"></div>
-            <div class="managerSchoolTitle">
-                <div class="managerSchool">
-                    <img src="../../assets/img/college1.jpg">
-                    <span>广东外语外贸大学</span>
-                </div>
-                <p class="managerTitle">
-                    招生宣讲
-                </p>
-            </div>
-        </div>
-    </div>
+	<!-- 单个活动块————使用方式 -->
+    <!-- <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox> -->
+
+	<!-- <div class="activityBody"> -->
+		<!-- 单个活动块 -->
+	    <div class="activityBox">
+	    <div>
+	        <!-- 头部图片及状态 -->
+	        <div class="activityImg"  :style="{ backgroundImage: 'url(&;quot;' + item.active_img + '&;quot;)' }">
+	            <p v-if="item.start_state==0">{{state}}</p>
+	            <p v-else :class="item.start_state==1?'activityState1':'activityState2' ">{{state}}</p>
+	        </div>
+	        <!-- 中间活动内容：标题、地址、时间 -->
+	        <div class="activityDetail">
+	            <div class="activityTitle">
+	                <p v-if="item.start_state==2" style="color: #b1b1b1;">{{item.active_name}}</p>
+	                <p v-else>{{item.active_name}}</p>
+	            </div>
+	            <div class="activityAddressTime">
+	                <div class="activityAddress">
+	                    <img src="../../assets/img/position.png">
+	                    <span>{{item.province[0].city}}</span>
+	                </div>
+	                <div class="activityTime">
+	                    <img src="../../assets/img/calendar.png">
+	                    <span>{{item.begin_time}}~{{item.end_time}}</span>
+	                </div>
+	            </div>
+	        </div>
+	        <!-- 底部：承办学校、主题 -->
+	        <div class="activityManager">
+	            <div class="line"></div>
+	            <div class="managerSchoolTitle">
+	                <div class="managerSchool">
+	                    <img src="../../assets/img/college1.jpg">
+	                    <span v-if="item.start_state==2" style="color: #b1b1b1;">{{item.z_name}}</span>
+	                    <span v-else>{{item.z_name}}</span>
+	                </div>
+	                <p v-if="item.activity_type == '招生宣讲'" style="background-color: rgb(0, 159, 160);" class="managerTitle">
+	                    {{item.activity_type}}
+	                </p>
+	                <p v-else-if="item.activity_type == '提前面试'" style="background-color: rgba(0,97,172,1);" class="managerTitle">
+	                    {{item.activity_type}}
+	                </p>
+	                <p v-else-if="item.activity_type == '高精会议'" style="background-color: rgba(199,140,0,1);" class="managerTitle">
+	                    {{item.activity_type}}
+	                </p>
+	                <p v-else class="managerTitle">
+	                    {{item.activity_type}}
+	                </p>
+	            </div>
+	        </div>
+	    </div>
+    <!-- </div> -->
     </div>
 </template>
 
@@ -43,24 +60,66 @@
 export default {
     data() {
         return {
+            item: this.activityInfo,//活动信息
+            state: '',//图片上标签——活动状态
             
         };
     },
     methods:{
-        
+        activityState:function(){
+        	let self = this;
+        	// console.log(self.item.start_state);
+        	switch(self.item.start_state){
+        		case 0:   self.state = "未开始"; break;
+        		case 1:   
+        			self.state = "进行中";
+    			break;
+    			case 2:   
+    				self.state = "已结束";
+    			break;
+        		default:  self.item.start_state = "未识别"; break;
+        	};
+        },
     },
-    props: "",
+    props: ["activityInfo"],
     mounted(){
-        
+        // console.log(this.activityInfo);
+        this.activityState();
     }
 }
 </script>
 
 <style>
-
+	/*单个活动块儿上部图片上的标签及字体样式*/
+    .activityImg>p{
+        width: 84px;
+        height: 34px;
+        box-sizing: border-box;
+        margin: 0 0 0 auto;
+        border-radius: 0px 5px 0px 5px;
+        font-size: 14px;
+        color: #fff;
+        /*padding: 9px 21px 10px 21px; 原有大小*/
+        padding: 7px 21px 10px 21px; /*更合适*/
+        /*颜色会根据状态不同而变化*/
+        background-color: #ffb957;
+    }
+	
 </style>
 
 <style scoped>
+	.activityBody{
+		width: 100%;
+		height: auto;
+		display: -webkit-box;
+	    display: -ms-flexbox;
+	    display: flex;
+	    -ms-flex-wrap: wrap;
+	    flex-wrap: wrap;
+	    margin-right: auto;
+	    margin-left: auto;
+	    min-height: auto;
+	}
 	p, span{
         font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
     }
@@ -89,25 +148,25 @@ export default {
     /*单个活动块儿上部图片*/
     .activityImg{
         height: 191px;
-        background-image: url("../../assets/img/activityTitle.jpg");
+        background-image: url("../../assets/img/activitytitle.jpg");
         background-position: 50% 50%;
         background-size: cover;
         border-radius: 0px 5px 0px 5px;
     }
 
-    /*单个活动块儿上部图片上的标签及字体样式*/
-    .activityImg>p{
-        width: 84px;
-        height: 34px;
-        box-sizing: border-box;
-        margin: 0 0 0 auto;
-        border-radius: 0px 5px 0px 5px;
-        font-size: 14px;
-        color: #fff;
-        /*padding: 9px 21px 10px 21px; 原有大小*/
-        padding: 7px 21px 10px 21px; /*更合适*/
-        /*颜色会根据状态不同而变化*/
-        background-color: #ffb957;
+    .activityState1{
+    	background-color: #b10008;
+    }
+	.activityState2{
+		background-color: #e6e6e8;
+		width: 100%;
+		height: 100%;
+		font-size: 33px;
+		opacity: 0.8;
+		color: rgb(108, 108, 108);
+		display: flex;
+    	justify-content: center;
+    	align-items: center;
     }
 
     /*单个活动块儿中间部位：包括活动标题、地址、日期*/

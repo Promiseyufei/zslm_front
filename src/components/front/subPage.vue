@@ -3,7 +3,7 @@
     <div>
         <div class="content-whole">
             <div class="content-whole-article">
-                <div class="content-son" v-for="item in mbaShort">
+                <div class="content-son" v-for="(item, index) in mbaShort" :key="index">
                     <div class="article-con-posiion clearfloat">
                         <div class="son-left">
                             <img :src="item.img" alt="未加载">

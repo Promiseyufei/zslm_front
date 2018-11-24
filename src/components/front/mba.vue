@@ -2,23 +2,23 @@
     <div>
         <div class="content-whole">
             <div class="content-whole-article">
-                <div class="content-head clearfloat" v-for="item in mbaHead">
+                <div class="content-head clearfloat" v-for="(item, index) in mbaHead">
                     <div class="head-left">
-                        <img src="../../assets/img/personal.jpg" alt="未加载">
+                            <img :src="item.z_image" alt="未加载">
                     </div>
                     <div class="head-right">
                         <h1 class="head-title">
-                            {{ item.title }}
+                            {{ item.zx_name }}
                         </h1>
                         <p class="head-paragraph">
-                            {{ item.content }}
+                            {{ item.brief_introduction }}
                         </p>
                         <div class="icon-head">
                             <i class="fa fa-calendar position">
-                                {{ item.time }}
+                                {{ item.create_time }}
                             </i>
                             <i class="fa fa-paper-plane">
-                                {{ item.author }}
+                                {{ item.publisher }}
                             </i>
                         </div>
                         <div class="button">
@@ -27,25 +27,25 @@
                     </div>
                 </div>
 
-                <div class="content-son" v-for="item in mbaShort">
+                <div class="content-son" v-for="(item,index) in mbaShort">
                     <div class="article-con-posiion clearfloat">
                         <div class="son-left">
-                            <img src="../../assets/img/picture.jpg" alt="未加载">
+                            <img :src="item.z_image" alt="未加载">
                         </div>
                         <div class="son-right">
                             <div>
                                 <h1 class="son-title">
-                                    {{ item.title }}
+                                    {{ item.zx_name }}
                                 </h1>
                                 <p class="head-paragraph">
-                                    {{ item.content }}
+                                    {{ item.brief_introduction }}
                                 </p>
                                 <div class="icon-head">
                                     <i class="fa fa-calendar position">
-                                        {{ item.time }}
+                                        {{ item.create_time }}
                                     </i>
                                     <i class="fa fa-paper-plane">
-                                        {{ item.author }}
+                                        {{ item.publisher }}
                                     </i>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="button-div">
-                    <a href="" class="load-button">加载更多</a>
+                    <a @click="addAtricle" class="load-button">加载更多</a>
                 </div>
             </div>
         </div>
@@ -69,7 +69,9 @@
             }
         },
         methods:{
-
+            addAtricle:function () {
+                this.$emit('addAtricle');
+            }
         },
         props:["headArticle","shortArticles"],
         mounted(){
@@ -79,6 +81,10 @@
 </script>
 
 <style scoped>
+    a{
+        cursor: pointer;
+        cursor: hand;
+    }
     .content-whole{
         width: 100%;
         background-color: #ffffff;
