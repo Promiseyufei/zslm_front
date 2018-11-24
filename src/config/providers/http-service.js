@@ -66,6 +66,7 @@ export default {
                 params:params
             })
             .then(response => {
+                console.log(response);
                 resolve(response.data);
             }).catch(err => {
                 reject(err);

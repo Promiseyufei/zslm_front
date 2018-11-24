@@ -2,7 +2,7 @@
     <div class="search_search_input">
         <div class="c-div div_v60iAm biaoqian sousuo">
             <div class="searchbox_PZpLzg">
-                <input class="c-search-box-input c-input input_3ty5SK" name="input1" placeholder="输入关键词进行搜索" type="text">
+                <input class="c-search-box-input c-input input_3ty5SK" name="input1" placeholder="输入关键词进行搜索" type="text"  v-model="keyword" @keyup.enter="enter">
             </div>
         </div>
     </div>
@@ -10,7 +10,19 @@
 
 <script>
 export default {
-    
+    data() {
+        return {
+            keyword:''
+        }
+    },
+    methods: {
+        enter() {
+            this.$emit('changeKeyword', this.keyword)
+        }
+    },
+    mounted() {
+        if(this.$store.state.search['keyword'] != '') this.keyword = this.$store.state.search['keyword'];
+    }
 }
 </script>
 

@@ -20,7 +20,7 @@
 	            <div class="activityAddressTime">
 	                <div class="activityAddress">
 	                    <img src="../../assets/img/position.png">
-	                    <span>{{item.province[0].city}}</span>
+	                    <span>{{item.province.province}}</span>
 	                </div>
 	                <div class="activityTime">
 	                    <img src="../../assets/img/calendar.png">

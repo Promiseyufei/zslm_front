@@ -84,7 +84,7 @@ let front_router = {
                     component: resolve => void(require(['@/views/front/search/search'], resolve)),
                     children: [
                         {
-                            path:'major',
+                            path:'major/:keyword?',
                             name:'搜索页面的院校专业详情',
                             component: resolve => void(require(['@/views/front/search/searchMajor'], resolve)),
                         },
