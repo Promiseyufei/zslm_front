@@ -35,7 +35,7 @@
 
                 <!-- 右边主要部分 -->
                 <div class="row_right row_padding">
-                    <searchSearchInput></searchSearchInput>
+                    <searchSearchInput :keyword="keyword" @changeKeyword="getKeyword"></searchSearchInput>
 
                     <div class="advertisement">
                         <img src="../../../assets/img/advertisement.png" alt="">
@@ -54,9 +54,11 @@
 
 <script>
 export default {
+    // inject: ['reload'],
     data() {
         return {
             page:0,
+            keyword:'',
             information:[],
             names: [
                  {name:'院校', selected_prop_value:null, url:'/front/search/major'},
@@ -84,9 +86,22 @@ export default {
                     console.log(response)
                 });
         },
+        getKeyword(key) {
+            this.keyword = key;
+            // var arr=this.$store.state.search['nowUrl'].split("/");
+            // arr.shift();
+            // if(arr.length !== 3)
+            //     arr.pop();  
+            // var str = '/';
+            // arr.forEach((item => {
+            //     str += (item + '/');
+            // }));
+            // this.$store.commit('changeSearch', {name:'nowUrl', val:str});
+            this.$router.push(this.$store.state.search['nowUrl'] + this.keyword);
+        }
     },
     mounted() {
-        this.presentation()
+        // this.presentation();
     }
 }
 </script>
