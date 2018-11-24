@@ -179,14 +179,13 @@
                     </el-card>
                 </el-col>
             </div>
-<<<<<<< HEAD
-            <!-- 分页 -->
+
+            
+        </div>  
+        <!-- 分页 -->
             <activityPage :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum"></activityPage>
             <!-- 分页 -->
-        </div>  
-=======
-        </div>
->>>>>>> f4f003d390b9911547d181308b127bdb457d5953
+
     </div>
 </template>
 
@@ -210,11 +209,9 @@ export default {
                 project_count:0,
                 page:1,
                 page_size:3,
-<<<<<<< HEAD
-                count:0,
-=======
+                count:10,
                 productShow:false,
->>>>>>> f4f003d390b9911547d181308b127bdb457d5953
+
             /*按钮参数*/
             viewMoreButt:'查看更多',
             majorInform:[],
@@ -291,14 +288,20 @@ export default {
                     page: that.page,
                     page_size: that.page_size,
                 }).then(function (response) {
-                        let res = response.result;
+                    // console.log(response);
+                        let res = response.result[0];
+                        // console.log(res)
                         if (response.code==0) {
-                            this.count = res.count;
+                            // console.log(res[0])
+                            console.log(res)
+                            that.count =response.result[1];
                             that.majorInform=res;
+                            
                             that.majorInform.forEach((item,index) => {
                                 that.majorInform[index].showProduct = item.product.slice(0,3);
                                 that.majorInform[index].missPorduct = item.product.slice(3);
                             });
+
                             // for (var i = 0; i < this.page_size.length; i++) {
                             //     console.log(res[i].major_follow_id)
                             // }
