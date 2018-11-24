@@ -20,6 +20,19 @@ export default {
         });
     },
 
+    spliceArr(arr, start) {
+        let returnArr=[];
+        if(arr.length >= (start + 1)) {
+            for(let i = 0; i <= start; i++) {
+                returnArr.push(arr.shift());
+            }
+            return [returnArr, arr];
+        }
+        else {
+            return arr;
+        }
+    },
+
     /**
      * 登录成功后本地保存用户的状态
      */
