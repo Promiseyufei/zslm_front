@@ -1,9 +1,9 @@
 <template>
     <div class="column_iVg8a1">
         <div class="c-div div_u9SQpS white">
-            <img class="c-image image_LP7GSV fudao" src="../../assets/img/xindongfang.png">
+            <img class="c-image image_LP7GSV fudao" :src="coachInfo.cover_name">
             <div class="c-div div_90yeFT">
-                <h1 class="c-heading heading_qcvvsp">新东方</h1>
+                <h1 class="c-heading heading_qcvvsp">{{ coachInfo.coach_name }}</h1>
             </div>
         </div>
     </div>
@@ -11,7 +11,15 @@
 
 <script>
 export default {
-    
+    props:['coachInfo'],
+    data() {
+        return {
+
+        }
+    },
+    methods: {
+
+    }
 }
 </script>
 

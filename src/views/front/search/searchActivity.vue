@@ -1,12 +1,9 @@
 <template>
     <div id="search_activity">
         <div class="div_rTx1Nf">
-            <h1 class="c-heading heading_XwQWQq jieguohuodong">当前搜索关键字为“活动”，小助手找到了以下内容：</h1>
+            <h1 class="c-heading heading_XwQWQq jieguohuodong">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
             <div class="activitys">
-                <activityBox></activityBox>
-                <activityBox></activityBox>
-                <activityBox></activityBox>
-                <activityBox></activityBox>
+                <activityBox v-for="(item, index) in activitys" :key="index" :activityInfo="item"></activityBox>
             </div>
         </div>
 
@@ -15,7 +12,37 @@
 
 <script>
 export default {
-    
+    data() {
+        return {
+            keyword:'',
+            pageCount:9,
+            pageNumber:1,
+            activitys:[]
+        }
+    }, 
+    methods: {
+        getActivity() {
+            this.fetch('/front/activity/getSearchActivity', {
+                keyword: this.keyword,
+                pageCount: this.pageCount,
+                pageNumber: this.pageNumber
+            }).then((response) => {
+                if(response.code == 0) {
+                    // console.log(response.result);
+                    this.activitys = response.result;
+                }
+                else this.message(true, response.msg, 'info');
+            }) 
+        }
+    },
+    mounted() {
+        if(typeof this.$route.params.keyword != 'undefined') {
+            this.keyword = this.$route.params.keyword;
+            // this.$store.commit('changeSearch', {name:'keyword', val: this.$route.params.keyword});
+        }
+        this.$store.commit('changeSearch', {name:'nowUrl', val: this.getChangeUrl(this.$route.path)});
+        this.getActivity();
+    }
 }
 </script>
 

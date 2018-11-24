@@ -95,17 +95,17 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/search/searchMajor'], resolve)),
                         },
                         {
-                            path: 'activity',
+                            path: 'activity/:keyword?',
                             name: '搜索页面的活动详情',
                             component: resolve => void(require(['@/views/front/search/searchActivity'], resolve)),
                         },
                         {
-                            path: 'info',
+                            path: 'info/:keyword?',
                             name: '搜索页面的咨询详情',
                             component: resolve => void(require(['@/views/front/search/searchInfo'], resolve)),
                         },
                         {
-                            path: 'coach',
+                            path: 'coach/:keyword?',
                             name: '搜索页面的辅导机构详情',
                             component: resolve => void(require(['@/views/front/search/searchCoach'], resolve)),
                         }

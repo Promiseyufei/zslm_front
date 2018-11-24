@@ -17,7 +17,8 @@ export default {
     },
     methods: {
         enter() {
-            this.$emit('changeKeyword', this.keyword)
+            this.$store.commit('changeSearch', {name:'keyword', val: this.keyword});
+            this.$emit('changeKeyword', this.keyword);
         }
     },
     mounted() {

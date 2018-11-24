@@ -33,7 +33,7 @@ export default {
     props: ['majorInfo'],
     data() {
         return {
-            majorInfo: this.majorInfo
+            // majorInfo: this.majorInfo
         }
     },
     methods: {
