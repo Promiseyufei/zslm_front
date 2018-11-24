@@ -40,6 +40,7 @@ export default {
     mounted(){
         // console.log(this.totalData);
         // console.log(this.currentPage);
+        // console.log(this.size);
     }
 }
 </script>
