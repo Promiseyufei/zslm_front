@@ -1,3 +1,5 @@
+import { stat } from "fs";
+
 export const mutations= {
 	//修改变量
 	setPassword(state, p) {
@@ -21,6 +23,9 @@ export const mutations= {
 	
 	changeUserInfo(state, param) {
 		state.userInfo[param.name] = param.val;
+	},
+	changeSearch(state, param) {
+		state.search[param.name] = param.val;
 	}
     
 }

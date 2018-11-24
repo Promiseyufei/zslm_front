@@ -20,11 +20,11 @@
                     <img class="c-image image_1XmLsk tixing c-action-click" src="http://qty83k.creatby.com/materials/2771/origin/83908f46282768d9baf1123cc53ee7cf_origin.png">
                     <img class="c-image image_1XmLsk c-action-click" src="http://qty83k.creatby.com/materials/2771/origin/060001cc8b7b4418f3207641bcd5a90b_origin.png">
                 </div>
-                <!-- <div class="c-div div_TquOe2">
+                <div class="c-div div_TquOe2">
                     <div class="c-div div_ejhvlr"></div>
                     <div class="c-div div_ejhvlr"></div>
                     <div class="c-div div_ejhvlr"></div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -174,6 +174,7 @@ a {
         justify-content: space-between;
         width: 30px;
     }
+
 }
 @media (max-width: 991px) {
     .div_ejhvlr {
@@ -181,6 +182,14 @@ a {
         min-height: auto;
         height: 2px;
         background-color: rgb(107, 107, 107);
+    }
+}
+@media (max-width: 991px) {
+    .div_sbhhz7 {
+        display: none;
+    }
+    .div_frZK1h {
+        display: none;
     }
 }
 
