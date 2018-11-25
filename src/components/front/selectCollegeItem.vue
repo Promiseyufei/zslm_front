@@ -1,12 +1,12 @@
 <template>
-    <div class="allInforma">
+    <div class="allInforma" @change="getViewIcon">
         <div class="c-div div_BMsaOd guanzhu" style="margin-bottom:30px;align-items:flex-end;">
             <div class="c-div div_ARD2As">
                 <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url(http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png); ">
                 </div>
                 <div class="c-div div_mnG0wo">
                     <div class="c-div div_oLhlRV">
-                        <h1 class="c-heading heading_IH2VnY">{{collegeInfo.z_name}}</h1>
+                        <h1 class="c-heading heading_IH2VnY" @click="goItemDetail">{{collegeInfo.z_name}}</h1>
                         <label class="c-label label_OVUgJH">{{collegeInfo.province}}</label>
                         <label class="c-label label_OVUgJH">{{collegeInfo.city}}</label>
                     </div>
@@ -77,7 +77,7 @@
             </div>
 
         </div>
-        <div class="viewMore">
+        <div class="viewMore" v-show="viewMoreIcon">
             <div class="updateInform">信息更新时间：{{update_time}}</div>
             <div class="moreInform" @click="viewMore">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
         </div>
@@ -91,8 +91,9 @@
         data() {
             return {
             /*按钮参数*/
+            viewMoreIcon:true,
             productShow:false,
-            viewMoreButt:'查看更多',
+            viewMoreButt:'查看更多项目',
             majorInform:[],
             nature:null,
             equis:true,
@@ -108,6 +109,15 @@
             }
         },
         methods: {
+            goItemDetail:function(){
+                this.$router.push({
+                            path:'/front/firstMenuRouter/singleCollage',
+                        });
+            },
+            //子向父传参
+            getViewIcon:function(a){
+                this.$emit('getViewIcon',this.viewMoreIcon)
+            },
             //加载更多院校信息
             viewMore:function(index) {
                 if (!this.productShow) {
@@ -115,17 +125,36 @@
                     this.productShow = true;
                     this.viewMoreButt = '收起';
                     $("#moreButton").attr("class","el-icon-caret-top")
-                } else if(this.productShow) {
+                } else {
                     this.productShow = false;
                     //改变字体及icon名字
-                    this.viewMoreButt = '查看更多';
+                    this.viewMoreButt = '查看更多项目';
                     $("#moreButton").attr("class","el-icon-caret-bottom")
                 }
             },
         },
-        props:["collegeInfo"],//需要传一个数组
+        props:["collegeInfo","followId","confirmId","missPorduct"],//需要传一个数组
         mounted() {
-            
+            // console.log(this.missPorduct);
+            //是否显示查看更多
+            if (this.collegeInfo.missPorduct.length==0) {
+                console.log(this.missPorduct)
+                this.viewMoreIcon = false;
+            };
+            //向父组件传参数
+            this.getViewIcon();
+            // 院校性质标签是否显示
+            if(this.followId == '原985')
+                this.nine= true;
+            else if(this.followId=='原211')
+                this.two = true;
+            else
+                this.both29 = true;
+            if (this.confirmId=='AASCB') {
+                this.aascb = true;
+            } else {
+                this.equis = true;
+            }
         }
 
     }
@@ -139,6 +168,9 @@
         .moreInform:hover {
             color: #009fa0;
             cursor: pointer;
+        }
+        .moreInform {
+            color: #a4a4a4;
         }
         .viewMore {
             width: 1230px;
@@ -214,7 +246,19 @@
             opacity: 0.06;
             margin: 50px auto;
         }
-        /** PC **/
+        /*加入对比*/
+        .joinContrast .el-button {
+            width: 120px;
+            height: 44px;
+            border: 2px solid #0fa5a6;
+            color: #0fa5a6;
+            font-weight: bold;
+        }
+        .joinContrast .el-button:hover{
+            color: #fff;
+            background-color: #0fa5a6;
+        }
+    /** PC **/
     @media only screen and (min-width: 1024px) and (max-width:1300px) {
         .viewMore {
             width: 755px;
@@ -225,9 +269,9 @@
              /*margin: 0 0 10px 80px;*/
         }
         .forY,.forThree {
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
+            /*flex-direction:column;*/
+            /*justify-content:center;*/
+            /*align-items:center;*/
         }
         .buttonCollege {
         }
@@ -247,8 +291,8 @@
             margin-right: 25px;
         }
         .forY,.forThree {
-            flex-direction:column;
-            justify-content:center;
+            /*flex-direction:column;*/
+            /*justify-content:center;*/
         }
         .buttonCollege {
         }
@@ -265,6 +309,9 @@
     }
     /** iPhone **/
     @media only screen and (min-width: 320px) and (max-width: 767px) {
+        .updateInform {
+            font-size: 12px;
+        }
         .buttonCollege {
             margin:0 0 20px;
         }
@@ -278,7 +325,7 @@
             width: 90%；
         }
         .viewMore {
-            width: 95%;
+            width: 85%;
         }
         .teach {
             margin-top: 10px;
@@ -287,6 +334,7 @@
             flex-direction: column;
         }
         .specificInform {
+            margin: 0 auto 10px;
             width: 200px;
             height: 150px;
             padding: 30px 25px;
@@ -296,8 +344,8 @@
             margin-left: 20px;
         }
         .forY,.forThree {
-            flex-direction:column;
-            justify-content:center;
+            /*flex-direction:column;*/
+            /*justify-content:center;*/
 
         }
         .diffeCollege {
@@ -307,13 +355,6 @@
     }
     /*不同院校——院校信息*/
 
-    /*不同院校——图片信息*/
-    .joinContrast .el-button {
-        width: 120px;
-        height: 44px;
-        border: 2px solid #0fa5a6;
-        color: #0fa5a6;
-    }
     h1 {
         display: block;
         font-size: 2em;
