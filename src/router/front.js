@@ -62,6 +62,11 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/lookActivity'], resolve))
                         },
                         {
+                            path: 'singleActivity/:id?',
+                            name: '一级导航-单个活动',
+                            component: resolve => void(require(['@/views/front/detailPage/singleActivity'], resolve))
+                        },
+                        {
                             path: 'viewInformation',
                             name: '找资讯',
                             component: resolve => void(require(['@/views/front/firstMenu/viewInformation'], resolve))

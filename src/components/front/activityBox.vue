@@ -2,9 +2,8 @@
 	<!-- 单个活动块————使用方式 -->
     <!-- <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox> -->
 
-	<!-- <div class="activityBody"> -->
-		<!-- 单个活动块 -->
-	    <div class="activityBox">
+	<!-- 单个活动块 -->
+    <div class="activityBox" @click="jump(activityInfo.id)">
 	    <div>
 	        <!-- 头部图片及状态 -->
 	        <div class="activityImg"  :style="{ backgroundImage: 'url(&;quot;' + activityInfo.active_img + '&;quot;)' }">
@@ -52,7 +51,6 @@
 	            </div>
 	        </div>
 	    </div>
-    <!-- </div> -->
     </div>
 </template>
 
@@ -79,6 +77,12 @@ export default {
     			break;
         		default:  self.activityInfo.start_state = "未识别"; break;
         	};
+        },
+
+        // 跳转到活动详情页
+        jump: function(){
+            let id = this.activityInfo.id;
+            this.$router.push('/front/firstMenuRouter/singleActivity/'+id);
         },
     },
     props: ["activityInfo"],
@@ -108,23 +112,12 @@ export default {
 </style>
 
 <style scoped>
-	.activityBody{
-		width: 100%;
-		height: auto;
-		display: -webkit-box;
-	    display: -ms-flexbox;
-	    display: flex;
-	    -ms-flex-wrap: wrap;
-	    flex-wrap: wrap;
-	    margin-right: auto;
-	    margin-left: auto;
-	    min-height: auto;
-	}
 	p, span{
         font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
     }
     /*单个活动块儿的属性：大小、背景色等*/
     .activityBox{
+        cursor: pointer;
         width: 25%;
         /*height: 370px;*/
         padding-left: 10px;
@@ -173,7 +166,6 @@ export default {
     .activityDetail{
         /*未按照原psd格式图片设计，根据原型图设计*/
         padding: 10px 15px 0 15px;
-        cursor: pointer;
         min-height: 80px;
     }
 
