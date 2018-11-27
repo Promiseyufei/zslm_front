@@ -7,7 +7,7 @@
                     <el-input
                         placeholder="复旦大学   北京大学"
                         suffix-icon="el-icon-search"
-                        v-model="z_name" @keyup.enter="search">
+                        v-model="z_name" @keyup.enter.native="search">
                     </el-input>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                         </div> -->
 
                         <!-- 每个院校情况组件 -->
-                        <selectCollegeItem v-for="(all, index) in majorInform" :key="index" :collegeInfo="all"></selectCollegeItem>
+                        <selectCollegeItem v-for="(all, index) in majorInform" :key="index" :collegeInfo="all" :followId="major_follow_id" :confirmId="major_confirm_id" @getViewIcon="getView" :missPorduct="missPorduct"></selectCollegeItem>
                         <!-- 每个院校情况组件 -->
                     </el-card>
                 </el-col>
@@ -141,8 +141,11 @@ export default {
     },
     data() {
         return {
-            missPorduct:[],
-            showProduct:[],
+            major_follow_id:'',
+            major_confirm_id:'',
+            viewMoreIcon:true,
+            missPorduct:0,
+            // showProduct:[],
             /*按钮参数*/
             provice:'',
             z_type:'',
@@ -177,6 +180,10 @@ export default {
         }
     },
     methods: {
+        getView:function(iconView){
+            // console.log(iconView)
+            this.viewMoreIcon = iconView;
+        },
         //分页请求
         changePageNum:function(pageNum) {
             this.page = pageNum;
@@ -185,6 +192,7 @@ export default {
         //搜索框失去焦点——传搜索内容
         search:function() {
             this.getmajorInform();
+            console.log(123)
         },
         //获得院校信息
         getmajorInform:function(){
@@ -213,19 +221,26 @@ export default {
                             that.majorInform.forEach((item,index) => {
                                 that.majorInform[index].showProduct = item.product.slice(0,3);
                                 that.majorInform[index].missPorduct = item.product.slice(3);
+                                if (that.majorInform[index].missPorduct==0) {
+                                    // that.viewMoreIcon = false;
+                                    console.log(that.majorInform[index].missPorduct);
+                                }
+                                that.missPorduct = that.majorInform[index].missPorduct;
                             });
-                            // 院校性质标签是否显示
-                            if(res[0].major_follow_id == '原985')
-                                self.nine= true;
-                            else if(res[0].major_follow_id=='原211')
-                                self.two = true;
-                            else
-                                self.both29 = true;
-                            if (res[0].major_confirm_id=='AASCB') {
-                                this.aascb = true;
-                            } else {
-                                this.equis = true;
-                            }
+                            
+                            // if(res[0].major_follow_id == '原985')
+                            //     that.nine= true;
+                            // else if(res[0].major_follow_id=='原211')
+                            //     that.two = true;
+                            // else
+                            //     that.both29 = true;
+                            // if (res[0].major_confirm_id=='AASCB') {
+                            //     that.aascb = true;
+                            // } else {
+                            //     that.equis = true;
+                            // }
+                            that.major_confirm_id = res[0].major_confirm_id;
+                            that.major_follow_id = res[0].major_follow_id;
                         }
 
                 }).catch(function (error) {

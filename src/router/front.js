@@ -45,7 +45,7 @@ let front_router = {
                     name: '注册会员',
                     component: resolve => void(require(['@/views/front/Login/register'], resolve))
                 },
-                //一级导航,主页面，包括选院校、找活动、找资讯、搜辅导
+                //一级导航,主页面，包括选院校、找活动、找资讯、搜辅导以及其详情页
                 {
                     path: 'firstMenuRouter',
                     name: '一级导航',
@@ -55,6 +55,11 @@ let front_router = {
                             path: 'selectCollege',
                             name: '选院校',
                             component: resolve => void(require(['@/views/front/firstMenu/selectCollege'], resolve))
+                        },
+                        {
+                            path: 'singleCollage',
+                            name: '选院校——单个院校，招生项目',
+                            component: resolve => void(require(['@/views/front/detailPage/singleCollage'], resolve))
                         },
                         {
                             path: 'lookActivity',
