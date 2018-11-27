@@ -3,7 +3,7 @@
     <div>
         <div class="content-whole">
             <div class="content-whole-article">
-                <div class="content-son" v-for="(item, index) in mbaShort" :key="index">
+                <div class="content-son" v-for="(item, index) in shortArticles" :key="index">
                     <div class="article-con-posiion clearfloat">
                         <div class="son-left">
                             <img :src="item.img" alt="未加载">
@@ -35,15 +35,15 @@
 
 <script>
     export default{
+        props:["shortArticles"],
         data(){
             return{
-                mbaShort:this.shortArticles
+                // mbaShort:this.shortArticles
             }
         },
         methods:{
 
         },
-        props:["shortArticles"],
         mounted(){
 
         }

@@ -1,5 +1,5 @@
 <template>
-    <!-- 分页 -->
+    <!-- 分页 当前页 总数 每页显示个数-->
     <!-- <activityPage :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage> -->
 
     <div class="apartPage">
@@ -40,6 +40,7 @@ export default {
     mounted(){
         // console.log(this.totalData);
         // console.log(this.currentPage);
+        // console.log(this.size);
     }
 }
 </script>

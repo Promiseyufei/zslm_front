@@ -1,83 +1,360 @@
 <template>
-    <div class="c-div div_v60iAm guanzhu">
-        <div class="c-div div_lPV1oN guanzhu">
-            <div class="c-div div_BMsaOd guanzhu">
-                <div class="c-div div_ARD2As">
-                    <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url(http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png); ">
-
+    <div class="allInforma" @change="getViewIcon">
+        <div class="c-div div_BMsaOd guanzhu" style="margin-bottom:30px;align-items:flex-end;">
+            <div class="c-div div_ARD2As">
+                <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url(http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png); ">
+                </div>
+                <div class="c-div div_mnG0wo">
+                    <div class="c-div div_oLhlRV">
+                        <h1 class="c-heading heading_IH2VnY" @click="goItemDetail">{{collegeInfo.z_name}}</h1>
+                        <label class="c-label label_OVUgJH">{{collegeInfo.province}}</label>
+                        <label class="c-label label_OVUgJH">{{collegeInfo.city}}</label>
                     </div>
-                    <div class="c-div div_mnG0wo">
-                        <div class="c-div div_oLhlRV">
-                            <h1 class="c-heading heading_IH2VnY">{{ data.z_name }}</h1>
-                            <label class="c-label label_OVUgJH">{{ data.province }}</label>
-                            <label class="c-label label_OVUgJH">{{ data.city }}</label>
-                        </div>
-                        <div class="c-div cs-repeatable div_sfz9WV">
-                            <img class="c-image image_2pnGPP" v-show="equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                            <img class="c-image image_2pnGPP" v-show="aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                            <img class="c-image image_2pnGPP" v-show="two" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
-                            <img class="c-image image_2pnGPP" v-show="nine" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
-                            <img class="c-image image_2pnGPP" v-show="both29" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
-                        </div>
+                    <div class="c-div cs-repeatable div_sfz9WV">
+                        <img class="c-image image_2pnGPP" v-show="equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
+                        <img class="c-image image_2pnGPP" v-show="aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                        <img class="c-image image_2pnGPP" v-show="two" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
+                        <img class="c-image image_2pnGPP" v-show="nine" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
+                        <img class="c-image image_2pnGPP" v-show="both29" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
                     </div>
                 </div>
-                <a class="btn c-button button_LsM2yn123 quguan" type="button">正在关注</a>
             </div>
-            <div class="c-div div_Sd6WRB">
-                <div v-show="classShow" class="c-div div_PiRYSQ" data-c_e_id="div_354d2bc5">
-            <div class="row c-row row_EsvYjt guanzhu" data-c_e_id="row_a53619dd">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_WvUK7W"  v-for="(item,index) in data.product">
-                    <div class="c-div div_zpfJlh"><h1 class="c-heading heading_gviHAE">{{ item.project_name }}</h1>
-                        <div class="c-div div_XXPhAx"><div class="row c-row row_JUft7v">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_mFWPbx">
-                                <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/6704701da17821d6beda8ba3bb60eea7_origin.png">
-                                <h1 class="c-heading heading_58QPWV">学费</h1>
-                                <h1 class="c-heading heading_58QPWV bold">{{item.cost}}</h1>
-                            </div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_UYw0gx">
-                            <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/20269a716dff64d3b9774b0a59b58d49_origin.png">
-                            <h1 class="c-heading heading_58QPWV">授课语言</h1>
-                            <h1 class="c-heading heading_58QPWV bold">{{ item.language }}</h1>
-                        </div></div><div class="c-div div_0oZzVH">
-                            <div class="c-div div_eQPG16">
-                                <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/d7d842b4a1e4f923dec499e431c2091d_origin.png"><h1 class="c-heading heading_58QPWV">授课语言</h1>
-                            </div>
-                            <p class="c-paragraph heading_58QPWV bold">{{ item.student_count }}</p>
-                        </div><div class="c-div div_0oZzVH">
-                            <div class="c-div div_eQPG16">
-                                <img class="c-image image_3wYLxF" src="http://qty83k.creatby.com/materials/2771/origin/a2a111bd9f722160447a7dc496916b1b_origin.png">
-                                <h1 class="c-heading heading_58QPWV">班级情况</h1>
-                            </div>
-                            <p class="c-paragraph heading_58QPWV bold">{{ item.class_situation }}</p>
-                        </div>
-                        </div>
+            <div class="joinContrast"><el-button>+ 加入对比</el-button></div>
+        </div>
+        <div class="forThree">
+            <div class="specificInform" v-for="(t,index) in collegeInfo.showProduct" :key="index">
+                <p class="international">{{t.project_name}}</p>
+                <div class="moneyType">
+                    <div style="display:flex;align-items:center;margin:0 44px 0 0;">
+                        <div style="margin:2px 0 0 0;"><img src="../../assets/img/smoney.png"></div>
+                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
+                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>
                     </div>
-                </div >
-
+                    <div style="display:flex;align-items:center;">
+                        <div style="margin:3px 0 0 0;"><img src="../../assets/img/class.png"></div>
+                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
+                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;margin:15px 0;">
+                        <div style="margin:2px 0 0 0;"><img src="../../assets/img/friends.png"></div>
+                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
+                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>
+                </div>
+                <div style="display:flex;align-items:center;">
+                        <div style="margin:2px 0 0 0;"><img src="../../assets/img/friends.png"></div>
+                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
+                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>
+                </div>
             </div>
-            <a class="btn c-button button_LsM2yn123 quguan jinruzhuye" type="button">进入院校主页</a>
         </div>
-            <a class="c-textlink textlink_wzNM3e dakai c-action-click"
-               data-c_act_id="M_ab06ccb710e44532|M_126530613a6d5d52"
-               data-c_e_id="textlink_d64f3c03"
-               style="color: rgb(160, 160, 160);"
-                v-show="show"
-                @click="showProject">查看招生项目</a>
-            <a class="c-textlink c-initHide textlink_wzNM3e c-action-click"
-               data-c_act_id="act_f7495771|M_102cb8b558cc53ad"
-               data-c_e_id="textlink5e28ab3f"
-               style="color: rgb(160, 160, 160);"
-               v-show="notShow"
-                @click="showProject">收起</a>
+
+        <div class="forThree" v-show="productShow">
+            <div class="specificInform" v-for="(t,index) in collegeInfo.missPorduct" :key="index">
+                <p class="international">{{t.project_name}}</p>
+                <div class="moneyType">
+                    <div style="display:flex;align-items:center;margin:0 44px 0 0;">
+                        <div style="margin:2px 0 0 0;"><img src="../../assets/img/smoney.png"></div>
+                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
+                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>
+                    </div>
+                    <div style="display:flex;align-items:center;">
+                        <div style="margin:3px 0 0 0;"><img src="../../assets/img/class.png"></div>
+                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
+                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;margin:15px 0;">
+                    <div style="margin:2px 0 0 0;"><img src="../../assets/img/friends.png"></div>
+                    <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
+                    <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>
+                </div>
+                <div style="display:flex;align-items:center;">
+                    <div style="margin:2px 0 0 0;"><img src="../../assets/img/friends.png"></div>
+                    <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
+                    <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>
+                </div>
+            </div>
+
         </div>
+        <div class="viewMore" v-show="viewMoreIcon">
+            <div class="updateInform">信息更新时间：{{update_time}}</div>
+            <div class="moreInform" @click="viewMore">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
         </div>
     </div>
 </template>
-<style scoped>
-    *{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+
+
+
+<script>
+    export default {
+        data() {
+            return {
+            /*按钮参数*/
+            viewMoreIcon:true,
+            productShow:false,
+            viewMoreButt:'查看更多项目',
+            majorInform:[],
+            nature:null,
+            equis:true,
+            aascb:false,
+            //211
+            two:false,
+            //985
+            nine:false,
+            //双一流
+            both29:false,
+            moreMajor:false,
+            update_time:1996,
+            }
+        },
+        methods: {
+            goItemDetail:function(){
+                this.$router.push({
+                            path:'/front/firstMenuRouter/singleCollage',
+                        });
+            },
+            //子向父传参
+            getViewIcon:function(a){
+                this.$emit('getViewIcon',this.viewMoreIcon)
+            },
+            //加载更多院校信息
+            viewMore:function(index) {
+                if (!this.productShow) {
+                    //改变字体及icon名字
+                    this.productShow = true;
+                    this.viewMoreButt = '收起';
+                    $("#moreButton").attr("class","el-icon-caret-top")
+                } else {
+                    this.productShow = false;
+                    //改变字体及icon名字
+                    this.viewMoreButt = '查看更多项目';
+                    $("#moreButton").attr("class","el-icon-caret-bottom")
+                }
+            },
+        },
+        props:["collegeInfo","followId","confirmId","missPorduct"],//需要传一个数组
+        mounted() {
+            // console.log(this.missPorduct);
+            //是否显示查看更多
+            if (this.collegeInfo.missPorduct.length==0) {
+                console.log(this.missPorduct)
+                this.viewMoreIcon = false;
+            };
+            //向父组件传参数
+            this.getViewIcon();
+            // 院校性质标签是否显示
+            if(this.followId == '原985')
+                this.nine= true;
+            else if(this.followId=='原211')
+                this.two = true;
+            else
+                this.both29 = true;
+            if (this.confirmId=='AASCB') {
+                this.aascb = true;
+            } else {
+                this.equis = true;
+            }
+        }
+
     }
+</script>
+<style>
+    
+</style>
+
+<style scoped>
+    /*不同院校——院校信息*/
+        .moreInform:hover {
+            color: #009fa0;
+            cursor: pointer;
+        }
+        .moreInform {
+            color: #a4a4a4;
+        }
+        .viewMore {
+            width: 1230px;
+            display: flex;
+            justify-content:space-between;
+            font-size: 12px;
+            color: #a4a4a4;
+        }
+        .allInforma {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #efefef;
+            padding-bottom: 40px;
+        }
+        .moneyType p {
+            height: 21px;
+            line-height: 21px;
+        }
+        .forThree {
+            display: flex;
+            flex-wrap:wrap;
+        }
+        .moneyType p,.state,.interval {
+            font-size: 14px;
+            color: #6e6e6e;
+        }
+        .interval {
+            margin: 10px 0 10px 0;
+        }
+        .money {
+            margin: 0 44px 0 11px;
+        }
+        .bold {
+            margin-left: 18px;
+        }
+        .type {
+            margin-left: 14px;
+        }
+        .money,.type,.bold {
+            font-size: 14px;
+            font-weight: bold;
+            color: #6e6e6e;
+        }
+        .international {
+            height: 19px;
+            margin-bottom: 21px;
+            font-size: 18px;
+            color: #009fa0;
+        }
+        .moneyType {
+            display: flex;
+        }
+        .specificInform {
+            width: 375px;
+            padding: 30px 0 30px 25px;
+            margin: 0 10px 10px 0;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        .forY {
+            display: flex;
+        }
+        .collegeInform {
+        }
+        .diffeCollege {
+            margin: 0 auto;
+            width: 1280px;
+        }
+        .buttonCollege {
+            width: 1280px;
+            height: 2px;
+            background-color: #009fa0;
+            /*border: solid 3px #000000;*/
+            opacity: 0.06;
+            margin: 50px auto;
+        }
+        /*加入对比*/
+        .joinContrast .el-button {
+            width: 120px;
+            height: 44px;
+            border: 2px solid #0fa5a6;
+            color: #0fa5a6;
+            font-weight: bold;
+        }
+        .joinContrast .el-button:hover{
+            color: #fff;
+            background-color: #0fa5a6;
+        }
+    /** PC **/
+    @media only screen and (min-width: 1024px) and (max-width:1300px) {
+        .viewMore {
+            width: 755px;
+            margin: 0 auto;
+        }
+        .specificInform {
+             width: 720px;
+             /*margin: 0 0 10px 80px;*/
+        }
+        .forY,.forThree {
+            /*flex-direction:column;*/
+            /*justify-content:center;*/
+            /*align-items:center;*/
+        }
+        .buttonCollege {
+        }
+        .diffeCollege {
+            width: 90%;
+            overflow:hidden;
+        }
+
+    }
+    /** iPad **/
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+        .viewMore {
+            width: 700px;
+        }
+        .specificInform,.threeSpecificInform {
+            width: 658px;
+            margin-right: 25px;
+        }
+        .forY,.forThree {
+            /*flex-direction:column;*/
+            /*justify-content:center;*/
+        }
+        .buttonCollege {
+        }
+        .diffeCollege {
+            width: 100%;
+            overflow:hidden;
+        }
+        .diffeCollege .el-col-8{
+            width: 720px;
+            overflow:hidden;
+            margin-left: 20px;
+        }
+
+    }
+    /** iPhone **/
+    @media only screen and (min-width: 320px) and (max-width: 767px) {
+        .updateInform {
+            font-size: 12px;
+        }
+        .buttonCollege {
+            margin:0 0 20px;
+        }
+        .selectCollegeSearch {
+            margin: 20px 0 20px 0;
+        }
+        .selectCollege .el-input__inner {
+            border-radius: 20px;
+        }
+        .buttonCollege {
+            width: 90%；
+        }
+        .viewMore {
+            width: 85%;
+        }
+        .teach {
+            margin-top: 10px;
+        }
+        .moneyType {
+            flex-direction: column;
+        }
+        .specificInform {
+            margin: 0 auto 10px;
+            width: 200px;
+            height: 150px;
+            padding: 30px 25px;
+        }
+        .diffeCollege .el-col-8 {
+            width: 90%;
+            margin-left: 20px;
+        }
+        .forY,.forThree {
+            /*flex-direction:column;*/
+            /*justify-content:center;*/
+
+        }
+        .diffeCollege {
+            width: 100%;
+        }
+        
+    }
+    /*不同院校——院校信息*/
+
     h1 {
         display: block;
         font-size: 2em;
@@ -522,15 +799,13 @@
     .label_OVUgJH {
         color: rgb(0, 159, 160);
         font-weight: normal;
-        padding-left: 6px;
-        padding-right: 6px;
+        padding: 4px 8px;
+        font-size: 14px;
         border-style: solid;
         border-radius: 5px;
         border-width: 1px;
         border-color: rgb(0, 159, 160);
-        margin-left: 3px;
-        margin-right: 3px;
-        margin-bottom: 0px;
+        margin:0 3px;
     }
 
     .div_sfz9WV {
@@ -678,10 +953,13 @@
 
 
     @media (max-width: 767px){
+
         * {
             background-attachment: initial !important;
         }
-
+        .buttonCollege {
+            width: 90%；
+        }
         .div_v60iAm {
             padding-left: 10px;
             padding-right: 10px;
@@ -770,14 +1048,12 @@
         .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
             float: left;
         }
-
         .col-md-6 {
             width: 50%;
         }
     }
 
     @media (min-width: 768px) {
-
         .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
             float: left;
         }
@@ -788,52 +1064,16 @@
 
     }
 
-</style>
-<script>
-    export default{
-        data(){
-            return{
-                classShow:false,
-                show:true,
-                notShow:false,
-                datas:null,
-                equis:false,
-                aascb:false,
-                //211
-                two:false,
-                //985
-                nine:false,
-                //双一流
-                both29:false,
-            }
-        },
-        methods:{
-            showProject(){
-              this.classShow = !this.classShow;
-                this.show = !this.show;
-                this.notShow = !this.notShow;
-            }
-        },
-        props:["data"],
-        mounted(){
+    /*不同院校——图片信息*/
 
-            let self = this;
-            console.log(this.data)
-            this.datas = this.data
-            if(this.datas.major_follow_id == '原985')
-                self.nine= true;
-            else if(this.datas.major_follow_id=='原211')
-                self.two = true;
-            else
-                self.both29 = true;
 
-            if(this.datas.major_confirm_id == 'AASCB')
-                this.aascb = true;
-            else{
-                this.equis = true;
-                console.log(232)
-            }
-        },
 
+    .selectCollegeSearch {
+        width: 407px;
+        margin: 49px 0 44px;
     }
-</script>
+    .selectCollege {
+        width: 1260px;
+        margin: 0 auto;
+    }
+</style>

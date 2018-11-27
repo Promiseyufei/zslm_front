@@ -20,6 +20,34 @@ export default {
         });
     },
 
+    spliceArr(arr, start) {
+        let returnArr=[];
+        if(arr.length >= (start + 1)) {
+            for(let i = 0; i <= start; i++) {
+                returnArr.push(arr.shift());
+            }
+            return [returnArr, arr];
+        }
+        else {
+            return arr;
+        }
+    },
+    /**
+     * 搜索页用于获得去掉参数的路由
+     * @param {string} url 
+     */
+    getChangeUrl(url) {
+        var arr=url.split("/");
+        arr.shift();
+        if(arr.length !== 3)
+            arr.pop();  
+        var str = '/';
+        arr.forEach((item => {
+            str += (item + '/');
+        }));
+        return str;
+    },
+
     /**
      * 登录成功后本地保存用户的状态
      */

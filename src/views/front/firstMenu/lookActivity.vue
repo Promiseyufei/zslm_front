@@ -3,12 +3,46 @@
         <hearderBanner enName="COLLEGES" name="选院校"></hearderBanner>
         <!-- 活动列表模块 -->
         <div class="activityList">
+            <!-- 搜索框 -->
+            <div class="search">
+                <el-input
+                    placeholder=" 复旦大学    北京大学"
+                    suffix-icon="el-icon-search"
+                    v-model="keyword"
+                    @keyup.enter.native="getPcActivityList"
+                    class="pcSeach">
+                </el-input>
+                <el-input
+                    placeholder=" 复旦大学    北京大学"
+                    suffix-icon="el-icon-search"
+                    v-model="keyword"
+                    @keyup.enter.native="getActivityList(1)"
+                    class="phoneSeach">
+                </el-input>
+            </div>
+            <!-- 筛选块 -->
+            <div class="activitySelt">
+                <selectAll :list='activitySelect' :checkboxGroup1='checkboxGroup' @change="change"></selectAll>
+                <div class="selectedTag">
+                    <div class="selected">
+                        <div class="slectedLeft">
+                            <span>选活动&gt;</span>
+                            <tag :tag="activitySelected[0].province"></tag>
+                        </div>
+                        <span>共{{count}}场活动</span>
+                    </div>
+                </div>
+            </div>
             <div class="activityListBox">
                 <!-- 单个活动块 -->
                 <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox>
-                
             </div>
-            <activityPage :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage>
+            <div class="pcPageDiv">
+                <activityPage class="pcPage" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage>
+            </div>
+            <div class="phoneLeadBtn">
+                <el-button class="leadBtn" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
+            </div>
         </div>
     </div>
 </template>
@@ -19,14 +53,34 @@ export default {
     },
     data() {
         return {
-            keyword:'',//搜索关键字
-            province:[],//选择的省份数组
-            majorType:[],//专业类型的id数组
-            activityType:[],//活动类型的id数组
-            activityState:[],//活动开始状态数组:0未开始 1进行中 2已结束
-            activityDate:1,//月份 1~12
+            // 下垃加载按钮
+            loadingBtnText:'加载更多',
+            disabled:false,
+            loading:false,
 
-            pageCount:12,//分页显示的行数
+            allActivity:[],//存放所有活动数据数组
+
+            keyword:'',//搜索关键字
+
+            //已选择的列表数据
+            activitySelected:[
+                {
+                    province:["北京","上海"],//选择的省份数组
+                },
+                {
+                    majorType:[0,1],//专业类型的id数组
+                },
+                {
+                    activityType:[0,1],//活动类型的id数组
+                },
+                {
+                    activityState:[0,1],//活动开始状态数组:0未开始 1进行中 2已结束
+                },
+                {
+                    activityDate:1,//月份 1~12
+                },
+            ],
+            pageCount:4,//分页显示的行数
             pageNumber:1,//分页显示的下标
 
             count:0,//筛选后活动总数
@@ -34,171 +88,300 @@ export default {
             info:[],//活动信息
 
             // 筛选块列表数据
-            activitySelect:[{
-                allMajorType:[],//所有专业类型的id数组
-                allProvince:[
-                    {
-                        id:1,
-                        name:"北京"
-                    },
-                    {
-                        id:2,
-                        name:"天津"
-                    },
-                    {
-                        id:3,
-                        name:"上海"
-                    },
-                    {
-                        id:4,
-                        name:"重庆"
-                    },
-                    {
-                        id:5,
-                        name:"河北"
-                    },
-                    {
-                        id:1,
-                        name:"北京"
-                    },
-                    {
-                        id:6,
-                        name:"山西"
-                    },
-                    {
-                        id:7,
-                        name:"台湾"
-                    },
-                    {
-                        id:8,
-                        name:"辽宁"
-                    },
-                    {
-                        id:9,
-                        name:"吉林"
-                    },
-                    {
-                        id:10,
-                        name:"黑龙江"
-                    },
-                    {
-                        id:11,
-                        name:"江苏"
-                    },
-                    {
-                        id:12,
-                        name:"浙江"
-                    },
-                    {
-                        id:13,
-                        name:"安微"
-                    },
-                    {
-                        id:14,
-                        name:"福建"
-                    },
-                    {
-                        id:15,
-                        name:"江西"
-                    },
-                    {
-                        id:16,
-                        name:"山东"
-                    },
-                    {
-                        id:17,
-                        name:"河南"
-                    },
-                ],//所有省份数组
-                allActivityType:[],//所有活动类型的id数组
-                studyCost:[
-                    {
-                        id:0,
-                        name:"未开始"
-                    },
-                    {
-                        id:1,
-                        name:"进行中"
-                    },
-                    {
-                        id:2,
-                        name:"已结束"
-                    },
-                ],//活动状态
-                gradeLine:[
-                    {
-                        id:1,
-                        name:"一月"
-                    },
-                    {
-                        id:2,
-                        name:"二月"
-                    },
-                    {
-                        id:3,
-                        name:"三月"
-                    },
-                    {
-                        id:4,
-                        name:"四月"
-                    },
-                    {
-                        id:5,
-                        name:"五月"
-                    },
-                    {
-                        id:6,
-                        name:"六月"
-                    },
-                    {
-                        id:7,
-                        name:"七月"
-                    },
-                    {
-                        id:8,
-                        name:"八月"
-                    },
-                    {
-                        id:9,
-                        name:"九月"
-                    },
-                    {
-                        id:10,
-                        name:"十月"
-                    },
-                    {
-                        id:11,
-                        name:"十一月"
-                    },
-                    {
-                        id:12,
-                        name:"十二月"
-                    },
-                ],//时间1-12月
-            }],
+            activitySelect:[
+                {
+                    type:'专业类型',
+                    cities:[],//所有专业类型的id数组
+                    "fif":"查看更多"
+                },
+                {
+                    type:'活动省市',
+                    cities:[
+                        {
+                            id:1,
+                            name:"北京"
+                        },
+                        {
+                            id:2,
+                            name:"天津"
+                        },
+                        {
+                            id:3,
+                            name:"上海"
+                        },
+                        {
+                            id:4,
+                            name:"重庆"
+                        },
+                        {
+                            id:5,
+                            name:"河北"
+                        },
+                        {
+                            id:1,
+                            name:"北京"
+                        },
+                        {
+                            id:6,
+                            name:"山西"
+                        },
+                        {
+                            id:7,
+                            name:"台湾"
+                        },
+                        {
+                            id:8,
+                            name:"辽宁"
+                        },
+                        {
+                            id:9,
+                            name:"吉林"
+                        },
+                        {
+                            id:10,
+                            name:"黑龙江"
+                        },
+                        {
+                            id:11,
+                            name:"江苏"
+                        },
+                        {
+                            id:12,
+                            name:"浙江"
+                        },
+                        {
+                            id:13,
+                            name:"安微"
+                        },
+                        {
+                            id:14,
+                            name:"福建"
+                        },
+                        {
+                            id:15,
+                            name:"江西"
+                        },
+                        {
+                            id:16,
+                            name:"山东"
+                        },
+                        {
+                            id:17,
+                            name:"河南"
+                        },
+                        {
+                            id:18,
+                            name:"湖北"
+                        },
+                        {
+                            id:19,
+                            name:"湖南"
+                        },
+                        {
+                            id:20,
+                            name:"广东"
+                        },
+                        {
+                            id:21,
+                            name:"甘肃"
+                        },
+                        {
+                            id:22,
+                            name:"四川"
+                        },
+                        {
+                            id:23,
+                            name:"贵州"
+                        },
+                        {
+                            id:24,
+                            name:"海南"
+                        },
+                        {
+                            id:25,
+                            name:"云南"
+                        },
+                        {
+                            id:26,
+                            name:"青海"
+                        },
+                        {
+                            id:27,
+                            name:"陕西"
+                        },
+                        {
+                            id:28,
+                            name:"广西"
+                        },
+                        {
+                            id:29,
+                            name:"西藏"
+                        },
+                        {
+                            id:30,
+                            name:"宁夏"
+                        },
+                        {
+                            id:31,
+                            name:"新疆"
+                        },
+                        {
+                            id:32,
+                            name:"内蒙古"
+                        },
+                        {
+                            id:33,
+                            name:"澳门"
+                        },
+                        {
+                            id:34,
+                            name:"香港"
+                        },
+                    ],//所有省份数组
+                    "fif":"查看更多"
+                },
+                {
+                    type:'活动类型',
+                    cities:[],//所有活动类型的id数组
+                },
+                {
+                    type:'活动状态',
+                    cities:[
+                        {
+                            id:0,
+                            name:"未开始"
+                        },
+                        {
+                            id:1,
+                            name:"进行中"
+                        },
+                        {
+                            id:2,
+                            name:"已结束"
+                        },
+                    ],//活动状态
+                    "fif":"查看更多"
+                },
+                {
+                    type:'活动时间',
+                    cities:[
+                        {
+                            id:1,
+                            name:"一月"
+                        },
+                        {
+                            id:2,
+                            name:"二月"
+                        },
+                        {
+                            id:3,
+                            name:"三月"
+                        },
+                        {
+                            id:4,
+                            name:"四月"
+                        },
+                        {
+                            id:5,
+                            name:"五月"
+                        },
+                        {
+                            id:6,
+                            name:"六月"
+                        },
+                        {
+                            id:7,
+                            name:"七月"
+                        },
+                        {
+                            id:8,
+                            name:"八月"
+                        },
+                        {
+                            id:9,
+                            name:"九月"
+                        },
+                        {
+                            id:10,
+                            name:"十月"
+                        },
+                        {
+                            id:11,
+                            name:"十一月"
+                        },
+                        {
+                            id:12,
+                            name:"十二月"
+                        },
+                    ],//时间1-12月
+                    "fif":"查看更多"
+                },
+            ],
+            checkboxGroup:[{index:"全部"},{index:"全部"},{index:"全部"},{index:"全部"},{index:"全部"},],
         }
     },
     methods: {
-        // 活动列表页---通过筛选条件获得的活动列表数据
-        getActivityList:function(){
+        // 滑动加载按钮
+         getPage(){
+            this.loading = true;
+            this.pageNumber++;
+            this.getActivityList(0);
+        },
+
+        // 活动列表页手机端---通过筛选条件获得的活动列表数据
+        getActivityList:function(val){
             var self = this;
+            let state = val; //0 加载更多 1 查询
+            if(state == 1){
+                self.allActivity = [];
+            }
             this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
-                province:self.province,
-                majorType:self.majorType,
-                activityType:self.activityType,
-                activityState:self.activityState,
-                activityDate:self.activityDate,
+                province:self.activitySelected[0].province,
+                majorType:self.activitySelected[1].majorType,
+                activityType:self.activitySelected[2].activityType,
+                activityState:self.activitySelected[3].activityState,
+                activityDate:self.activitySelected[4].activityDate,
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
-                // let res = response.data;
+                self.loading = false;
                 if(res.code == 0){
-                    // console.log(res.data[0].info);
-                    self.count = res.data[0].count;
-                    // console.log(self.count);
-                    self.info = res.data[0].info;
-                    // self.message(true, "活动列表加载成功", 'success');
+                    self.count = res.result.count;
+                    let data = res.result.info;
+                    for(let i in data){
+                        self.allActivity.push(data[i]);
+                    };
+                    self.info = self.allActivity;
+                }
+                else{
+                    self.message(true, "加载失败，请重试", 'info');
+                }
+                if( self.pageNumber*self.pageCount >= self.count){
+                    self.disabled = true;
+                    self.loadingBtnText = "已经到底了";
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
+         // 活动列表页pc端---通过筛选条件获得的活动列表数据
+        getPcActivityList:function(){
+            console.log('----pc');
+            var self = this;
+            this.fetch('/front/activity/getActivity',{
+                keyword:self.keyword,
+                province:self.activitySelected[0].province,
+                majorType:self.activitySelected[1].majorType,
+                activityType:self.activitySelected[2].activityType,
+                activityState:self.activitySelected[3].activityState,
+                activityDate:self.activitySelected[4].activityDate,
+                pageCount:self.pageCount,
+                pageNumber:self.pageNumber
+            }).then(function (res) {
+                if(res.code == 0){
+                    self.count = res.result.count;
+                    self.info = res.result.info;
                 }
                 else{
                     self.message(true, "加载失败，请重试", 'info');
@@ -216,8 +399,8 @@ export default {
             }).then(function (res) {
                 // console.log(res);
                 if(res.code == 0){
-                    self.activitySelect.allMajorType = res.result;
-                    // console.log(self.activitySelect.allMajorType);
+                    self.activitySelect[0].cities = res.result;
+                    // console.log(self.activitySelect[0].cities);
                 }
                 else{
                     self.message(true, "加载失败，请重试", 'info');
@@ -234,8 +417,8 @@ export default {
                
             }).then(function (res) {
                 if(res.code == 0){
-                    self.activitySelect.allActivityType = res.result;
-                    // console.log(self.activitySelect.allActivityType);
+                    self.activitySelect[2].cities = res.result;
+                    // console.log(self.activitySelect[2].cities);
                 }
                 else{
                     self.message(true, "加载失败，请重试", 'info');
@@ -245,9 +428,15 @@ export default {
             });
         },
 
+        // 筛选块-结果
+        change(data){
+            // console.log(123);
+            // console.log(data);
+        },
+
         changePageNum(pageNum) {
             this.pageNumber = pageNum;
-            this.getActivityList();
+            this.getPcActivityList();
         },
 
     },
@@ -255,12 +444,75 @@ export default {
         this.getCollegesType();
         this.getActivityType();
         this.getActivityList();
+        this.getPcActivityList();
     },
 };
 </script>
 <style>
+/*搜索框*/
+.search .el-input__inner {
+    font-size: 14px;
+    border-radius: 60px;
+    height: 32px;
+}
+.search>div{
+    width: 306px;
+}
+.search .el-input__icon{
+    line-height: 0;
+}
+
+/*筛选块*/
+.slectedLeft .el-tag{
+    color: #009fa0;
+    background-color: unset;
+    border-color: rgb(210, 210, 210);
+}
 </style>
 <style scoped>
+    /*筛选块*/
+    .activitySelt .selectedTag{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 60px;
+    }
+    .selectedTag .selected{
+        width: 1280px;
+        min-height: auto;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+        color: rgb(110, 110, 110);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 19px;
+        margin-bottom: 48px;
+    }
+    .selected .slectedLeft{
+        display: flex;
+        align-items: center;
+        min-height: auto;
+    }
+    .slectedLeft span{
+        margin-left: 7px;
+        margin-right: 7px;
+    }
+
+    
+
+    /*加载更多*/
+    .phoneLeadBtn{
+        margin-bottom: 10px; 
+        margin-left: 10px;
+        margin-right: 10px;
+        text-align: center;   
+    }
+    .phoneLeadBtn .leadBtn{
+        color: #fff;
+        background-color: #009fa0;
+        width: 100%;
+    }
+
     .activityList{
         width: 100%;
         overflow: hidden;
@@ -276,11 +528,29 @@ export default {
         min-height: auto;
         margin-bottom: 20px;
     }
+
+    /*搜索框*/
+    .search {
+        width: 1280px;
+        margin: 37px auto 49px;
+    }
     
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
         .activityListBox{
             background-attachment: initial !important;
+        }
+        .search{
+            width: 95%;
+        }
+        .search>div{
+            width: 100%;
+        }
+        .pcPageDiv .pcPage{
+            display: none;
+        }
+        .search .pcSeach{
+            display: none;
         }
     }
 
@@ -289,15 +559,44 @@ export default {
         .activityListBox{
             background-attachment: initial !important;
         }
+        .search{
+            width: 95%;
+        }
+        .search>div{
+            width: 100%;
+        }
+        .pcPageDiv .pcPage{
+            display: none;
+        }
+        .search .pcSeach{
+            display: none;
+        }
     }
 
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
-        
+        .pcPageDiv .pcPage{
+            display: block;
+        }
+        .search .pcSeach{
+            display: block;
+        }
+        .phoneLeadBtn .leadBtn{
+            display: none;
+        }
+        .search .phoneSeach{
+            display: none;
+        }
     } 
 
     /* Large devices (laptops/desktops, 992px and up) */
     @media only screen and (min-width: 992px) {
+        .search{
+            width: 1280px;
+        }
+        .search>div{
+            width: 306px;
+        }
         
     } 
 
@@ -306,6 +605,7 @@ export default {
         .activityListBox{
             width: 1300px;
         }
+
     }   
 
 </style>

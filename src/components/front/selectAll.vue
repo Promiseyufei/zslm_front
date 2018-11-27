@@ -66,7 +66,7 @@ export default {
                     divs[i].style.height = "30px";
                 }
             }, 1000);
-        })
+        });
     }
 }
 </script>

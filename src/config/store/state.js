@@ -9,5 +9,9 @@ export const state = {
 		userPhone:'',
 		userPassword:'',
 		smsCode:'',
+	},
+	search: {
+		keyword:'',
+		nowUrl:'/front/search/major'
 	}
 }
