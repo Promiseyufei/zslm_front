@@ -57,7 +57,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/selectCollege'], resolve))
                         },
                         {
-                            path: 'singleCollage',
+                            path: 'singleCollage/:id?',
                             name: '选院校——单个院校，招生项目',
                             component: resolve => void(require(['@/views/front/detailPage/singleCollage'], resolve))
                         },
@@ -80,6 +80,11 @@ let front_router = {
                             path: 'searchCoach',
                             name: '搜辅导',
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
+                        },
+                        {
+                            path: 'singleCoach/:id?',
+                            name: '单个辅导机构',
+                            component: resolve => void(require(['@/views/front/detailPage/singleCoach'], resolve))
                         },
                         {
                             path: 'usercore',
@@ -120,20 +125,6 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/search/searchCoach'], resolve)),
                         }
                     ]
-                },
-
-
-
-                //小分页
-                {
-                    path: 'singleCollage/:id?',
-                    name: '首页-单个院校',
-                    component: resolve => void(require(['@/views/front/detailPage/singleCollage'], resolve))
-                },
-                {
-                    path: 'singleCoach/:id?',
-                    name: '单个辅导机构',
-                    component: resolve => void(require(['@/views/front/detailPage/singleCoach'], resolve))
                 },
 
             ]

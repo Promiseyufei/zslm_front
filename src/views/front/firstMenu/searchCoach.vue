@@ -4,6 +4,17 @@
             <!-- header -->
             <hearderBanner enName="INSTITUTIONS" name="搜辅导"></hearderBanner>
 
+            <!-- 搜索框 -->
+            <div class="singlecoachBig">
+                <div class="singlecoachbox">
+                    <div class="coachInput">
+                        <input type="text" placeholder="输入关键字搜索">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    
+                </div>
+            </div>
+
             <!-- 筛选框 -->
             <selectAll :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectAll>
 
@@ -77,8 +88,79 @@ export default {
     },
     data() {
         return {
-            list: [],
-            checkboxGroup1: [["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"]],
+            list: [
+                {
+                    type:"热门地区",
+                    cities:[
+                        {
+                            name: "北京",
+                        },
+                        {
+                            name: "天津",
+                        },
+                        {
+                            name: "上海",
+                        },
+                        {
+                            name: "重庆",
+                        },
+                        {
+                            name: "山西",
+                        },
+                        {
+                            name: "台湾",
+                        },
+                        {
+                            name: "辽宁",
+                        },
+                        {
+                            name: "吉林",
+                        },
+                        {
+                            name: "黑龙江",
+                        },
+                        {
+                            name: "江苏",
+                        },
+                        {
+                            name: "浙江",
+                        },
+                        {
+                            name: "安徽",
+                        },
+                        {
+                            name: "江西",
+                        }
+                    ],
+                    fif:"更多地区"
+                },
+                {
+                    type:"辅导形式",
+                    cities:[
+                        {
+                            name:"在线学习"
+                        },
+                        {
+                            name:"面对面授课"
+                        }
+                    ],
+                    fif:"更多辅导"
+                },
+                {
+                    type:"会员特权",
+                    cities:[
+                        {
+                            name:"专属优惠卷"
+                        },
+                        {
+                            name:"10天退款无忧"
+                        }
+                    ],
+                    fif:"更多特权"
+                }
+                
+            ],
+            checkboxGroup1: [[],[],[],[],[],[],[],[],[],[]],
             coachlist: [],
         }
     },
@@ -87,25 +169,6 @@ export default {
         change: function(checkboxGroup) {
             console.log(checkboxGroup);
         },
-        //得到筛选框二维数组
-        getRoot: function() {
-            var that = this;
-            axios.get('/mulu',{
-                provice: "全部",
-                coach_type: 3,
-                coach_name: "",
-                if_back: 2,
-                if_coupon: 2,
-                page: 1,
-                page_size: 8
-            }).then(function (response) {
-                    var res = response.data;
-                    if (res.code == 0) {
-                        that.list = res.list;
-                    }
-            }).catch(function (error) {
-            });
-        },
         //跳转辅导机构详情页
         jump: function(id) {
             this.$router.push('/front/singleCoach/'+id);
@@ -113,32 +176,51 @@ export default {
         //得到所有筛选过的辅导机构列表
         getCoach: function() {
             var that = this;
-            axios.post('/front/coach/getcoach',{
-                provice: "全部",
-                coach_type: 3,
-                coach_name: "",
-                if_back: 2,
-                if_coupon: 2,
-                page: 1,
-                page_size: 8
-            }).then(function (response) {
-                    var res = response.data;
-                    if (res.code == 0) {
-                        that.coachlist = res.data;
-                    }
-            }).catch(function (error) {
-            });
+            // this.fetch('/front/coach/getcoach',{
+            //     provice: "全部",
+            //     coach_type: 3,
+            //     coach_name: "",
+            //     if_back: 2,
+            //     if_coupon: 2,
+            //     page: 1,
+            //     page_size: 8
+            // }).then(function (response) {
+            //         var res = response.data;
+            //         if (res.code == 0) {
+            //             that.coachlist = res.data;
+            //         }
+            // }).catch(function (error) {
+            // });
         }
     },
     mounted(){
         this.getCoach();
-        this.getRoot();
+        // this.getRoot();
     },
 };
 </script>
 <style>
 </style>
 <style scoped>
+.coachInput {
+    background: #fff;
+    border: 1px solid #ccc;
+    margin: 49px 10px 45px;
+    padding:7px 15px;
+    border-radius: 20px;
+}
+.coachInput>input {
+    border: none;
+    outline: none;
+    width: 245px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    
+}
+.coachInput>i {
+    color:#666;
+}
 .coachLittleshort {
     display: flex;
     justify-content: flex-start;
