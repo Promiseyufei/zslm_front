@@ -10,10 +10,13 @@
                 <label>></label>
                 <i>MBA分析</i>
                 <label>></label>
-                <i>正文</i>
+                <i class="text-article">正文</i>
             </div>
             <div class="content-written clearfloat">
                 <div class="weitten-left">
+                    <div id="single-img">
+                        <img src="" alt="">
+                    </div>
                     <div class="content-title">
                         <h1>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h1>
                         <div class="icon-content">
@@ -60,6 +63,7 @@ export default{
     data(){
         return {
             information:[],
+            articleContent:[]
         }
     },
     methods: {
@@ -87,13 +91,35 @@ export default{
                     _this.industryTatol = response.result.count;
                 }
             })
+            .catch(error => function (error) {
+                console.log(response)
+            });
+        },
+        /*
+        *
+        * 展示文章
+        * */
+        articleShow:function () {
+            console.log(this.$route.params.id)
+            let _this = this;
+            this.fetch('/front/consult/getConsultDeyail',{
+                consultId:_this.$route.params.id
+            }).then((response) => {
+                if(response.code == 0){
+                    console.log(response)
+                    _this.articleContent = response.result;
+//                    _this.information=response.result.info;
+//                    _this.industryTatol = response.result.count;
+                }
+            })
                 .catch(error => function (error) {
                     console.log(response)
                 });
-        },
+        }
     },
     mounted(){
         this.readtation();
+        this.articleShow();
     }
 }
 </script>
@@ -245,5 +271,18 @@ export default{
         -webkit-transform: rotate(0deg) scale(1) translate(0%,0%);
         transform: rotate(0deg) scale(1) translate(0%,0%);
         transition: All 0.3s ease;
+    }
+    .content-article-single > div >i:last-child{
+        color: rgb(0, 159, 160);
+        font-weight: bolder;
+    }
+    #single-img{
+        width: 94%;
+        height: 365px;
+        margin: auto;
+        margin-bottom: 14px;
+        margin-top: 21px;
+        background-color: red;
+        border-radius: 5px;
     }
 </style>

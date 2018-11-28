@@ -16,19 +16,19 @@
                 </div>
 
                 <div class="article-cont">
-                    <mbaArticle @addAtricle="addArticle" v-if="judge" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
+                    <mbaArticle @jumpContent="jump" @jumpArticle="jump" @addAtricle="addArticle" v-if="judge" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
                 </div>
             </div>
             <!--右边的的文章-->
             <div class="float-right">
-                <Article @refreshs="refreshBusiness" v-if="informbusiness.length" title="行业报告" :inforArticle="informbusiness"></Article>
+                <Article @refreshs="refreshBusiness" @jump="jump" v-if="informbusiness.length" title="行业报告" :inforArticle="informbusiness"></Article>
                 <div class="advertisement">
                     <img src="../../../assets/img/advertisement.png" alt="">
                 </div>
                 <div class="advertisement">
                     <img src="../../../assets/img/advertisementB.png" alt="">
                 </div>
-                <Article @refreshs="refresh" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
+                <Article @refreshs="refresh" @jump="jump" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
             </div>
         </div>
         <!--<div class="footer">-->
@@ -142,6 +142,9 @@ export default {
                 .catch(error => function (error) {
                     console.log(response)
                 });
+        },
+        jump: function (id) {
+            this.$router.push('/front/firstMenuRouter/singleInformation/'+id.id);
         },
         /*
         * 行业报告
