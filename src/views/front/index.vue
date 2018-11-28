@@ -8,11 +8,11 @@
                     <div class="indexNav">
                         <div class="indexHeader">
                             <div>
-                                <input type="text" class="indexinput">
-                                <i class="fa fa-search"></i>
+                                <input type="text" class="indexinput" id="indexinput">
+                                <i class="fa fa-search" @click="jumpsearch(1)"></i>
                             </div>
-                            <i class="fa fa-bell"></i>
-                            <i class="fa fa-user-circle"></i>
+                            <i class="fa fa-bell" @click="jumpsearch(2)"></i>
+                            <i class="fa fa-user-circle" @click="jumpsearch(3)"></i>
                         </div>
                     </div>
                     <!-- logo按钮 -->
@@ -41,15 +41,15 @@
                     <!-- 选择院校----单个院校小块块 -->
                     <div class="singleCollegeBox">
                         <div class="singleCollege" v-for="(temp,index) in college" :key="index" @click = "toJumpCollege(temp.id)">
-                            <img :src="temp.img" alt="">
+                            <img src="../../assets/img/coach2.png" alt="">
                             
                             <div class="hover">
                                 <div>
-                                    <img :src="temp.backImg" alt="" class="indeximg">
+                                    <img src="../../assets/img/coach2.png" alt="" class="indeximg">
                                 </div>
                                 <div class="singleCollegeHover">
                                     <div class="singleCollegeHeader">
-                                        <img :src="temp.img" alt="">
+                                        <img src="../../assets/img/coach2.png" alt="">
                                         <div>
                                             <img src="../../assets/img/aacsb.jpg" alt="">
                                             <img src="../../assets/img/camea.png" alt="">
@@ -57,7 +57,7 @@
                                     </div>
                                     
                                     <div class="collegeName">
-                                        <p>{{temp.name}}</p>
+                                        <p>{{temp.z_name}}</p>
                                         <p>点击进入院校主页<i class="fa fa-long-arrow-right"></i></p>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                     <!-- 搜辅导----单个辅导机构小块块 -->
                     <div class="singleCollegeBox">
                         <div class="selectInformationHearder">
-                            <div class="selectInformationLeft"> 
+                            <div class="selectInformationLeft" @click="toJumpCoach(coach[0].id)"> 
                                 <img src="../../assets/img/sitanfu.jpg" alt="">
                                 <div>
                                     <div class="selectInformationLeftimg">
@@ -96,18 +96,18 @@
                                     </div>
                                     <div class="selectInformationLeftMessage">
                                         <div class="collegeName">
-                                            <p>YaHei</p>
+                                            <p>{{coach[0].coach_name}}</p>
                                             <p>点击进入院校主页<i class="fa fa-long-arrow-right"></i></p>
                                         </div>
                                         <div class="selectInformationSign">
-                                            <img src="../../assets/img/money.png" alt="">
-                                            <img src="../../assets/img/return.png" alt="">
+                                            <img src="../../assets/img/money.png" alt="" v-if="coach[0].if_coupons==0">
+                                            <img src="../../assets/img/return.png" alt="" v-if="coach[0].if_back_money==0">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="selectInformationRight">
-                                <div class="selectInformationLittle" v-for="(item, index) in 2" :key="index">
+                                <div class="selectInformationLittle" v-for="(item, index) in coach2" :key="index" @click="toJumpCoach(item.id)">
                                     <img src="../../assets/img/sitanfu.jpg" alt="">
                                     <div>
                                         <div class="selectInformationLeftimg">
@@ -115,12 +115,12 @@
                                         </div>
                                         <div class="selectInformationLeftMessage">
                                             <div class="collegeName">
-                                                <p>YaHei</p>
+                                                <p>{{item.coach_name}}</p>
                                                 <p>点击进入院校主页<i class="fa fa-long-arrow-right"></i></p>
                                             </div>
                                             <div class="selectInformationSign">
-                                                <img src="../../assets/img/money.png" alt="">
-                                                <img src="../../assets/img/return.png" alt="">
+                                                <img src="../../assets/img/money.png" alt="" v-if="item.if_coupons==0">
+                                            <img src="../../assets/img/return.png" alt="" v-if="item.if_back_money==0">
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +151,7 @@
                     <!-- 找活动----三个活动小块块 -->
                     <div class="singleCollegeBox">
                         <div class="selectActivity">
-                            <div class="homeContainer">
+                            <div class="homeContainer" @click="toJumpActivity">
                                 <div class="wrap" style="left: -955px;">
                                     <img src="../../assets/img/sitanfu.jpg" alt="">
                                     <img src="../../assets/img/banner1.jpg" alt="">
@@ -167,24 +167,24 @@
                                 <div class="wrapCover">
                                     <div class="wrapCover1">
                                         <span>招生宣讲</span>
-                                        <h3>{{activity[index].name}}</h3>
+                                        <h3>{{activity[index].active_name}}</h3>
                                     </div>
                                     <div class="wrapCover2">
-                                        <p><i class="fa fa-map-marker"></i>{{activity[index].province}}</p>
-                                        <p><i class="fa fa-calendar"></i>{{activity[index].time}}</p>
+                                        <p><i class="fa fa-map-marker"></i>{{activity[index].province.province}}{{activity[index].province.city}}</p>
+                                        <p><i class="fa fa-calendar"></i>{{activity[index].begin_time}}-{{activity[index].end_time}}</p>
                                         <div>
-                                            <img :src="activity[index].logo" alt="">
-                                            <span>{{activity[index].school}}</span>
+                                            <img src="../../assets/img/college.png" alt="">
+                                            <span>{{activity[index].z_name}}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="singActivitybox">
                                 <div class="singActivity selectMessage" v-for="(item,indd) in activity">
-                                    <h3>{{item.name}}</h3>
+                                    <h3>{{item.active_name}}</h3>
                                     <div class="singActivityspan">
-                                        <span><i class="fa fa-map-marker"></i>{{item.province}}</span>
-                                        <span><i class="fa fa-calendar"></i>{{item.time}}</span>
+                                        <span><i class="fa fa-map-marker"></i>{{item.province.province}}{{item.province.city}}</span>
+                                        <span><i class="fa fa-calendar"></i>{{item.begin_time}}-{{item.end_time}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -213,44 +213,34 @@
                     <!-- 看资讯----单个辅导机构小块块 -->
                     <div class="singleCollegeBox">
                         <div class="selectInformationHearder informationDiv">
-                            <div class="lookinformation" v-for="(item,index) in 2">
+                            <div class="lookinformation" v-for="(item,index) in consult1">
                                 <img src="../../assets/img/infor.jpg" alt="">
                                 <div class="lookinforMessage">
-                                    <h3>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h3>
+                                    <h3>{{item.zx_name}}</h3>
                                     <div>
-                                        <p><i class="fa fa-calendar"></i>2018.8.31</p>
-                                        <p><i class="fa fa-map-marker"></i>专硕联盟</p>
+                                        <p><i class="fa fa-calendar"></i>{{item.create_time}}</p>
+                                        <p><i class="fa fa-map-marker"></i>{{item.publisher}}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="lookinformation little" v-for="(item,index) in 2">
-                                <img src="../../assets/img/infor.jpg" alt="">
+                            <div class="lookinformationBig big" v-for="(item,index) in consult2">
                                 <div class="lookinforMessage">
-                                    <h3>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h3>
+                                    <h3>{{item.zx_name}}</h3>
+                                    <p>{{item.brief_introduction}}</p>
                                     <div>
-                                        <p><i class="fa fa-calendar"></i>2018.8.31</p>
-                                        <p><i class="fa fa-map-marker"></i>专硕联盟</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="lookinformationBig big" v-for="(item,index) in 2">
-                                <div class="lookinforMessage">
-                                    <h3>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h3>
-                                    <p>在教育资源方面，2017年，全国共有普通搞笑2914所育资源方面，2017年，全国共有普育资源方面，2017年，全国共有普育资源方面，2017年，全国共有普育资源方面，2017年，全国共有普育资源方面，2017年，全国共有普</p>
-                                    <div>
-                                        <p><i class="fa fa-calendar"></i>2018.8.31</p>
-                                        <p><i class="fa fa-map-marker"></i>专硕联盟</p>
+                                        <p><i class="fa fa-calendar"></i>{{item.create_time}}</p>
+                                        <p><i class="fa fa-map-marker"></i>{{item.publisher}}</p>
                                     </div>
                                 </div>
                                 <img src="../../assets/img/infor.jpg" alt="">
                             </div>
-                            <div class="lookinformation" v-for="(item,index) in 2">
+                            <div class="lookinformation" v-for="(item,index) in consult3">
                                 <img src="../../assets/img/infor.jpg" alt="">
                                 <div class="lookinforMessage">
-                                    <h3>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h3>
+                                    <h3>{{item.zx_name}}</h3>
                                     <div>
-                                        <p><i class="fa fa-calendar"></i>2018.8.31</p>
-                                        <p><i class="fa fa-map-marker"></i>专硕联盟</p>
+                                        <p><i class="fa fa-calendar"></i>{{item.create_time}}</p>
+                                        <p><i class="fa fa-map-marker"></i>{{item.publisher}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -363,56 +353,67 @@ export default {
         index: 0,
         dots: document.getElementsByTagName("b"),
         mes: document.getElementsByClassName("selectMessage"),
-        college: [
+        college:[],
+        coach:[
             {
                 id: 1,
-                img: require("../../assets/img/college.png"),
-                backImg: require("../../assets/img/college1.jpg"),
-                name: "北京科技大学MBA"
-            },
-            {
-                id: 2,
-                img: require("../../assets/img/college.png"),
-                backImg: require("../../assets/img/college1.jpg"),
-                name: "北京科技大学MBA2"
-            },
-            {
-                id: 3,
-                img: require("../../assets/img/college.png"),
-                backImg: require("../../assets/img/college1.jpg"),
-                name: "北京科技大学MBA3"
-            },
-            {
-                id: 4,
-                img: require("../../assets/img/college.png"),
-                backImg: require("../../assets/img/college1.jpg"),
-                name: "北京科技大学MBA"
-            },
-            {
-                id: 5,
-                img: require("../../assets/img/college.png"),
-                backImg: require("../../assets/img/college1.jpg"),
-                name: "北京科技大学MBA"
-            },
-            {
-                id: 6,
-                img: require("../../assets/img/college.png"),
-                backImg: require("../../assets/img/college1.jpg"),
-                name: "北京科技大学MBA"
-            },
-            {
-                id: 7,
-                img: require("../../assets/img/college.png"),
-                backImg: require("../../assets/img/college1.jpg"),
-                name: "北京科技大学MBA7"
-            },
+                coach_name: "河南科技学院",
+                if_coupons: 0,
+                if_back_money: 0,
+                cover_name: "1540718814-5bd580de207fe-coach.png",
+                cover_alt:null,
+                logo_name: "1540718814-5bd580de20853-coach.png",
+                logo_alt:null,
+            }
         ],
-
+        coach2:[],
+        consult1:[],
+        consult2:[],
+        consult3:[]
       }
     },
     methods: {
+        //得到7个院校
+        getCollage: function() {
+            var that = this;
+            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/indexinfo').then(function (res) {
+                if (res.code == 0) {
+                    that.college = res.result.major;//返回学校
+                    that.coach = res.result.coach;//返回辅导机构
+                    that.coach2.push(that.coach[1],that.coach[2]);//过滤掉第一个辅导机构
+                    that.activity = res.result.actives.info;//返回活动
+                    var consult = res.result.consult.info;//返回资讯
+                    that.consult1.push(consult[0],consult[1]);
+                    that.consult2.push(consult[2],consult[3]);
+                    that.consult3.push(consult[2],consult[3]);
+                    // console.log(consult);
+                }else {
+                    that.message(true,res.msg,"error");
+                }
+            }).catch(function (error) {
+            });
+        },
+        //跳到搜索页面
+        jumpsearch:function(re) {
+            if(re==1){
+                var message = document.getElementById("indexinput");
+                this.$router.push('/front/search');
+            }else if(re==2) {
+                // this.$router.push('/front/search');
+            }else {
+                // this.$router.push('/front/search');
+            }
+        },
+        //跳到注册页面
         jump:function() {
             this.$router.push('/front/Login/register');
+        },
+        toJumpActivity: function() {
+            // this.$router.push('/front/Login/register');
+        },
+        //跳到相应的单个辅导机构
+        toJumpCoach:function(id) {
+            this.$router.push('/front/singleCoach/'+id);
         },
         //跳到相应的模块，分别为（选校校，找活动，找资讯，搜辅导）
         toJump: function(index) {
@@ -430,7 +431,7 @@ export default {
         toJumpCollege: function(id) {
             this.$router.push('/front/singleCollage/'+id);
         },
-
+        //轮播图，图片前移
         next_pic: function() {
             this.index++;
             if(this.index > 2){
@@ -445,6 +446,7 @@ export default {
             }
             this.wrap.style.left = newLeft + "px";
         },
+        //轮播图，图片右移
         prev_pic: function() {
             this.index--;
             if(this.index < 0){
@@ -459,6 +461,7 @@ export default {
             }
             this.wrap.style.left = newLeft + "px";
         },
+        //轮播图的圆点
         showCurrentDot: function () {
             for(var i = 0, len = this.dots.length; i < len; i++){
                 this.dots[i].className = "";
@@ -472,6 +475,7 @@ export default {
         clearInterval(this.timer);
     },
     mounted(){
+        this.getCollage();
         var wrap = document.querySelector(".wrap");
         this.wrap = wrap;
         var dots = document.getElementsByTagName("b");
@@ -549,6 +553,7 @@ export default {
     .memberServe p {
         color: rgb(56, 59, 61);
         font-size: 14px;
+        line-height: 20px;
     }
     .memberServe>div {
         width: 206px;
@@ -574,6 +579,7 @@ export default {
         width: 305px;
         border-radius: 6px;
         overflow: hidden;
+        cursor: pointer;
     }
     
     .lookinformation>img {
@@ -617,6 +623,7 @@ export default {
         flex-wrap: wrap;
         border-radius: 6px;
         overflow: hidden;
+        cursor: pointer;
     }
     .lookinformationBig .lookinforMessage {
         width: 265px;
@@ -769,6 +776,8 @@ export default {
     .selectHeader>strong {
         color: #009fa0;
         font-size: 30px;
+        display: inline-block;
+        margin-top: 10px;
     }
     .singleCollegeBox {
         display: flex;
@@ -880,6 +889,7 @@ export default {
         padding: 10px 15px;
         position: relative;
         font-weight: lighter;
+        cursor: pointer;
     }
     .singActivity>h3 {
         margin: 0;
@@ -942,6 +952,7 @@ export default {
         border-radius: 5px;
         overflow: hidden;
         margin-bottom: 20px;
+        cursor: pointer;
     }
     .selectInformationLeft>img {
         min-width: 100%;
@@ -986,7 +997,6 @@ export default {
     .selectInformationRight {
         width: 305px;
         margin-left: 20px;
-        
     }
     .selectInformationLittle {
         width: 100%;
@@ -995,6 +1005,7 @@ export default {
         border-radius: 5px;
         overflow: hidden;
         margin-bottom: 20px;
+        cursor: pointer;
     }
     
     .selectInformationLittle>img {
@@ -1161,6 +1172,7 @@ export default {
         height: 350px;
         margin-top: 20px;
         overflow: hidden;
+        cursor: pointer;
     }
     .homeContainer .wrap {
         position: absolute;
@@ -1213,7 +1225,9 @@ export default {
     .wrapCover1>h3 {
         font-size: 24px;
         font-weight: lighter;
-        /* margin-bottom: 70px; */
+        font-size: 24px;
+        line-height: 1.4em;
+        margin-top: 12px;
     }
     .wrapCover2>p {
         font-size: 14px;

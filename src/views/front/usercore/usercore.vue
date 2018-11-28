@@ -445,7 +445,7 @@
 
             info(){
                 let self = this;
-                this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/usercore/getuserinfo?id='+self.id)
+                this.fetch('/front/usercore/getuserinfo?id='+self.id)
                     .then(res=>{
                         if(res.code == 0){
                             let result = res.result[0];
@@ -461,7 +461,7 @@
             },
             getMajor(){
                 let self = this;
-                this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
+                this.fetch('/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
                     .then(res=>{
                         if(res.code == 0){
                             let data = res.result;

@@ -8,15 +8,38 @@
                 <el-input
                     placeholder=" 复旦大学    北京大学"
                     suffix-icon="el-icon-search"
-                    v-model="keyword">
+                    v-model="keyword"
+                    @keyup.enter.native="getPcActivityList"
+                    class="pcSeach">
+                </el-input>
+                <el-input
+                    placeholder=" 复旦大学    北京大学"
+                    suffix-icon="el-icon-search"
+                    v-model="keyword"
+                    @keyup.enter.native="getActivityList(1)"
+                    class="phoneSeach">
                 </el-input>
             </div>
-            <selectAll :list='activitySelect' :checkboxGroup1='checkboxGroup' @change="change"></selectAll>
+            <!-- 筛选块 -->
+            <div class="activitySelt">
+                <selectAll :list='activitySelect' :checkboxGroup1='checkboxGroup' @change="change"></selectAll>
+                <div class="selectedTag">
+                    <div class="selected">
+                        <div class="slectedLeft">
+                            <span>选活动&gt;</span>
+                            <tag :tag="activitySelected[0].province"></tag>
+                        </div>
+                        <span>共{{count}}场活动</span>
+                    </div>
+                </div>
+            </div>
             <div class="activityListBox">
                 <!-- 单个活动块 -->
                 <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox>
             </div>
-            <activityPage class="pcPage" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage>
+            <div class="pcPageDiv">
+                <activityPage class="pcPage" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage>
+            </div>
             <div class="phoneLeadBtn">
                 <el-button class="leadBtn" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
             </div>
@@ -34,6 +57,8 @@ export default {
             loadingBtnText:'加载更多',
             disabled:false,
             loading:false,
+
+            allActivity:[],//存放所有活动数据数组
 
             keyword:'',//搜索关键字
 
@@ -300,16 +325,16 @@ export default {
          getPage(){
             this.loading = true;
             this.pageNumber++;
-            this.getActivityList();
+            this.getActivityList(0);
         },
 
-        // 活动列表页---通过筛选条件获得的活动列表数据
-        getActivityList:function(){
+        // 活动列表页手机端---通过筛选条件获得的活动列表数据
+        getActivityList:function(val){
             var self = this;
-            // console.log(self.activitySelected[0].province);
-            // console.log("=======");
-            // console.log(self.pageCount);
-            // console.log(self.pageNumber);
+            let state = val; //0 加载更多 1 查询
+            if(state == 1){
+                self.allActivity = [];
+            }
             this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
                 province:self.activitySelected[0].province,
@@ -321,23 +346,45 @@ export default {
                 pageNumber:self.pageNumber
             }).then(function (res) {
                 self.loading = false;
-                // console.log("------");
-                // console.log(res);
-                // let res = response.data;
                 if(res.code == 0){
                     self.count = res.result.count;
-                    self.info = res.result.info;
-                    // self.message(true, "活动列表加载成功", 'success');
+                    let data = res.result.info;
+                    for(let i in data){
+                        self.allActivity.push(data[i]);
+                    };
+                    self.info = self.allActivity;
                 }
                 else{
                     self.message(true, "加载失败，请重试", 'info');
                 }
-                // console.log(self.pageNumber*self.pageCount);
-                // console.log("-----");
-                // console.log(self.count);
                 if( self.pageNumber*self.pageCount >= self.count){
                     self.disabled = true;
                     self.loadingBtnText = "已经到底了";
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
+         // 活动列表页pc端---通过筛选条件获得的活动列表数据
+        getPcActivityList:function(){
+            console.log('----pc');
+            var self = this;
+            this.fetch('/front/activity/getActivity',{
+                keyword:self.keyword,
+                province:self.activitySelected[0].province,
+                majorType:self.activitySelected[1].majorType,
+                activityType:self.activitySelected[2].activityType,
+                activityState:self.activitySelected[3].activityState,
+                activityDate:self.activitySelected[4].activityDate,
+                pageCount:self.pageCount,
+                pageNumber:self.pageNumber
+            }).then(function (res) {
+                if(res.code == 0){
+                    self.count = res.result.count;
+                    self.info = res.result.info;
+                }
+                else{
+                    self.message(true, "加载失败，请重试", 'info');
                 }
             }).catch(function(error){
                 console.log("error");
@@ -389,7 +436,7 @@ export default {
 
         changePageNum(pageNum) {
             this.pageNumber = pageNum;
-            this.getActivityList();
+            this.getPcActivityList();
         },
 
     },
@@ -397,6 +444,7 @@ export default {
         this.getCollegesType();
         this.getActivityType();
         this.getActivityList();
+        this.getPcActivityList();
     },
 };
 </script>
@@ -413,8 +461,46 @@ export default {
 .search .el-input__icon{
     line-height: 0;
 }
+
+/*筛选块*/
+.slectedLeft .el-tag{
+    color: #009fa0;
+    background-color: unset;
+    border-color: rgb(210, 210, 210);
+}
 </style>
 <style scoped>
+    /*筛选块*/
+    .activitySelt .selectedTag{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 60px;
+    }
+    .selectedTag .selected{
+        width: 1280px;
+        min-height: auto;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+        color: rgb(110, 110, 110);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 19px;
+        margin-bottom: 48px;
+    }
+    .selected .slectedLeft{
+        display: flex;
+        align-items: center;
+        min-height: auto;
+    }
+    .slectedLeft span{
+        margin-left: 7px;
+        margin-right: 7px;
+    }
+
+    
+
+    /*加载更多*/
     .phoneLeadBtn{
         margin-bottom: 10px; 
         margin-left: 10px;
@@ -445,7 +531,7 @@ export default {
 
     /*搜索框*/
     .search {
-        width: 1300px;
+        width: 1280px;
         margin: 37px auto 49px;
     }
     
@@ -460,7 +546,10 @@ export default {
         .search>div{
             width: 100%;
         }
-        .pcPage{
+        .pcPageDiv .pcPage{
+            display: none;
+        }
+        .search .pcSeach{
             display: none;
         }
     }
@@ -476,17 +565,26 @@ export default {
         .search>div{
             width: 100%;
         }
-        .pcPage{
+        .pcPageDiv .pcPage{
+            display: none;
+        }
+        .search .pcSeach{
             display: none;
         }
     }
 
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
-        .pcPage{
+        .pcPageDiv .pcPage{
+            display: block;
+        }
+        .search .pcSeach{
             display: block;
         }
         .phoneLeadBtn .leadBtn{
+            display: none;
+        }
+        .search .phoneSeach{
             display: none;
         }
     } 
@@ -494,7 +592,7 @@ export default {
     /* Large devices (laptops/desktops, 992px and up) */
     @media only screen and (min-width: 992px) {
         .search{
-            width: 1300px;
+            width: 1280px;
         }
         .search>div{
             width: 306px;
