@@ -225,6 +225,7 @@ export default {
     margin: 10px;
     position: relative;
     border-radius: 5px;
+    cursor: pointer;
 }
 .singlecoachHoverbig {
     display: none;
