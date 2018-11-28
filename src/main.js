@@ -38,7 +38,7 @@ window.Exif = Exif
 import WangEditor from 'wangeditor'
 window.WangEditor = WangEditor
 
-
+// // 使用mock
 // import Mock from 'mockjs'
 // window.Mock = Mock
 // require('../util/mock/xuhong_mock.js')

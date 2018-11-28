@@ -57,7 +57,6 @@ export default {
         var d = new Date();
         d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
         var expires = "expires=" + d.toUTCString();
-        console.info(userName + "=" + '111' + "; " + expires);
         document.cookie = userName + "=" + userPhone + "; " + expires;
     },
 

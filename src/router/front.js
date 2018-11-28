@@ -77,6 +77,11 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/viewInformation'], resolve))
                         },
                         {
+                            path: 'singleInformation/:id?',
+                            name: '找资讯详情页',
+                            component: resolve => void(require(['@/views/front/detailPage/singleInformation'], resolve))
+                        },
+                        {
                             path: 'searchCoach',
                             name: '搜辅导',
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
