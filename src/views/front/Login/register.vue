@@ -101,6 +101,7 @@
 					}
 					else if(response.code == 0) {
 						this.saveUserState('user', this.phoneNumber);
+						this.saveUserState('userId', response.result);
 						this.message(true, '注册成功，默认密码为手机号后六位~', 'success');
 					}
 				})
