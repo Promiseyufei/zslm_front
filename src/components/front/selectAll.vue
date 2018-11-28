@@ -125,6 +125,20 @@ export default {
     .publicRowRight .el-checkbox-button__inner {
         border-left: none !important;
     }
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1200px) {
+    .ff span{
+        width: 10px !important;
+        margin: 0 5px;
+    }
+    .fff span{
+        width: 10px !important;
+        margin: 0 5px;
+    }
+    .publicRowRight .el-checkbox-button__inner {
+        padding: 12px 10px;
+    }
+}
 </style>
 <style scoped>
 .el-checkbox-button {
@@ -142,7 +156,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
-    margin: 0 10px;
+    margin: 0 10px 60px;
     background-color: #fff;
     border-radius: 5px;
     color: #333;
@@ -204,9 +218,16 @@ export default {
     }
     .publicRow>span {
         width: auto;
+        font-size: 12px;
     }
     .publicRowRight>p {
-        width: auto;
+        width: 20px;
+    }
+    .ff span{
+        width: 10px !important;
+    }
+    .fff span{
+        width: 10px !important;
     }
 }
 </style>
