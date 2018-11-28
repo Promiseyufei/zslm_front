@@ -4,25 +4,25 @@
             <div class="div_BMsaOd">
                 <div class="div_ARD2As">
                     <div class="c-inlineblock c-imageblock imageblock_VRWtPr" 
-                        mode="scaleToFill" src="../../assets/img/majorIcon.png" 
-                        style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url(../../assets/img/majorIcon.png); ">
+                        mode="scaleToFill" :src="majorInfo.magor_logo_name" 
+                        :style="'background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url('+ majorInfo.magor_logo_name +');'">
                     </div>
                     <div class="div_mnG0wo">
                         <div class="div_oLhlRV">
-                            <h1 class="c-heading heading_IH2VnY">北京大学光华管理学院MBA</h1>
-                            <label class="c-label label_OVUgJH">北京</label>
-                            <label class="c-label label_OVUgJH">北京</label>
+                            <h1 class="c-heading heading_IH2VnY">{{ majorInfo.z_name }}</h1>
+                            <label class="c-label label_OVUgJH">{{ majorInfo.province.province }}</label>
+                            <label class="c-label label_OVUgJH">{{ majorInfo.province.city }}</label>
                         </div>
                         <div class="div_sfz9WV">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
-                            <img class="c-image image_2pnGPP" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_confirm_id == 'EQUIS'" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_confirm_id == 'AACSB'" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '原211'" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '原985'" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '双一流'" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
                         </div>
                     </div>
                 </div>
-                <a class="btn c-button button_LsM2yn123 duibi" type="button">+  加入对比</a>
+                <a class="btn c-button button_LsM2yn123 duibi" @click="addContrast" type="button">+  加入对比</a>
             </div>
         </div>
     </div>
@@ -30,7 +30,17 @@
 
 <script>
 export default {
-    
+    props: ['majorInfo'],
+    data() {
+        return {
+            // majorInfo: this.majorInfo
+        }
+    },
+    methods: {
+        addContrast() {
+            
+        }
+    }
 }
 </script>
 

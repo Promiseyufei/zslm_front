@@ -26,7 +26,7 @@
                 <!-- 左边主要部分 -->
                 <div class="row_left row_padding">
                     <!-- 标签页导航 -->
-                    <searchLablePageHead :names="names"></searchLablePageHead>
+                    <searchLablePageHead :names="names" @labelHeadClick="changeUrl"></searchLablePageHead>
                     <router-view></router-view>
                     <!-- <div class="c-div div_v60iAm xiangqingye xiangqingye_flex">
                         <h1 class="c-heading heading_XwQWQq">当前搜索关键字为“院校”，小助手找到了以下内容：</h1>
@@ -35,7 +35,7 @@
 
                 <!-- 右边主要部分 -->
                 <div class="row_right row_padding">
-                    <searchSearchInput></searchSearchInput>
+                    <searchSearchInput :keyword="keyword" @changeKeyword="getKeyword"></searchSearchInput>
 
                     <div class="advertisement">
                         <img src="../../../assets/img/advertisement.png" alt="">
@@ -54,9 +54,14 @@
 
 <script>
 export default {
+    // inject: ['reload'],
     data() {
         return {
             page:0,
+            keyword:'',
+            pageNumber: 0,
+            readCount:0,
+            industryTatol:1,
             information:[],
             names: [
                  {name:'院校', selected_prop_value:null, url:'/front/search/major'},
@@ -68,25 +73,34 @@ export default {
     },
     methods: {
         refresh: function (data) {
+            this.pageNumber++;
+            if (this.pageNumber*4 >=this.industryTatol){
+                this.pageNumber = 0;
+            }
             this.presentation();
         },
         presentation: function () {
             let _this = this;
-            axios.get('/front/consult/getRecommendRead?pageNumber='+_this.page)
-                .then(response => {
-                    console.log(response.data);
-                    if(response.data.code == 0){
-                        _this.information=response.data.data;
-
-                    }
-                })
-                .catch(error => function (error) {
-                    console.log(response)
-                });
+            this.fetch('/front/consult/getRecommendRead', {
+                pageNumber: this.pageNumber
+            }).then((response) => {
+                if(response.code == 0) {
+                    this.industryTatol = response.result.count;
+                    this.information = response.result.info;
+                }
+            })
+                
         },
+        changeUrl(item) {
+            this.$router.push(item.url + '/' + this.$store.state.search['keyword']);
+        },
+        getKeyword(key) {
+            this.keyword = key;
+            this.$router.push(this.$store.state.search['nowUrl'] + this.keyword);
+        }
     },
     mounted() {
-        this.presentation()
+        this.presentation();
     }
 }
 </script>

@@ -2,29 +2,28 @@
 	<!-- 单个活动块————使用方式 -->
     <!-- <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox> -->
 
-	<!-- <div class="activityBody"> -->
-		<!-- 单个活动块 -->
-	    <div class="activityBox">
+	<!-- 单个活动块 -->
+    <div class="activityBox" @click="jump(activityInfo.id)">
 	    <div>
 	        <!-- 头部图片及状态 -->
-	        <div class="activityImg"  :style="{ backgroundImage: 'url(&;quot;' + item.active_img + '&;quot;)' }">
-	            <p v-if="item.start_state==0">{{state}}</p>
-	            <p v-else :class="item.start_state==1?'activityState1':'activityState2' ">{{state}}</p>
+	        <div class="activityImg"  :style="{ backgroundImage: 'url(&;quot;' + activityInfo.active_img + '&;quot;)' }">
+	            <p v-if="activityInfo.start_state==0">{{state}}</p>
+	            <p v-else :class="activityInfo.start_state==1?'activityState1':'activityState2' ">{{state}}</p>
 	        </div>
 	        <!-- 中间活动内容：标题、地址、时间 -->
 	        <div class="activityDetail">
 	            <div class="activityTitle">
-	                <p v-if="item.start_state==2" style="color: #b1b1b1;">{{item.active_name}}</p>
-	                <p v-else>{{item.active_name}}</p>
+	                <p v-if="activityInfo.start_state==2" style="color: #b1b1b1;">{{activityInfo.active_name}}</p>
+	                <p v-else>{{activityInfo.active_name}}</p>
 	            </div>
 	            <div class="activityAddressTime">
 	                <div class="activityAddress">
 	                    <img src="../../assets/img/position.png">
-	                    <span>{{item.province[0].city}}</span>
+	                    <span>{{activityInfo.province.province}}</span>
 	                </div>
 	                <div class="activityTime">
 	                    <img src="../../assets/img/calendar.png">
-	                    <span>{{item.begin_time}}~{{item.end_time}}</span>
+	                    <span>{{activityInfo.begin_time}}~{{activityInfo.end_time}}</span>
 	                </div>
 	            </div>
 	        </div>
@@ -34,25 +33,24 @@
 	            <div class="managerSchoolTitle">
 	                <div class="managerSchool">
 	                    <img src="../../assets/img/college1.jpg">
-	                    <span v-if="item.start_state==2" style="color: #b1b1b1;">{{item.z_name}}</span>
-	                    <span v-else>{{item.z_name}}</span>
+	                    <span v-if="activityInfo.start_state==2" style="color: #b1b1b1;">{{activityInfo.z_name}}</span>
+	                    <span v-else>{{activityInfo.z_name}}</span>
 	                </div>
-	                <p v-if="item.activity_type == '招生宣讲'" style="background-color: rgb(0, 159, 160);" class="managerTitle">
-	                    {{item.activity_type}}
+	                <p v-if="activityInfo.activity_type == '招生宣讲'" style="background-color: rgb(0, 159, 160);" class="managerTitle">
+	                    {{activityInfo.activity_type}}
 	                </p>
-	                <p v-else-if="item.activity_type == '提前面试'" style="background-color: rgba(0,97,172,1);" class="managerTitle">
-	                    {{item.activity_type}}
+	                <p v-else-if="activityInfo.activity_type == '提前面试'" style="background-color: rgba(0,97,172,1);" class="managerTitle">
+	                    {{activityInfo.activity_type}}
 	                </p>
-	                <p v-else-if="item.activity_type == '高精会议'" style="background-color: rgba(199,140,0,1);" class="managerTitle">
-	                    {{item.activity_type}}
+	                <p v-else-if="activityInfo.activity_type == '高精会议'" style="background-color: rgba(199,140,0,1);" class="managerTitle">
+	                    {{activityInfo.activity_type}}
 	                </p>
 	                <p v-else class="managerTitle">
-	                    {{item.activity_type}}
+	                    {{activityInfo.activity_type}}
 	                </p>
 	            </div>
 	        </div>
 	    </div>
-    <!-- </div> -->
     </div>
 </template>
 
@@ -69,7 +67,7 @@ export default {
         activityState:function(){
         	let self = this;
         	// console.log(self.item.start_state);
-        	switch(self.item.start_state){
+        	switch(self.activityInfo.start_state){
         		case 0:   self.state = "未开始"; break;
         		case 1:   
         			self.state = "进行中";
@@ -77,8 +75,14 @@ export default {
     			case 2:   
     				self.state = "已结束";
     			break;
-        		default:  self.item.start_state = "未识别"; break;
+        		default:  self.activityInfo.start_state = "未识别"; break;
         	};
+        },
+
+        // 跳转到活动详情页
+        jump: function(){
+            let id = this.activityInfo.id;
+            this.$router.push('/front/firstMenuRouter/singleActivity/'+id);
         },
     },
     props: ["activityInfo"],
@@ -108,23 +112,12 @@ export default {
 </style>
 
 <style scoped>
-	.activityBody{
-		width: 100%;
-		height: auto;
-		display: -webkit-box;
-	    display: -ms-flexbox;
-	    display: flex;
-	    -ms-flex-wrap: wrap;
-	    flex-wrap: wrap;
-	    margin-right: auto;
-	    margin-left: auto;
-	    min-height: auto;
-	}
 	p, span{
         font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
     }
     /*单个活动块儿的属性：大小、背景色等*/
     .activityBox{
+        cursor: pointer;
         width: 25%;
         /*height: 370px;*/
         padding-left: 10px;
@@ -173,7 +166,6 @@ export default {
     .activityDetail{
         /*未按照原psd格式图片设计，根据原型图设计*/
         padding: 10px 15px 0 15px;
-        cursor: pointer;
         min-height: 80px;
     }
 

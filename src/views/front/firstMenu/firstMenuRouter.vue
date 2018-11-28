@@ -138,6 +138,7 @@
 <style>
 	.logoInto .el-badge {
 		margin: 0 55px 0 35px;
+		/*line-height: 20px;*/
 		/*margin: 0 55px 0 35px;*/
 	}
 	.el-dropdown-menu__item--divided:before, .el-menu, .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {

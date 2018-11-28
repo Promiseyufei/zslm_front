@@ -17,16 +17,18 @@ export default {
     },
     methods: {
         forCancelStyle() {
-            this.Names.forEach((item) => {
-                item.selected_prop_value = null;
-            });
+            let _this = this;
+            for(let i = 0; i < this.Names.length; i++) {
+                _this.Names[i].selected_prop_value = null;
+            }
             return true;
         },
         testClick(item, index) {
-//            this.$router.push(item.url);
-             this.$emit('labelHeadClick', item);
+        //    this.$router.push(item.url);
             if(this.forCancelStyle())
                 this.Names[index].selected_prop_value = index;
+                
+            this.$emit('labelHeadClick', item);
             
         }
     }

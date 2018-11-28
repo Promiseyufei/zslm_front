@@ -1,8 +1,11 @@
 <template>
     <div>
-        <div class="bigBox" v-bind:style="minHeight= heig + 'px' ">
+        <div class="bigBox">
             <!-- header -->
             <hearderBanner enName="INSTITUTIONS" name="搜辅导"></hearderBanner>
+
+            <!-- 筛选框 -->
+            <selectAll :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectAll>
 
             <!-- 辅导机构小块块 -->
             <div class="singlecoachBig">
@@ -70,18 +73,44 @@
 <script>
 export default {
     components: {
+
     },
     data() {
         return {
-            tive:true,
+            list: [],
+            checkboxGroup1: [["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"]],
             coachlist: [],
-            heig: 0,
         }
     },
     methods: {
+        //每次子组件改变时，父组件就会改变
+        change: function(checkboxGroup) {
+            console.log(checkboxGroup);
+        },
+        //得到筛选框二维数组
+        getRoot: function() {
+            var that = this;
+            axios.get('/mulu',{
+                provice: "全部",
+                coach_type: 3,
+                coach_name: "",
+                if_back: 2,
+                if_coupon: 2,
+                page: 1,
+                page_size: 8
+            }).then(function (response) {
+                    var res = response.data;
+                    if (res.code == 0) {
+                        that.list = res.list;
+                    }
+            }).catch(function (error) {
+            });
+        },
+        //跳转辅导机构详情页
         jump: function(id) {
             this.$router.push('/front/singleCoach/'+id);
         },
+        //得到所有筛选过的辅导机构列表
         getCoach: function() {
             var that = this;
             axios.post('/front/coach/getcoach',{
@@ -103,8 +132,7 @@ export default {
     },
     mounted(){
         this.getCoach();
-        this.heig = window.screen.height;
-        console.log(this.heig);
+        this.getRoot();
     },
 };
 </script>
@@ -118,7 +146,6 @@ export default {
     width: 50%;
     margin-bottom: 15px;
 }
-
 .coachLittleshort>strong {
     background-color: #ffb957;
     border-radius: 50%;
