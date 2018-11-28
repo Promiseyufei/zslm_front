@@ -29,11 +29,23 @@
                                 </div>
                                 <div class="hostInfoItem">
                                     <img src="../../../assets/img/position.png">
-                                    <p>闵行区沪闵路6088号凯德龙之梦17楼R6教室</p>
+                                    <p>{{AppointAcInfo.address}}</p>
                                 </div>
                                 <div class="hostInfoType hostInfoItem">
                                     <img src="../../../assets/img/tag.png">
-                                    <p>{{AppointAcInfo.active_type}}</p>
+                                    <!-- <p>{{AppointAcInfo.active_type}}</p> -->
+                                    <p v-if="AppointAcInfo.active_type == '招生宣讲'" style="background-color: rgb(0, 159, 160);">
+                                        {{AppointAcInfo.active_type}}
+                                    </p>
+                                    <p v-else-if="AppointAcInfo.active_type == '提前面试'" style="background-color: rgba(0,97,172,1);">
+                                        {{AppointAcInfo.active_type}}
+                                    </p>
+                                    <p v-else-if="AppointAcInfo.active_type == '高精会议'" style="background-color: rgba(199,140,0,1);">
+                                        {{AppointAcInfo.active_type}}
+                                    </p>
+                                    <p v-else>
+                                        {{AppointAcInfo.active_type}}
+                                    </p>
                                 </div>
                             </div>
                             <div class="InfoBtn hostBtn">
@@ -66,10 +78,10 @@
                 <!-- 右部分侧边栏 -->
                 <aside>
                     <!-- 院校信息 -->
-                    <div class="asideBox" style='background-image:url("../../../assets/img/2.jpg");'>
+                    <div v-if="acHostInfo.id" class="asideBox" style='background-image:url("../../../assets/img/2.jpg");'>
                         <div class="asideContent">
                             <div class="asideLogo">
-                                <img v-if=" acHostInfo.magor_logo_name != '' " src="acHostInfo.magor_logo_name">
+                                <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name">
                                 <!-- 默认图片 -->
                                 <img v-else src="../../../assets/img/majorIcon.png">
                             </div>
@@ -80,8 +92,8 @@
                             </div>
                             <div class="asideAddress">
                                 <img src="../../../assets/img/position.png">
-                                <span>{{this.acHostInfo.city}}&nbsp;</span>
-                                <span class="addressItem">&middot;&nbsp;{{this.acHostInfo.province}}</span>
+                                <span>{{acHostInfo.province.city}}&nbsp;</span>
+                                <span class="addressItem">&middot;&nbsp;{{acHostInfo.province.province}}</span>
                             </div>
                             <div class="InfoBtn asideBtn">
                                 <a href="">+&nbsp;关注</a>
@@ -138,16 +150,15 @@ export default {
         // 获取活动主办院校信息
         getAcHostMajor:function(){
             let self = this;
-            axios.get('/front/activity/getAcHostMajor',{
-                scId:this.id,
-            }).then(function (result) {
-                let res = result.data;
+            this.fetch('/front/activity/getAcHostMajor',{
+                acId:this.id,
+            }).then(function (res) {
+                // let res = result.data;
                 // console.log(res);
                 if(res.code == 0){
-                    self.acHostInfo = res.result[0];
-
+                    self.acHostInfo = res.result;
                 }else{
-                    self.message(true, "加载失败，请重试", 'info');
+                    self.message(true, "主办院校不存在", 'errors');
                 }
             }).catch(function(error){
                 console.log("error");
@@ -157,14 +168,14 @@ export default {
         // 热门活动推荐列表
         getPopularAcInfo:function(){
             let self = this;
-            axios.get('/front/activity/getPopularAcInfo',{
-                scId:this.id,
+            this.fetch('/front/activity/getPopularAcInfo',{
+                acId:this.id,
                 pageNumber:this.hotInfopage,
-            }).then(function (result) {
-                let res = result.data;
+            }).then(function (res) {
+                // let res = result.data;
                 // console.log(res);
                 if(res.code == 0){
-                    let acInfo = res.result[0].acInfo;
+                    let acInfo = res.result.acInfo;
                     for(var i in acInfo){
                         self.hotInfor.push({
                             id:acInfo[i].id,
@@ -175,9 +186,33 @@ export default {
                     }
                     // console.log(self.hotInfor);
                     // self.hotInfor = res.result[0].acInfo;
-                    self.hotInfoTatol = res.count;
+                    self.hotInfoTatol = acInfo.count;
                 }else{
-                    self.message(true, "加载失败，请重试", 'info');
+                    self.message(true, "热门活动不存在", 'error');
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
+
+        // 获取文章详情
+        getAppointAcInfo:function(){
+            let self = this;
+            this.fetch('/front/activity/getAppointAcInfo',{
+                acId:this.id,
+            }).then(function (res) {
+                // let res = result.data;
+                // console.log(res);
+                if(res.code == 0){
+                    self.AppointAcInfo = res.result;
+                    switch(self.AppointAcInfo.start_state){
+                        case 0:   self.acState = "+ 我要报名"; break;//未开始
+                        case 1:   self.acState = "活动进行中"; break;//进行中
+                        case 2:   self.acState = "活动已结束"; break;//已结束
+                        default:  self.acState = "状态未知"; break;//未识别
+                    };
+                }else{
+                    self.message(true, "文章不存在", 'error');
                 }
             }).catch(function(error){
                 console.log("error");
@@ -189,12 +224,12 @@ export default {
             // 需不需要前台判断多次点击时的情况
             let self = this;
             if(self.AppointAcInfo.start_state == 0){
-                axios.get('/front/activity/activitySign',{
+                this.fetch('/front/activity/activitySign',{
                     userId:this.userId,
-                    scId:this.id,
-                }).then(function (result) {
-                    let res = result.data;
-                    console.log(res);
+                    acId:this.id,
+                }).then(function (res) {
+                    // let res = result.data;
+                    // console.log(res);
                     if(res.code == 0){
                         // self.acHostInfo = res.result[0];
                         self.message(true, "报名成功", 'success');
@@ -205,33 +240,9 @@ export default {
                     console.log("error");
                 });
             }else{
-                self.message(true, "报名已结束，下次早点来哦", 'error');
+                self.message(true, "报名已结束，下次早点来哦", 'info');
             }
         },
-
-        // 获取文章详情
-        getAppointAcInfo:function(){
-            let self = this;
-            axios.get('/front/activity/getAppointAcInfo',{
-                scId:this.id,
-            }).then(function (result) {
-                let res = result.data;
-                console.log(res);
-                if(res.code == 0){
-                    self.AppointAcInfo = res.result[0];
-                    switch(self.AppointAcInfo.start_state){
-                        case 0:   self.acState = "+ 我要报名"; break;//未开始
-                        case 1:   self.acState = "活动进行中"; break;//进行中
-                        case 2:   self.acState = "活动已结束"; break;//已结束
-                        default:  self.acState = "状态未知"; break;//未识别
-                    };
-                }else{
-                    self.message(true, "加载失败，请重试", 'info');
-                }
-            }).catch(function(error){
-                console.log("error");
-            });
-        }
 
     },
     mounted(){
@@ -468,7 +479,7 @@ export default {
         background-position: 50% 50%;
         background-size: cover;
         border-radius: 5px;
-        margin-bottom: 20px;
+        margin-bottom: 34px;
         width: auto;
         height: 350px;
     }
@@ -551,7 +562,7 @@ export default {
     .advertisement{
         border-radius: 3px;
         margin-bottom: 14px;
-        margin-top: 14px;
+        /*margin-top: 14px;*/
         height: auto;
     }
     .advertisement img{
