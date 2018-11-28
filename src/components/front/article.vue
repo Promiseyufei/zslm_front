@@ -15,7 +15,9 @@
                 </div>
                 <div class="content-article" v-for="(item,index) in infor" :key="index">
                     <div id="title-article">
-                        <div class="font-style"><a href="">{{ item.zx_name }}</a></div>
+                        <div class="font-style">
+                            <a href="">{{ item.zx_name }}</a>
+                        </div>
                         <div class="time">{{ item.create_time }}</div>
                     </div>
                     <div id="picture">
@@ -43,7 +45,7 @@
         },
 
         mounted(){
-
+          
         }
     }
 </script>

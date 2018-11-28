@@ -69,13 +69,9 @@ export default {
         	// console.log(self.item.start_state);
         	switch(self.activityInfo.start_state){
         		case 0:   self.state = "未开始"; break;
-        		case 1:   
-        			self.state = "进行中";
-    			break;
-    			case 2:   
-    				self.state = "已结束";
-    			break;
-        		default:  self.activityInfo.start_state = "未识别"; break;
+        		case 1:   self.state = "进行中"; break;
+    			case 2:   self.state = "已结束"; break;
+        		default:  self.state = "未识别"; break;
         	};
         },
 
