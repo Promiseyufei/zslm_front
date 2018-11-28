@@ -11,12 +11,25 @@
                         <input type="text" placeholder="输入关键字搜索">
                         <i class="fa fa-search"></i>
                     </div>
-                    
                 </div>
             </div>
 
             <!-- 筛选框 -->
             <selectAll :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectAll>
+
+            <!-- 选项卡 -->
+            <div class="singlecoachBig">
+                <div class="singlecoachbox">
+                    <span>选院校</span>
+                    <el-tag
+                    v-for="tag in tags"
+                    :key="tag.name"
+                    closable
+                    :type="tag.type">
+                    {{tag.name}}
+                    </el-tag>
+                </div>
+            </div>
 
             <!-- 辅导机构小块块 -->
             <div class="singlecoachBig">
@@ -88,6 +101,7 @@ export default {
     },
     data() {
         return {
+            tags: [],
             list: [
                 {
                     type:"热门地区",
@@ -167,7 +181,7 @@ export default {
     methods: {
         //每次子组件改变时，父组件就会改变
         change: function(checkboxGroup) {
-            console.log(checkboxGroup);
+            this.tags = checkboxGroup[0];
         },
         //跳转辅导机构详情页
         jump: function(id) {
