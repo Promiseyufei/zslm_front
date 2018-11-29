@@ -1,7 +1,7 @@
 <template>
     <div class="search_label_page_head">
         <div class="c-div div_v60iAm biaoqian">
-            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': item.selected_prop_value === index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="javaScript:void(0)">{{ item.name }}</a>
+            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': item.selected_prop_value == index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="javaScript:void(0)">{{ item.name }}</a>
 
         </div>
     </div>

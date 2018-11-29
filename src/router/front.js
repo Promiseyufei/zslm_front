@@ -94,7 +94,36 @@ let front_router = {
                         {
                             path: 'usercore',
                             name: 'usercore_major',
-                            component: resolve =>void(require(['@/views/front/usercore/usercore'], resolve))
+                            component: resolve =>void(require(['@/views/front/usercore/usercore'], resolve)),
+                            children: [
+                                {
+                                    path:'myFollow',
+                                    name:'我的关注',
+                                    component: resolve =>void(require(['@/views/front/usercore/myFollow'], resolve)),
+                                },
+                                {
+                                    path: 'myNews',
+                                    name: '我的消息',
+                                    component: resolve =>void(require(['@/views/front/usercore/myNews'], resolve)),
+                                    children: [
+                                        {
+                                            path: 'dynamic',
+                                            name: '院校动态',
+                                            component: resolve =>void(require(['@/views/front/usercore/news/dynamic'], resolve)),
+                                        },
+                                        {
+                                            path: 'assistant',
+                                            name: '小助手消息',
+                                            component: resolve =>void(require(['@/views/front/usercore/news/assistant'], resolve)),
+                                        },
+                                        {
+                                            path:'system',
+                                            name: '系统消息',
+                                            component: resolve =>void(require(['@/views/front/usercore/news/system'], resolve)),
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                     ]
                 },

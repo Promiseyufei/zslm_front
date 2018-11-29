@@ -1,0 +1,52 @@
+<template>
+    <div>
+        <div v-for="(item,index) in this.majors" :key="index">
+            <user-college :data="item"></user-college>
+        </div>
+        <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
+    </div>
+
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            majors:[],
+            loading:false,
+            disabled:false,
+            loadingBtnText:'加载更多',
+        }
+    },
+    methods: {
+        getMajor(){
+            let self = this;
+            this.fetch('/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
+                .then(res=>{
+                    if(res.code == 0){
+                        let data = res.result;
+                        for(let i in data){
+                            self.majors.push(data[i])
+                        }
+                    }else{
+                        self.disabled = true;
+                        self.loadingBtnText = "已经到底了"
+                    }
+                })
+        },
+        getPage(){
+            this.loading = true;
+            this.page++;
+            this.getMajor();
+            this.loading = false;
+        }
+    },
+    mounted() {
+        this.getMajor();
+    }
+}
+</script>
+
+<style scoped>
+
+</style>
