@@ -317,7 +317,7 @@ export default {
                     "fif":"查看更多"
                 },
             ],
-            checkboxGroup:[{index:"全部"},{index:"全部"},{index:"全部"},{index:"全部"},{index:"全部"},],
+            checkboxGroup:[[],[],[],[],[],[],[],[],[],[]],
         }
     },
     methods: {
@@ -431,7 +431,7 @@ export default {
         // 筛选块-结果
         change(data){
             // console.log(123);
-            // console.log(data);
+            console.log(data);
         },
 
         changePageNum(pageNum) {

@@ -1,15 +1,30 @@
 <template>
     <div>
         <div class="bigBox">
+            <!--header-->
             <div class="singlecoachBig">
-                <div class="selectHeader">
-                    <img src="" alt="">
-                    <p><span></span><strong>新东方</strong><span></span></p>
+                <div class="singlecoachbox">
+                    <div class="selectHeaderbox">
+                        <div class="selectHeaderboxhover">
+                            <div class="selectHeader">
+                                <img src="../../../assets/img/xindongfang.png" alt="">
+                                <p><span></span><strong>新东方</strong><span></span></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
+            <!--main-->
+            <div class="singlecoachBig">
+                <div class="singlecoachbox">
+                    
+                </div>
+            </div>
+
+
+
+
         </div>
-        
     </div>
 </template>
 
@@ -41,11 +56,34 @@ export default {
     margin: 0 auto;
     text-align: center;
 }
+.singlecoachbox {
+    width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+.selectHeaderbox {
+    background: url("../../../assets/img/room.jpg");
+    background-size: 100%;
+    width: 100%;
+}
+.selectHeaderboxhover {
+    background-color: rgba(56, 59, 61, 0.85);
+    width: 100%;
+    height: 100%;
+    padding: 80px 0;
+}
+.selectHeader>img {
+    margin-bottom: 30px;
+    max-width: 110px;
+    border-radius: 5px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+}
 .selectHeader>p {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 0 10px;
 }
 .selectHeader>p>span {
     display: inline-block;
@@ -80,6 +118,11 @@ export default {
     }
     .selectHeader>strong {
         font-size: 20px;
+    }
+}
+@media only screen and (max-width: 1280px) {
+    .singlecoachbox {
+        width: 100%;
     }
 }
 

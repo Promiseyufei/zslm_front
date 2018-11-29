@@ -38,14 +38,15 @@ window.Exif = Exif
 import WangEditor from 'wangeditor'
 window.WangEditor = WangEditor
 
-// // 使用mock
+
 // import Mock from 'mockjs'
 // window.Mock = Mock
 // require('../util/mock/xuhong_mock.js')
 // require('../util/mock/youqiqin_mock.js')
 // require('../util/mock/tnt_mock.js')
 // require('../util/mock/sunjifeng.js')
-// Vue.config.productionTip = false
+
+Vue.config.productionTip = false
 
 
 
@@ -67,7 +68,7 @@ Object.keys(methods).forEach((key)=>{
   Vue.prototype[key]=methods[key];
 })
 
-//二次封装axios
+// 二次封装axios
 import httpServer from './config/providers/http-service.js'
 Object.keys(httpServer).forEach((key) => {
   Vue.prototype[key] = httpServer[key];
