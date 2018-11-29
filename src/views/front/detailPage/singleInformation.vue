@@ -1,58 +1,60 @@
 <!-- 看资讯》资讯详情 -->
 <template>
     <div class="content">
-        <div class="content-article-single">
-            <div class="single-div-head">
-                <i id="home"></i>&nbsp;
-                <i>首页</i>
-                <label>></label>
-                <i>看资讯</i>
-                <label>></label>
-                <i>MBA分析</i>
-                <label>></label>
-                <i class="text-article">正文</i>
-            </div>
-            <div class="content-written clearfloat">
-                <div class="weitten-left">
-                    <div id="single-img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="content-title">
-                        <h1>浙江：这里产浙商，也教你经商︱浙江MBA项目分析</h1>
-                        <div class="icon-content">
-                            <div class="icon-left">
-                                <i class="fa fa-calendar color" aria-hidden="true"></i>&nbsp;&nbsp;
-                                <i>2018.8.31&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
-                                <i class="fa fa-paper-plane color" aria-hidden="true"></i>&nbsp;&nbsp;
-                                <i>专硕联盟</i>
-                            </div>
-                            <div class="icon-right">
-                                <i>分享到&nbsp;&nbsp;&nbsp;&nbsp;</i>
-                                <i class="fa fa-weixin weixin" aria-hidden="true"></i>
-                                &nbsp;&nbsp;<i class="fa fa-weibo weibo" aria-hidden="true"></i>
+        <div class="single-div-con">
+            <div class="content-article-single">
+                <div class="single-div-head">
+                    <i id="home"></i>&nbsp;
+                    <i>首页</i>
+                    <label>></label>
+                    <i>看资讯</i>
+                    <label>></label>
+                    <i>MBA分析</i>
+                    <label>></label>
+                    <i class="text-article">正文</i>
+                </div>
+                <div class="content-written clearfloat">
+                    <div class="weitten-left">
+                        <div id="single-img" v-if="articleContent.z_image != '' && articleContent.z_image != undefined">
+                            <img :src="articleContent.z_image" alt="articleContent.z_alt">
+                        </div>
+                        <div class="content-title">
+                            <h1>{{ articleContent.zx_name }}</h1>
+                            <div class="icon-content">
+                                <div class="icon-left">
+                                    <i class="fa fa-calendar color" aria-hidden="true"></i>&nbsp;&nbsp;
+                                    <i>{{ articleContent.create_time }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <i class="fa fa-paper-plane color" aria-hidden="true"></i>&nbsp;&nbsp;
+                                    <i>{{ articleContent.publisher }}</i>
+                                </div>
+                                <div class="icon-right">
+                                    <i>分享到&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                                    <i class="fa fa-weixin weixin" aria-hidden="true"></i>
+                                    &nbsp;&nbsp;<i class="fa fa-weibo weibo" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
+                        <div class="content-article-write">
+                            {{ articleContent.z_text }}
+                        </div>
+                        <div class="footer-icon">
+                            <i>分享到&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                            <i class="fa fa-weixin weixin" aria-hidden="true"></i>
+                            &nbsp;&nbsp;<i class="fa fa-weibo weibo" aria-hidden="true"></i>
+                        </div>
                     </div>
-                    <div class="content-article-write">
-
+                    <div class="weitten-right">
+                        <div class="advertisement">
+                            <img src="../../../assets/img/advertisementA.png" alt="未加载">
+                        </div>
+                        <div class="advertisement">
+                            <img src="../../../assets/img/advertisementA.png" alt="未加载">
+                        </div>
+                        <div class="advertisement">
+                            <img src="../../../assets/img/advertisementA.png" alt="未加载">
+                        </div>
+                        <Article @jump="jump" @refreshs="refresh" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
                     </div>
-                    <div class="footer-icon">
-                        <i>分享到&nbsp;&nbsp;&nbsp;&nbsp;</i>
-                        <i class="fa fa-weixin weixin" aria-hidden="true"></i>
-                        &nbsp;&nbsp;<i class="fa fa-weibo weibo" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <div class="weitten-right">
-                    <div class="advertisement">
-                        <img src="../../../assets/img/advertisementA.png" alt="未加载">
-                    </div>
-                    <div class="advertisement">
-                        <img src="../../../assets/img/advertisementA.png" alt="未加载">
-                    </div>
-                    <div class="advertisement">
-                        <img src="../../../assets/img/advertisementA.png" alt="未加载">
-                    </div>
-                    <Article @refreshs="refresh" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
                 </div>
             </div>
         </div>
@@ -100,17 +102,40 @@ export default{
         * 展示文章
         * */
         articleShow:function () {
-            console.log(this.$route.params.id)
             let _this = this;
             this.fetch('/front/consult/getConsultDeyail',{
                 consultId:_this.$route.params.id
             }).then((response) => {
                 if(response.code == 0){
-                    console.log(response)
+
                     _this.articleContent = response.result;
-//                    _this.information=response.result.info;
-//                    _this.industryTatol = response.result.count;
+                    console.log(response)
                 }
+            })
+                .catch(error => function (error) {
+                    console.log(response)
+                });
+        },
+        /*
+        * 推荐阅读跳转
+        * */
+        jump: function (id) {
+            this.$router.push('/front/firstMenuRouter/singleInformation/'+id.id);
+        },
+        /*
+        * 展示广告
+        * */
+        showPicture: function () {
+            let _this = this;
+            this.fetch('/front/consult/getBt',{
+                url:_this.$route.params.id
+            }).then((response) => {
+                console.log(response);
+//                if(response.code == 0){
+//
+//                    _this.articleContent = response.result;
+//                    console.log(response)
+//                }
             })
                 .catch(error => function (error) {
                     console.log(response)
@@ -120,6 +145,7 @@ export default{
     mounted(){
         this.readtation();
         this.articleShow();
+        this.showPicture();
     }
 }
 </script>
@@ -278,11 +304,32 @@ export default{
     }
     #single-img{
         width: 94%;
-        height: 365px;
+        max-height: 365px;
         margin: auto;
         margin-bottom: 14px;
         margin-top: 21px;
-        background-color: red;
         border-radius: 5px;
+    }
+    #single-img > img{
+        width: 100%;
+        height: auto;
+    }
+    @media (max-width: 991px){
+        .content-article-single,.content-written,.weitten-left,.weitten-right{
+            width: 100%;
+        }
+        .float-right{
+            margin-top: 25px;
+            width: 100%;
+            text-align: center;
+        }
+        .advertisement{
+            width: 100%;
+            height: auto;
+        }
+        .single-div-con{
+            width: 95%;
+            margin: auto;
+        }
     }
 </style>
