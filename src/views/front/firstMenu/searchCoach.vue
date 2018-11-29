@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="coachNavright">
-                            <span>共有12344所学校</span>
+                            <span>共有{{count}}所学校</span>
                         </div>
                     </div>
                 </div>
@@ -45,14 +45,14 @@
             <!-- 辅导机构小块块 -->
             <div class="singlecoachBig">
                 <div class="singlecoachbox">
-                    <div class="singlecoach" v-for="(item,index) in coachlist" @click="jump(item.id)" :key="index">
-                        <div class="singlecoachtop">
+                    <div class="singlecoach" v-for="(item,index) in coachlist" :key="index">
+                        <div class="singlecoachtop" @click="jump(item.id)">
                             <img src="../../../assets/img/xindongfang.png" alt="">
                         </div>
-                        <span>{{item.coach_name}}</span>
+                        <span @click="jump(item.id)">{{item.coach_name}}</span>
                         <div class="singlecoachHoverbig"> 
                             <div class="singlecoachHoverbox" :class="index%4==2||index%4==3 ? 'activeClass' : ''">
-                                <div class="singlecoachHover" v-if="index%4==0||index%4==1">
+                                <div class="singlecoachHover" v-if="index%4==0||index%4==1" @click="jump(item.id)">
                                     <div class="singlecoachtop2">
                                         <img src="../../../assets/img/xindongfangwhite.png" alt="">
                                     </div>
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="singlecoachHover" v-if="index%4==2||index%4==3">
+                                <div class="singlecoachHover" v-if="index%4==2||index%4==3" @click="jump(item.id)">
                                     <div class="singlecoachtop2">
                                         <img src="../../../assets/img/xindongfangwhite.png" alt="">
                                     </div>
@@ -100,6 +100,7 @@
                 </div>
             </div>
             
+            <activityPage :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage>
         </div>
         
     </div>
@@ -112,6 +113,9 @@ export default {
     },
     data() {
         return {
+            pageNumber:1,
+            count: 1234,
+            pageCount: 8,
             tags: [],
             list: [
                 {
@@ -190,6 +194,7 @@ export default {
         }
     },
     methods: {
+        changePageNum:function
         //标签栏，点击标签，删除标签
         handleClose(tag) {
             for (let index = 0; index < this.tags.length; index++) {
@@ -213,26 +218,29 @@ export default {
         },
         //跳转辅导机构详情页
         jump: function(id) {
-            this.$router.push('/front/singleCoach/'+id);
+            this.$router.push('/front/firstMenuRouter/singleCoach/'+id);
         },
         //得到所有筛选过的辅导机构列表
         getCoach: function() {
             var that = this;
-            // this.fetch('/front/coach/getcoach',{
-            //     provice: "全部",
-            //     coach_type: 3,
-            //     coach_name: "",
-            //     if_back: 2,
-            //     if_coupon: 2,
-            //     page: 1,
-            //     page_size: 8
-            // }).then(function (response) {
-            //         var res = response.data;
-            //         if (res.code == 0) {
-            //             that.coachlist = res.data;
-            //         }
-            // }).catch(function (error) {
-            // });
+            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/coach/getcoach',{
+                provice: null,
+                coach_type: null,
+                coach_name: "",
+                if_back: 2,
+                if_coupon: 2,
+                page: 1,
+                page_size: 8
+            }).then(function (res) {
+                    console.log(res);
+                    if (res.code == 0) {
+                        that.coachlist = res.result;
+                        // that.count = res.count;
+                    }else {
+                        that.message(true,res.msg,"error");
+                    }
+            }).catch(function (error) {
+            });
         }
     },
     mounted(){
@@ -291,6 +299,7 @@ export default {
     align-items: center;
     width: 50%;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 .coachLittleshort>strong {
     background-color: #ffb957;
@@ -308,6 +317,7 @@ export default {
 .coachLittle {
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
     width: 604px;
     overflow-y: scroll;
     height: 160px;
@@ -350,9 +360,11 @@ export default {
 }
 .singlecoachHover {
     width: 305px;
+    cursor: pointer;
 }
 .bigBox {
     background-color: rgb(245, 245, 245);
+    padding-bottom: 10px;
 }
 .singlecoachBig {
     display: flex;
@@ -371,7 +383,6 @@ export default {
     margin: 10px;
     position: relative;
     border-radius: 5px;
-    cursor: pointer;
 }
 .singlecoachHoverbig {
     display: none;
@@ -389,6 +400,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 .singlecoachtop>img {
     width: 40%;
@@ -406,6 +418,7 @@ export default {
     background-color: rgba(56, 59, 61, 0.8);
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    cursor: pointer;
 }
 .singlecoachspan {
     width: 100%;
