@@ -20,14 +20,25 @@
             <!-- 选项卡 -->
             <div class="singlecoachBig">
                 <div class="singlecoachbox">
-                    <span>选院校</span>
-                    <el-tag
-                    v-for="tag in tags"
-                    :key="tag.name"
-                    closable
-                    :type="tag.type">
-                    {{tag.name}}
-                    </el-tag>
+                    <div class="coachNav">
+                        <div class="coachNavleft">
+                            <span>选院校&gt;</span>
+                            <div v-for="(item,index) in tags">
+                                <el-tag
+                                    v-for="tag in tags[index]"
+                                    :key="tag.name"
+                                    closable
+                                    :disable-transitions="false"
+                                    @close="handleClose(tag)"
+                                    :type="tag.type">
+                                    {{tag.name}}
+                                </el-tag >
+                            </div>
+                        </div>
+                        <div class="coachNavright">
+                            <span>共有12344所学校</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -179,9 +190,26 @@ export default {
         }
     },
     methods: {
+        //标签栏，点击标签，删除标签
+        handleClose(tag) {
+            for (let index = 0; index < this.tags.length; index++) {
+                var temp = this.tags[index].indexOf(tag);
+                if(temp==-1){
+                    continue;
+                }else {
+                    this.tags[index].splice(this.tags[index].indexOf(tag), 1);
+                }
+            }
+        },
         //每次子组件改变时，父组件就会改变
         change: function(checkboxGroup) {
-            this.tags = checkboxGroup[0];
+            this.tags = checkboxGroup;
+            //当选中全部时，清空当前行数组，通过*号匹配
+            for (let index = 0; index < this.tags.length; index++) {
+                if(this.tags[index].length==0){
+                    this.tags[index].splice(this.tags[index].indexOf("*"), 1);
+                }
+            }
         },
         //跳转辅导机构详情页
         jump: function(id) {
@@ -222,6 +250,28 @@ export default {
     margin: 49px 10px 45px;
     padding:7px 15px;
     border-radius: 20px;
+}
+.coachNav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+    margin-bottom: 45px;
+}
+.coachNavleft {
+    display: flex;
+    justify-items: center;
+    flex-wrap: wrap;
+    justify-content: start;
+    
+}
+.coachNavleft>span,.coachNavright>span {
+    line-height: 32px;
+    font-size: 16px;
+    color: rgb(110, 110, 110);
+    margin-right: 7px;
+    margin-left: 7px;
 }
 .coachInput>input {
     border: none;
