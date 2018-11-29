@@ -180,7 +180,7 @@
                                 </div>
                             </div>
                             <div class="singActivitybox">
-                                <div class="singActivity selectMessage" v-for="(item,indd) in activity">
+                                <div class="singActivity selectMessage" v-for="(item,indd) in activity"  @click="toJumpActivity2(item.id)">
                                     <h3>{{item.active_name}}</h3>
                                     <div class="singActivityspan">
                                         <span><i class="fa fa-map-marker"></i>{{item.province.province}}{{item.province.city}}</span>
@@ -213,7 +213,7 @@
                     <!-- 看资讯----单个辅导机构小块块 -->
                     <div class="singleCollegeBox">
                         <div class="selectInformationHearder informationDiv">
-                            <div class="lookinformation" v-for="(item,index) in consult1">
+                            <div class="lookinformation" v-for="(item,index) in consult1" @click="toJumpInfor(item.id)">
                                 <img src="../../assets/img/infor.jpg" alt="">
                                 <div class="lookinforMessage">
                                     <h3>{{item.zx_name}}</h3>
@@ -223,7 +223,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="lookinformationBig big" v-for="(item,index) in consult2">
+                            <div class="lookinformationBig big" v-for="(item,index) in consult2" @click="toJumpInfor(item.id)">
                                 <div class="lookinforMessage">
                                     <h3>{{item.zx_name}}</h3>
                                     <p>{{item.brief_introduction}}</p>
@@ -234,7 +234,7 @@
                                 </div>
                                 <img src="../../assets/img/infor.jpg" alt="">
                             </div>
-                            <div class="lookinformation" v-for="(item,index) in consult3">
+                            <div class="lookinformation" v-for="(item,index) in consult3" @click="toJumpInfor(item.id)">
                                 <img src="../../assets/img/infor.jpg" alt="">
                                 <div class="lookinforMessage">
                                     <h3>{{item.zx_name}}</h3>
@@ -408,12 +408,21 @@ export default {
         jump:function() {
             this.$router.push('/front/Login/register');
         },
+        //跳到相应的单个活动页面
         toJumpActivity: function() {
-            // this.$router.push('/front/Login/register');
+            this.$router.push('/front/firstMenuRouter/singleActivity/'+this.activity[this.index].id);
+        },
+        //跳到相应的单个活动页面
+        toJumpActivity2:function(id) {
+            this.$router.push('/front/firstMenuRouter/singleActivity/'+id);
         },
         //跳到相应的单个辅导机构
         toJumpCoach:function(id) {
-            this.$router.push('/front/singleCoach/'+id);
+            this.$router.push('/front/firstMenuRouter/singleCoach/'+id);
+        },
+        //跳转到单个资讯页面
+        toJumpInfor:function(id) {
+            this.$router.push('/front/firstMenuRouter/singleInformation/'+id);
         },
         //跳到相应的模块，分别为（选校校，找活动，找资讯，搜辅导）
         toJump: function(index) {
@@ -429,7 +438,7 @@ export default {
         },
         //跳到相应的单个院校
         toJumpCollege: function(id) {
-            this.$router.push('/front/singleCollage/'+id);
+            this.$router.push('/front/firstMenuRouter/singleCollage/'+id);
         },
         //轮播图，图片前移
         next_pic: function() {

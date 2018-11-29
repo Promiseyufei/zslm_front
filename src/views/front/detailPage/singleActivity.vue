@@ -21,30 +21,43 @@
                     <!-- 主办方信息块 -->
                     <div class="InfoBox host">
                         <div class="hostInfo">
-                            <h1>华中科技大学MBA2019聚英计划第一批提前面试申请时间表</h1>
+                            <h1>{{AppointAcInfo.active_name}}</h1>
                             <div class="hostInfoContent">
                                 <div class="hostInfoItem">
                                     <img src="../../../assets/img/calendar.png">
-                                    <p>2018-10-07 13:00 至 13:30</p>
+                                    <p>{{AppointAcInfo.begin_time}} 至 {{AppointAcInfo.end_time}}</p>
                                 </div>
                                 <div class="hostInfoItem">
                                     <img src="../../../assets/img/position.png">
-                                    <p>闵行区沪闵路6088号凯德龙之梦17楼R6教室</p>
+                                    <p>{{AppointAcInfo.address}}</p>
                                 </div>
                                 <div class="hostInfoType hostInfoItem">
                                     <img src="../../../assets/img/tag.png">
-                                    <p>招生宣讲</p>
+                                    <!-- <p>{{AppointAcInfo.active_type}}</p> -->
+                                    <p v-if="AppointAcInfo.active_type == '招生宣讲'" style="background-color: rgb(0, 159, 160);">
+                                        {{AppointAcInfo.active_type}}
+                                    </p>
+                                    <p v-else-if="AppointAcInfo.active_type == '提前面试'" style="background-color: rgba(0,97,172,1);">
+                                        {{AppointAcInfo.active_type}}
+                                    </p>
+                                    <p v-else-if="AppointAcInfo.active_type == '高精会议'" style="background-color: rgba(199,140,0,1);">
+                                        {{AppointAcInfo.active_type}}
+                                    </p>
+                                    <p v-else>
+                                        {{AppointAcInfo.active_type}}
+                                    </p>
                                 </div>
                             </div>
                             <div class="InfoBtn hostBtn">
-                                <a href="">+&nbsp;我要报名</a>
+                                <a v-if="AppointAcInfo.start_state == 0" href="javascript:;" @click="activitySign">{{acState}}</a>
+                                <a v-else style="background-color:rgb(200,200,200);cursor: not-allowed;" href="javascript:;">{{acState}}</a>
                                 <div class="hostShare">
                                     <p>分享到</p>
-                                    <a href="">
-                                        <img src="../../../assets/img/weixin.png">
+                                    <a class="shareweixin" href="">
+                                        <!-- <img src="../../../assets/img/weixin.png"> -->
                                     </a>
-                                    <a href="">
-                                        <img src="../../../assets/img/xinlang.png">
+                                    <a class="shareweibo" href="">
+                                        <!-- <img src="../../../assets/img/glayxinlang.png"> -->
                                     </a>
                                 </div>
                             </div>
@@ -56,36 +69,33 @@
                             <h1>活动内容</h1>
                         </div>
                         <article>
-                            上海对外经贸大学MBA招生宣讲安排（2018年10月7日）
-
-                            为了帮助考生朋友更好的了解上海对外经贸大学MBA项目和申请流程，我们MBA项目宣讲会安排如下，欢迎考生朋友前来咨询：
-
-                            时间： 10月7日 13:00-13:30 地 址：闵行区沪闵路6088号凯德龙之梦17楼R6教室
-
-                            时间安排可能临时调整，请关注我们官网的最新动态或者咨询我们。 咨询电话：021-52067665 牟老师
+                            {{AppointAcInfo.introduce}}
                         </article>
                         <div class="InfoBtn">
-                            <a href="">+&nbsp;我要报名</a>
+                            <a v-if="AppointAcInfo.start_state == 0" href="javascript:;" @click="activitySign">{{acState}}</a>
+                            <a v-else style="background-color:rgb(200,200,200);cursor: not-allowed;" href="javascript:;">{{acState}}</a>
                         </div>
                     </div>
                 </section>
                 <!-- 右部分侧边栏 -->
                 <aside>
                     <!-- 院校信息 -->
-                    <div class="asideBox">
+                    <div v-if="acHostInfo.id" class="asideBox" style='background-image: url("../../../assets/img/singleCollege.jpg");'>
                         <div class="asideContent">
                             <div class="asideLogo">
-                                <img src="../../../assets/img/majorIcon.png">
+                                <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name">
+                                <!-- 默认图片 -->
+                                <img v-else src="../../../assets/img/majorIcon.png">
                             </div>
                             <div class="asideTitle">
                                 <span></span>
-                                <p>复旦大学MBA</p>
+                                <p>{{acHostInfo.z_name}}</p>
                                 <span></span>
                             </div>
                             <div class="asideAddress">
                                 <img src="../../../assets/img/position.png">
-                                <span>上海市&nbsp;</span>
-                                <span class="addressItem">&middot;&nbsp;静安区</span>
+                                <span>{{acHostInfo.province.city}}&nbsp;</span>
+                                <span class="addressItem">&middot;&nbsp;{{acHostInfo.province.province}}</span>
                             </div>
                             <div class="InfoBtn asideBtn">
                                 <a href="">+&nbsp;关注</a>
@@ -97,7 +107,7 @@
                         <img src="../../../assets/img/advertisementB.png" alt="">
                     </div>
                     <!-- 热门活动推荐 -->
-                    <!-- <Article @refreshs="refresh" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article> -->
+                    <Article @refreshs="refresh" v-if="hotInfor.length" title="热门活动" :inforArticle="hotInfor"></Article>
                 </aside>
             </div>
         </div>
@@ -110,15 +120,142 @@ export default {
     },
     data() {
         return {
+            // 单个活动id
             id: 0,
+
+            //侧边栏 活动主办院校
+            acHostInfo:[],
+            // 热门活动 
+            hotInfor:[],//活动信息
+            hotInfoTatol:1,
+            hotInfopage:0,
+
+            // 用户id
+            userId:1,
+            // 我要报名状态，实现只可点击一次
+            acSignClick:0,
+
+            // 活动详情
+            AppointAcInfo:[],
+            acState:'',
 
         }
     },
     methods: {
+        // 热门活动——换一换
+        refresh: function (data) {
+            this.hotInfopage++;
+            if (this.hotInfopage*4 >=this.hotInfoTatol){
+                this.hotInfopage = 0;
+            }
+            this.getPopularAcInfo();
+        },
+
+        // 获取活动主办院校信息
+        getAcHostMajor:function(){
+            let self = this;
+            this.fetch('/front/activity/getAcHostMajor',{
+                acId:this.id,
+            }).then(function (res) {
+                // let res = result.data;
+                // console.log(res);
+                if(res.code == 0){
+                    self.acHostInfo = res.result;
+                }else{
+                    self.message(true, "主办院校不存在", 'errors');
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
+
+        // 热门活动推荐列表
+        getPopularAcInfo:function(){
+            let self = this;
+            this.fetch('/front/activity/getPopularAcInfo',{
+                acId:this.id,
+                pageNumber:this.hotInfopage,
+            }).then(function (res) {
+                // let res = result.data;
+                // console.log(res);
+                if(res.code == 0){
+                    let acInfo = res.result.acInfo;
+                    for(var i in acInfo){
+                        self.hotInfor.push({
+                            id:acInfo[i].id,
+                            zx_name:acInfo[i].active_name,
+                            create_time:acInfo[i].begin_time,
+                            z_image:acInfo[i].active_img,
+                        });
+                    }
+                    // console.log(self.hotInfor);
+                    // self.hotInfor = res.result[0].acInfo;
+                    self.hotInfoTatol = acInfo.count;
+                }else{
+                    self.message(true, "热门活动不存在", 'error');
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
+
+        // 获取活动内容详情
+        getAppointAcInfo:function(){
+            let self = this;
+            this.fetch('/front/activity/getAppointAcInfo',{
+                acId:this.id,
+            }).then(function (res) {
+                // let res = result.data;
+                // console.log(res);
+                if(res.code == 0){
+                    self.AppointAcInfo = res.result;
+                    switch(self.AppointAcInfo.start_state){
+                        case 0:   self.acState = "+ 我要报名"; break;//未开始
+                        case 1:   self.acState = "活动进行中"; break;//进行中
+                        case 2:   self.acState = "活动已结束"; break;//已结束
+                        default:  self.acState = "状态未知"; break;//未识别
+                    };
+                }else{
+                    self.message(true, "活动不存在", 'error');
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
+
+        // 我要报名
+        activitySign:function(){
+            // 需不需要前台判断多次点击时的情况
+            let self = this;
+            if(self.acSignClick == 0){
+                this.fetch('/front/activity/activitySign',{
+                    userId:this.userId,
+                    acId:this.id,
+                }).then(function (res) {
+                    // let res = result.data;
+                    // console.log(res);
+                    if(res.code == 0){
+                        // self.acHostInfo = res.result[0];
+                        self.message(true, "报名成功", 'success');
+                        self.acSignClick = 1; 
+                        self.acState = "已报名";   
+                    }else{
+                        self.message(true, "报名已结束，下次早点来哦", 'info');
+                    }
+                }).catch(function(error){
+                    console.log("error");
+                });
+            }else{
+                self.message(true, "操作不正确", 'info');
+            }
+        },
 
     },
     mounted(){
         this.id = this.$route.params.id;
+        this.getAcHostMajor();//主办院校信息
+        this.getPopularAcInfo();//热门活动列表
+        this.getAppointAcInfo();//活动详细信息
     },
 };
 </script>
@@ -281,12 +418,23 @@ export default {
         align-items: center;
         -webkit-box-align: center;
     }
-    .hostBtn .hostShare img{
-        width: 28px;
-        height: 28px;
-    }
     .hostBtn .hostShare a{
         margin-left: 11px;
+        width: 28px;
+        height: 28px;
+        background-size: cover;
+    }
+    .hostShare .shareweixin{
+        background-image: url("../../../assets/img/weixin.png");
+    }
+    .hostShare .shareweibo{
+        background-image: url("../../../assets/img/glayxinlang.png");
+    }
+    .hostShare .shareweixin:hover{
+        background-image: url("../../../assets/img/greenweixin.png");
+    }
+    .hostShare .shareweibo:hover{
+        background-image: url("../../../assets/img/xinlang.png");
     }
     .hostBtn .hostShare p{
         opacity: 0.7;
@@ -333,11 +481,11 @@ export default {
     }
     /*侧边栏第一块*/
     aside .asideBox{
-        background-image: url("../../../assets/img/coach.jpg");
+        /*background-image: url("../../../assets/img/singleCollege.jpg");*/
         background-position: 50% 50%;
         background-size: cover;
         border-radius: 5px;
-        margin-bottom: 20px;
+        margin-bottom: 34px;
         width: auto;
         height: 350px;
     }
@@ -352,6 +500,7 @@ export default {
         text-align: center;
         padding-top: 52px;
         box-sizing: border-box;
+        background-color: rgba(56, 59, 61, 0.85);
     }
     .asideBox .asideLogo{
         width: 108px;
@@ -419,7 +568,7 @@ export default {
     .advertisement{
         border-radius: 3px;
         margin-bottom: 14px;
-        margin-top: 14px;
+        /*margin-top: 14px;*/
         height: auto;
     }
     .advertisement img{

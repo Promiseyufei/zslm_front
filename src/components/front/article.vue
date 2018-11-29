@@ -52,7 +52,7 @@
         },
 
         mounted(){
-
+          
         }
     }
 </script>
