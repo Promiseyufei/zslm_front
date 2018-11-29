@@ -6,7 +6,8 @@
     <div class="activityBox" @click="jump(activityInfo.id)">
 	    <div>
 	        <!-- 头部图片及状态 -->
-	        <div class="activityImg"  :style="{ backgroundImage: 'url(&;quot;' + activityInfo.active_img + '&;quot;)' }">
+	        <!-- <div class="activityImg"  :style="{ backgroundImage: 'url(&;quot;' + activityInfo.active_img + '&;quot;)' }"> -->
+            <div class="activityImg">   
 	            <p v-if="activityInfo.start_state==0">{{state}}</p>
 	            <p v-else :class="activityInfo.start_state==1?'activityState1':'activityState2' ">{{state}}</p>
 	        </div>
@@ -84,7 +85,13 @@ export default {
     props: ["activityInfo"],
     mounted(){
         // console.log(this.activityInfo);
-        this.activityState();
+        
+    },
+    watch:{
+        activityInfo(){
+            this.activityState();
+        }
+
     }
 }
 </script>
@@ -114,7 +121,7 @@ export default {
     /*单个活动块儿的属性：大小、背景色等*/
     .activityBox{
         cursor: pointer;
-        width: 25%;
+        width: 325px;
         /*height: 370px;*/
         padding-left: 10px;
         padding-right: 10px;
@@ -287,74 +294,5 @@ export default {
         text-align: left;
         /*颜色可变*/
         background-color: #aaa;
-    }
-
-
-    /* Extra small devices (phones, 600px and down) */
-    @media only screen and (max-width: 600px) {
-        .activityBox{
-            width: 100%;
-        }
-        .activityManager .line{
-            height: 1px;
-            width: 100%;
-        }
-        .activityAddressTime span{
-            font-size: 12px;
-        }
-        .activityTitle>p{
-            margin-bottom: 24px;
-            font-size: 14px;
-        }
-    }
-
-    /* Small devices (portrait tablets and large phones, 600px and up) */
-    @media only screen and (min-width: 600px) {
-        .activityBox{
-            width: 100%;
-        }
-        .activityManager .line{
-            height: 1px;
-            width: 100%;
-        }
-        .activityAddressTime span{
-            font-size: 12px;
-        }
-        .activityTitle>p{
-            margin-bottom: 24px;
-            font-size: 14px;
-        }
-    }
-
-    /* Medium devices (landscape tablets, 768px and up) */
-    @media only screen and (min-width: 768px) {
-        .activityBox{
-            width: 25%;
-        }
-       .activityTitle>p{
-            margin-bottom: 0;
-       }
-       .activityManager .line{
-            /*分割线就没了，根据原型图网页样式*/
-            height: 0;
-       }
-    } 
-
-    /* Large devices (laptops/desktops, 992px and up) */
-    @media only screen and (min-width: 992px) {
-        .activityTitle>p{
-        	font-size: 16px;
-        }
-        .activityAddressTime span{
-        	font-size: 14px;
-        }
-        .activityManager .line{
-            height: 1px;
-       }
-    } 
-
-    /* Extra large devices (large laptops and desktops, 1200px and up) */
-    @media only screen and (min-width: 1200px) {
-        
     }
 </style>
