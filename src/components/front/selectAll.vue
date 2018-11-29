@@ -39,16 +39,10 @@ export default {
         handleCheckAllChange(index,val) {
             this.checkboxGroup[index] = val ? checkboxGroup[index] : [];
             this.isIndeterminate[index] = false;
-            console.log(this.checkboxGroup[index]);
+            this.$emit('change',this.checkboxGroup);
         },
         handleChange: function() {
             this.$emit('change',this.checkboxGroup);
-        },
-        //点击全部时，清空数组
-        style: function(index) {
-            // console.log(this.checkboxGroup);
-            // this.checkboxGroup[index] = this.checkbox[0]; 
-            // console.log(this.checkboxGroup);
         },
         //展开或者合并每行
         getMore:function(index) {
