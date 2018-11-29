@@ -49,7 +49,8 @@
                                 </div>
                             </div>
                             <div class="InfoBtn hostBtn">
-                                <a href="javascript:;" @click="activitySign">{{acState}}</a>
+                                <a v-if="AppointAcInfo.start_state == 0" href="javascript:;" @click="activitySign">{{acState}}</a>
+                                <a v-else style="background-color:rgb(200,200,200);cursor: not-allowed;" href="javascript:;">{{acState}}</a>
                                 <div class="hostShare">
                                     <p>分享到</p>
                                     <a class="shareweixin" href="">
@@ -71,14 +72,15 @@
                             {{AppointAcInfo.introduce}}
                         </article>
                         <div class="InfoBtn">
-                            <a href="javascript:;" @click="activitySign">{{acState}}</a>
+                            <a v-if="AppointAcInfo.start_state == 0" href="javascript:;" @click="activitySign">{{acState}}</a>
+                            <a v-else style="background-color:rgb(200,200,200);cursor: not-allowed;" href="javascript:;">{{acState}}</a>
                         </div>
                     </div>
                 </section>
                 <!-- 右部分侧边栏 -->
                 <aside>
                     <!-- 院校信息 -->
-                    <div v-if="acHostInfo.id" class="asideBox" style='background-image:url("../../../assets/img/2.jpg");'>
+                    <div v-if="acHostInfo.id" class="asideBox" style='background-image: url("../../../assets/img/singleCollege.jpg");'>
                         <div class="asideContent">
                             <div class="asideLogo">
                                 <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name">
@@ -130,6 +132,8 @@ export default {
 
             // 用户id
             userId:1,
+            // 我要报名状态，实现只可点击一次
+            acSignClick:0,
 
             // 活动详情
             AppointAcInfo:[],
@@ -195,7 +199,7 @@ export default {
             });
         },
 
-        // 获取文章详情
+        // 获取活动内容详情
         getAppointAcInfo:function(){
             let self = this;
             this.fetch('/front/activity/getAppointAcInfo',{
@@ -212,7 +216,7 @@ export default {
                         default:  self.acState = "状态未知"; break;//未识别
                     };
                 }else{
-                    self.message(true, "文章不存在", 'error');
+                    self.message(true, "活动不存在", 'error');
                 }
             }).catch(function(error){
                 console.log("error");
@@ -223,7 +227,7 @@ export default {
         activitySign:function(){
             // 需不需要前台判断多次点击时的情况
             let self = this;
-            if(self.AppointAcInfo.start_state == 0){
+            if(self.acSignClick == 0){
                 this.fetch('/front/activity/activitySign',{
                     userId:this.userId,
                     acId:this.id,
@@ -233,14 +237,16 @@ export default {
                     if(res.code == 0){
                         // self.acHostInfo = res.result[0];
                         self.message(true, "报名成功", 'success');
+                        self.acSignClick = 1; 
+                        self.acState = "已报名";   
                     }else{
-                        self.message(true, res.msg, 'info');
+                        self.message(true, "报名已结束，下次早点来哦", 'info');
                     }
                 }).catch(function(error){
                     console.log("error");
                 });
             }else{
-                self.message(true, "报名已结束，下次早点来哦", 'info');
+                self.message(true, "操作不正确", 'info');
             }
         },
 
