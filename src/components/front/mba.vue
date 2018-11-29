@@ -21,14 +21,14 @@
                                 {{ item.publisher }}
                             </i>
                         </div>
-                        <div class="button">
+                        <div class="button" @click="jump(item.id)">
                             <homeBtn class="botton-style" text="查看详情"></homeBtn>
                         </div>
                     </div>
                 </div>
 
                 <div class="content-son" v-for="(item,index) in mbaShort">
-                    <div class="article-con-posiion clearfloat">
+                    <div class="article-con-posiion clearfloat" @click="jumpArticle(item.id)">
                         <div class="son-left">
                             <img :src="item.z_image" alt="未加载">
                         </div>
@@ -71,7 +71,13 @@
         methods:{
             addAtricle:function () {
                 this.$emit('addAtricle');
-            }
+            },
+            jump: function (id) {
+                this.$emit('jumpContent',{id:id});
+            },
+            jumpArticle: function (id) {
+                this.$emit('jumpArticle',{id:id});
+            },
         },
         props:["headArticle","shortArticles"],
         mounted(){

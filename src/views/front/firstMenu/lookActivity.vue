@@ -27,7 +27,7 @@
                     <div class="selected">
                         <div class="slectedLeft">
                             <span>选活动&gt;</span>
-                            <tag :tag="activitySelected[0].province"></tag>
+                            <!-- <tag :tag="activitySelected[0].province"></tag> -->
                         </div>
                         <span>共{{count}}场活动</span>
                     </div>
@@ -64,21 +64,21 @@ export default {
 
             //已选择的列表数据
             activitySelected:[
-                {
-                    province:["北京","上海"],//选择的省份数组
-                },
-                {
-                    majorType:[0,1],//专业类型的id数组
-                },
-                {
-                    activityType:[0,1],//活动类型的id数组
-                },
-                {
-                    activityState:[0,1],//活动开始状态数组:0未开始 1进行中 2已结束
-                },
-                {
-                    activityDate:1,//月份 1~12
-                },
+                // {
+                //     province:["北京","上海"],//选择的省份数组
+                // },
+                // {
+                //     majorType:[0,1],//专业类型的id数组
+                // },
+                // {
+                //     activityType:[0,1],//活动类型的id数组
+                // },
+                // {
+                //     activityState:[0,1],//活动开始状态数组:0未开始 1进行中 2已结束
+                // },
+                // {
+                //     activityDate:1,//月份 1~12
+                // },
             ],
             pageCount:4,//分页显示的行数
             pageNumber:1,//分页显示的下标
@@ -317,7 +317,7 @@ export default {
                     "fif":"查看更多"
                 },
             ],
-            checkboxGroup:[{index:"全部"},{index:"全部"},{index:"全部"},{index:"全部"},{index:"全部"},],
+            checkboxGroup:[[],[],[],[],[]],
         }
     },
     methods: {
@@ -326,8 +326,8 @@ export default {
             this.loading = true;
             this.pageNumber++;
             this.getActivityList(0);
-        },
-
+        }, 
+        
         // 活动列表页手机端---通过筛选条件获得的活动列表数据
         getActivityList:function(val){
             var self = this;
@@ -337,11 +337,11 @@ export default {
             }
             this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
-                province:self.activitySelected[0].province,
-                majorType:self.activitySelected[1].majorType,
-                activityType:self.activitySelected[2].activityType,
-                activityState:self.activitySelected[3].activityState,
-                activityDate:self.activitySelected[4].activityDate,
+                province:self.activitySelected[0],
+                majorType:self.activitySelected[1],
+                activityType:self.activitySelected[2],
+                activityState:self.activitySelected[3],
+                activityDate:self.activitySelected[4],
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
@@ -349,6 +349,7 @@ export default {
                 if(res.code == 0){
                     self.count = res.result.count;
                     let data = res.result.info;
+                    console.log(info);
                     for(let i in data){
                         self.allActivity.push(data[i]);
                     };
@@ -371,11 +372,11 @@ export default {
             var self = this;
             this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
-                province:self.activitySelected[0].province,
-                majorType:self.activitySelected[1].majorType,
-                activityType:self.activitySelected[2].activityType,
-                activityState:self.activitySelected[3].activityState,
-                activityDate:self.activitySelected[4].activityDate,
+                province:self.activitySelected[0],
+                majorType:self.activitySelected[1],
+                activityType:self.activitySelected[2],
+                activityState:self.activitySelected[3],
+                activityDate:self.activitySelected[4],
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
@@ -428,11 +429,30 @@ export default {
             });
         },
 
-        // 筛选块-结果
+        // 筛选块-从组件中获取选中结果
         change(data){
-            // console.log(123);
-            // console.log(data);
+            console.log(data);
+            
+            // this.activitySelected = data;
+            // var arr = [];
+
+            // for (var i = 0; i < data.length; i++) {
+            //     for (var j = 0; j < data[i].length; j++) {
+            //         console.log(data[i][j].name);
+            //         this.activitySelected[i].push(data[i][j].name);
+            //     }
+            // }
+            // this.getActivityList(1);
+            // this.getPcActivityList();
+            console.log(this.activitySelected);
+            // for (let index = 0; index < this.activitySelected.length; index++) {
+            //     if(this.activitySelected[index].length==0){
+            //         this.activitySelected[index].splice(this.activitySelected[index].indexOf("*"), 1);
+            //     }
+            // }
+            // console.log(this.activitySelected);
         },
+
 
         changePageNum(pageNum) {
             this.pageNumber = pageNum;
@@ -443,7 +463,7 @@ export default {
     mounted(){
         this.getCollegesType();
         this.getActivityType();
-        this.getActivityList();
+        this.getActivityList(1);
         this.getPcActivityList();
     },
 };
@@ -531,21 +551,18 @@ export default {
 
     /*搜索框*/
     .search {
-        width: 1280px;
+        width: 95%;
         margin: 37px auto 49px;
     }
     
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
-        .activityListBox{
-            background-attachment: initial !important;
-        }
-        .search{
+       /* .search{
             width: 95%;
-        }
-        .search>div{
+        }*/
+        /*.search>div{
             width: 100%;
-        }
+        }*/
         .pcPageDiv .pcPage{
             display: none;
         }
@@ -556,15 +573,12 @@ export default {
 
     /* Small devices (portrait tablets and large phones, 600px and up) */
     @media only screen and (min-width: 600px) {
-        .activityListBox{
-            background-attachment: initial !important;
-        }
-        .search{
+        /*.search{
             width: 95%;
         }
         .search>div{
             width: 100%;
-        }
+        }*/
         .pcPageDiv .pcPage{
             display: none;
         }

@@ -7,7 +7,7 @@
                 <span>{{item.type}}</span>
                 <nav class="publicRowRight">
                     <div ref="publiccheckbox">
-                        <b @click="style(index)" :class="checkboxGroup[index]=='全部'?'ff':'' ">全部</b>
+                        <el-checkbox :indeterminate="isIndeterminate[index]" v-model="checkAll[index]" @change="handleCheckAllChange(index)" :class="checkboxGroup[index]==''?'ff':'' ">全部</el-checkbox>
                         <el-checkbox-group v-model="checkboxGroup[index]" @change="handleChange">
                             <!-- 循环出来行 -->
                             <el-checkbox-button v-for="(city,ind) in item.cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
@@ -27,27 +27,28 @@
 export default {
     data() {
         return {
-            checkbox: [['全部'],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"],["全部"]],
+            checkbox: [[],[],[],[],[],[],[],[],[],[]],
             checkboxGroup: this.checkboxGroup1,
             array:document.getElementsByTagName("nav"),
             arrayh:[],
+            checkAll: [false,false,false],
+            isIndeterminate: [true,true,true]
         };
     },
     methods:{
-        handleChange: function() {
+        handleCheckAllChange(index,val) {
+            this.checkboxGroup[index] = val ? checkboxGroup[index] : [];
+            this.isIndeterminate[index] = false;
             this.$emit('change',this.checkboxGroup);
         },
-        //点击全部时，清空数组
-        style: function(index) {
-            console.log(this.checkboxGroup);
-            this.checkboxGroup[index] = this.checkbox[0]; 
-            console.log(this.checkboxGroup);
+        handleChange: function() {
+            this.$emit('change',this.checkboxGroup);
         },
         //展开或者合并每行
         getMore:function(index) {
             var a = document.getElementsByTagName("nav")[index];
             if(a.offsetHeight==this.arrayh[index]) {
-                a.style.height = "30px";
+                a.style.height = "38px";
             }else {
                 a.style.height = this.arrayh[index]+"px";
             }
@@ -63,7 +64,7 @@ export default {
                 let divs= self.$refs.publiccheckbox;
                 for(let i =0 ;i<divs.length;i++){
                     self.arrayh[i] = divs[i].offsetHeight;
-                    divs[i].style.height = "30px";
+                    divs[i].style.height = "38px";
                 }
             }, 1000);
         });
@@ -71,6 +72,44 @@ export default {
 }
 </script>
 <style>
+    .publicRowRight .el-checkbox-button.is-checked .el-checkbox-button__inner {
+        background-color: #ffb957;
+        border-color: #ffb957;
+        border-radius: 5px !important;
+        box-shadow:-1px 0 0 0 rgb(225, 225, 225);
+    }
+    .publicRowRight .el-checkbox-button.is-checked .el-checkbox-button__inner:hover {
+        color: #fff;
+    }
+    .publicRowRight .el-checkbox-button__inner:hover {
+        color: #ffb957;
+    }
+    .publicRowRight .el-checkbox__input.is-checked .el-checkbox__label {
+        color: #fff;
+    }
+    .ff span{
+        background-color: #ffb957;
+        color: #fff !important;
+    }
+    .fff span{
+        color: #333 !important;
+    }
+    .publicRowRight .el-checkbox__label {
+        /* width: 50px; */
+        flex-shrink:0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 2px;
+        font-size: 13px;
+        padding: 12px 20px;
+        font-size: 14px;
+        line-height: 1;
+    }
+    .publicRowRight .el-checkbox__input {
+        display: none;
+    }
     .publicRowRight .el-checkbox-button:first-child {
         border: none;
     }
@@ -80,31 +119,52 @@ export default {
     .publicRowRight .el-checkbox-button__inner {
         border-left: none !important;
     }
+    /* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1200px) {
+    .ff span{
+        width: 10px !important;
+        margin: 0 5px;
+    }
+    .fff span{
+        width: 10px !important;
+        margin: 0 5px;
+    }
+    .publicRowRight .el-checkbox-button__inner {
+        padding: 12px 10px;
+    }
+}
 </style>
 <style scoped>
+.el-checkbox-button {
+    margin-bottom: 8px;
+    border-radius: 2px !important;
+}
 .publicRowboxbig {
     display: flex;
     justify-content: center;
 }
-.ff {
-    background-color: #ffb957;
-    color: #fff;
-}
+
 .publicRowbox {
     width: 1300px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
-    margin: 0 10px;
+    margin: 0 10px 60px;
     background-color: #fff;
+    border-radius: 5px;
+    color: #333;
 }
-.publicRowRight b {
-    width: 50px;
-    flex-shrink:0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.publicRowbox:hover {
+    box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
+}
+
+.publicRowRight p {
+    font-size: 12px;
+    font-weight: normal;
+    color: rgb(160, 160, 160);
+    cursor: pointer;
+    margin-top: 14px;
 }
 .publicRow {
     width: 100%;
@@ -120,6 +180,8 @@ export default {
     width: 90px;
     flex-shrink:0;
     margin-top: 10px;
+    color: #1ABC9C;
+    font-size: 16px;
 }
 .publicRowRight {
     display: flex;
@@ -134,7 +196,7 @@ export default {
 }
 .publicRowRight>p {
     display: flex;
-    width: 100px;
+    width: 80px;
     flex-shrink:0;
     justify-content: flex-start;
 }
@@ -150,9 +212,16 @@ export default {
     }
     .publicRow>span {
         width: auto;
+        font-size: 12px;
     }
     .publicRowRight>p {
-        width: auto;
+        width: 20px;
+    }
+    .ff span{
+        width: 10px !important;
+    }
+    .fff span{
+        width: 10px !important;
     }
 }
 </style>

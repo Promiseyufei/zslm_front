@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="content-article" v-for="(item,index) in infor" :key="index">
-                    <div id="title-article">
+                    <div id="title-article" @click="jump(item.id)">
                         <div class="font-style"><a href="">{{ item.zx_name }}</a></div>
                         <div class="time">{{ item.create_time }}</div>
                     </div>
@@ -37,13 +37,22 @@
         },
         props:["inforArticle","title"],
         methods:{
+            /*
+            * 刷新页面
+            * */
             refresh: function () {
                 this.$emit('refreshs');
-            }
+            },
+            /*
+            * 跳转页面
+            * */
+            jump:function (id) {
+                this.$emit('jump',{id:id});
+            },
         },
 
         mounted(){
-
+          
         }
     }
 </script>
