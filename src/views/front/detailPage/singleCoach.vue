@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="bigBox">
+            <!--header-->
             <div class="singlecoachBig">
                 <div class="singlecoachbox">
                     <div class="selectHeaderbox">
@@ -10,14 +11,20 @@
                                 <p><span></span><strong>新东方</strong><span></span></p>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
-                
             </div>
-            
+            <!--main-->
+            <div class="singlecoachBig">
+                <div class="singlecoachbox">
+                    
+                </div>
+            </div>
+
+
+
+
         </div>
-        
     </div>
 </template>
 
