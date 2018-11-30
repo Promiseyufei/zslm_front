@@ -83,10 +83,10 @@
                         </div>
 
                         <!-- 活动小块 -->
-                        <activityBox :activityInfo="activity"></activityBox>
+                        <activityBox :activityInfo="activity" class="activitystyle"></activityBox>
 
                         <!-- 意见反馈 -->
-                        <img src="../../../assets/img/advise.png" alt="">
+                        <img src="../../../assets/img/advise.png" alt="" click="advise"> 
 
                         <!-- 退款保障 -->
                         <img src="../../../assets/img/returnmoney.png" alt="">
@@ -126,10 +126,30 @@ export default {
         }
     },
     methods: {
-
+        singlecoach:function () {
+            var that = this;
+            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/api/user/register',{
+                id: 0
+            }).then(function (res) {
+                    console.log(res);
+                    // if (res.code == 0) {
+                    //     that.coachlist = res.result[0];
+                    //     console.log(that.coachlist);
+                    //     // that.count = res.count;
+                    // }else {
+                    //     that.message(true,res.msg,"error");
+                    // }
+            }).catch(function (error) {
+            });
+        },
+        //点击跳到意见反馈页面
+        advise: function() {
+            // this.$router.push('/front/firstMenuRouter/singleCoach/'+id);
+        }
     },
     mounted(){
         this.id = this.$route.params.id;
+        // this.singlecoach();
     },
 };
 </script>
@@ -145,6 +165,9 @@ export default {
 <style scoped>
 .bigBox {
     background-color: rgb(245, 245, 245);
+}
+.activitystyle {
+    margin-left: 0 !important;
 }
 .collagemessage {
     margin-left: 20px;
@@ -212,6 +235,7 @@ export default {
     justify-content: center;
     align-items: center;
     opacity: 0.6;
+    cursor: pointer;
     background-image: url("../../../assets/img/green3.png");
 }
 .coachleftright:hover {
