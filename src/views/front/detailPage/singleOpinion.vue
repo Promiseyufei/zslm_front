@@ -25,8 +25,10 @@
         methods: {
             submit: function () {
                 let _this = this;
-                this.fetch('/front/consult/getConsultDeyail',{
-                    consultId:0,
+                this.fetch('/front/usercore/adduseropinion',{
+                    text:_this.text,
+                    id:0,
+                    name:'das',
                 }).then((response) => {
                     if(response.code == 0){
                         _this.message(true,"您已经成功提交反馈建议",'success');
