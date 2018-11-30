@@ -1,7 +1,7 @@
 <template>
         <div class="detailPicture" @mouseover="pdfOne" @mouseout="pdfOneOut" >
             <div><img :src="src"></div>
-            <div class="detailCity" id="city">{{city}}</div>
+            <div class="detailCity">{{city}}</div>
         </div>
 </template>
 
@@ -13,15 +13,21 @@ export default {
             city:'北京地区招生报告',
     	}
     },
+    props:["t"],
     methods:{
        //资料下载区logo——鼠标滑过样式
             pdfOne:function() {
                     this.src = require("../../assets/img/pdfG.png")
-                    document.getElementById('city').style.color = "#009fa0"
+                    // console.log(this.t)
+                    this.$emit('thisTest', this.t)
+                    // getElementByClassName
+                    // document.getElementById('t').style.color = "#009fa0"
             },
             pdfOneOut:function() {
                     this.src = require("../../assets/img/pdf.png")
-                    document.getElementById('city').style.color = "#6f6f6f"
+                    this.$emit('thisTesta', this.t)
+                    // this.$emit('thisTest', this.t)
+                    // document.getElementById('t').style.color = "#6f6f6f"
             },
         //资料下载区logo——鼠标滑过样式
 
@@ -31,6 +37,7 @@ export default {
 
     },
     mounted(){
+        // console.log(this.t)
         // console.log(this.tag)
     }
 }
@@ -41,6 +48,12 @@ export default {
 </style>
 
 <style scoped>
+    .testa>.detailCity {
+        color: #009fa0;
+    }
+    .testb>.detailCity {
+        color: #6f6f6f;
+    }
     .detailCity {
         line-height: 17px;
         font-size: 12px;

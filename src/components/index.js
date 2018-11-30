@@ -30,8 +30,12 @@ import searchMajorModular from './front/searchMajorModular.vue'
 import searchCoachBox from './front/searchCoachBox.vue'
 import tag from './front/tag.vue'
 import selectCollegeItem from './front/selectCollegeItem.vue'
+import majorDynamic from './front/majorDynamic.vue'
 import singleItem from './front/singleItem.vue'
 import pdfDetail from './front/pdfDetail.vue'
+import testA from './front/test.vue'
+import majorInfoDynamic from './front/majorInfoDynamic.vue'
+import system from './front/system.vue'
 export default {
     Test, 
     Test2,
@@ -66,6 +70,10 @@ export default {
     searchCoachBox,
     tag,
     selectCollegeItem,
+    majorDynamic,
     singleItem,
-    pdfDetail
+    pdfDetail,
+    testA,
+    majorInfoDynamic,
+    system
 }

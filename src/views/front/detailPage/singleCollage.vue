@@ -48,6 +48,9 @@
                                     <a><i class="fa fa-repeat">&nbsp;换一换</i></a>
                                 </div>
                             </div>
+                            <div class="recommedContent">
+                                <subPage :shortArticles="recommedContent" v-for="(t,index) in recommedContent" :key="index"></subPage>
+                            </div>
                         </el-card>
                     </el-col>
                     <el-col :span="8">
@@ -149,8 +152,8 @@
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="pdf">
-                                    <div class="pdfDetail" v-for="(t,index) in pdfPicture" :key="index">
-                                        <pdfDetail v-for="(t,index) in pdfPicture" :key="index"></pdfDetail>
+                                    <div class="pdfDetail">
+                                        <pdfDetail v-for="(t,index) in pdfPicture" @thisTesta="(b) => {bb = b}" @thisTest="(a) => {aa = a}" :t="index" :key="index" :class="{testa: index == aa ? true : false, testb: index == bb ? true : false}" :id="city(index)"></pdfDetail>
                                     </div>
                                 </div>
                             </el-card>
@@ -170,6 +173,32 @@ export default {
     },
     data() {
         return {
+            aa:-1,
+            bb:-1,
+            count:0,
+            recommedContent:[
+                // {
+                //     img:'123',
+                //     title:'45',
+                //     content:'67',
+                //     time:'11',
+                //     author:'33',
+                // },
+                // {
+                //     img:'123',
+                //     title:'45',
+                //     content:'67',
+                //     time:'11',
+                //     author:'33',
+                // },
+                {
+                    img:'123',
+                    title:'45',
+                    content:'67',
+                    time:'11',
+                    author:'33',
+                },
+            ],
             aboutActivity:[
                 {
                     start_state:'123',
@@ -189,35 +218,23 @@ export default {
                     end_time:'55',
                     province:{province:'99'}
                 },
-                // {
-                //     start_state:'123',
-                //     z_name:'45',
-                //     activity_type:'67',
-                //     active_name:'11',
-                //     begin_time:'33',
-                //     end_time:'55',
-                //     province:{province:'99'}
-                // },
-                // {
-                //     start_state:'123',
-                //     z_name:'45',
-                //     activity_type:'67',
-                //     active_name:'11',
-                //     begin_time:'33',
-                //     end_time:'55',
-                //     province:{province:'99'}
-                // },
-                // {
-                //     start_state:'123',
-                //     z_name:'45',
-                //     activity_type:'67',
-                //     active_name:'11',
-                //     begin_time:'33',
-                //     end_time:'55',
-                //     province:{province:'99'}
-                // },
+                {
+                    start_state:'123',
+                    z_name:'45',
+                    activity_type:'67',
+                    active_name:'11',
+                    begin_time:'33',
+                    end_time:'55',
+                    province:{province:'99'}
+                },
             ],
             pdfPicture:[
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
                 {},
                 {},
                 {},
@@ -244,6 +261,10 @@ export default {
         }
     },
     methods: {
+        city:function(index){
+            console.log(index)
+            return "city" + index;
+        },
         //联系方式logo——鼠标滑过样式
             computer:function() {
                 this.logoPicture[0].computer = require("../../../assets/img/computerG.png")
@@ -281,6 +302,12 @@ export default {
         
     },
     mounted(){
+
+        // count:function(){
+            // let i = 0;
+            // i++;
+            // this.t = i;
+        // }
         // console.log(this.pdfDetail[0].src)
         // let w = document.documentElement.offsetWidth || document.body.offsetWidth;
         // if (w<991) {
@@ -386,15 +413,8 @@ export default {
                 width: 305px;
             }
         /*左边*/
-        .aboutActivity .activityBox {
-            width:33.3%;
-        }
-        .aboutActivity {
-            width: 96%;
-            margin: 0 0 0 2%;
-            display: flex;
-            flex-wrap:wrap;
-        }
+        
+        
         .leftTwo .el-col-8 {
             margin: 20px 0;
         }
@@ -418,7 +438,8 @@ export default {
             margin: 0 0 20px;
         }
         .itemInform .el-card__body{
-            padding: 25px 25px;
+            /*width: 100%;*/
+            padding: 25px 25;
         }
         .itemInform {
             width: 955px;
@@ -454,6 +475,17 @@ export default {
 </style>
 <style scoped>
     /*<!-- 招生项目 -->*/
+        .aboutActivity >>>.activityBox {
+            width: 288.3px;
+            /*padding: 0 10px 0 0;*/
+        }
+        .aboutActivity {
+            /*width: 925px;*/
+            display: flex;
+            margin-right: 0;
+            flex-wrap:wrap;
+            justify-content:space-between;
+        }
         .reflesh > a:hover{
             color: rgb(255, 255, 255);
             background-color: rgb(255, 185, 87);
@@ -598,6 +630,13 @@ export default {
     }
     /** iPhone **/
     @media only screen and (min-width: 320px) and (max-width: 767px) {
+        .aboutActivity >>>.activityBox {
+            /*width: 100%;*/
+            /*padding: 0 10px 0 0;*/
+        }
+        .aboutActivity {
+            /*width: 100%;*/
+        }
         .leftOne .el-col-8,.leftTwo .el-col-8,.leftThree .el-col-8 {
             width: 96%;
             padding: 0;
@@ -607,7 +646,7 @@ export default {
             padding: 25px 5px;
         }
         .itemInform .el-card {
-            /*height: 100%;*/
+            height: 100%;
         }
         .basicInform {
             width: 100%;

@@ -189,7 +189,8 @@ export default {
                             z_image:acInfo[i].active_img,
                         });
                     }
-                    // console.log(self.hotInfor);
+                    console.log(res);
+                    console.log("-----");
                     // self.hotInfor = res.result[0].acInfo;
                     self.hotInfoTatol = acInfo.count;
                 }else{
