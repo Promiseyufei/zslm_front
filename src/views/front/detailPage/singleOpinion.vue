@@ -25,10 +25,11 @@
         methods: {
             submit: function () {
                 let _this = this;
+                console.log(_this.$route.params.id);
                 this.fetch('/front/usercore/adduseropinion',{
                     text:_this.text,
-                    id:0,
-                    name:'das',
+                    id:_this.$route.params.id,
+                    name:_this.$route.params.name,
                 }).then((response) => {
                     if(response.code == 0){
                         _this.message(true,"您已经成功提交反馈建议",'success');
