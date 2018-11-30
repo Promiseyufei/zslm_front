@@ -68,8 +68,8 @@
                         <div class="infoTitle">
                             <h1>活动内容</h1>
                         </div>
-                        <article>
-                            {{AppointAcInfo.introduce}}
+                        <article v-html="AppointAcInfo.introduce">
+                            <!-- {{AppointAcInfo.introduce}} -->
                         </article>
                         <div class="InfoBtn">
                             <a v-if="AppointAcInfo.start_state == 0" href="javascript:;" @click="activitySign">{{acState}}</a>
@@ -80,7 +80,8 @@
                 <!-- 右部分侧边栏 -->
                 <aside>
                     <!-- 院校信息 -->
-                    <div v-if="acHostInfo.id" class="asideBox" style='background-image: url("../../../assets/img/singleCollege.jpg");'>
+                    <div v-if="acHostInfo.id" class="asideBox" style="backgroundImage: url(/static/img/singleCollege.924aa58.jpg);">
+                        <!-- <div v-if="acHostInfo.id" class="asideBox" style="backgroundImage: url(../../../assets/img/singleCollege.jpg);"> -->
                         <div class="asideContent">
                             <div class="asideLogo">
                                 <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name">
@@ -188,7 +189,8 @@ export default {
                             z_image:acInfo[i].active_img,
                         });
                     }
-                    // console.log(self.hotInfor);
+                    console.log(res);
+                    console.log("-----");
                     // self.hotInfor = res.result[0].acInfo;
                     self.hotInfoTatol = acInfo.count;
                 }else{
@@ -425,16 +427,16 @@ export default {
         background-size: cover;
     }
     .hostShare .shareweixin{
-        background-image: url("../../../assets/img/weixin.png");
+        background-image: url("../../../assets/img/grayweixin.png");
     }
     .hostShare .shareweibo{
-        background-image: url("../../../assets/img/glayxinlang.png");
+        background-image: url("../../../assets/img/grayxinlang.png");
     }
     .hostShare .shareweixin:hover{
         background-image: url("../../../assets/img/greenweixin.png");
     }
     .hostShare .shareweibo:hover{
-        background-image: url("../../../assets/img/xinlang.png");
+        background-image: url("../../../assets/img/redxinlang.png");
     }
     .hostBtn .hostShare p{
         opacity: 0.7;
@@ -481,7 +483,7 @@ export default {
     }
     /*侧边栏第一块*/
     aside .asideBox{
-        /*background-image: url("../../../assets/img/singleCollege.jpg");*/
+        /*background: url('../../../assets/img/singleCollege.jpg') no-repeat;*/
         background-position: 50% 50%;
         background-size: cover;
         border-radius: 5px;

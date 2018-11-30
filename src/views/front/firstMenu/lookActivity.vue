@@ -27,7 +27,7 @@
                     <div class="selected">
                         <div class="slectedLeft">
                             <span>选活动&gt;</span>
-                            <tag :tag="activitySelected[0].province"></tag>
+                            <!-- <tag :tag="activitySelected[0].province"></tag> -->
                         </div>
                         <span>共{{count}}场活动</span>
                     </div>
@@ -64,21 +64,21 @@ export default {
 
             //已选择的列表数据
             activitySelected:[
-                {
-                    province:["北京","上海"],//选择的省份数组
-                },
-                {
-                    majorType:[0,1],//专业类型的id数组
-                },
-                {
-                    activityType:[0,1],//活动类型的id数组
-                },
-                {
-                    activityState:[0,1],//活动开始状态数组:0未开始 1进行中 2已结束
-                },
-                {
-                    activityDate:1,//月份 1~12
-                },
+                // {
+                //     province:["北京","上海"],//选择的省份数组
+                // },
+                // {
+                //     majorType:[0,1],//专业类型的id数组
+                // },
+                // {
+                //     activityType:[0,1],//活动类型的id数组
+                // },
+                // {
+                //     activityState:[0,1],//活动开始状态数组:0未开始 1进行中 2已结束
+                // },
+                // {
+                //     activityDate:1,//月份 1~12
+                // },
             ],
             pageCount:4,//分页显示的行数
             pageNumber:1,//分页显示的下标
@@ -317,7 +317,7 @@ export default {
                     "fif":"查看更多"
                 },
             ],
-            checkboxGroup:[[],[],[],[],[],[],[],[],[],[]],
+            checkboxGroup:[[],[],[],[],[]],
         }
     },
     methods: {
@@ -326,8 +326,8 @@ export default {
             this.loading = true;
             this.pageNumber++;
             this.getActivityList(0);
-        },
-
+        }, 
+        
         // 活动列表页手机端---通过筛选条件获得的活动列表数据
         getActivityList:function(val){
             var self = this;
@@ -337,11 +337,11 @@ export default {
             }
             this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
-                province:self.activitySelected[0].province,
-                majorType:self.activitySelected[1].majorType,
-                activityType:self.activitySelected[2].activityType,
-                activityState:self.activitySelected[3].activityState,
-                activityDate:self.activitySelected[4].activityDate,
+                province:self.activitySelected[0],
+                majorType:self.activitySelected[1],
+                activityType:self.activitySelected[2],
+                activityState:self.activitySelected[3],
+                activityDate:self.activitySelected[4],
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
@@ -349,6 +349,7 @@ export default {
                 if(res.code == 0){
                     self.count = res.result.count;
                     let data = res.result.info;
+                    console.log(info);
                     for(let i in data){
                         self.allActivity.push(data[i]);
                     };
@@ -371,11 +372,11 @@ export default {
             var self = this;
             this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
-                province:self.activitySelected[0].province,
-                majorType:self.activitySelected[1].majorType,
-                activityType:self.activitySelected[2].activityType,
-                activityState:self.activitySelected[3].activityState,
-                activityDate:self.activitySelected[4].activityDate,
+                province:self.activitySelected[0],
+                majorType:self.activitySelected[1],
+                activityType:self.activitySelected[2],
+                activityState:self.activitySelected[3],
+                activityDate:self.activitySelected[4],
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
@@ -428,11 +429,30 @@ export default {
             });
         },
 
-        // 筛选块-结果
+        // 筛选块-从组件中获取选中结果
         change(data){
-            // console.log(123);
             console.log(data);
+            
+            // this.activitySelected = data;
+            // var arr = [];
+
+            // for (var i = 0; i < data.length; i++) {
+            //     for (var j = 0; j < data[i].length; j++) {
+            //         console.log(data[i][j].name);
+            //         this.activitySelected[i].push(data[i][j].name);
+            //     }
+            // }
+            // this.getActivityList(1);
+            // this.getPcActivityList();
+            console.log(this.activitySelected);
+            // for (let index = 0; index < this.activitySelected.length; index++) {
+            //     if(this.activitySelected[index].length==0){
+            //         this.activitySelected[index].splice(this.activitySelected[index].indexOf("*"), 1);
+            //     }
+            // }
+            // console.log(this.activitySelected);
         },
+
 
         changePageNum(pageNum) {
             this.pageNumber = pageNum;
@@ -443,7 +463,7 @@ export default {
     mounted(){
         this.getCollegesType();
         this.getActivityType();
-        this.getActivityList();
+        this.getActivityList(1);
         this.getPcActivityList();
     },
 };
@@ -451,15 +471,15 @@ export default {
 <style>
 /*搜索框*/
 .search .el-input__inner {
-    font-size: 14px;
     border-radius: 60px;
     height: 32px;
 }
-.search>div{
-    width: 306px;
-}
 .search .el-input__icon{
     line-height: 0;
+}
+.search>div{
+    width: 407px;
+    margin: 20px 0;
 }
 
 /*筛选块*/
@@ -470,20 +490,20 @@ export default {
 }
 </style>
 <style scoped>
-    /*筛选块*/
-    .activitySelt .selectedTag{
+    
+    .search, .activitySelt .selectedTag, .selectedTag .selected, .activityListBox{
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 60px;
+        flex-wrap: wrap;
     }
+    /*筛选块*/
+
     .selectedTag .selected{
-        width: 1280px;
+        width: 95%;
         min-height: auto;
         border-bottom: 2px solid rgba(0, 0, 0, 0.06);
         color: rgb(110, 110, 110);
-        display: flex;
-        align-items: center;
         justify-content: space-between;
         padding-bottom: 19px;
         margin-bottom: 48px;
@@ -499,13 +519,12 @@ export default {
     }
 
     
-
     /*加载更多*/
     .phoneLeadBtn{
         margin-bottom: 10px; 
         margin-left: 10px;
         margin-right: 10px;
-        text-align: center;   
+        width: 95%;
     }
     .phoneLeadBtn .leadBtn{
         color: #fff;
@@ -520,56 +539,18 @@ export default {
     }
 
     .activityListBox{
-        display: flex;
-        /*换行，默认左对齐*/
-        flex-wrap: wrap; 
-        margin-right: auto;
-        margin-left: auto;
-        min-height: auto;
         margin-bottom: 20px;
     }
 
-    /*搜索框*/
-    .search {
-        width: 1280px;
-        margin: 37px auto 49px;
-    }
-    
-    /* Extra small devices (phones, 600px and down) */
-    @media only screen and (max-width: 600px) {
-        .activityListBox{
-            background-attachment: initial !important;
-        }
-        .search{
-            width: 95%;
-        }
-        .search>div{
-            width: 100%;
-        }
+    @media only screen and (max-width: 767px) {
         .pcPageDiv .pcPage{
             display: none;
         }
         .search .pcSeach{
             display: none;
         }
-    }
-
-    /* Small devices (portrait tablets and large phones, 600px and up) */
-    @media only screen and (min-width: 600px) {
-        .activityListBox{
-            background-attachment: initial !important;
-        }
-        .search{
-            width: 95%;
-        }
         .search>div{
-            width: 100%;
-        }
-        .pcPageDiv .pcPage{
-            display: none;
-        }
-        .search .pcSeach{
-            display: none;
+            width: 95%;
         }
     }
 
@@ -587,25 +568,20 @@ export default {
         .search .phoneSeach{
             display: none;
         }
-    } 
-
-    /* Large devices (laptops/desktops, 992px and up) */
-    @media only screen and (min-width: 992px) {
         .search{
-            width: 1280px;
+            margin-left: 10px;
+            justify-content: left;
         }
-        .search>div{
-            width: 306px;
-        }
-        
     } 
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1200px) {
-        .activityListBox{
+        .search{
+            width: 1300px;
+            margin: 0 auto;
+        }
+        .selectedTag .selected{
             width: 1300px;
         }
-
     }   
-
 </style>

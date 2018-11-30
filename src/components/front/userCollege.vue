@@ -26,7 +26,7 @@
             <div class="c-div div_Sd6WRB">
                 <div v-show="classShow" class="c-div div_PiRYSQ" data-c_e_id="div_354d2bc5">
             <div class="row c-row row_EsvYjt guanzhu" data-c_e_id="row_a53619dd">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_WvUK7W"  v-for="(item,index) in data.product">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_WvUK7W"  v-for="(item,index) in data.product" :key="index">
                     <div class="c-div div_zpfJlh"><h1 class="c-heading heading_gviHAE">{{ item.project_name }}</h1>
                         <div class="c-div div_XXPhAx"><div class="row c-row row_JUft7v">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_mFWPbx">
