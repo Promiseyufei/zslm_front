@@ -86,7 +86,7 @@
                         <activityBox :activityInfo="activity" class="activitystyle"></activityBox>
 
                         <!-- 意见反馈 -->
-                        <img src="../../../assets/img/advise.png" alt="" click="advise"> 
+                        <img src="../../../assets/img/advise.png" alt="" @click="advise"> 
 
                         <!-- 退款保障 -->
                         <img src="../../../assets/img/returnmoney.png" alt="">
@@ -144,7 +144,7 @@ export default {
         },
         //点击跳到意见反馈页面
         advise: function() {
-            // this.$router.push('/front/firstMenuRouter/singleCoach/'+id);
+            this.$router.push('/front/firstMenuRouter/singleOpinion');
         }
     },
     mounted(){

@@ -220,6 +220,7 @@ export default {
         },
         //跳转辅导机构详情页
         jump: function(id) {
+            console.log(90);
             this.$router.push('/front/detailPage/singleOpinion');
         },
         //得到所有筛选过的辅导机构列表
