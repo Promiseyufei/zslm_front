@@ -122,6 +122,11 @@ let front_router = {
                                             component: resolve =>void(require(['@/views/front/usercore/news/system'], resolve)),
                                         }
                                     ]
+                                },
+                                {
+                                    path: 'myAccount',
+                                    name: '我的账户',
+                                    component: resolve =>void(require(['@/views/front/usercore/myAccount'], resolve)),
                                 }
                             ]
                         },
