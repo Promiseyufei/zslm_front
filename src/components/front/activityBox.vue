@@ -295,4 +295,16 @@ export default {
         /*颜色可变*/
         background-color: #aaa;
     }
+
+     /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (max-width: 767px) {
+        .activityBox{
+            width: 100%;
+        }
+    }
+    @media only screen and (min-width: 768px) and (max-width: 1200px) {
+        .activityBox{
+            width: 50%;
+        }
+    }
 </style>

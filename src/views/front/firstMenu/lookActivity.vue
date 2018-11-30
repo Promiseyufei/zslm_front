@@ -471,15 +471,15 @@ export default {
 <style>
 /*搜索框*/
 .search .el-input__inner {
-    font-size: 14px;
     border-radius: 60px;
     height: 32px;
 }
-.search>div{
-    width: 306px;
-}
 .search .el-input__icon{
     line-height: 0;
+}
+.search>div{
+    width: 407px;
+    margin: 20px 0;
 }
 
 /*筛选块*/
@@ -490,20 +490,20 @@ export default {
 }
 </style>
 <style scoped>
-    /*筛选块*/
-    .activitySelt .selectedTag{
+    
+    .search, .activitySelt .selectedTag, .selectedTag .selected, .activityListBox{
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 60px;
+        flex-wrap: wrap;
     }
+    /*筛选块*/
+
     .selectedTag .selected{
-        width: 1280px;
+        width: 95%;
         min-height: auto;
         border-bottom: 2px solid rgba(0, 0, 0, 0.06);
         color: rgb(110, 110, 110);
-        display: flex;
-        align-items: center;
         justify-content: space-between;
         padding-bottom: 19px;
         margin-bottom: 48px;
@@ -519,13 +519,12 @@ export default {
     }
 
     
-
     /*加载更多*/
     .phoneLeadBtn{
         margin-bottom: 10px; 
         margin-left: 10px;
         margin-right: 10px;
-        text-align: center;   
+        width: 95%;
     }
     .phoneLeadBtn .leadBtn{
         color: #fff;
@@ -540,50 +539,18 @@ export default {
     }
 
     .activityListBox{
-        display: flex;
-        /*换行，默认左对齐*/
-        flex-wrap: wrap; 
-        margin-right: auto;
-        margin-left: auto;
-        min-height: auto;
         margin-bottom: 20px;
     }
 
-    /*搜索框*/
-    .search {
-        width: 95%;
-        margin: 37px auto 49px;
-    }
-    
-    /* Extra small devices (phones, 600px and down) */
-    @media only screen and (max-width: 600px) {
-       /* .search{
-            width: 95%;
-        }*/
-        /*.search>div{
-            width: 100%;
-        }*/
+    @media only screen and (max-width: 767px) {
         .pcPageDiv .pcPage{
             display: none;
         }
         .search .pcSeach{
             display: none;
-        }
-    }
-
-    /* Small devices (portrait tablets and large phones, 600px and up) */
-    @media only screen and (min-width: 600px) {
-        /*.search{
-            width: 95%;
         }
         .search>div{
-            width: 100%;
-        }*/
-        .pcPageDiv .pcPage{
-            display: none;
-        }
-        .search .pcSeach{
-            display: none;
+            width: 95%;
         }
     }
 
@@ -601,25 +568,20 @@ export default {
         .search .phoneSeach{
             display: none;
         }
-    } 
-
-    /* Large devices (laptops/desktops, 992px and up) */
-    @media only screen and (min-width: 992px) {
         .search{
-            width: 1280px;
+            margin-left: 10px;
+            justify-content: left;
         }
-        .search>div{
-            width: 306px;
-        }
-        
     } 
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1200px) {
-        .activityListBox{
+        .search{
+            width: 1300px;
+            margin: 0 auto;
+        }
+        .selectedTag .selected{
             width: 1300px;
         }
-
     }   
-
 </style>
