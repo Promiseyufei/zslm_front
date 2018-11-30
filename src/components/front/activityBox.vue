@@ -85,7 +85,7 @@ export default {
     props: ["activityInfo"],
     mounted(){
         // console.log(this.activityInfo);
-        
+        this.activityState();
     },
     watch:{
         activityInfo(){
@@ -121,10 +121,10 @@ export default {
     /*单个活动块儿的属性：大小、背景色等*/
     .activityBox{
         cursor: pointer;
-        width: 325px;
+        width: 305px;
         /*height: 370px;*/
-        padding-left: 10px;
-        padding-right: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
         margin-bottom: 20px;
         /*包括边框和padding的大小*/
         box-sizing: border-box;
