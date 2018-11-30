@@ -14,10 +14,9 @@
 
                     </div>
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_aLEhx8" >
-                        <div v-for="(item,index) in this.coupons">
-                             <user-college :data="item"></user-college>
+                        <div  v-for="(item,index) in this.active">
+                            <userActivity :data="item" :id="id"></userActivity>
                         </div>
-
                         <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
                     </div>
 
@@ -378,55 +377,7 @@
 
 </style>
 
-<style>
-    body{
-        background-color: #f5f5f5;
-    }
-    .el-carousel__container{
-        height: 440px;
-    }
-    .el-carousel__button{
-        width: 1em;
-        height: 1em;
-        border-radius: .5em;
-    }
-    .el-carousel__indicator{
-        padding: 0 3px 16px;
-    }
 
-    .el-carousel__arrow{
-        height: 0px;
-    }
-    [class*=" el-icon-"], [class^=el-icon-]{
-        font-size:26px;
-        font-weight: bolder;
-        line-height:0px;
-    }
-    .el-carousel__arrow--left{
-        left: 20px;
-    }
-    .el-carousel__arrow--right{
-        right: 20px;
-    }
-    .sowingContent[data-v-2912dfba]{
-        border-radius: 5px;
-    }
-
-    @media (max-width: 991px){
-        .el-carousel__container {
-            min-height: auto;
-        }
-        .sowingMap[data-v-2912dfba]{
-            width: 100%;
-        }
-        [class*=" el-icon-"], [class^=el-icon-]{
-            font-size: 0px;
-        }
-        .sowingContent[data-v-2912dfba]{
-            border-radius: 0px;
-        }
-    }
-</style>
 <script>
     export default {
         data() {
@@ -441,8 +392,8 @@
                 userNews:0,
                 userCoupon:0,
                 page:1,
-                page_size:3,
-                coupons:[],
+                page_size:1,
+                active:[],
                 loading:false,
                 disabled:false,
                 loadingBtnText:'加载更多'
@@ -466,14 +417,14 @@
                         }
                     })
             },
-            getCoupon(){
+            getActive(){
                 let self = this;
-                this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
+                this.fetch('http://www.zslm.com/front/activity/getuseractivity',{id:self.id,page:self.page,page_size:self.page_size})
                     .then(res=>{
                         if(res.code == 0){
-                            let data = res.result;
+                            let data = res.result['info'];
                             for(let i in data){
-                                self.coupons.push(data[i])
+                                self.active.push(data[i])
                             }
                         }else{
                             self.disabled = true;
@@ -484,16 +435,17 @@
             getPage(){
                 this.loading = true;
                 this.page++;
-                this.getCoupon();
+                this.getActive();
                 this.loading = false;
             }
         },
+
         mounted(){
             let divs = document.getElementsByTagName("div")
             divs[1].style.height = 0;
             divs[2].style.height = 0;
             this.info();
-            this.getCoupon();
+            this.getActive()
         }
     }
 </script>

@@ -70,6 +70,16 @@ let front_router = {
                             name: 'usercore_major',
                             component: resolve =>void(require(['@/views/front/usercore/usercore'], resolve))
                         },
+                        {
+                            path: 'usercoupon',
+                            name: 'usercore_coupon',
+                            component: resolve =>void(require(['@/views/front/usercore/userConpon'], resolve))
+                        },
+                        {
+                            path: 'useractive',
+                            name: 'usercore_active',
+                            component: resolve =>void(require(['@/views/front/usercore/userActive'], resolve))
+                        },
                     ]
                 },
                 // 首页
