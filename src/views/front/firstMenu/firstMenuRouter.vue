@@ -13,11 +13,8 @@
 					  text-color="#6e6e6e"
 					  active-text-color="#009fa0">
 					  <el-menu-item index="1">选院校</el-menu-item>
-					  <!-- <div class="divLine">|</div> -->
 					  <el-menu-item index="2">找活动</el-menu-item>
-					   <!-- <div class="divLine">|</div> -->
 					  <el-menu-item index="3">看资讯</el-menu-item>
-					   <!-- <div class="divLine">|</div> -->
 					  <el-menu-item index="4">搜辅导</el-menu-item>
 					</el-menu>
 		        </div>

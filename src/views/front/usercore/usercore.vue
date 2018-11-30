@@ -13,10 +13,7 @@
                         <userList></userList>
                     </div>
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_aLEhx8" >
-                        <div v-for="(item,index) in this.majors">
-                             <user-college :data="item"></user-college>
-                        </div>
-                        <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
+                        <router-view/>
                     </div>
 
                 </div>
@@ -435,10 +432,10 @@
                 userCoupon:0,
                 page:1,
                 page_size:3,
-                majors:[],
-                loading:false,
-                disabled:false,
-                loadingBtnText:'加载更多'
+                // majors:[],
+                // loading:false,
+                // disabled:false,
+                // loadingBtnText:'加载更多'
             };
         },
         methods: {
@@ -459,34 +456,34 @@
                         }
                     })
             },
-            getMajor(){
-                let self = this;
-                this.fetch('/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
-                    .then(res=>{
-                        if(res.code == 0){
-                            let data = res.result;
-                            for(let i in data){
-                                self.majors.push(data[i])
-                            }
-                        }else{
-                            self.disabled = true;
-                            self.loadingBtnText = "已经到底了"
-                        }
-                    })
-            },
-            getPage(){
-                this.loading = true;
-                this.page++;
-                this.getMajor();
-                this.loading = false;
-            }
+            // getMajor(){
+            //     let self = this;
+            //     this.fetch('/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
+            //         .then(res=>{
+            //             if(res.code == 0){
+            //                 let data = res.result;
+            //                 for(let i in data){
+            //                     self.majors.push(data[i])
+            //                 }
+            //             }else{
+            //                 self.disabled = true;
+            //                 self.loadingBtnText = "已经到底了"
+            //             }
+            //         })
+            // },
+            // getPage(){
+            //     this.loading = true;
+            //     this.page++;
+            //     this.getMajor();
+            //     this.loading = false;
+            // }
         },
         mounted(){
             let divs = document.getElementsByTagName("div")
             divs[1].style.height = 0;
             divs[2].style.height = 0;
             this.info();
-            this.getMajor();
+            // this.getMajor();
         }
     }
 </script>
