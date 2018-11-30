@@ -121,7 +121,7 @@ export default {
                 active_img:'http://www.xxx.com/ssdsd/dds',
                 activity_type:'活动类型名称',
                 z_name:'主办院校专业名称',
-                start_state:'0'
+                start_state: 0
             }
         }
     },
