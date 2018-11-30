@@ -380,6 +380,7 @@ export default {
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
+                console.log(res);
                 if(res.code == 0){
                     self.count = res.result.count;
                     self.info = res.result.info;
@@ -432,7 +433,15 @@ export default {
         // 筛选块-从组件中获取选中结果
         change(data){
             console.log(data);
-            
+            var list = [];
+            for (var i = 0; i < data.length; i++) {
+                var little = [];
+                for (var j = 0; j < data[i].length; j++) {
+                    little.push(data[i][j].name);
+                }
+                list.push(little);
+            }
+            console.log(list);
             // this.activitySelected = data;
             // var arr = [];
 
@@ -444,7 +453,7 @@ export default {
             // }
             // this.getActivityList(1);
             // this.getPcActivityList();
-            console.log(this.activitySelected);
+            // console.log(this.activitySelected);
             // for (let index = 0; index < this.activitySelected.length; index++) {
             //     if(this.activitySelected[index].length==0){
             //         this.activitySelected[index].splice(this.activitySelected[index].indexOf("*"), 1);
@@ -469,25 +478,25 @@ export default {
 };
 </script>
 <style>
-/*搜索框*/
-.search .el-input__inner {
-    border-radius: 60px;
-    height: 32px;
-}
-.search .el-input__icon{
-    line-height: 0;
-}
-.search>div{
-    width: 407px;
-    margin: 20px 0;
-}
+    /*搜索框*/
+    .search .el-input__inner {
+        border-radius: 60px;
+        height: 32px;
+    }
+    .search .el-input__icon{
+        line-height: 0;
+    }
+    .search>div{
+        width: 407px;
+        margin: 20px 0;
+    }
 
-/*筛选块*/
-.slectedLeft .el-tag{
-    color: #009fa0;
-    background-color: unset;
-    border-color: rgb(210, 210, 210);
-}
+    /*筛选块*/
+    .slectedLeft .el-tag{
+        color: #009fa0;
+        background-color: unset;
+        border-color: rgb(210, 210, 210);
+    }
 </style>
 <style scoped>
     
