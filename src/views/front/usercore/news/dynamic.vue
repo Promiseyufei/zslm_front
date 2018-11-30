@@ -1,6 +1,7 @@
 <template>
     <div>
         <majorDynamic></majorDynamic>
+        <majorInfoDynamic></majorInfoDynamic>
     </div>
 </template>
 
@@ -8,7 +9,7 @@
 export default {
     data() {
         return {
-
+            
         }
     },
     methods: {
