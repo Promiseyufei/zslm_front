@@ -102,4 +102,12 @@
         width: 100%;
         height: 100%;
     }
+    @media (max-width: 991px){
+        .opinionContent{
+            width: 100%;
+        }
+        .opinionAdvice{
+            width: 90%;
+        }
+    }
 </style>
