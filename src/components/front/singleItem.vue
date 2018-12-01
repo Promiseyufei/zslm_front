@@ -2,24 +2,84 @@
     <div>
         <div class="singleItemName" @click="showInform" id="back">
             <div>
-                <h1 id="h1" style="color: rgb(111, 111, 111);">非全日制FMBA项目</h1>
+                <h1 id="h1" style="color: rgb(111, 111, 111);">{{deta.project_name}}</h1>
                 <p id="p">非全日制</p>
             </div>
             <div><i class="el-icon-arrow-down" id="up" style="color: #a2a2a2;"></i></div>
         </div>
         <div class="singleItemDetail" v-show="singleItemDetail">
             <div class="left">
-                <div class="informationLeft" v-for="(l,index) in itemInformLeft" :key="index">
+                <!-- <div class="informationLeft" v-for="(l,index) in itemInformLeft" :key="index">
                     <div class="informationOne"><img :src="l.src"></div>
                     <div class="informationTwo">{{l.itemName}}</div>
-                    <p class="informationThree">29.8万29.8万29.829.8万29.8万29.829.8万29.8万29.8万29.8万29.8万29.8万29.8万29.8万29.8万</p>
+                    <p class="informationThree">{{deta.cost}}</p>
+                </div> -->
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/smoney.png"></div>
+                    <div class="informationTwo">项目费用</div>
+                    <p class="informationThree">{{deta.cost}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/friends.png"></div>
+                    <div class="informationTwo">招生名额</div>
+                    <p class="informationThree">{{deta.student_count}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/class.png"></div>
+                    <div class="informationTwo">授课语言</div>
+                    <p class="informationThree">{{deta.language}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/class2.png"></div>
+                    <div class="informationTwo">班级情况</div>
+                    <p class="informationThree">{{deta.class_situation}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/system.png"></div>
+                    <div class="informationTwo">学制</div>
+                    <p class="informationThree">{{deta.eductional_systme}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/exam.png"></div>
+                    <div class="informationTwo">报考条件</div>
+                    <p class="informationThree">{{deta.can_conditions}}</p>
                 </div>
             </div>
             <div class="right">
-                <div class="informationRight"  v-for="(r,index) in itemInformRight" :key="index">
+                <!-- <div class="informationRight"  v-for="(r,index) in itemInformRight" :key="index">
                     <div class="informationOne"><img :src="r.src"></div>
                     <div class="informationTwo">{{r.itemName}}</div>
                     <p class="informationThree">29.8万</p>
+                </div> -->
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/smoney.png"></div>
+                    <div class="informationTwo">分数线描述</div>
+                    <p class="informationThree">{{deta.score_describe}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/friends.png"></div>
+                    <div class="informationTwo">分数线类型</div>
+                    <p class="informationThree">{{deta.score_type}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/class.png"></div>
+                    <div class="informationTwo">统招模式</div>
+                    <p class="informationThree">{{deta.recruitment_pattern}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/class2.png"></div>
+                    <div class="informationTwo">招生模式</div>
+                    <p class="informationThree">{{deta.enrollment_mode}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/system.png"></div>
+                    <div class="informationTwo">毕业证书</div>
+                    <p class="informationThree">{{deta.graduation_certificate}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/exam.png"></div>
+                    <div class="informationTwo">其他说明</div>
+                    <p class="informationThree">{{deta.other_explain}}</p>
                 </div>
             </div>
         </div>
@@ -30,25 +90,27 @@
 export default {
     data(){
     	return{
+            deta:this.detail,
             singleItemDetail:false,
-            itemInformLeft:[
-                {itemName:'项目费用',src:require("../../assets/img/smoney.png")},
-                {itemName:'招生名额',src:require("../../assets/img/friends.png")},
-                {itemName:'授课语言',src:require("../../assets/img/class.png")},
-                {itemName:'班级情况',src:require("../../assets/img/class2.png")},
-                {itemName:'学制',src:require("../../assets/img/system.png")},
-                {itemName:'报考条件',src:require("../../assets/img/exam.png")},
-            ],
-            itemInformRight:[
-                {itemName:'项目费用',src:require("../../assets/img/describe.png")},
-                {itemName:'招生名额',src:require("../../assets/img/type.png")},
-                {itemName:'授课语言',src:require("../../assets/img/model.png")},
-                {itemName:'班级情况',src:require("../../assets/img/model2.png")},
-                {itemName:'学制',src:require("../../assets/img/biye.png")},
-                {itemName:'报考条件',src:require("../../assets/img/other.png")},
-            ],
+            // itemInformLeft:[
+            //     {itemName:'项目费用',src:require("../../assets/img/smoney.png")},
+            //     {itemName:'招生名额',src:require("../../assets/img/friends.png")},
+            //     {itemName:'授课语言',src:require("../../assets/img/class.png")},
+            //     {itemName:'班级情况',src:require("../../assets/img/class2.png")},
+            //     {itemName:'学制',src:require("../../assets/img/system.png")},
+            //     {itemName:'报考条件',src:require("../../assets/img/exam.png")},
+            // ],
+            // itemInformRight:[
+            //     {itemName:'项目费用',src:require("../../assets/img/describe.png")},
+            //     {itemName:'招生名额',src:require("../../assets/img/type.png")},
+            //     {itemName:'授课语言',src:require("../../assets/img/model.png")},
+            //     {itemName:'班级情况',src:require("../../assets/img/model2.png")},
+            //     {itemName:'学制',src:require("../../assets/img/biye.png")},
+            //     {itemName:'报考条件',src:require("../../assets/img/other.png")},
+            // ],
     	}
     },
+    props:["detail"],
     methods:{
         //点击单个项目标题
         showInform:function() {
@@ -76,7 +138,7 @@ export default {
 
     },
     mounted(){
-
+        // console.log(this.detail)
     },
 }
 </script>
