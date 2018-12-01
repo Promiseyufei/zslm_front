@@ -1,6 +1,6 @@
 <template>
     <div id="myNews">
-        <searchLablePageHead :names="names"></searchLablePageHead>
+        <searchLablePageHead :names="names" @labelHeadClick="(item) => {$router.push(item.url)}"></searchLablePageHead>
         <router-view/>
     </div>
 </template>

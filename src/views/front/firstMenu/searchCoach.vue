@@ -194,7 +194,9 @@ export default {
         }
     },
     methods: {
-        changePageNum:function
+        changePageNum:function () {
+            
+        },
         //标签栏，点击标签，删除标签
         handleClose(tag) {
             for (let index = 0; index < this.tags.length; index++) {
@@ -218,7 +220,8 @@ export default {
         },
         //跳转辅导机构详情页
         jump: function(id) {
-            this.$router.push('/front/firstMenuRouter/singleCoach/'+id);
+            console.log(90);
+            this.$router.push('/front/detailPage/singleOpinion');
         },
         //得到所有筛选过的辅导机构列表
         getCoach: function() {
@@ -234,7 +237,8 @@ export default {
             }).then(function (res) {
                     console.log(res);
                     if (res.code == 0) {
-                        that.coachlist = res.result;
+                        that.coachlist = res.result[0];
+                        console.log(that.coachlist);
                         // that.count = res.count;
                     }else {
                         that.message(true,res.msg,"error");
@@ -245,7 +249,6 @@ export default {
     },
     mounted(){
         this.getCoach();
-        // this.getRoot();
     },
 };
 </script>

@@ -82,6 +82,11 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/detailPage/singleInformation'], resolve))
                         },
                         {
+                            path: 'singleOpinion/:id?/:name?',
+                            name: '意见反馈页',
+                            component: resolve => void(require(['@/views/front/detailPage/singleOpinion'], resolve))
+                        },
+                        {
                             path: 'searchCoach',
                             name: '搜辅导',
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
@@ -122,6 +127,11 @@ let front_router = {
                                             component: resolve =>void(require(['@/views/front/usercore/news/system'], resolve)),
                                         }
                                     ]
+                                },
+                                {
+                                    path: 'myAccount',
+                                    name: '我的账户',
+                                    component: resolve =>void(require(['@/views/front/usercore/myAccount'], resolve)),
                                 }
                             ]
                         },
