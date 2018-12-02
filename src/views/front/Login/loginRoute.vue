@@ -60,7 +60,7 @@
 		    },
 		    //刷新登录不变
 		    accountNumber:function() {
-		    	// console.log(sessionStorage.getItem("active"));
+		    	// console.log(666);
 		    	if (sessionStorage.getItem("active")) {
 		    		//取变量
 		    		this.active=sessionStorage.getItem("active")
