@@ -326,6 +326,9 @@ export default {
     background-color: #fff;
     padding: 25px;
 }
+.messageCoach:hover {
+    box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
+}
 
 .detailCoach {
     padding: 25px;
