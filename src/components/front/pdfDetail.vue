@@ -18,9 +18,7 @@ export default {
        //资料下载区logo——鼠标滑过样式
             pdfOne:function() {
                     this.src = require("../../assets/img/pdfG.png")
-                    // console.log(this.t)
                     this.$emit('thisTest', this.t)
-                    // getElementByClassName
                     // document.getElementById('t').style.color = "#009fa0"
             },
             pdfOneOut:function() {
@@ -66,7 +64,6 @@ export default {
         text-align: center;
         margin: 0 10px;
         height: 86px;
-        /*width: 29%;*/
     }
     
 

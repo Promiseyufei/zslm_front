@@ -11,6 +11,7 @@
                     </el-input>
                 </div>
             </div>
+            <selectAll :checkboxGroup1="checkboxGroup" :list="collegeInform"></selectAll>
             <div class="tagSort">
                 <div class="tag"></div>
                 <div class="sort">
@@ -36,89 +37,6 @@
             <div class="diffeCollege">
                 <el-col :span="8">
                     <el-card shadow="hover">
-                        <!-- <div class="allInforma" :ref="'allInforma' + index" v-for="(all,index) in majorInform" :key="index">
-                            <div class="c-div div_BMsaOd guanzhu" style="margin-bottom:30px;align-items:flex-end;">
-                                <div class="c-div div_ARD2As">
-                                    <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url(http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png); ">
-                                    </div>
-                                    <div class="c-div div_mnG0wo">
-                                        <div class="c-div div_oLhlRV">
-                                            <h1 class="c-heading heading_IH2VnY">{{all.z_name}}</h1>
-                                            <label class="c-label label_OVUgJH">{{all.province}}</label>
-                                            <label class="c-label label_OVUgJH">{{all.city}}</label>
-                                        </div>
-                                        <div class="c-div cs-repeatable div_sfz9WV">
-                                            <img class="c-image image_2pnGPP" v-show="equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                                            <img class="c-image image_2pnGPP" v-show="aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                                            <img class="c-image image_2pnGPP" v-show="two" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
-                                            <img class="c-image image_2pnGPP" v-show="nine" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
-                                            <img class="c-image image_2pnGPP" v-show="both29" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="joinContrast"><el-button>+ 加入对比</el-button></div>
-                            </div>
-                            <div class="forThree">
-                                <div class="specificInform" v-for="(t,index) in all.showProduct" :key="index">
-                                    <p class="international">{{t.project_name}}</p>
-                                    <div class="moneyType">
-                                        <div style="display:flex;align-items:center;margin:0 44px 0 0;">
-                                            <div style="margin:2px 0 0 0;"><img src="../../../assets/img/smoney.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>
-                                        </div>
-                                        <div style="display:flex;align-items:center;">
-                                            <div style="margin:3px 0 0 0;"><img src="../../../assets/img/class.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>
-                                        </div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;margin:15px 0;">
-                                            <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;">
-                                            <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="forThree" style="display: none;" :ref="'forThree' + index">
-                                <div class="specificInform" v-for="(t,k) in all.missPorduct" :key="index">
-                                    <p class="international">{{t.project_name}}</p>
-                                    <div class="moneyType">
-                                        <div style="display:flex;align-items:center;margin:0 44px 0 0;">
-                                            <div style="margin:2px 0 0 0;"><img src="../../../assets/img/smoney.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>
-                                        </div>
-                                        <div style="display:flex;align-items:center;">
-                                            <div style="margin:3px 0 0 0;"><img src="../../../assets/img/class.png"></div>
-                                            <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
-                                            <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>
-                                        </div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;margin:15px 0;">
-                                        <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
-                                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
-                                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;">
-                                        <div style="margin:2px 0 0 0;"><img src="../../../assets/img/friends.png"></div>
-                                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
-                                        <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="viewMore">
-                                <div class="updateInform">信息更新时间：{{update_time}}</div>
-                                <div class="moreInform" @click="viewMore(index)" :ref="'moreInform' + index">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
-                            </div>
-                        </div> -->
-
                         <!-- 每个院校情况组件 -->
                         <selectCollegeItem v-for="(all, index) in majorInform" :key="index" :collegeInfo="all" :followId="major_follow_id" :confirmId="major_confirm_id" @getViewIcon="getView" :missPorduct="missPorduct"></selectCollegeItem>
                         <!-- 每个院校情况组件 -->
@@ -141,6 +59,211 @@ export default {
     },
     data() {
         return {
+            collegeInform:[
+                {
+                    type:'专业类型',
+                    cities:[],//所有专业类型的id数组
+                    "fif":"查看更多"
+                },
+                {
+                    type:'专业方向',
+                    cities:[],//所有专业类型的id数组
+                    "fif":"查看更多"
+                },
+                {
+                    type:'院校地点',
+                    cities:[
+                        {
+                            id:1,
+                            name:"北京"
+                        },
+                        {
+                            id:2,
+                            name:"天津"
+                        },
+                        {
+                            id:3,
+                            name:"上海"
+                        },
+                        {
+                            id:4,
+                            name:"重庆"
+                        },
+                        {
+                            id:5,
+                            name:"河北"
+                        },
+                        {
+                            id:1,
+                            name:"北京"
+                        },
+                        {
+                            id:6,
+                            name:"山西"
+                        },
+                        {
+                            id:7,
+                            name:"台湾"
+                        },
+                        {
+                            id:8,
+                            name:"辽宁"
+                        },
+                        {
+                            id:9,
+                            name:"吉林"
+                        },
+                        {
+                            id:10,
+                            name:"黑龙江"
+                        },
+                        {
+                            id:11,
+                            name:"江苏"
+                        },
+                        {
+                            id:12,
+                            name:"浙江"
+                        },
+                        {
+                            id:13,
+                            name:"安微"
+                        },
+                        {
+                            id:14,
+                            name:"福建"
+                        },
+                        {
+                            id:15,
+                            name:"江西"
+                        },
+                        {
+                            id:16,
+                            name:"山东"
+                        },
+                        {
+                            id:17,
+                            name:"河南"
+                        },
+                        {
+                            id:18,
+                            name:"湖北"
+                        },
+                        {
+                            id:19,
+                            name:"湖南"
+                        },
+                        {
+                            id:20,
+                            name:"广东"
+                        },
+                        {
+                            id:21,
+                            name:"甘肃"
+                        },
+                        {
+                            id:22,
+                            name:"四川"
+                        },
+                        {
+                            id:23,
+                            name:"贵州"
+                        },
+                        {
+                            id:24,
+                            name:"海南"
+                        },
+                        {
+                            id:25,
+                            name:"云南"
+                        },
+                        {
+                            id:26,
+                            name:"青海"
+                        },
+                        {
+                            id:27,
+                            name:"陕西"
+                        },
+                        {
+                            id:28,
+                            name:"广西"
+                        },
+                        {
+                            id:29,
+                            name:"西藏"
+                        },
+                        {
+                            id:30,
+                            name:"宁夏"
+                        },
+                        {
+                            id:31,
+                            name:"新疆"
+                        },
+                        {
+                            id:32,
+                            name:"内蒙古"
+                        },
+                        {
+                            id:33,
+                            name:"澳门"
+                        },
+                        {
+                            id:34,
+                            name:"香港"
+                        },
+                    ],//所有专业类型的id数组
+                    "fif":"查看更多"
+                },
+                {
+                    type:'统招模式',
+                    cities:[
+                       { 
+                            id:0,
+                            name:''
+                        }
+                    ],//所有专业类型的id数组
+                    "fif":"查看更多"
+                },
+                {
+                    type:'学习费用',
+                    cities:[
+                        {
+                            id:0,
+                            name:'1500'
+                        },
+                        {
+                            id:1,
+                            name:'2500'
+                        },
+                        {
+                            id:2,
+                            name:'3500'
+                        },
+                        {
+                            id:3,
+                            name:'4500'
+                        },
+                        {
+                            id:4,
+                            name:'5500'
+                        },
+                        {
+                            id:5,
+                            name:'6500'
+                        },
+                    ],//所有专业类型的id数组
+                    "fif":"查看更多"
+                },
+                {
+                    type:'分数线',
+                    cities:[],//所有专业类型的id数组
+                    "fif":"查看更多"
+                },
+
+            ],
+            checkboxGroup:[[],[],[],[],[],[]],
             major_follow_id:'',
             major_confirm_id:'',
             viewMoreIcon:true,
@@ -176,10 +299,71 @@ export default {
             both29:false,
             moreMajor:false,
             update_time:1996,
-             /*院校信息*/
+            /*院校信息*/
+            u_id:1,
+            id:1
         }
     },
     methods: {
+        //获取按钮内容
+            //专业类型
+            getmajorType:function(){
+                let that = this;
+                this.fetch('/front/colleges/getmajordetails',{
+                    u_id:that.u_id,
+                    id:that.id
+                      
+                }).then(function (response) {
+                    let res = response[0].project[0].recruitment_pattern;
+                    that.collegeInform.cities[0].name = res;
+                    // console.log(that.collegeInform.cities[0].name)
+                    // console.log(456)      
+                }).catch(function (error) {
+                });
+            },
+            //专业方向
+            getmajorDirection:function(){
+                let that = this;
+                this.fetch('/front/colleges/collegesDirection',{
+                    //搜索内容fetc
+                      
+                }).then(function (response){
+                    let res = response;
+                    // console.log(res)      
+
+                }).catch(function (error){
+                    // console.log(132)
+                });
+            },
+            //统招模式
+            getRecruit:function(){
+                let that = this;
+                this.fetch('/front/colleges/collegesRecruit',{
+                    //搜索内容fetc
+                      
+                }).then(function (response){
+                    let res = response;
+                    // console.log(res)      
+
+                }).catch(function (error){
+                    // console.log(132)
+                });
+            },
+            //分数线类型
+            getLine:function(){
+                let that = this;
+                this.fetch('/front/colleges/collegesLine',{
+                    //搜索内容fetc
+                      
+                }).then(function (response) {
+                    let res = response;
+                    // console.log(res)      
+
+                }).catch(function (error) {
+                    // console.log(132)
+                });
+            },
+        //获取按钮内容
         getView:function(iconView){
             // console.log(iconView)
             this.viewMoreIcon = iconView;
@@ -212,7 +396,7 @@ export default {
                     project_count: that.project_count,
                     page: that.page,
                     page_size: that.page_size,
-                }).then(function (response) {
+            }).then(function (response) {
                         let res = response.result[0];
                         if (response.code==0) {
                             // console.log(res)
@@ -243,8 +427,8 @@ export default {
                             that.major_follow_id = res[0].major_follow_id;
                         }
 
-                }).catch(function (error) {
-                });
+            }).catch(function (error) {
+            });
         },
         //点击热度改变颜色，排序
         changeHot:function() {
@@ -299,6 +483,10 @@ export default {
     },
     mounted(){
         this.getmajorInform();
+        this.getmajorType();
+        this.getmajorDirection();
+        this.getRecruit();
+        this.getLine();
         // console.log(123)
 
     },

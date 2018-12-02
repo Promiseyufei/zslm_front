@@ -33,7 +33,7 @@
                                     </div>
                                     <div><el-button size="mini">+ 对比</el-button></div>
                                 </div>
-                                <singleItem></singleItem>
+                                <singleItem :detail="t" v-for="(t,index) in singleItem" :key="index"></singleItem>
                             </el-card>
                         </el-col>
                     <!-- </div> -->
@@ -45,11 +45,11 @@
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="reflesh">
-                                    <a><i class="fa fa-repeat">&nbsp;换一换</i></a>
+                                    <a @click="getContent"><i class="fa fa-repeat">&nbsp;换一换</i></a>
                                 </div>
                             </div>
                             <div class="recommedContent">
-                                <subPage :shortArticles="recommedContent" v-for="(t,index) in recommedContent" :key="index"></subPage>
+                                <subPage :shortArticles="recommedContent"></subPage>
                             </div>
                         </el-card>
                     </el-col>
@@ -152,7 +152,7 @@
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="pdf">
-                                    <div class="pdfDetail">
+                                    <div class="pdfDetail" v-for="(t,index) in pdfPicture" :key="index">
                                         <pdfDetail v-for="(t,index) in pdfPicture" @thisTesta="(b) => {bb = b}" @thisTest="(a) => {aa = a}" :t="index" :key="index" :class="{testa: index == aa ? true : false, testb: index == bb ? true : false}" :id="city(index)"></pdfDetail>
                                     </div>
                                 </div>
@@ -173,68 +173,47 @@ export default {
     },
     data() {
         return {
+            id:1,
+            u_id:2,
             aa:-1,
             bb:-1,
             count:0,
-            recommedContent:[
-                // {
-                //     img:'123',
-                //     title:'45',
-                //     content:'67',
-                //     time:'11',
-                //     author:'33',
-                // },
-                // {
-                //     img:'123',
-                //     title:'45',
-                //     content:'67',
-                //     time:'11',
-                //     author:'33',
-                // },
-                {
-                    img:'123',
-                    title:'45',
-                    content:'67',
-                    time:'11',
-                    author:'33',
-                },
-            ],
+            page:1,
+            page_size:3,
+            //招生项目
+            singleItem:[],
+            //推荐内容
+            recommedContent:[],
             aboutActivity:[
-                {
-                    start_state:'123',
-                    z_name:'45',
-                    activity_type:'67',
-                    active_name:'11',
-                    begin_time:'33',
-                    end_time:'55',
-                    province:{province:'99'}
-                },
-                {
-                    start_state:'123',
-                    z_name:'45',
-                    activity_type:'67',
-                    active_name:'11',
-                    begin_time:'33',
-                    end_time:'55',
-                    province:{province:'99'}
-                },
-                {
-                    start_state:'123',
-                    z_name:'45',
-                    activity_type:'67',
-                    active_name:'11',
-                    begin_time:'33',
-                    end_time:'55',
-                    province:{province:'99'}
-                },
+                // {
+                //     start_state:'123',
+                //     z_name:'45',
+                //     activity_type:'67',
+                //     active_name:'11',
+                //     begin_time:'33',
+                //     end_time:'55',
+                //     province:{province:'99'}
+                // },
+                // {
+                //     start_state:'123',
+                //     z_name:'45',
+                //     activity_type:'67',
+                //     active_name:'11',
+                //     begin_time:'33',
+                //     end_time:'55',
+                //     province:{province:'99'}
+                // },
+                // {
+                //     start_state:'123',
+                //     z_name:'45',
+                //     activity_type:'67',
+                //     active_name:'11',
+                //     begin_time:'33',
+                //     end_time:'55',
+                //     province:{province:'99'}
+                // },
             ],
             pdfPicture:[
-                {},
-                {},
-                {},
-                {},
-                {},
-                {},
                 {},
                 {},
                 {},
@@ -261,10 +240,92 @@ export default {
         }
     },
     methods: {
+        // 相关活动
+        getaboutAcitivity:function(){
+            let that = this;
+            this.fetch('/front/colleges/getmajoractive',{
+                id:that.id,
+                page:that.page,
+                page_size:that.page_size
+            }).then((response) => {
+                if(response.code == 0){
+                    let res = response.result.info;
+                    that.aboutActivity = res;
+                    // for(var i in res){
+                    //     that.recommedContent.push({
+                    //         img:res[i].z_image ,
+                    //         title:res[i].zx_name,
+                    //         content:res[i].brief_introduction,
+                    //         time:res[i].z_from,
+                    //         author:res[i].brief_introduction,
+                    //     });
+                    // }
+                    // console.log(res)
+                    // console.log(123)
+                }
+            })
+            .catch(error => function (error) {
+                console.log(response)
+            });
+        },
+        //推荐内容刷新
+        refresh: function (data) {
+            this.page++;
+            if (this.page*3 >60){
+                this.page = 0;
+            }
+            this.getContent();
+        },
+        //获取推荐内容
+        getContent:function(){
+            let that = this;
+            this.fetch('/front/colleges/getmajorinformation',{
+                id:that.id,
+                page:that.page,
+                page_size:that.page_size
+            }).then((response) => {
+                if(response.code == 0){
+                    let res = response.result;
+                    that.recommedContent = res;
+                    for(var i in res){
+                        that.recommedContent.push({
+                            img:res[i].z_image ,
+                            title:res[i].zx_name,
+                            content:res[i].brief_introduction,
+                            time:res[i].z_from,
+                            author:res[i].brief_introduction,
+                        });
+                    }
+                    // console.log(res)
+                }
+            })
+            .catch(error => function (error) {
+                console.log(response)
+            });
+        },
         city:function(index){
-            console.log(index)
+            // console.log(index)
             return "city" + index;
         },
+        //获取招生项目和基本信息
+        getItemInform:function(){
+            let that = this;
+            that.fetch('/front/colleges/getmajordetails',{
+                u_id: that.u_id,
+                id: that.id,
+                  
+            }).then(function (response) {
+                let res = response[0].project;
+                that.singleItem = res;
+                // if (response.code==0) {}
+                // console.log(response)      
+
+            }).catch(function (error) {
+                // console.log(132)
+            });
+        },
+
+        
         //联系方式logo——鼠标滑过样式
             computer:function() {
                 this.logoPicture[0].computer = require("../../../assets/img/computerG.png")
@@ -302,7 +363,9 @@ export default {
         
     },
     mounted(){
-
+        this.getaboutAcitivity();
+        this.getContent();
+        this.getItemInform();
         // count:function(){
             // let i = 0;
             // i++;
