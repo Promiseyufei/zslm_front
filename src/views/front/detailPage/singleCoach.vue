@@ -274,6 +274,7 @@ export default {
 }
 .singlerightbox>img {
     margin-bottom: 20px;
+    cursor: pointer;
 }
 .singlerightbox>img:hover {
     box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
