@@ -87,6 +87,11 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/detailPage/singleOpinion'], resolve))
                         },
                         {
+                            path: 'returnmoney',
+                            name: '退款保障页',
+                            component: resolve => void(require(['@/views/front/detailPage/returnmoney'], resolve))
+                        },
+                        {
                             path: 'searchCoach',
                             name: '搜辅导',
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
