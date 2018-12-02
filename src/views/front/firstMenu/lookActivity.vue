@@ -1,6 +1,6 @@
 <template>
     <div>
-        <hearderBanner enName="COLLEGES" name="选院校"></hearderBanner>
+        <hearderBanner enName="COLLEGES" name="找活动"></hearderBanner>
         <!-- 活动列表模块 -->
         <div class="activityList">
             <!-- 搜索框 -->
@@ -37,12 +37,16 @@
                 <!-- 单个活动块 -->
                 <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox>
             </div>
-            <div class="pcPageDiv">
+            <!-- 分页 -->
+            <div>
+                <pcPhonePage class="pcPage" :phoneparam="phoneparam" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum" @getPage="getPage"></pcPhonePage>
+            </div>
+            <!-- <div class="pcPageDiv">
                 <activityPage class="pcPage" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage>
             </div>
             <div class="phoneLeadBtn">
                 <el-button class="leadBtn" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -54,9 +58,11 @@ export default {
     data() {
         return {
             // 下垃加载按钮
-            loadingBtnText:'加载更多',
-            disabled:false,
-            loading:false,
+            phoneparam:{
+                loadingBtnText:'加载更多',
+                disabled:false,
+                loading:false,
+            },
 
             allActivity:[],//存放所有活动数据数组
 
@@ -322,8 +328,8 @@ export default {
     },
     methods: {
         // 滑动加载按钮
-         getPage(){
-            this.loading = true;
+        getPage(){
+            this.phoneparam.loading = true;
             this.pageNumber++;
             this.getActivityList(0);
         }, 
@@ -345,22 +351,22 @@ export default {
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
-                self.loading = false;
+                self.phoneparam.loading = false;
                 if(res.code == 0){
                     self.count = res.result.count;
                     let data = res.result.info;
-                    console.log(info);
                     for(let i in data){
                         self.allActivity.push(data[i]);
-                    };
+                    }
                     self.info = self.allActivity;
+                    // console.log(self.info);
                 }
                 else{
                     self.message(true, "加载失败，请重试", 'info');
                 }
                 if( self.pageNumber*self.pageCount >= self.count){
-                    self.disabled = true;
-                    self.loadingBtnText = "已经到底了";
+                    self.phoneparam.disabled = true;
+                    self.phoneparam.loadingBtnText = "————我是有底线的————";
                 }
             }).catch(function(error){
                 console.log("error");
@@ -368,7 +374,7 @@ export default {
         },
          // 活动列表页pc端---通过筛选条件获得的活动列表数据
         getPcActivityList:function(){
-            console.log('----pc');
+            // console.log('----pc');
             var self = this;
             this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
@@ -432,34 +438,26 @@ export default {
 
         // 筛选块-从组件中获取选中结果
         change(data){
-            console.log(data);
+            // console.log(data);
             var list = [];
             for (var i = 0; i < data.length; i++) {
                 var little = [];
                 for (var j = 0; j < data[i].length; j++) {
-                    little.push(data[i][j].name);
+                    if(i == 1)
+                        little.push(data[i][j].name);
+                    else
+                        little.push(data[i][j].id);
                 }
                 list.push(little);
             }
-            console.log(list);
-            // this.activitySelected = data;
-            // var arr = [];
-
-            // for (var i = 0; i < data.length; i++) {
-            //     for (var j = 0; j < data[i].length; j++) {
-            //         console.log(data[i][j].name);
-            //         this.activitySelected[i].push(data[i][j].name);
-            //     }
-            // }
+            // console.log(list[0]);
+            this.activitySelected = list;
+            for (var i = 0; i < this.activitySelected.length; i++) {
+                console.log(this.activitySelected[i]);
+            }
             // this.getActivityList(1);
-            // this.getPcActivityList();
-            // console.log(this.activitySelected);
-            // for (let index = 0; index < this.activitySelected.length; index++) {
-            //     if(this.activitySelected[index].length==0){
-            //         this.activitySelected[index].splice(this.activitySelected[index].indexOf("*"), 1);
-            //     }
-            // }
-            // console.log(this.activitySelected);
+            this.getPcActivityList();
+            // console.log(this.activitySelected[0]);
         },
 
 
@@ -470,6 +468,7 @@ export default {
 
     },
     mounted(){
+        // console.log(this.phoneparam.loading);
         this.getCollegesType();
         this.getActivityType();
         this.getActivityList(1);
@@ -529,7 +528,7 @@ export default {
 
     
     /*加载更多*/
-    .phoneLeadBtn{
+    /*.phoneLeadBtn{
         margin-bottom: 10px; 
         margin-left: 10px;
         margin-right: 10px;
@@ -539,7 +538,7 @@ export default {
         color: #fff;
         background-color: #009fa0;
         width: 100%;
-    }
+    }*/
 
     .activityList{
         width: 100%;
@@ -552,9 +551,9 @@ export default {
     }
 
     @media only screen and (max-width: 767px) {
-        .pcPageDiv .pcPage{
+        /*.pcPageDiv .pcPage{
             display: none;
-        }
+        }*/
         .search .pcSeach{
             display: none;
         }
@@ -565,15 +564,15 @@ export default {
 
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
-        .pcPageDiv .pcPage{
+        /*.pcPageDiv .pcPage{
             display: block;
-        }
+        }*/
         .search .pcSeach{
             display: block;
         }
-        .phoneLeadBtn .leadBtn{
+        /*.phoneLeadBtn .leadBtn{
             display: none;
-        }
+        }*/
         .search .phoneSeach{
             display: none;
         }

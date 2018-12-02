@@ -20,7 +20,7 @@
 	            <div class="activityAddressTime">
 	                <div class="activityAddress">
 	                    <img src="../../assets/img/position.png">
-	                    <!-- <span>{{activityInfo.province.province}}</span> -->
+	                    <span>{{activityInfo.province.province}}</span>
 	                </div>
 	                <div class="activityTime">
 	                    <img src="../../assets/img/calendar.png">
@@ -147,7 +147,7 @@ export default {
         background-image: url("../../assets/img/activitytitle.jpg");
         background-position: 50% 50%;
         background-size: cover;
-        border-radius: 0px 5px 0px 5px;
+        border-radius: 5px 5px 0px 0px;
     }
 
     .activityState1{

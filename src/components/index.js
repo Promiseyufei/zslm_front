@@ -36,6 +36,7 @@ import pdfDetail from './front/pdfDetail.vue'
 import testA from './front/test.vue'
 import majorInfoDynamic from './front/majorInfoDynamic.vue'
 import system from './front/system.vue'
+import pcPhonePage from './front/pcPhonePage.vue'
 export default {
     Test, 
     Test2,
@@ -75,5 +76,6 @@ export default {
     pdfDetail,
     testA,
     majorInfoDynamic,
-    system
+    system,
+    pcPhonePage
 }
