@@ -89,7 +89,7 @@
                         <img src="../../../assets/img/advise.png" alt="" @click="advise"> 
 
                         <!-- 退款保障 -->
-                        <img src="../../../assets/img/returnmoney.png" alt="">
+                        <img src="../../../assets/img/returnmoney.png" alt="" @click="returnmoney">
                     </div>
                 </div>
             </div>
@@ -126,10 +126,11 @@ export default {
         }
     },
     methods: {
+        //获得分页数据
         singlecoach:function () {
             var that = this;
-            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/api/user/register',{
-                id: 0
+            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/colleges/getmajordetails',{
+                id: 1
             }).then(function (res) {
                     console.log(res);
                     // if (res.code == 0) {
@@ -145,11 +146,15 @@ export default {
         //点击跳到意见反馈页面
         advise: function() {
             this.$router.push('/front/firstMenuRouter/singleOpinion');
+        },
+        //点击跳到退款保障页面
+        returnmoney: function() {
+            this.$router.push('/front/firstMenuRouter/returnmoney');
         }
     },
     mounted(){
         this.id = this.$route.params.id;
-        // this.singlecoach();
+        this.singlecoach();
     },
 };
 </script>
