@@ -87,11 +87,11 @@ export default {
     .publicRowRight .el-checkbox__input.is-checked .el-checkbox__label {
         color: #fff;
     }
-    .ff span{
+    .publicRowRight .ff span{
         background-color: #ffb957;
         color: #fff !important;
     }
-    .fff span{
+    .publicRowRight .fff span{
         color: #333 !important;
     }
     .publicRowRight .el-checkbox__label {
@@ -121,11 +121,11 @@ export default {
     }
     /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 1200px) {
-    .ff span{
+    .publicRowRight .ff span{
         width: 10px !important;
         margin: 0 5px;
     }
-    .fff span{
+    .publicRowRight .fff span{
         width: 10px !important;
         margin: 0 5px;
     }

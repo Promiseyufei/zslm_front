@@ -87,14 +87,24 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/detailPage/singleOpinion'], resolve))
                         },
                         {
+                            path: 'returnmoney',
+                            name: '退款保障页',
+                            component: resolve => void(require(['@/views/front/detailPage/returnmoney'], resolve))
+                        },
+                        {
+                            path: 'returnform',
+                            name: '退款申请页',
+                            component: resolve => void(require(['@/views/front/detailPage/returnform'], resolve))
+                        },
+                        {
                             path: 'searchCoach',
                             name: '搜辅导',
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
                         },
                         {
-                            path: 'singleCoach/:id?',
+                            path: 'singleCoachs/:id?',
                             name: '单个辅导机构',
-                            component: resolve => void(require(['@/views/front/detailPage/singleCoach'], resolve))
+                            component: resolve => void(require(['@/views/front/detailPage/singleCoachs'], resolve))
                         },
                         {
                             path: 'usercore',
