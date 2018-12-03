@@ -37,6 +37,7 @@ import testA from './front/test.vue'
 import majorInfoDynamic from './front/majorInfoDynamic.vue'
 import system from './front/system.vue'
 import pcPhonePage from './front/pcPhonePage.vue'
+import staticNav from './front/staticNav.vue'
 export default {
     Test, 
     Test2,
@@ -77,5 +78,6 @@ export default {
     testA,
     majorInfoDynamic,
     system,
-    pcPhonePage
+    pcPhonePage,
+    staticNav
 }
