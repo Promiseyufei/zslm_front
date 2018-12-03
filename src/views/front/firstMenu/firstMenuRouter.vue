@@ -227,7 +227,7 @@
 				this.footer = false;
 			}
 
-		    },
+		},
 	};
 </script>
 <style>

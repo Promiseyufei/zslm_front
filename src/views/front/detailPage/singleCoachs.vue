@@ -141,7 +141,7 @@ export default {
                 id: 1,
                 u_id:1
             }).then(function (res) {
-                    console.log(res);
+                    // console.log(res);
                     if (res.code == 0) {
                         that.collage = res.result[0];
                         that.activity = that.collage.best_hot_active.info[0];
@@ -194,10 +194,11 @@ export default {
 };
 </script>
 <style>
-    .el-tabs__nav {
+    /* 选项卡样式 */
+    .messageCoach .el-tabs__nav {
         width: 100%;
     }
-    .el-tabs__item {
+    .messageCoach .el-tabs__item {
         width: 50%;
         text-align: center;
     }

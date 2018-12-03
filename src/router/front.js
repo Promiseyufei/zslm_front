@@ -102,9 +102,9 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
                         },
                         {
-                            path: 'singleCoach/:id?',
+                            path: 'singleCoachs/:id?',
                             name: '单个辅导机构',
-                            component: resolve => void(require(['@/views/front/detailPage/singleCoach'], resolve))
+                            component: resolve => void(require(['@/views/front/detailPage/singleCoachs'], resolve))
                         },
                         {
                             path: 'usercore',
