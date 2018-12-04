@@ -8,7 +8,7 @@
                         <div class="selectHeaderboxhover">
                             <div class="selectHeader">
                                 <img src="../../../assets/img/xindongfang.png" alt="">
-                                <p><span></span><strong>新东方</strong><span></span></p>
+                                <p><span></span><strong>{{collage.coach_name}}</strong><span></span></p>
                             </div>
                         </div>
                     </div>
@@ -21,12 +21,7 @@
                         <!-- 简介 -->
                         <div class="detailCoach">
                             <h6>机构简介</h6>
-                            <p>北京社科赛斯教育集团由北京大学MBA甄诚先生于2002年创立，是一家股东层、管理层由北大、清华、南开、
-                                上海交大等高校MBA毕业生组成的教育科技企业，同时也是中国较早成立的MBA、MPAcc等专业培训的机构之一，
-                                核心业务涵盖MBA、MPA、MPAcc、MEM等硕士考前辅导、在线教育、国际合作MBA、考试研究及图书出版等。 
-                                旗下设有MBA备考网（http://www.mbaschool.com.cn/、MBA教育网(http://www.mbaedu.cn/)
-                                、研线网（http://www.yanxian.org/）和研线课堂（http://ke.yanxian.org/)等教育门户网站和在
-                                线学习平台。</p>
+                            <p>{{collage.describe}}</p>
                         </div>
                         <!-- 切换卡 -->
                         <div class="messageCoach">
@@ -34,36 +29,44 @@
                                 <el-tab-pane label="优惠卷" name="first">
                                     <div class="coachbig">
                                         <!-- n个优惠卷 -->
-                                        <div class="coachbox" v-for="(item,index) in 2">
-                                            <div class="coachleft">
-                                                <div class="coachleftleft">折扣卷</div>
+                                        <div class="coachbox" v-for="(item,index) in collage.coupon" @click="useorget(item.is_have,item.id)">
+                                            <div class="coachleft" :class="item.is_have==1?'ff':'' ">
+                                                <div class="coachleftleft" v-if="item.type==0">折扣卷</div>
+                                                <div class="coachleftleft2" v-if="item.type==1">满减卷</div>
                                                 <div class="coachright">
-                                                    <p>任意课程8折</p>
+                                                    <p :class="item.type==1?'ffff':'' ">{{item.name}}</p>
                                                     <span>2018.10.12-2018.11.12</span>
                                                 </div>
                                             </div>
-                                            <div class="coachleftright">
+                                            <div class="coachleftright" v-if="item.is_have==0">
                                                 <span>点击领取</span>
+                                            </div>
+                                            <div class="coachleftright coachleftright2" v-if="item.is_have==1">
+                                                <span>去使用</span>
                                             </div>
                                         </div>
                                     </div>
                                 </el-tab-pane>
                                 <el-tab-pane label="分校列表" name="second">
                                     <div class="coachbig">
-                                        <div class="collagebox" v-for="(item,index) in 2">
+                                        <div class="collagebox" v-for="(item,index) in collage.son_coach">
                                             <img src="../../../assets/img/collageimg.jpg" alt="">
                                             <div class="collagemessage detailCoach">
                                                 <nav>
-                                                    <h4>社科赛似（合肥）分校</h4>
+                                                    <h4>{{item.coach_name}}</h4>
                                                     <img src="../../../assets/img/money2.png" alt="">
                                                     <img src="../../../assets/img/return3.png" alt="">
                                                 </nav>
-                                                <div><span>所在省市</span><strong>400-010-9168</strong></div>
-                                                <div><span>联系电话</span><strong>点击访问</strong></div>
-                                                <div><span>地址</span><strong>北京市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长市海淀区苏州街18号长远天地大厦A1-1901室</strong></div>
-                                                <div><span>网址</span><strong>线上线下</strong></div>
-                                                <div><span>辅导形式</span><strong>2018.09.02</strong></div>
-                                                <div><span>信息更新日期</span><strong>2018.09.02</strong></div>
+                                                <div><span>所在省市</span><strong>{{item.province}}</strong></div>
+                                                <div><span>联系电话</span><strong>{{item.phone}}</strong></div>
+                                                <div><span>地址</span><strong>{{item.address}}</strong></div>
+                                                <div><span>网址</span><strong class="link" @click="tolink(item.web_url)">{{item.web_url}}</strong></div>
+                                                <div><span>辅导形式</span>
+                                                    <strong v-if="item.coach_type==0">线上</strong>
+                                                    <strong v-if="item.coach_type==1">线下</strong>
+                                                    <strong v-if="item.coach_type==2">线上、线下</strong>
+                                                </div>
+                                                <div><span>信息更新日期</span><strong>{{item.update_time}}</strong></div>
                                             </div>
                                         </div>
                                     </div>
@@ -75,11 +78,15 @@
                         <!-- 机构信息 -->
                         <div class="detailCoach">
                             <h6>机构简介</h6>
-                            <div><span>联系电话</span><strong>400-010-9168</strong></div>
-                            <div><span>总部官网</span><strong>点击访问</strong></div>
-                            <div><span>总部地址</span><strong>北京市海淀区苏州街18号长远天地大厦A1-1901室</strong></div>
-                            <div><span>辅导形式</span><strong>线上线下</strong></div>
-                            <div><span>信息更新</span><strong>2018.09.02</strong></div>
+                            <div><span>联系电话</span><strong>{{collage.phone}}</strong></div>
+                            <div><span>总部官网</span><strong @click="jumpweb" class="handstyle">点击访问</strong></div>
+                            <div><span>总部地址</span><strong>{{collage.address}}</strong></div>
+                            <div><span>辅导形式</span>
+                                <strong v-if="collage.coach_type==0">线上</strong>
+                                <strong v-if="collage.coach_type==1">线下</strong>
+                                <strong v-if="collage.coach_type==2">线上、线下</strong>
+                            </div>
+                            <div><span>信息更新</span><strong>{{collage.update_time}}</strong></div>
                         </div>
 
                         <!-- 活动小块 -->
@@ -122,26 +129,54 @@ export default {
                 activity_type:'活动类型名称',
                 z_name:'主办院校专业名称',
                 start_state: 0
-            }
+            },
+            collage:{},
         }
     },
     methods: {
         //获得分页数据
         singlecoach:function () {
             var that = this;
-            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/colleges/getmajordetails',{
-                id: 1
+            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/coach/getcoachbyid',{
+                id: 1,
+                u_id:1
             }).then(function (res) {
-                    console.log(res);
-                    // if (res.code == 0) {
-                    //     that.coachlist = res.result[0];
-                    //     console.log(that.coachlist);
-                    //     // that.count = res.count;
-                    // }else {
-                    //     that.message(true,res.msg,"error");
-                    // }
+                    // console.log(res);
+                    if (res.code == 0) {
+                        that.collage = res.result[0];
+                        that.activity = that.collage.best_hot_active.info[0];
+                        // console.log(that.coachlist);
+                        // that.count = res.count;
+                    }else {
+                        that.message(true,res.msg,"error");
+                    }
             }).catch(function (error) {
             });
+        },
+        //跳转到官网
+        jumpweb:function() {
+            window.location.href=this.collage.web_url;
+        },
+        useorget:function(re,id) {
+            if(re==0) {
+                var that = this;
+                this.post('http://www.lishanlei.cn/zslm_back_rmfd/public/front/coach/addcoupon',{
+                    u_id:1,
+                    c_id:id
+                }).then(function (res) {
+                        // console.log(res);
+                        if (res.code == 0) {
+                            that.message(true,res.msg,"succeed");
+                        }else {
+                            that.message(true,res.msg,"error");
+                        }
+                }).catch(function (error) {
+                });
+            }
+        },
+        //跳转到官网
+        tolink:function(url) {
+            window.location.href=url;
         },
         //点击跳到意见反馈页面
         advise: function() {
@@ -159,10 +194,11 @@ export default {
 };
 </script>
 <style>
-    .el-tabs__nav {
+    /* 选项卡样式 */
+    .messageCoach .el-tabs__nav {
         width: 100%;
     }
-    .el-tabs__item {
+    .messageCoach .el-tabs__item {
         width: 50%;
         text-align: center;
     }
@@ -171,8 +207,15 @@ export default {
 .bigBox {
     background-color: rgb(245, 245, 245);
 }
+
+.ffff {
+    color: #0061ac !important;
+}
 .activitystyle {
     margin-left: 0 !important;
+}
+.handstyle {
+    cursor: pointer;
 }
 .collagemessage {
     margin-left: 20px;
@@ -246,6 +289,7 @@ export default {
 .coachleftright:hover {
     opacity: 1;
 }
+
 .coachleftright>span {
     width: 16px;
     font-size: 16px;
@@ -255,6 +299,16 @@ export default {
     color: rgb(255, 255, 255);
     line-height: 1.2em;
     text-align: center;
+}
+.coachleftright2 {
+    background-image: url("../../../assets/img/green4.png");
+    opacity: 1;
+}
+.coachleftright2:hover {
+    background-image: url("../../../assets/img/green2.png");
+}
+.coachleftright2>span {
+    color: #009FA1;
 }
 .coachleft {
     width: 350px;
@@ -267,6 +321,16 @@ export default {
     width: 112px;
     height: 59px;
     background-image: url("../../../assets/img/yellow.png");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+}
+.coachleftleft2 {
+    width: 112px;
+    height: 59px;
+    background-image: url("../../../assets/img/reduce.png");
     display: flex;
     align-items: center;
     justify-content: center;
@@ -308,7 +372,9 @@ export default {
     line-height: 1.6em;
     color: rgb(110, 110, 110);
 }
-
+.ff {
+    background-image: url("../../../assets/img/finish.png") !important;
+}
 .detailCoach>div>strong {
     font-size: 12px;
     font-weight: bold;
@@ -404,7 +470,10 @@ export default {
     color: #fff;
     font-size: 30px;
 }
-
+.link {
+    color: #009FA1 !important;
+    cursor: pointer;
+}
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (max-width: 992px) {
     .selectHeader>p>span {
@@ -448,6 +517,13 @@ export default {
         background-repeat: no-repeat;
     }
     .coachleftleft {
+        width: 55px;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        font-size: 12px;
+        height: 30px;
+    }
+    .coachleftleft2 {
         width: 55px;
         background-size: 100%;
         background-repeat: no-repeat;

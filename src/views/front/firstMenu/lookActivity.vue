@@ -27,7 +27,7 @@
                     <div class="selected">
                         <div class="slectedLeft">
                             <span>选活动&gt;</span>
-                            <!-- <tag :tag="activitySelected[0].province"></tag> -->
+                            <!-- <tags :tags="activitySelected" @handleC></tags> -->
                         </div>
                         <span>共{{count}}场活动</span>
                     </div>

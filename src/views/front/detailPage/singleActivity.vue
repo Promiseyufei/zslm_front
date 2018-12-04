@@ -84,9 +84,10 @@
                         <!-- <div v-if="acHostInfo.id" class="asideBox" style="backgroundImage: url(../../../assets/img/singleCollege.jpg);"> -->
                         <div class="asideContent">
                             <div class="asideLogo">
-                                <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name">
+                                <!-- <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name"> -->
                                 <!-- 默认图片 -->
-                                <img v-else src="../../../assets/img/majorIcon.png">
+                                 <img v-if=" acHostInfo.magor_logo_name != '' " src="../../../assets/img/logo.png">
+                                <img v-else src="../../../assets/img/logo.png">
                             </div>
                             <div class="asideTitle">
                                 <span></span>
