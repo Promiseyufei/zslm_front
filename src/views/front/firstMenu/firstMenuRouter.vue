@@ -20,42 +20,22 @@
 						</el-menu>
 			        </div>
 			        <div @click="isLogin" v-show="mobileIcon" class="mobileIcon">
-			        	<img src="../../../assets/img/mobileIcon.png">
-			        	<ul id="login" style="display:none;">
-			        		<li>消息通知</li>
-			        		<li>登录</li>
-			        	</ul>
-			        	<ul id="noLogin" style="display:none;">
-			        		<li>我的关注</li>
-			        		<li>我的活动</li>
-			        		<li>我的优惠券</li>
-			        		<li>我的消息</li>
-			        		<li>我的账户</li>
-			        	</ul>
-			        	<!-- <el-row class="tac">
-							<el-col :span="12">
-							    <el-menu
-							    	default-active="2"
-							    	class="el-menu-vertical-demo"
-							      	@open="handleOpen"
-							      	@close="handleClose">
-							      	<el-submenu index="1">
-								        <template slot="title">
-								        	<i class="el-icon-location"></i>
-								        </template>
-								        <el-menu-item-group>
-								        	<template slot="title">分组一</template>
-								        	<el-menu-item index="1-1">选项1</el-menu-item>
-								        	<el-menu-item index="1-2">选项2</el-menu-item>
-								        </el-menu-item-group>
-								        <el-menu-item-group title="分组2">
-								        	<el-menu-item index="1-3">选项3</el-menu-item>
-								        </el-menu-item-group>
-							      	</el-submenu>     
-							   	</el-menu>
-							</el-col>
-						</el-row> -->
+			        	<img @click="dialogVisible = true" style="margin-top: 0;"  src="../../../assets/img/mobileIcon.png">
+			        	<el-dialog
+						  :visible.sync="dialogVisible"
+						  width="70%" >
+						  <div style="width:100%;height:130px;background-color:red;"></div>
+						  <div style="padding:0 20px;">
+						  	  <el-button type="text" @click="">我的关注</el-button>
+							  <el-button type="text">我的活动</el-button>
+							  <el-button type="text">我的优惠券</el-button>
+							  <el-button type="text">我的消息</el-button>
+							  <el-button type="text">我的账户</el-button>
+						  </div>
+						  <!-- <span slot="footer" class="dialog-footer"></span> -->
+						</el-dialog>
 			        </div>
+
 	    		</div>
 		        <div class="logoInto" v-show="logoInto">
 		        		<div><i class="el-icon-search"></i></div>
@@ -112,6 +92,7 @@
 	    },
 	    data() {
 	        return {
+	        	dialogVisible: false,
 	        	activeIndex: '1',
 	        	firstMenu:true,
 	        	logoInto:true,
@@ -120,10 +101,42 @@
 	        }
 	    },
 	    methods: {
+	    	// handleClose(done) {
+		    //     this.$confirm('确认关闭？')
+		    //       .then(_ => {
+		    //         done();
+		    //       })
+		    //       .catch(_ => {});
+		    //  },
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
 	    		this.activeIndex = key;
-	    		this.activeIndex == '1' ? this.$router.push('/front/firstMenuRouter/selectCollege') : this.$router.push('/front/firstMenuRouter/lookActivity');
+	    		if (this.activeIndex==1) {
+	    			this.$router.push('/front/firstMenuRouter/selectCollege');
+	    		} else if(this.activeIndex==2) {
+	    			this.$router.push('/front/firstMenuRouter/lookActivity');
+	    		} else if(this.activeIndex==3) {
+	    			this.$router.push('/front/firstMenuRouter/viewInformation');
+	    		} else if(this.activeIndex==4) {
+	    			this.$router.push('/front/firstMenuRouter/searchCoach');
+	    		}
+	    		// switch(key) {
+	    		// 	case 1:
+	    		// 	this.$router.push('/front/firstMenuRouter/selectCollege');
+	    		// 	console.log(123)
+	    		// 	break;
+	    		// 	case 2:
+	    		// 	this.$router.push('/front/firstMenuRouter/lookActivity');
+	    		// 	break;
+	    		// 	case 3:
+	    		// 	this.$router.push('/front/firstMenuRouter/viewInformation');
+	    		// 	break;
+	    		// 	case 4:
+	    		// 	this.$router.push('/front/firstMenuRouter/searchCoach');
+	    		// 	break;
+
+	    		// }
+	    		// this.activeIndex == '1' ? this.$router.push('/front/firstMenuRouter/selectCollege') : this.$router.push('/front/firstMenuRouter/lookActivity');
 	    		sessionStorage.setItem("active",key);
 	    		// this.activeIndex = sessionStorage.getItem("active");
 	    		// console.log(key)
@@ -174,20 +187,20 @@
 		    //判断是否登录
 		    isLogin:function(){
 		    	this.getUserState('user');
-		    	let aa = 2;
-		    	if (aa==1) {
-		    		let login = document.getElementById('login');
-			    	if (login.style.display == "none") 
-			    		login.style.display = "block";
-			    	else
-			    		login.style.display = "none";
-		    	} else{
-		    		let noLogin = document.getElementById('noLogin');
-			    	if (noLogin.style.display == "none") 
-			    		noLogin.style.display = "block";
-			    	else
-			    		noLogin.style.display = "none";
-		    	}
+		    	// let aa = 2;
+		    	// if (aa==1) {
+		    	// 	let login = document.getElementById('login');
+			    // 	if (login.style.display == "none") 
+			    // 		login.style.display = "block";
+			    // 	else
+			    // 		login.style.display = "none";
+		    	// } else{
+		    	// 	let noLogin = document.getElementById('noLogin');
+			    // 	if (noLogin.style.display == "none") 
+			    // 		noLogin.style.display = "block";
+			    // 	else
+			    // 		noLogin.style.display = "none";
+		    	// }
 		    	// if (this.getUserState('user')){
 		    		
 		    	// } else{
@@ -231,8 +244,33 @@
 	};
 </script>
 <style>
+	.mobileIcon .el-dialog__header {
+		width: 0;
+		padding: 0;
+		height: 0;
+	}
+	.mobileIcon .el-dialog__headerbtn {
+		opacity: 0;
+		font-size: 0;
+	}
+	.mobileIcon .el-button--text {
+		color: #606266;
+		font-weight: bold;
+		font-size: 14px;
+		/*padding: 20px 10px;*/
+	}
+	.mobileIcon .el-dialog__body {
+		padding: 0 0 100%;
+	}
+	.mobileIcon .el-button+.el-button {
+		margin-left: 0;
+	}
+	.mobileIcon .el-dialog {
+		margin-top: 0;
+		margin-left: 50%;
+	}
 	.logoInto .el-badge {
-		margin: 0 55px 0 35px;
+		margin: 0 33px 0 21px;
 	}
 	.el-dropdown-menu__item--divided:before, .el-menu, .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
 		background-color: #fff;
@@ -332,15 +370,15 @@
 	    color: #009FA1;
 	}
 	.firstMenu {
-		width: 356px;
+		width: 346px;
 	}
 	.logoPicture {
 		width: 166px;
 		height: auto;
 	}
 	.logoInto {
-		width: 142px;
-		margin-left: 300px;
+		width: 134px;
+		/*margin-left: 300px;*/
 		display: flex;
 		align-items:center;
 	}
@@ -351,11 +389,11 @@
 		align-items:center;
 	}
 	.head {
-		width: 1300px;
+		width: 1281px;
 		margin: 23.5px auto;
 		display: flex;
 		overflow: hidden;
-		justify-content:start;
+		justify-content:space-between;
 	}
 	/** PC **/
 	@media only screen and (min-width: 1024px) and (max-width:1300px) {
