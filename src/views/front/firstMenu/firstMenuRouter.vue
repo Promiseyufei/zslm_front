@@ -13,49 +13,34 @@
 						  @select="handleSelect"
 						  text-color="#6e6e6e"
 						  active-text-color="#009fa0">
-						  <el-menu-item index="1">选院校</el-menu-item>
-						  <el-menu-item index="2">找活动</el-menu-item>
-						  <el-menu-item index="3">看资讯</el-menu-item>
-						  <el-menu-item index="4" style="border:0;padding-right:0;">搜辅导</el-menu-item>
+						  <el-menu-item index="1" @click="selectCollege">选院校</el-menu-item>
+						  <el-menu-item index="2" @click="lookActivity">找活动</el-menu-item>
+						  <el-menu-item index="3" @click="viewInformation">看资讯</el-menu-item>
+						  <el-menu-item index="4" style="border:0;padding-right:0;" @click="searchCoach">搜辅导</el-menu-item>
 						</el-menu>
 			        </div>
 			        <div @click="isLogin" v-show="mobileIcon" class="mobileIcon">
-			        	<img src="../../../assets/img/mobileIcon.png">
-			        	<ul id="login" style="display:none;">
-			        		<li>消息通知</li>
-			        		<li>登录</li>
-			        	</ul>
-			        	<ul id="noLogin" style="display:none;">
-			        		<li>我的关注</li>
-			        		<li>我的活动</li>
-			        		<li>我的优惠券</li>
-			        		<li>我的消息</li>
-			        		<li>我的账户</li>
-			        	</ul>
-			        	<el-row class="tac">
-							<el-col :span="12">
-							    <el-menu
-							    	default-active="2"
-							    	class="el-menu-vertical-demo"
-							      	@open="handleOpen"
-							      	@close="handleClose">
-							      	<el-submenu index="1">
-								        <template slot="title">
-								        	<i class="el-icon-location"></i>
-								        </template>
-								        <el-menu-item-group>
-								        	<template slot="title">分组一</template>
-								        	<el-menu-item index="1-1">选项1</el-menu-item>
-								        	<el-menu-item index="1-2">选项2</el-menu-item>
-								        </el-menu-item-group>
-								        <el-menu-item-group title="分组2">
-								        	<el-menu-item index="1-3">选项3</el-menu-item>
-								        </el-menu-item-group>
-							      	</el-submenu>     
-							   	</el-menu>
-							</el-col>
-						</el-row>
+			        	<img @click="dialogVisible = true" src="../../../assets/img/mobileIcon.png">
+			        	<el-dialog
+						  :visible.sync="dialogVisible"
+						  width="50%">
+						  <div class="dialog">
+						  	<div class="dialogPicture">
+						  		<div class="userPicture"><img :src="loginOr"></div>
+						  		<div class="userName">{{userName}}</div>
+						  	</div>
+						  </div>
+						  <div style="padding:10px 25px;width:60px;">
+						  	  <el-button type="text" @click="">我的关注</el-button>
+							  <el-button type="text" @click="">我的活动</el-button>
+							  <el-button type="text" @click="">我的优惠券</el-button>
+							  <el-button type="text" @click="">我的消息</el-button>
+							  <el-button type="text" @click="">我的账户</el-button>
+						  </div>
+						  <!-- <span slot="footer" class="dialog-footer"></span> -->
+						</el-dialog>
 			        </div>
+
 	    		</div>
 		        <div class="logoInto" v-show="logoInto">
 		        		<div><i class="el-icon-search"></i></div>
@@ -102,16 +87,15 @@
         <!-- 页脚 -->
     </div>
 </template>
-
-
-
-
 <script>
 	export default {
 	    components: {
 	    },
 	    data() {
 	        return {
+	        	loginOr:require("../../../assets/img/noLogin.png"),
+	        	userName:'未登录',
+	        	dialogVisible: false,
 	        	activeIndex: '1',
 	        	firstMenu:true,
 	        	logoInto:true,
@@ -120,79 +104,112 @@
 	        }
 	    },
 	    methods: {
+	    	selectCollege:function(){
+	    		this.$router.push('/front/firstMenuRouter/selectCollege');
+	    	},
+	    	lookActivity:function(){
+	    		this.$router.push('/front/firstMenuRouter/lookActivity');
+	    	},
+	    	viewInformation:function(){
+	    		this.$router.push('/front/firstMenuRouter/viewInformation');
+	    	},
+	    	searchCoach:function(){
+	    		this.$router.push('/front/firstMenuRouter/searchCoach');
+	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
-	    		this.activeIndex = key;
-	    		this.activeIndex == '1' ? this.$router.push('/front/firstMenuRouter/selectCollege') : this.$router.push('/front/firstMenuRouter/lookActivity');
-	    		sessionStorage.setItem("active",key);
-	    		// this.activeIndex = sessionStorage.getItem("active");
-	    		// console.log(key)
-	    		// console.log(23)
-		    	
+	    		// this.activeIndex = key;
+	    		// if (this.activeIndex==1) {
+	    		// 	this.$router.push('/front/firstMenuRouter/selectCollege');
+	    		// } else if(this.activeIndex==2) {
+	    		// 	this.$router.push('/front/firstMenuRouter/lookActivity');
+	    		// } else if(this.activeIndex==3) {
+	    		// 	this.$router.push('/front/firstMenuRouter/viewInformation');
+	    		// } else if(this.activeIndex==4) {
+	    		// 	this.$router.push('/front/firstMenuRouter/searchCoach');
+	    		// }
+	    		// sessionStorage.setItem("active",key);
 		    },
 		    //刷新菜单高亮不变
-		    rushPage:function(){
-		    	if (sessionStorage.getItem("active")){
-		    		this.activeIndex=sessionStorage.getItem("active")
-		    		if (this.activeIndex==1) {
-		        		this.$router.push({
-				    		path:'/front/firstMenuRouter/selectCollege',
-				    	});
-		        	} else if (this.activeIndex==2) {
-		        		this.$router.push({
-				    		path:'/front/firstMenuRouter/lookActivity',
-				    	});
-		        	} else if(this.activeIndex==3) {
-		        		this.$router.push({
-				    		path:'/front/firstMenuRouter/viewInformation',
-				    	});
-		        	} else if(this.activeIndex==4) {
-		        		this.$router.push({
-				    		path:'/front/firstMenuRouter/searchCoach',
-				    	});
-		        	}
-		    	} else{
-		    		if (this.activeIndex==1) {
-		        		this.$router.push({
-				    		path:'/front/firstMenuRouter/selectCollege',
-				    	});
-		        	} else if (this.activeIndex==2) {
-		        		this.$router.push({
-				    		path:'/front/firstMenuRouter/lookActivity',
-				    	});
-		        	} else if(this.activeIndex==3) {
-		        		this.$router.push({
-				    		path:'/front/firstMenuRouter/viewInformation',
-				    	});
-		        	} else if(this.activeIndex==4) {
-		        		this.$router.push({
-				    		path:'/front/firstMenuRouter/searchCoach',
-				    	});
-		        	}
+		    rushRouter:function(){
+	    		let path = this.$route.matched[2].path;
+	    		if (path.indexOf('/front/firstMenuRouter/selectCollege') != -1) {
+	    			this.activeIndex = '1';
+	    		} else if(path.indexOf('/front/firstMenuRouter/lookActivity') != -1) {
+		    		this.activeIndex = '2';
+	    		} else if(path.indexOf('/front/firstMenuRouter/viewInformation') != -1) {
+		    		this.activeIndex = '3';
+		    	} else if(path.indexOf('/front/firstMenuRouter/searchCoach') != -1) {
+		    		this.activeIndex = '4';
 		    	}
 		    },
 		    //判断是否登录
 		    isLogin:function(){
 		    	this.getUserState('user');
-		    	let aa = 2;
-		    	if (aa==1) {
-		    		let login = document.getElementById('login');
-			    	if (login.style.display == "none") 
-			    		login.style.display = "block";
-			    	else
-			    		login.style.display = "none";
-		    	} else{
-		    		let noLogin = document.getElementById('noLogin');
-			    	if (noLogin.style.display == "none") 
-			    		noLogin.style.display = "block";
-			    	else
-			    		noLogin.style.display = "none";
-		    	}
+		    	// let aa = 2;
+		    	// if (aa==1) {
+		    	// 	let login = document.getElementById('login');
+			    // 	if (login.style.display == "none") 
+			    // 		login.style.display = "block";
+			    // 	else
+			    // 		login.style.display = "none";
+		    	// } else{
+		    	// 	let noLogin = document.getElementById('noLogin');
+			    // 	if (noLogin.style.display == "none") 
+			    // 		noLogin.style.display = "block";
+			    // 	else
+			    // 		noLogin.style.display = "none";
+		    	// }
 		    	// if (this.getUserState('user')){
 		    		
 		    	// } else{
 
 		    	// }
+		    },
+		    //跳到我的关注or登录
+		    myCare:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState) {
+		    		this.$router.push('/front/Login/loginRoute');
+		    	} else{
+		    		this.$router.push('/front/usercore/myFollow');
+		    	}
+		    },
+		    //跳到我的活动or登录
+		    myActivity:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState) {
+		    		this.$router.push('/front/Login/loginRoute');
+		    	} else{
+		    		this.$router.push('/front/usercore/myFollow');
+		    	}
+		    },
+		    //跳到我的优惠券or登录
+		    myCoupon:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState) {
+		    		this.$router.push('/front/Login/loginRoute');
+		    	} else{
+		    		this.$router.push('/front/usercore/myFollow');
+		    	}
+		    },
+		    //跳到我的消息or登录
+		    myMessage:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState) {
+		    		this.$router.push('/front/Login/loginRoute');
+		    	} else{
+		    		this.$router.push('/front/usercore/myNews');
+		    	}
+		    },
+		    //跳到我的账户or登录
+		    myAccount:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState) {
+		    		this.$router.push('/front/Login/loginRoute');
+		    	} else{
+		    		this.$router.push('/front/usercore/myAccount');
+		    	}
 		    },
 		    //footer——跳到关于我们
 		    aboutUs:function() {
@@ -216,10 +233,15 @@
 		    },
 
 	    },
+	    watch:{
+	    	$router() {
+	    		this.rushRouter();
+	    	}
+	    },
 	    mounted(){
-	    	this.rushPage();
+	    	this.rushRouter();
 	    	//手机端改变样式
-	     	let w = document.documentElement.offsetWidth || document.body.offsetWidth;
+	     	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
 			if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
 				this.firstMenu = false;
 				this.logoInto = false;
@@ -231,8 +253,36 @@
 	};
 </script>
 <style>
+	.mobileIcon .el-dialog__wrapper {
+		overflow:hidden; 
+	}
+	.mobileIcon .el-dialog__header {
+		width: 0;
+		padding: 0;
+		height: 0;
+	}
+	.mobileIcon .el-dialog__headerbtn {
+		opacity: 0;
+		font-size: 0;
+	}
+	.mobileIcon .el-button--text {
+		color: #606266;
+		font-weight: bold;
+		font-size: 14px;
+	}
+	.mobileIcon .el-dialog__body {
+		padding: 0 0 100%;
+	}
+	.mobileIcon .el-button+.el-button {
+		margin-left: 0;
+	}
+	.mobileIcon .el-dialog {
+		margin-top: 0 !important;
+		height: 100%;
+		margin-left: 50%;
+	}
 	.logoInto .el-badge {
-		margin: 0 55px 0 35px;
+		margin: 0 33px 0 21px;
 	}
 	.el-dropdown-menu__item--divided:before, .el-menu, .el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
 		background-color: #fff;
@@ -261,6 +311,7 @@
 </style>
 
 <style scoped>
+
 	.footerBott p {
 		opacity: 0.65;
 		color: rgb(255, 255, 255);
@@ -332,15 +383,15 @@
 	    color: #009FA1;
 	}
 	.firstMenu {
-		width: 356px;
+		width: 346px;
 	}
 	.logoPicture {
 		width: 166px;
 		height: auto;
 	}
 	.logoInto {
-		width: 142px;
-		margin-left: 300px;
+		width: 134px;
+		/*margin-left: 300px;*/
 		display: flex;
 		align-items:center;
 	}
@@ -351,11 +402,11 @@
 		align-items:center;
 	}
 	.head {
-		width: 1300px;
+		width: 1281px;
 		margin: 23.5px auto;
 		display: flex;
 		overflow: hidden;
-		justify-content:start;
+		justify-content:space-between;
 	}
 	/** PC **/
 	@media only screen and (min-width: 1024px) and (max-width:1300px) {
@@ -414,7 +465,7 @@
 	}
 	/** iPhone **/
 	@media only screen and (min-width: 320px) and (max-width: 767px) {
-		 
+		
 		#login,#noLogin {
 			background-color: #009fa0;
 			width: 120px;
@@ -441,6 +492,38 @@
 		}
 		.mobileIcon img {
 			width: 37px;
+		}
+		.dialogPicture img{
+			width: 100%;
+		}
+		.userPicture img {
+			width: 100%;
+		}
+		.userPicture {
+			width: 44px;
+			height: 44px;
+			background-size: cover; 
+			border-radius: 50px;
+		}
+		.userName {
+			margin-top: 10px;
+			color: #fff;
+		}
+		.dialogPicture {
+			display: flex;
+			flex-direction: column;
+			align-items:center;
+			justify-content:center;
+			width: 100%;
+			height: 120px;
+			background-color: rgba(56, 59, 61, 0.85);
+		}
+		.dialog {
+			background: url(../../../assets/img/dialog.jpg) no-repeat;
+			background-position: 50% 50%;
+            background-size: cover; 
+			width: 100%;
+			height: 120px;
 		}
 		.headLeft {
 			width: 100%;

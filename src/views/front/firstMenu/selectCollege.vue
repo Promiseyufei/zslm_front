@@ -43,13 +43,13 @@
                     </el-card>
                 </el-col>
             </div>
-
             
-        </div>  
+        </div> 
         <!-- 分页 -->
+        <div class="page">
             <activityPage :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum"></activityPage>
-            <!-- 分页 -->
-
+        </div>
+        <!-- 分页 -->
     </div>
 </template>
 
@@ -368,6 +368,7 @@ export default {
                             });
                             that.major_confirm_id = res[0].major_confirm_id;
                             that.major_follow_id = res[0].major_follow_id;
+                            console.log(res[2].id)
                         }
 
             }).catch(function (error) {
@@ -433,6 +434,11 @@ export default {
 </script>
 <style>
     /*不同院校*/
+    .selectCollegeSearch .el-input__icon {
+        font-size: 16px;
+        line-height: 30px;
+        /*padding-bottom: 5px;*/
+    }
     .moreInform:hover {
         color: #009fa0;
         cursor: pointer;
@@ -462,6 +468,15 @@ export default {
     }
 </style>
 <style scoped>
+    /*分页*/
+    .page {
+        padding: 0 0 56px;
+        width: 100%;
+        background-color: #f5f5f5;
+    }
+    .page>>>.apartPage{
+        margin: 0;
+    }
     /*排序 */
         .topBott .el-icon-caret-top {
             /*color: #bfbfbf;*/

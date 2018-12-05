@@ -57,7 +57,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/selectCollege'], resolve))
                         },
                         {
-                            path: 'singleCollage/:id?',
+                            path: 'selectCollege/singleCollage/:id?',
                             name: '选院校——单个院校，招生项目',
                             component: resolve => void(require(['@/views/front/detailPage/singleCollage'], resolve))
                         },
@@ -67,7 +67,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/lookActivity'], resolve))
                         },
                         {
-                            path: 'singleActivity/:id?',
+                            path: 'lookActivity/singleActivity/:id?',
                             name: '找活动-单个活动详情页',
                             component: resolve => void(require(['@/views/front/detailPage/singleActivity'], resolve))
                         },
@@ -77,7 +77,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/viewInformation'], resolve))
                         },
                         {
-                            path: 'singleInformation/:id?',
+                            path: 'viewInformation/singleInformation/:id?',
                             name: '找资讯详情页',
                             component: resolve => void(require(['@/views/front/detailPage/singleInformation'], resolve))
                         },
@@ -102,7 +102,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
                         },
                         {
-                            path: 'singleCoachs/:id?',
+                            path: 'searchCoach/singleCoachs/:id?',
                             name: '单个辅导机构',
                             component: resolve => void(require(['@/views/front/detailPage/singleCoachs'], resolve))
                         },
