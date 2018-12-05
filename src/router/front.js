@@ -68,7 +68,7 @@ let front_router = {
                         },
                         {
                             path: 'singleActivity/:id?',
-                            name: '一级导航-单个活动',
+                            name: '找活动-单个活动详情页',
                             component: resolve => void(require(['@/views/front/detailPage/singleActivity'], resolve))
                         },
                         {
@@ -97,14 +97,24 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/detailPage/singleOpinion'], resolve))
                         },
                         {
+                            path: 'returnmoney',
+                            name: '退款保障页',
+                            component: resolve => void(require(['@/views/front/detailPage/returnmoney'], resolve))
+                        },
+                        {
+                            path: 'returnform',
+                            name: '退款申请页',
+                            component: resolve => void(require(['@/views/front/detailPage/returnform'], resolve))
+                        },
+                        {
                             path: 'searchCoach',
                             name: '搜辅导',
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
                         },
                         {
-                            path: 'singleCoach/:id?',
+                            path: 'singleCoachs/:id?',
                             name: '单个辅导机构',
-                            component: resolve => void(require(['@/views/front/detailPage/singleCoach'], resolve))
+                            component: resolve => void(require(['@/views/front/detailPage/singleCoachs'], resolve))
                         },
                         {
                             path: 'usercore',
@@ -144,6 +154,16 @@ let front_router = {
                                     component: resolve =>void(require(['@/views/front/usercore/myAccount'], resolve)),
                                 }
                             ]
+                        },
+                        {
+                            path: '404NotFound',
+                            name: '404页面',
+                            component: resolve => void(require(['@/views/front/staticPage/404Page'], resolve))
+                        },
+                        {
+                            path: 'aboutUs',
+                            name: '关于我们',
+                            component: resolve => void(require(['@/views/front/staticPage/aboutUs'], resolve))
                         },
                     ]
                 },

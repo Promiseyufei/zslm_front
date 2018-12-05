@@ -418,7 +418,7 @@ export default {
         },
         //跳到相应的单个辅导机构
         toJumpCoach:function(id) {
-            this.$router.push('/front/firstMenuRouter/singleCoach/'+id);
+            this.$router.push('/front/firstMenuRouter/singleCoachs/'+id);
         },
         //跳转到单个资讯页面
         toJumpInfor:function(id) {

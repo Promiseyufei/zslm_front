@@ -138,7 +138,7 @@
             // console.log(this.missPorduct);
             //是否显示查看更多
             if (this.collegeInfo.missPorduct.length==0) {
-                console.log(this.missPorduct)
+                // console.log(this.missPorduct)
                 this.viewMoreIcon = false;
             };
             //向父组件传参数

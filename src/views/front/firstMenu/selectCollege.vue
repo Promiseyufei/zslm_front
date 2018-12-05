@@ -261,7 +261,6 @@ export default {
                     cities:[],//所有专业类型的id数组
                     "fif":"查看更多"
                 },
-
             ],
             checkboxGroup:[[],[],[],[],[],[]],
             major_follow_id:'',
@@ -306,64 +305,22 @@ export default {
     },
     methods: {
         //获取按钮内容
-            //专业类型
-            getmajorType:function(){
-                let that = this;
-                this.fetch('/front/colleges/getmajordetails',{
-                    u_id:that.u_id,
-                    id:that.id
-                      
-                }).then(function (response) {
-                    let res = response[0].project[0].recruitment_pattern;
-                    that.collegeInform.cities[0].name = res;
-                    // console.log(that.collegeInform.cities[0].name)
-                    // console.log(456)      
-                }).catch(function (error) {
-                });
-            },
-            //专业方向
-            getmajorDirection:function(){
-                let that = this;
-                this.fetch('/front/colleges/collegesDirection',{
-                    //搜索内容fetc
-                      
-                }).then(function (response){
-                    let res = response;
-                    // console.log(res)      
-
-                }).catch(function (error){
-                    // console.log(132)
-                });
-            },
-            //统招模式
-            getRecruit:function(){
-                let that = this;
-                this.fetch('/front/colleges/collegesRecruit',{
-                    //搜索内容fetc
-                      
-                }).then(function (response){
-                    let res = response;
-                    // console.log(res)      
-
-                }).catch(function (error){
-                    // console.log(132)
-                });
-            },
-            //分数线类型
-            getLine:function(){
-                let that = this;
-                this.fetch('/front/colleges/collegesLine',{
-                    //搜索内容fetc
-                      
-                }).then(function (response) {
-                    let res = response;
-                    // console.log(res)      
-
-                }).catch(function (error) {
-                    // console.log(132)
-                });
-            },
-        //获取按钮内容
+        getmajorType:function(){
+            let that = this;
+            this.fetch('/front/colleges/info',{
+            }).then(function (response) {
+                if (response.code==0) {
+                    let res = response.result;
+                    that.collegeInform[0].cities = res.type;
+                    that.collegeInform[1].cities = res.direction;
+                    that.collegeInform[3].cities = res.pattern;
+                    that.collegeInform[5].cities = res.socre;
+                }
+                // console.log(res)
+            }).catch(function (error) {
+            });
+        },
+        //查看更多是否显示
         getView:function(iconView){
             // console.log(iconView)
             this.viewMoreIcon = iconView;
@@ -405,24 +362,10 @@ export default {
                             that.majorInform.forEach((item,index) => {
                                 that.majorInform[index].showProduct = item.product.slice(0,3);
                                 that.majorInform[index].missPorduct = item.product.slice(3);
-                                if (that.majorInform[index].missPorduct==0) {
-                                    // that.viewMoreIcon = false;
-                                    console.log(that.majorInform[index].missPorduct);
-                                }
+                                // if (that.majorInform[index].missPorduct==0) {
+                                // }
                                 that.missPorduct = that.majorInform[index].missPorduct;
                             });
-                            
-                            // if(res[0].major_follow_id == '原985')
-                            //     that.nine= true;
-                            // else if(res[0].major_follow_id=='原211')
-                            //     that.two = true;
-                            // else
-                            //     that.both29 = true;
-                            // if (res[0].major_confirm_id=='AASCB') {
-                            //     that.aascb = true;
-                            // } else {
-                            //     that.equis = true;
-                            // }
                             that.major_confirm_id = res[0].major_confirm_id;
                             that.major_follow_id = res[0].major_follow_id;
                         }
@@ -484,10 +427,6 @@ export default {
     mounted(){
         this.getmajorInform();
         this.getmajorType();
-        this.getmajorDirection();
-        this.getRecruit();
-        this.getLine();
-        // console.log(123)
 
     },
 };
@@ -1376,7 +1315,7 @@ export default {
         margin: 49px 0 44px;
     }
     .selectCollege {
-        width: 1260px;
+        width: 1300px;
         margin: 0 auto;
     }
 
@@ -1516,8 +1455,8 @@ export default {
             width: 100%;
         }
         .selectCollegeSearch {
-            width: 90%;
-            margin-left: 20px;
+            width: 94%;
+            margin-left: 3%;
         }
         .selectCollege {
             width: 100%;

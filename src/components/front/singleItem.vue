@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="padding:0 20px;">
         <div class="singleItemName" @click="showInform" id="back">
             <div>
                 <h1 id="h1" style="color: rgb(111, 111, 111);">{{deta.project_name}}</h1>

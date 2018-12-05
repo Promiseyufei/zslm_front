@@ -1,7 +1,7 @@
 <!-- 登录总部 -->
 <template>
     	<div>
-    		<div class="loginRouterCenter">
+    		<!-- <div class="loginRouterCenter">
     			<div class="loginPicture"><img src="../../../assets/img/login.png"></div>
 				<el-card class="boxCard">
     				<el-menu :default-active="active" class="el-menu-demo" 
@@ -31,7 +31,8 @@
     					</div>
     				</div>
     			</el-card>
-    		</div>
+    		</div> -->
+    		<div class="phoneLogin"></div>
     	</div>
 </template>
 
@@ -60,7 +61,7 @@
 		    },
 		    //刷新登录不变
 		    accountNumber:function() {
-		    	// console.log(sessionStorage.getItem("active"));
+		    	// console.log(666);
 		    	if (sessionStorage.getItem("active")) {
 		    		//取变量
 		    		this.active=sessionStorage.getItem("active")
@@ -204,13 +205,15 @@
 
 <!-- 局部样式 -->
 <style scoped>
+	.phoneLogin {
+		width: 100%;
+		
+	}
 	.login {
 		width: 345px;
-		/*margin: 0 auto;*/
 	}
 	.phoneInput {
 		width: 340px;
-		/*margin: 0 auto;*/
 	}
 	.weixin {
 		width: 21px;
