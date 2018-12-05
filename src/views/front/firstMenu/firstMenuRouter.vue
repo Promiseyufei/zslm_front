@@ -118,7 +118,7 @@
 	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
-	    		this.activeIndex = key;
+	    		// this.activeIndex = key;
 	    		// if (this.activeIndex==1) {
 	    		// 	this.$router.push('/front/firstMenuRouter/selectCollege');
 	    		// } else if(this.activeIndex==2) {
@@ -128,19 +128,19 @@
 	    		// } else if(this.activeIndex==4) {
 	    		// 	this.$router.push('/front/firstMenuRouter/searchCoach');
 	    		// }
-	    		sessionStorage.setItem("active",key);
+	    		// sessionStorage.setItem("active",key);
 		    },
 		    //刷新菜单高亮不变
 		    rushRouter:function(){
 	    		let path = this.$route.matched[2].path;
 	    		if (path.indexOf('/front/firstMenuRouter/selectCollege') != -1) {
-	    			this.activeIndex = 1;
+	    			this.activeIndex = '1';
 	    		} else if(path.indexOf('/front/firstMenuRouter/lookActivity') != -1) {
-		    		this.activeIndex = 2;
+		    		this.activeIndex = '2';
 	    		} else if(path.indexOf('/front/firstMenuRouter/viewInformation') != -1) {
-		    		this.activeIndex = 3;
+		    		this.activeIndex = '3';
 		    	} else if(path.indexOf('/front/firstMenuRouter/searchCoach') != -1) {
-		    		this.activeIndex = 4;
+		    		this.activeIndex = '4';
 		    	}
 		    },
 		    //判断是否登录
@@ -239,11 +239,9 @@
 	    	}
 	    },
 	    mounted(){
-	    	// console.log(path)
 	    	this.rushRouter();
 	    	//手机端改变样式
 	     	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
-	     	console.log(w)
 			if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
 				this.firstMenu = false;
 				this.logoInto = false;
