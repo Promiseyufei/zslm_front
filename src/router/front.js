@@ -82,6 +82,16 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/detailPage/singleInformation'], resolve))
                         },
                         {
+                            path: 'recruitStudents',
+                            name: '招生简章',
+                            component: resolve => void(require(['@/views/front/detailPage/recruitStudents'], resolve))
+                        },
+                        {
+                            path: 'collageCompare',
+                            name: '专业对比',
+                            component: resolve => void(require(['@/views/front/detailPage/collageCompare'], resolve))
+                        },
+                        {
                             path: 'singleOpinion/:id?/:name?',
                             name: '意见反馈页',
                             component: resolve => void(require(['@/views/front/detailPage/singleOpinion'], resolve))
