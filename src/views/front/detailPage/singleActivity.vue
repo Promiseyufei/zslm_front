@@ -157,7 +157,7 @@ export default {
         // 获取活动主办院校信息
         getAcHostMajor:function(){
             let self = this;
-            this.fetch('/front/colleges/getactivemajor',{
+            this.fetch('http://www.lishanlei.cn/front/colleges/getactivemajor',{
                 // acId:this.id,
                 a_id:this.id,
                 u_id:this.userId,
@@ -177,7 +177,7 @@ export default {
         // 热门活动推荐列表
         getPopularAcInfo:function(){
             let self = this;
-            this.fetch('/front/activity/getPopularAcInfo',{
+            this.fetch('http://www.lishanlei.cn/front/activity/getPopularAcInfo',{
                 acId:this.id,
                 pageNumber:this.hotInfopage,
             }).then(function (res) {
@@ -208,7 +208,7 @@ export default {
         // 获取活动内容详情
         getAppointAcInfo:function(){
             let self = this;
-            this.fetch('/front/activity/getAppointAcInfo',{
+            this.fetch('http://www.lishanlei.cn/front/activity/getAppointAcInfo',{
                 acId:this.id,
             }).then(function (res) {
                 // let res = result.data;
@@ -234,7 +234,7 @@ export default {
             // 需不需要前台判断多次点击时的情况
             let self = this;
             if(self.acSignClick == 0){
-                this.fetch('/front/activity/activitySign',{
+                this.fetch('http://www.lishanlei.cn/front/activity/activitySign',{
                     userId:this.userId,
                     acId:this.id,
                 }).then(function (res) {

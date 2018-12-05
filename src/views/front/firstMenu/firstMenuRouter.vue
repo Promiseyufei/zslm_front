@@ -32,7 +32,7 @@
 			        		<li>我的消息</li>
 			        		<li>我的账户</li>
 			        	</ul>
-			        	<!-- <el-row class="tac">
+			        	<el-row class="tac">
 							<el-col :span="12">
 							    <el-menu
 							    	default-active="2"
@@ -54,7 +54,7 @@
 							      	</el-submenu>     
 							   	</el-menu>
 							</el-col>
-						</el-row> -->
+						</el-row>
 			        </div>
 	    		</div>
 		        <div class="logoInto" v-show="logoInto">
