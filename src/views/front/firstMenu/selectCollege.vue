@@ -433,6 +433,9 @@ export default {
 };
 </script>
 <style>
+    .moreInform i {
+        font-size: 13px !important;
+    }
     /*不同院校*/
     .selectCollegeSearch .el-input__icon {
         font-size: 16px;
@@ -478,8 +481,9 @@ export default {
         margin: 0;
     }
     /*排序 */
-        .topBott .el-icon-caret-top {
+        .topBott .el-icon-caret-top,.topBott .el-icon-caret-bottom {
             /*color: #bfbfbf;*/
+            font-size: 16px;
         }
         .topBott .el-icon-caret-bottom {
             /*color: #bfbfbf;*/
@@ -522,8 +526,12 @@ export default {
             margin: 0 0 6px 5px;
             display: flex;
             flex-direction:column;
-            justify-content:center;
+            /*justify-content:center;*/
         }
+        .hot,.publicMoney,.paixu{
+            cursor: pointer;
+        }
+
         .sort {
             display: flex;
             width: 400px;

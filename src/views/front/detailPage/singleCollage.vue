@@ -33,7 +33,7 @@
                                     </div>
                                     <div><el-button size="mini">+ 对比</el-button></div>
                                 </div>
-                                <singleItem :detail="t" v-for="(t,index) in singleItem" :key="index"></singleItem>
+                                <singleItem :detail="t" :i="index" v-for="(t,index) in singleItem" :key="index"></singleItem>
                             </el-card>
                         </el-col>
                     <!-- </div> -->

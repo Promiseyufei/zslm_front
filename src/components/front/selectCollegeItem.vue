@@ -178,7 +178,7 @@
         }
         .viewMore {
             width: 1220px;
-            padding: 0 5px;
+            padding: 0 5px 0 10px;
             display: flex;
             justify-content:space-between;
             font-size: 12px;
