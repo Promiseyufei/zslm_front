@@ -181,7 +181,7 @@ export default {
             province:'',
             address:'',
             phonNumber:0,
-            id:1,
+            id:this.$route.params.id,
             u_id:1,
             page:1,
             page_size:3,
