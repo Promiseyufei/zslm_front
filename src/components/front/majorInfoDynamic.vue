@@ -3,38 +3,38 @@
     <div class="c-div div_v60iAm guanzhu huodong">
         <div class="row c-row row_E5qvBw">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_KR9WLK">
-                <img class="c-image image_NXxCPj" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png">
+                <img class="c-image image_NXxCPj" :src="dynamic.magor_logo_name">
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_S6tf0c">
-                <h1 class="c-heading textlink_e6pE3X daliebiao xiaoxi">北京大学光华管理学院MBA</h1>
+                <h1 class="c-heading textlink_e6pE3X daliebiao xiaoxi">{{ dynamic.z_name }}</h1>
                 <div class="c-div div_VSj9pT">
-                    <h1 class="c-heading heading_uRIjB0 xiaoxi">发布了一个新的活动</h1>
-                    <h1 class="c-heading heading_uRIjB0 xiaoxi">昨天  12:00</h1>
+                    <h1 class="c-heading heading_uRIjB0 xiaoxi">有一条新的相关资讯</h1>
+                    <h1 class="c-heading heading_uRIjB0 xiaoxi">{{ newsTime }}</h1>
                 </div>
             </div>
         </div>
         <div class="row c-row row_F2BBBz">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 c-column column_QvALNG">
-                <div class="c-div div_39Oixh wode xiaoxi"></div>
+                <div :style="'background-image: url('+ dynamic.z_image +')'" class="c-div div_39Oixh wode xiaoxi"></div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 c-column column_AfewZV">
-                <a class="c-ellipse c-textlink textlink_e6pE3X daliebiao xiaoxi111" href="#">2018年度北京地区MBA招生项目分析报告</a>
+                <a class="c-ellipse c-textlink textlink_e6pE3X daliebiao xiaoxi111" href="#">{{ dynamic.zx_name }}</a>
                 <p class="c-ellipse c-paragraph paragraph_XjkcYS">
-                    当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基因。2017年浙江GDP为51768亿元，全国第四，人均GDP全国第三；而离开浙江本土，在海外发展的浙商有800万。
+                    {{ dynamic.brief_introduction }}
                 </p>
                 <div class="c-div div_QcKVUN kanzixun">
                     <div class="c-div div_IIlwIU kanzixun">
                         <img class="c-image image_tCkiDX" src="http://qty83k.creatby.com/materials/2771/origin/9db5aa337c69de693b44eec51ca7f1e8_origin.png">
-                        <h1 class="c-heading heading_3hU4sb grey">2018.8.31</h1>
+                        <h1 class="c-heading heading_3hU4sb grey">{{ dynamic.create_time }}</h1>
                     </div>
                     <div class="c-div div_IIlwIU">
                         <img class="c-image image_tCkiDX" src="http://qty83k.creatby.com/materials/2771/origin/ff1ad5a743abe73d8316a6bc2d680168_origin.png">
-                        <h1 class="c-heading heading_3hU4sb grey">专硕联盟</h1>
+                        <h1 class="c-heading heading_3hU4sb grey">{{ dynamic.publisher }}</h1>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 c-column column_MgrNOl">
-                <a class="btn c-button button_LsM2yn123 quguan" type="button">查看详情</a>
+                <a class="btn c-button button_LsM2yn123 quguan" type="button" @click="viewDetails">查看详情</a>
             </div>
         </div>
     </div>
@@ -42,13 +42,16 @@
 
 <script>
 export default {
+    props:["newsTime", "dynamic"],
     data() {
         return {
 
         }
     },
     methods: {
-
+        viewDetails() {
+            this.$router.push('/front/firstMenuRouter/singleInformation/' + this.dynamic.id);
+        }
     },
     mounted() {
 
