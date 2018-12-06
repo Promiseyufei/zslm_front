@@ -114,7 +114,9 @@
 				this.post('/login/front/login', params).then((response) => {
 					if(response.code == 0) {
 						this.saveUserState('user', this.phoneNumber);
-						this.saveUserState('userId', response.result);
+						this.saveUserState('userId', response.result.user_account_id);
+						this.saveUserState('userName', response.result.user_name);
+						this.saveUserState('userHead', response.result.head_portrait);
 						this.message(true, response.msg, 'success');
 					}
 					else if(response.code == 1) this.message(true, response.msg, 'info');

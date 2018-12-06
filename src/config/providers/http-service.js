@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 axios.defaults.timeout = 5000;
 
 axios.defaults.baseURL = 'http://localhost:81/html/zslm_back/public/';
