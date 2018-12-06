@@ -1,25 +1,85 @@
 <template>
-    <div>
-        <div class="singleItemName" @click="showInform" id="back">
+    <div style="padding:0 20px;">
+        <div :id="back(this.backData)" class="singleItemName" @click="showInform" >
             <div>
-                <h1 id="h1" style="color: rgb(111, 111, 111);">非全日制FMBA项目</h1>
-                <p id="p">非全日制</p>
+                <h1 style="color:rgb(111, 111, 111);" :id="title(this.titleData)">{{deta.project_name}}</h1>
+                <p :id="p(this.pData)">非全日制</p>
             </div>
-            <div><i class="el-icon-arrow-down" id="up" style="color: #a2a2a2;"></i></div>
+            <div><i class="el-icon-arrow-down" :id="icon(this.upData)" style="color: #a2a2a2;"></i></div>
         </div>
         <div class="singleItemDetail" v-show="singleItemDetail">
             <div class="left">
-                <div class="informationLeft" v-for="(l,index) in itemInformLeft" :key="index">
+                <!-- <div class="informationLeft" v-for="(l,index) in itemInformLeft" :key="index">
                     <div class="informationOne"><img :src="l.src"></div>
                     <div class="informationTwo">{{l.itemName}}</div>
-                    <p class="informationThree">29.8万29.8万29.829.8万29.8万29.829.8万29.8万29.8万29.8万29.8万29.8万29.8万29.8万29.8万</p>
+                    <p class="informationThree">{{deta.cost}}</p>
+                </div> -->
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/smoney.png"></div>
+                    <div class="informationTwo">项目费用</div>
+                    <p class="informationThree">{{deta.cost}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/friends.png"></div>
+                    <div class="informationTwo">招生名额</div>
+                    <p class="informationThree">{{deta.student_count}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/class.png"></div>
+                    <div class="informationTwo">授课语言</div>
+                    <p class="informationThree">{{deta.language}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/class2.png"></div>
+                    <div class="informationTwo">班级情况</div>
+                    <p class="informationThree">{{deta.class_situation}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/system.png"></div>
+                    <div class="informationTwo">学制</div>
+                    <p class="informationThree">{{deta.eductional_systme}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/exam.png"></div>
+                    <div class="informationTwo">报考条件</div>
+                    <p class="informationThree">{{deta.can_conditions}}</p>
                 </div>
             </div>
             <div class="right">
-                <div class="informationRight"  v-for="(r,index) in itemInformRight" :key="index">
+                <!-- <div class="informationRight"  v-for="(r,index) in itemInformRight" :key="index">
                     <div class="informationOne"><img :src="r.src"></div>
                     <div class="informationTwo">{{r.itemName}}</div>
                     <p class="informationThree">29.8万</p>
+                </div> -->
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/smoney.png"></div>
+                    <div class="informationTwo">分数线描述</div>
+                    <p class="informationThree">{{deta.score_describe}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/friends.png"></div>
+                    <div class="informationTwo">分数线类型</div>
+                    <p class="informationThree">{{deta.score_type}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/class.png"></div>
+                    <div class="informationTwo">统招模式</div>
+                    <p class="informationThree">{{deta.recruitment_pattern}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/class2.png"></div>
+                    <div class="informationTwo">招生模式</div>
+                    <p class="informationThree">{{deta.enrollment_mode}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/system.png"></div>
+                    <div class="informationTwo">毕业证书</div>
+                    <p class="informationThree">{{deta.graduation_certificate}}</p>
+                </div>
+                <div class="informationLeft">
+                    <div class="informationOne"><img src="../../assets/img/exam.png"></div>
+                    <div class="informationTwo">其他说明</div>
+                    <p class="informationThree">{{deta.other_explain}}</p>
                 </div>
             </div>
         </div>
@@ -30,53 +90,76 @@
 export default {
     data(){
     	return{
+            upData:this.i,
+            backData:this.i,
+            pData:this.i,
+            titleData:this.i,
+            deta:this.detail,
             singleItemDetail:false,
-            itemInformLeft:[
-                {itemName:'项目费用',src:require("../../assets/img/smoney.png")},
-                {itemName:'招生名额',src:require("../../assets/img/friends.png")},
-                {itemName:'授课语言',src:require("../../assets/img/class.png")},
-                {itemName:'班级情况',src:require("../../assets/img/class2.png")},
-                {itemName:'学制',src:require("../../assets/img/system.png")},
-                {itemName:'报考条件',src:require("../../assets/img/exam.png")},
-            ],
-            itemInformRight:[
-                {itemName:'项目费用',src:require("../../assets/img/describe.png")},
-                {itemName:'招生名额',src:require("../../assets/img/type.png")},
-                {itemName:'授课语言',src:require("../../assets/img/model.png")},
-                {itemName:'班级情况',src:require("../../assets/img/model2.png")},
-                {itemName:'学制',src:require("../../assets/img/biye.png")},
-                {itemName:'报考条件',src:require("../../assets/img/other.png")},
-            ],
+            // itemInformLeft:[
+            //     {itemName:'项目费用',src:require("../../assets/img/smoney.png")},
+            //     {itemName:'招生名额',src:require("../../assets/img/friends.png")},
+            //     {itemName:'授课语言',src:require("../../assets/img/class.png")},
+            //     {itemName:'班级情况',src:require("../../assets/img/class2.png")},
+            //     {itemName:'学制',src:require("../../assets/img/system.png")},
+            //     {itemName:'报考条件',src:require("../../assets/img/exam.png")},
+            // ],
+            // itemInformRight:[
+            //     {itemName:'项目费用',src:require("../../assets/img/describe.png")},
+            //     {itemName:'招生名额',src:require("../../assets/img/type.png")},
+            //     {itemName:'授课语言',src:require("../../assets/img/model.png")},
+            //     {itemName:'班级情况',src:require("../../assets/img/model2.png")},
+            //     {itemName:'学制',src:require("../../assets/img/biye.png")},
+            //     {itemName:'报考条件',src:require("../../assets/img/other.png")},
+            // ],
     	}
     },
+    props:["detail","i"],
     methods:{
+        back:function(index){
+                return "back_" +this.backData
+        },
+        title:function(index){
+                return "title_" +this.titleData
+        },
+        p:function(index){
+                return "p_" +this.pData
+        },
+        icon:function(index){
+                return "icon_" +this.upData
+        },
         //点击单个项目标题
         showInform:function() {
-            let h1 = document.getElementById('h1');
-            let p = document.getElementById('p');
-            let back = document.getElementById('back');
+            let h = $("#title_"+this.titleData);
+            let p = $("#p_"+this.pData);
+            let back = $("#back_"+this.backData);
+            let icon = $("#icon_"+this.upData);
             if (!this.singleItemDetail) {
                 this.singleItemDetail = true;
-                //标题样式改变
-                h1.style.color = "#ffffff";
-                p.style.color = "#ffffff";
-                back.style.background = "#009fa0";
-                $("#up").attr("class","el-icon-arrow-up");
-                document.getElementById('up').style.color = "#ffffff";
+                //动态id——标题样式改变
+                for (var i = 0; i <= this.i; i++) {
+                    h[i].style.color = "#ffffff";
+                    back[i].style.background = "#009fa0";
+                    p[i].style.color = "#ffffff";
+                    icon[i].style.color = "#ffffff";
+                    $(icon[i]).attr("class","el-icon-arrow-up");
+                }
             } else {
                 this.singleItemDetail = false;
-                //标题样式改变
-                h1.style.color = "rgb(111, 111, 111)";
-                p.style.color = "rgb(111, 111, 111)";
-                back.style.background = "#ffffff";
-                $("#up").attr("class","el-icon-arrow-down");
-                document.getElementById('up').style.color = "#a2a2a2";
+                //动态id——标题样式改变
+                for (var j = 0; j <= this.titleData; j++) {
+                    h[j].style.color = "rgb(111, 111, 111)";
+                    back[j].style.background = "#ffffff";
+                    p[j].style.color = "rgb(111, 111, 111)";
+                    icon[j].style.color = "#a2a2a2";
+                    $(icon[j]).attr("class","el-icon-arrow-down");
+                };
             }
         }
 
     },
     mounted(){
-
+        
     },
 }
 </script>

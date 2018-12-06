@@ -9,14 +9,14 @@
                     <label>></label>
                     <i>看资讯</i>
                     <label>></label>
-                    <i>MBA分析</i>
+                    <i>{{ articleContent.type_name }}</i>
                     <label>></label>
                     <i class="text-article">正文</i>
                 </div>
                 <div class="content-written clearfloat">
                     <div class="weitten-left">
                         <div id="single-img" v-if="articleContent.z_image != '' && articleContent.z_image != undefined">
-                            <img :src="articleContent.z_image" alt="articleContent.z_alt">
+                            <img :src="articleContent.z_image" :alt="articleContent.z_alt">
                         </div>
                         <div class="content-title">
                             <h1>{{ articleContent.zx_name }}</h1>
@@ -34,8 +34,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="content-article-write">
-                            {{ articleContent.z_text }}
+                        <div class="content-article-write" v-html="articleContent.z_text">
+                            <!--{{ articleContent.z_text }}-->
                         </div>
                         <div class="footer-icon">
                             <i>分享到&nbsp;&nbsp;&nbsp;&nbsp;</i>
@@ -44,14 +44,8 @@
                         </div>
                     </div>
                     <div class="weitten-right">
-                        <div class="advertisement">
-                            <img src="../../../assets/img/advertisementA.png" alt="未加载">
-                        </div>
-                        <div class="advertisement">
-                            <img src="../../../assets/img/advertisementA.png" alt="未加载">
-                        </div>
-                        <div class="advertisement">
-                            <img src="../../../assets/img/advertisementA.png" alt="未加载">
+                        <div class="advertisement" v-if="advertisement.length != 0" v-for="(item,index) in advertisement">
+                            <a :href="item.re_url"><img :src="item.img" alt="未加载"></a>
                         </div>
                         <Article @jump="jump" @refreshs="refresh" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
                     </div>
@@ -65,7 +59,9 @@ export default{
     data(){
         return {
             information:[],
-            articleContent:[]
+            articleContent:[],
+            advertisement:[],
+            page:0,
         }
     },
     methods: {
@@ -85,12 +81,15 @@ export default{
          * */
         readtation: function () {
             let _this = this;
-            this.fetch('/front/consult/getRecommendRead',{
+            this.fetch('/front/consult/getAppointRead',{
+                consultId:_this.$route.params.id,
                 pageNumber:_this.page
             }).then((response) => {
                 if(response.code == 0){
-                    _this.information=response.result.info;
-                    _this.industryTatol = response.result.count;
+                    if (response.result.length != 0){
+                        _this.information=response.result.info;
+                        _this.industryTatol = response.result .count;
+                    }
                 }
             })
             .catch(error => function (error) {
@@ -106,15 +105,14 @@ export default{
             this.fetch('/front/consult/getConsultDeyail',{
                 consultId:_this.$route.params.id
             }).then((response) => {
+                console.log(response)
                 if(response.code == 0){
-
                     _this.articleContent = response.result;
-                    console.log(response)
                 }
             })
-                .catch(error => function (error) {
-                    console.log(response)
-                });
+            .catch(error => function (error) {
+                console.log(response)
+            });
         },
         /*
         * 推荐阅读跳转
@@ -128,18 +126,15 @@ export default{
         showPicture: function () {
             let _this = this;
             this.fetch('/front/consult/getBt',{
-                url:_this.$route.params.id
+                url:'/front/firstMenuRouter/singleInformation'
             }).then((response) => {
-                console.log(response);
-//                if(response.code == 0){
-//
-//                    _this.articleContent = response.result;
-//                    console.log(response)
-//                }
+                if (response.code == 0){
+                    _this.advertisement = response.result;
+                }
             })
-                .catch(error => function (error) {
-                    console.log(response)
-                });
+            .catch(error => function (error) {
+                console.log(response)
+            });
         }
     },
     mounted(){

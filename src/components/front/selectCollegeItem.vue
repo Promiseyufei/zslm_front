@@ -109,9 +109,12 @@
             }
         },
         methods: {
+            //跳到单个院校
             goItemDetail:function(){
+                let id = this.collegeInfo.id;
+                console.log(id)
                 this.$router.push({
-                            path:'/front/firstMenuRouter/singleCollage',
+                            path:'/front/firstMenuRouter/selectCollege/singleCollage/'+id
                         });
             },
             //子向父传参
@@ -135,10 +138,11 @@
         },
         props:["collegeInfo","followId","confirmId","missPorduct"],//需要传一个数组
         mounted() {
+            // this.goItemDetail();
             // console.log(this.missPorduct);
             //是否显示查看更多
             if (this.collegeInfo.missPorduct.length==0) {
-                console.log(this.missPorduct)
+                // console.log(this.missPorduct)
                 this.viewMoreIcon = false;
             };
             //向父组件传参数
@@ -173,7 +177,8 @@
             color: #a4a4a4;
         }
         .viewMore {
-            width: 1230px;
+            width: 1220px;
+            padding: 0 5px 0 10px;
             display: flex;
             justify-content:space-between;
             font-size: 12px;
@@ -191,6 +196,7 @@
         .forThree {
             display: flex;
             flex-wrap:wrap;
+            margin-left: 5px;
         }
         .moneyType p,.state,.interval {
             font-size: 14px;
@@ -225,7 +231,7 @@
         .specificInform {
             width: 375px;
             padding: 30px 0 30px 25px;
-            margin: 0 10px 10px 0;
+            margin: 10px 5px;
             background-color: #f5f5f5;
             border-radius: 5px;
         }
