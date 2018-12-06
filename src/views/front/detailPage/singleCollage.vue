@@ -14,7 +14,24 @@
                     <p style="opacity: 0.8;text-align: center;color: rgb(255, 255, 255);font-size: 12px;font-weight: bold;">关注复旦大学MBA，获取最新信息！</p>
                     <div class="collageButton">
                         <div class="buttoOne"><el-button type="primary">+ 关注</el-button></div>
-                        <div class="buttoTwo"><el-button type="primary" icon="el-icon-share"></el-button></div>
+                        <div class="buttoTwo">
+                            <el-popover
+                              placement="bottom-start"
+                              v-model="visible2">
+                              <div class="shareWeinxin" @click="sharewx">
+                                  <img src="../../../assets/img/weixin2.png">
+                                  <span>分享到微信</span>
+                              </div>
+                              <div class="shareWeinxin" @click="sharexl">
+                                  <img src="../../../assets/img/xinlang2.png">
+                                  <span>分享到微博</span>
+                              </div>
+                              <!-- <div class="shareWeibo"></div> -->
+                            <!-- <p>这是一段内容这是一段内容确定删除吗？</p> -->
+                            <el-button type="primary" icon="el-icon-share" slot="reference"></el-button>
+                            </el-popover>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -33,7 +50,7 @@
                                     </div>
                                     <div><el-button size="mini">+ 对比</el-button></div>
                                 </div>
-                                <singleItem :detail="t" v-for="(t,index) in singleItem" :key="index"></singleItem>
+                                <singleItem :detail="t" :i="index" v-for="(t,index) in singleItem" :key="index"></singleItem>
                             </el-card>
                         </el-col>
                     <!-- </div> -->
@@ -173,6 +190,8 @@ export default {
     },
     data() {
         return {
+            //分享
+            visible2: false,
             //资料下载区
             aa:-1,
             bb:-1,
@@ -181,7 +200,7 @@ export default {
             province:'',
             address:'',
             phonNumber:0,
-            id:1,
+            id:this.$route.params.id,
             u_id:1,
             page:1,
             page_size:3,
@@ -215,6 +234,14 @@ export default {
         }
     },
     methods: {
+        //分享到微信——接口没写~
+        sharewx:function(){
+
+        },
+        //分享到新浪微博——接口没写~
+        sharexl:function(){
+
+        },
         // 相关活动
         getaboutAcitivity:function(){
             let that = this;
@@ -346,13 +373,15 @@ export default {
 };
 </script>
 <style>
+    .buttoTwo .el-popover {
+        min-width: 150px;
+        padding: 0 !important;
+    }
     /*<!-- 招生项目 -->*/
         /*左边*/
             .pdfDetail {
                 width: 100%;
                 margin: 0 auto;
-                /*padding: 25px 0;*/
-                /*border-bottom: 1px solid rgb(239, 239, 239);*/
                 display: flex;
                 flex-wrap:wrap;
                 justify-content:center;
@@ -501,8 +530,28 @@ export default {
 
 </style>
 <style scoped>
+        /*分享按钮*/
+        .shareWeinxin img {
+            width: 20px;
+        }
+        .shareWeinxin span {
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            line-height: 26px;
+            letter-spacing: 0px;
+            color: #6f6f6f;
+        }
+        .shareWeinxin {
+            display: flex;
+            justify-content:space-between;
+            align-items:center;
+            padding: 0 20px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        
     /*<!-- 招生项目 -->*/
-
         .aboutActivity >>>.activityBox {
             width: 280px;
         }

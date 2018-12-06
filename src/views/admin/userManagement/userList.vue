@@ -13,7 +13,7 @@
                     line-height: 30px;
                     text-decoration: none;"
                class="export-button"
-               href="http://www.zslm.com/admin/accounts/createUserExcel">
+               :href="testUrl+'/admin/accounts/createUserExcel'">
                 <!--需要配置域名-->
                 导出
             </a>
@@ -77,6 +77,7 @@
         name: "userFocusMajor",
         data(){
             return {
+                testUrl:this.globals.testUrl,
                 name:'',
                 major:'',
                 realname:'',

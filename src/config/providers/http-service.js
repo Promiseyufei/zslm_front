@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+
 axios.defaults.timeout = 5000;
 
-axios.defaults.baseURL = 'http://www.lishanlei.cn/zslm_back_rmfd/public/';
+axios.defaults.baseURL = 'http://www.lishanlei.cn';
 
 axios.interceptors.request.use(
     config => {

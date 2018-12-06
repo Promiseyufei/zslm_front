@@ -57,7 +57,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/selectCollege'], resolve))
                         },
                         {
-                            path: 'singleCollage/:id?',
+                            path: 'selectCollege/singleCollage/:id?',
                             name: '选院校——单个院校，招生项目',
                             component: resolve => void(require(['@/views/front/detailPage/singleCollage'], resolve))
                         },
@@ -67,8 +67,8 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/lookActivity'], resolve))
                         },
                         {
-                            path: 'singleActivity/:id?',
-                            name: '一级导航-单个活动',
+                            path: 'lookActivity/singleActivity/:id?',
+                            name: '找活动-单个活动详情页',
                             component: resolve => void(require(['@/views/front/detailPage/singleActivity'], resolve))
                         },
                         {
@@ -77,7 +77,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/viewInformation'], resolve))
                         },
                         {
-                            path: 'singleInformation/:id?',
+                            path: 'viewInformation/singleInformation/:id?',
                             name: '找资讯详情页',
                             component: resolve => void(require(['@/views/front/detailPage/singleInformation'], resolve))
                         },
@@ -102,7 +102,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
                         },
                         {
-                            path: 'singleCoachs/:id?',
+                            path: 'searchCoach/singleCoachs/:id?',
                             name: '单个辅导机构',
                             component: resolve => void(require(['@/views/front/detailPage/singleCoachs'], resolve))
                         },
@@ -144,6 +144,16 @@ let front_router = {
                                     component: resolve =>void(require(['@/views/front/usercore/myAccount'], resolve)),
                                 }
                             ]
+                        },
+                        {
+                            path: '404NotFound',
+                            name: '404页面',
+                            component: resolve => void(require(['@/views/front/staticPage/404Page'], resolve))
+                        },
+                        {
+                            path: 'aboutUs',
+                            name: '关于我们',
+                            component: resolve => void(require(['@/views/front/staticPage/aboutUs'], resolve))
                         },
                     ]
                 },

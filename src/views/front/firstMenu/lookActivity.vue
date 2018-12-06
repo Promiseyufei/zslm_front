@@ -27,7 +27,7 @@
                     <div class="selected">
                         <div class="slectedLeft">
                             <span>选活动&gt;</span>
-                            <!-- <tag :tag="activitySelected[0].province"></tag> -->
+                            <tags :tags="seltData" @handleClose="handleClose"></tags>
                         </div>
                         <span>共{{count}}场活动</span>
                     </div>
@@ -39,7 +39,7 @@
             </div>
             <!-- 分页 -->
             <div>
-                <pcPhonePage class="pcPage" :phoneparam="phoneparam" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum" @getPage="getPage"></pcPhonePage>
+                <pcPhonePage class="pcPage" :loading="loading" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum" @getPage="getPage"></pcPhonePage>
             </div>
             <!-- <div class="pcPageDiv">
                 <activityPage class="pcPage" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"></activityPage>
@@ -58,17 +58,19 @@ export default {
     data() {
         return {
             // 下垃加载按钮
-            phoneparam:{
-                loadingBtnText:'加载更多',
-                disabled:false,
+            // phoneparam:{
+                // loadingBtnText:'加载更多',
+                // disabled:false,
                 loading:false,
-            },
+            // },
 
             allActivity:[],//存放所有活动数据数组
 
             keyword:'',//搜索关键字
 
-            //已选择的列表数据
+            //已选择的列表数据---未处理
+            seltData: [],
+            //已选择的列表数据---已处理过
             activitySelected:[
                 // {
                 //     province:["北京","上海"],//选择的省份数组
@@ -86,7 +88,7 @@ export default {
                 //     activityDate:1,//月份 1~12
                 // },
             ],
-            pageCount:4,//分页显示的行数
+            pageCount:12,//分页显示的行数
             pageNumber:1,//分页显示的下标
 
             count:0,//筛选后活动总数
@@ -327,13 +329,13 @@ export default {
         }
     },
     methods: {
-        // 滑动加载按钮
+        // 滑动加载按钮 pageNumber当前页
         getPage(){
-            this.phoneparam.loading = true;
+            this.loading = true;
             this.pageNumber++;
             this.getActivityList(0);
         }, 
-        
+
         // 活动列表页手机端---通过筛选条件获得的活动列表数据
         getActivityList:function(val){
             var self = this;
@@ -341,7 +343,7 @@ export default {
             if(state == 1){
                 self.allActivity = [];
             }
-            this.fetch('/front/activity/getActivity',{
+            this.fetch('http://www.lishanlei.cn/front/activity/getActivity',{
                 keyword:self.keyword,
                 province:self.activitySelected[0],
                 majorType:self.activitySelected[1],
@@ -351,7 +353,7 @@ export default {
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
-                self.phoneparam.loading = false;
+                self.loading = false;
                 if(res.code == 0){
                     self.count = res.result.count;
                     let data = res.result.info;
@@ -364,10 +366,10 @@ export default {
                 else{
                     self.message(true, "加载失败，请重试", 'info');
                 }
-                if( self.pageNumber*self.pageCount >= self.count){
-                    self.phoneparam.disabled = true;
-                    self.phoneparam.loadingBtnText = "————我是有底线的————";
-                }
+                // if( self.pageNumber*self.pageCount >= self.count){
+                //     self.phoneparam.disabled = true;
+                //     self.phoneparam.loadingBtnText = "————我是有底线的————";
+                // }
             }).catch(function(error){
                 console.log("error");
             });
@@ -376,7 +378,7 @@ export default {
         getPcActivityList:function(){
             // console.log('----pc');
             var self = this;
-            this.fetch('/front/activity/getActivity',{
+            this.fetch('http://www.lishanlei.cn/front/activity/getActivity',{
                 keyword:self.keyword,
                 province:self.activitySelected[0],
                 majorType:self.activitySelected[1],
@@ -386,7 +388,7 @@ export default {
                 pageCount:self.pageCount,
                 pageNumber:self.pageNumber
             }).then(function (res) {
-                console.log(res);
+                // console.log(res);
                 if(res.code == 0){
                     self.count = res.result.count;
                     self.info = res.result.info;
@@ -402,7 +404,7 @@ export default {
         // 在活动列表页————筛选部分————获得活动的专业字典
         getCollegesType:function(){
             var self = this;
-            this.fetch('/front/colleges/getCollegesType',{
+            this.fetch('http://www.lishanlei.cn/front/colleges/getCollegesType',{
                
             }).then(function (res) {
                 // console.log(res);
@@ -421,7 +423,7 @@ export default {
         // 在活动列表页————筛选部分————获得活动的类型字典
         getActivityType:function(){
             var self = this;
-            this.fetch('/front/activity/getActivityType',{
+            this.fetch('http://www.lishanlei.cn/front/activity/getActivityType',{
                
             }).then(function (res) {
                 if(res.code == 0){
@@ -438,29 +440,52 @@ export default {
 
         // 筛选块-从组件中获取选中结果
         change(data){
+            this.seltData = data;
             // console.log(data);
-            var list = [];
-            for (var i = 0; i < data.length; i++) {
+            this.getselt();
+        },
+
+        // 筛选选中删除，点击标签，删除标签
+        handleClose(tag) {
+            // console.log("---");
+            // console.log(this.seltData.length);
+            for (let index = 0; index < this.seltData.length; index++) {
+                var temp = this.seltData[index].indexOf(tag);
+                if(temp==-1){
+                    continue;
+                }else {
+                    this.seltData[index].splice(this.seltData[index].indexOf(tag), 1);
+                }
+            };
+            this.getselt();
+        },
+
+        //转换选中参数的格式——数组，以便传参
+        getselt:function(){
+            let list = [];
+            for (var i = 0; i < this.seltData.length; i++) {
                 var little = [];
-                for (var j = 0; j < data[i].length; j++) {
+                for (var j = 0; j < this.seltData[i].length; j++) {
                     if(i == 1)
-                        little.push(data[i][j].name);
+                        little.push(this.seltData[i][j].name);
                     else
-                        little.push(data[i][j].id);
+                        little.push(this.seltData[i][j].id);
                 }
                 list.push(little);
             }
             // console.log(list[0]);
             this.activitySelected = list;
-            for (var i = 0; i < this.activitySelected.length; i++) {
-                console.log(this.activitySelected[i]);
-            }
+            // for (var i = 0; i < this.activitySelected.length; i++) {
+            //     console.log(this.activitySelected[i]);
+            // }
             // this.getActivityList(1);
             this.getPcActivityList();
+            // console.log("======");
+            // console.log(this.seltData);
             // console.log(this.activitySelected[0]);
         },
 
-
+        // 电脑点击改变分页值
         changePageNum(pageNum) {
             this.pageNumber = pageNum;
             this.getPcActivityList();

@@ -1,7 +1,7 @@
 <!-- 登录总部 -->
 <template>
     	<div>
-    		<div class="loginRouterCenter">
+    		<div class="loginRouterCenter" v-show="computer">
     			<div class="loginPicture"><img src="../../../assets/img/login.png"></div>
 				<el-card class="boxCard">
     				<el-menu :default-active="active" class="el-menu-demo" 
@@ -32,6 +32,21 @@
     				</div>
     			</el-card>
     		</div>
+    		<div class="phoneLogin" v-show="phone">
+    			<div class="Close">
+    				<div class="close"><img src="../../../assets/img/Close.png"></div>
+    			</div>
+    			<div class="MBA"><img src="../../../assets/img/logoGreen.png"></div>
+    			<div class="loginText">登录</div>
+    			<div class="userInform">
+    				<div class="mobileNumber">
+    					<el-input v-model="mobileNumber" placeholder="手机号"></el-input>
+    					<el-button type="success">发送验证码</el-button>
+    				</div>
+    				<div class="mobileCode"><el-input v-model="mobileCode" placeholder="验证码"></el-input></div>
+    				<div class="mobileLogin"><el-button type="success">登录</el-button></div>
+    			</div>
+    		</div>
     	</div>
 </template>
 
@@ -39,6 +54,10 @@
 	export default {
 		data() {
 			return {
+				mobileCode:'',
+				mobileNumber:'',
+				computer:true,
+				phone:false,
 				active:'1',
 				phoneNumber:'',
 				checked:'',
@@ -114,7 +133,9 @@
 				this.post('/login/front/login', params).then((response) => {
 					if(response.code == 0) {
 						this.saveUserState('user', this.phoneNumber);
-						this.saveUserState('userId', response.result);
+						this.saveUserState('userId', response.result.user_account_id);
+						this.saveUserState('userName', response.result.user_name);
+						this.saveUserState('userHead', response.result.head_portrait);
 						this.message(true, response.msg, 'success');
 					}
 					else if(response.code == 1) this.message(true, response.msg, 'info');
@@ -144,6 +165,11 @@
 		},
 		mounted() {
 			this.accountNumber();
+			let w = document.documentElement.offsetWidth || document.body.offsetWidth;
+			if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
+				this.phone = true;
+				this.computer = false;
+			}
 		}
 	}
 </script>
@@ -151,6 +177,21 @@
 
 <!-- 全局样式 -->
 <style>
+	.phoneLogin .el-button--success {
+		background-color: #ffb957;
+    	border-color: #ffb957;
+	}
+	.mobileLogin .el-button {
+		width: 100%;
+		height: 50px;
+	}
+	.mobileCode .el-input__inner,.mobileNumber .el-input__inner {
+		height: 50px;
+	}
+	.mobileNumber .el-button {
+		margin-left: 10px;
+		padding:12px 15px;
+	}
 	.loginRouterCenter .el-menu-item {
 		font-size: 18px;
 		font-weight: normal;
@@ -204,13 +245,14 @@
 
 <!-- 局部样式 -->
 <style scoped>
+	.phoneLogin {
+		width: 100%;
+	}
 	.login {
 		width: 345px;
-		/*margin: 0 auto;*/
 	}
 	.phoneInput {
 		width: 340px;
-		/*margin: 0 auto;*/
 	}
 	.weixin {
 		width: 21px;
@@ -266,22 +308,58 @@
 		cursor: pointer;
 	}
 	.boxCard {
-		/*width: 412px;*/
 		height: 488px;
-		/*margin-right: 100px;*/
 	}
 	.loginPicture {
 		width: 966px;
-		/*height: 543px;*/
-		/*margin-left: 50px;*/
-		/*background: url(../../../assets/img/login.png) no-repeat;*/
-        /*background-size: 100% 100%;*/
 	}
 	.loginRouterCenter {
-		/*width: 1903px;*/
 		display: flex;
 		justify-content:center;
 		margin: 100px 0;
 		overflow:hidden;
+	}
+	
+	/** iPhone + ipad**/
+	@media only screen and (min-width: 320px) and (max-width: 1024px) {
+		.mobileCode,.mobileLogin {
+			width: 90%;
+			margin: 15px auto;
+		}
+		.mobileNumber {
+			display: flex;
+			width: 90%;
+			margin: 0 auto;
+		}
+		.loginText {
+			color: #333;
+			font-size: 23px;
+			letter-spacing:10px;
+			margin: 20px 0 40px 10px;
+		}
+		.close {
+			margin: 10px 10px 20px 0;
+		}
+		.close img{
+			width: 30px;
+		}
+		.MBA {
+			/*width:371px;*/
+			/*margin: 0 auto;*/
+		}
+		.Close {
+			width: 100%;
+			text-align: right;
+		}
+		.userInform {
+			width: 100%;
+		}
+		.phoneLogin {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items:center;
+			justify-content:center;
+		}
 	}
 </style>

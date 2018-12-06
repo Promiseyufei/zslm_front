@@ -1,11 +1,11 @@
 <template>
     <div style="padding:0 20px;">
-        <div class="singleItemName" @click="showInform" id="back">
+        <div :id="back(this.backData)" class="singleItemName" @click="showInform" >
             <div>
-                <h1 id="h1" style="color: rgb(111, 111, 111);">{{deta.project_name}}</h1>
-                <p id="p">非全日制</p>
+                <h1 style="color:rgb(111, 111, 111);" :id="title(this.titleData)">{{deta.project_name}}</h1>
+                <p :id="p(this.pData)">非全日制</p>
             </div>
-            <div><i class="el-icon-arrow-down" id="up" style="color: #a2a2a2;"></i></div>
+            <div><i class="el-icon-arrow-down" :id="icon(this.upData)" style="color: #a2a2a2;"></i></div>
         </div>
         <div class="singleItemDetail" v-show="singleItemDetail">
             <div class="left">
@@ -90,6 +90,10 @@
 export default {
     data(){
     	return{
+            upData:this.i,
+            backData:this.i,
+            pData:this.i,
+            titleData:this.i,
             deta:this.detail,
             singleItemDetail:false,
             // itemInformLeft:[
@@ -110,35 +114,52 @@ export default {
             // ],
     	}
     },
-    props:["detail"],
+    props:["detail","i"],
     methods:{
+        back:function(index){
+                return "back_" +this.backData
+        },
+        title:function(index){
+                return "title_" +this.titleData
+        },
+        p:function(index){
+                return "p_" +this.pData
+        },
+        icon:function(index){
+                return "icon_" +this.upData
+        },
         //点击单个项目标题
         showInform:function() {
-            let h1 = document.getElementById('h1');
-            let p = document.getElementById('p');
-            let back = document.getElementById('back');
+            let h = $("#title_"+this.titleData);
+            let p = $("#p_"+this.pData);
+            let back = $("#back_"+this.backData);
+            let icon = $("#icon_"+this.upData);
             if (!this.singleItemDetail) {
                 this.singleItemDetail = true;
-                //标题样式改变
-                h1.style.color = "#ffffff";
-                p.style.color = "#ffffff";
-                back.style.background = "#009fa0";
-                $("#up").attr("class","el-icon-arrow-up");
-                document.getElementById('up').style.color = "#ffffff";
+                //动态id——标题样式改变
+                for (var i = 0; i <= this.i; i++) {
+                    h[i].style.color = "#ffffff";
+                    back[i].style.background = "#009fa0";
+                    p[i].style.color = "#ffffff";
+                    icon[i].style.color = "#ffffff";
+                    $(icon[i]).attr("class","el-icon-arrow-up");
+                }
             } else {
                 this.singleItemDetail = false;
-                //标题样式改变
-                h1.style.color = "rgb(111, 111, 111)";
-                p.style.color = "rgb(111, 111, 111)";
-                back.style.background = "#ffffff";
-                $("#up").attr("class","el-icon-arrow-down");
-                document.getElementById('up').style.color = "#a2a2a2";
+                //动态id——标题样式改变
+                for (var j = 0; j <= this.titleData; j++) {
+                    h[j].style.color = "rgb(111, 111, 111)";
+                    back[j].style.background = "#ffffff";
+                    p[j].style.color = "rgb(111, 111, 111)";
+                    icon[j].style.color = "#a2a2a2";
+                    $(icon[j]).attr("class","el-icon-arrow-down");
+                };
             }
         }
 
     },
     mounted(){
-        // console.log(this.detail)
+        
     },
 }
 </script>

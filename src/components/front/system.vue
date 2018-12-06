@@ -2,23 +2,23 @@
 
     <div class="c-div div_v60iAm guanzhu huodong" style="border-bottom:1px dashed #C0C0C0;" @click="test">
         <div class="row c-row row_E5qvBw">
-            <span style="width:5px;height:5px;background-color:#FF9900;border-radius:5px;margin-top:15px;margin-right:5px;"></span>
+            <span v-if="news.status == 0" style="width:5px;height:5px;background-color:#FF9900;border-radius:5px;margin-top:15px;margin-right:5px;"></span>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_KR9WLK">
                 <img class="c-image image_NXxCPj" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png">
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_S6tf0c">
-                <h1 class="c-heading textlink_e6pE3X daliebiao xiaoxi" style="color:#808080;">事项通知 &emsp;<span style="font-size:14px;color:#909090;">昨天 12:00</span></h1>
+                <h1 class="c-heading textlink_e6pE3X daliebiao xiaoxi" style="color:#808080;">事项通知 &emsp;<span style="font-size:14px;color:#909090;">{{ news.create_time }}</span></h1>
             </div>
         </div>
         <div class="row c-row row_F2BBBz">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 c-column column_AfewZV" style="margin-left:15px;">
-                <a class="c-ellipse c-textlink textlink_e6pE3X daliebiao xiaoxi111" href="#" style="color:#686868;">2018年度北京地区MBA招生项目分析报告</a>
+                <a class="c-ellipse c-textlink textlink_e6pE3X daliebiao xiaoxi111" href="#" style="color:#686868;">{{ news.news_title }}</a>
                 <p class="c-ellipse c-paragraph paragraph_XjkcYS">
-                    当代浙商的闻名，不仅仅是因为这片土地孕育了马云、丁磊、杨元庆、宗庆后等知名企业家。更因为浙商血液里流淌着创业经营的基因。2017年浙江GDP为51768亿元，全国第四，人均GDP全国第三；而离开浙江本土，在海外发展的浙商有800万。
+                    {{ news.context }}
                 </p>
                 <div class="c-div div_QcKVUN kanzixun">
                     <div class="c-div div_IIlwIU kanzixun">
-                        <h1 class="c-heading heading_3hU4sb grey">链接：https://www.lishanlei.cn/zslm_back_rmfd/public/</h1>
+                        <h1 class="c-heading heading_3hU4sb grey">链接：{{ news.url }}</h1>
                     </div>
                 </div>
             </div>
@@ -28,6 +28,7 @@
 
 <script>
 export default {
+    props:['news'],
     data() {
         return {
 
