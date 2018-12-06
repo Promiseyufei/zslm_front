@@ -376,7 +376,7 @@ export default {
         //得到7个院校
         getCollage: function() {
             var that = this;
-            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/indexinfo').then(function (res) {
+            this.fetch('http://www.lishanlei.cn/front/indexinfo').then(function (res) {
                 if (res.code == 0) {
                     that.college = res.result.major;//返回学校
                     that.coach = res.result.coach;//返回辅导机构

@@ -46,6 +46,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="nonecoach" v-if="collage.coupon.length==0">
+                                        <img src="../../../assets/img/nonecoach.png" alt="">
+                                        <span>暂无可用优惠卷</span>
+                                    </div>
+                                    
                                 </el-tab-pane>
                                 <el-tab-pane label="分校列表" name="second">
                                     <div class="coachbig">
@@ -72,6 +77,13 @@
                                     </div>
                                 </el-tab-pane>
                             </el-tabs>
+                        </div>
+                        <div class="messageCoach">
+                            <h6>优惠卷</h6>
+                            <div class="nonecoach">
+                                <img src="../../../assets/img/nonecoach.png" alt="">
+                                <span>暂无可用优惠卷</span>
+                            </div>
                         </div>
                     </div>
                     <div class="singlerightbox">
@@ -207,7 +219,18 @@ export default {
 .bigBox {
     background-color: rgb(245, 245, 245);
 }
-
+.nonecoach {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+}
+.nonecoach>span {
+    margin-top: 10px;
+    color: rgb(170, 170, 170);
+    font-size: 14px;
+}
 .ffff {
     color: #0061ac !important;
 }
