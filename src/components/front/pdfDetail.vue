@@ -10,7 +10,6 @@ export default {
     data(){
     	return{
             src:require("../../assets/img/pdf.png"),
-            // {{pdfPicture[0].file_name}}
     	}
     },
     props:["t","pdfPicture"],
