@@ -13,10 +13,10 @@
 						  @select="handleSelect"
 						  text-color="#6e6e6e"
 						  active-text-color="#009fa0">
-						  <el-menu-item index="1" @click="selectCollege">选院校</el-menu-item>
-						  <el-menu-item index="2" @click="lookActivity">找活动</el-menu-item>
-						  <el-menu-item index="3" @click="viewInformation">看资讯</el-menu-item>
-						  <el-menu-item index="4" style="border:0;padding-right:0;" @click="searchCoach">搜辅导</el-menu-item>
+						  <el-menu-item index="1">选院校</el-menu-item>
+						  <el-menu-item index="2">找活动</el-menu-item>
+						  <el-menu-item index="3">看资讯</el-menu-item>
+						  <el-menu-item index="4" style="border:0;padding-right:0;">搜辅导</el-menu-item>
 						</el-menu>
 			        </div>
 			        <div @click="isLogin" v-show="mobileIcon" class="mobileIcon">
@@ -26,7 +26,7 @@
 						  width="50%">
 						  <div class="dialog">
 						  	<div class="dialogPicture">
-						  		<div class="userPicture"><img :src="loginOr"></div>
+						  		<div class="userPicture"><img :src="loginOr" alt="加载中"></div>
 						  		<div class="userName">{{userName}}</div>
 						  	</div>
 						  </div>
@@ -47,7 +47,7 @@
 			        	<el-badge :value="200" :max="10" class="item">
 						  <img src="../../../assets/img/messageLogo.png">
 						</el-badge>
-						<div><i class="el-icon-question"></i></div>
+						<div class="isLoginPicture"><img :src="loginOr"></div>
 		        </div>
 	    	</div>
     	<!-- 头部导航 -->
@@ -93,7 +93,7 @@
 	    },
 	    data() {
 	        return {
-	        	loginOr:require("../../../assets/img/noLogin.png"),
+	        	loginOr:require('../../../assets/img/nologin.png'),
 	        	userName:'未登录',
 	        	dialogVisible: false,
 	        	activeIndex: '1',
@@ -104,35 +104,24 @@
 	        }
 	    },
 	    methods: {
-	    	selectCollege:function(){
-	    		this.$router.push('/front/firstMenuRouter/selectCollege');
-	    	},
-	    	lookActivity:function(){
-	    		this.$router.push('/front/firstMenuRouter/lookActivity');
-	    	},
-	    	viewInformation:function(){
-	    		this.$router.push('/front/firstMenuRouter/viewInformation');
-	    	},
-	    	searchCoach:function(){
-	    		this.$router.push('/front/firstMenuRouter/searchCoach');
-	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
-	    		// this.activeIndex = key;
-	    		// if (this.activeIndex==1) {
-	    		// 	this.$router.push('/front/firstMenuRouter/selectCollege');
-	    		// } else if(this.activeIndex==2) {
-	    		// 	this.$router.push('/front/firstMenuRouter/lookActivity');
-	    		// } else if(this.activeIndex==3) {
-	    		// 	this.$router.push('/front/firstMenuRouter/viewInformation');
-	    		// } else if(this.activeIndex==4) {
-	    		// 	this.$router.push('/front/firstMenuRouter/searchCoach');
-	    		// }
+	    		this.activeIndex = key;
+	    		if (this.activeIndex==1) {
+	    			this.$router.push('/front/firstMenuRouter/selectCollege');
+	    		} else if(this.activeIndex==2) {
+	    			this.$router.push('/front/firstMenuRouter/lookActivity');
+	    		} else if(this.activeIndex==3) {
+	    			this.$router.push('/front/firstMenuRouter/viewInformation');
+	    		} else if(this.activeIndex==4) {
+	    			this.$router.push('/front/firstMenuRouter/searchCoach');
+	    		}
 	    		// sessionStorage.setItem("active",key);
 		    },
-		    //刷新菜单高亮不变
+		    //改变路由菜单高亮不变
 		    rushRouter:function(){
 	    		let path = this.$route.matched[2].path;
+	    		//当前输入的路由包括()中路由时，显示当前高亮
 	    		if (path.indexOf('/front/firstMenuRouter/selectCollege') != -1) {
 	    			this.activeIndex = '1';
 	    		} else if(path.indexOf('/front/firstMenuRouter/lookActivity') != -1) {
@@ -311,7 +300,13 @@
 </style>
 
 <style scoped>
-
+	.isLoginPicture img {
+		width: 100%;
+	}
+	.isLoginPicture {
+		width: 36px;
+		height: 36px;
+	}
 	.footerBott p {
 		opacity: 0.65;
 		color: rgb(255, 255, 255);

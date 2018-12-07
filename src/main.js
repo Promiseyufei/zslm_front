@@ -50,6 +50,11 @@ Vue.config.productionTip = false
 
 
 
+//引入全局配置变量
+import globals from './config/global'
+Vue.prototype.globals = globals;
+
+
 //加载公共组件
 import components from './components/'
 Object.keys(components).forEach((key)=>{
