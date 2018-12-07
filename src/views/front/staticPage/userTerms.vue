@@ -1,11 +1,11 @@
 <template> 
-	<!-- 关于我们 -->
+	<!-- 用户条款 -->
     <div class="bodyBox">
     	<body>
     	   	<staticNav :state="state"></staticNav>
             <div class="content">
                 <div class="title">
-                    <p>机构简介</p>
+                    <p>用户条款</p>
                 </div>
                 <article>
                     <img src="../../../assets/img/staticLogo.png">
@@ -23,7 +23,7 @@ export default {
     },
     data() {
         return {
-            state:0,
+            state:1,
         }
     },
     methods: {

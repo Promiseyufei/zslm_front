@@ -773,6 +773,7 @@
     }
 
     .heading_IH2VnY {
+        cursor: pointer;
         font-size: 26px;
         color: rgb(72, 72, 72);
         margin-top: 0px;

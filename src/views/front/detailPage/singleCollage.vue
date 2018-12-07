@@ -13,22 +13,20 @@
                     </div>
                     <p style="opacity: 0.8;text-align: center;color: rgb(255, 255, 255);font-size: 12px;font-weight: bold;">关注复旦大学MBA，获取最新信息！</p>
                     <div class="collageButton">
-                        <div class="buttoOne"><el-button type="primary">+ 关注</el-button></div>
+                        <div class="buttoOne" @click="clickFollow"><el-button type="primary" id="followButt"><i class="el-icon-plus" id="symbol"></i>{{follow}}</el-button></div>
                         <div class="buttoTwo">
                             <el-popover
                               placement="bottom-start"
                               v-model="visible2">
-                              <div class="shareWeinxin" @click="sharewx">
-                                  <img src="../../../assets/img/weixin2.png">
-                                  <span>分享到微信</span>
-                              </div>
-                              <div class="shareWeinxin" @click="sharexl">
-                                  <img src="../../../assets/img/xinlang2.png">
-                                  <span>分享到微博</span>
-                              </div>
-                              <!-- <div class="shareWeibo"></div> -->
-                            <!-- <p>这是一段内容这是一段内容确定删除吗？</p> -->
-                            <el-button type="primary" icon="el-icon-share" slot="reference"></el-button>
+                                <div class="shareWeinxin" @click="sharewx">
+                                    <img src="../../../assets/img/weixin2.png">
+                                    <span>分享到微信</span>
+                                </div>
+                                 <div class="shareWeinxin" @click="sharexl">
+                                    <img src="../../../assets/img/xinlang2.png">
+                                    <span>分享到微博</span>
+                                </div>
+                                <el-button type="primary" icon="el-icon-share" slot="reference"></el-button>
                             </el-popover>
                         </div>
 
@@ -48,7 +46,7 @@
                                         <p>招生项目</p>
                                         <div class="collageLine"></div>
                                     </div>
-                                    <div><el-button size="mini">+ 对比</el-button></div>
+                                    <div class="hover"><el-button size="mini">+ 对比</el-button></div>
                                 </div>
                                 <singleItem :detail="t" :i="index" v-for="(t,index) in singleItem" :key="index"></singleItem>
                             </el-card>
@@ -138,25 +136,35 @@
                                     <div class="phoneNumber">{{phonNumber}}</div>
                                 </div>
                                 <div class="fourLogon">
-                                    <div class="majorLine" @mouseover="computer" @mouseout="computerOut">
+                                    <div class="majorLine" @mouseover="computer" @mouseout="computerOut" @click="majorWebsite">
                                         <div><img :src="logoPicture[0].computer"></div>
                                         <div class="major" id="major">校园官网</div>
                                     </div>
                                     <div class="logonLine"></div>
-                                    <div class="studentLine" @mouseover="contact" @mouseout="contactOut">
+                                    <div class="studentLine" @mouseover="contact" @mouseout="contactOut" @click="majorSpecial">
                                         <div><img :src="logoPicture[0].contact"></div>
                                         <div class="student" id="contact">招生专题</div>
                                     </div>
                                     <div class="logonLine"></div>
-                                    <div class="weixinLine" @mouseover="weixin" @mouseout="weixinOut">
+                                    <div class="weixinLine" @mouseover="weixin" @mouseout="weixinOut" @click="majorWx">
                                         <div><img :src="logoPicture[0].weixin"></div>
                                         <div class="weixin" id="weixin">院校微信</div>
                                     </div>
+                                    <el-dialog
+                                      :visible.sync="dialogVisible"
+                                      width="30%">
+                                      <span><img src="../../../assets/img/xinlang2.png"></span>
+                                    </el-dialog>
                                     <div class="logonLine"></div>
-                                    <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut">
+                                    <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut" @click="majorWb">
                                         <div><img :src="logoPicture[0].xinlang"></div>
                                         <div class="weibo" id="xinlang">微博主页</div>
                                     </div>
+                                    <el-dialog
+                                      :visible.sync="dialogVisible2"
+                                      width="30%">
+                                      <span><img src="../../../assets/img/xinlang2.png"></span>
+                                    </el-dialog>
                                 </div>
                             </el-card>
                         </el-col>
@@ -192,6 +200,11 @@ export default {
     },
     data() {
         return {
+            dialogVisible: false,
+            dialogVisible2:false,
+            //关注
+            follow:'关注',
+            ab:1,
             //分享
             visible2: false,
             //资料下载区
@@ -244,6 +257,55 @@ export default {
         sharexl:function(){
 
         },
+        //院校官网——跳转页面
+        majorWebsite:function(){
+
+        },
+        //招生专题——跳转页面
+        majorSpecial:function(){
+
+        },
+        //微博主页
+        majorWb:function(){
+            this.dialogVisible2 = true;
+        },
+        //院校微信
+        majorWx:function(){
+            this.dialogVisible = true;
+        },
+        //点击关注
+        clickFollow:function(){
+             // let ab = 1;   
+             let followButt = document.getElementById('followButt');
+             if (this.ab==1) {
+                this.message('judge', '您已成功关注！', 'success');
+                this.follow = '已关注';
+                $("#symbol").attr("class","el-icon-check");
+                followButt.style.background = '#009fa0';
+                this.ab = 2;
+            } else{
+                this.message('judge', '您已取消关注哦', 'warning')
+                this.follow = '关注';
+                $("#symbol").attr("class","el-icon-plus");
+                followButt.style.background = '#ffb957';
+                this.ab = 1;
+            }
+        },
+        //判断是否关注
+        isFollow:function(){
+            let ab = 1;
+            let followButt = document.getElementById('followButt');
+            if (ab==1) {
+                this.follow = '已关注';
+                $("#symbol").attr("class","el-icon-check");
+                followButt.style.background = '#009fa0'
+            } else {
+                this.follow = '关注';
+                $("#symbol").attr("class","el-icon-plus");
+                followButt.style.background = '#ffb957'
+            }
+        },
+
         // 相关活动
         getaboutAcitivity:function(){
             let that = this;
@@ -356,6 +418,7 @@ export default {
         
     },
     mounted(){
+        this.isFollow();
         this.getaboutAcitivity();
         this.getContent();
         this.getItemInform();
@@ -375,9 +438,20 @@ export default {
 };
 </script>
 <style>
-    .buttoTwo .el-popover {
+    .diffeCollege>>>.div_BMsaOd[data-v-0ea0cb0a] {
+        /*margin-top: 20px !important;*/
+    }
+    .leftTwo .el-dialog__body {
+        text-align: center;
+    }
+    .buttoOne .reflesh > a >[class*=" el-icon-"][data-v-26348ad6], [class^=el-icon-][data-v-26348ad6] {
+        margin-right: 3px;
+        font-size: 12px !important;
+        font-weight: bold;
+    }
+    .el-popover {
         min-width: 150px;
-        padding: 0 !important;
+        padding: 0;
     }
     /*<!-- 招生项目 -->*/
         /*左边*/
@@ -490,6 +564,11 @@ export default {
         .itemInform .el-button--mini, .el-button--mini.is-round {
             padding: 8px 18px;
         }
+        .hover .el-button:hover {
+            background-color: #009fa0;
+            color: #fff;
+            border-color: #009fa0;
+        }
         .itemInform .el-button--mini, .el-button--small {
             font-size: 12px;
             border-radius: 3px;
@@ -512,9 +591,10 @@ export default {
             width: 48px;
             background-color: rgb(255, 185, 87);
             color: rgb(255, 255, 255);
-            font-weight: bold;
+            font-size: 18px !important;
             border-radius: 5px;
             border: 0;
+            padding-right:25px; 
             margin-left: 6px;
         }
         .buttoOne .el-button--primary {
@@ -594,16 +674,11 @@ export default {
             border-radius: 3px;
         }
         .reflesh {
-           /* display: flex;
-            align-items:center;
-            width: 89px;
-            height: 28px;*/
-            
+           cursor: pointer;
         }
         .collageLine {
             width: 21px;
             height: 4px;
-            /*min-height: auto;*/
             background-color: rgba(210,210,210,1);
         }
         .itemInformOne p,.basicInform p {
