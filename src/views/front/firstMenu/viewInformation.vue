@@ -282,6 +282,7 @@ export default {
         width: 100%;
         height: 100%;
     }
+
     .content-information{
         background-color: #f5f5f5;
         padding-top: 30px;
@@ -489,10 +490,11 @@ export default {
             height: auto;
         }
     }
+    
 </style>
 
-<style >
-    .sowingMap [class*=" el-icon-"], [class^=el-icon-]{
+<style>
+    .sowingMap [class*=" el-icon-"],.sowingMap [class^=el-icon-]{
         font-size:26px;
         font-weight: bolder;
         line-height:0px;
