@@ -25,11 +25,11 @@
                 if(index==0) {
                     this.$router.push('/front/firstMenuRouter/aboutUs');
                 }else if(index==1) {
-                    // this.$router.push('/front/firstMenuRouter/lookActivity');
+                    this.$router.push('/front/firstMenuRouter/userTerms');
                 }else if(index==2) {
-                    // this.$router.push('/front/firstMenuRouter/viewInformation');
+                    this.$router.push('/front/firstMenuRouter/helpCenter');
                 }else {
-                    // this.$router.push('/front/firstMenuRouter/searchCoach');
+                    this.$router.push('/front/firstMenuRouter/legalNotice');
                 }
             },
         },
@@ -43,7 +43,7 @@
     .staticNav{
         background-color: #fff;
         min-width: 305px;
-        width: 305px;
+        /*width: 305px;*/
         border-radius: 5px;
         padding: 9px 0;
     }
@@ -81,5 +81,26 @@
     }
     .activep{
         color: rgb(0, 159, 160) !important;
+    }
+
+     /*手机端样式*/
+    @media only screen and (max-width: 1024px) {
+        .staticNav{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .staticNav span{
+            display: none;
+        }
+        .activediv{
+            background-color: unset;
+        }
+        .staticNav div{
+            padding: 2%;
+            width: 70px;
+        }
+        .activediv{
+            border-bottom: 1px solid rgb(0, 159, 160) !important;
+        }
     }
 </style>
