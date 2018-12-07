@@ -26,7 +26,7 @@
 						  width="50%">
 						  <div class="dialog">
 						  	<div class="dialogPicture">
-						  		<div class="userPicture"><img :src="loginOr"></div>
+						  		<div class="userPicture"><img :src="loginOr" alt="加载中"></div>
 						  		<div class="userName">{{userName}}</div>
 						  	</div>
 						  </div>
@@ -47,7 +47,7 @@
 			        	<el-badge :value="200" :max="10" class="item">
 						  <img src="../../../assets/img/messageLogo.png">
 						</el-badge>
-						<div class="isLoginPicture"><img src=""></div>
+						<div class="isLoginPicture"><img :src="loginOr"></div>
 		        </div>
 	    	</div>
     	<!-- 头部导航 -->
@@ -93,7 +93,7 @@
 	    },
 	    data() {
 	        return {
-	        	loginOr:require("../../../assets/img/nologin.png"),
+	        	loginOr:require('../../../assets/img/nologin.png'),
 	        	userName:'未登录',
 	        	dialogVisible: false,
 	        	activeIndex: '1',
@@ -300,6 +300,9 @@
 </style>
 
 <style scoped>
+	.isLoginPicture img {
+		width: 100%;
+	}
 	.isLoginPicture {
 		width: 36px;
 		height: 36px;
