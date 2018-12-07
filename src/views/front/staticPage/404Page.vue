@@ -4,7 +4,7 @@
     	<body>
     		<div class="mainBody">
     			<div class="returnIndex">
-    				<a href="">返回首页
+    				<a @click="toIndex" href="javascript:0;">返回首页
     					<img src="../../../assets/img/arrow.png">
     				</a>
     			</div>
@@ -41,9 +41,13 @@ export default {
                 this.$router.push('/front/firstMenuRouter/searchCoach');
             }
         },
+        toIndex:function(){
+            this.$router.push('/front/firstMenuRouter/index');
+        }
     },
     mounted(){
-
+        // let height = $(window).height()-63.1;
+        // $('.bodyBox').height(height);
     },
 };
 </script>
@@ -62,13 +66,15 @@ export default {
 
 	.bodyBox{
 		width: 100%;
-		padding-top: 2%;
-		padding-bottom: 3.5%;
+		/*padding-top: 2%;
+		padding-bottom: 3.5%;*/
 		background-color: rgb(245, 245, 245);
         font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
         font-size: 12px;
 	}
 	body{
+        margin-top: 2%;
+        margin-bottom: 3.5%;
 		width: 1280px;
 		background-color: #fff;
 		text-align: center;
@@ -104,7 +110,7 @@ export default {
         margin-right: 4px;
         margin-bottom: 5px;
         padding: 16px 26px 12px 26px;
-        background-color: #f5f5f5;
+        background-color: rgba(245, 245, 245, .3);
         text-align: center;
         border-radius: 5px;
     }
@@ -125,6 +131,10 @@ export default {
     	body{
     		width: 100%;
     	}
+        .indexBigBlock{
+            font-size: 10px;
+            flex-wrap: nowrap;    
+        }
     }
 
     @media only screen and (max-width: 360px) {

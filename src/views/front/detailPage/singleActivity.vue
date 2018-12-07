@@ -80,7 +80,7 @@
                 <!-- 右部分侧边栏 -->
                 <aside>
                     <!-- 院校信息 -->
-                    <div v-if="acHostInfo.id" class="asideBox" style="backgroundImage: url(/static/img/singleCollege.924aa58.jpg);">
+                    <div v-if="acHostInfo.id" class="asideBox" :style="{backgroundImage:'url(' + hostBgimg + ')'}">
                         <!-- <div v-if="acHostInfo.id" class="asideBox" style="backgroundImage: url(../../../assets/img/singleCollege.jpg);"> -->
                         <div class="asideContent">
                             <div class="asideLogo">
@@ -100,8 +100,8 @@
                                 <span class="addressItem">&middot;&nbsp;{{acHostInfo.province}}</span>
                             </div>
                             <div class="InfoBtn asideBtn">
-                                <a href="" v-if="acHostInfo.is_guanzhu">已关注</a>
-                                <a href="" v-else>+&nbsp;关注</a>
+                                <a href="javascript:0;" style="background-color: rgba(0,159,160,1);" @click="changeState(acHostInfo.is_guanzhu)" v-if="acHostInfo.is_guanzhu">已关注</a>
+                                <a href="javascript:0;" @click="changeState(acHostInfo.is_guanzhu)" v-else>+&nbsp;关注</a>
                             </div>
                         </div>
                     </div>
@@ -142,9 +142,41 @@ export default {
             AppointAcInfo:[],
             acState:'',
 
+            // 院校背景图路径
+            hostBgimg:'url(' + require('../../../assets/img/singleCollege.jpg') + ')',
         }
     },
     methods: {
+
+        // 关注院校、取消关注
+        // state: false 未关注 true 已关注
+        changeState:function(state){
+            if(state){this.remove();}
+            else {this.follow();}
+        },
+        //关注院校
+        follow:function(){
+            let self = this;
+            this.post('http://www.lishanlei.cn/front/colleges/setusermajor',{
+                m_id:this.acHostInfo.id,     //院校id
+                u_id:this.userId, //用户id
+            }).then(function (res) {
+                // let res = response[0];
+                // console.log(res);
+                if(res.code == 0){
+                    self.message(true, "关注成功", 'success');
+                    self.refresh();
+                }else{
+                    self.message(true, "操作失败，请重试", 'error');
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
+        remove:function(){
+
+        },
+
         // 热门活动——换一换
         refresh: function (data) {
             this.hotInfopage++;
@@ -166,6 +198,10 @@ export default {
                 console.log(res.result[0]);
                 if(res.code == 0){
                     self.acHostInfo = res.result[0];
+                    // 设置背景图
+                    if(self.acHostInfo.major_cover_name != ""){
+                        self.hostBgimg = self.acHostInfo.major_cover_name;
+                    }
                 }else{
                     self.message(true, "主办院校不存在", 'errors');
                 }
@@ -488,7 +524,7 @@ export default {
     }
     /*侧边栏第一块*/
     aside .asideBox{
-        /*background: url('../../../assets/img/singleCollege.jpg') no-repeat;*/
+        background: url('../../../assets/img/singleCollege.jpg') no-repeat;
         background-position: 50% 50%;
         background-size: cover;
         border-radius: 5px;

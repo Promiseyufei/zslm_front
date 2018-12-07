@@ -79,7 +79,7 @@ export default {
         // 跳转到活动详情页
         jump: function(){
             let id = this.activityInfo.id;
-            this.$router.push('/front/firstMenuRouter/singleActivity/'+id);
+            this.$router.push('/front/firstMenuRouter/lookActivity/singleActivity/'+id);
         },
     },
     props: ["activityInfo"],
