@@ -155,6 +155,21 @@ let front_router = {
                             name: '关于我们',
                             component: resolve => void(require(['@/views/front/staticPage/aboutUs'], resolve))
                         },
+                        {
+                            path: 'userTerms',
+                            name: '用户条款',
+                            component: resolve => void(require(['@/views/front/staticPage/userTerms'], resolve))
+                        },
+                        {
+                            path: 'helpCenter',
+                            name: '帮助中心',
+                            component: resolve => void(require(['@/views/front/staticPage/helpCenter'], resolve))
+                        },
+                        {
+                            path: 'legalNotice',
+                            name: '法律声明',
+                            component: resolve => void(require(['@/views/front/staticPage/legalNotice'], resolve))
+                        },
                     ]
                 },
                 // 首页
@@ -164,7 +179,7 @@ let front_router = {
                     component: resolve => void(require(['@/views/front/index'], resolve))
                 },
                 {
-                    path: 'search',
+                    path: 'search/:form?',
                     name: '搜索页面',
                     component: resolve => void(require(['@/views/front/search/search'], resolve)),
                     children: [

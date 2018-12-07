@@ -24,7 +24,7 @@
                             <p>{{collage.describe}}</p>
                         </div>
                         <!-- 切换卡 -->
-                        <div class="messageCoach">
+                        <div class="messageCoach" v-show="collage.son_coach!='' ">
                             <el-tabs v-model="activeName">
                                 <el-tab-pane label="优惠卷" name="first">
                                     <div class="coachbig">
@@ -46,6 +46,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="nonecoach" v-show="collage.coupon=='' ">
+                                        <img src="../../../assets/img/nonecoach.png" alt="">
+                                        <span>暂无可用优惠卷</span>
+                                    </div>
+                                    
                                 </el-tab-pane>
                                 <el-tab-pane label="分校列表" name="second">
                                     <div class="coachbig">
@@ -72,6 +77,13 @@
                                     </div>
                                 </el-tab-pane>
                             </el-tabs>
+                        </div>
+                        <div class="messageCoach" v-show="collage.son_coach=='' ">
+                            <h6>优惠卷</h6>
+                            <div class="nonecoach">
+                                <img src="../../../assets/img/nonecoach.png" alt="">
+                                <span>暂无可用优惠卷</span>
+                            </div>
                         </div>
                     </div>
                     <div class="singlerightbox">
@@ -137,7 +149,7 @@ export default {
         //获得分页数据
         singlecoach:function () {
             var that = this;
-            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/coach/getcoachbyid',{
+            this.fetch('http://www.lishanlei.cn/front/coach/getcoachbyid',{
                 id: 1,
                 u_id:1
             }).then(function (res) {
@@ -145,7 +157,7 @@ export default {
                     if (res.code == 0) {
                         that.collage = res.result[0];
                         that.activity = that.collage.best_hot_active.info[0];
-                        // console.log(that.coachlist);
+                        // console.log(that.collage);
                         // that.count = res.count;
                     }else {
                         that.message(true,res.msg,"error");
@@ -160,7 +172,7 @@ export default {
         useorget:function(re,id) {
             if(re==0) {
                 var that = this;
-                this.post('http://www.lishanlei.cn/zslm_back_rmfd/public/front/coach/addcoupon',{
+                this.post('http://www.lishanlei.cn/front/coach/addcoupon',{
                     u_id:1,
                     c_id:id
                 }).then(function (res) {
@@ -207,7 +219,18 @@ export default {
 .bigBox {
     background-color: rgb(245, 245, 245);
 }
-
+.nonecoach {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+}
+.nonecoach>span {
+    margin-top: 10px;
+    color: rgb(170, 170, 170);
+    font-size: 14px;
+}
 .ffff {
     color: #0061ac !important;
 }
@@ -400,7 +423,10 @@ export default {
 .messageCoach:hover {
     box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
 }
-
+.messageCoach>h6 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+}
 .detailCoach {
     padding: 25px;
     margin-bottom: 20px;
