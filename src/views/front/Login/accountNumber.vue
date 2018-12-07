@@ -19,7 +19,6 @@
 		},
 		watch: {
 			password(pass, oldpass) {
-
 				this.$store.commit('changeUserInfo', {name: 'userPassword', val: this.password});
 			}
 		},

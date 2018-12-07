@@ -1,7 +1,7 @@
 <template>
     <div class="search_label_page_head">
         <div class="c-div div_v60iAm biaoqian">
-            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': item.selected_prop_value === index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="javaScript:void(0)">{{ item.name }}</a>
+            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': item.selected_prop_value == index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="javaScript:void(0)">{{ item.name }}</a>
 
         </div>
     </div>
@@ -17,16 +17,18 @@ export default {
     },
     methods: {
         forCancelStyle() {
-            this.Names.forEach((item) => {
-                item.selected_prop_value = null;
-            });
+            let _this = this;
+            for(let i = 0; i < this.Names.length; i++) {
+                _this.Names[i].selected_prop_value = null;
+            }
             return true;
         },
         testClick(item, index) {
-//            this.$router.push(item.url);
-             this.$emit('labelHeadClick', item);
+        //    this.$router.push(item.url);
             if(this.forCancelStyle())
                 this.Names[index].selected_prop_value = index;
+                
+            this.$emit('labelHeadClick', item);
             
         }
     }

@@ -1,76 +1,53 @@
 <template>
-    <div style="height: 0">
-            <div class="container-fluid c-section section_bUBpNL">
-                <div class="row c-row row_EaN5GL">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 c-column column_Pmqzmn" style="margin-bottom: 25px">
-                        <userInfomation :user_name="this.userName"
-                                        :colleges="this.userCollege"
-                                        :provices="this.userProvice"
-                                        :citys="this.userCity"
-                                        :actives="this.userActive"
-                                        :ding="this.userNews"
-                                        :coupons="this.userCoupon"></userInfomation>
-                        <userList></userList>
-
-                    </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_aLEhx8" >
-                        <!--<div v-for="(item,index) in this.majors">-->
-                             <!--<user-college :data="item"></user-college>-->
-                        <!--</div>-->
-                        <!--<userActivity></userActivity>-->
-                        <div class="c-div div_v60iAm xiangqingye">
-                            <div class="c-div div_Vpd4yi biaoti">
-                                <div class="c-div div_gv5puJ">
-                                    <h1 class="c-heading heading_LkNL2E">优惠券使用操作流程</h1>
-                                </div>
-                                <div class="c-div div_ZlvBVf xian">
-
-                                </div></div>
-                            <div class="row c-row row_lysUBI">
-                                <div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg">
-                                    <div class="c-div div_jvE6kN"><div class="c-div div_HMuEFu">
-                                        <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/7edff31b5173a184ae1a2ba77b380ba7_origin.png">
-                                        <img class="hidden-xs c-image image_zlyW4q" src="http://qty83k.creatby.com/materials/2771/origin/62353520f032dd88dc536cb8979c86b4_origin.png">
-                                    </div>
-                                        <h1 class="c-heading heading_bzBLAm">step.1</h1>
-                                        <h1 class="c-heading heading_wT39zy">领取优惠券</h1></div>
-                                </div><div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg">
-                                <div class="c-div div_jvE6kN"><div class="c-div div_HMuEFu">
-                                    <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/d6a6bfeef43412a4a3e3d7631c5683cd_origin.png">
-                                    <img class="hidden-xs c-image image_zlyW4q" src="http://qty83k.creatby.com/materials/2771/origin/62353520f032dd88dc536cb8979c86b4_origin.png">
-                                </div><h1 class="c-heading heading_bzBLAm">step.2</h1><h1 class="c-heading heading_wT39zy">在个人中心可以查看到相应的优惠券</h1></div></div>
-                                <div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg"><div class="c-div div_jvE6kN">
-                                    <div class="c-div div_HMuEFu">
-                                        <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/6d65440a03efb918fe32ec1f1e180951_origin.png">
-                                        <img class="hidden-xs c-image image_zlyW4q" src="http://qty83k.creatby.com/materials/2771/origin/62353520f032dd88dc536cb8979c86b4_origin.png">
-                                    </div><h1 class="c-heading heading_bzBLAm">step.3</h1><h1 class="c-heading heading_wT39zy">选择想要使用的优惠券，点击使用</h1>
-                                </div></div><div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg">
-                                <div class="c-div div_jvE6kN"><div class="c-div div_HMuEFu">
-                                    <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/d70b7ea45baa54b5a62c13ad1650c826_origin.png">
-                                    <img class="hidden-xs c-image image_zlyW4q" src="http://qty83k.creatby.com/materials/2771/origin/62353520f032dd88dc536cb8979c86b4_origin.png">
-                                </div>
-                                    <h1 class="c-heading heading_bzBLAm">step.4</h1>
-                                    <h1 class="c-heading heading_wT39zy">收到短信凭据</h1>
-                                </div></div><div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg">
-                                <div class="c-div div_jvE6kN"><div class="c-div div_HMuEFu">
-                                    <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/7a310a01603dc0b85112c25941443108_origin.png">
-                                </div><h1 class="c-heading heading_bzBLAm">step.5</h1><h1 class="c-heading heading_wT39zy">在辅导机构报名时，出示短信凭据即可享受优惠</h1>
-                                </div></div></div>
-                        </div>
-                        <div class="c-div div_v60iAm biaoqian">
-                            <a class="c-textlink textlink_jH6Kkn xuanzhong" @click="pageInfo(0,0)">未使用 (10)</a>
-                            <a class="c-textlink textlink_jH6Kkn" @click="pageInfo(0,1)">已使用 (20)</a>
-                            <a class="c-textlink textlink_jH6Kkn"@click="pageInfo(1,2)">已失效 (35)</a>
-                        </div>
-                        <div v-for="(item,index) in this.coupons">
-                        <user-coupon :data="item" :id="id"></user-coupon>
-                        </div>
-                        <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
-                    </div>
-
+    <div>
+        <div class="c-div div_v60iAm xiangqingye">
+            <div class="c-div div_Vpd4yi biaoti">
+                <div class="c-div div_gv5puJ">
+                    <h1 class="c-heading heading_LkNL2E">优惠券使用操作流程</h1>
                 </div>
+                <div class="c-div div_ZlvBVf xian">
 
-            </div>
+                </div></div>
+            <div class="row c-row row_lysUBI">
+                <div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg">
+                    <div class="c-div div_jvE6kN"><div class="c-div div_HMuEFu">
+                        <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/7edff31b5173a184ae1a2ba77b380ba7_origin.png">
+                        <img class="hidden-xs c-image image_zlyW4q" src="http://qty83k.creatby.com/materials/2771/origin/62353520f032dd88dc536cb8979c86b4_origin.png">
+                    </div>
+                        <h1 class="c-heading heading_bzBLAm">step.1</h1>
+                        <h1 class="c-heading heading_wT39zy">领取优惠券</h1></div>
+                </div><div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg">
+                <div class="c-div div_jvE6kN"><div class="c-div div_HMuEFu">
+                    <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/d6a6bfeef43412a4a3e3d7631c5683cd_origin.png">
+                    <img class="hidden-xs c-image image_zlyW4q" src="http://qty83k.creatby.com/materials/2771/origin/62353520f032dd88dc536cb8979c86b4_origin.png">
+                </div><h1 class="c-heading heading_bzBLAm">step.2</h1><h1 class="c-heading heading_wT39zy">在个人中心可以查看到相应的优惠券</h1></div></div>
+                <div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg"><div class="c-div div_jvE6kN">
+                    <div class="c-div div_HMuEFu">
+                        <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/6d65440a03efb918fe32ec1f1e180951_origin.png">
+                        <img class="hidden-xs c-image image_zlyW4q" src="http://qty83k.creatby.com/materials/2771/origin/62353520f032dd88dc536cb8979c86b4_origin.png">
+                    </div><h1 class="c-heading heading_bzBLAm">step.3</h1><h1 class="c-heading heading_wT39zy">选择想要使用的优惠券，点击使用</h1>
+                </div></div><div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg">
+                <div class="c-div div_jvE6kN"><div class="c-div div_HMuEFu">
+                    <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/d70b7ea45baa54b5a62c13ad1650c826_origin.png">
+                    <img class="hidden-xs c-image image_zlyW4q" src="http://qty83k.creatby.com/materials/2771/origin/62353520f032dd88dc536cb8979c86b4_origin.png">
+                </div>
+                    <h1 class="c-heading heading_bzBLAm">step.4</h1>
+                    <h1 class="c-heading heading_wT39zy">收到短信凭据</h1>
+                </div></div><div class="col-lg-2_4 col-md-2_4 col-sm-2_4 col-xs-12 c-column column_mGHURg">
+                <div class="c-div div_jvE6kN"><div class="c-div div_HMuEFu">
+                    <img class="c-image image_5BC1ZB" src="http://qty83k.creatby.com/materials/2771/origin/7a310a01603dc0b85112c25941443108_origin.png">
+                </div><h1 class="c-heading heading_bzBLAm">step.5</h1><h1 class="c-heading heading_wT39zy">在辅导机构报名时，出示短信凭据即可享受优惠</h1>
+                </div></div></div>
+        </div>
+        <div class="c-div div_v60iAm biaoqian">
+            <a class="c-textlink textlink_jH6Kkn xuanzhong" @click="pageInfo(0,0)">未使用 (10)</a>
+            <a class="c-textlink textlink_jH6Kkn" @click="pageInfo(0,1)">已使用 (20)</a>
+            <a class="c-textlink textlink_jH6Kkn"@click="pageInfo(1,2)">已失效 (35)</a>
+        </div>
+        <div v-for="(item,index) in this.coupons">
+            <user-coupon :data="item" :id="id"></user-coupon>
+        </div>
+        <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
 
     </div>
 </template>
@@ -734,22 +711,6 @@
         },
         methods: {
 
-            info(){
-                let self = this;
-                this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/usercore/getuserinfo?id='+self.id)
-                    .then(res=>{
-                        if(res.code == 0){
-                            let result = res.result[0];
-                            self.userName = result.user_name;
-                            self.userProvice = result.provice
-                            self.userCity = result.city
-                            self.userCollege = result.majorCount;
-                            self.userActive = result.activeCount;
-                            self.userNews = result.newCount;
-                            self.userCoupon = result.couponCount;
-                        }
-                    })
-            },
             getCoupon(){
                 let self = this;
                 this.fetch('http://www.zslm.com/front/coach/getusercoach',{
@@ -789,7 +750,6 @@
             let divs = document.getElementsByTagName("div")
             divs[1].style.height = 0;
             divs[2].style.height = 0;
-            this.info();
             this.getCoupon();
         }
     }

@@ -32,6 +32,21 @@ export default {
             return arr;
         }
     },
+    /**
+     * 搜索页用于获得去掉参数的路由
+     * @param {string} url 
+     */
+    getChangeUrl(url) {
+        var arr=url.split("/");
+        arr.shift();
+        if(arr.length !== 3)
+            arr.pop();  
+        var str = '/';
+        arr.forEach((item => {
+            str += (item + '/');
+        }));
+        return str;
+    },
 
     /**
      * 登录成功后本地保存用户的状态
@@ -42,7 +57,6 @@ export default {
         var d = new Date();
         d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
         var expires = "expires=" + d.toUTCString();
-        console.info(userName + "=" + '111' + "; " + expires);
         document.cookie = userName + "=" + userPhone + "; " + expires;
     },
 

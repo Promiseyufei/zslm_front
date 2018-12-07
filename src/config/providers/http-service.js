@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.defaults.timeout = 5000;
 
-axios.defaults.baseURL = 'http://www.lishanlei.cn/zslm_back_rmfd/public/';
+axios.defaults.baseURL = 'http://www.zslm.com';
 
 axios.interceptors.request.use(
     config => {
@@ -66,7 +66,6 @@ export default {
                 params:params
             })
             .then(response => {
-                console.log(response);
                 resolve(response.data);
             }).catch(err => {
                 reject(err);

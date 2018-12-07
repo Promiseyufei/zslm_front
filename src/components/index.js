@@ -31,6 +31,12 @@ import selectAll from './front/selectAll'
 import searchMajorModular from './front/searchMajorModular.vue'
 import searchCoachBox from './front/searchCoachBox.vue'
 
+import tag from './front/tag.vue'
+import selectCollegeItem from './front/selectCollegeItem.vue'
+import majorDynamic from './front/majorDynamic.vue'
+import singleItem from './front/singleItem.vue'
+import pdfDetail from './front/pdfDetail.vue'
+
 export default {
     Test, 
     Test2,
@@ -63,5 +69,10 @@ export default {
     selectAll,
     searchCoachBox,
     userActivity,
-    userCoupon
+    userCoupon,
+    tag,
+    selectCollegeItem,
+    majorDynamic,
+    singleItem,
+    pdfDetail
 }
