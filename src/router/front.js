@@ -164,7 +164,7 @@ let front_router = {
                     component: resolve => void(require(['@/views/front/index'], resolve))
                 },
                 {
-                    path: 'search',
+                    path: 'search/:form?',
                     name: '搜索页面',
                     component: resolve => void(require(['@/views/front/search/search'], resolve)),
                     children: [

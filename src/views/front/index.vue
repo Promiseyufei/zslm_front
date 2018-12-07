@@ -397,11 +397,12 @@ export default {
         jumpsearch:function(re) {
             if(re==1){
                 var message = document.getElementById("indexinput");
-                this.$router.push('/front/search');
+                console.log();
+                this.$router.push('/front/search/major/'+message.value);
             }else if(re==2) {
-                // this.$router.push('/front/search');
+                this.$router.push('/front/firstMenuRouter/usercore/myNews');
             }else {
-                // this.$router.push('/front/search');
+                this.$router.push('/front/firstMenuRouter/usercore/myAccount');
             }
         },
         //跳到注册页面
@@ -410,19 +411,19 @@ export default {
         },
         //跳到相应的单个活动页面
         toJumpActivity: function() {
-            this.$router.push('/front/firstMenuRouter/singleActivity/'+this.activity[this.index].id);
+            this.$router.push('/front/firstMenuRouter/lookActivity/singleActivity/'+this.activity[this.index].id);
         },
         //跳到相应的单个活动页面
         toJumpActivity2:function(id) {
-            this.$router.push('/front/firstMenuRouter/singleActivity/'+id);
+            this.$router.push('/front/firstMenuRouter/lookActivity/singleActivity/'+id);
         },
         //跳到相应的单个辅导机构
         toJumpCoach:function(id) {
-            this.$router.push('/front/firstMenuRouter/singleCoachs/'+id);
+            this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/'+id);
         },
         //跳转到单个资讯页面
         toJumpInfor:function(id) {
-            this.$router.push('/front/firstMenuRouter/singleInformation/'+id);
+            this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/'+id);
         },
         //跳到相应的模块，分别为（选校校，找活动，找资讯，搜辅导）
         toJump: function(index) {
@@ -685,11 +686,13 @@ export default {
     .indexHeader>div>i {
         margin-bottom: 1px;
         margin-right: 1px;
+        cursor: pointer;
     }
     .indexHeader>i {
         margin: 0 10px;
         color: #fff;
         font-size: 22px;
+        cursor: pointer;
     }
     .indexinput {
         width: 0;
