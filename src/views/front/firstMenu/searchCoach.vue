@@ -221,12 +221,12 @@ export default {
         //跳转辅导机构详情页
         jump: function(id) {
             console.log(90);
-            this.$router.push('/front/firstMenuRouter/singleCoachs/'+id);
+            this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/'+id);
         },
         //得到所有筛选过的辅导机构列表
         getCoach: function() {
             var that = this;
-            this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/coach/getcoach',{
+            this.fetch('http://www.lishanlei.cn/front/coach/getcoach',{
                 provice: null,
                 coach_type: null,
                 coach_name: "",

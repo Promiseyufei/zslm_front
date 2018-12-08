@@ -82,6 +82,16 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/detailPage/singleInformation'], resolve))
                         },
                         {
+                            path: 'recruitStudents',
+                            name: '招生简章',
+                            component: resolve => void(require(['@/views/front/detailPage/recruitStudents'], resolve))
+                        },
+                        {
+                            path: 'majorCompare/:id?',
+                            name: '专业对比',
+                            component: resolve => void(require(['@/views/front/detailPage/majorCompare'], resolve))
+                        },
+                        {
                             path: 'singleOpinion/:id?/:name?',
                             name: '意见反馈页',
                             component: resolve => void(require(['@/views/front/detailPage/singleOpinion'], resolve))
@@ -156,6 +166,33 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/staticPage/aboutUs'], resolve))
                         },
                         {
+                            path: 'search',
+                            name: '搜索页面',
+                            component: resolve => void(require(['@/views/front/search/search'], resolve)),
+                            children: [
+                                {
+                                    path:'major/:keyword?',
+                                    name:'搜索页面的院校专业详情',
+                                    component: resolve => void(require(['@/views/front/search/searchMajor'], resolve)),
+                                },
+                                {
+                                    path: 'activity/:keyword?',
+                                    name: '搜索页面的活动详情',
+                                    component: resolve => void(require(['@/views/front/search/searchActivity'], resolve)),
+                                },
+                                {
+                                    path: 'info/:keyword?',
+                                    name: '搜索页面的咨询详情',
+                                    component: resolve => void(require(['@/views/front/search/searchInfo'], resolve)),
+                                },
+                                {
+                                    path: 'coach/:keyword?',
+                                    name: '搜索页面的辅导机构详情',
+                                    component: resolve => void(require(['@/views/front/search/searchCoach'], resolve)),
+                                }
+                            ]
+                        },
+                        {
                             path: 'userTerms',
                             name: '用户条款',
                             component: resolve => void(require(['@/views/front/staticPage/userTerms'], resolve))
@@ -178,33 +215,33 @@ let front_router = {
                     name: '首页',
                     component: resolve => void(require(['@/views/front/index'], resolve))
                 },
-                {
-                    path: 'search',
-                    name: '搜索页面',
-                    component: resolve => void(require(['@/views/front/search/search'], resolve)),
-                    children: [
-                        {
-                            path:'major/:keyword?',
-                            name:'搜索页面的院校专业详情',
-                            component: resolve => void(require(['@/views/front/search/searchMajor'], resolve)),
-                        },
-                        {
-                            path: 'activity/:keyword?',
-                            name: '搜索页面的活动详情',
-                            component: resolve => void(require(['@/views/front/search/searchActivity'], resolve)),
-                        },
-                        {
-                            path: 'info/:keyword?',
-                            name: '搜索页面的咨询详情',
-                            component: resolve => void(require(['@/views/front/search/searchInfo'], resolve)),
-                        },
-                        {
-                            path: 'coach/:keyword?',
-                            name: '搜索页面的辅导机构详情',
-                            component: resolve => void(require(['@/views/front/search/searchCoach'], resolve)),
-                        }
-                    ]
-                },
+                // {
+                //     path: 'search',
+                //     name: '搜索页面',
+                //     component: resolve => void(require(['@/views/front/search/search'], resolve)),
+                //     children: [
+                //         {
+                //             path:'major/:keyword?',
+                //             name:'搜索页面的院校专业详情',
+                //             component: resolve => void(require(['@/views/front/search/searchMajor'], resolve)),
+                //         },
+                //         {
+                //             path: 'activity/:keyword?',
+                //             name: '搜索页面的活动详情',
+                //             component: resolve => void(require(['@/views/front/search/searchActivity'], resolve)),
+                //         },
+                //         {
+                //             path: 'info/:keyword?',
+                //             name: '搜索页面的咨询详情',
+                //             component: resolve => void(require(['@/views/front/search/searchInfo'], resolve)),
+                //         },
+                //         {
+                //             path: 'coach/:keyword?',
+                //             name: '搜索页面的辅导机构详情',
+                //             component: resolve => void(require(['@/views/front/search/searchCoach'], resolve)),
+                //         }
+                //     ]
+                // },
 
             ]
         }

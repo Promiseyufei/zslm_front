@@ -57,7 +57,10 @@
 		methods:{
 			handleSelect(key, keyPath) {
 		    	let active = key;
-		    	
+		    },
+		    //同意用户协议
+		    agree:function(){
+
 		    },
 		    //获取验证码方法
 			sendcode:function(){

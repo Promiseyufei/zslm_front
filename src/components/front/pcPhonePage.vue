@@ -28,7 +28,6 @@
     <div class="phoneLeadBtn">
         <el-button class="leadBtn" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
     </div>
-
 </div>
 </template>
 
