@@ -1,5 +1,6 @@
 <template>
     <div style="height: 0">
+        <div class="container-fluid c-section section_bUBpNL banner c-scrollIn" data-c_tl_id="M_1190f23c338d4f57" id="section_d2fdb4dd"></div>
             <div class="container-fluid c-section section_bUBpNL">
                 <div class="row c-row row_EaN5GL">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 c-column column_Pmqzmn" style="margin-bottom: 25px">
@@ -223,6 +224,18 @@
         padding-bottom: 50px;
     }
 
+    .section_bUBpNL {
+        background-color: rgb(245, 245, 245);
+        min-height: auto;
+        padding-bottom: 60px;
+        position: relative;
+        z-index: -2;
+    }
+
+    .section_bUBpNL.banner {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
 
 
 
@@ -289,7 +302,10 @@
         * {
             background-attachment: initial !important;
         }
-
+        .section_bUBpNL.banner {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
 
     }
 
@@ -328,9 +344,9 @@
             width: 50%;
         }
 
-        .row_EaN5GL{
-            width: 100%;
-        }
+        /*.row_EaN5GL{*/
+            /*width: 100%;*/
+        /*}*/
     }
 
     @media (min-width: 768px) {
@@ -374,60 +390,10 @@
 
 </style>
 
-<style>
-    body{
-        background-color: #f5f5f5;
-    }
-    .el-carousel__container{
-        height: 440px;
-    }
-    .el-carousel__button{
-        width: 1em;
-        height: 1em;
-        border-radius: .5em;
-    }
-    .el-carousel__indicator{
-        padding: 0 3px 16px;
-    }
-
-    .el-carousel__arrow{
-        height: 0px;
-    }
-    [class*=" el-icon-"], [class^=el-icon-]{
-        font-size:26px;
-        font-weight: bolder;
-        line-height:0px;
-    }
-    .el-carousel__arrow--left{
-        left: 20px;
-    }
-    .el-carousel__arrow--right{
-        right: 20px;
-    }
-    .sowingContent[data-v-2912dfba]{
-        border-radius: 5px;
-    }
-
-    @media (max-width: 991px){
-        .el-carousel__container {
-            min-height: auto;
-        }
-        .sowingMap[data-v-2912dfba]{
-            width: 100%;
-        }
-        [class*=" el-icon-"], [class^=el-icon-]{
-            font-size: 0px;
-        }
-        .sowingContent[data-v-2912dfba]{
-            border-radius: 0px;
-        }
-    }
-</style>
 <script>
     export default {
         data() {
             return {
-                // isCollapse: true,
                 id:1,
                 userName:'',
                 userProvice:'',
@@ -438,10 +404,6 @@
                 userCoupon:0,
                 page:1,
                 page_size:3,
-                // majors:[],
-                // loading:false,
-                // disabled:false,
-                // loadingBtnText:'加载更多'
             };
         },
         methods: {
@@ -462,27 +424,6 @@
                         }
                     })
             },
-            // getMajor(){
-            //     let self = this;
-            //     this.fetch('/front/usercore/getusermajor',{id:self.id,page:self.page,page_size:self.page_size})
-            //         .then(res=>{
-            //             if(res.code == 0){
-            //                 let data = res.result;
-            //                 for(let i in data){
-            //                     self.majors.push(data[i])
-            //                 }
-            //             }else{
-            //                 self.disabled = true;
-            //                 self.loadingBtnText = "已经到底了"
-            //             }
-            //         })
-            // },
-            // getPage(){
-            //     this.loading = true;
-            //     this.page++;
-            //     this.getMajor();
-            //     this.loading = false;
-            // }
         },
         mounted(){
             let divs = document.getElementsByTagName("div")

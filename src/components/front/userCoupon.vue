@@ -6,9 +6,9 @@
                 <div class="c-div div_bYIuDs">
                     <img class="c-image image_Y5MjSi" src="http://qty83k.creatby.com/materials/2771/origin/c2002a76f6c09f0000660a8ad7c20035_origin.png">
                     <h1 class="c-heading textlink_e6pE3X daliebiao wode">{{data.coach_name}}</h1>
-                    <p class="c-ellipse c-paragraph paragraph_XjkcYS">{{data.province}}+data{{data.city}}</p>
-                </div><div class="c-div div_m9HjXA c-action-click" data-c_act_id="M_4abc7f687fa31f82|M_ece499c2586fc4bd|M_152275e144592094" data-c_e_id="div_dec5b8c0">
-                <h1 class="c-heading heading_6Bjcro" data-c_e_id="heading_393988c5"><a :href="data.web_url">进入主页</a>></h1>
+                    <p class="c-ellipse c-paragraph paragraph_XjkcYS">{{data.province}}+{{data.city}}</p>
+                </div><div class="c-div div_m9HjXA c-action-click" >
+                <h1 class="c-heading heading_6Bjcro"><a :href="data.web_url">进入主页</a>></h1>
             </div></div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_PITz90">
             <div class="c-div cs-repeatable div_2wrISM">
                 <div class="c-div div_x27uqU wode"  v-for="(item,index) in this.data.coupon">
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="c-div div_8LVJIQ shiyong wode c-action-click" data-c_act_id="act_6dbad610">
+                    <div class="c-div div_8LVJIQ shiyong wode c-action-click" >
                         <h1 class="c-heading heading_UEZrXJ shiyong wode">去<div>使</div><div>用</div></h1>
                     </div>
                 </div>
@@ -641,7 +641,7 @@
         },
         methods: {
         },
-        props: ["data","id"],
+        props: ["data"],
         mounted(){
         }
     }

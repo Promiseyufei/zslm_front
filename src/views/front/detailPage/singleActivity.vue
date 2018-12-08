@@ -80,13 +80,14 @@
                 <!-- 右部分侧边栏 -->
                 <aside>
                     <!-- 院校信息 -->
-                    <div v-if="acHostInfo.id" class="asideBox" style="backgroundImage: url(/static/img/singleCollege.924aa58.jpg);">
+                    <div v-if="acHostInfo.id" class="asideBox" :style="{backgroundImage:'url(' + hostBgimg + ')'}">
                         <!-- <div v-if="acHostInfo.id" class="asideBox" style="backgroundImage: url(../../../assets/img/singleCollege.jpg);"> -->
                         <div class="asideContent">
                             <div class="asideLogo">
-                                <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name">
+                                <!-- <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name"> -->
                                 <!-- 默认图片 -->
-                                <img v-else src="../../../assets/img/majorIcon.png">
+                                 <img v-if=" acHostInfo.magor_logo_name != '' " src="../../../assets/img/logo.png">
+                                <img v-else src="../../../assets/img/logo.png">
                             </div>
                             <div class="asideTitle">
                                 <span></span>
@@ -95,11 +96,12 @@
                             </div>
                             <div class="asideAddress">
                                 <img src="../../../assets/img/position.png">
-                                <span>{{acHostInfo.province.city}}&nbsp;</span>
-                                <span class="addressItem">&middot;&nbsp;{{acHostInfo.province.province}}</span>
+                                <span>{{acHostInfo.city}}&nbsp;</span>
+                                <span class="addressItem">&middot;&nbsp;{{acHostInfo.province}}</span>
                             </div>
                             <div class="InfoBtn asideBtn">
-                                <a href="">+&nbsp;关注</a>
+                                <a href="javascript:0;" style="background-color: rgba(0,159,160,1);" @click="changeState(acHostInfo.is_guanzhu)" v-if="acHostInfo.is_guanzhu">已关注</a>
+                                <a href="javascript:0;" @click="changeState(acHostInfo.is_guanzhu)" v-else>+&nbsp;关注</a>
                             </div>
                         </div>
                     </div>
@@ -140,9 +142,41 @@ export default {
             AppointAcInfo:[],
             acState:'',
 
+            // 院校背景图路径
+            hostBgimg:'url(' + require('../../../assets/img/singleCollege.jpg') + ')',
         }
     },
     methods: {
+
+        // 关注院校、取消关注
+        // state: false 未关注 true 已关注
+        changeState:function(state){
+            if(state){this.remove();}
+            else {this.follow();}
+        },
+        //关注院校
+        follow:function(){
+            let self = this;
+            this.post('http://www.lishanlei.cn/front/colleges/setusermajor',{
+                m_id:this.acHostInfo.id,     //院校id
+                u_id:this.userId, //用户id
+            }).then(function (res) {
+                // let res = response[0];
+                // console.log(res);
+                if(res.code == 0){
+                    self.message(true, "关注成功", 'success');
+                    self.refresh();
+                }else{
+                    self.message(true, "操作失败，请重试", 'error');
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
+        },
+        remove:function(){
+
+        },
+
         // 热门活动——换一换
         refresh: function (data) {
             this.hotInfopage++;
@@ -155,13 +189,19 @@ export default {
         // 获取活动主办院校信息
         getAcHostMajor:function(){
             let self = this;
-            this.fetch('/front/activity/getAcHostMajor',{
-                acId:this.id,
+            this.fetch('http://www.lishanlei.cn/front/colleges/getactivemajor',{
+                // acId:this.id,
+                a_id:this.id,
+                u_id:this.userId,
             }).then(function (res) {
-                // let res = result.data;
-                // console.log(res);
+                // let res = response[0];
+                console.log(res.result[0]);
                 if(res.code == 0){
-                    self.acHostInfo = res.result;
+                    self.acHostInfo = res.result[0];
+                    // 设置背景图
+                    if(self.acHostInfo.major_cover_name != ""){
+                        self.hostBgimg = self.acHostInfo.major_cover_name;
+                    }
                 }else{
                     self.message(true, "主办院校不存在", 'errors');
                 }
@@ -173,7 +213,7 @@ export default {
         // 热门活动推荐列表
         getPopularAcInfo:function(){
             let self = this;
-            this.fetch('/front/activity/getPopularAcInfo',{
+            this.fetch('http://www.lishanlei.cn/front/activity/getPopularAcInfo',{
                 acId:this.id,
                 pageNumber:this.hotInfopage,
             }).then(function (res) {
@@ -189,7 +229,8 @@ export default {
                             z_image:acInfo[i].active_img,
                         });
                     }
-                    // console.log(self.hotInfor);
+                    console.log(res);
+                    console.log("-----");
                     // self.hotInfor = res.result[0].acInfo;
                     self.hotInfoTatol = acInfo.count;
                 }else{
@@ -203,7 +244,7 @@ export default {
         // 获取活动内容详情
         getAppointAcInfo:function(){
             let self = this;
-            this.fetch('/front/activity/getAppointAcInfo',{
+            this.fetch('http://www.lishanlei.cn/front/activity/getAppointAcInfo',{
                 acId:this.id,
             }).then(function (res) {
                 // let res = result.data;
@@ -229,7 +270,7 @@ export default {
             // 需不需要前台判断多次点击时的情况
             let self = this;
             if(self.acSignClick == 0){
-                this.fetch('/front/activity/activitySign',{
+                this.fetch('http://www.lishanlei.cn/front/activity/activitySign',{
                     userId:this.userId,
                     acId:this.id,
                 }).then(function (res) {
@@ -287,6 +328,7 @@ export default {
         margin-left: auto;
         display: flex;
         align-items: center;
+        padding-left: 10px;
     }
     .breadCrumb .breadCrumbContainer>img{
         margin-right: 7px;
@@ -310,13 +352,15 @@ export default {
         visibility:hidden;
         height:0;
     }
+    .singleActivityBody section, .singleActivityBody aside{
+        padding-left: 10px;
+        padding-right: 10px;
+        float: left;
+    }
 
     /*左浮动——中间的左边部分大块：包括主办院校信息以及活动信息*/
     .singleActivityBody section{
-        padding-left: 10px;
-        padding-right: 10px;
         min-height: 80px;
-        float: left;
         box-sizing: border-box;
     }
     .singleActivityBody section .InfoBox{
@@ -346,10 +390,11 @@ export default {
         text-align: center;
         text-decoration: none;
         font-weight: bold;
-        padding-top: 14px;
+        padding-top: 16px;
         width: 138px;
         height: 48px;
         box-sizing: border-box;
+        font-size: 14px;
     }
     .InfoBtn>a:hover{
         background-color: rgba(0,159,160,1);
@@ -473,20 +518,17 @@ export default {
 
     /*中间的右边侧边栏部分块*/
     .singleActivityBody aside{
-        padding-left: 10px;
-        padding-right: 10px;
         min-height: 80px;
-        float: left;
         position: relative;
         box-sizing: border-box;
     }
     /*侧边栏第一块*/
     aside .asideBox{
-        /*background: url('../../../assets/img/singleCollege.jpg') no-repeat;*/
+        background: url('../../../assets/img/singleCollege.jpg') no-repeat;
         background-position: 50% 50%;
         background-size: cover;
         border-radius: 5px;
-        margin-bottom: 34px;
+        margin-bottom: 20px;
         width: auto;
         height: 350px;
     }
@@ -540,6 +582,8 @@ export default {
         margin-right: 14px;
         color: #fcfcfc;
         font-weight: bold;
+        width: 138px;
+        line-height: 1.2;
     }
     .asideBox .asideAddress{
         display: flex;
@@ -584,41 +628,13 @@ export default {
         transition: All 0.3s ease;
     }
 
-    /* Extra small devices (phones, 600px and down) */
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 767px) {
         /*面包屑导航样式*/
         .breadCrumb{
             padding-top: 25px;
             padding-bottom: 10px;
         }
-        .breadCrumb .breadCrumbContainer{
-            padding-left: 10px;
-        }
-        /*活动详情大块元素*/
-        .singleActivityBody{
-            padding-bottom: 30px;
-        }
-        .singleActivityBody>div,section,aside{
-            width: 100%;
-        }
-        /*主办方标题*/
-        .hostInfo h1{
-            font-size: 18px;
-            line-height: 26px;
-            margin-bottom: 18px;
-        }
-    }
-
-    /* Small devices (portrait tablets and large phones, 600px and up) */
-    @media only screen and (min-width: 600px) {
-        /*面包屑导航样式*/
-        .breadCrumb{
-            padding-top: 25px;
-            padding-bottom: 10px;
-        }
-        .breadCrumb .breadCrumbContainer{
-            padding-left: 10px;
-        }
+       
         /*活动详情大块元素*/
         .singleActivityBody{
             padding-bottom: 30px;
@@ -649,17 +665,9 @@ export default {
         }
     } 
 
-    /* Large devices (laptops/desktops, 992px and up) */
-    @media only screen and (min-width: 992px) {
-
-    } 
-
     /* Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1200px) {
         /*中间活动大块样式*/
-        .singleActivityBody{
-            padding-bottom: 60px;
-        }
         .singleActivityBody>div{
             width: 1300px;
         } 
@@ -673,8 +681,6 @@ export default {
         /*面包屑样式*/
         .breadCrumb .breadCrumbContainer{
             width: 1280px;
-        }
-        .breadCrumb .breadCrumbContainer{
             padding-left: 0;
         }
     }

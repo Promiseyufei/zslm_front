@@ -1,7 +1,7 @@
 <template>
         <div class="detailPicture" @mouseover="pdfOne" @mouseout="pdfOneOut" >
-            <div><img :src="src"></div>
-            <div class="detailCity" id="city">{{city}}</div>
+            <div><img :src="src" alt="加载中"></div>
+            <div class="detailCity">{{pdfPicture[0].file_alt}}</div>
         </div>
 </template>
 
@@ -10,18 +10,21 @@ export default {
     data(){
     	return{
             src:require("../../assets/img/pdf.png"),
-            city:'北京地区招生报告',
     	}
     },
+    props:["t","pdfPicture"],
     methods:{
        //资料下载区logo——鼠标滑过样式
             pdfOne:function() {
                     this.src = require("../../assets/img/pdfG.png")
-                    document.getElementById('city').style.color = "#009fa0"
+                    this.$emit('thisTest', this.t)
+                    // document.getElementById('t').style.color = "#009fa0"
             },
             pdfOneOut:function() {
                     this.src = require("../../assets/img/pdf.png")
-                    document.getElementById('city').style.color = "#6f6f6f"
+                    this.$emit('thisTesta', this.t)
+                    // this.$emit('thisTest', this.t)
+                    // document.getElementById('t').style.color = "#6f6f6f"
             },
         //资料下载区logo——鼠标滑过样式
 
@@ -31,6 +34,7 @@ export default {
 
     },
     mounted(){
+        // console.log(this.t)
         // console.log(this.tag)
     }
 }
@@ -41,19 +45,27 @@ export default {
 </style>
 
 <style scoped>
+    .testa>.detailCity {
+        color: #009fa0;
+    }
+    .testb>.detailCity {
+        color: #6f6f6f;
+    }
     .detailCity {
+        text-align: center;
+        width: 100%;
         line-height: 17px;
         font-size: 12px;
         color: rgb(110, 110, 110);
     }
     .detailPicture {
+        display: flex;
+        align-items:center;
+        flex-direction:column;
         cursor: pointer;
-        width: 24%;
-        height: 52px;
-        text-align: center;
-        margin: 0 10px;
-        height: 86px;
-        /*width: 29%;*/
+        border-bottom: 1px solid rgb(239, 239, 239);
+        width: 23%;
+        padding: 20px 12px;
     }
     
 

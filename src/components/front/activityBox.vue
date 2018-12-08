@@ -3,7 +3,7 @@
     <!-- <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox> -->
 
 	<!-- 单个活动块 -->
-    <div class="activityBox" @click="jump(activityInfo.id)">
+    <div class="activityBox" @click="jump">
 	    <div>
 	        <!-- 头部图片及状态 -->
 	        <!-- <div class="activityImg"  :style="{ backgroundImage: 'url(&;quot;' + activityInfo.active_img + '&;quot;)' }"> -->
@@ -20,7 +20,7 @@
 	            <div class="activityAddressTime">
 	                <div class="activityAddress">
 	                    <img src="../../assets/img/position.png">
-	                    <!-- <span>{{activityInfo.province.province}}</span> -->
+	                    <span>{{activityInfo.province.province}}</span>
 	                </div>
 	                <div class="activityTime">
 	                    <img src="../../assets/img/calendar.png">
@@ -79,13 +79,13 @@ export default {
         // 跳转到活动详情页
         jump: function(){
             let id = this.activityInfo.id;
-            this.$router.push('/front/firstMenuRouter/singleActivity/'+id);
+            this.$router.push('/front/firstMenuRouter/lookActivity/singleActivity/'+id);
         },
     },
     props: ["activityInfo"],
     mounted(){
         // console.log(this.activityInfo);
-        
+        this.activityState();
     },
     watch:{
         activityInfo(){
@@ -121,10 +121,10 @@ export default {
     /*单个活动块儿的属性：大小、背景色等*/
     .activityBox{
         cursor: pointer;
-        width: 325px;
+        width: 305px;
         /*height: 370px;*/
-        padding-left: 10px;
-        padding-right: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
         margin-bottom: 20px;
         /*包括边框和padding的大小*/
         box-sizing: border-box;
@@ -147,7 +147,7 @@ export default {
         background-image: url("../../assets/img/activitytitle.jpg");
         background-position: 50% 50%;
         background-size: cover;
-        border-radius: 0px 5px 0px 5px;
+        border-radius: 5px 5px 0px 0px;
     }
 
     .activityState1{
@@ -294,5 +294,17 @@ export default {
         text-align: left;
         /*颜色可变*/
         background-color: #aaa;
+    }
+
+     /* Medium devices (landscape tablets, 768px and up) */
+    @media only screen and (max-width: 767px) {
+        .activityBox{
+            width: 100%;
+        }
+    }
+    @media only screen and (min-width: 768px) and (max-width: 1200px) {
+        .activityBox{
+            width: 50%;
+        }
     }
 </style>

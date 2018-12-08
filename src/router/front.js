@@ -57,7 +57,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/selectCollege'], resolve))
                         },
                         {
-                            path: 'singleCollage/:id?',
+                            path: 'selectCollege/singleCollage/:id?',
                             name: '选院校——单个院校，招生项目',
                             component: resolve => void(require(['@/views/front/detailPage/singleCollage'], resolve))
                         },
@@ -67,8 +67,8 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/lookActivity'], resolve))
                         },
                         {
-                            path: 'singleActivity/:id?',
-                            name: '一级导航-单个活动',
+                            path: 'lookActivity/singleActivity/:id?',
+                            name: '找活动-单个活动详情页',
                             component: resolve => void(require(['@/views/front/detailPage/singleActivity'], resolve))
                         },
                         {
@@ -77,9 +77,24 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/viewInformation'], resolve))
                         },
                         {
-                            path: 'singleInformation/:id?',
+                            path: 'viewInformation/singleInformation/:id?',
                             name: '找资讯详情页',
                             component: resolve => void(require(['@/views/front/detailPage/singleInformation'], resolve))
+                        },
+                        {
+                            path: 'singleOpinion/:id?/:name?',
+                            name: '意见反馈页',
+                            component: resolve => void(require(['@/views/front/detailPage/singleOpinion'], resolve))
+                        },
+                        {
+                            path: 'returnmoney',
+                            name: '退款保障页',
+                            component: resolve => void(require(['@/views/front/detailPage/returnmoney'], resolve))
+                        },
+                        {
+                            path: 'returnform',
+                            name: '退款申请页',
+                            component: resolve => void(require(['@/views/front/detailPage/returnform'], resolve))
                         },
                         {
                             path: 'searchCoach',
@@ -87,9 +102,9 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/firstMenu/searchCoach'], resolve))
                         },
                         {
-                            path: 'singleCoach/:id?',
+                            path: 'searchCoach/singleCoachs/:id?',
                             name: '单个辅导机构',
-                            component: resolve => void(require(['@/views/front/detailPage/singleCoach'], resolve))
+                            component: resolve => void(require(['@/views/front/detailPage/singleCoachs'], resolve))
                         },
                         {
                             path: 'usercore',
@@ -98,7 +113,7 @@ let front_router = {
                             children: [
                                 {
                                     path:'myFollow',
-                                    name:'我的关注',
+                                    name:'myfollow',
                                     component: resolve =>void(require(['@/views/front/usercore/myFollow'], resolve)),
                                 },
                                 {
@@ -124,8 +139,9 @@ let front_router = {
                                     ]
                                 },
                                 {
+
                                     path:'myactive',
-                                    name:'我的关注',
+                                    name:'myactive',
                                     component: resolve =>void(require(['@/views/front/usercore/userActive'], resolve)),
                                 },
                                 {
@@ -133,13 +149,46 @@ let front_router = {
                                     name: 'usercore_coupon',
                                     component: resolve =>void(require(['@/views/front/usercore/userConpon'], resolve))
                                 },
+                                {
+                                    path: 'useractive',
+                                    name: 'usercore_active',
+                                    component: resolve => void(require(['@/views/front/usercore/userActive'], resolve))
+                                },
+                                {
+                                    path: 'myAccount',
+                                    name: 'myAccount',
+                                    component: resolve =>void(require(['@/views/front/usercore/myAccount'], resolve)),
+                                }
+                            ]
+                        },
                             ]
                         },
 
+
                         {
-                            path: 'useractive',
-                            name: 'usercore_active',
-                            component: resolve =>void(require(['@/views/front/usercore/userActive'], resolve))
+                            path: '404NotFound',
+                            name: '404页面',
+                            component: resolve => void(require(['@/views/front/staticPage/404Page'], resolve))
+                        },
+                        {
+                            path: 'aboutUs',
+                            name: '关于我们',
+                            component: resolve => void(require(['@/views/front/staticPage/aboutUs'], resolve))
+                        },
+                        {
+                            path: 'userTerms',
+                            name: '用户条款',
+                            component: resolve => void(require(['@/views/front/staticPage/userTerms'], resolve))
+                        },
+                        {
+                            path: 'helpCenter',
+                            name: '帮助中心',
+                            component: resolve => void(require(['@/views/front/staticPage/helpCenter'], resolve))
+                        },
+                        {
+                            path: 'legalNotice',
+                            name: '法律声明',
+                            component: resolve => void(require(['@/views/front/staticPage/legalNotice'], resolve))
                         },
                     ]
                 },
@@ -150,7 +199,7 @@ let front_router = {
                     component: resolve => void(require(['@/views/front/index'], resolve))
                 },
                 {
-                    path: 'search',
+                    path: 'search/:form?',
                     name: '搜索页面',
                     component: resolve => void(require(['@/views/front/search/search'], resolve)),
                     children: [
@@ -178,8 +227,6 @@ let front_router = {
                 },
 
             ]
-        }
-    ]
 }
 
 

@@ -13,8 +13,23 @@
                     </div>
                     <p style="opacity: 0.8;text-align: center;color: rgb(255, 255, 255);font-size: 12px;font-weight: bold;">关注复旦大学MBA，获取最新信息！</p>
                     <div class="collageButton">
-                        <div class="buttoOne"><el-button type="primary">+ 关注</el-button></div>
-                        <div class="buttoTwo"><el-button type="primary" icon="el-icon-share"></el-button></div>
+                        <div class="buttoOne" @click="clickFollow"><el-button type="primary" id="followButt"><i class="el-icon-plus" id="symbol"></i>{{follow}}</el-button></div>
+                        <div class="buttoTwo">
+                            <el-popover
+                              placement="bottom-start"
+                              v-model="visible2">
+                                <div class="shareWeinxin" @click="sharewx">
+                                    <img src="../../../assets/img/weixin2.png">
+                                    <span>分享到微信</span>
+                                </div>
+                                 <div class="shareWeinxin" @click="sharexl">
+                                    <img src="../../../assets/img/xinlang2.png">
+                                    <span>分享到微博</span>
+                                </div>
+                                <el-button type="primary" icon="el-icon-share" slot="reference"></el-button>
+                            </el-popover>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -31,9 +46,9 @@
                                         <p>招生项目</p>
                                         <div class="collageLine"></div>
                                     </div>
-                                    <div><el-button size="mini">+ 对比</el-button></div>
+                                    <div class="hover"><el-button size="mini">+ 对比</el-button></div>
                                 </div>
-                                <singleItem></singleItem>
+                                <singleItem :detail="t" :i="index" v-for="(t,index) in singleItem" :key="index"></singleItem>
                             </el-card>
                         </el-col>
                     <!-- </div> -->
@@ -45,8 +60,11 @@
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="reflesh">
-                                    <a><i class="fa fa-repeat">&nbsp;换一换</i></a>
+                                    <a @click="getContent"><i class="fa fa-repeat">&nbsp;换一换</i></a>
                                 </div>
+                            </div>
+                            <div class="recommedContent">
+                                <subPage :shortArticles="recommedContent"></subPage>
                             </div>
                         </el-card>
                     </el-col>
@@ -80,7 +98,7 @@
                                 <div class="basicDetail">
                                     <div class="detailYear">
                                         <div class="detailTitle">审批年限</div>
-                                        <div class="detailContent">1991</div>
+                                        <div class="detailContent">{{year}}</div>
                                     </div>
                                     <div class="detailMajor">
                                         <div class="detailTitle">专业认证</div>
@@ -96,11 +114,11 @@
                                     </div>
                                     <div class="detailCity">
                                         <div class="detailTitle">所在省市</div>
-                                        <div class="detailContent">上海</div>
+                                        <div class="detailContent">{{province}}</div>
                                     </div>
                                     <div class="detailAddress" style="align-items:flex-start;">
                                         <div class="detailTitle">院校地址</div>
-                                        <div class="detailContent" style="width:182px;line-height: 22px;">上海市杨浦区国顺路670号史带楼 702室</div>
+                                        <div class="detailContent" style="width:182px;line-height: 22px;">{{address}}</div>
                                     </div>
                                 </div>
                             </el-card>
@@ -115,28 +133,38 @@
                                 </div>
                                 <div class="telephone">
                                     <div class="phoneText">咨询电话</div>
-                                    <div class="phoneNumber">021-65119023，021-65643935 021-25011338</div>
+                                    <div class="phoneNumber">{{phonNumber}}</div>
                                 </div>
                                 <div class="fourLogon">
-                                    <div class="majorLine" @mouseover="computer" @mouseout="computerOut">
+                                    <div class="majorLine" @mouseover="computer" @mouseout="computerOut" @click="majorWebsite">
                                         <div><img :src="logoPicture[0].computer"></div>
                                         <div class="major" id="major">校园官网</div>
                                     </div>
                                     <div class="logonLine"></div>
-                                    <div class="studentLine" @mouseover="contact" @mouseout="contactOut">
+                                    <div class="studentLine" @mouseover="contact" @mouseout="contactOut" @click="majorSpecial">
                                         <div><img :src="logoPicture[0].contact"></div>
                                         <div class="student" id="contact">招生专题</div>
                                     </div>
                                     <div class="logonLine"></div>
-                                    <div class="weixinLine" @mouseover="weixin" @mouseout="weixinOut">
+                                    <div class="weixinLine" @mouseover="weixin" @mouseout="weixinOut" @click="majorWx">
                                         <div><img :src="logoPicture[0].weixin"></div>
                                         <div class="weixin" id="weixin">院校微信</div>
                                     </div>
+                                    <el-dialog
+                                      :visible.sync="dialogVisible"
+                                      width="30%">
+                                      <span><img src="../../../assets/img/xinlang2.png"></span>
+                                    </el-dialog>
                                     <div class="logonLine"></div>
-                                    <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut">
+                                    <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut" @click="majorWb">
                                         <div><img :src="logoPicture[0].xinlang"></div>
                                         <div class="weibo" id="xinlang">微博主页</div>
                                     </div>
+                                    <el-dialog
+                                      :visible.sync="dialogVisible2"
+                                      width="30%">
+                                      <span><img src="../../../assets/img/xinlang2.png"></span>
+                                    </el-dialog>
                                 </div>
                             </el-card>
                         </el-col>
@@ -144,13 +172,13 @@
                     <div class="leftThree">
                         <el-col :span="8">
                             <el-card shadow="hover">
-                                <div style="margin-bottom:10px;">
+                                <div style="margin-bottom:10px;padding:10px;">
                                     <p>资料下载区</p>
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="pdf">
-                                    <div class="pdfDetail" v-for="(t,index) in pdfPicture" :key="index">
-                                        <pdfDetail v-for="(t,index) in pdfPicture" :key="index"></pdfDetail>
+                                    <div class="pdfDetail">
+                                        <pdfDetail :pdfPicture="pdfPicture" v-for="(t,index) in pdfPicture" @thisTesta="(b) => {bb = b}" @thisTest="(a) => {aa = a}" :t="index" :key="index" :class="{testa: index == aa ? true : false, testb: index == bb ? true : false}" :id="city(index)"></pdfDetail>
                                     </div>
                                 </div>
                             </el-card>
@@ -170,64 +198,41 @@ export default {
     },
     data() {
         return {
-            aboutActivity:[
-                {
-                    start_state:'123',
-                    z_name:'45',
-                    activity_type:'67',
-                    active_name:'11',
-                    begin_time:'33',
-                    end_time:'55',
-                    province:{province:'99'}
-                },
-                {
-                    start_state:'123',
-                    z_name:'45',
-                    activity_type:'67',
-                    active_name:'11',
-                    begin_time:'33',
-                    end_time:'55',
-                    province:{province:'99'}
-                },
-                // {
-                //     start_state:'123',
-                //     z_name:'45',
-                //     activity_type:'67',
-                //     active_name:'11',
-                //     begin_time:'33',
-                //     end_time:'55',
-                //     province:{province:'99'}
-                // },
-                // {
-                //     start_state:'123',
-                //     z_name:'45',
-                //     activity_type:'67',
-                //     active_name:'11',
-                //     begin_time:'33',
-                //     end_time:'55',
-                //     province:{province:'99'}
-                // },
-                // {
-                //     start_state:'123',
-                //     z_name:'45',
-                //     activity_type:'67',
-                //     active_name:'11',
-                //     begin_time:'33',
-                //     end_time:'55',
-                //     province:{province:'99'}
-                // },
-            ],
-            pdfPicture:[
-                {},
-                {},
-                {},
-            ],
+            dialogVisible: false,
+            dialogVisible2:false,
+            //关注
+            follow:'关注',
+            ab:1,
+            //分享
+            visible2: false,
+            //资料下载区
+            aa:-1,
+            bb:-1,
+            //基本信息、联系方式资料下载区
+            year:0,
+            province:'',
+            address:'',
+            phonNumber:0,
+            id:this.$route.params.id,
+            u_id:1,
+            page:1,
+            page_size:3,
+            //招生项目
+            singleItem:[],
+            //推荐内容
+            recommedContent:[],
+            //相关活动
+            aboutActivity:[],
+            //资料下载区
+            pdfPicture:[],
+            //联系方式
             logoPicture:[{
                 computer:require("../../../assets/img/computer.png"),
                 xinlang:require("../../../assets/img/xinlang2.png"),
                 weixin:require("../../../assets/img/weixin2.png"),
                 contact:require("../../../assets/img/contact.png"), 
             }],
+            //基本信息
             majorPicture:[
                 {src:require("../../../assets/img/amba.png")},
                 {src:require("../../../assets/img/aacsbSmall.png")},
@@ -239,11 +244,141 @@ export default {
                 {src:require("../../../assets/img/985.png")},
                 {src:require("../../../assets/img/shuangyiliu.png")},
             ]
-            // basicInform:true,
-            // id: this.$route.params.id,
         }
     },
     methods: {
+        //分享到微信——接口没写~
+        sharewx:function(){
+
+        },
+        //分享到新浪微博——接口没写~
+        sharexl:function(){
+
+        },
+        //院校官网——跳转页面
+        majorWebsite:function(){
+
+        },
+        //招生专题——跳转页面
+        majorSpecial:function(){
+
+        },
+        //微博主页
+        majorWb:function(){
+            this.dialogVisible2 = true;
+        },
+        //院校微信
+        majorWx:function(){
+            this.dialogVisible = true;
+        },
+        //点击关注
+        clickFollow:function(){
+             // let ab = 1;   
+             let followButt = document.getElementById('followButt');
+             if (this.ab==1) {
+                this.message('judge', '您已成功关注！', 'success');
+                this.follow = '已关注';
+                $("#symbol").attr("class","el-icon-check");
+                followButt.style.background = '#009fa0';
+                this.ab = 2;
+            } else{
+                this.message('judge', '您已取消关注哦', 'warning')
+                this.follow = '关注';
+                $("#symbol").attr("class","el-icon-plus");
+                followButt.style.background = '#ffb957';
+                this.ab = 1;
+            }
+        },
+        //判断是否关注
+        isFollow:function(){
+            let ab = 1;
+            let followButt = document.getElementById('followButt');
+            if (ab==1) {
+                this.follow = '已关注';
+                $("#symbol").attr("class","el-icon-check");
+                followButt.style.background = '#009fa0'
+            } else {
+                this.follow = '关注';
+                $("#symbol").attr("class","el-icon-plus");
+                followButt.style.background = '#ffb957'
+            }
+        },
+
+        // 相关活动
+        getaboutAcitivity:function(){
+            let that = this;
+            this.fetch('/front/colleges/getmajoractive',{
+                id:that.id,
+                page:that.page,
+                page_size:that.page_size
+            }).then((response) => {
+                if(response.code == 0){
+                    let res = response.result.info;
+                    that.aboutActivity = res;
+                }
+            })
+            .catch(error => function (error) {
+                // console.log(response)
+            });
+        },
+        //推荐内容刷新
+        refresh: function (data) {
+            this.page++;
+            if (this.page*3 >60){
+                this.page = 0;
+            }
+            this.getContent();
+        },
+        //获取推荐内容
+        getContent:function(){
+            let that = this;
+            this.fetch('/front/colleges/getmajorinformation',{
+                id:that.id,
+                page:that.page,
+                page_size:that.page_size
+            }).then((response) => {
+                // console.log(response.result)
+                if(response.code == 0){
+                    let res = response.result;
+                    for(var i in res){
+                        that.recommedContent.push({
+                            img:res[i].z_image ,
+                            title:res[i].zx_name,
+                            content:res[i].brief_introduction,
+                            time:res[i].z_from,
+                            author:res[i].brief_introduction,
+                        });
+                    }
+                }
+            })
+            .catch(error => function (error) {
+                console.log(response)
+            });
+        },
+        city:function(index){
+            // console.log(index)
+            return "city" + index;
+        },
+        //获取招生项目和基本信息
+        getItemInform:function(){
+            let that = this;
+            that.fetch('/front/colleges/getmajordetails',{
+                u_id: that.u_id,
+                id: that.id,
+            }).then(function (response) {
+                if (response.code==0) {
+                    let res = response.result[0];
+                    that.singleItem = res.project;
+                    that.phonNumber = res.phone;
+                    that.year = res.access_year;
+                    that.province = res.province;
+                    that.address = res.address;
+                    that.pdfPicture = res.file;
+                }
+            }).catch(function (error) {
+                // console.log(132)
+            });
+        },
         //联系方式logo——鼠标滑过样式
             computer:function() {
                 this.logoPicture[0].computer = require("../../../assets/img/computerG.png")
@@ -281,6 +416,15 @@ export default {
         
     },
     mounted(){
+        this.isFollow();
+        this.getaboutAcitivity();
+        this.getContent();
+        this.getItemInform();
+        // count:function(){
+            // let i = 0;
+            // i++;
+            // this.t = i;
+        // }
         // console.log(this.pdfDetail[0].src)
         // let w = document.documentElement.offsetWidth || document.body.offsetWidth;
         // if (w<991) {
@@ -292,15 +436,29 @@ export default {
 };
 </script>
 <style>
+    .diffeCollege>>>.div_BMsaOd[data-v-0ea0cb0a] {
+        /*margin-top: 20px !important;*/
+    }
+    .leftTwo .el-dialog__body {
+        text-align: center;
+    }
+    .buttoOne .reflesh > a >[class*=" el-icon-"][data-v-26348ad6], [class^=el-icon-][data-v-26348ad6] {
+        margin-right: 3px;
+        font-size: 12px !important;
+        font-weight: bold;
+    }
+    .el-popover {
+        min-width: 150px;
+        padding: 0;
+    }
     /*<!-- 招生项目 -->*/
         /*左边*/
             .pdfDetail {
-                width: 96%;
+                width: 100%;
                 margin: 0 auto;
-                padding: 25px 0;
-                border-bottom: 1px solid rgb(239, 239, 239);
                 display: flex;
                 flex-wrap:wrap;
+                justify-content:center;
             }
             .major,.student,.weixin,.weibo {
                 font-family: MicrosoftYaHei;
@@ -329,7 +487,7 @@ export default {
             }
             .fourLogon {
                 width: 96%;
-                margin: 29px 0 0 2%;
+                margin: 20px 0 0 2%;
                 display: flex;
                 align-items:center;
                 justify-content:center;
@@ -386,14 +544,12 @@ export default {
                 width: 305px;
             }
         /*左边*/
-        .aboutActivity .activityBox {
-            width:33.3%;
+        .leftThree .el-card__body {
+            padding: 10px;
+            padding-bottom: 0;
         }
-        .aboutActivity {
-            width: 96%;
-            margin: 0 0 0 2%;
-            display: flex;
-            flex-wrap:wrap;
+        .itemInform .el-card__body {
+            padding: 0 0 20px 0;
         }
         .leftTwo .el-col-8 {
             margin: 20px 0;
@@ -402,11 +558,14 @@ export default {
             width: 325px;
             padding-left: 10px;
         }
-        .itemInform .el-card__body{
-            padding: 25px;
-        }
+        
         .itemInform .el-button--mini, .el-button--mini.is-round {
             padding: 8px 18px;
+        }
+        .hover .el-button:hover {
+            background-color: #009fa0;
+            color: #fff;
+            border-color: #009fa0;
         }
         .itemInform .el-button--mini, .el-button--small {
             font-size: 12px;
@@ -416,9 +575,6 @@ export default {
             width: 955px;
             padding-right: 10px;
             margin: 0 0 20px;
-        }
-        .itemInform .el-card__body{
-            padding: 25px 25px;
         }
         .itemInform {
             width: 955px;
@@ -433,9 +589,10 @@ export default {
             width: 48px;
             background-color: rgb(255, 185, 87);
             color: rgb(255, 255, 255);
-            font-weight: bold;
+            font-size: 18px !important;
             border-radius: 5px;
             border: 0;
+            padding-right:25px; 
             margin-left: 6px;
         }
         .buttoOne .el-button--primary {
@@ -453,7 +610,49 @@ export default {
 
 </style>
 <style scoped>
+        /*分享按钮*/
+        .shareWeinxin img {
+            width: 20px;
+        }
+        .shareWeinxin span {
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            line-height: 26px;
+            letter-spacing: 0px;
+            color: #6f6f6f;
+        }
+        .shareWeinxin {
+            display: flex;
+            justify-content:space-between;
+            align-items:center;
+            padding: 0 20px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        
     /*<!-- 招生项目 -->*/
+        .aboutActivity >>>.activityBox {
+            width: 280px;
+        }
+        .aboutActivity >>> .activityManager {
+            margin-top: 0;
+            padding-top: 23px;
+        }
+        .activityBox>>>div {
+            background-color: #f5f5f5;
+        }
+        .itemInform .el-card__body{
+            padding: 25px;
+        }
+        .aboutActivity {
+            width: 905px;
+            padding: 0 20px;
+            display: flex;
+            /*margin-right: 0;*/
+            flex-wrap:wrap;
+            justify-content:space-between;
+        }
         .reflesh > a:hover{
             color: rgb(255, 255, 255);
             background-color: rgb(255, 185, 87);
@@ -473,16 +672,11 @@ export default {
             border-radius: 3px;
         }
         .reflesh {
-           /* display: flex;
-            align-items:center;
-            width: 89px;
-            height: 28px;*/
-            
+           cursor: pointer;
         }
         .collageLine {
             width: 21px;
             height: 4px;
-            /*min-height: auto;*/
             background-color: rgba(210,210,210,1);
         }
         .itemInformOne p,.basicInform p {
@@ -494,8 +688,9 @@ export default {
         .itemInformOne {
             display: flex;
             justify-content:space-between;
-            width: 905px;
-            margin-bottom: 30px;
+            width: 880px;
+            margin-bottom: 5px;
+            padding: 25px;
         }
         .itemDetails {
             display: flex;
@@ -598,22 +793,32 @@ export default {
     }
     /** iPhone **/
     @media only screen and (min-width: 320px) and (max-width: 767px) {
+        .aboutActivity >>>.activityBox {
+            /*width: 100%;*/
+            /*padding: 0 10px 0 0;*/
+        }
+        .aboutActivity {
+            width: 100%;
+        }
         .leftOne .el-col-8,.leftTwo .el-col-8,.leftThree .el-col-8 {
             width: 96%;
             padding: 0;
             margin-left: 2%;
         }
         .itemInform .el-card__body {
-            padding: 25px 5px;
+            /*width: 100%;*/
+            /*padding: 0;*/
         }
+        /*.itemInform .el-card__body*/
         .itemInform .el-card {
-            /*height: 100%;*/
+            height: 100%;
         }
         .basicInform {
             width: 100%;
         }
         .itemInformOne {
-            width: 100%;
+            width: 95%;
+            padding: 10px;
         }
         .itemInform .el-col-8 {
             width: 96%;

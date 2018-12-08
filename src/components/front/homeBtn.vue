@@ -1,4 +1,5 @@
 <template>
+    <!-- <homeBtn text="查看全部院校"></homeBtn> -->
     <span @mouseover="selectStyle()" @mouseout="outStyle()"  class="homeBtn">{{text}}
         <img :src="src" alt="">
     </span>

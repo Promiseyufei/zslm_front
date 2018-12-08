@@ -42,10 +42,10 @@
         <div class="c-div div_v60iAm biaoqian">
             <a class="c-textlink textlink_jH6Kkn xuanzhong" @click="pageInfo(0,0)">未使用 (10)</a>
             <a class="c-textlink textlink_jH6Kkn" @click="pageInfo(0,1)">已使用 (20)</a>
-            <a class="c-textlink textlink_jH6Kkn"@click="pageInfo(1,2)">已失效 (35)</a>
+            <a class="c-textlink textlink_jH6Kkn" @click="pageInfo(1,2)">已失效 (35)</a>
         </div>
         <div v-for="(item,index) in this.coupons">
-            <user-coupon :data="item" :id="id"></user-coupon>
+            <userCoupon :data="item" ></userCoupon>
         </div>
         <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
 
@@ -713,7 +713,7 @@
 
             getCoupon(){
                 let self = this;
-                this.fetch('http://www.zslm.com/front/coach/getusercoach',{
+                this.fetch('/front/coach/getusercoach',{
                     id:self.id,
                     page:self.page,
                     page_size:self.page_size,
