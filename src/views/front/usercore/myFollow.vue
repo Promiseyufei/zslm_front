@@ -16,6 +16,9 @@ export default {
             loading:false,
             disabled:false,
             loadingBtnText:'加载更多',
+            id:1,
+            page:1,
+            page_size:3,
         }
     },
     methods: {

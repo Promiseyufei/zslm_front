@@ -58,6 +58,7 @@
         cursor: pointer;
         display: flex;
         align-items: center;
+        justify-content: center;
         padding: 20px 191px 19px 21px; 
     }
     /*.staticNav div:hover{
@@ -87,7 +88,8 @@
     @media only screen and (max-width: 1024px) {
         .staticNav{
             display: flex;
-            justify-content: space-evenly;
+            justify-content: space-between;
+            padding-bottom: 0;
         }
         .staticNav span{
             display: none;
@@ -96,8 +98,12 @@
             background-color: unset;
         }
         .staticNav div{
-            padding: 2%;
-            width: 70px;
+            width: 55px;
+            padding: 0 1% 3% 1%;
+            margin: 2% 2% 0;
+        }
+        .staticNav div p{
+            font-size: 12px;
         }
         .activediv{
             border-bottom: 1px solid rgb(0, 159, 160) !important;
