@@ -119,6 +119,33 @@ let front_router = {
                             name: '单个辅导机构',
                             component: resolve => void(require(['@/views/front/detailPage/singleCoachs'], resolve))
                         },
+                        // 静态页面
+                        {
+                            path: '404NotFound',
+                            name: '404页面',
+                            component: resolve => void(require(['@/views/front/staticPage/404Page'], resolve))
+                        },
+                        {
+                            path: 'aboutUs',
+                            name: '关于我们',
+                            component: resolve => void(require(['@/views/front/staticPage/aboutUs'], resolve))
+                        },
+                        {
+                            path: 'userTerms',
+                            name: '用户条款',
+                            component: resolve => void(require(['@/views/front/staticPage/userTerms'], resolve))
+                        },
+                        {
+                            path: 'helpCenter',
+                            name: '帮助中心',
+                            component: resolve => void(require(['@/views/front/staticPage/helpCenter'], resolve))
+                        },
+                        {
+                            path: 'legalNotice',
+                            name: '法律声明',
+                            component: resolve => void(require(['@/views/front/staticPage/legalNotice'], resolve))
+                        },
+                        // 个人中心
                         {
                             path: 'usercore',
                             name: 'usercore_major',
@@ -178,16 +205,7 @@ let front_router = {
                 },
 
 
-                {
-                    path: '404NotFound',
-                    name: '404页面',
-                    component: resolve => void(require(['@/views/front/staticPage/404Page'], resolve))
-                },
-                {
-                    path: 'aboutUs',
-                    name: '关于我们',
-                    component: resolve => void(require(['@/views/front/staticPage/aboutUs'], resolve))
-                },
+                
                 {
                     path: 'search',
                     name: '搜索页面',
@@ -215,21 +233,7 @@ let front_router = {
                         }
                     ]
                 },
-                {
-                    path: 'userTerms',
-                    name: '用户条款',
-                    component: resolve => void(require(['@/views/front/staticPage/userTerms'], resolve))
-                },
-                {
-                    path: 'helpCenter',
-                    name: '帮助中心',
-                    component: resolve => void(require(['@/views/front/staticPage/helpCenter'], resolve))
-                },
-                {
-                    path: 'legalNotice',
-                    name: '法律声明',
-                    component: resolve => void(require(['@/views/front/staticPage/legalNotice'], resolve))
-                },
+                
                 // 首页
                 {
                     path: 'index',
