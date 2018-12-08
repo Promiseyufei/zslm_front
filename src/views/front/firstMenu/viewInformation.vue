@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="article-cont">
-                    <mbaArticle @jumpContent="jump" @jumpArticle="jump" @addAtricle="addArticle" v-if="judge" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
+                    <mbaArticle @jumpContent="jump" @jumpArticle="jump" @addAtricle="addArticle" v-if="judge" :mbatitle="mbatitles" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
                 </div>
             </div>
             <!--右边的的文章-->
@@ -102,7 +102,8 @@ export default {
             mbaInformation:[],
             pageCount:9,
             mbaJudge:true,
-            judge:true
+            judge:true,
+            mbatitles:"加载更多"
         }
     },
     methods: {
@@ -144,7 +145,7 @@ export default {
                 });
         },
         jump: function (id) {
-            this.$router.push('/front/firstMenuRouter/singleInformation/'+id.id);
+            this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/'+id.id);
         },
         /*
         * 行业报告
@@ -244,6 +245,7 @@ export default {
             _this.mbaJudge =false;
             _this.mbaPage++;
             if (_this.mbaPage*_this.pageCount>=_this.industryTatol){
+                _this.mbatitles = "加载完成";
                 return false;
             }
             _this.mbatation();
@@ -492,7 +494,7 @@ export default {
 </style>
 
 <style >
-    .sowingMap [class*=" el-icon-"], [class^=el-icon-]{
+    .sowingMap [class*=" el-icon-"],.sowingMap [class^=el-icon-]{
         font-size:26px;
         font-weight: bolder;
         line-height:0px;

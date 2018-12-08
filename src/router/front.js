@@ -87,9 +87,9 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/detailPage/recruitStudents'], resolve))
                         },
                         {
-                            path: 'collageCompare',
+                            path: 'majorCompare/:id?',
                             name: '专业对比',
-                            component: resolve => void(require(['@/views/front/detailPage/collageCompare'], resolve))
+                            component: resolve => void(require(['@/views/front/detailPage/majorCompare'], resolve))
                         },
                         {
                             path: 'singleOpinion/:id?/:name?',

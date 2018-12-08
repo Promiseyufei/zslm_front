@@ -12,11 +12,14 @@
                 </div>
                 <div class="title-head clearfloat">
                     <div class="float-left">
-                        <a href="javaScript:void(0)" v-for="(item,index) in time">
+                        <a href="javaScript:void(0)">
+                            全部年分
+                        </a>
+                        <a href="javaScript:void(0)" v-for="(item,index) in time" class="time-a" @click="choiceTime(index)">
                             {{ item }}
                         </a>
                     </div>
-                    <div class="float-right">
+                    <div class="float-right" @keyup.13="showInformation()">
                         <el-input
                                 placeholder="请输入内容"
                                 suffix-icon="el-icon-search"
@@ -26,55 +29,16 @@
                 </div>
 
                 <div class="recruitContent clearfloat">
-                    <div class="university" @click="centerDialogVisible = true">
-                        <div class="university-icon">
-                            <img src="../../../assets/img/picture-university.png" alt="">
+                    <div class="university" @click="studentInformation(index)" v-for="(item , index) in information">
+                        <div class="university-icon" @mouseover="overStyle(item,index)" @mouseout="outStyle(item,index)">
+                            <img :src="item.magor_logo_name" alt="">
                         </div>
                         <div class="university-footer">
                             <div class="footer-font">
-                                dsggdgsdf
+                                {{ item.z_name }}
                             </div>
                             <div class="tips">
-                                kkkk
-                            </div>
-                        </div>
-                    </div>
-                    <div class="university">
-                        <div class="university-icon">
-                            <img src="../../../assets/img/picture-university.png" alt="">
-                        </div>
-                        <div class="university-footer">
-                            <div class="footer-font">
-                                dsggdgsdf
-                            </div>
-                            <div class="tips">
-                                kkkk
-                            </div>
-                        </div>
-                    </div>
-                    <div class="university">
-                        <div class="university-icon">
-                            <img src="../../../assets/img/picture-university.png" alt="">
-                        </div>
-                        <div class="university-footer">
-                            <div class="footer-font">
-                                dsggdgsdf
-                            </div>
-                            <div class="tips">
-                                kkkk
-                            </div>
-                        </div>
-                    </div>
-                    <div class="university">
-                        <div class="university-icon">
-                            <img src="../../../assets/img/picture-university.png" alt="">
-                        </div>
-                        <div class="university-footer">
-                            <div class="footer-font">
-                                dsggdgsdf
-                            </div>
-                            <div class="tips">
-                                kkkk
+                                点击打开招生简章&nbsp;&nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
@@ -82,13 +46,15 @@
             </div>
         </div>
         <el-dialog
-                title="共6则招生简章"
+                :title="title"
                 :visible.sync="centerDialogVisible"
                 width="30%"
                 center>
-            <div class="title-span">
-                <span>1</span>&nbsp;&nbsp;&nbsp;
-                <span>需要注意的是内容是默认不居中的</span>
+            <div v-if="centerDialogVisible">
+                <div class="title-span" v-for="(item,index) in information[number].ZSJZF">
+                    <span>{{index+1}}</span>&nbsp;&nbsp;&nbsp;
+                    <span>{{item.file_alt}}</span>
+                </div>
             </div>
         </el-dialog>
     </div>
@@ -97,10 +63,74 @@
     export default{
         data() {
             return {
-                time:['全部年分','2018','2017'],
+                time:[],
                 search:'',
                 centerDialogVisible: false,
+                /*分页*/
+                page:1,
+                pageSize:8,
+                name:'',
+                year:'',
+                /*招生信息*/
+                information:[],
+                number:0,
+                title:''
             }
+        },
+        methods: {
+            getRecruit: function () {
+                let _this = this;
+                _this.fetch('/front/colleges/getmajorzsjz',{
+                    page:_this.page,
+                    page_size: _this.pageSize,
+                    name:_this.name,
+                    year:_this.year
+                }).then(function (res) {
+                    if (res.code == 0){
+                        _this.information = res.result[0];
+                    }
+
+                }).catch(function (error) {
+
+                })
+            },
+            getYear: function () {
+                let _this = this;
+                _this.fetch('/front/colleges/getyear').then(function (res) {
+                    if (res.code == 0){
+                        _this.time = res.result;
+                    }
+                }).catch(function (error) {
+
+                })
+            },
+            choiceTime: function (index) {
+                $(".time-a").css("color","#6e6e6e");
+                $(".time-a").css("font-weight","normal");
+                $($(".time-a")[index]).css("color","#009fa0");
+                $($(".time-a")[index]).css("font-weight","bolder");
+                this.year = this.time[index];
+                this.getRecruit();
+            },
+            overStyle: function (item,index) {
+                $($(".university-icon")[index]).css("background-image","url("+item.major_cover_name+")");
+            },
+            outStyle: function (item,index) {
+                $($(".university-icon")[index]).css("background-image","");
+            },
+            studentInformation: function (index) {
+                this.number = index;
+                this.title = "共"+this.information[index].ZSJZF.length+"则招生简章";
+                this.centerDialogVisible = true;
+            },
+            showInformation:function () {
+                this.name = this.search;
+                this.getRecruit();
+            }
+        },
+        mounted:function () {
+            this.getYear();
+            this.getRecruit();
         }
     }
 </script>
@@ -174,7 +204,7 @@
     }
     .recruitContent{
         width: 100%;
-        margin-top: 33px;
+        margin-top: 20px;
     }
     .university{
         width: 305px;
@@ -183,6 +213,7 @@
         border-radius: 10px;
         cursor: pointer;
         float: left;
+        margin-top: 33px;
     }
     .university:nth-child(4n){
         margin-right: 0px;
@@ -229,7 +260,6 @@
         display: none;
     }
     .university:hover .university-icon{
-        background-image: url("../../../assets/img/back-picture.jpg");
         background-size: cover;
         height: 204px;
         transition: all 1s;
@@ -240,12 +270,12 @@
     }
     .university:hover .tips{
         display: block;
-        transition: all 1s;
+        transition: all .5s;
     }
     .university:hover .university-footer{
-        height: 97px;
+        height: 101px;
         background-color: #ffb957;
-        transition: all 1s;
+        transition: all .5s;
     }
     .title-span span:first-child{
         display: inline-block;
@@ -265,6 +295,9 @@
         line-height: 30px;
         letter-spacing: 0px;
         cursor: pointer;
+    }
+    .time-a{
+
     }
     @media (max-width: 991px){
         .single-div-con{
@@ -301,6 +334,28 @@
     }
     .float-right .el-input__icon{
         line-height: 29px;
+    }
+    .float-left .el-menu--horizontal>.el-menu-item.is-active {
+        border-bottom: 0;
+        font-weight: bold;
+    }
+    .float-left .el-menu--horizontal>.el-menu-item {
+        font-size: 16px;
+        cursor: pointer;
+        padding: 0 20px;
+        height: 11px;
+        line-height: 11px;
+        color: #009fa0;
+        background-color: #f5f5f5;
+    }
+    .float-left .el-menu--horizontal {
+        border-bottom: 0;
+    }
+    .float-left .el-menu{
+        background-color: #f5f5f5;
+    }
+    .float-left .el-menu--horizontal{
+        display: inline-block;
     }
     @media (max-width: 991px){
         .content .el-dialog{
