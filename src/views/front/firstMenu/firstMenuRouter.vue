@@ -13,7 +13,7 @@
 						  @select="handleSelect"
 						  text-color="#6e6e6e"
 						  active-text-color="#009fa0">
-						  <el-menu-item index="1">选院校</el-menu-item>
+						  <el-menu-item index="1" @click="major">选院校</el-menu-item>
 						  <el-menu-item index="2">找活动</el-menu-item>
 						  <el-menu-item index="3">看资讯</el-menu-item>
 						  <el-menu-item index="4" style="border:0;padding-right:0;">搜辅导</el-menu-item>
@@ -42,11 +42,13 @@
 
 	    		</div>
 		        <div class="logoInto" v-show="logoInto">
-		        		<div><i class="el-icon-search"></i></div>
-			        	<el-badge :value="200" :max="10" class="item">
-						  <img src="../../../assets/img/messageLogo.png">
-						</el-badge>
-						<div class="isLoginPicture"><img :src="loginOr"></div>
+		        		<div style="cursor: pointer;" @click="goSearch"><i class="el-icon-search"></i></div>
+			        	<div style="cursor: pointer;" @click="goMessage">
+			        		<el-badge :value="200" :max="10" class="item">
+							  <img src="../../../assets/img/messageLogo.png">
+							</el-badge>
+			        	</div>
+						<div class="isLoginPicture" style="cursor: pointer;" @click="goFollow"><img :src="loginOr"></div>
 		        </div>
 	    	</div>
     	<!-- 头部导航 -->
@@ -92,7 +94,7 @@
 	    },
 	    data() {
 	        return {
-	        	loginOr:require('../../../assets/img/nologin.png'),
+	        	loginOr:require('../../../assets/img/nologin.jpg'),
 	        	userName:'未登录',
 	        	dialogVisible: false,
 	        	activeIndex: '1',
@@ -107,6 +109,18 @@
 	    	goIndex:function(){
 	    		this.$router.push('/front/index');
 	    	},
+	    	//跳到我的消息
+	    	goMessage:function(){
+	    		this.$router.push('/front/usercore/myNews');
+	    	},
+	    	//跳到我的关注
+	    	goFollow:function(){
+	    		this.$router.push('/front/usercore/myFollow');
+	    	},
+	    	//跳到搜索
+	    	goSearch:function(){
+	    		this.$router.push('/front/search/search');
+	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
 	    		this.activeIndex = key;
@@ -119,6 +133,9 @@
 	    		} else if(this.activeIndex==4) {
 	    			this.$router.push('/front/firstMenuRouter/searchCoach');
 	    		}
+		    },
+		    major:function(){
+		    	this.$router.push('/front/firstMenuRouter/selectCollege');
 		    },
 		    //改变路由菜单高亮不变
 		    rushRouter:function(){
@@ -309,12 +326,12 @@
 </style>
 
 <style scoped>
-	.isLoginPicture img {
-		width: 100%;
-	}
 	.isLoginPicture {
 		width: 36px;
 		height: 36px;
+		/*border: 2px solid #009fa0;*/
+		/*border-radius: 50%;*/
+		/*background-color: #e0e0e0;*/
 	}
 	 /*-----------foot-----------*/
     .footer{
