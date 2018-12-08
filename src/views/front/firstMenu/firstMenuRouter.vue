@@ -95,7 +95,7 @@
 	    },
 	    data() {
 	        return {
-	        	loginOr:require('../../../assets/img/nologin.png'),
+	        	loginOr:require('../../../assets/img/noLogin.png'),
 	        	userName:'未登录',
 	        	dialogVisible: false,
 	        	activeIndex: '1',
