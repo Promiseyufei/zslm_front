@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="button-div">
-                    <a @click="addAtricle" class="load-button">加载更多</a>
+                    <a @click="addAtricle" class="load-button">{{ mbaTitle }}</a>
                 </div>
             </div>
         </div>
@@ -65,7 +65,8 @@
         data(){
             return{
                 mbaHead:this.headArticle,
-                mbaShort:this.shortArticles
+                mbaShort:this.shortArticles,
+                mbaTitle:this.mbatitle
             }
         },
         methods:{
@@ -79,9 +80,9 @@
                 this.$emit('jumpArticle',{id:id});
             },
         },
-        props:["headArticle","shortArticles"],
+        props:["headArticle","shortArticles","mbatitle"],
         mounted(){
-
+            console.log(this.mbaTitle);
         }
     }
 </script>

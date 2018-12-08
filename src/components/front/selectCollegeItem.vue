@@ -266,9 +266,12 @@
         }
     /** PC **/
     @media only screen and (min-width: 1024px) and (max-width:1300px) {
+        .joinContrast {
+            /*margin-right: 40px;*/
+        }
         .viewMore {
             width: 755px;
-            margin: 0 auto;
+            /*margin: 0 auto;*/
         }
         .specificInform {
              width: 720px;
@@ -289,18 +292,15 @@
     }
     /** iPad **/
     @media only screen and (min-width: 768px) and (max-width: 1023px) {
+        .joinContrast {
+            margin-right: 15px;
+        }
         .viewMore {
-            width: 700px;
+            width: 645px;
         }
         .specificInform,.threeSpecificInform {
             width: 658px;
             margin-right: 25px;
-        }
-        .forY,.forThree {
-            /*flex-direction:column;*/
-            /*justify-content:center;*/
-        }
-        .buttonCollege {
         }
         .diffeCollege {
             width: 100%;
@@ -348,11 +348,6 @@
         .diffeCollege .el-col-8 {
             width: 90%;
             margin-left: 20px;
-        }
-        .forY,.forThree {
-            /*flex-direction:column;*/
-            /*justify-content:center;*/
-
         }
         .diffeCollege {
             width: 100%;
@@ -671,16 +666,9 @@
         text-align: right;
         height: auto !important;
     }
-
-
-
-
     .c-action-click {
         cursor: pointer;
     }
-
-
-
     a:-webkit-any-link {
         color: -webkit-link;
         cursor: pointer;
@@ -1072,9 +1060,6 @@
     }
 
     /*不同院校——图片信息*/
-
-
-
     .selectCollegeSearch {
         width: 407px;
         margin: 49px 0 44px;

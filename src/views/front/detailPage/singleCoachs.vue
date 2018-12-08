@@ -91,7 +91,7 @@
                         <div class="detailCoach">
                             <h6>机构简介</h6>
                             <div><span>联系电话</span><strong>{{collage.phone}}</strong></div>
-                            <div><span>总部官网</span><strong @click="jumpweb" class="handstyle">点击访问</strong></div>
+                            <div><span>总部官网</span><strong @click="jumpweb" class="handstyle">点击访问<i class="fa fa-share-square-o"></i></strong></div>
                             <div><span>总部地址</span><strong>{{collage.address}}</strong></div>
                             <div><span>辅导形式</span>
                                 <strong v-if="collage.coach_type==0">线上</strong>
@@ -150,14 +150,14 @@ export default {
         singlecoach:function () {
             var that = this;
             this.fetch('http://www.lishanlei.cn/front/coach/getcoachbyid',{
-                id: 1,
+                id: that.id,
                 u_id:1
             }).then(function (res) {
                     // console.log(res);
                     if (res.code == 0) {
                         that.collage = res.result[0];
                         that.activity = that.collage.best_hot_active.info[0];
-                        // console.log(that.collage);
+                        console.log(that.collage);
                         // that.count = res.count;
                     }else {
                         that.message(true,res.msg,"error");
@@ -239,6 +239,10 @@ export default {
 }
 .handstyle {
     cursor: pointer;
+}
+.handstyle>i {
+    margin-left: 5px;
+    color: #009FA1;
 }
 .collagemessage {
     margin-left: 20px;

@@ -34,17 +34,17 @@
     		</div>
     		<div class="phoneLogin" v-show="phone">
     			<div class="Close">
-    				<div class="close"><img src="../../../assets/img/Close.png"></div>
+    				<div class="close" @click="close"><img src="../../../assets/img/Close.png"></div>
     			</div>
     			<div class="MBA"><img src="../../../assets/img/logoGreen.png"></div>
     			<div class="loginText">登录</div>
     			<div class="userInform">
+    				<div class="mobileCode"><el-input v-model="phoneNumber" placeholder="手机号"></el-input></div>
     				<div class="mobileNumber">
-    					<el-input v-model="mobileNumber" placeholder="手机号"></el-input>
-    					<el-button type="success">发送验证码</el-button>
+    					<el-input v-model="smsCode" placeholder="验证码"></el-input>
+    					<el-button type="success" :disabled="disabled" @click="sendcode">{{btntxt}}</el-button>
     				</div>
-    				<div class="mobileCode"><el-input v-model="mobileCode" placeholder="验证码"></el-input></div>
-    				<div class="mobileLogin"><el-button type="success">登录</el-button></div>
+    				<div class="mobileLogin"><el-button type="success" @click="loginTest">登录</el-button></div>
     			</div>
     		</div>
     	</div>
@@ -54,8 +54,9 @@
 	export default {
 		data() {
 			return {
-				mobileCode:'',
-				mobileNumber:'',
+				smsCode:'',
+				btntxt:"获取验证码",
+		        disabled:false,
 				computer:true,
 				phone:false,
 				active:'1',
@@ -70,6 +71,18 @@
 			},
 		},
 		methods:{
+			//获取验证码方法
+			sendcode:function(){
+            	if(this.$store.state.userInfo['userPhone'] == ''){
+            		this.$message('手机号不能为空！');
+                	return;
+            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.$store.state.userInfo['userPhone']))){
+					this.$message('请输入正确的手机号！');
+					return;
+            	} else {
+					this.sendSmsCode(this.$store.state.userInfo['userPhone']);
+            	}
+        	},
             //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
 				this.active = key;
@@ -79,7 +92,6 @@
 		    },
 		    //刷新登录不变
 		    accountNumber:function() {
-		    	// console.log(666);
 		    	if (sessionStorage.getItem("active")) {
 		    		//取变量
 		    		this.active=sessionStorage.getItem("active")
@@ -162,13 +174,20 @@
 				}
 			},
 			thirdLogin() {
-				// var test = window.open(this.globals.longUrl + '/auth/weixin/');
-				// console.log(test);
 				this.fetch('/auth/weixin', {}).then((response) => {
 					console.log(response);
 				})
+			},
+			//不登录——跳到院校列表页
+			close:function(){
+				this.$router.push('/front/firstMenuRouter/selectCollege');
 			}
 			
+		},
+		watch:{
+			smsCode(smscode, oldcode) {
+				this.$store.commit('changeUserInfo', {name: 'smsCode', val: smscode});
+			}
 		},
 		mounted() {
 			this.accountNumber();
@@ -190,10 +209,6 @@
 	}
 	.mobileLogin .el-button {
 		width: 100%;
-		height: 50px;
-	}
-	.mobileCode .el-input__inner,.mobileNumber .el-input__inner {
-		height: 50px;
 	}
 	.mobileNumber .el-button {
 		margin-left: 10px;
@@ -244,8 +259,12 @@
 		font-size: 14px;
 	}
 	.login .el-button--primary:hover {
-		background-color:  #000;
-		border-color:  #000;
+		background-color:  #009fa0;
+		border-color:  #009fa0;
+	}
+	.mobileLogin .el-button:hover {
+		background-color:  #009fa0;
+		border-color:  #009fa0;
 	}
 </style>
 
@@ -262,6 +281,7 @@
 		width: 340px;
 	}
 	.weixin {
+		cursor: pointer;
 		width: 21px;
 		height: 19px;
 		margin: 0 0 0 14px;
@@ -275,6 +295,7 @@
 		background-color: #c7c7c7;
 	}
 	.xinlang {
+		cursor: pointer;
 		width: 23px;
 		height: 19px;
 		margin: 0 9px 0 0;

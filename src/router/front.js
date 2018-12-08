@@ -82,6 +82,21 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/detailPage/singleInformation'], resolve))
                         },
                         {
+                            path: 'recruitStudents',
+                            name: '招生简章',
+                            component: resolve => void(require(['@/views/front/detailPage/recruitStudents'], resolve))
+                        },
+                        {
+                            path: 'majorCompare/:id?',
+                            name: '专业对比',
+                            component: resolve => void(require(['@/views/front/detailPage/majorCompare'], resolve))
+                        },
+                        {
+                            path: 'majorsCompare',
+                            name: '院校对比',
+                            component: resolve => void(require(['@/views/front/detailPage/majorsCompare'], resolve))
+                        },
+                        {
                             path: 'singleOpinion/:id?/:name?',
                             name: '意见反馈页',
                             component: resolve => void(require(['@/views/front/detailPage/singleOpinion'], resolve))
@@ -113,7 +128,7 @@ let front_router = {
                             children: [
                                 {
                                     path:'myFollow',
-                                    name:'我的关注',
+                                    name:'myfollow',
                                     component: resolve =>void(require(['@/views/front/usercore/myFollow'], resolve)),
                                 },
                                 {
@@ -139,12 +154,32 @@ let front_router = {
                                     ]
                                 },
                                 {
+
+                                    path:'myactive',
+                                    name:'myactive',
+                                    component: resolve =>void(require(['@/views/front/usercore/userActive'], resolve)),
+                                },
+                                {
+                                    path: 'mycoupon',
+                                    name: 'usercore_coupon',
+                                    component: resolve =>void(require(['@/views/front/usercore/userConpon'], resolve))
+                                },
+                                {
+                                    path: 'useractive',
+                                    name: 'usercore_active',
+                                    component: resolve => void(require(['@/views/front/usercore/userActive'], resolve))
+                                },
+                                {
                                     path: 'myAccount',
-                                    name: '我的账户',
+                                    name: 'myAccount',
                                     component: resolve =>void(require(['@/views/front/usercore/myAccount'], resolve)),
                                 }
                             ]
                         },
+                            ]
+                        },
+
+
                         {
                             path: '404NotFound',
                             name: '404页面',
@@ -234,8 +269,6 @@ let front_router = {
                 // },
 
             ]
-        }
-    ]
 }
 
 

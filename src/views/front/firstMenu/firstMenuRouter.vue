@@ -13,12 +13,13 @@
 						  @select="handleSelect"
 						  text-color="#6e6e6e"
 						  active-text-color="#009fa0">
-						  <el-menu-item index="1">选院校</el-menu-item>
+						  <el-menu-item index="1" @click="major">选院校</el-menu-item>
 						  <el-menu-item index="2">找活动</el-menu-item>
 						  <el-menu-item index="3">看资讯</el-menu-item>
 						  <el-menu-item index="4" style="border:0;padding-right:0;">搜辅导</el-menu-item>
 						</el-menu>
 			        </div>
+			        <!-- 手机版 -->
 			        <div @click="isLogin" v-show="mobileIcon" class="mobileIcon">
 			        	<img @click="dialogVisible = true" src="../../../assets/img/mobileIcon.png">
 			        	<el-dialog
@@ -31,22 +32,24 @@
 						  	</div>
 						  </div>
 						  <div style="padding:10px 25px;width:60px;">
-						  	  <el-button type="text" @click="">我的关注</el-button>
-							  <el-button type="text" @click="">我的活动</el-button>
-							  <el-button type="text" @click="">我的优惠券</el-button>
-							  <el-button type="text" @click="">我的消息</el-button>
-							  <el-button type="text" @click="">我的账户</el-button>
+						  	  <el-button type="text" @click="myCare">我的关注</el-button>
+							  <el-button type="text" @click="myActivity">我的活动</el-button>
+							  <el-button type="text" @click="myCoupon">我的优惠券</el-button>
+							  <el-button type="text" @click="myMessage">我的消息</el-button>
+							  <el-button type="text" @click="myAccount">我的账户</el-button>
 						  </div>
 						</el-dialog>
 			        </div>
 
 	    		</div>
 		        <div class="logoInto" v-show="logoInto">
-		        		<div><i class="el-icon-search"></i></div>
-			        	<el-badge :value="200" :max="10" class="item">
-						  <img src="../../../assets/img/messageLogo.png">
-						</el-badge>
-						<div class="isLoginPicture"><img :src="loginOr"></div>
+		        		<div style="cursor: pointer;" @click="goSearch"><i class="el-icon-search"></i></div>
+			        	<div style="cursor: pointer;" @click="goMessage">
+			        		<el-badge :value="200" :max="10" class="item">
+							  <img src="../../../assets/img/messageLogo.png">
+							</el-badge>
+			        	</div>
+						<div class="isLoginPicture" style="cursor: pointer;" @click="goFollow"><img :src="loginOr"></div>
 		        </div>
 	    	</div>
     	<!-- 头部导航 -->
@@ -99,13 +102,29 @@
 	        	firstMenu:true,
 	        	logoInto:true,
 	        	mobileIcon:false,
-	        	// footer:true,
 	        }
 	    },
 	    methods: {
 	    	//跳到首页
 	    	goIndex:function(){
 	    		this.$router.push('/front/index');
+	    	},
+	    	//跳到我的消息
+	    	goMessage:function(){
+	    		this.$router.push('/front/usercore/myNews');
+	    	},
+	    	//跳到我的关注
+	    	goFollow:function(){
+	    		let a = 1;
+	    		this.getUserState('user');
+	    		if (a==1){
+	    			//未登录
+	    			this.$router.push('/front/Login/loginRoute');
+	    		}
+	    	},
+	    	//跳到搜索
+	    	goSearch:function(){
+	    		this.$router.push('/front/search/search');
 	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
@@ -119,6 +138,9 @@
 	    		} else if(this.activeIndex==4) {
 	    			this.$router.push('/front/firstMenuRouter/searchCoach');
 	    		}
+		    },
+		    major:function(){
+		    	this.$router.push('/front/firstMenuRouter/selectCollege');
 		    },
 		    //改变路由菜单高亮不变
 		    rushRouter:function(){
@@ -166,8 +188,10 @@
 		    },
 		    //跳到我的关注or登录
 		    myCare:function(){
+		    	//模拟登陆是否成功
+		    	// let a=1
 		    	this.getUserState('user');
-		    	if (!this.getUserState) {
+		    	if (!this.getUserState('user')) {
 		    		this.$router.push('/front/Login/loginRoute');
 		    	} else{
 		    		this.$router.push('/front/usercore/myFollow');
@@ -309,9 +333,6 @@
 </style>
 
 <style scoped>
-	.isLoginPicture img {
-		width: 100%;
-	}
 	.isLoginPicture {
 		width: 36px;
 		height: 36px;
@@ -321,7 +342,6 @@
         width: 100%;
         height: 249px;
         background-color: #383b3d;
-        /*margin-top: 105px;*/
         display: flex;
         align-items:center;
     }
@@ -422,71 +442,6 @@
         width: 100%;
         margin-top: 11px;
     }
-    /*-----------foot-----------*/
-	/*.footerBott p {
-		opacity: 0.65;
-		color: rgb(255, 255, 255);
-		font-size: 12px;
-	}
-	.footerBott {
-		width: 1280px;
-		margin-top: 31px;
-		display: flex;
-		justify-content:space-between;
-	} 
-	.footerAddres span {
-		margin-right: 12px; 
-	}
-    .footerAddres p {
-    	color: rgb(255, 255, 255);
-    	font-size: 23px;
-    }
-	.footerAddres>p {
-		font-size: 12px;
-	    font-weight: bold;
-	    color: rgb(255, 255, 255);
-	    margin-top: 9px;
-	}
-	.footerAddres {
-		width: 198.2px;
-		text-align: right;
-	}
-	.footerMenu div {
-		margin-right: 78px;
-	}
-	.footerMenu li:hover {
-		opacity: 0.7;
-	}
-	.footerMenu li {
-		color: rgb(255, 255, 255);
-		margin-bottom: 11px;
-		font-size: 14px;
-		cursor: pointer;
-	}
-	.footerMenu {
-		display: flex;
-		justify-content:start;
-		width: 761.8px;
-	}
-	.footerLogo img {
-		width: 166px;
-	}
-	.footerLogo {
-		width: 320px;
-	}
-	.footerTop {
-		display: flex;
-		justify-content:space-between;
-	}
-	.footer {
-		display: flex;
-		flex-direction: column;
-		align-items:center;
-		justify-content:center;
-		width: 100%;
-		height: 251px;
-		background-color: rgb(56, 59, 61);
-	} */
 	.logoInto i {
 		width: 21px;
 	    height: 21px;
@@ -503,7 +458,6 @@
 	}
 	.logoInto {
 		width: 134px;
-		/*margin-left: 300px;*/
 		display: flex;
 		align-items:center;
 	}
@@ -520,14 +474,71 @@
 		overflow: hidden;
 		justify-content:space-between;
 	}
+	.dialog {
+		background: url(../../../assets/img/dialog.jpg) no-repeat;
+		background-position: 50% 50%;
+        background-size: cover; 
+		width: 100%;
+		height: 120px;
+	}
+	.dialogPicture {
+		display: flex;
+		flex-direction: column;
+		align-items:center;
+		justify-content:center;
+		width: 100%;
+		height: 120px;
+		background-color: rgba(56, 59, 61, 0.85);
+	}
+	.dialogPicture img{
+		width: 100%;
+	}
+	.userPicture img {
+		width: 100%;
+	}
+	.userPicture {
+		width: 36px;
+		height: 36px;
+		background-size: cover; 
+		border-radius: 50px;
+	}
+	.userName {
+		margin-top: 10px;
+		color: #fff;
+	}
 	/** PC **/
 	@media only screen and (min-width: 1024px) and (max-width:1300px) {
-		/*.footerBott {
-            width: 900px;
+		.float-left{
+            width: 100%;
         }
-		.footerMenu {
-			width: 400px;
-		}*/
+        .float-right{
+            margin-top: 25px;
+            width: 100%;
+        }
+        .sowingMap{
+            width: 100%;
+        }
+        .foot-left,.float-right,.foot-icon{
+            width: 100%;
+            text-align: center;
+        }
+        .foot-left img{
+            width: 40%;
+        }
+        .foot-content,.footer{
+            height: auto;
+        }
+        .foot-content{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .foot-icon p{
+            width: 100%;
+            margin-bottom: 9px;
+        }
+        .float-middle{
+            display: none;
+        }
 		.head {
 			width: 1000px;
 		}
@@ -537,16 +548,6 @@
 	}
 	/** iPad **/
 	@media only screen and (min-width: 768px) and (max-width: 1023px) {
-		/*.footerLogo {
-			width: 200px;
-		}
-		.footerMenu {
-			width: 280px;
-		}*/
-		.content{
-            width: 95%;
-            margin-bottom: 30px;
-        }
         .float-left{
             width: 100%;
         }
@@ -578,10 +579,6 @@
         .float-middle{
             display: none;
         }
-        .advertisement{
-            width: 100%;
-            height: auto;
-        }
 		#login,#noLogin {
 			background-color: #009fa0;
 			width: 120px;
@@ -606,6 +603,9 @@
 		}
 		.mobileIcon img {
 			width: 30px;
+		}
+		.userPicture img {
+			width: 36px;
 		}
 		.headLeft {
 			width: 100%;
@@ -651,10 +651,6 @@
         .float-middle{
             display: none;
         }
-        .advertisement{
-            width: 100%;
-            height: auto;
-        }
 		#login,#noLogin {
 			background-color: #009fa0;
 			width: 120px;
@@ -673,11 +669,6 @@
 			padding: 0 0 5px 5px;
 			width: 80px;
 			display: block;
-		}
-		.mobileIcon {
-			/*width: 150px;*/
-			/*height:100px;*/
-			/*position: relative;*/
 		}
 		.mobileIcon img {
 			width: 37px;

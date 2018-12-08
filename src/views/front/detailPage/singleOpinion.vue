@@ -26,9 +26,9 @@
             submit: function () {
                 let _this = this;
                 console.log(_this.$route.params.id);
-                this.fetch('/front/usercore/adduseropinion',{
+                this.post('/front/usercore/adduseropinion',{
                     text:_this.text,
-                    id:_this.$route.params.id,
+                    id:1,
                     name:_this.$route.params.name,
                 }).then((response) => {
                     if(response.code == 0){
@@ -42,6 +42,8 @@
                         _this.message(true,"您提交反馈建议失败",'error');
                     });
             }
+        },
+        mounted(){
         }
     }
 </script>
