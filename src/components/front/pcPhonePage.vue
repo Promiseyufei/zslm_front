@@ -64,9 +64,12 @@ export default {
         }, 
     },
     mounted(){
-        // console.log(this.totalData);
-        // console.log(this.currentPage);
-        // console.log(this.size);
+        //刚开始是否已经加载完
+        if(this.count*this.size >= this.totalData){
+            this.disabled = true;
+            this.loadingBtnText = "————我是有底线的————";
+            this.count = 1;
+        }
     }
 }
 </script>
