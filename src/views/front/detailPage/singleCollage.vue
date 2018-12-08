@@ -153,7 +153,7 @@
                                     <el-dialog
                                       :visible.sync="dialogVisible"
                                       width="30%">
-                                      <span><img src="../../../assets/img/xinlang2.png"></span>
+                                      <span><img :src="all" v-for="(all, index) in wxCode" :key="index"></span>
                                     </el-dialog>
                                     <div class="logonLine"></div>
                                     <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut" @click="majorWb">
@@ -163,7 +163,7 @@
                                     <el-dialog
                                       :visible.sync="dialogVisible2"
                                       width="30%">
-                                      <span><img src="../../../assets/img/xinlang2.png"></span>
+                                      <span><img :src="xlCode"></span>
                                     </el-dialog>
                                 </div>
                             </el-card>
@@ -200,6 +200,11 @@ export default {
     },
     data() {
         return {
+            //院校二维码
+            // wxCode:require("../../../assets/img/weixin2.png"),
+            wxCode:[],
+            xlCode:require("../../../assets/img/xinlang2.png"),
+            //模态框
             dialogVisible: false,
             dialogVisible2:false,
             //关注
@@ -381,7 +386,10 @@ export default {
                     that.is_guanzhu = res.is_guanzhu;
                     that.index_web = res.index_web;
                     that.admissions_web = res.admissions_web;
-                    console.log(that.index_web);
+                    that.wxCode = res.wc_image;
+                    that.xlCode = res.wb_image;
+                    // String[] splitAddress=xlCode.split(“\\,”); 
+                    console.log(that.wxCode);
                     console.log(123)
                 }
             }).catch(function (error) {
@@ -614,9 +622,6 @@ export default {
             border: 0;
         }
     /*<!-- 院校logo -->*/
-
-
-
 </style>
 <style scoped>
         /*分享按钮*/
@@ -658,7 +663,6 @@ export default {
             width: 905px;
             padding: 0 20px;
             display: flex;
-            /*margin-right: 0;*/
             flex-wrap:wrap;
             justify-content:space-between;
         }
@@ -697,7 +701,7 @@ export default {
         .itemInformOne {
             display: flex;
             justify-content:space-between;
-            width: 880px;
+            width: 900px;
             margin-bottom: 5px;
             padding: 25px;
         }
