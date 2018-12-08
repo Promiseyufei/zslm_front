@@ -176,7 +176,7 @@ let front_router = {
                                 }
                             ]
                         },
-                            ]
+                    ]
                         },
 
 
@@ -233,7 +233,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/staticPage/legalNotice'], resolve))
                         },
                     ]
-                },
+        },
                 // 首页
                 {
                     path: 'index',
