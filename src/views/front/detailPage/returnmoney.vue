@@ -149,6 +149,9 @@ export default {
     overflow: hidden;
     align-items: center;
 }
+.singlecoachbox>img {
+    margin-left: 10px;
+}
 .collagebreadcrumb {
     margin:35px 8px 30px;
 }
