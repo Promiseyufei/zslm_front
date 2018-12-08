@@ -9,7 +9,7 @@
                     placeholder=" 复旦大学    北京大学"
                     suffix-icon="el-icon-search"
                     v-model="keyword"
-                    @keyup.enter.native="getPcActivityList"
+                    @keyup.enter.native="getActivityList(2)"
                     class="pcSeach">
                 </el-input>
                 <el-input
@@ -29,16 +29,20 @@
                             <span>选活动&gt;</span>
                             <tags :tags="seltData" @handleClose="handleClose"></tags>
                         </div>
-                        <span>共{{count}}场活动</span>
+                        <div>
+                            <span>共{{count}}场活动</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="activityListBox">
+                <div>
+                    <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox>
+                </div>
                 <!-- 单个活动块 -->
-                <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox>
             </div>
             <!-- 分页 -->
-            <div>
+            <div v-if="info.length">
                 <pcPhonePage class="pcPage" :loading="loading" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum" @getPage="getPage"></pcPhonePage>
             </div>
             <!-- <div class="pcPageDiv">
@@ -337,9 +341,13 @@ export default {
         }, 
 
         // 活动列表页手机端---通过筛选条件获得的活动列表数据
+        /**
+         * 获取活动列表内容
+         * @param  {[int]} val [0 手机端加载更多 1 手机端查询 2 电脑端查询]
+         */
         getActivityList:function(val){
             var self = this;
-            let state = val; //0 加载更多 1 查询
+            let state = val;
             if(state == 1){
                 self.allActivity = [];
             }
@@ -357,50 +365,29 @@ export default {
                 if(res.code == 0){
                     self.count = res.result.count;
                     let data = res.result.info;
-                    for(let i in data){
-                        self.allActivity.push(data[i]);
-                    }
-                    self.info = self.allActivity;
+                    // console.log(state);
+                    //0 手机端加载更多 1 手机端查询 2 电脑端查询
+                    switch(state){
+                        case 0:
+                        case 1: 
+                            for(let i in data){
+                                self.allActivity.push(data[i]);
+                            }
+                            self.info = self.allActivity; 
+                        break;
+                        case 2:   self.info = res.result.info; break;
+                        default:  self.message(true, "加载失败，请重试", 'info'); break;
+                    };
                     // console.log(self.info);
                 }
                 else{
                     self.message(true, "加载失败，请重试", 'info');
                 }
-                // if( self.pageNumber*self.pageCount >= self.count){
-                //     self.phoneparam.disabled = true;
-                //     self.phoneparam.loadingBtnText = "————我是有底线的————";
-                // }
             }).catch(function(error){
                 console.log("error");
             });
         },
-         // 活动列表页pc端---通过筛选条件获得的活动列表数据
-        getPcActivityList:function(){
-            // console.log('----pc');
-            var self = this;
-            this.fetch('http://www.lishanlei.cn/front/activity/getActivity',{
-                keyword:self.keyword,
-                province:self.activitySelected[0],
-                majorType:self.activitySelected[1],
-                activityType:self.activitySelected[2],
-                activityState:self.activitySelected[3],
-                activityDate:self.activitySelected[4],
-                pageCount:self.pageCount,
-                pageNumber:self.pageNumber
-            }).then(function (res) {
-                // console.log(res);
-                if(res.code == 0){
-                    self.count = res.result.count;
-                    self.info = res.result.info;
-                }
-                else{
-                    self.message(true, "加载失败，请重试", 'info');
-                }
-            }).catch(function(error){
-                console.log("error");
-            });
-        },
-
+        
         // 在活动列表页————筛选部分————获得活动的专业字典
         getCollegesType:function(){
             var self = this;
@@ -441,6 +428,11 @@ export default {
         // 筛选块-从组件中获取选中结果
         change(data){
             this.seltData = data;
+            for (let index = 0; index < this.seltData.length; index++) {
+                if(this.seltData[index].length==0){
+                    this.seltData[index].splice(this.seltData[index].indexOf("*"), 1);
+                }
+            }
             // console.log(data);
             this.getselt();
         },
@@ -478,8 +470,8 @@ export default {
             // for (var i = 0; i < this.activitySelected.length; i++) {
             //     console.log(this.activitySelected[i]);
             // }
-            // this.getActivityList(1);
-            this.getPcActivityList();
+            this.getActivityList(2);
+            // this.getPcActivityList();
             // console.log("======");
             // console.log(this.seltData);
             // console.log(this.activitySelected[0]);
@@ -488,7 +480,8 @@ export default {
         // 电脑点击改变分页值
         changePageNum(pageNum) {
             this.pageNumber = pageNum;
-            this.getPcActivityList();
+            // this.getPcActivityList();
+            this.getActivityList(2);
         },
 
     },
@@ -497,7 +490,8 @@ export default {
         this.getCollegesType();
         this.getActivityType();
         this.getActivityList(1);
-        this.getPcActivityList();
+        this.getActivityList(2);
+        // this.getPcActivityList();
     },
 };
 </script>
@@ -512,7 +506,10 @@ export default {
     }
     .search>div{
         width: 407px;
-        margin: 20px 0;
+        /*margin: 20px 0;*/
+        margin: 49px 0 44px 0;
+        /*margin-top: 49px;*/
+        /*margin-bottom: 44px;*/
     }
 
     /*筛选块*/
@@ -524,7 +521,7 @@ export default {
 </style>
 <style scoped>
     
-    .search, .activitySelt .selectedTag, .selectedTag .selected, .activityListBox{
+    .search, .activitySelt .selectedTag, .selectedTag .selected, .activityListBox, .activityListBox>div{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -545,25 +542,13 @@ export default {
         display: flex;
         align-items: center;
         min-height: auto;
+        width: 90%;
     }
     .slectedLeft span{
         margin-left: 7px;
         margin-right: 7px;
+        min-width: 60px;
     }
-
-    
-    /*加载更多*/
-    /*.phoneLeadBtn{
-        margin-bottom: 10px; 
-        margin-left: 10px;
-        margin-right: 10px;
-        width: 95%;
-    }
-    .phoneLeadBtn .leadBtn{
-        color: #fff;
-        background-color: #009fa0;
-        width: 100%;
-    }*/
 
     .activityList{
         width: 100%;
@@ -571,49 +556,50 @@ export default {
         background-color: rgb(245, 245, 245);
     }
 
-    .activityListBox{
+    .activityListBox>div{
         margin-bottom: 20px;
     }
 
     @media only screen and (max-width: 767px) {
-        /*.pcPageDiv .pcPage{
-            display: none;
-        }*/
         .search .pcSeach{
             display: none;
         }
         .search>div{
             width: 95%;
+            margin: 20px 0;
         }
     }
 
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
-        /*.pcPageDiv .pcPage{
-            display: block;
-        }*/
+        /*搜索-判断手机还是电脑的请求*/
         .search .pcSeach{
             display: block;
         }
-        /*.phoneLeadBtn .leadBtn{
-            display: none;
-        }*/
         .search .phoneSeach{
             display: none;
         }
+        /*搜索框样式*/
         .search{
             margin-left: 10px;
             justify-content: left;
+        }
+    }
+
+    /*iPad活动列表样式-覆盖子组件活动块宽度*/
+    @media only screen and (min-width: 768px) and (max-width: 1200px) {
+        .activityListBox .activityBox{
+            width: 47%;
         }
     } 
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1200px) {
         .search{
-            width: 1300px;
             margin: 0 auto;
         }
-        .selectedTag .selected{
+        /*整体布局：搜索块、筛选结果块、活动列表块*/
+        .search, .selectedTag .selected, .activityListBox>div{
             width: 1300px;
         }
     }   

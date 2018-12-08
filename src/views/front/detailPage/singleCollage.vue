@@ -189,8 +189,10 @@
             </div>
         <!-- 招生项目 -->
         </div>
+        
     </div>
 </template>
+
 
 <script>
 export default {
@@ -252,7 +254,7 @@ export default {
     methods: {
         //分享到微信——接口没写~
         sharewx:function(){
-
+            
         },
         //分享到新浪微博——接口没写~
         sharexl:function(){
@@ -486,7 +488,7 @@ export default {
                 width: 24%;
                 height: 52px;
                 text-align: center;
-                margin-right: 
+                /* margin-right:  */
             }
             .pdf {
                 width: 100%;

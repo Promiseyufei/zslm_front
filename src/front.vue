@@ -3,6 +3,7 @@
       <!-- <p>this is front.vue</p> -->
       <router-view  :key="$route.path"/>
     </div>
+	
 </template>
 
 <script>
