@@ -1,17 +1,13 @@
 <template>
     <!-- 分页参数： 
         手机端参数
-            phoneparam{phoneparam:{
-                loadingBtnText:'加载更多',//按钮上文字
-                disabled:false,//是否可点击
-                loading:false,//加载小圈圈
-            },
+            loading:false,//加载小圈圈
         pc端分页
             currentPage当前页
             totalData总数
             size每页显示个数
     -->
-    <!-- <pcPhonePage class="pcPage" :phoneparam="phoneparam" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum" @getPage="getPage"></pcPhonePage> -->
+    <!-- <pcPhonePage class="pcPage" :loading="loading" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum" @getPage="getPage"></pcPhonePage> -->
 <div>
     <div class="apartPage">
        <!--  <div class="countPage">
@@ -30,7 +26,7 @@
         </el-pagination>
     </div>
     <div class="phoneLeadBtn">
-        <el-button class="leadBtn" type="text" @click="getPage" :loading="phoneparam.loading" :disabled="phoneparam.disabled">{{ phoneparam.loadingBtnText }}</el-button>
+        <el-button class="leadBtn" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
     </div>
 </div>
 </template>
@@ -41,10 +37,13 @@ export default {
         return {
             currentPage2: this.currentPage,
             // totalData2: this.totalData,
+            disabled:false,
+            loadingBtnText:'加载更多',
+            count:1
         };
     },
 
-    props:["currentPage", "totalData","size", "phoneparam"],
+    props:["currentPage", "totalData","size", "loading"],
     methods:{
         //pc改变当前页时，触发事件,val为当前页
         handleCurrentChange(val) {
@@ -53,6 +52,13 @@ export default {
         },
         // phone滑动加载按钮
         getPage(){
+            // 当前页*每页显示个数 >= 总数 时加载全部结束
+            this.count = this.count+1;
+            if(this.count*this.size >= this.totalData){
+                this.disabled = true;
+                this.loadingBtnText = "————我是有底线的————";
+                this.count = 1;
+            }
             this.$emit('getPage');
         }, 
     },

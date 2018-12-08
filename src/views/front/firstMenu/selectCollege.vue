@@ -11,9 +11,12 @@
                     </el-input>
                 </div>
             </div>
-            <selectAll :checkboxGroup1="checkboxGroup" :list="collegeInform"></selectAll>
+            <selectAll :checkboxGroup1="checkboxGroup" :list="collegeInform" @change="change"></selectAll>
             <div class="tagSort">
-                <div class="tag"></div>
+                <div class="tag">
+                    <span>选院校 &gt;</span>
+                    <tags :tags="selectData" @handleClose="handleClose"></tags>
+                </div>
                 <div class="sort">
                     <div class="paixu">默认排序</div>
                     <div class="hot" @click="changeHot">
@@ -59,6 +62,7 @@ export default {
     },
     data() {
         return {
+            selectData:[],//tags数组
             collegeInform:[
                 {
                     type:'专业类型',
@@ -304,6 +308,50 @@ export default {
         }
     },
     methods: {
+        // 筛选块-从组件中获取选中结果
+        change(data){
+            this.selectData = data;
+            // console.log(data);
+            // this.getselt();
+        },
+        handleClose(tag) {
+            // console.log("---");
+            // console.log(this.seltData.length);
+            for (let index = 0; index < this.selectData.length; index++) {
+                var temp = this.selectData[index].indexOf(tag);
+                if(temp==-1){
+                    continue;
+                }else {
+                    this.selectData[index].splice(this.selectData[index].indexOf(tag), 1);
+                }
+            };
+            this.getselt();
+        },
+
+        //转换选中参数的格式——数组，以便传参
+        getselt:function(){
+            let list = [];
+            for (var i = 0; i < this.seltData.length; i++) {
+                var little = [];
+                for (var j = 0; j < this.seltData[i].length; j++) {
+                    if(i == 1)
+                        little.push(this.seltData[i][j].name);
+                    else
+                        little.push(this.seltData[i][j].id);
+                }
+                list.push(little);
+            }
+            // console.log(list[0]);
+            this.activitySelected = list;
+            // for (var i = 0; i < this.activitySelected.length; i++) {
+            //     console.log(this.activitySelected[i]);
+            // }
+            // this.getActivityList(1);
+            this.getPcActivityList();
+            // console.log("======");
+            // console.log(this.seltData);
+            // console.log(this.activitySelected[0]);
+        },
         //获取按钮内容
         getmajorType:function(){
             let that = this;
@@ -347,7 +395,7 @@ export default {
                     major_order:that.major_order,
                     min: that.min,
                     max: that.max,
-                    money_order: that.money_order,
+                    money_order:that.money_order,
                     score_type: that.score_type,
                     enrollment_mode: that.enrollment_mode,
                     project_count: that.project_count,
@@ -403,7 +451,6 @@ export default {
         changeMoney:function() {
                 let hotTop = document.getElementById('moneyTop');
                 let hotBottom = document.getElementById('moneyBottom');
-                console.log(hotTop.style.color)
                 if (moneyTop.style.color=='rgb(191, 191, 191)'&& moneyBottom.style.color=='rgb(191, 191, 191)'){
                     //首次点击费用，升序，1为升序
                     this.money_order = 1;
@@ -420,6 +467,7 @@ export default {
                     //循环点击，升序，1为升序
                     this.money_order = 1;
                     this.getmajorInform();
+                    // console.log(this.money_order)
                     moneyBottom.style.color= '#bfbfbf';
                     moneyTop.style.color='#009fa0';
                 }
@@ -433,6 +481,9 @@ export default {
 };
 </script>
 <style>
+    .moreInform i {
+        font-size: 13px !important;
+    }
     /*不同院校*/
     .selectCollegeSearch .el-input__icon {
         font-size: 16px;
@@ -468,6 +519,11 @@ export default {
     }
 </style>
 <style scoped>
+    .tag span {
+        font-size: 16px;
+        color: rgb(110, 110, 110);
+        margin: 0 7px;
+    }
     /*分页*/
     .page {
         padding: 0 0 56px;
@@ -478,8 +534,9 @@ export default {
         margin: 0;
     }
     /*排序 */
-        .topBott .el-icon-caret-top {
+        .topBott .el-icon-caret-top,.topBott .el-icon-caret-bottom {
             /*color: #bfbfbf;*/
+            font-size: 16px;
         }
         .topBott .el-icon-caret-bottom {
             /*color: #bfbfbf;*/
@@ -505,7 +562,10 @@ export default {
             margin: 0 auto 20px;
         }
         .tag {
-            width: 300px;
+            display: flex;
+            align-items: center;
+            width: 70%;
+            /*height: 32px;*/
         }
         .paixu:hover {
             color: #009fa0;
@@ -522,8 +582,12 @@ export default {
             margin: 0 0 6px 5px;
             display: flex;
             flex-direction:column;
-            justify-content:center;
+            /*justify-content:center;*/
         }
+        .hot,.publicMoney,.paixu{
+            cursor: pointer;
+        }
+
         .sort {
             display: flex;
             width: 400px;
@@ -1425,11 +1489,13 @@ export default {
         .countMajor,.paixu,.hot,.publicCost {
             font-size: 12px;
         }
-        .tag {
-            width: 0;
+        .tag span {
+            font-size: 14px;
+            margin: 0 0 10px;
         }
         .tagSort {
             width: 90%;
+            flex-wrap: wrap;
         }
         .buttonCollege {
             margin:0 0 20px;

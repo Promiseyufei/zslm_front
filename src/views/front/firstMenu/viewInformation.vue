@@ -31,37 +31,37 @@
                 <Article @refreshs="refresh" @jump="jump" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
             </div>
         </div>
-        <!--<div class="footer">-->
-            <!--<div class="foot-content">-->
-                <!--<div class="clearfloat foot-head">-->
-                    <!--<div class="foot-left">-->
-                        <!--<img src="../../../assets/img/foot.png" alt="">-->
-                    <!--</div>-->
-                    <!--<div class="float-middle">-->
-                        <!--<ul>-->
-                            <!--<li><a href="">关于我们</a></li>-->
-                            <!--<li><a href="">用户条款</a></li>-->
-                            <!--<li><a href="">帮助中心</a></li>-->
-                            <!--<li><a href="">问题反馈</a></li>-->
-                            <!--<li><a href="">法律声明</a></li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-                    <!--<div class="float-right">-->
-                        <!--<i class="fa fa-phone" id="phone-font" aria-hidden="true">&nbsp;&nbsp;&nbsp;010-56980320</i>-->
-                        <!--<i class="font-foot">周一至周五 9:00-18:00</i>-->
-                        <!--<i class="font-foot">北京荣美福地科技有限公司</i>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="clearfloat foot-icon">-->
-                    <!--<p>-->
-                        <!--© MBA Helper 2018-->
-                    <!--</p>-->
-                    <!--<p>-->
-                        <!--京ICP备13040890号-1-->
-                    <!--</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+          <!-- <div class="footer">
+            <div class="foot-content">
+                <div class="clearfloat foot-head">
+                    <div class="foot-left">
+                        <img src="../../../assets/img/foot.png" alt="">
+                    </div>
+                    <div class="float-middle">
+                        <ul>
+                            <li><a href="">关于我们</a></li>
+                            <li><a href="">用户条款</a></li>
+                            <li><a href="">帮助中心</a></li>
+                            <li><a href="">问题反馈</a></li>
+                            <li><a href="">法律声明</a></li>
+                        </ul>
+                    </div>
+                    <div class="float-right">
+                        <i class="fa fa-phone" id="phone-font" aria-hidden="true">&nbsp;&nbsp;&nbsp;010-56980320</i>
+                        <i class="font-foot">周一至周五 9:00-18:00</i>
+                        <i class="font-foot">北京荣美福地科技有限公司</i>
+                    </div>
+                </div>
+                <div class="clearfloat foot-icon">
+                    <p>
+                        © MBA Helper 2018
+                    </p>
+                    <p>
+                        京ICP备13040890号-1
+                    </p>
+                </div>
+            </div>
+        </div>  --> 
     </div>
 </template>
 
@@ -284,6 +284,7 @@ export default {
         width: 100%;
         height: 100%;
     }
+
     .content-information{
         background-color: #f5f5f5;
         padding-top: 30px;
@@ -491,6 +492,7 @@ export default {
             height: auto;
         }
     }
+    
 </style>
 
 <style >

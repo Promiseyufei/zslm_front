@@ -27,7 +27,7 @@
     					<div class="logonIn">
     						<div class="xinlang"></div>
     						<div class="diviLine"></div>
-    						<div class="weixin"></div>
+    						<div class="weixin" @click="thirdLogin"></div>
     					</div>
     				</div>
     			</el-card>
@@ -133,7 +133,9 @@
 				this.post('/login/front/login', params).then((response) => {
 					if(response.code == 0) {
 						this.saveUserState('user', this.phoneNumber);
-						this.saveUserState('userId', response.result);
+						this.saveUserState('userId', response.result.user_account_id);
+						this.saveUserState('userName', response.result.user_name);
+						this.saveUserState('userHead', response.result.head_portrait);
 						this.message(true, response.msg, 'success');
 					}
 					else if(response.code == 1) this.message(true, response.msg, 'info');
@@ -158,6 +160,13 @@
 					type: 1,
 					agree: agree
 				}
+			},
+			thirdLogin() {
+				// var test = window.open(this.globals.longUrl + '/auth/weixin/');
+				// console.log(test);
+				this.fetch('/auth/weixin', {}).then((response) => {
+					console.log(response);
+				})
 			}
 			
 		},

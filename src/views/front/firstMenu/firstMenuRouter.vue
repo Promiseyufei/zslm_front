@@ -4,7 +4,7 @@
     	<!-- 头部导航 -->
 	    	<div class="head">
 	    		<div class="headLeft">
-	    			<div class="logoPicture"><img src="../../../assets/img/logoGreen.png"></div>
+	    			<div class="logoPicture" @click="goIndex"><img src="../../../assets/img/logoGreen.png"></div>
 			        <div class="firstMenu" v-show="firstMenu">
 			        	<el-menu
 						  :default-active="activeIndex"
@@ -13,10 +13,10 @@
 						  @select="handleSelect"
 						  text-color="#6e6e6e"
 						  active-text-color="#009fa0">
-						  <el-menu-item index="1" @click="selectCollege">选院校</el-menu-item>
-						  <el-menu-item index="2" @click="lookActivity">找活动</el-menu-item>
-						  <el-menu-item index="3" @click="viewInformation">看资讯</el-menu-item>
-						  <el-menu-item index="4" style="border:0;padding-right:0;" @click="searchCoach">搜辅导</el-menu-item>
+						  <el-menu-item index="1">选院校</el-menu-item>
+						  <el-menu-item index="2">找活动</el-menu-item>
+						  <el-menu-item index="3">看资讯</el-menu-item>
+						  <el-menu-item index="4" style="border:0;padding-right:0;">搜辅导</el-menu-item>
 						</el-menu>
 			        </div>
 			        <div @click="isLogin" v-show="mobileIcon" class="mobileIcon">
@@ -26,7 +26,7 @@
 						  width="50%">
 						  <div class="dialog">
 						  	<div class="dialogPicture">
-						  		<div class="userPicture"><img :src="loginOr"></div>
+						  		<div class="userPicture"><img :src="loginOr" alt="加载中"></div>
 						  		<div class="userName">{{userName}}</div>
 						  	</div>
 						  </div>
@@ -37,7 +37,6 @@
 							  <el-button type="text" @click="">我的消息</el-button>
 							  <el-button type="text" @click="">我的账户</el-button>
 						  </div>
-						  <!-- <span slot="footer" class="dialog-footer"></span> -->
 						</el-dialog>
 			        </div>
 
@@ -47,43 +46,43 @@
 			        	<el-badge :value="200" :max="10" class="item">
 						  <img src="../../../assets/img/messageLogo.png">
 						</el-badge>
-						<div><i class="el-icon-question"></i></div>
+						<div class="isLoginPicture"><img :src="loginOr"></div>
 		        </div>
 	    	</div>
     	<!-- 头部导航 -->
     	<router-view/>
     	<!-- 页脚 -->
-	        <div class="footer" v-show="footer">
-	        	<div class="footerTop">
-	        		<div class="footerLogo"><img src="../../../assets/img/MBA.png"></div>
-	        		<div class="footerMenu">
-	        			<div>
-	        				<ul>
-	        					<li @click="aboutUs">关于我们</li>
-	        					<li @click="helpCenter">帮助中心</li>
-	        					<li @click="lawStatement">法律声明</li>
-	        				</ul>
-	        			</div>
-	        			<div>
-	        				<ul>
-	        					<li @click="userList">用户条款</li>
-	        					<li @click="problemBack">问题反馈</li>
-	        				</ul>
-	        			</div>
-	        		</div>
-	        		<div class="footerAddres">
-		        		<div class="footerAddresOne">
-		        			<p><span><i class="fa fa-phone"></i></span>010-56980320</p>
-		        		</div>
-	        			<p>周一至周五 9:00-18:00</p>
-	        			<p>北京荣美福地科技有限公司</p>
-	        		</div>
-	        	</div>
-	        	<div class="footerBott">
-	        		<div><p>© MBA Helper 2018</p></div>
-	        		<div><p>京ICP备13040890号-1</p></div>
-	        	</div>
-	        </div>
+    		<div class="footer">
+	            <div class="foot-content">
+	                <div class="clearfloat foot-head">
+	                    <div class="foot-left">
+	                        <img src="../../../assets/img/foot.png" alt="">
+	                    </div>
+	                    <div class="float-middle">
+	                        <ul>
+	                            <li><a href="">关于我们</a></li>
+	                            <li><a href="">用户条款</a></li>
+	                            <li><a href="">帮助中心</a></li>
+	                            <li><a href="">问题反馈</a></li>
+	                            <li><a href="">法律声明</a></li>
+	                        </ul>
+	                    </div>
+	                    <div class="float-right">
+	                        <i class="fa fa-phone" id="phone-font" aria-hidden="true">&nbsp;&nbsp;&nbsp;010-56980320</i>
+	                        <i class="font-foot">周一至周五 9:00-18:00</i>
+	                        <i class="font-foot">北京荣美福地科技有限公司</i>
+	                    </div>
+	                </div>
+	                <div class="clearfloat foot-icon">
+	                    <p>
+	                        © MBA Helper 2018
+	                    </p>
+	                    <p>
+	                        京ICP备13040890号-1
+	                    </p>
+	                </div>
+	            </div>
+	        </div> 
         <!-- 页脚 -->
     </div>
 </template>
@@ -93,46 +92,38 @@
 	    },
 	    data() {
 	        return {
-	        	loginOr:require("../../../assets/img/noLogin.png"),
+	        	loginOr:require('../../../assets/img/nologin.png'),
 	        	userName:'未登录',
 	        	dialogVisible: false,
 	        	activeIndex: '1',
 	        	firstMenu:true,
 	        	logoInto:true,
 	        	mobileIcon:false,
-	        	footer:true,
+	        	// footer:true,
 	        }
 	    },
 	    methods: {
-	    	selectCollege:function(){
-	    		this.$router.push('/front/firstMenuRouter/selectCollege');
-	    	},
-	    	lookActivity:function(){
-	    		this.$router.push('/front/firstMenuRouter/lookActivity');
-	    	},
-	    	viewInformation:function(){
-	    		this.$router.push('/front/firstMenuRouter/viewInformation');
-	    	},
-	    	searchCoach:function(){
-	    		this.$router.push('/front/firstMenuRouter/searchCoach');
+	    	//跳到首页
+	    	goIndex:function(){
+	    		this.$router.push('/front/index');
 	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
-	    		// this.activeIndex = key;
-	    		// if (this.activeIndex==1) {
-	    		// 	this.$router.push('/front/firstMenuRouter/selectCollege');
-	    		// } else if(this.activeIndex==2) {
-	    		// 	this.$router.push('/front/firstMenuRouter/lookActivity');
-	    		// } else if(this.activeIndex==3) {
-	    		// 	this.$router.push('/front/firstMenuRouter/viewInformation');
-	    		// } else if(this.activeIndex==4) {
-	    		// 	this.$router.push('/front/firstMenuRouter/searchCoach');
-	    		// }
-	    		// sessionStorage.setItem("active",key);
+	    		this.activeIndex = key;
+	    		if (this.activeIndex==1) {
+	    			this.$router.push('/front/firstMenuRouter/selectCollege');
+	    		} else if(this.activeIndex==2) {
+	    			this.$router.push('/front/firstMenuRouter/lookActivity');
+	    		} else if(this.activeIndex==3) {
+	    			this.$router.push('/front/firstMenuRouter/viewInformation');
+	    		} else if(this.activeIndex==4) {
+	    			this.$router.push('/front/firstMenuRouter/searchCoach');
+	    		}
 		    },
-		    //刷新菜单高亮不变
+		    //改变路由菜单高亮不变
 		    rushRouter:function(){
 	    		let path = this.$route.matched[2].path;
+	    		//当前输入的路由包括()中路由时，显示当前高亮
 	    		if (path.indexOf('/front/firstMenuRouter/selectCollege') != -1) {
 	    			this.activeIndex = '1';
 	    		} else if(path.indexOf('/front/firstMenuRouter/lookActivity') != -1) {
@@ -145,10 +136,17 @@
 		    },
 		    //判断是否登录
 		    isLogin:function(){
+		    	//手机号
 		    	this.getUserState('user');
+		    	//用户id
+		    	this.getUserState('userId');
+		    	//用户头像
+		    	this.getUserState('userHead');
+		    	//用户名称
+		    	this.getUserState('userName');
 		    	// let aa = 2;
-		    	// if (aa==1) {
-		    	// 	let login = document.getElementById('login');
+		    	// if (aa==login1) {
+		    	// 	let  = document.getElementById('login');
 			    // 	if (login.style.display == "none") 
 			    // 		login.style.display = "block";
 			    // 	else
@@ -246,7 +244,7 @@
 				this.firstMenu = false;
 				this.logoInto = false;
 				this.mobileIcon = true;
-				this.footer = false;
+				// this.footer = false;
 			}
 
 		},
@@ -311,8 +309,121 @@
 </style>
 
 <style scoped>
-
-	.footerBott p {
+	.isLoginPicture img {
+		width: 100%;
+	}
+	.isLoginPicture {
+		width: 36px;
+		height: 36px;
+	}
+	 /*-----------foot-----------*/
+    .footer{
+        width: 100%;
+        height: 249px;
+        background-color: #383b3d;
+        /*margin-top: 105px;*/
+        display: flex;
+        align-items:center;
+    }
+    .clearfloat::after{
+        display:block;
+        clear:both;content:"";
+        visibility:hidden;
+        height:0;
+    }
+    .foot-content{
+        width: 1280px;
+        margin: auto;
+        height: 156px;
+    }
+    .foot-left{
+        float: left;
+    }
+    .foot-left{
+        width: 166px;
+        margin-right: 99px;
+    }
+    .foot-left > img{
+        width: 100%;
+    }
+    .float-right{
+        float: right;
+    }
+    .float-middle{
+        width: 280px;
+        float: left;
+    }
+    .float-middle > ul >li{
+        list-style: none;
+        margin-bottom: 15px;
+        width: 140px;
+        float: left;
+        text-align: center;
+    }
+    .float-middle > ul >li > a{
+        font-family: MicrosoftYaHei;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        color: #ffffff;
+        text-decoration: none;
+    }
+    #phone-font{
+        font-size: 24px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 22px;
+        letter-spacing: 0px;
+        color: #ffffff;
+    }
+    .font-foot{
+        font-family: MicrosoftYaHei-Bold;
+        font-size: 12px;
+        font-weight: normal;
+        letter-spacing: 0px;
+        color: #ffffff;
+    }
+    .foot-icon{
+        width: 100%;
+        margin-top: 36px;
+    }
+    .foot-icon > p{
+        font-family: MicrosoftYaHei;
+        font-size: 12px;
+        font-weight: normal;
+        font-stretch: normal;
+        letter-spacing: 0px;
+        color: #ffffff;
+        opacity: 0.65;
+    }
+    .foot-icon > p:first-child{
+        float: left;
+    }
+    .foot-icon > p:last-child{
+        float: right;
+    }
+    .foot-head{
+        padding-top: 15px;
+    }
+    .float-middle > ul > li > a:hover {
+        color: #cecece;
+    }
+    .float-right{
+        float: right;
+        width: 305px;
+        text-align: right;
+    }
+    .float-right > i{
+        display: block;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+    #article-cont{
+        width: 100%;
+        margin-top: 11px;
+    }
+    /*-----------foot-----------*/
+	/*.footerBott p {
 		opacity: 0.65;
 		color: rgb(255, 255, 255);
 		font-size: 12px;
@@ -375,7 +486,7 @@
 		width: 100%;
 		height: 251px;
 		background-color: rgb(56, 59, 61);
-	} 
+	} */
 	.logoInto i {
 		width: 21px;
 	    height: 21px;
@@ -386,6 +497,7 @@
 		width: 346px;
 	}
 	.logoPicture {
+		cursor: pointer;
 		width: 166px;
 		height: auto;
 	}
@@ -410,12 +522,12 @@
 	}
 	/** PC **/
 	@media only screen and (min-width: 1024px) and (max-width:1300px) {
-		.footerBott {
+		/*.footerBott {
             width: 900px;
         }
 		.footerMenu {
 			width: 400px;
-		}
+		}*/
 		.head {
 			width: 1000px;
 		}
@@ -425,12 +537,51 @@
 	}
 	/** iPad **/
 	@media only screen and (min-width: 768px) and (max-width: 1023px) {
-		.footerLogo {
+		/*.footerLogo {
 			width: 200px;
 		}
 		.footerMenu {
 			width: 280px;
-		}
+		}*/
+		.content{
+            width: 95%;
+            margin-bottom: 30px;
+        }
+        .float-left{
+            width: 100%;
+        }
+        .float-right{
+            margin-top: 25px;
+            width: 100%;
+        }
+        .sowingMap{
+            width: 100%;
+        }
+        .foot-left,.float-right,.foot-icon{
+            width: 100%;
+            text-align: center;
+        }
+        .foot-left img{
+            width: 40%;
+        }
+        .foot-content,.footer{
+            height: auto;
+        }
+        .foot-content{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .foot-icon p{
+            width: 100%;
+            margin-bottom: 9px;
+        }
+        .float-middle{
+            display: none;
+        }
+        .advertisement{
+            width: 100%;
+            height: auto;
+        }
 		#login,#noLogin {
 			background-color: #009fa0;
 			width: 120px;
@@ -465,7 +616,45 @@
 	}
 	/** iPhone **/
 	@media only screen and (min-width: 320px) and (max-width: 767px) {
-		
+		.content{
+            width: 95%;
+            margin-bottom: 30px;
+        }
+        .float-left{
+            width: 100%;
+        }
+        .float-right{
+            margin-top: 25px;
+            width: 100%;
+        }
+        .sowingMap{
+            width: 100%;
+        }
+        .foot-left,.float-right,.foot-icon{
+            width: 100%;
+            text-align: center;
+        }
+        .foot-left img{
+            width: 40%;
+        }
+        .foot-content,.footer{
+            height: auto;
+        }
+        .foot-content{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .foot-icon p{
+            width: 100%;
+            margin-bottom: 9px;
+        }
+        .float-middle{
+            display: none;
+        }
+        .advertisement{
+            width: 100%;
+            height: auto;
+        }
 		#login,#noLogin {
 			background-color: #009fa0;
 			width: 120px;

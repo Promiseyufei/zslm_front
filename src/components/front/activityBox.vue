@@ -3,7 +3,7 @@
     <!-- <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox> -->
 
 	<!-- 单个活动块 -->
-    <div class="activityBox" @click="jump(activityInfo.id)">
+    <div class="activityBox" @click="jump">
 	    <div>
 	        <!-- 头部图片及状态 -->
 	        <!-- <div class="activityImg"  :style="{ backgroundImage: 'url(&;quot;' + activityInfo.active_img + '&;quot;)' }"> -->
@@ -79,7 +79,7 @@ export default {
         // 跳转到活动详情页
         jump: function(){
             let id = this.activityInfo.id;
-            this.$router.push('/front/firstMenuRouter/singleActivity/'+id);
+            this.$router.push('/front/firstMenuRouter/lookActivity/singleActivity/'+id);
         },
     },
     props: ["activityInfo"],

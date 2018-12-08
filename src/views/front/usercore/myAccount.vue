@@ -12,17 +12,17 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_0l18QF">
                     <div class="c-div div_xRicHO">
                         <h1 class="c-heading heading_m2C6Qu">昵称</h1>
-                        <input type="text" class="c-heading heading_m2C6Qu mingcheng input" placeholder="用户名称">
+                        <input type="text" v-model="userInfo.user_name" class="c-heading heading_m2C6Qu mingcheng input" placeholder="用户名称">
                         <h1 class="c-heading heading_m2C6Qu bianji">编辑昵称</h1>
                     </div>
                     <div class="c-div div_xRicHO">
                         <h1 class="c-heading heading_m2C6Qu">注册手机号</h1>
-                        <h1 type="text" class="c-heading heading_m2C6Qu mingcheng input">15515151534</h1>
+                        <h1 type="text" class="c-heading heading_m2C6Qu mingcheng input">{{ userInfo.phone }}</h1>
                         <h1 class="c-heading heading_m2C6Qu bianji"></h1>
                     </div>
                     <div class="c-div div_xRicHO">
                         <h1 class="c-heading heading_m2C6Qu">注册时间</h1>
-                        <h1 class="c-heading heading_m2C6Qu mingcheng">2018-08-02</h1>
+                        <h1 class="c-heading heading_m2C6Qu mingcheng">{{ userInfo.create_time }}</h1>
                         <h1 class="c-heading heading_m2C6Qu bianji"></h1>
                     </div>
                     <a class="btn c-button button_LsM2yn123 quguan quxiao mima" type="button">修改密码</a>
@@ -30,7 +30,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_wODSnC">
                     <div class="c-div div_c1UVgP" style="">
                         <el-upload class="c-inlineblock c-imageblock imageblock_JtO0xa yuan shezhi" style="border: 1px dashed #d9d9d9;" action="" :show-file-list="false">
-                            <img v-if="imageUrl" :src="imageUrl" class="avatar" >
+                            <img v-if="userInfo.head_portrait" :src="userInfo.head_portrait" class="avatar" >
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
                         <h1 class="c-heading heading_m2C6Qu bianji touxiang">修改头像</h1>
@@ -49,15 +49,15 @@
             </div>
             <div class="c-div div_xRicHO">
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">姓名</h1>
-                <input type="text" class="c-heading heading_m2C6Qu huiyuan mingcheng input" style="padding-bottom: 14px;" placeholder="用户名称">
+                <input type="text" class="c-heading heading_m2C6Qu huiyuan mingcheng input" style="padding-bottom: 14px;" v-model="userInfo.real_name" placeholder="用户名称">
                 <h1 class="c-heading heading_m2C6Qu bianji huiyuan">修改</h1>
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">仅自己可见</h1>
             </div>
             <div class="c-div div_xRicHO biaodan">
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">性别</h1>
                 <div class="row c-row row_myRz0h df123">
-                    <el-radio v-model="radio" label="1">男</el-radio>
-                    <el-radio v-model="radio" label="2">女</el-radio>
+                    <el-radio v-model="userInfo.sex" :label=0>男</el-radio>
+                    <el-radio v-model="userInfo.sex" :label=1>女</el-radio>
                 </div>
             </div>
             <div class="c-div div_xRicHO biaodan">
@@ -107,6 +107,7 @@ export default {
             radio: '1',
             input: '',
             value: '',
+            userInfo:{},
             optionsTpw: [{
             value: '选项1',
             label: '黄金糕'
@@ -160,7 +161,33 @@ export default {
     methods: {
         handleChange(value) {
             console.log(value);
+        },
+        getUserAccounts() {
+            // let phone = this.getUserState('user');
+            let phone = '15837587256';
+            if(phone) {
+                this.fetch('/front/usercore/getUserAccountInfo', {
+                    phone: phone
+                }).then((response) => {
+                    console.log(response.result);
+                    if(response.code == 0) {
+                        this.userInfo = response.result;
+                    }
+                    else this.message(true, response.msg, 'info');
+                })
+            }
+            else {
+                this.message(true, '该用户会话已过时', 'info');
+                // this.$router.push('/front/Login/loginRoute/accountNumber');
+            }   
         }
+
+    },
+    mounted() {
+        this.getUserAccounts();
+        this.post('/admin/information/getMajorProvincesAndCities').then((response) => {
+            console.log(response.result);
+        })
     }
 }
 </script>

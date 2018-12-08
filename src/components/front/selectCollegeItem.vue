@@ -178,7 +178,7 @@
         }
         .viewMore {
             width: 1220px;
-            padding: 0 5px;
+            padding: 0 5px 0 10px;
             display: flex;
             justify-content:space-between;
             font-size: 12px;
@@ -773,6 +773,7 @@
     }
 
     .heading_IH2VnY {
+        cursor: pointer;
         font-size: 26px;
         color: rgb(72, 72, 72);
         margin-top: 0px;
