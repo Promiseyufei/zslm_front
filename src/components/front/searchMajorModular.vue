@@ -14,11 +14,11 @@
                             <label class="c-label label_OVUgJH">{{ majorInfo.province.city }}</label>
                         </div>
                         <div class="div_sfz9WV">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_confirm_id == 'EQUIS'" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_confirm_id == 'AACSB'" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '原211'" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '原985'" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '双一流'" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_confirm_id == 'EQUIS'" src="../../assets/img/equsSmall.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_confirm_id == 'AACSB'" src="../../assets/img/aacsbSmall.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '原211'" src="../../assets/img/211.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '原985'" src="../../assets/img/985.png">
+                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '双一流'" src="../../assets/img/shuangyiliu.png">
                         </div>
                     </div>
                 </div>
@@ -121,8 +121,9 @@ export default {
 .div_oLhlRV .label_OVUgJH {
     color: rgb(0, 159, 160);
     font-weight: normal;
-    padding-left: 6px;
-    padding-right: 6px;
+    /* padding-left: 6px; */
+    /* padding-right: 6px; */
+    padding: 4px 8px;
     border-style: solid;
     border-radius: 5px;
     border-width: 1px;

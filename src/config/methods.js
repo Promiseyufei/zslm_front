@@ -177,7 +177,7 @@ export default {
 
     /**
      * 截取数组，且原数组的值不会改变
-     * @param array　目标数组
+     * @param array　目标数
      * @param index 初始截取下标
      * @param length 截取长度
      *

@@ -31,15 +31,12 @@ export default {
     methods: {
     	//跳到相应的模块，分别为（选校校，找活动，找资讯，搜辅导）
         toJump: function(index) {
-            if(index==1) {
-                this.$router.push('/front/firstMenuRouter/selectCollege');
-            }else if(index==2) {
-                this.$router.push('/front/firstMenuRouter/lookActivity');
-            }else if(index==3) {
-                this.$router.push('/front/firstMenuRouter/viewInformation');
-            }else {
-                this.$router.push('/front/firstMenuRouter/searchCoach');
-            }
+            switch(index){
+                case 1:   this.$router.push('/front/firstMenuRouter/selectCollege'); break;
+                case 2:   this.$router.push('/front/firstMenuRouter/lookActivity'); break;
+                case 3:   this.$router.push('/front/firstMenuRouter/viewInformation'); break;
+                default:  this.$router.push('/front/firstMenuRouter/searchCoach'); break;
+            };
         },
         toIndex:function(){
             this.$router.push('/front/firstMenuRouter/index');

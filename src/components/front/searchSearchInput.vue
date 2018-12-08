@@ -28,6 +28,9 @@ export default {
 </script>
 
 <style scoped>
+.search_search_input {
+    margin-right:10px;
+}
 .search_search_input input {
     outline: none;
     font-family: inherit;
@@ -69,7 +72,7 @@ export default {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    height: 50px;
+    height: 100%;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
@@ -78,7 +81,7 @@ export default {
 .searchbox_PZpLzg .c-input {
     display: block;
     width: 100%;
-    height: 38px;
+    /* height: 100%; */
     padding: 8px 12px;
     margin-bottom: 10px;
     font-size: 14px;
@@ -114,6 +117,9 @@ export default {
     -webkit-transition: All 0.3s ease;
 }
 @media (max-width: 767px) {
+    .search_search_input {
+        margin-right: 0;
+    }
     .search_search_input .div_v60iAm.biaoqian {
         padding-left: 10px;
         padding-right: 10px;
