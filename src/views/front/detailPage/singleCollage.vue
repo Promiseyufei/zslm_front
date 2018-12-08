@@ -214,6 +214,9 @@ export default {
             address:'',
             phonNumber:0,
             id:this.$route.params.id,
+            is_guanzhu:'',
+            index_web:'',
+            admissions_web:'',
             u_id:1,
             page:1,
             page_size:3,
@@ -257,11 +260,11 @@ export default {
         },
         //院校官网——跳转页面
         majorWebsite:function(){
-
+            window.open(this.index_web);
         },
         //招生专题——跳转页面
         majorSpecial:function(){
-
+            window.open(this.admissions_web);
         },
         //微博主页
         majorWb:function(){
@@ -275,32 +278,31 @@ export default {
         clickFollow:function(){
              // let ab = 1;   
              let followButt = document.getElementById('followButt');
-             if (this.ab==1) {
+             if (this.is_guanzhu==false) {
                 this.message('judge', '您已成功关注！', 'success');
                 this.follow = '已关注';
                 $("#symbol").attr("class","el-icon-check");
                 followButt.style.background = '#009fa0';
-                this.ab = 2;
+                this.is_guanzhu=true;
             } else{
                 this.message('judge', '您已取消关注哦', 'warning')
                 this.follow = '关注';
                 $("#symbol").attr("class","el-icon-plus");
                 followButt.style.background = '#ffb957';
-                this.ab = 1;
+                this.is_guanzhu=false;
             }
         },
         //判断是否关注
         isFollow:function(){
-            let ab = 1;
             let followButt = document.getElementById('followButt');
-            if (ab==1) {
+            if (this.is_guanzhu==true) {
                 this.follow = '已关注';
                 $("#symbol").attr("class","el-icon-check");
-                followButt.style.background = '#009fa0'
+                followButt.style.background = '#009fa0';
             } else {
                 this.follow = '关注';
                 $("#symbol").attr("class","el-icon-plus");
-                followButt.style.background = '#ffb957'
+                followButt.style.background = '#ffb957';
             }
         },
 
@@ -374,6 +376,11 @@ export default {
                     that.province = res.province;
                     that.address = res.address;
                     that.pdfPicture = res.file;
+                    that.is_guanzhu = res.is_guanzhu;
+                    that.index_web = res.index_web;
+                    that.admissions_web = res.admissions_web;
+                    console.log(that.index_web);
+                    console.log(123)
                 }
             }).catch(function (error) {
                 // console.log(132)

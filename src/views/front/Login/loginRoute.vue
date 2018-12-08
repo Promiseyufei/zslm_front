@@ -255,6 +255,7 @@
 		width: 340px;
 	}
 	.weixin {
+		cursor: pointer;
 		width: 21px;
 		height: 19px;
 		margin: 0 0 0 14px;
@@ -268,6 +269,7 @@
 		background-color: #c7c7c7;
 	}
 	.xinlang {
+		cursor: pointer;
 		width: 23px;
 		height: 19px;
 		margin: 0 9px 0 0;
