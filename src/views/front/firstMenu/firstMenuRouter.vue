@@ -63,11 +63,11 @@
 	                    </div>
 	                    <div class="float-middle">
 	                        <ul>
-	                            <li><a href="">关于我们</a></li>
-	                            <li><a href="">用户条款</a></li>
-	                            <li><a href="">帮助中心</a></li>
-	                            <li><a href="">问题反馈</a></li>
-	                            <li><a href="">法律声明</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(0)">关于我们</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(1)">用户条款</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(2)">帮助中心</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(3)">问题反馈</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(4)">法律声明</a></li>
 	                        </ul>
 	                    </div>
 	                    <div class="float-right">
@@ -105,6 +105,16 @@
 	        }
 	    },
 	    methods: {
+	    	// footer链接:0关于我们 1用户条款 2帮助中心 3问题反馈 4法律声明
+	    	toJump(state){
+	    		switch(state){
+	    			case 0:   this.$router.push('/front/firstMenuRouter/aboutUs'); break;
+	                case 1:   this.$router.push('/front/firstMenuRouter/userTerms'); break;
+	                case 2:   this.$router.push('/front/firstMenuRouter/helpCenter'); break;
+	                case 3:   this.$router.push('/front/firstMenuRouter/ href="javascript:0;"singleOpinion'); break;
+	                default:  this.$router.push('/front/firstMenuRouter/legalNotice'); break;
+	            };
+	    	},
 	    	//跳到首页
 	    	goIndex:function(){
 	    		this.$router.push('/front/index');
