@@ -86,8 +86,8 @@
                             <div class="asideLogo">
                                 <!-- <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name"> -->
                                 <!-- 默认图片 -->
-                                 <img v-if=" acHostInfo.magor_logo_name != '' " src="../../../assets/img/logo.png">
-                                <img v-else src="../../../assets/img/logo.png">
+                                 <img v-if=" acHostInfo.magor_logo_name != '' " src="../../../assets/img/collegeLogo.png">
+                                <img v-else src="../../../assets/img/collegeLogo.png">
                             </div>
                             <div class="asideTitle">
                                 <span></span>
@@ -100,8 +100,8 @@
                                 <span class="addressItem">&middot;&nbsp;{{acHostInfo.province}}</span>
                             </div>
                             <div class="InfoBtn asideBtn">
-                                <a href="javascript:0;" style="background-color: rgba(0,159,160,1);" @click="changeState(acHostInfo.is_guanzhu)" v-if="acHostInfo.is_guanzhu">已关注</a>
-                                <a href="javascript:0;" @click="changeState(acHostInfo.is_guanzhu)" v-else>+&nbsp;关注</a>
+                                <a class="getGuanZhu" href="javascript:0;" @click="changeState(acHostInfo.is_guanzhu)">{{GuanZhu}}</a>
+                                <!-- <a href="javascript:0;" @click="changeState(acHostInfo.is_guanzhu)" v-else>+&nbsp;关注</a> -->
                             </div>
                         </div>
                     </div>
@@ -128,6 +128,9 @@ export default {
 
             //侧边栏 活动主办院校
             acHostInfo:[],
+            // 关注
+            GuanZhu:"+ 关注",
+
             // 热门活动 
             hotInfor:[],//活动信息
             hotInfoTatol:1,
@@ -162,10 +165,12 @@ export default {
                 u_id:this.userId, //用户id
             }).then(function (res) {
                 // let res = response[0];
-                // console.log(res);
+                console.log(res);
                 if(res.code == 0){
                     self.message(true, "关注成功", 'success');
-                    self.refresh();
+                    self.GuanZhu = "取消关注";
+                    $(".getGuanZhu").css("background-color",'rgb(0, 159, 160)');
+                    self.getAcHostMajor();
                 }else{
                     self.message(true, "操作失败，请重试", 'error');
                 }
@@ -173,8 +178,25 @@ export default {
                 console.log("error");
             });
         },
+        // 取消关注
         remove:function(){
-
+            this.post('http://www.lishanlei.cn/front/colleges/unsetusermajor',{
+                m_id:this.acHostInfo.id,     //院校id
+                u_id:this.userId, //用户id
+            }).then(function (res) {
+                // let res = response[0];
+                // console.log(res);
+                if(res.code == 0){
+                    self.message(true, "取消关注成功", 'success');
+                    self.GuanZhu = "+ 关注";
+                    $(".getGuanZhu").css("background-color",'rgb(255, 185, 87)');
+                    self.getAcHostMajor();
+                }else{
+                    self.message(true, "操作失败，请重试", 'error');
+                }
+            }).catch(function(error){
+                console.log("error");
+            });
         },
 
         // 热门活动——换一换
@@ -194,13 +216,17 @@ export default {
                 a_id:this.id,
                 u_id:this.userId,
             }).then(function (res) {
+                // console.log(res);
                 // let res = response[0];
-                console.log(res.result[0]);
+                // console.log(res.result[0]);
                 if(res.code == 0){
                     self.acHostInfo = res.result[0];
                     // 设置背景图
                     if(self.acHostInfo.major_cover_name != ""){
                         self.hostBgimg = self.acHostInfo.major_cover_name;
+                    }
+                    if(self.acHostInfo.is_guanzhu != true){
+                        self.GuanZhu = "取消关注";
                     }
                 }else{
                     self.message(true, "主办院校不存在", 'errors');
@@ -229,8 +255,8 @@ export default {
                             z_image:acInfo[i].active_img,
                         });
                     }
-                    console.log(res);
-                    console.log("-----");
+                    // console.log(res);
+                    // console.log("-----");
                     // self.hotInfor = res.result[0].acInfo;
                     self.hotInfoTatol = acInfo.count;
                 }else{
@@ -508,11 +534,11 @@ export default {
         font-weight: bold;
     }
     .content article{
-        margin-bottom: 49px;
+        /*margin-bottom: 49px;*/
         font-size: 16px;
         line-height: 30px;
         color: rgb(110,110,110);
-        margin-top: 33px;
+        /*margin-top: 33px;*/
         text-align: justify;
     }
 
@@ -648,10 +674,15 @@ export default {
             line-height: 26px;
             margin-bottom: 18px;
         }
+        /*主办院校整体块*/
+        .singleActivityBody section .InfoBox{
+            padding-left: 10px;
+            padding-right: 10px;
+        }
     }
 
     /* Medium devices (landscape tablets, 768px and up) */
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 768px){
         /*面包屑*/
         .breadCrumb{
             padding-bottom: 32px;
@@ -663,6 +694,13 @@ export default {
             line-height: 34px;
             margin-bottom: 30px;
         }
+        /*左右两边分布 布局*/
+        .singleActivityBody section{
+            width: 75%;
+        }
+        .singleActivityBody aside{
+            width: 25%;
+        }
     } 
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -671,13 +709,7 @@ export default {
         .singleActivityBody>div{
             width: 1300px;
         } 
-        /*左右两边分布 布局*/
-        .singleActivityBody section{
-            width: 75%;
-        }
-        .singleActivityBody aside{
-            width: 25%;
-        }
+        
         /*面包屑样式*/
         .breadCrumb .breadCrumbContainer{
             width: 1280px;

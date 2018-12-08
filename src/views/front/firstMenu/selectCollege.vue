@@ -18,7 +18,7 @@
                     <tags :tags="selectData" @handleClose="handleClose"></tags>
                 </div>
                 <div class="sort">
-                    <div class="paixu">默认排序</div>
+                    <div class="paixu" id="paixu" style="color: #009fa0;" @click="paixu">默认排序</div>
                     <div class="hot" @click="changeHot">
                         <div>热度</div>
                         <div class="topBott">
@@ -312,11 +312,9 @@ export default {
         change(data){
             this.selectData = data;
             // console.log(data);
-            // this.getselt();
+            this.getselt();
         },
         handleClose(tag) {
-            // console.log("---");
-            // console.log(this.seltData.length);
             for (let index = 0; index < this.selectData.length; index++) {
                 var temp = this.selectData[index].indexOf(tag);
                 if(temp==-1){
@@ -327,7 +325,6 @@ export default {
             };
             this.getselt();
         },
-
         //转换选中参数的格式——数组，以便传参
         getselt:function(){
             let list = [];
@@ -347,7 +344,7 @@ export default {
             //     console.log(this.activitySelected[i]);
             // }
             // this.getActivityList(1);
-            this.getPcActivityList();
+            this.getmajorInform();
             // console.log("======");
             // console.log(this.seltData);
             // console.log(this.activitySelected[0]);
@@ -422,55 +419,77 @@ export default {
             }).catch(function (error) {
             });
         },
+        //默认排序
+        paixu:function(){
+            let hotTop = document.getElementById('hotTop');
+            let hotBottom = document.getElementById('hotBottom');
+            let moneyTop = document.getElementById('moneyTop');
+            let moneyBottom = document.getElementById('moneyBottom');
+            hotTop.style.color='#bfbfbf';
+            hotBottom.style.color='#bfbfbf';
+            moneyBottom.style.color='#bfbfbf';
+            moneyTop.style.color='#bfbfbf';
+            let paixu = document.getElementById('paixu');
+            if (paixu.style.color='rgb(191, 191, 191)') {
+               paixu.style.color = '#009fa0'; 
+            } else {
+                paixu.style.color = '#bfbfbf'; 
+            }
+            this.getmajorInform();
+        },
         //点击热度改变颜色，排序
         changeHot:function() {
-                let hotTop = document.getElementById('hotTop');
-                let hotBottom = document.getElementById('hotBottom');
-                // console.log(hotTop.style.color)
-                if (hotTop.style.color=='rgb(191, 191, 191)'&&hotBottom.style.color=='rgb(191, 191, 191)'){
-                    //首次点击热度，升序，1为升序
-                    this.major_order = 1;
-                    this.getmajorInform();
-                    hotTop.style.color= '#009fa0';//绿色rgb(0, 159, 160)
-                    hotBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
-                } else if(hotTop.style.color=='rgb(0, 159, 160)'&& hotBottom.style.color=='rgb(191, 191, 191)') {
-                    //再次点击，降序，0为降序
-                    this.major_order = 0;
-                    this.getmajorInform();
-                    hotTop.style.color='#bfbfbf';
-                    hotBottom.style.color= '#009fa0';
-                } else if (hotTop.style.color=='rgb(191, 191, 191)'||hotBottom.style.color=='rgb(0, 159, 160)') {
-                    //循环点击，升序，1为升序
-                    this.major_order = 1;
-                    this.getmajorInform();
-                    hotBottom.style.color= '#bfbfbf';
-                    hotTop.style.color='#009fa0';
-                }
+            let paixu = document.getElementById('paixu');
+            paixu.style.color = '#bfbfbf';
+            let hotTop = document.getElementById('hotTop');
+            let hotBottom = document.getElementById('hotBottom');
+            if (hotTop.style.color=='rgb(191, 191, 191)'&&hotBottom.style.color=='rgb(191, 191, 191)'){
+                console.log(paixu.style.color)
+                //首次点击热度，升序，1为升序
+                this.major_order = 1;
+                this.getmajorInform();
+                hotTop.style.color= '#009fa0';//绿色rgb(0, 159, 160)
+                hotBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
+            } else if(hotTop.style.color=='rgb(0, 159, 160)'&& hotBottom.style.color=='rgb(191, 191, 191)') {
+                //再次点击，降序，0为降序
+                this.major_order = 0;
+                this.getmajorInform();
+                hotTop.style.color='#bfbfbf';
+                hotBottom.style.color= '#009fa0';
+            } else if (hotTop.style.color=='rgb(191, 191, 191)'||hotBottom.style.color=='rgb(0, 159, 160)') {
+                //循环点击，升序，1为升序
+                this.major_order = 1;
+                this.getmajorInform();
+                hotBottom.style.color= '#bfbfbf';
+                hotTop.style.color='#009fa0';
+            }
         },
         //点击费用改变颜色，排序
         changeMoney:function() {
-                let hotTop = document.getElementById('moneyTop');
-                let hotBottom = document.getElementById('moneyBottom');
-                if (moneyTop.style.color=='rgb(191, 191, 191)'&& moneyBottom.style.color=='rgb(191, 191, 191)'){
-                    //首次点击费用，升序，1为升序
-                    this.money_order = 1;
-                    this.getmajorInform();
-                    moneyTop.style.color='#009fa0';//绿色rgb(0, 159, 160)
-                    moneyBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
-                } else if(moneyTop.style.color=='rgb(0, 159, 160)'&& moneyBottom.style.color=='rgb(191, 191, 191)') {
-                    //再次点击费用，降序，0为降序
-                    this.money_order = 0;
-                    this.getmajorInform();
-                    moneyTop.style.color='#bfbfbf';
-                    moneyBottom.style.color= '#009fa0';
-                } else if (moneyTop.style.color=='rgb(191, 191, 191)'||moneyBottom.style.color=='rgb(0, 159, 160)') {
-                    //循环点击，升序，1为升序
-                    this.money_order = 1;
-                    this.getmajorInform();
-                    // console.log(this.money_order)
-                    moneyBottom.style.color= '#bfbfbf';
-                    moneyTop.style.color='#009fa0';
-                }
+            let paixu = document.getElementById('paixu');
+            paixu.style.color = '#bfbfbf';
+            let hotTop = document.getElementById('moneyTop');
+            let hotBottom = document.getElementById('moneyBottom');
+            if (moneyTop.style.color=='rgb(191, 191, 191)'&& moneyBottom.style.color=='rgb(191, 191, 191)'){
+                //首次点击费用，升序，1为升序
+                this.money_order = 1;
+                this.getmajorInform();
+                moneyTop.style.color='#009fa0';//绿色rgb(0, 159, 160)
+                moneyBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
+            } else if(moneyTop.style.color=='rgb(0, 159, 160)'&& moneyBottom.style.color=='rgb(191, 191, 191)') {
+                //再次点击费用，降序，0为降序
+                this.money_order = 0;
+                this.getmajorInform();
+                moneyTop.style.color='#bfbfbf';
+                moneyBottom.style.color= '#009fa0';
+            } else if (moneyTop.style.color=='rgb(191, 191, 191)'||moneyBottom.style.color=='rgb(0, 159, 160)') {
+                //循环点击，升序，1为升序
+                this.money_order = 1;
+                this.getmajorInform();
+                // console.log(this.money_order)
+                moneyBottom.style.color= '#bfbfbf';
+                moneyTop.style.color='#009fa0';
+            }
         }
     },
     mounted(){
@@ -565,15 +584,10 @@ export default {
             display: flex;
             align-items: center;
             width: 70%;
-            /*height: 32px;*/
-        }
-        .paixu:hover {
-            color: #009fa0;
         }
         .paixu {
             font-size: 16px;
             font-weight: bold;
-            color: rgb(191, 191, 190);
         }
         .topBott i {
             height: 7px;
@@ -582,7 +596,6 @@ export default {
             margin: 0 0 6px 5px;
             display: flex;
             flex-direction:column;
-            /*justify-content:center;*/
         }
         .hot,.publicMoney,.paixu{
             cursor: pointer;
@@ -662,9 +675,8 @@ export default {
             width: 1280px;
             height: 2px;
             background-color: #009fa0;
-            /*border: solid 3px #000000;*/
             opacity: 0.06;
-            margin: 50px auto;
+            margin: 19px auto 48px;
         }
     /*不同院校——院校信息*/
 

@@ -133,7 +133,7 @@ export default {
     	}
         .indexBigBlock{
             font-size: 10px;
-            flex-wrap: nowrap;    
+            /*flex-wrap: nowrap;*/
         }
     }
 
