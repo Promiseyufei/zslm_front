@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 0">
+    <div >
         <div class="container-fluid c-section section_bUBpNL banner c-scrollIn" data-c_tl_id="M_1190f23c338d4f57" id="section_d2fdb4dd"></div>
             <div class="container-fluid c-section section_bUBpNL">
                 <div class="row c-row row_EaN5GL">
@@ -190,7 +190,7 @@
         min-height: auto;
         padding-bottom: 60px;
         position: relative;
-        z-index: -2;
+        z-index: 100;
     }
 
     .row_EaN5GL {
@@ -229,7 +229,7 @@
         min-height: auto;
         padding-bottom: 60px;
         position: relative;
-        z-index: -2;
+        z-index: 100;
     }
 
     .section_bUBpNL.banner {

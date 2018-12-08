@@ -5,7 +5,7 @@
                 @mouseenter="onHoverUserList(userlist[0],userlist_box[0],userlist_h[0])">
             <div id="follow_box"  class="c-div div_bWWE5A userlist_box ">
             </div>
-            <h1 id="follow_h" class="c-heading heading_Bxhtr7 " >我的关注</h1>
+            <h1 id="follow_h" class="c-heading heading_Bxhtr7 " @click="jump(0)" >我的关注</h1>
         </div>
         <div id="active" class="c-div div_jR3IYS userlist c-action-click"
              @mouseleave="outHoverUserList(userlist[1],userlist_box[1],userlist_h[1])"
@@ -13,25 +13,25 @@
             <div id="active_box" class="c-div div_bWWE5A userlist_box">
 
             </div>
-            <h1 id="active_h" class="c-heading heading_Bxhtr7" data-c_e_id="heading570cda33">我的活动</h1>
+            <h1 id="active_h" class="c-heading heading_Bxhtr7" @click="jump(1)">我的活动</h1>
         </div>
         <div id="coupon" class="c-div div_jR3IYS userlist c-action-click" @mouseleave="outHoverUserList(userlist[2],userlist_box[2],userlist_h[2])"
              @mouseenter="onHoverUserList(userlist[2],userlist_box[2],userlist_h[2])">
             <div id="coupon_box" class="c-div div_bWWE5A userlist_box " data-c_e_id="div68e8d5e1"></div>
-            <h1 id="coupon_h" class="c-heading heading_Bxhtr7" data-c_e_id="heading8f58b202">我的优惠券</h1>
+            <h1 id="coupon_h" class="c-heading heading_Bxhtr7" @click="jump(2)">我的优惠券</h1>
         </div>
         <div id="message" class="c-div div_jR3IYS userlist c-action-click"
              @mouseleave="outHoverUserList(userlist[3],userlist_box[3],userlist_h[3])"
              @mouseenter="onHoverUserList(userlist[3],userlist_box[3],userlist_h[3])">
             <div id="message_box" class="c-div div_bWWE5A userlist_box" data-c_e_id="div93d02825"></div>
-            <h1 id="message_h" class="c-heading heading_Bxhtr7" data-c_e_id="headingeea3e1ef">我的消息</h1>
+            <h1 id="message_h" class="c-heading heading_Bxhtr7" @click="jump(3)">我的消息</h1>
             <div class="c-div div_bQPBwF"></div>
         </div>
         <div id="my" class="c-div div_jR3IYS userlist c-action-click"
              @mouseleave="outHoverUserList(userlist[4],userlist_box[4],userlist_h[4])"
              @mouseenter="onHoverUserList(userlist[4],userlist_box[4],userlist_h[4])">
             <div id="my_box" class="c-div div_bWWE5A userlist_box" data-c_e_id="div8629c0b6"></div>
-            <h1 id="my_h" class="c-heading heading_Bxhtr7" data-c_e_id="heading5dc4eb8a">我的帐户</h1>
+            <h1 id="my_h" class="c-heading heading_Bxhtr7" @click="jump(4)">我的帐户</h1>
         </div>
     </div>
 </template>
@@ -234,6 +234,11 @@
                 userlist:["follow","active","coupon","message","my"],
                 userlist_box:["follow_box","active_box","coupon_box","message_box","my_box"],
                 userlist_h:["follow_h","active_h","coupon_h","message_h","my_h"],
+                url:['/front/firstMenuRouter/usercore/myFollow',
+                        '/front/firstMenuRouter/usercore/myactive',
+                        '/front/firstMenuRouter/usercore/mycoupon',
+                        '/front/firstMenuRouter/usercore/myNews/dynamic',
+                        '/front/firstMenuRouter/usercore/myAccount'],
                 path_judge:''
 
             };
@@ -259,6 +264,9 @@
                 var boxH = document.getElementById(hId);
                 boxH.setAttribute('class', 'c-heading heading_Bxhtr7')
 
+            },
+            jump(index){
+                this.$router.push(this.url[index])
             }
 
         },

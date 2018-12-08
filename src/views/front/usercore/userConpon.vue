@@ -40,9 +40,9 @@
                 </div></div></div>
         </div>
         <div class="c-div div_v60iAm biaoqian">
-            <a class="c-textlink textlink_jH6Kkn xuanzhong" @click="pageInfo(0,0)">未使用 (10)</a>
-            <a class="c-textlink textlink_jH6Kkn" @click="pageInfo(0,1)">已使用 (20)</a>
-            <a class="c-textlink textlink_jH6Kkn" @click="pageInfo(1,2)">已失效 (35)</a>
+            <a class="c-textlink textlink_jH6Kkn userclick xuanzhong" @click="pageInfo(0,0)">未使用 ({{noUseCount}})</a>
+            <a class="c-textlink textlink_jH6Kkn userclick" @click="pageInfo(0,1)">已使用 ({{useCount}})</a>
+            <a class="c-textlink textlink_jH6Kkn userclick" @click="pageInfo(1,2)">已失效 ({{enable}})</a>
         </div>
         <div v-for="(item,index) in this.coupons">
             <userCoupon :data="item" ></userCoupon>
@@ -707,6 +707,9 @@
                 loadingBtnText:'加载更多',
                 type:0,
                 isUse:0,
+                noUseCount:0,
+                useCount:0,
+                enable:0
             };
         },
         methods: {
@@ -722,7 +725,10 @@
                 })
                     .then(res=>{
                         if(res.code == 0){
-                            let data = res.result;
+                            let data = res.result[0];
+                            self.noUseCount = res.result['nouse'];
+                            self.useCount = res.result['use'];
+                            self.enable = res.result['enable'];
                             for(let i in data){
                                 self.coupons.push(data[i])
                             }
@@ -743,6 +749,14 @@
                 this.type = type;
                 this.isUse = isUse;
                 this.coupons = [];
+                var doc = document.getElementsByClassName('userclick')
+                console.log(doc)
+                for(var i = 0;i<doc.length;i++){
+                    if(i == isUse)
+                        doc[i].setAttribute('class', 'c-textlink textlink_jH6Kkn userclick xuanzhong')
+                    else
+                        doc[i].setAttribute('class', 'c-textlink textlink_jH6Kkn userclick ')
+                }
                 this.getCoupon();
             }
         },
