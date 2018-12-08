@@ -23,11 +23,14 @@ import activityPage from './front/activityPage.vue'
 import userInfomation from './front/userinformation.vue'
 import userList from './front/userList.vue'
 import userCollege from './front/userCollege.vue'
+import userActivity from './front/userActivity.vue'
+import userCoupon from './front/userCoupon.vue'
 import searchLablePageHead from './front/searchLablePageHead.vue'
 import searchSearchInput from './front/searchSearchInput.vue'
 import selectAll from './front/selectAll'
 import searchMajorModular from './front/searchMajorModular.vue'
 import searchCoachBox from './front/searchCoachBox.vue'
+
 import tag from './front/tag.vue'
 import selectCollegeItem from './front/selectCollegeItem.vue'
 import majorDynamic from './front/majorDynamic.vue'
@@ -63,7 +66,6 @@ export default {
     activityBox,
     activityPage,
     subPage,
-    activityBox,
     userInfomation,
     userList,
     userCollege,
@@ -72,6 +74,8 @@ export default {
     searchMajorModular,
     selectAll,
     searchCoachBox,
+    userActivity,
+    userCoupon,
     tag,
     selectCollegeItem,
     majorDynamic,
