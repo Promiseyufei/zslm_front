@@ -100,7 +100,8 @@
                                 <span class="addressItem">&middot;&nbsp;{{acHostInfo.province}}</span>
                             </div>
                             <div class="InfoBtn asideBtn">
-                                <a class="getGuanZhu" href="javascript:0;" @click="changeState(acHostInfo.is_guanzhu)">{{GuanZhu}}</a>
+                                <a v-if="acHostInfo.is_guanzhu" style="background-color:rgb(0, 159, 160)" class="getGuanZhu" href="javascript:0;" @click="changeState(acHostInfo.is_guanzhu)">{{GuanZhu}}</a>
+                                <a v-else style="background-color:rgb(255, 185, 87)" class="getGuanZhu" href="javascript:0;" @click="changeState(acHostInfo.is_guanzhu)">{{GuanZhu}}</a>
                                 <!-- <a href="javascript:0;" @click="changeState(acHostInfo.is_guanzhu)" v-else>+&nbsp;关注</a> -->
                             </div>
                         </div>
@@ -110,7 +111,9 @@
                         <img src="../../../assets/img/advertisementB.png" alt="">
                     </div>
                     <!-- 热门活动推荐 -->
-                    <Article @refreshs="refresh" v-if="hotInfor.length" title="热门活动" :inforArticle="hotInfor"></Article>
+                    <div class="HotAcList">
+                        <Article @refreshs="refresh" v-if="hotInfor.length" title="热门活动" :inforArticle="hotInfor"></Article>
+                    </div>
                 </aside>
             </div>
         </div>
@@ -154,6 +157,7 @@ export default {
         // 关注院校、取消关注
         // state: false 未关注 true 已关注
         changeState:function(state){
+            console.log(state);
             if(state){this.remove();}
             else {this.follow();}
         },
@@ -164,12 +168,9 @@ export default {
                 m_id:this.acHostInfo.id,     //院校id
                 u_id:this.userId, //用户id
             }).then(function (res) {
-                // let res = response[0];
-                console.log(res);
                 if(res.code == 0){
                     self.message(true, "关注成功", 'success');
                     self.GuanZhu = "取消关注";
-                    $(".getGuanZhu").css("background-color",'rgb(0, 159, 160)');
                     self.getAcHostMajor();
                 }else{
                     self.message(true, "操作失败，请重试", 'error');
@@ -180,17 +181,16 @@ export default {
         },
         // 取消关注
         remove:function(){
+            let self = this;
             this.post('http://www.lishanlei.cn/front/colleges/unsetusermajor',{
                 m_id:this.acHostInfo.id,     //院校id
                 u_id:this.userId, //用户id
             }).then(function (res) {
-                // let res = response[0];
-                // console.log(res);
                 if(res.code == 0){
                     self.message(true, "取消关注成功", 'success');
                     self.GuanZhu = "+ 关注";
-                    $(".getGuanZhu").css("background-color",'rgb(255, 185, 87)');
                     self.getAcHostMajor();
+                    // console.log("---");
                 }else{
                     self.message(true, "操作失败，请重试", 'error');
                 }
@@ -225,7 +225,7 @@ export default {
                     if(self.acHostInfo.major_cover_name != ""){
                         self.hostBgimg = self.acHostInfo.major_cover_name;
                     }
-                    if(self.acHostInfo.is_guanzhu != true){
+                    if(self.acHostInfo.is_guanzhu == true){
                         self.GuanZhu = "取消关注";
                     }
                 }else{
@@ -696,10 +696,10 @@ export default {
         }
         /*左右两边分布 布局*/
         .singleActivityBody section{
-            width: 75%;
+            width: 69%;
         }
         .singleActivityBody aside{
-            width: 25%;
+            width: 31%;
         }
     } 
 
@@ -709,7 +709,13 @@ export default {
         .singleActivityBody>div{
             width: 1300px;
         } 
-        
+        /*左右两边分布 布局*/
+        .singleActivityBody section{
+            width: 75%;
+        }
+        .singleActivityBody aside{
+            width: 25%;
+        }
         /*面包屑样式*/
         .breadCrumb .breadCrumbContainer{
             width: 1280px;
