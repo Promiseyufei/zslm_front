@@ -88,6 +88,7 @@
         .staticNav{
             display: flex;
             justify-content: space-evenly;
+            padding-bottom: 0;
         }
         .staticNav span{
             display: none;
@@ -96,8 +97,11 @@
             background-color: unset;
         }
         .staticNav div{
-            padding: 2%;
-            width: 70px;
+            padding: 0 1% 2% 1%;
+            margin: 2% 2% 0;
+        }
+        .staticNav div p{
+            font-size: 12px;
         }
         .activediv{
             border-bottom: 1px solid rgb(0, 159, 160) !important;

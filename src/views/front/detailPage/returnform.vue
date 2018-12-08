@@ -18,13 +18,13 @@
                 <div class="singlecoachbox">
                     <div class="returnform">
                         <div class="returnformbutton">
-                            <el-button type="primary" @click="dialogVisible = true" v-if="fifnish==null">选择辅导机构</el-button>
+                            <el-button type="primary" @click="selectCoach" v-if="fifnish==null">选择辅导机构</el-button>
                             <div class="collagelogobox" v-if="fifnish!=null">
                                 <div class="collagelogo">
-                                    <img src="../../../assets/img/xindongfang.png" alt="">
-                                    <span>河南科技学院</span>
+                                    <img :src="'http://www.lishanlei.cn/storage/testimg/'+selectfif.logo_name" alt="">
+                                    <span>{{selectfif.coach_name}}</span>
                                 </div>
-                                <span @click="dialogVisible = true">重新选择</span>
+                                <span @click="selectCoach">重新选择</span>
                             </div>
                         </div>
 
@@ -35,11 +35,11 @@
                             center
                             :before-close="handleClose">
                             <div class="boxdialog">
-                                <div class="singlecoach" v-for="(item,index) in 13" :key="index" @click="selectsingle(index)">
+                                <div class="singlecoach" v-for="(item,index) in coach" :key="index" @click="selectsingle(index)">
                                     <div class="singlecoachtop">
-                                        <img src="../../../assets/img/xindongfang.png" alt="">
+                                        <img :src="'http://www.lishanlei.cn/storage/testimg/'+item.logo_name" alt="">
                                     </div>
-                                    <span>河南科技学院</span>
+                                    <span>{{item.coach_name}}</span>
                                 </div>
                             </div>
 
@@ -109,6 +109,7 @@
                                     action="https://jsonplaceholder.typicode.com/posts/"
                                     :on-preview="handlePreview"
                                     :on-remove="handleRemove"
+                                    :on-progress="test"
                                     :file-list="formLabelAlign.fileList"
                                     :auto-upload="false">
                                     <el-button slot="trigger" size="small" type="primary">上传图片</el-button>
@@ -139,6 +140,10 @@ export default {
             dialogVisible: false,
             select:null,
             fifnish:null,
+            coach:[],
+            selectfif:{
+                coach_name:""
+            },
             formLabelAlign: {
                 name: '',
                 money: '',
@@ -160,7 +165,25 @@ export default {
         //选择辅导机构，点击确认之后，关闭弹出层
         successselect:function() {
             this.fifnish = this.select;
+            this.selectfif = this.coach[this.fifnish];
+            console.log(this.selectfif);
             this.dialogVisible = false;
+        },
+        
+        selectCoach:function() {
+            this.dialogVisible = true;
+            var that = this;
+            this.fetch('http://www.lishanlei.cn/front/coach/getallcoupon').then(function (res) {
+                    console.log(res);
+                    if (res.code == 0) {
+                        that.coach = res.result;
+                        // console.log(that.collage);
+                        // that.count = res.count;
+                    }else {
+                        that.message(true,res.msg,"error");
+                    }
+            }).catch(function (error) {
+            });
         },
         //选中某个辅导机构时，高亮显示
         selectsingle:function(index) {
@@ -170,7 +193,6 @@ export default {
             }
             box[index].classList.add("active");
             this.select = index;
-            // console.log(box);
         },
         //点击关闭弹框时触发事件
         handleClose(done) {
@@ -180,11 +202,15 @@ export default {
             })
             .catch(_ => {});
         },
+        test:function(event, file, fileList) {
+            console.log(file, fileList);
+        },
         handleRemove(file, fileList) {
             console.log(file, fileList);
         },
         handlePreview(file) {
             console.log(file);
+            console.log(1234);
         }
     },
     mounted(){
@@ -277,7 +303,7 @@ export default {
 .boxdialog {
     display: flex;
     flex-wrap: wrap;
-    height: 646px;
+    max-height: 646px;
     overflow-x: hidden;
     overflow-y: scroll;
     justify-content: center;
@@ -351,6 +377,9 @@ export default {
     flex-wrap: wrap;
     overflow: hidden;
     align-items: center;
+}
+.singlecoachbox>img {
+    margin-left: 10px;
 }
 .collagebreadcrumb {
     margin:35px 8px 30px;

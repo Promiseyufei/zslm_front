@@ -27,7 +27,7 @@
     					<div class="logonIn">
     						<div class="xinlang"></div>
     						<div class="diviLine"></div>
-    						<div class="weixin"></div>
+    						<div class="weixin" @click="thirdLogin"></div>
     					</div>
     				</div>
     			</el-card>
@@ -160,6 +160,13 @@
 					type: 1,
 					agree: agree
 				}
+			},
+			thirdLogin() {
+				// var test = window.open(this.globals.longUrl + '/auth/weixin/');
+				// console.log(test);
+				this.fetch('/auth/weixin', {}).then((response) => {
+					console.log(response);
+				})
 			}
 			
 		},
@@ -255,6 +262,7 @@
 		width: 340px;
 	}
 	.weixin {
+		cursor: pointer;
 		width: 21px;
 		height: 19px;
 		margin: 0 0 0 14px;
@@ -268,6 +276,7 @@
 		background-color: #c7c7c7;
 	}
 	.xinlang {
+		cursor: pointer;
 		width: 23px;
 		height: 19px;
 		margin: 0 9px 0 0;

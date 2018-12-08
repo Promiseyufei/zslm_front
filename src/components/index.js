@@ -42,6 +42,7 @@ import system from './front/system.vue'
 import pcPhonePage from './front/pcPhonePage.vue'
 import staticNav from './front/staticNav.vue'
 import tags from './front/tags.vue'
+import RemoteJs from './common/RemoteJs.vue'
 export default {
     Test, 
     Test2,
@@ -85,5 +86,6 @@ export default {
     system,
     pcPhonePage,
     staticNav,
-    tags
+    tags,
+    RemoteJs
 }

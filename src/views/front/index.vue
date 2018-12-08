@@ -155,7 +155,7 @@
                                 <div class="wrap" style="left: -955px;">
                                     <img src="../../assets/img/sitanfu.jpg" alt="">
                                     <img src="../../assets/img/banner1.jpg" alt="">
-                                    <img src="../../assets/img/sitanfu.jpg" alt="">
+                                    <img src="../../assets/img/banner4.jpeg" alt="">
                                     <img src="../../assets/img/sitanfu.jpg" alt="">
                                     <img src="../../assets/img/banner1.jpg" alt="">
                                 </div>
@@ -284,6 +284,39 @@
                 </div>
             </div>
 
+            <!-- 页脚 -->
+    		<div class="footer">
+	            <div class="foot-content">
+	                <div class="clearfloat foot-head">
+	                    <div class="foot-left">
+	                        <img src="../../assets/img/foot.png" alt="">
+	                    </div>
+	                    <div class="float-middle">
+	                        <ul>
+	                            <li><a href="">关于我们</a></li>
+	                            <li><a href="">用户条款</a></li>
+	                            <li><a href="">帮助中心</a></li>
+	                            <li><a href="">问题反馈</a></li>
+	                            <li><a href="">法律声明</a></li>
+	                        </ul>
+	                    </div>
+	                    <div class="float-right">
+	                        <i class="fa fa-phone" id="phone-font" aria-hidden="true">&nbsp;&nbsp;&nbsp;010-56980320</i>
+	                        <i class="font-foot">周一至周五 9:00-18:00</i>
+	                        <i class="font-foot">北京荣美福地科技有限公司</i>
+	                    </div>
+	                </div>
+	                <div class="clearfloat foot-icon">
+	                    <p>
+	                        © MBA Helper 2018
+	                    </p>
+	                    <p>
+	                        京ICP备13040890号-1
+	                    </p>
+	                </div>
+	            </div>
+	        </div> 
+            <!-- 页脚 -->
     	</div>
     </div>
 </template>
@@ -744,6 +777,183 @@ export default {
         font-size: 14px;
         margin: 10px 0 5px;
         color: #fff;
+    }
+
+     /*-----------foot-----------*/
+    .float-right{
+        float: right;
+        width: 305px;
+        text-align: right;
+    }
+    .float-right > i{
+        display: block;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+    .footer{
+        width: 100%;
+        height: 249px;
+        background-color: #383b3d;
+        /*margin-top: 105px;*/
+        display: flex;
+        align-items:center;
+    }
+    .clearfloat::after{
+        display:block;
+        clear:both;content:"";
+        visibility:hidden;
+        height:0;
+    }
+    .foot-content{
+        width: 1280px;
+        margin: auto;
+        height: 156px;
+    }
+    .foot-left{
+        float: left;
+    }
+    .foot-left{
+        width: 166px;
+        margin-right: 99px;
+    }
+    .foot-left > img{
+        width: 100%;
+    }
+    .float-right{
+        float: right;
+    }
+    .float-middle{
+        width: 280px;
+        float: left;
+    }
+    .float-middle > ul >li{
+        list-style: none;
+        margin-bottom: 15px;
+        width: 140px;
+        float: left;
+        text-align: center;
+    }
+    .float-middle > ul >li > a{
+        font-family: MicrosoftYaHei;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        color: #ffffff;
+        text-decoration: none;
+    }
+    #phone-font{
+        font-size: 24px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 22px;
+        letter-spacing: 0px;
+        color: #ffffff;
+    }
+    .font-foot{
+        font-family: MicrosoftYaHei-Bold;
+        font-size: 12px;
+        font-weight: normal;
+        letter-spacing: 0px;
+        color: #ffffff;
+    }
+    .foot-icon{
+        width: 100%;
+        margin-top: 36px;
+    }
+    .foot-icon > p{
+        font-family: MicrosoftYaHei;
+        font-size: 12px;
+        font-weight: normal;
+        font-stretch: normal;
+        letter-spacing: 0px;
+        color: #ffffff;
+        opacity: 0.65;
+    }
+    .foot-icon > p:first-child{
+        float: left;
+    }
+    .foot-icon > p:last-child{
+        float: right;
+    }
+    .foot-head{
+        padding-top: 15px;
+    }
+    .float-middle > ul > li > a:hover {
+        color: #cecece;
+    }
+    .float-right{
+        float: right;
+        width: 305px;
+        text-align: right;
+    }
+    .float-right > i{
+        display: block;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+    #article-cont{
+        width: 100%;
+        margin-top: 11px;
+    }
+    /*-----------foot-----------*/
+    .advertisement{
+        border-radius: 3px;
+        width: 305px;
+        height: 188px;
+        margin-bottom: 14px;
+        margin-top: 14px;
+    }
+    .advertisement img{
+        width: 100%;
+        height: 100%;
+    }
+    .advertisement img:hover{
+        box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
+        -webkit-transition: All 0.3s ease;
+        -webkit-transform: rotate(0deg) scale(1) translate(0%,0%);
+        transform: rotate(0deg) scale(1) translate(0%,0%);
+        transition: All 0.3s ease;
+    }
+    @media (max-width: 991px){
+        .content{
+            width: 95%;
+            margin-bottom: 30px;
+        }
+        .float-left{
+            width: 100%;
+        }
+        .float-right{
+            margin-top: 25px;
+            width: 100%;
+        }
+        .sowingMap{
+            width: 100%;
+        }
+        .foot-left,.float-right,.foot-icon{
+            width: 100%;
+            text-align: center;
+        }
+        .foot-left img{
+            width: 40%;
+        }
+        .foot-content,.footer{
+            height: auto;
+        }
+        .foot-content{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .foot-icon p{
+            width: 100%;
+            margin-bottom: 9px;
+        }
+        .float-middle{
+            display: none;
+        }
+        .advertisement{
+            width: 100%;
+            height: auto;
+        }
     }
 
     /* 搜辅导模块样式 */
