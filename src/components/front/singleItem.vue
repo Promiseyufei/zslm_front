@@ -9,11 +9,6 @@
         </div>
         <div class="singleItemDetail" v-show="singleItemDetail">
             <div class="left">
-                <!-- <div class="informationLeft" v-for="(l,index) in itemInformLeft" :key="index">
-                    <div class="informationOne"><img :src="l.src"></div>
-                    <div class="informationTwo">{{l.itemName}}</div>
-                    <p class="informationThree">{{deta.cost}}</p>
-                </div> -->
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/smoney.png"></div>
                     <div class="informationTwo">项目费用</div>
@@ -46,38 +41,33 @@
                 </div>
             </div>
             <div class="right">
-                <!-- <div class="informationRight"  v-for="(r,index) in itemInformRight" :key="index">
-                    <div class="informationOne"><img :src="r.src"></div>
-                    <div class="informationTwo">{{r.itemName}}</div>
-                    <p class="informationThree">29.8万</p>
-                </div> -->
                 <div class="informationLeft">
-                    <div class="informationOne"><img src="../../assets/img/smoney.png"></div>
+                    <div class="informationOne"><img src="../../assets/img/describe.png"></div>
                     <div class="informationTwo">分数线描述</div>
                     <p class="informationThree">{{deta.score_describe}}</p>
                 </div>
                 <div class="informationLeft">
-                    <div class="informationOne"><img src="../../assets/img/friends.png"></div>
+                    <div class="informationOne"><img src="../../assets/img/type.png"></div>
                     <div class="informationTwo">分数线类型</div>
                     <p class="informationThree">{{deta.score_type}}</p>
                 </div>
                 <div class="informationLeft">
-                    <div class="informationOne"><img src="../../assets/img/class.png"></div>
+                    <div class="informationOne"><img src="../../assets/img/model.png"></div>
                     <div class="informationTwo">统招模式</div>
                     <p class="informationThree">{{deta.recruitment_pattern}}</p>
                 </div>
                 <div class="informationLeft">
-                    <div class="informationOne"><img src="../../assets/img/class2.png"></div>
+                    <div class="informationOne"><img src="../../assets/img/model2.png"></div>
                     <div class="informationTwo">招生模式</div>
                     <p class="informationThree">{{deta.enrollment_mode}}</p>
                 </div>
                 <div class="informationLeft">
-                    <div class="informationOne"><img src="../../assets/img/system.png"></div>
+                    <div class="informationOne"><img src="../../assets/img/biye.png"></div>
                     <div class="informationTwo">毕业证书</div>
                     <p class="informationThree">{{deta.graduation_certificate}}</p>
                 </div>
                 <div class="informationLeft">
-                    <div class="informationOne"><img src="../../assets/img/exam.png"></div>
+                    <div class="informationOne"><img src="../../assets/img/other.png"></div>
                     <div class="informationTwo">其他说明</div>
                     <p class="informationThree">{{deta.other_explain}}</p>
                 </div>

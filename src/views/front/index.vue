@@ -431,7 +431,7 @@ export default {
             if(re==1){
                 var message = document.getElementById("indexinput");
                 console.log();
-                this.$router.push('/front/search/major/'+message.value);
+                this.$router.push('/front/firstMenuRouter/search/major/'+message.value);
             }else if(re==2) {
                 this.$router.push('/front/firstMenuRouter/usercore/myNews');
             }else {

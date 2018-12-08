@@ -22,6 +22,7 @@
 
         <!-- 主题部分 -->
         <div class="section_bUBpNL" style="z-index:1">
+
             <div class="row_EaN5GL c-row row_flex">
                 <!-- 左边主要部分 -->
                 <div class="row_left row_padding">
@@ -130,7 +131,7 @@ export default {
     margin-left: auto;
 }
 .mianbao .container_tPJRDM {
-    width: 1280px;
+    width: 100%;
     min-height: auto;
     padding-left: 0px;
     padding-right: 0px;
