@@ -50,7 +50,8 @@
         </div> 
         <!-- 分页 -->
         <div class="page">
-            <activityPage :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum"></activityPage>
+           <!--  <activityPage :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum"></activityPage> -->
+            <pcPhonePage :loading="loading" :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum" @getPage="getPage"></pcPhonePage>
         </div>
         <!-- 分页 -->
     </div>
@@ -62,6 +63,8 @@ export default {
     },
     data() {
         return {
+            //加载更多
+            loading:false,
             selectData:[],//tags数组
             collegeInform:[
                 {
@@ -308,11 +311,18 @@ export default {
         }
     },
     methods: {
+        //手机端加载更多
+        getPage:function(){
+            this.loading = true;
+            this.page++;
+            this.getmajorInform(0);
+        },
         // 筛选块-从组件中获取选中结果
         change(data){
             this.selectData = data;
-            // console.log(data);
             this.getselt();
+            console.log(this.selectData)
+            // this.getmajorInform();
         },
         handleClose(tag) {
             for (let index = 0; index < this.selectData.length; index++) {
@@ -324,30 +334,24 @@ export default {
                 }
             };
             this.getselt();
+            this.getmajorInform();
         },
         //转换选中参数的格式——数组，以便传参
         getselt:function(){
-            let list = [];
-            for (var i = 0; i < this.seltData.length; i++) {
-                var little = [];
-                for (var j = 0; j < this.seltData[i].length; j++) {
-                    if(i == 1)
-                        little.push(this.seltData[i][j].name);
-                    else
-                        little.push(this.seltData[i][j].id);
-                }
-                list.push(little);
-            }
-            // console.log(list[0]);
-            this.activitySelected = list;
-            // for (var i = 0; i < this.activitySelected.length; i++) {
-            //     console.log(this.activitySelected[i]);
+            // let list = [];
+            // for (var i = 0; i < this.selectData.length; i++) {
+            //     var little = [];
+            //     for (var j = 0; j < this.selectData[i].length; j++) {
+            //         if(i == 1)
+            //             little.push(this.selectData[i][j].name);
+            //         else
+            //             little.push(this.selectData[i][j].id);
+            //     }
+            //     list.push(little);
             // }
-            // this.getActivityList(1);
+            // console.log(list[0]);
+            // this.activitySelected = list;
             this.getmajorInform();
-            // console.log("======");
-            // console.log(this.seltData);
-            // console.log(this.activitySelected[0]);
         },
         //获取按钮内容
         getmajorType:function(){
@@ -495,7 +499,7 @@ export default {
     mounted(){
         this.getmajorInform();
         this.getmajorType();
-
+        console.log(this.selectData)
     },
 };
 </script>
@@ -1413,23 +1417,22 @@ export default {
 
     /** PC **/
     @media only screen and (min-width: 1024px) and (max-width:1300px) {
-        .updateInform {
-            /*margin-left: 50px;*/
-        }
         .viewMore {
             width: 755px;
             margin: 0 auto;
         }
         .specificInform {
              width: 720px;
-             /*margin: 0 0 10px 80px;*/
         }
         .forY,.forThree {
             flex-direction:column;
             justify-content:center;
             align-items:center;
         }
-        .buttonCollege {
+         .tagSort {
+            width: 95%;
+            flex-direction:column;
+            justify-content:center;
         }
         .diffeCollege {
             width: 90%;
@@ -1440,12 +1443,9 @@ export default {
         }
         .diffeCollege .el-card__body{
             width: 90%;
-            /*margin-left: 10px;*/
         }
-
         .selectCollegeSearch {
             margin: 49px auto 44px;
-            /*margin-left: 10px;*/
             width: 50%;
         }
         .selectCollege {
@@ -1462,7 +1462,6 @@ export default {
             width: 95%;
             flex-direction:column;
             justify-content:center;
-            align-items:center;
         }
         .viewMore {
             width: 700px;

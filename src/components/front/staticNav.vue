@@ -22,15 +22,12 @@
         methods:{
             //跳到相应的模块，分别为（关于我们、用户条款、帮助中心、法律声明）
             toJump: function(index) {
-                if(index==0) {
-                    this.$router.push('/front/firstMenuRouter/aboutUs');
-                }else if(index==1) {
-                    this.$router.push('/front/firstMenuRouter/userTerms');
-                }else if(index==2) {
-                    this.$router.push('/front/firstMenuRouter/helpCenter');
-                }else {
-                    this.$router.push('/front/firstMenuRouter/legalNotice');
-                }
+                switch(index){
+                    case 0:   this.$router.push('/front/firstMenuRouter/aboutUs'); break;
+                    case 1:   this.$router.push('/front/firstMenuRouter/userTerms'); break;
+                    case 2:   this.$router.push('/front/firstMenuRouter/helpCenter'); break;
+                    default:  this.$router.push('/front/firstMenuRouter/legalNotice'); break;
+                };
             },
         },
         mounted(){

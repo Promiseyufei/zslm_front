@@ -19,6 +19,7 @@
 						  <el-menu-item index="4" style="border:0;padding-right:0;">搜辅导</el-menu-item>
 						</el-menu>
 			        </div>
+			        <!-- 手机版 -->
 			        <div @click="isLogin" v-show="mobileIcon" class="mobileIcon">
 			        	<img @click="dialogVisible = true" src="../../../assets/img/mobileIcon.png">
 			        	<el-dialog
@@ -31,11 +32,11 @@
 						  	</div>
 						  </div>
 						  <div style="padding:10px 25px;width:60px;">
-						  	  <el-button type="text" @click="">我的关注</el-button>
-							  <el-button type="text" @click="">我的活动</el-button>
-							  <el-button type="text" @click="">我的优惠券</el-button>
-							  <el-button type="text" @click="">我的消息</el-button>
-							  <el-button type="text" @click="">我的账户</el-button>
+						  	  <el-button type="text" @click="myCare">我的关注</el-button>
+							  <el-button type="text" @click="myActivity">我的活动</el-button>
+							  <el-button type="text" @click="myCoupon">我的优惠券</el-button>
+							  <el-button type="text" @click="myMessage">我的消息</el-button>
+							  <el-button type="text" @click="myAccount">我的账户</el-button>
 						  </div>
 						</el-dialog>
 			        </div>
@@ -62,11 +63,11 @@
 	                    </div>
 	                    <div class="float-middle">
 	                        <ul>
-	                            <li><a href="">关于我们</a></li>
-	                            <li><a href="">用户条款</a></li>
-	                            <li><a href="">帮助中心</a></li>
-	                            <li><a href="">问题反馈</a></li>
-	                            <li><a href="">法律声明</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(0)">关于我们</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(1)">用户条款</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(2)">帮助中心</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(3)">问题反馈</a></li>
+	                            <li><a href="javascript:0;" @click = "toJump(4)">法律声明</a></li>
 	                        </ul>
 	                    </div>
 	                    <div class="float-right">
@@ -94,32 +95,52 @@
 	    },
 	    data() {
 	        return {
-	        	loginOr:require('../../../assets/img/nologin.jpg'),
+	        	loginOr:require('../../../assets/img/noLogin.png'),
 	        	userName:'未登录',
 	        	dialogVisible: false,
 	        	activeIndex: '1',
 	        	firstMenu:true,
 	        	logoInto:true,
 	        	mobileIcon:false,
-	        	// footer:true,
+	        	userId:0,
 	        }
 	    },
 	    methods: {
+	    	// footer链接:0关于我们 1用户条款 2帮助中心 3问题反馈 4法律声明
+	    	toJump(state){
+	    		switch(state){
+	    			case 0:   this.$router.push('/front/firstMenuRouter/aboutUs'); break;
+	                case 1:   this.$router.push('/front/firstMenuRouter/userTerms'); break;
+	                case 2:   this.$router.push('/front/firstMenuRouter/helpCenter'); break;
+	                case 3:   this.$router.push('/front/firstMenuRouter/ href="javascript:0;"singleOpinion'); break;
+	                default:  this.$router.push('/front/firstMenuRouter/legalNotice'); break;
+	            };
+	    	},
 	    	//跳到首页
 	    	goIndex:function(){
 	    		this.$router.push('/front/index');
 	    	},
 	    	//跳到我的消息
 	    	goMessage:function(){
-	    		this.$router.push('/front/usercore/myNews');
+	    		if (!this.getUserState('user')){
+	    			//未登录
+	    			this.$router.push('/front/Login/loginRoute');
+	    		} else{
+	    			this.$router.push('/front/usercore/myNews');
+	    		}
 	    	},
 	    	//跳到我的关注
 	    	goFollow:function(){
-	    		this.$router.push('/front/usercore/myFollow');
+	    		if (!this.getUserState('user')){
+	    			//未登录
+	    			this.$router.push('/front/Login/loginRoute');
+	    		} else{
+	    			this.$router.push('/front/usercore/myFollow');
+	    		}
 	    	},
 	    	//跳到搜索
 	    	goSearch:function(){
-	    		this.$router.push('/front/search/search');
+	    		this.$router.push('/front/search/searchMajor');
 	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
@@ -135,7 +156,7 @@
 	    		}
 		    },
 		    major:function(){
-		    	this.$router.push('/front/firstMenuRouter/selectCollege');
+		    	// this.$router.push('/front/firstMenuRouter/selectCollege');
 		    },
 		    //改变路由菜单高亮不变
 		    rushRouter:function(){
@@ -161,31 +182,17 @@
 		    	this.getUserState('userHead');
 		    	//用户名称
 		    	this.getUserState('userName');
-		    	// let aa = 2;
-		    	// if (aa==login1) {
-		    	// 	let  = document.getElementById('login');
-			    // 	if (login.style.display == "none") 
-			    // 		login.style.display = "block";
-			    // 	else
-			    // 		login.style.display = "none";
-		    	// } else{
-		    	// 	let noLogin = document.getElementById('noLogin');
-			    // 	if (noLogin.style.display == "none") 
-			    // 		noLogin.style.display = "block";
-			    // 	else
-			    // 		noLogin.style.display = "none";
-		    	// }
-		    	// if (this.getUserState('user')){
-		    		
-		    	// } else{
-
-		    	// }
+		    	if (this.getUserState('user')) {
+		    		this.userName = this.getUserState('userName');
+		    		this.loginOr = this.getUserState('userHead');
+		    		this.userId = this.getUserState('userId');
+		    	}
 		    },
 		    //跳到我的关注or登录
 		    myCare:function(){
 		    	this.getUserState('user');
-		    	if (!this.getUserState) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    	if (!this.getUserState('user')) {
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	} else{
 		    		this.$router.push('/front/usercore/myFollow');
 		    	}
@@ -194,7 +201,7 @@
 		    myActivity:function(){
 		    	this.getUserState('user');
 		    	if (!this.getUserState) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	} else{
 		    		this.$router.push('/front/usercore/myFollow');
 		    	}
@@ -203,7 +210,7 @@
 		    myCoupon:function(){
 		    	this.getUserState('user');
 		    	if (!this.getUserState) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    		this.$router.push('/front/Login/loginRout/shortMessagee');
 		    	} else{
 		    		this.$router.push('/front/usercore/myFollow');
 		    	}
@@ -212,7 +219,7 @@
 		    myMessage:function(){
 		    	this.getUserState('user');
 		    	if (!this.getUserState) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	} else{
 		    		this.$router.push('/front/usercore/myNews');
 		    	}
@@ -221,7 +228,7 @@
 		    myAccount:function(){
 		    	this.getUserState('user');
 		    	if (!this.getUserState) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	} else{
 		    		this.$router.push('/front/usercore/myAccount');
 		    	}
@@ -329,16 +336,12 @@
 	.isLoginPicture {
 		width: 36px;
 		height: 36px;
-		/*border: 2px solid #009fa0;*/
-		/*border-radius: 50%;*/
-		/*background-color: #e0e0e0;*/
 	}
 	 /*-----------foot-----------*/
     .footer{
         width: 100%;
         height: 249px;
         background-color: #383b3d;
-        /*margin-top: 105px;*/
         display: flex;
         align-items:center;
     }
@@ -439,71 +442,6 @@
         width: 100%;
         margin-top: 11px;
     }
-    /*-----------foot-----------*/
-	/*.footerBott p {
-		opacity: 0.65;
-		color: rgb(255, 255, 255);
-		font-size: 12px;
-	}
-	.footerBott {
-		width: 1280px;
-		margin-top: 31px;
-		display: flex;
-		justify-content:space-between;
-	} 
-	.footerAddres span {
-		margin-right: 12px; 
-	}
-    .footerAddres p {
-    	color: rgb(255, 255, 255);
-    	font-size: 23px;
-    }
-	.footerAddres>p {
-		font-size: 12px;
-	    font-weight: bold;
-	    color: rgb(255, 255, 255);
-	    margin-top: 9px;
-	}
-	.footerAddres {
-		width: 198.2px;
-		text-align: right;
-	}
-	.footerMenu div {
-		margin-right: 78px;
-	}
-	.footerMenu li:hover {
-		opacity: 0.7;
-	}
-	.footerMenu li {
-		color: rgb(255, 255, 255);
-		margin-bottom: 11px;
-		font-size: 14px;
-		cursor: pointer;
-	}
-	.footerMenu {
-		display: flex;
-		justify-content:start;
-		width: 761.8px;
-	}
-	.footerLogo img {
-		width: 166px;
-	}
-	.footerLogo {
-		width: 320px;
-	}
-	.footerTop {
-		display: flex;
-		justify-content:space-between;
-	}
-	.footer {
-		display: flex;
-		flex-direction: column;
-		align-items:center;
-		justify-content:center;
-		width: 100%;
-		height: 251px;
-		background-color: rgb(56, 59, 61);
-	} */
 	.logoInto i {
 		width: 21px;
 	    height: 21px;
@@ -520,7 +458,6 @@
 	}
 	.logoInto {
 		width: 134px;
-		/*margin-left: 300px;*/
 		display: flex;
 		align-items:center;
 	}
@@ -537,14 +474,71 @@
 		overflow: hidden;
 		justify-content:space-between;
 	}
+	.dialog {
+		background: url(../../../assets/img/dialog.jpg) no-repeat;
+		background-position: 50% 50%;
+        background-size: cover; 
+		width: 100%;
+		height: 120px;
+	}
+	.dialogPicture {
+		display: flex;
+		flex-direction: column;
+		align-items:center;
+		justify-content:center;
+		width: 100%;
+		height: 120px;
+		background-color: rgba(56, 59, 61, 0.85);
+	}
+	.dialogPicture img{
+		width: 100%;
+	}
+	.userPicture img {
+		width: 100%;
+	}
+	.userPicture {
+		width: 36px;
+		height: 36px;
+		background-size: cover; 
+		border-radius: 50px;
+	}
+	.userName {
+		margin-top: 10px;
+		color: #fff;
+	}
 	/** PC **/
 	@media only screen and (min-width: 1024px) and (max-width:1300px) {
-		/*.footerBott {
-            width: 900px;
+		.float-left{
+            width: 100%;
         }
-		.footerMenu {
-			width: 400px;
-		}*/
+        .float-right{
+            margin-top: 25px;
+            width: 100%;
+        }
+        .sowingMap{
+            width: 100%;
+        }
+        .foot-left,.float-right,.foot-icon{
+            width: 100%;
+            text-align: center;
+        }
+        .foot-left img{
+            width: 40%;
+        }
+        .foot-content,.footer{
+            height: auto;
+        }
+        .foot-content{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .foot-icon p{
+            width: 100%;
+            margin-bottom: 9px;
+        }
+        .float-middle{
+            display: none;
+        }
 		.head {
 			width: 1000px;
 		}
@@ -554,16 +548,6 @@
 	}
 	/** iPad **/
 	@media only screen and (min-width: 768px) and (max-width: 1023px) {
-		/*.footerLogo {
-			width: 200px;
-		}
-		.footerMenu {
-			width: 280px;
-		}*/
-		.content{
-            width: 95%;
-            margin-bottom: 30px;
-        }
         .float-left{
             width: 100%;
         }
@@ -595,10 +579,6 @@
         .float-middle{
             display: none;
         }
-        .advertisement{
-            width: 100%;
-            height: auto;
-        }
 		#login,#noLogin {
 			background-color: #009fa0;
 			width: 120px;
@@ -623,6 +603,9 @@
 		}
 		.mobileIcon img {
 			width: 30px;
+		}
+		.userPicture img {
+			width: 36px;
 		}
 		.headLeft {
 			width: 100%;
@@ -668,10 +651,6 @@
         .float-middle{
             display: none;
         }
-        .advertisement{
-            width: 100%;
-            height: auto;
-        }
 		#login,#noLogin {
 			background-color: #009fa0;
 			width: 120px;
@@ -690,11 +669,6 @@
 			padding: 0 0 5px 5px;
 			width: 80px;
 			display: block;
-		}
-		.mobileIcon {
-			/*width: 150px;*/
-			/*height:100px;*/
-			/*position: relative;*/
 		}
 		.mobileIcon img {
 			width: 37px;

@@ -34,17 +34,17 @@
     		</div>
     		<div class="phoneLogin" v-show="phone">
     			<div class="Close">
-    				<div class="close"><img src="../../../assets/img/Close.png"></div>
+    				<div class="close" @click="close"><img src="../../../assets/img/Close.png"></div>
     			</div>
     			<div class="MBA"><img src="../../../assets/img/logoGreen.png"></div>
     			<div class="loginText">登录</div>
     			<div class="userInform">
+    				<div class="mobileCode"><el-input v-model="phoneNumber" placeholder="手机号"></el-input></div>
     				<div class="mobileNumber">
-    					<el-input v-model="mobileNumber" placeholder="手机号"></el-input>
-    					<el-button type="success">发送验证码</el-button>
+    					<el-input v-model="smsCode" placeholder="验证码"></el-input>
+    					<el-button type="success" :disabled="disabled" @click="sendcode">{{btntxt}}</el-button>
     				</div>
-    				<div class="mobileCode"><el-input v-model="mobileCode" placeholder="验证码"></el-input></div>
-    				<div class="mobileLogin"><el-button type="success">登录</el-button></div>
+    				<div class="mobileLogin"><el-button type="success" @click="loginTest">登录</el-button></div>
     			</div>
     		</div>
     	</div>
@@ -54,8 +54,9 @@
 	export default {
 		data() {
 			return {
-				mobileCode:'',
-				mobileNumber:'',
+				smsCode:'',
+				btntxt:"获取验证码",
+		        disabled:false,
 				computer:true,
 				phone:false,
 				active:'1',
@@ -68,33 +69,60 @@
 			phoneNumber(phone,oldPhone) {
 				this.$store.commit('changeUserInfo', {name:'userPhone', val:phone});
 			},
+			smsCode(smscode, oldcode) {
+				this.$store.commit('changeUserInfo', {name: 'smsCode', val: smscode});
+			}
 		},
 		methods:{
+			//获取验证码方法
+			sendcode:function(){
+            	if(this.$store.state.userInfo['userPhone'] == ''){
+            		this.$message('手机号不能为空！');
+                	return;
+            	} else if(!(/^1[3|4|5|8][0-9]\d{8,11}$/.test(this.$store.state.userInfo['userPhone']))){
+					this.$message('请输入正确的手机号！');
+					return;
+            	} else {
+					this.sendSmsCode(this.$store.state.userInfo['userPhone']);
+            	}
+            	console.log(123)
+        	},
             //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
 				this.active = key;
 				this.active == '1' ? this.$router.push('/front/Login/loginRoute/accountNumber') : this.$router.push('/front/Login/loginRoute/shortMessage');
 				//存变量
-				sessionStorage.setItem("active",key);
+				// sessionStorage.setItem("active",key);
 		    },
 		    //刷新登录不变
 		    accountNumber:function() {
-		    	// console.log(666);
-		    	if (sessionStorage.getItem("active")) {
-		    		//取变量
-		    		this.active=sessionStorage.getItem("active")
-		    		if (this.active==1) {
-		    			this.$router.push('/front/Login/loginRoute/accountNumber');
-		    		} else{
-		    			this.$router.push('/front/Login/loginRoute/shortMessage');
-		    		}
-		    	} else{
-		    		if (this.active==1) {
-		    			this.$router.push('/front/Login/loginRoute/accountNumber');
-		    		} else{
-		    			this.$router.push('/front/Login/loginRoute/shortMessage');
-		    		}
-		    	}
+		    	let path = this.$route.matched[2].path;
+	    		//当前输入的路由包括()中路由时，显示当前高亮
+	    		if (path.indexOf('/Login/loginRoute/shortMessage') != -1) {
+	    			this.active = '2';
+	    		} else if(path.indexOf('/front/Login/loginRoute/accountNumber') != -1) {
+		    		this.active = '1';
+	    		} 
+	    		// else if(path.indexOf('/front/firstMenuRouter/viewInformation') != -1) {
+		    	// 	this.activeIndex = '3';
+		    	// } else if(path.indexOf('/front/firstMenuRouter/searchCoach') != -1) {
+		    	// 	this.activeIndex = '4';
+		    	// }
+		    	// if (sessionStorage.getItem("active")) {
+		    	// 	//取变量
+		    	// 	this.active=sessionStorage.getItem("active")
+		    	// 	if (this.active==1) {
+		    	// 		this.$router.push('/front/Login/loginRoute/accountNumber');
+		    	// 	} else{
+		    	// 		this.$router.push('/front/Login/loginRoute/shortMessage');
+		    	// 	}
+		    	// } else{
+		    	// 	if (this.active==1) {
+		    	// 		this.$router.push('/front/Login/loginRoute/accountNumber');
+		    	// 	} else{
+		    	// 		this.$router.push('/front/Login/loginRoute/shortMessage');
+		    	// 	}
+		    	// }
 		    	
 		    },
 		    //跳转到重置密码页面
@@ -162,11 +190,13 @@
 				}
 			},
 			thirdLogin() {
-				// var test = window.open(this.globals.longUrl + '/auth/weixin/');
-				// console.log(test);
 				this.fetch('/auth/weixin', {}).then((response) => {
 					console.log(response);
 				})
+			},
+			//不登录——跳到院校列表页
+			close:function(){
+				this.$router.push('/front/firstMenuRouter/selectCollege');
 			}
 			
 		},
@@ -190,10 +220,6 @@
 	}
 	.mobileLogin .el-button {
 		width: 100%;
-		height: 50px;
-	}
-	.mobileCode .el-input__inner,.mobileNumber .el-input__inner {
-		height: 50px;
 	}
 	.mobileNumber .el-button {
 		margin-left: 10px;
@@ -244,8 +270,12 @@
 		font-size: 14px;
 	}
 	.login .el-button--primary:hover {
-		background-color:  #000;
-		border-color:  #000;
+		background-color:  #009fa0;
+		border-color:  #009fa0;
+	}
+	.mobileLogin .el-button:hover {
+		background-color:  #009fa0;
+		border-color:  #009fa0;
 	}
 </style>
 

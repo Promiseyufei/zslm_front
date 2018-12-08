@@ -32,7 +32,7 @@
                                     @close="handleClose(tag)"
                                     :type="tag.type">
                                     {{tag.name}}
-                                </el-tag >
+                                </el-tag>
                             </div>
                         </div>
                         <div class="coachNavright">
