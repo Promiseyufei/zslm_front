@@ -55,6 +55,7 @@ export default {
         getPage(){
             // 当前页*每页显示个数 >= 总数 时加载全部结束
             this.count = this.count+1;
+            console.log(this.count)
             if(this.count*this.size >= this.totalData){
                 this.disabled = true;
                 this.loadingBtnText = "————我是有底线的————";

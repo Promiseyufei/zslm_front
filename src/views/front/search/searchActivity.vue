@@ -6,7 +6,7 @@
                 <activityBox v-for="(item, index) in activitys" :key="index" :activityInfo="item"></activityBox>
             </div>
         </div>
-
+        <pcPhonePage :totalData="count" :size="pageCount" :currentPage="pageNumber" :loading="loading" @use="getActivity" @getPage="getPage"></pcPhonePage>
     </div>
 </template>
 
@@ -15,33 +15,51 @@ export default {
     data() {
         return {
             keyword:'',
+            count: 0,
+            loading: false,
             pageCount:9,
             pageNumber:1,
             activitys:[]
         }
     }, 
     methods: {
-        getActivity() {
+        getActivity(number) {
+            this.pageNumber = number;
             this.fetch('/front/activity/getSearchActivity', {
                 keyword: this.keyword,
                 pageCount: this.pageCount,
                 pageNumber: this.pageNumber
             }).then((response) => {
                 if(response.code == 0) {
-                    // console.log(response.result);
-                    this.activitys = response.result;
+                    this.count = response.result.count;
+                    this.activitys = response.result.activitys;
                 }
                 else this.message(true, response.msg, 'info');
             }) 
+        },
+        getPage() {
+            this.loading = true;
+            this.pageNumber += 1;
+            this.fetch('/front/activity/getSearchActivity', {
+                keyword: this.keyword,
+                pageCount: this.pageCount,
+                pageNumber: this.pageNumber   
+            }).then((response) => {
+                if(response.code == 0) {
+                    this.count = response.result.count;
+                    this.activitys = this.activitys.concat(response.result.activitys);
+                }
+                else this.message(true, response.msg, 'info');
+            })
         }
     },
     mounted() {
         if(typeof this.$route.params.keyword != 'undefined') {
             this.keyword = this.$route.params.keyword;
-            // this.$store.commit('changeSearch', {name:'keyword', val: this.$route.params.keyword});
+            this.$store.commit('changeSearch', {name:'keyword', val: this.$route.params.keyword});
         }
         this.$store.commit('changeSearch', {name:'nowUrl', val: this.getChangeUrl(this.$route.path)});
-        this.getActivity();
+        this.getActivity(this.pageNumber);
     }
 }
 </script>
@@ -78,7 +96,7 @@ export default {
 }
 @media only screen and (min-width: 768px) {
     .activitys .activityBox[data-v-1be92314] {
-        width: 33.3% !important;
+        width: 31.2% !important;
     }
 }
 

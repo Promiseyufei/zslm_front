@@ -6,6 +6,7 @@
                 <searchCoachBox v-for="(item, index) in coachs" :key="index" :coachInfo="item"></searchCoachBox>
             </div>
         </div>
+        <pcPhonePage :totalData="count" :size="pageCount" :currentPage="pageNumber" :loading="loading" @use="getCoach" @getPage="getPage"></pcPhonePage>
     </div>
 </template>
 
@@ -14,21 +15,39 @@ export default {
     data() {
         return {
             keyword:'',
+            count: 0,
+            loading: false,
             pageNumber: 1,
             pageCount:6,
             coachs: []
         }
     },
     methods: {
-        getCoach() {
+        getCoach(number) {
+            this.pageNumber = number;
+            this.fetch('/front/coach/getcoachbyname', {
+                name: this.keyword,
+                page: this.pageNumber,
+                page_size: this.pageCount
+            }).then((response) => {
+                console.log(response)
+                if(response.code == 0) {
+                    this.count = response.result.count;
+                    this.coachs = response.result.coachs;
+                }
+                else this.message(true, response.msg, 'info');
+            })
+        },
+        getPage() {
+            this.loading = true;
+            this.pageNumber += 1;
             this.fetch('/front/coach/getcoachbyname', {
                 name: this.keyword,
                 page: this.pageNumber,
                 page_size: this.pageCount
             }).then((response) => {
                 if(response.code == 0) {
-                    // console.log(response.result);
-                    this.coachs = response.result;
+                    this.coachs = this.coachs.concat(response.result.coachs);
                 }
                 else this.message(true, response.msg, 'info');
             })
@@ -37,10 +56,10 @@ export default {
     mounted() {
         if(typeof this.$route.params.keyword != 'undefined') {
             this.keyword = this.$route.params.keyword;
-            // this.$store.commit('changeSearch', {name:'keyword', val: this.$route.params.keyword});
+            this.$store.commit('changeSearch', {name:'keyword', val: this.$route.params.keyword});
         }
         this.$store.commit('changeSearch', {name:'nowUrl', val: this.getChangeUrl(this.$route.path)});
-        this.getCoach();
+        this.getCoach(this.pageNumber);
     }
 }
 </script>
