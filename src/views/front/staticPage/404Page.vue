@@ -139,7 +139,7 @@ export default {
 
     @media only screen and (max-width: 360px) {
 		.indexBigBlock>div {
-		    padding: 16px 40px 12px 40px;
+	        padding: 16px 20px 12px 20px;
 		}
     }
 </style>
