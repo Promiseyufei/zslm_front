@@ -69,6 +69,9 @@
 			phoneNumber(phone,oldPhone) {
 				this.$store.commit('changeUserInfo', {name:'userPhone', val:phone});
 			},
+			smsCode(smscode, oldcode) {
+				this.$store.commit('changeUserInfo', {name: 'smsCode', val: smscode});
+			}
 		},
 		methods:{
 			//获取验证码方法
@@ -82,31 +85,44 @@
             	} else {
 					this.sendSmsCode(this.$store.state.userInfo['userPhone']);
             	}
+            	console.log(123)
         	},
             //组件自带——菜单当前ID(active)
 			handleSelect(key, keyPath) {
 				this.active = key;
 				this.active == '1' ? this.$router.push('/front/Login/loginRoute/accountNumber') : this.$router.push('/front/Login/loginRoute/shortMessage');
 				//存变量
-				sessionStorage.setItem("active",key);
+				// sessionStorage.setItem("active",key);
 		    },
 		    //刷新登录不变
 		    accountNumber:function() {
-		    	if (sessionStorage.getItem("active")) {
-		    		//取变量
-		    		this.active=sessionStorage.getItem("active")
-		    		if (this.active==1) {
-		    			this.$router.push('/front/Login/loginRoute/accountNumber');
-		    		} else{
-		    			this.$router.push('/front/Login/loginRoute/shortMessage');
-		    		}
-		    	} else{
-		    		if (this.active==1) {
-		    			this.$router.push('/front/Login/loginRoute/accountNumber');
-		    		} else{
-		    			this.$router.push('/front/Login/loginRoute/shortMessage');
-		    		}
-		    	}
+		    	let path = this.$route.matched[2].path;
+	    		//当前输入的路由包括()中路由时，显示当前高亮
+	    		if (path.indexOf('/Login/loginRoute/shortMessage') != -1) {
+	    			this.active = '2';
+	    		} else if(path.indexOf('/front/Login/loginRoute/accountNumber') != -1) {
+		    		this.active = '1';
+	    		} 
+	    		// else if(path.indexOf('/front/firstMenuRouter/viewInformation') != -1) {
+		    	// 	this.activeIndex = '3';
+		    	// } else if(path.indexOf('/front/firstMenuRouter/searchCoach') != -1) {
+		    	// 	this.activeIndex = '4';
+		    	// }
+		    	// if (sessionStorage.getItem("active")) {
+		    	// 	//取变量
+		    	// 	this.active=sessionStorage.getItem("active")
+		    	// 	if (this.active==1) {
+		    	// 		this.$router.push('/front/Login/loginRoute/accountNumber');
+		    	// 	} else{
+		    	// 		this.$router.push('/front/Login/loginRoute/shortMessage');
+		    	// 	}
+		    	// } else{
+		    	// 	if (this.active==1) {
+		    	// 		this.$router.push('/front/Login/loginRoute/accountNumber');
+		    	// 	} else{
+		    	// 		this.$router.push('/front/Login/loginRoute/shortMessage');
+		    	// 	}
+		    	// }
 		    	
 		    },
 		    //跳转到重置密码页面
@@ -183,11 +199,6 @@
 				this.$router.push('/front/firstMenuRouter/selectCollege');
 			}
 			
-		},
-		watch:{
-			smsCode(smscode, oldcode) {
-				this.$store.commit('changeUserInfo', {name: 'smsCode', val: smscode});
-			}
 		},
 		mounted() {
 			this.accountNumber();

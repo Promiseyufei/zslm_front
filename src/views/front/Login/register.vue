@@ -196,8 +196,8 @@
 		font-size: 14px;
 	}
 	.registerLogin .el-button--primary:hover {
-		background-color:  #000;
-		border-color:  #000;
+		background-color:  #009fa0;
+		border-color:  #009fa0;
 	}
 </style>
 

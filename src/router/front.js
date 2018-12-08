@@ -271,6 +271,4 @@ let front_router = {
         // },
     ]
 }
-
-
 export default front_router;
