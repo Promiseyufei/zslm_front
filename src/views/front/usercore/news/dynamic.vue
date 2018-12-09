@@ -6,7 +6,7 @@
                 <majorInfoDynamic v-else-if="dynamic.content_type == 1"  :dynamic="item" :newsTime="dynamic.dynamic_create_time"></majorInfoDynamic>
             </template>
         </template>
-            <el-button style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
+        <el-button style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
     </div>
 </template>
 

@@ -4,7 +4,7 @@
             <system :key="index" :news="item"></system>
             <h1 class="hostisy" v-if="index == 4" :key="index">--以下为历史消息--</h1>
         </template>
-        
+        <el-button style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
     </div>
 </template>
 
@@ -13,10 +13,13 @@ export default {
     
     data() {
         return {
+            loading: false,
+            disabled: false,
             newsType: 1,
             pageCount: 6,
             pageNumber: 0,
-            assistantList:[]
+            assistantList:[],
+            loadingBtnText: '加载更多',
         }
     },
     methods: {
@@ -31,9 +34,19 @@ export default {
             }).then((response) => {
                 console.log(response.result);
                 if(response.code == 0) {
-                    _this.assistantList = response.result;
+                    _this.assistantList = _this.assistantList.concat(response.result);
+                    if(response.result.length == 0) {
+                        _this.loadingBtnText = '已经到底了';
+                        this.disabled = true;
+                    }
                 }
             })
+        },
+        getPage() {
+            this.loading = true;
+            this.pageNumber += 1;
+            this.getAssistant();
+            this.loading = false;
         }
     },
     mounted() {

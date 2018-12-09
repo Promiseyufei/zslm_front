@@ -24,7 +24,7 @@
 				</el-form-item>
 				<div class="button">
 					<el-button type="primary" @click="submission">确定</el-button>
-					<el-button>返回</el-button>
+					<el-button @click="$router.push('/front/Login/loginRoute/accountNumber')">返回</el-button>
 				</div>
 			</div>
 		</el-form>
@@ -71,7 +71,10 @@
 							newPass: 		this.resetPass.pass,
 							againNewPass: 	this.resetPass.checkPass
 						}).then((response) => {
-							if(response.code == 0) this.message(true, '保存成功', 'success');
+							if(response.code == 0) {
+								this.message(true, '保存成功', 'success');
+								this.$router.push('/front/Login/loginRoute/accountNumber');
+							}
 							else {
 								this.message(true, response.msg, 'info');
 							}
