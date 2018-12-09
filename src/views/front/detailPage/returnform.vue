@@ -60,8 +60,8 @@
                                 </el-form-item>
                                 <el-form-item label="是否使用优惠卷：">
                                     <el-radio-group v-model="formLabelAlign.is_coupon">
-                                        <el-radio label="是" value="0"></el-radio>
-                                        <el-radio label="否" value="1"></el-radio>
+                                        <el-radio label="0" >是</el-radio>
+                                        <el-radio label="1" >否</el-radio>
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="优惠卷序列号：">
@@ -79,8 +79,9 @@
                                 </el-form-item>
                                 <el-form-item label="退款选择途径：">
                                     <el-radio-group v-model="formLabelAlign.refund_type">
-                                        <el-radio label="支付宝" value="0"></el-radio>
-                                        <el-radio label="银行卡转账" value="1"></el-radio>
+                                        <el-radio label="0" >支付宝</el-radio>
+                                        <el-radio label="1" >银行卡转账</el-radio>
+
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="支付宝账号：">
@@ -108,7 +109,8 @@
                                     :on-preview="handlePreview"
                                     :on-remove="handleRemove"
                                     :on-progress="test"
-                                    :file-list="formLabelAlign.img"
+                                    :file-list="tests"
+                                    :on-change="testfile"
                                     :auto-upload="false">
                                     <el-button slot="trigger" size="small" type="primary">上传图片</el-button>
                                     </el-upload>
@@ -139,11 +141,14 @@ export default {
             select:null,
             fifnish:null,
             coach:[],
+            u_id:'1',
             selectfif:{
                 coach_name:""
             },
             formLabelAlign: {
-            }
+                img:[]
+            },
+            tests:[]
         }
     },
     methods: {
@@ -198,11 +203,35 @@ export default {
         handlePreview(file) {
             console.log(file);
         },
+        testfile(file,filelist){
+            this.formLabelAlign.img = filelist
+        },
         sublimt(){
+            this.formLabelAlign.u_id = this.u_id
             this.formLabelAlign.time = Date.parse( this.formLabelAlign.time)/1000
             let self = this
-            console.log(this.formLabelAlign)
-            // this.post("/front/usercore/refund",  self.formLabelAlign)
+            for(let i in this.formLabelAlign.img){
+                this.formLabelAlign.img[i] = this.formLabelAlign.img[i].raw
+            }
+            let fd = new FormData();
+            let f = self.formLabelAlign
+            for(let i in f){
+                fd.append(i,f[i])
+
+            }
+
+            let config = {
+                headers:{'Content-Type':'multipart/form-data'}
+            };
+
+            this.post("/front/usercore/refund", fd,config)
+                .then(res=>{
+                    if(res.code == 0){
+                        this.message(true,'提交成功','success')
+                    }else{
+                        this.message(true,res.message,'error')
+                    }
+                })
         }
     },
     mounted(){
