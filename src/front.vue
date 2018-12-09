@@ -31,5 +31,10 @@ export default {
 </script>
 
 <style>
-
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+	.el-message {
+		min-width: 95%;
+	}
+}
 </style>

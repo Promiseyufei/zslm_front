@@ -4,6 +4,7 @@
             <h1 class="c-heading heading_XwQWQq">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
             <searchMajorModular  v-for="(item, index) in majors" :key="index" :majorInfo="item"></searchMajorModular>
         </div>
+        <pcPhonePage :totalData="count" :size="pageCount" :currentPage="pageNumber" :loading="loading" @use="getMajor" @getPage="getPage"></pcPhonePage>
     </div>
 </template>
 
@@ -14,41 +15,49 @@ export default {
             keyword:'',
             pageNumber:1,
             pageCount:5,
+            count:0,
+            loading:false,
             majors:[]
         }
     },
     methods: {                                                                          
-        getMajor() {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        getMajor(number) {
+            this.pageNumber = number;
+            this.fetch('/front/colleges/getcollegebyname', {
+                name: this.keyword,
+                page: this.pageNumber,
+                page_size: this.pageCount
+            }).then((response) => {
+                console.log(response)
+                if(response.code == 0) {
+                    this.count = response.result.count;
+                    this.majors = response.result.majors;
+                }
+                else this.message(true, response.msg, 'info'); 
+            })
+        },
+        getPage() {
+            this.loading = true;
+            this.pageNumber += 1;
             this.fetch('/front/colleges/getcollegebyname', {
                 name: this.keyword,
                 page: this.pageNumber,
                 page_size: this.pageCount
             }).then((response) => {
                 if(response.code == 0) {
-                    this.majors = response.result;
+                    this.majors = this.majors.concat(response.result.majors);
                 }
-                else this.message(true, response.msg, 'info'); 
+                else this.message(true, response.msg, 'info');
             })
-        },
-        // getChangeUrl(url) {
-        //     var arr=url.split("/");
-        //     arr.shift();
-        //     if(arr.length !== 3)
-        //         arr.pop();  
-        //     var str = '/';
-        //     arr.forEach((item => {
-        //         str += (item + '/');
-        //     }));
-        //     return str;
-        // }
+        }
     },
     mounted() {
         if(typeof this.$route.params.keyword != 'undefined') {
             this.keyword = this.$route.params.keyword;
-            // this.$store.commit('changeSearch', {name:'keyword', val: this.$route.params.keyword});
+            this.$store.commit('changeSearch', {name:'keyword', val: this.$route.params.keyword});
         }
         this.$store.commit('changeSearch', {name:'nowUrl', val: this.getChangeUrl(this.$route.path)});
-        this.getMajor();
+        this.getMajor(this.pageNumber);
 
     }
     

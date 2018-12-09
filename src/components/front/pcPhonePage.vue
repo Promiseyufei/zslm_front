@@ -54,6 +54,7 @@ export default {
         getPage(){
             // 当前页*每页显示个数 >= 总数 时加载全部结束
             this.count = this.count+1;
+            console.log(this.count)
             if(this.count*this.size >= this.totalData){
                 this.disabled = true;
                 this.loadingBtnText = "————我是有底线的————";
@@ -88,7 +89,8 @@ export default {
         background-color: #f4f4f5;
     }
     .apartPage .active{
-        background-color: #009fa0;
+        background-color: #009fa0 !important;
+        border: none !important;
     }
 
     /*加载更多*/

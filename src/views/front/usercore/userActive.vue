@@ -36,7 +36,7 @@
 
             info() {
                 let self = this;
-                this.fetch('http://www.lishanlei.cn/zslm_back_rmfd/public/front/usercore/getuserinfo?id=' + self.id)
+                this.fetch('/front/usercore/getuserinfo?id=' + self.id)
                     .then(res => {
                         if (res.code == 0) {
                             let result = res.result[0];
@@ -52,7 +52,7 @@
             },
             getActive() {
                 let self = this;
-                this.fetch('http://www.zslm.com/front/activity/getuseractivity', {
+                this.fetch('/front/activity/getuseractivity', {
                     id: self.id,
                     page: self.page,
                     page_size: self.page_size

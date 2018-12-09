@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="c-div div_8LVJIQ shiyong wode c-action-click" >
+                    <div class="c-div div_8LVJIQ shiyong wode c-action-click" v-if="use_show">
                         <h1 class="c-heading heading_UEZrXJ shiyong wode">去<div>使</div><div>用</div></h1>
                     </div>
                 </div>
@@ -488,7 +488,7 @@
         font-size: 22px;
         font-weight: normal;
         font-stretch: normal;
-        line-height: auto;
+        /*line-height: auto;*/
         letter-spacing: 0px;
         color: rgb(199, 140, 0);
         margin-top: 0px;
@@ -641,7 +641,7 @@
         },
         methods: {
         },
-        props: ["data"],
+        props: ["data","use_show"],
         mounted(){
         }
     }

@@ -13,11 +13,18 @@
                             <label class="c-label label_OVUgJH">{{ data.city }}</label>
                         </div>
                         <div class="c-div cs-repeatable div_sfz9WV">
-                            <img class="c-image image_2pnGPP" v-show="equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                            <img class="c-image image_2pnGPP" v-show="aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                            <img class="c-image image_2pnGPP" v-show="two" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
-                            <img class="c-image image_2pnGPP" v-show="nine" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
-                            <img class="c-image image_2pnGPP" v-show="both29" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
+                                <div v-for="(item_,index_) in datas.major_confirm_id" style="display: inline-block;margin: 5px 5px">
+                                    <img class="c-image image_2pnGPP" v-if="item_ == equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_ == aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_ == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_ == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+
+                                </div>
+                                <div v-for="(item_,index_) in datas.major_follow_id" style="display: inline-block;margin: 5px 5px">
+                                    <img class="c-image image_2pnGPP" v-if="item_==two" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_==nine" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_==both29" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -510,6 +517,8 @@
         margin-left: 3px;
         margin-right: 3px;
         margin-bottom: 0px;
+        font-size: 14px;
+        padding: 2px 5px;
     }
 
     label {
@@ -796,15 +805,14 @@
                 classShow:false,
                 show:true,
                 notShow:false,
-                datas:null,
-                equis:false,
-                aascb:false,
-                //211
-                two:false,
-                //985
-                nine:false,
-                //双一流
-                both29:false,
+                datas:{},
+                equis:"EQUIS",
+                aascb:"AASCB",
+                two:"原211",
+                nine:"原985",
+                both29:"双一流",
+                amba:"AMBA",
+                camea:"CAMEA",
             }
         },
         methods:{
@@ -818,21 +826,10 @@
         mounted(){
 
             let self = this;
-            console.log(this.data)
-            this.datas = this.data
-            if(this.datas.major_follow_id == '原985')
-                self.nine= true;
-            else if(this.datas.major_follow_id=='原211')
-                self.two = true;
-            else
-                self.both29 = true;
 
-            if(this.datas.major_confirm_id == 'AASCB')
-                this.aascb = true;
-            else{
-                this.equis = true;
-                console.log(232)
-            }
+            this.datas = this.data
+            this.datas.major_follow_id = this.data.major_follow_id.split(',')
+            this.datas.major_confirm_id = this.data.major_confirm_id.split(',')
         },
 
     }

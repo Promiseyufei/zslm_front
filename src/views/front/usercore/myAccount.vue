@@ -12,8 +12,8 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_0l18QF">
                     <div class="c-div div_xRicHO">
                         <h1 class="c-heading heading_m2C6Qu">昵称</h1>
-                        <input type="text" v-model="userInfo.user_name" class="c-heading heading_m2C6Qu mingcheng input" placeholder="用户名称">
-                        <h1 class="c-heading heading_m2C6Qu bianji">编辑昵称</h1>
+                        <input type="text" :disabled="userNameDis" v-model="userInfo.user_name" class="c-heading heading_m2C6Qu mingcheng input" placeholder="用户名称">
+                        <h1 class="c-heading heading_m2C6Qu bianji" @click="updateUserName">{{ userNameText }}</h1>
                     </div>
                     <div class="c-div div_xRicHO">
                         <h1 class="c-heading heading_m2C6Qu">注册手机号</h1>
@@ -29,11 +29,11 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_wODSnC">
                     <div class="c-div div_c1UVgP" style="">
-                        <el-upload class="c-inlineblock c-imageblock imageblock_JtO0xa yuan shezhi" style="border: 1px dashed #d9d9d9;" action="" :show-file-list="false">
-                            <img v-if="userInfo.head_portrait" :src="userInfo.head_portrait" class="avatar" >
+                        <el-upload class="c-inlineblock c-imageblock imageblock_JtO0xa yuan shezhi" style="border: 1px dashed #d9d9d9;" :auto-upload="false" action="" :show-file-list="false" :on-change="changeCoverMapUpload" :multiple="false">
+                            <img v-if="userHeadUrl" :src="userHeadUrl" class="avatar" >
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
-                        <h1 class="c-heading heading_m2C6Qu bianji touxiang">修改头像</h1>
+                        <h1 class="c-heading heading_m2C6Qu bianji touxiang" @click="updateUserHead">{{ updateUserHeadText }}</h1>
                     </div>
                 </div>
             </div>
@@ -49,8 +49,8 @@
             </div>
             <div class="c-div div_xRicHO">
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">姓名</h1>
-                <input type="text" class="c-heading heading_m2C6Qu huiyuan mingcheng input" style="padding-bottom: 14px;" v-model="userInfo.real_name" placeholder="用户名称">
-                <h1 class="c-heading heading_m2C6Qu bianji huiyuan">修改</h1>
+                <input type="text" class="c-heading heading_m2C6Qu huiyuan mingcheng input" style="padding-bottom: 14px;" :disabled="realNameDis" v-model="userInfo.real_name" placeholder="用户名称">
+                <h1 class="c-heading heading_m2C6Qu bianji huiyuan" @click="() => {realNameDis = false;}">修改</h1>
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">仅自己可见</h1>
             </div>
             <div class="c-div div_xRicHO biaodan">
@@ -62,39 +62,41 @@
             </div>
             <div class="c-div div_xRicHO biaodan">
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">常住地</h1>
-                <el-cascader :options="options" v-model="selectedOptions" @change="handleChange"></el-cascader>
+                <el-cascader :props="props" :options="provinces" v-model="userInfo.address" @change="handleChange"></el-cascader>
             </div>
             <div class="c-div div_xRicHO biaodan">
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">最高学历</h1>
-                <el-cascader :options="options" v-model="selectedOptions" @change="handleChange"></el-cascader>
+                <el-select placeholder="请选择" v-model="userInfo.schooling_id">
+                    <el-option v-for="item in dictionaries.education" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
             </div>
             <div class="c-div div_xRicHO biaodan major">
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">毕业院校</h1>
-                <el-input class="c-input select_1BZvOz" v-model="input" placeholder="请输入内容"></el-input>
+                <el-input class="c-input select_1BZvOz" v-model="userInfo.graduate_school" placeholder="请输入内容"></el-input>
             </div>
             <div class="c-div div_xRicHO biaodan">
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">所属行业</h1>
-                <el-select v-model="value" placeholder="请选择" class="c-select select_1BZvOz kuan">
+                <el-select v-model="userInfo.industry" placeholder="请选择" class="c-select select_1BZvOz kuan">
                     <el-option
-                    v-for="item in optionsTpw"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="item in dictionaries.industry"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
                     </el-option>
                 </el-select>
             </div>
             <div class="c-div div_xRicHO biaodan">
                 <h1 class="c-heading heading_m2C6Qu huiyuan mingcheng">工作年限</h1>
-                <el-select v-model="value" placeholder="请选择" class="c-select select_1BZvOz kuan">
+                <el-select v-model="userInfo.worked_year" placeholder="请选择" class="c-select select_1BZvOz kuan">
                     <el-option
-                    v-for="item in optionsTpw"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="item in dictionaries.workYears"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
                     </el-option>
                 </el-select>
             </div>
-            <a class="btn c-button button_LsM2yn123 quguan quxiao mima baocun" type="button">保 存</a>
+            <a class="btn c-button button_LsM2yn123 quguan quxiao mima baocun" type="button" @click="updateUserInfo">保 存</a>
         </div>
     </div>
 </template>
@@ -103,6 +105,12 @@
 export default {
     data() {
         return {
+            userHeadUrl:'',
+            userHeadUrlFile: {},
+            userNameText:'编辑昵称',
+            updateUserHeadText: '修改头像',
+            userNameDis: true,
+            realNameDis: true,
             imageUrl:'http://qty83k.creatby.com/materials/2771/origin/dfcbeb92f5c5e039d67f280a7bd3b330_origin.png',
             radio: '1',
             input: '',
@@ -125,6 +133,12 @@ export default {
             label: '北京烤鸭'
             }],
             selectedOptions: [],
+            dictionaries: {},
+            props: {
+                value: 'id',
+                label: 'name',
+                children: 'citys',
+            },
             options:[
                 {
                     value:1,
@@ -154,11 +168,97 @@ export default {
                         }
                     ]
                 }
-            ]
+            ],
+            provinces:[]
 
         }
     },
     methods: {
+        changeCoverMapUpload(file, fileList) {
+            if(this.beforeAvatarUpload(file)) {
+                // console.log(file.url);
+                this.userHeadUrl = file.url;
+                this.userHeadUrlFile = file.raw;
+                this.updateUserHeadText = '确认上传';
+            }
+        },
+        //上传图片判断
+        beforeAvatarUpload(file) {
+            const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png';
+            const isLt2M = file.raw.size / 1024 / 1024 < 4;
+
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 4MB!');
+            }
+            return isJPG && isLt2M;
+        },
+        //上传用户头像
+        updateUserHead() {
+            if(this.updateUserHeadText == '确认上传' && JSON.stringify(this.userHeadUrlFile) != '{}' && this.userHeadUrlFile.size > 0) {
+                let _this = this;
+                let formdata = new FormData();
+                formdata.append('userHeadImg', this.userHeadUrlFile);
+                formdata.append('phone', this.userInfo.phone)
+                formdata.append('type', 1)
+                this.post('/front/usercore/changeName', formdata, this.globals.config).then((response) => {
+                    if(response.code == 0) {
+                        console.log(response);
+                    }
+                    else this.message(true, response.msg, 'info');
+                    this.updateUserHeadText = '修改头像';
+                })
+            }
+            else this.message(true, '请先选择上传的头像', 'info');
+        },
+        //修改用户昵称
+        updateUserName() {
+            this.userNameDis = !this.userNameDis;
+            if(this.userNameDis == false) this.userNameText = '确认修改';
+            if(this.userNameDis == true && this.userNameText == '确认修改') {
+                let _this = this;
+                this.post('/front/usercore/changeName', {
+                    phone: _this.userInfo.phone,
+                    type:0,
+                    newName:_this.userInfo.user_name
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.message(true, 'success', 'success');
+                    }
+                    else this.message(true, response.msg, 'info');
+                    this.userNameDis = true;
+                    this.userNameText = '编辑昵称';
+                })
+            }
+            // if(this)
+
+
+        },
+        updateUserInfo() {
+            let addressText = '';
+            if(this.userInfo.real_name == '') {
+                this.message(true, '姓名不能为空', 'info');
+                return;
+            }
+            if(this.userInfo.address.length != 0 || this.userInfo.address !==undefined) {
+                addressText = this.userInfo.address.join(',');
+            }
+            let formdata = new FormData();
+            formdata.append('phone', this.userInfo.phone);
+            formdata.append('userRealName', this.userInfo.real_name);
+            formdata.append('userSex', this.userInfo.sex);
+            formdata.append('userAddress', addressText);
+            formdata.append('userEducation', this.userInfo.schooling_id);
+            formdata.append('userGraduation', this.userInfo.graduate_school);
+            formdata.append('userInIndustry', this.userInfo.industry);
+            formdata.append('userWorkYears', this.userInfo.worked_year);
+            this.post('front/usercore/changeUserInfo', formdata).then((response) => {
+                if(response.code == 0) this.message(true, '信息修改成功', 'success');
+                else this.message(true, response.msg, 'info');
+            })
+        },
         handleChange(value) {
             console.log(value);
         },
@@ -169,8 +269,12 @@ export default {
                 this.fetch('/front/usercore/getUserAccountInfo', {
                     phone: phone
                 }).then((response) => {
-                    console.log(response.result);
                     if(response.code == 0) {
+                        console.log(response.result);
+                        response.result.address.forEach((item, index) => {
+                            response.result.address[index] = parseInt(item);
+                        });
+                        this.userHeadUrl = response.result.head_portrait;
                         this.userInfo = response.result;
                     }
                     else this.message(true, response.msg, 'info');
@@ -185,9 +289,20 @@ export default {
     },
     mounted() {
         this.getUserAccounts();
-        this.post('/admin/information/getMajorProvincesAndCities').then((response) => {
-            console.log(response.result);
+        this.fetch('/front/usercore/getFrontProvince').then((response) => {
+            if(response.code == 0)
+                this.provinces = response.result[0];
+            else 
+                this.provinces  = this.options;
+        });
+        this.fetch('/front/usercore/getIndustryList').then((response) => {
+            if(response.code == 0) {
+                console.log(response.result);
+                this.dictionaries = response.result;
+            }
+            else this.message(true, '请尝试刷新', 'info');
         })
+
     }
 }
 </script>
@@ -204,6 +319,8 @@ export default {
     outline:medium;
 }
 .avatar {
+    width: 100px;
+    height: 100px;
     border-radius: 98px;
 }
 .avatar-uploader-icon {
