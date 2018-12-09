@@ -140,7 +140,7 @@ export default {
             hotInfopage:0,
 
             // 用户id
-            userId:1,
+            userId:0,
             // 我要报名状态，实现只可点击一次
             acSignClick:0,
 
@@ -157,46 +157,55 @@ export default {
         // 关注院校、取消关注
         // state: false 未关注 true 已关注
         changeState:function(state){
-            console.log(state);
+            // console.log(state);
             if(state){this.remove();}
             else {this.follow();}
         },
         //关注院校
         follow:function(){
             let self = this;
-            this.post('http://www.lishanlei.cn/front/colleges/setusermajor',{
-                m_id:this.acHostInfo.id,     //院校id
-                u_id:this.userId, //用户id
-            }).then(function (res) {
-                if(res.code == 0){
-                    self.message(true, "关注成功", 'success');
-                    self.GuanZhu = "取消关注";
-                    self.getAcHostMajor();
-                }else{
-                    self.message(true, "操作失败，请重试", 'error');
-                }
-            }).catch(function(error){
-                console.log("error");
-            });
+            if(self.userId){
+                this.post('http://www.lishanlei.cn/front/colleges/setusermajor',{
+                    m_id:this.acHostInfo.id,     //院校id
+                    u_id:this.userId, //用户id
+                }).then(function (res) {
+                    if(res.code == 0){
+                        self.message(true, "关注成功", 'success');
+                        self.GuanZhu = "取消关注";
+                        self.getAcHostMajor();
+                    }else{
+                        self.message(true, "操作失败，请重试", 'error');
+                    }
+                }).catch(function(error){
+                    console.log("error");
+                });
+            }else{
+                self.message(true, "你还没有登录哦", 'info');
+            }
+            
         },
         // 取消关注
         remove:function(){
             let self = this;
-            this.post('http://www.lishanlei.cn/front/colleges/unsetusermajor',{
-                m_id:this.acHostInfo.id,     //院校id
-                u_id:this.userId, //用户id
-            }).then(function (res) {
-                if(res.code == 0){
-                    self.message(true, "取消关注成功", 'success');
-                    self.GuanZhu = "+ 关注";
-                    self.getAcHostMajor();
-                    // console.log("---");
-                }else{
-                    self.message(true, "操作失败，请重试", 'error');
-                }
-            }).catch(function(error){
-                console.log("error");
-            });
+            if(self.userId){
+                this.post('http://www.lishanlei.cn/front/colleges/unsetusermajor',{
+                    m_id:this.acHostInfo.id,     //院校id
+                    u_id:this.userId, //用户id
+                }).then(function (res) {
+                    if(res.code == 0){
+                        self.message(true, "取消关注成功", 'success');
+                        self.GuanZhu = "+ 关注";
+                        self.getAcHostMajor();
+                        // console.log("---");
+                    }else{
+                        self.message(true, "操作失败，请重试", 'error');
+                    }
+                }).catch(function(error){
+                    console.log("error");
+                });
+            }else{
+                self.message(true, "你还没有登录哦", 'info');
+            }
         },
 
         // 热门活动——换一换
@@ -211,29 +220,34 @@ export default {
         // 获取活动主办院校信息
         getAcHostMajor:function(){
             let self = this;
-            this.fetch('http://www.lishanlei.cn/front/colleges/getactivemajor',{
-                // acId:this.id,
-                a_id:this.id,
-                u_id:this.userId,
-            }).then(function (res) {
-                // console.log(res);
-                // let res = response[0];
-                // console.log(res.result[0]);
-                if(res.code == 0){
-                    self.acHostInfo = res.result[0];
-                    // 设置背景图
-                    if(self.acHostInfo.major_cover_name != ""){
-                        self.hostBgimg = self.acHostInfo.major_cover_name;
+            if(self.u_id){
+                this.fetch('http://www.lishanlei.cn/front/colleges/getactivemajor',{
+                    // acId:this.id,
+                    a_id:this.id,
+                    u_id:this.userId,
+                }).then(function (res) {
+                    // console.log(res);
+                    // let res = response[0];
+                    // console.log(res.result[0]);
+                    if(res.code == 0){
+                        self.acHostInfo = res.result[0];
+                        // 设置背景图
+                        if(self.acHostInfo.major_cover_name != ""){
+                            self.hostBgimg = self.acHostInfo.major_cover_name;
+                        }
+                        if(self.acHostInfo.is_guanzhu == true){
+                            self.GuanZhu = "取消关注";
+                        }
+                    }else{
+                        self.message(true, "主办院校不存在", 'errors');
                     }
-                    if(self.acHostInfo.is_guanzhu == true){
-                        self.GuanZhu = "取消关注";
-                    }
-                }else{
-                    self.message(true, "主办院校不存在", 'errors');
-                }
-            }).catch(function(error){
-                console.log("error");
-            });
+                }).catch(function(error){
+                    console.log("error");
+                });
+            }else{
+                self.message(true, "记得先去登陆~", 'info');
+            }
+            
         },
 
         // 热门活动推荐列表
@@ -321,6 +335,8 @@ export default {
     },
     mounted(){
         this.id = this.$route.params.id;
+        this.userId = this.getUserState('userId');
+        // console.log(this.userId);
         this.getAcHostMajor();//主办院校信息
         this.getPopularAcInfo();//热门活动列表
         this.getAppointAcInfo();//活动详细信息
