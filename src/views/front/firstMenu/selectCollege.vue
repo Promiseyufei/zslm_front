@@ -9,7 +9,7 @@
                         suffix-icon="el-icon-search"
                         v-model="z_name" @keyup.enter.native="search">
                     </el-input>
-                </div>
+                </div>count
             </div>
             <selectAll :checkboxGroup1="checkboxGroup" :list="collegeInform" @change="change"></selectAll>
             <div class="tagSort">
@@ -33,7 +33,7 @@
                             <i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="moneyBottom"></i>
                         </div>
                     </div>
-                    <div class="countMajor">共1242所院校</div>
+                    <div class="countMajor">共{{ this.count }}所院校</div>
                 </div>
             </div>
             <div class="buttonCollege"></div>

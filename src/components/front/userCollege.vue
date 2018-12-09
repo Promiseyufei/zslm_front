@@ -3,7 +3,10 @@
         <div class="c-div div_lPV1oN guanzhu">
             <div class="c-div div_BMsaOd guanzhu">
                 <div class="c-div div_ARD2As">
-                    <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url(http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png); ">
+                    <div id="logo" class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png"
+                         style="background-size:  100% 100%; background-position:  0% 0%;
+                         background-repeat:  no-repeat;
+                       ">
 
                     </div>
                     <div class="c-div div_mnG0wo">
@@ -14,16 +17,16 @@
                         </div>
                         <div class="c-div cs-repeatable div_sfz9WV">
                                 <div v-for="(item_,index_) in datas.major_confirm_id" style="display: inline-block;margin: 5px 5px">
-                                    <img class="c-image image_2pnGPP" v-if="item_ == equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                                    <img class="c-image image_2pnGPP" v-if="item_ == aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                                    <img class="c-image image_2pnGPP" v-if="item_ == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                                    <img class="c-image image_2pnGPP" v-if="item_ == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_==equis" src="../../assets/img/equs.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_==aascb" src="../../assets/img/aacsb.jpg">
+                                    <img class="c-image image_2pnGPP" v-if="item_ == amba" src="../../assets/img/amba.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_ == camea" src="../../assets/img/camea.png">
 
                                 </div>
                                 <div v-for="(item_,index_) in datas.major_follow_id" style="display: inline-block;margin: 5px 5px">
-                                    <img class="c-image image_2pnGPP" v-if="item_==two" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
-                                    <img class="c-image image_2pnGPP" v-if="item_==nine" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
-                                    <img class="c-image image_2pnGPP" v-if="item_==both29" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_==two" src="../../assets/img/211.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_==nine" src="../../assets/img/985.png">
+                                    <img class="c-image image_2pnGPP" v-if="item_==both29" src="../../assets/img/all985211.png">
                                 </div>
                         </div>
                     </div>
@@ -828,6 +831,10 @@
             let self = this;
 
             this.datas = this.data
+
+            let url = "http://www.lishanlei.cn/storage/admin/info/"+this.data.magor_logo_name;
+            console.log(url)
+            document.getElementById("logo").style.backgroundImage = "url('"+url+"')";
             this.datas.major_follow_id = this.data.major_follow_id.split(',')
             this.datas.major_confirm_id = this.data.major_confirm_id.split(',')
         },

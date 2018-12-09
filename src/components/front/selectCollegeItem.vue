@@ -14,16 +14,16 @@
                     </div>
                     <div class="c-div cs-repeatable div_sfz9WV" style="display: flex;">
                         <div v-for="(item,index) in datas.major_confirm_id" class="majorType">
-                             <img class="c-image image_2pnGPP" v-if="item==equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="item==aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="item == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="item == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                             <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/equs.png">
+                            <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/aacsb.jpg">
+                            <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
+                            <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/camea.png">
                             
                         </div>
                         <div v-for="(item,index) in datas.major_follow_id" class="majorType">
-                            <img class="c-image image_2pnGPP" v-if="item==two" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="item==nine" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="item==both29" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="item==two" src="../../assets/img/211.png">
+                            <img class="c-image image_2pnGPP" v-if="item==nine" src="../../assets/img/985.png">
+                            <img class="c-image image_2pnGPP" v-if="item==both29" src="../../assets/img/all985211.png">
                         </div>
                        
                     </div>
@@ -150,19 +150,28 @@
         methods: {
             //加入对比弹出框
             info(){
-                this.colleges =   JSON.parse(this.getMajors())
+                console.log(222)
+                console.log(this.getMajors())
+                // console.log(JSON.parse(this.getMajors()))
+                let obj = this.getMajors();
+                this.colleges =  obj == '' ?[]:JSON.parse(obj)
             },
             addMajor(){
-               var obj = {college:this.collegeInfo.z_name,id:this.collegeInfo.z_name}
-               var obj_arr =  JSON.parse(this.getMajors())
+                var obj = {college:this.collegeInfo.z_name,id:this.collegeInfo.id}
+                console.log(obj)
+                var objs = this.getMajors()
+                console.log(objs)
+                var obj_arr = objs == ""?[]: JSON.parse(this.getMajors())
 
-                if(obj_arr != null && obj_arr.lenght == 4){
+                if(obj_arr != null && obj_arr.length == 4){
                     this.message(true,"对比列表已满", 'info');
+                    return
                 }else{
                     if(obj_arr == null)
                         obj_arr = []
                     obj_arr.push(obj)
                     this.setCookie(obj_arr)
+                    this.colleges = obj_arr
                 }
             },
             setCookie(obj_arr){
@@ -170,7 +179,6 @@
                 document.cookie = this.cookieName + "="+ escape (obj_json)+ ";"
             },
             getMajors(){
-                var arr,reg=new RegExp("(^| )"+this.cookieNamee+"=([^;]*)(;|$)");
                 let cookie = document.cookie.split(";")
                 let index = 0;
                 let i = 0
@@ -183,6 +191,7 @@
                 let obj = cookie[i]
                 obj = obj.split('=')
                 let obj_arr = unescape(obj[1]);
+                console.log(this.cookieName)
                 return obj_arr
             },
             remove(index){
@@ -199,7 +208,7 @@
                     id+=this.colleges[i].  id+','
                 }
                 id = id.substr(0,id.length-1)
-                console.log(id)
+                this.$router.push("/front/firstMenuRouter/majorsCompare/"+id)
             },
             //加入对比按钮
             compareMajor:function(){
