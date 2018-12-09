@@ -90,7 +90,7 @@ let front_router = {
                             component: resolve => void(require(['@/views/front/detailPage/majorCompare'], resolve))
                         },
                         {
-                            path: 'majorsCompare',
+                            path: 'majorsCompare/:id?',
                             name: '院校对比',
                             component: resolve => void(require(['@/views/front/detailPage/majorsCompare'], resolve))
                         },
@@ -201,6 +201,7 @@ let front_router = {
                                 }
                             ]
                         },
+
                         {
                             path: 'search',
                             name: '搜索页面',
@@ -229,11 +230,9 @@ let front_router = {
                             ]
                         },
                     ]
+
                 },
 
-
-                
-                
                 // 首页
                 {
                     path: 'index',
@@ -271,6 +270,4 @@ let front_router = {
         // },
     ]
 }
-
-
 export default front_router;
