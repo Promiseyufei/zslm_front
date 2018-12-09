@@ -130,10 +130,6 @@ export default {
                             name:"河北"
                         },
                         {
-                            id:1,
-                            name:"北京"
-                        },
-                        {
                             id:6,
                             name:"山西"
                         },

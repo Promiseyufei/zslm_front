@@ -63,7 +63,6 @@
     </div>
 </template>
 <script>
-    import PDFJS from 'pdfjs-dist'
     export default{
         data() {
             return {
