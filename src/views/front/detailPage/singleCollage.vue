@@ -104,6 +104,10 @@
                                         <div class="detailTitle">专业认证</div>
                                         <div class="majorPicture" >
                                             <div v-for="(m,index) in majorPicture" :key="index"><img :src="m.src"></div>
+                                            <!-- <img class="c-image image_2pnGPP" v-if="item_ == equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
+                                            <img class="c-image image_2pnGPP" v-if="item_ == aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                                            <img class="c-image image_2pnGPP" v-if="item_ == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                                            <img class="c-image image_2pnGPP" v-if="item_ == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png"> -->
                                         </div>
                                     </div>
                                     <div class="detailType">
@@ -177,7 +181,7 @@
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="pdf">
-                                    <div class="pdfDetail">
+                                    <div class="pdfDetail" @click="loadPdf">
                                         <pdfDetail :pdfPicture="pdfPicture" v-for="(t,index) in pdfPicture" @thisTesta="(b) => {bb = b}" @thisTest="(a) => {aa = a}" :t="index" :key="index" :class="{testa: index == aa ? true : false, testb: index == bb ? true : false}" :id="city(index)"></pdfDetail>
                                     </div>
                                 </div>
@@ -203,7 +207,7 @@ export default {
             //院校二维码
             // wxCode:require("../../../assets/img/weixin2.png"),
             wxCode:[],
-            xlCode:require("../../../assets/img/xinlang2.png"),
+            xlCode:[],
             //模态框
             dialogVisible: false,
             dialogVisible2:false,
@@ -280,6 +284,10 @@ export default {
         //院校微信
         majorWx:function(){
             this.dialogVisible = true;
+        },
+        //下载pdf
+        loadPdf:function(){
+            window.open("http://www.lishanlei.cn/storage/major_file");
         },
         //点击关注
         clickFollow:function(){
@@ -386,14 +394,13 @@ export default {
                     that.is_guanzhu = res.is_guanzhu;
                     that.index_web = res.index_web;
                     that.admissions_web = res.admissions_web;
-                    that.wxCode = res.wc_image;
-                    that.xlCode = res.wb_image;
-                    // String[] splitAddress=xlCode.split(“\\,”); 
-                    console.log(that.wxCode);
+                    //字符串转化为数组
+                    that.wxCode = res.wc_image.split(',');
+                    that.xlCode = res.wb_image.split(',');
+                    console.log(res.major_follow_id);
                     console.log(123)
                 }
             }).catch(function (error) {
-                // console.log(132)
             });
         },
         //联系方式logo——鼠标滑过样式
@@ -433,22 +440,11 @@ export default {
         
     },
     mounted(){
+        // console.log(369)
         this.isFollow();
         this.getaboutAcitivity();
         this.getContent();
         this.getItemInform();
-        // count:function(){
-            // let i = 0;
-            // i++;
-            // this.t = i;
-        // }
-        // console.log(this.pdfDetail[0].src)
-        // let w = document.documentElement.offsetWidth || document.body.offsetWidth;
-        // if (w<991) {
-        //     this.basicInform = false;
-        // } else {
-        //     this.basicInform = true;
-        // }
     },
 };
 </script>
