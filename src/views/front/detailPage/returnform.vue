@@ -206,6 +206,73 @@ export default {
         testfile(file,filelist){
             this.formLabelAlign.img = filelist
         },
+        BASEisNotFloat(theFloat)
+        {
+
+           var  len=theFloat.length;
+            var dotNum = 0;
+            if (len == 0)
+                return true;
+            for (var i = 0; i < len; i++) {
+               var  oneNum = theFloat.substring(i, i + 1);
+                if (oneNum == ".")
+                    dotNum++;
+                if (((oneNum < "0" || oneNum > "9") && oneNum != ".") || dotNum > 1)
+                    return true;
+            }
+            if (len > 1 && theFloat.substring(0, 1) == "0") {
+                if (theFloat.substring(1, 2) != ".")
+                    return true;
+            }
+            return false;
+        },
+        judge(){
+            var regPos = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/
+            var phonereg=/^[1][3,4,5,7,8][0-9]{9}$/;
+            if(this.formLabelAlign.c_name == undefined || this.formLabelAlign.c_name == ''){
+                this.message(true,'请输入正确的课程名称','error')
+                return false;
+            }else if(this.formLabelAlign.money == undefined || !regPos.test(this.formLabelAlign.money) ){
+                this.message(true,"请输入正确的金额",'error')
+                return false;
+            }else if(this.formLabelAlign.is_coupon == undefined || !(this.formLabelAlign.is_coupon == '0' || this.formLabelAlign.is_coupon == '1')){
+                console.log(regPos.test(this.formLabelAlign.is_coupon))
+                this.message(true,"请选择是否使用优惠券",'error')
+                return false;
+            }else if(this.formLabelAlign.time == undefined || !regPos.test(this.formLabelAlign.time)){
+                this.message(true,"日期格式错误",'error')
+                return false;
+            }else if(this.formLabelAlign.phone == undefined || !phonereg.test(this.formLabelAlign.phone)) {
+                this.message(true,"请输入正确的手机号",'error')
+                return false;
+            }else if(this.formLabelAlign.refund_type == undefined ||  !(this.formLabelAlign.refund_type == '0' || this.formLabelAlign.refund_type == '1')){
+                this.message(true,"退款方式格式错误",'error')
+                return false;
+            }else if(this.formLabelAlign.alipay_account == undefined || this.formLabelAlign.alipay_account == ''){
+                this.message(true,"请输入支付宝账号",'error')
+                return false;
+            }else if(this.formLabelAlign.name == undefined || this.formLabelAlign.name == ''){
+                this.message(true,"请输入姓名",'error')
+                return false;
+            }else if(this.formLabelAlign.card == undefined || this.formLabelAlign.card == ''){
+                this.message(true,"请输入银行卡号",'error')
+                return false;
+            }else if(this.formLabelAlign.blank_addr == undefined || this.formLabelAlign.blank_addr == ''){
+                this.message(true,"请输入开户行信息",'error')
+                return false;
+            }else if(this.formLabelAlign.message == undefined || this.formLabelAlign.message == ''){
+                this.message(true,"请输入详细信息","error")
+                return false;
+            }else if(this.formLabelAlign.cou_id == undefined || !regPos.test(this.formLabelAlign.cou_id)){
+                this.message(true,"优惠券序列号不能为空，且必须为数字","error")
+                return false;
+            }else if(this.formLabelAlign.f_id == undefined){
+                this.message(true,"请选择辅导机构","error")
+                return false;
+            }
+
+            return true;
+        },
         sublimt(){
             this.formLabelAlign.u_id = this.u_id
             this.formLabelAlign.time = Date.parse( this.formLabelAlign.time)/1000
@@ -216,20 +283,28 @@ export default {
             let fd = new FormData();
             let f = self.formLabelAlign
             for(let i in f){
-                fd.append(i,f[i])
 
+                if(i == 'img'){
+                    let index_img = 0
+                    for(let j in f[i])
+                        fd.append(i+(++index_img),f[i][j],f[i][j].name)
+
+                }else{
+                    fd.append(i,f[i])
+                }
             }
 
             let config = {
                 headers:{'Content-Type':'multipart/form-data'}
             };
-
+            if(!this.judge()) return
             this.post("/front/usercore/refund", fd,config)
                 .then(res=>{
+                    console.log(res)
                     if(res.code == 0){
-                        this.message(true,'提交成功','success')
+                        self.message(true,'提交成功','success')
                     }else{
-                        this.message(true,res.message,'error')
+                        self.message(true,res.msg,'error')
                     }
                 })
         }

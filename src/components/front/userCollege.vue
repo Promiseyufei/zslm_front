@@ -822,7 +822,7 @@
                 this.notShow = !this.notShow;
             }
         },
-        props:["data"],
+        props:["data","id"],
         mounted(){
 
             let self = this;

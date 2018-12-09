@@ -50,6 +50,10 @@
                         }
                     })
             },
+            pageinfo(){
+              this.page = 1;
+              this.getActive()
+            },
             getActive() {
                 let self = this;
                 this.fetch('/front/activity/getuseractivity', {
@@ -78,10 +82,10 @@
         },
 
         mounted() {
+            this.id = this.getUserState("userId")
             let divs = document.getElementsByTagName("div")
             divs[1].style.height = 0;
             divs[2].style.height = 0;
-            this.info();
             this.getActive()
         }
     }
