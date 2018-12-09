@@ -511,13 +511,6 @@ export default {
         /*margin-top: 49px;*/
         /*margin-bottom: 44px;*/
     }
-
-    /*筛选块*/
-    .slectedLeft .el-tag{
-        color: #009fa0;
-        background-color: unset;
-        border-color: rgb(210, 210, 210);
-    }
 </style>
 <style scoped>
     

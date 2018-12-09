@@ -72,6 +72,13 @@ export default {
 }
 </script>
 <style>
+    /*筛选块*/
+    .fourtags .el-tag{
+        color: #009fa0;
+        background-color: unset;
+        border-color: rgb(210, 210, 210);
+    }
+
     .publicRowRight .el-checkbox-button.is-checked .el-checkbox-button__inner {
         background-color: #ffb957;
         border-color: #ffb957;

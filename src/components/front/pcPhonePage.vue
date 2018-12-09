@@ -89,7 +89,8 @@ export default {
         background-color: #f4f4f5;
     }
     .apartPage .active{
-        background-color: #009fa0;
+        background-color: #009fa0 !important;
+        border: none !important;
     }
 
     /*加载更多*/
