@@ -24,8 +24,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="c-div div_8LVJIQ shiyong wode c-action-click" v-if="use_show">
-                        <h1 class="c-heading heading_UEZrXJ shiyong wode">去<div>使</div><div>用</div></h1>
+                    <div class="c-div div_8LVJIQ shiyong wode c-action-click" v-if="use_show" @click="userCouponFunc(item.id)">
+                        <h1 class="c-heading heading_UEZrXJ shiyong wode" >去<div>使</div><div>用</div></h1>
                     </div>
                 </div>
 
@@ -623,7 +623,6 @@
         data() {
             return {
                 // isCollapse: true,
-                id:1,
                 userName:'',
                 userProvice:'',
                 userCity:'',
@@ -640,8 +639,25 @@
             };
         },
         methods: {
+
+            userCouponFunc(id){
+                var phone = this.getUserState("user")
+                    let self = this
+                this.post('/front/coupon/usecoupon',{
+                    u_id:self.id,
+                    c_id:id,
+                    phone:phone
+                }).then(res=>{
+                    if(res.code == 0){
+                        this.message(true,"使用成功",'success')
+                        this.$parent.pageInfo(0,0)
+                    }else{
+                        this.message(true,res.msg,'error')
+                    }
+                })
+            }
         },
-        props: ["data","use_show"],
+        props: ["data","use_show","id"],
         mounted(){
         }
     }

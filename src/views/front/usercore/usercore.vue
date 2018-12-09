@@ -429,6 +429,7 @@
             },
         },
         mounted(){
+            this.id = this.getUserState("userId")
             let divs = document.getElementsByTagName("div")
             divs[1].style.height = 0;
             divs[2].style.height = 0;

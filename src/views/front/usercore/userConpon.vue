@@ -45,7 +45,7 @@
             <a class="c-textlink textlink_jH6Kkn userclick" @click="pageInfo(1,2)">已失效 ({{enable}})</a>
         </div>
         <div v-for="(item,index) in this.coupons">
-            <userCoupon :data="item" :use_show="use_show"></userCoupon>
+            <userCoupon :data="item" :use_show="use_show" :id="id"></userCoupon>
         </div>
         <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
 
@@ -767,6 +767,7 @@
             }
         },
         mounted(){
+            this.id = this.getUserState("userId")
             let divs = document.getElementsByTagName("div")
             divs[1].style.height = 0;
             divs[2].style.height = 0;
