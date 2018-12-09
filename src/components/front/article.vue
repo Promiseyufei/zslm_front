@@ -66,7 +66,6 @@
         cursor: pointer;
     }
     .artile-content{
-        width: 300px;
         height: 498px;
         border-radius: 5px;
         background-color: #ffffff;

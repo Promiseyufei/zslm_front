@@ -80,7 +80,6 @@ Object.keys(httpServer).forEach((key) => {
 })
 
 
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

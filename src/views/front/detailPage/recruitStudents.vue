@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="contentS">
         <div class="single-div-con">
             <div class="content-article-single">
                 <div class="single-div-head">
@@ -12,7 +12,7 @@
                 </div>
                 <div class="title-head clearfloat">
                     <div class="float-left">
-                        <a href="javaScript:void(0)">
+                        <a href="javaScript:void(0)" @click="allInformation">
                             全部年分
                         </a>
                         <a href="javaScript:void(0)" v-for="(item,index) in time" class="time-a" @click="choiceTime(index)">
@@ -43,6 +43,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="loadPage">
+                    <pcPhonePage :currentPage="page" :totalData="pagecount" :size="pageSize" @use="usePage" @getPage="getPage"></pcPhonePage>
+                </div>
             </div>
         </div>
         <el-dialog
@@ -51,7 +54,7 @@
                 width="30%"
                 center>
             <div v-if="centerDialogVisible">
-                <div class="title-span" v-for="(item,index) in information[number].ZSJZF">
+                <div class="title-span" v-for="(item,index) in information[number].ZSJZF" @click="showPdf(item)">
                     <span>{{index+1}}</span>&nbsp;&nbsp;&nbsp;
                     <span>{{item.file_alt}}</span>
                 </div>
@@ -60,6 +63,7 @@
     </div>
 </template>
 <script>
+    import PDFJS from 'pdfjs-dist'
     export default{
         data() {
             return {
@@ -69,6 +73,7 @@
                 /*分页*/
                 page:1,
                 pageSize:8,
+                pagecount:1,
                 name:'',
                 year:'',
                 /*招生信息*/
@@ -88,8 +93,12 @@
                 }).then(function (res) {
                     if (res.code == 0){
                         _this.information = res.result[0];
+                        _this.pagecount = Math.ceil(res.result[1]/_this.pageSize);
+                        console.log(res)
+                    }else if(res.code == 1) {
+                        _this.information = [];
+                        _this.pagecount = 0;
                     }
-
                 }).catch(function (error) {
 
                 })
@@ -126,6 +135,28 @@
             showInformation:function () {
                 this.name = this.search;
                 this.getRecruit();
+            },
+            usePage:function (index) {
+                this.page = index;
+                this.getRecruit();
+            },
+            allInformation:function () {
+                $(".time-a").css("color","#6e6e6e");
+                $(".time-a").css("font-weight","normal");
+                this.year = '';
+                this.getRecruit();
+            },
+            getPage: function () {
+                if ((this.page+1)>this.pagecount){
+                    return ;
+
+                }
+                this.page++;
+                this.getRecruit();
+            },
+            showPdf: function (item) {
+                window.open('http://www.lishanlei.cn/storage/major_file/test.pdf');
+//                window.location.href = "http://www.lishanlei.cn/storage/major_file/"+item.file_name;
             }
         },
         mounted:function () {
@@ -141,7 +172,7 @@
         visibility:hidden;
         height:0;
     }
-    .content{
+    .contentS{
         width: 100%;
         background-color: #f5f5f5;
     }
@@ -299,6 +330,11 @@
     .time-a{
 
     }
+    .loadPage{
+        width: 100%;
+        height: 50px;
+        margin-top: 20px;
+    }
     @media (max-width: 991px){
         .single-div-con{
             width: 95%;
@@ -358,8 +394,9 @@
         display: inline-block;
     }
     @media (max-width: 991px){
-        .content .el-dialog{
+        .contentS .el-dialog{
             width: 89% !important;
         }
+
     }
 </style>
