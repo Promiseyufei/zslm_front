@@ -10,7 +10,8 @@
                                         :citys="this.userCity"
                                         :actives="this.userActive"
                                         :ding="this.userNews"
-                                        :coupons="this.userCoupon"></userInfomation>
+                                        :coupons="this.userCoupon"
+                                        :userhead="this.userHead"></userInfomation>
                         <userList></userList>
 
                     </div>
@@ -402,6 +403,7 @@
                 userActive:0,
                 userNews:0,
                 userCoupon:0,
+                userHead:'',
                 page:1,
                 page_size:3,
             };
@@ -421,6 +423,7 @@
                             self.userActive = result.activeCount;
                             self.userNews = result.newCount;
                             self.userCoupon = result.couponCount;
+                            self.userHead = result.head_portrait;
                         }
                     })
             },
