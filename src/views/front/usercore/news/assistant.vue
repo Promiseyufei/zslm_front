@@ -5,9 +5,6 @@
             <h1 class="hostisy" v-if="index == 4" :key="index">--以下为历史消息--</h1>
         </template>
         
-        <!-- <system></system>
-        <system></system>
-        <system></system>        -->
     </div>
 </template>
 

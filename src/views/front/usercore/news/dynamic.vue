@@ -1,11 +1,12 @@
 <template>
     <div>
         <template v-for="dynamic in dynamicList">
-            <template v-if="dynamic.content_id != null" v-for="(item, key) in dynamic.content_id">
-                <majorDynamic v-if="dynamic.content_type == 2" :key="key" :dynamic="item" :newsTime="dynamic.dynamic_create_time"></majorDynamic>
-                <majorInfoDynamic v-else-if="dynamic.content_type == 1" :key="key" :dynamic="item" :newsTime="dynamic.dynamic_create_time"></majorInfoDynamic>
+            <template v-if="dynamic.content_id != null" v-for="item in dynamic.content_id">
+                <majorDynamic v-if="dynamic.content_type == 2"  :dynamic="item" :newsTime="dynamic.dynamic_create_time"></majorDynamic>
+                <majorInfoDynamic v-else-if="dynamic.content_type == 1"  :dynamic="item" :newsTime="dynamic.dynamic_create_time"></majorInfoDynamic>
             </template>
         </template>
+            <el-button style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
     </div>
 </template>
 
@@ -13,9 +14,12 @@
 export default {
     data() {
         return {
+            loading: false,
+            disabled: false,
             type: 3,
             pageCount: 6,
             pageNumber: 0,
+            loadingBtnText: '加载更多',
             dynamicList:[]
         }
     },
@@ -39,11 +43,21 @@ export default {
             }).then((response) => {
                 console.log(response.result);
                 if(response.code == 0) {
-                    _this.dynamicList = response.result;
+                    _this.dynamicList = _this.dynamicList.concat(response.result);
+                    if(response.result.length == 0) {
+                        _this.loadingBtnText = '已经到底了';
+                        this.disabled = true;
+                    }
                 }
-                else this.message()
+                else this.message(true, response.msg, 'info');
             })
             // }
+        },
+        getPage() {
+            this.loading = true;
+            this.pageNumber += 1;
+            this.getDynamic();
+            this.loading = false;
         }
     },
     mounted() {
