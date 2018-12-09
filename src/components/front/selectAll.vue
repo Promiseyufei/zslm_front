@@ -13,7 +13,11 @@
                             <el-checkbox-button v-for="(city,ind) in item.cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
                         </el-checkbox-group>
                     </div>
-                    <p @click="getMore(index)">
+                    <p @click="getMore(index,$event)" v-show="list[index].cities.length>=14" class="pcspan">
+                        <span>查看更多</span>
+                        <i class="el-icon-caret-bottom"></i>
+                    </p>
+                    <p @click="getMore(index,$event)" class="photospan">
                         <span>查看更多</span>
                         <i class="el-icon-caret-bottom"></i>
                     </p>
@@ -32,7 +36,9 @@ export default {
             array:document.getElementsByTagName("nav"),
             arrayh:[],
             checkAll: [false,false,false],
-            isIndeterminate: [true,true,true]
+            isIndeterminate: [true,true,true],
+            span2:"",
+            span:"",
         };
     },
     methods:{
@@ -45,13 +51,16 @@ export default {
             this.$emit('change',this.checkboxGroup);
         },
         //展开或者合并每行
-        getMore:function(index) {
+        getMore:function(index,e) {
             var a = document.getElementsByTagName("nav")[index];
             if(a.offsetHeight==this.arrayh[index]) {
-                a.style.height = "38px";
+                a.style.height = "46px";
             }else {
                 a.style.height = this.arrayh[index]+"px";
             }
+        //    console.log(e.currentTarget.children[0].innerHTML);
+            e.currentTarget.children[0].innerHTML = e.currentTarget.children[0].innerHTML=="查看更多"?"收起":"查看更多";
+            e.currentTarget.children[1].className = e.currentTarget.children[1].className=="el-icon-caret-bottom"?"el-icon-caret-top":"el-icon-caret-bottom";
         },
     },
     props:["list","checkboxGroup1"],
@@ -64,10 +73,11 @@ export default {
                 let divs= self.$refs.publiccheckbox;
                 for(let i =0 ;i<divs.length;i++){
                     self.arrayh[i] = divs[i].offsetHeight;
-                    divs[i].style.height = "38px";
+                    divs[i].style.height = "46px";
                 }
             }, 1000);
         });
+        console.log(self.arrayh);
     }
 }
 </script>
@@ -173,7 +183,6 @@ export default {
     justify-content: flex-start;
     align-items: flex-start;
     margin: 15px 30px 0;
-    padding-bottom: 15px;
     border-bottom: 1px solid #e6e6e6;
 }
 .publicRow>span {
@@ -203,7 +212,9 @@ export default {
 .publicRowRight span {
     flex-shrink:0;
 }
-
+.photospan {
+    display: none !important;
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 1200px) {
@@ -222,6 +233,12 @@ export default {
     }
     .fff span{
         width: 10px !important;
+    }
+    .photospan {
+        display: block !important;
+    }
+    .pcspan {
+        display: none !important;
     }
 }
 </style>

@@ -23,17 +23,7 @@
                     <div class="coachNav">
                         <div class="coachNavleft">
                             <span>选院校&gt;</span>
-                            <div v-for="(item,index) in tags">
-                                <el-tag
-                                    v-for="tag in tags[index]"
-                                    :key="tag.name"
-                                    closable
-                                    :disable-transitions="false"
-                                    @close="handleClose(tag)"
-                                    :type="tag.type">
-                                    {{tag.name}}
-                                </el-tag>
-                            </div>
+                            <tags :tags = "tags" @handleClose="handleClose"></tags>
                         </div>
                         <div class="coachNavright">
                             <span>共有{{count}}所学校</span>
@@ -314,6 +304,7 @@ export default {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding-bottom: 20px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.06);
     margin-bottom: 45px;
