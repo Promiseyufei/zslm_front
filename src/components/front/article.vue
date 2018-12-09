@@ -66,7 +66,6 @@
         cursor: pointer;
     }
     .artile-content{
-        height: 498px;
         border-radius: 5px;
         background-color: #ffffff;
         overflow: hidden;
@@ -76,7 +75,6 @@
     #content{
         margin: auto;
         width: 82%;
-        height: 64px;
     }
     #head-choiced{
         width: 100%;
