@@ -16,17 +16,19 @@
                 </div>
 
                 <div class="article-cont">
-                    <mbaArticle @jumpContent="jump" @jumpArticle="jump" @addAtricle="addArticle" v-if="judge" :mbatitle="mbatitles" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
+                    <mbaArticle @jumpContent="jump" @jumpArticle="jump" @addAtricle="addArticle" v-if="judge" :mbatitle="mbatitlesmba" :headArticle="homepage" :shortArticles="shortpage"></mbaArticle>
                 </div>
             </div>
             <!--右边的的文章-->
             <div class="float-right">
                 <Article @refreshs="refreshBusiness" @jump="jump" v-if="informbusiness.length" title="行业报告" :inforArticle="informbusiness"></Article>
-                <div class="advertisement">
+                <div class="advertisement" @click="jumpStudent">
                     <img src="../../../assets/img/advertisement.png" alt="">
                 </div>
                 <div class="advertisement">
-                    <img src="../../../assets/img/advertisementB.png" alt="">
+                    <a v-if="advertisementB != ''" :href="advertisementB.re_url">
+                        <img :src="advertisementB.img" alt="advertisementB.img_alt">
+                    </a>
                 </div>
                 <Article @refreshs="refresh" @jump="jump" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
             </div>
@@ -103,10 +105,33 @@ export default {
             pageCount:9,
             mbaJudge:true,
             judge:true,
-            mbatitles:"加载更多"
+            mbatitlesmba:1,
+
+
+            advertisementB:''
         }
     },
     methods: {
+        advertisementBS: function () {
+            let _this = this;
+            this.fetch('/front/consult/getBt',{
+                url:"/front/firstMenuRouter/viewInformation"
+            })
+                .then((response) => {
+                    if(response.code == 0){
+                        _this.advertisementB=response.result;
+                    }
+                })
+                .catch(error => function (error) {
+                    console.log(response)
+                });
+        },
+        /*
+        * 找生简章
+        * */
+        jumpStudent: function () {
+            this.$router.push({path: '/front/firstMenuRouter/recruitStudents'});
+        },
         /*
         * 推荐阅读刷新
         * */
@@ -220,7 +245,6 @@ export default {
                                     _this.shortpage.push(response.result.info[i]);
                                 }
                             }
-                            console.log(_this.shortpage)
                         }else {
                             for(let i in response.result.info ){
                                 _this.shortpage.push(response.result.info[i]);
@@ -229,7 +253,6 @@ export default {
 
                         _this.industryTatol = response.result.count;
                     }
-                    console.log(_this.homepage.length+"=========")
                 })
                 .catch(error => function (error) {
                     console.log(response)
@@ -245,7 +268,8 @@ export default {
             _this.mbaJudge =false;
             _this.mbaPage++;
             if (_this.mbaPage*_this.pageCount>=_this.industryTatol){
-                _this.mbatitles = "加载完成";
+                _this.mbatitlesmba = 2;
+                console.log(_this.mbatitlesmba)
                 return false;
             }
             _this.mbatation();
@@ -275,6 +299,7 @@ export default {
         this.readtation();
         this.presentation();
         this.mbatation();
+        this.advertisementBS();
     },
 };
 </script>
@@ -454,7 +479,6 @@ export default {
     @media (max-width: 991px){
         .content{
             width: 95%;
-            margin-bottom: 30px;
         }
         .float-left{
             width: 100%;

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <div v-for="(item,index) in this.majors" :key="index">
             <user-college :data="item"></user-college>
         </div>
@@ -19,6 +19,7 @@ export default {
             id:1,
             page:1,
             page_size:3,
+
         }
     },
     methods: {
@@ -46,6 +47,7 @@ export default {
     },
     mounted() {
         this.getMajor();
+
     }
 }
 </script>

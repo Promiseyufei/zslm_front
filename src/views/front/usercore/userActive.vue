@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <div v-for="(item,index) in this.active">
+        <div v-for="(item,index) in this.active" :key="index">
             <userActivity :data="item" :id="id"></userActivity>
         </div>
         <el-button style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{

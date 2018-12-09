@@ -45,7 +45,7 @@
             <a class="c-textlink textlink_jH6Kkn userclick" @click="pageInfo(1,2)">已失效 ({{enable}})</a>
         </div>
         <div v-for="(item,index) in this.coupons">
-            <userCoupon :data="item" ></userCoupon>
+            <userCoupon :data="item" :use_show="use_show"></userCoupon>
         </div>
         <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
 
@@ -709,7 +709,8 @@
                 isUse:0,
                 noUseCount:0,
                 useCount:0,
-                enable:0
+                enable:0,
+                use_show:true,
             };
         },
         methods: {
@@ -757,6 +758,11 @@
                     else
                         doc[i].setAttribute('class', 'c-textlink textlink_jH6Kkn userclick ')
                 }
+
+                if(isUse == 0)
+                    this.use_show = true
+                else
+                    this.use_show = false
                 this.getCoupon();
             }
         },
