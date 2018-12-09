@@ -3,14 +3,15 @@
         <div class="container c-container container_T7sUlN huodong geren" >
             <div class="c-div div_sS15pC huodong">
                 <div class="c-div div_9HK05B yuan">
-                    <div id="user_img" class="c-inlineblock c-imageblock imageblock_JtO0xa yuan"
+                    <div v-if="userhead != ''" id="user_img" class="c-inlineblock c-imageblock imageblock_JtO0xa yuan test"
                          mode="scaleToFill"
-                         src="http://qty83k.creatby.com/materials/2771/origin/dfcbeb92f5c5e039d67f280a7bd3b330_origin.png"
-                         style="background-size:
-                                          100% 100%; background-position:   0% 0%;
-                                          background-repeat:   no-repeat;
-                                           background-image: url(http://qty83k.creatby.com/materials/2771/origin/dfcbeb92f5c5e039d67f280a7bd3b330_origin.png); ">
-
+                         :src="userhead"
+                         :style="{ backgroundImage: 'url(' + userhead + ')' }">
+                    </div>
+                    <div v-else id="user_img" class="c-inlineblock c-imageblock imageblock_JtO0xa yuan test"
+                         mode="scaleToFill"
+                         :src="userhead"
+                         style="backgroundImage: url(http://qty83k.creatby.com/materials/2771/origin/dfcbeb92f5c5e039d67f280a7bd3b330_origin.png);">
                     </div>
                 </div>
                 <div class="c-div div_SjIrYp biaotizhong">
@@ -360,6 +361,10 @@
         margin-left: auto;
         margin-right: auto;
     }
+    .test {
+        background-size: 100% 100%; background-position:   0% 0%;
+        background-repeat:   no-repeat;
+    }
 
     .div_SjIrYp.biaotizhong {
         margin-bottom: 0px;
@@ -567,7 +572,7 @@
         methods:{
 
         },
-        props:["user_img","user_name","provices","citys","colleges","actives","ding","coupons"],
+        props:["user_img","user_name","provices","citys","colleges","actives","ding","coupons", "userhead"],
         mounted(){
 
         }

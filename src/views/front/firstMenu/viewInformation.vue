@@ -25,9 +25,9 @@
                 <div class="advertisement" @click="jumpStudent">
                     <img src="../../../assets/img/advertisement.png" alt="">
                 </div>
-                <div class="advertisement">
-                    <a v-if="advertisementB != ''" :href="advertisementB.re_url">
-                        <img :src="advertisementB.img" alt="advertisementB.img_alt">
+                <div class="advertisement" v-for="(item,index) in advertisementB">
+                    <a :href="item.re_url">
+                        <img :src="item.img" alt="item.img_alt">
                     </a>
                 </div>
                 <Article @refreshs="refresh" @jump="jump" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>

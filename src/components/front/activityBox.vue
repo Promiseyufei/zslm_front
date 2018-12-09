@@ -6,11 +6,14 @@
     <div class="activityBox" @click="jump">
 	    <div>
 	        <!-- 头部图片及状态 -->
-	        <!-- <div class="activityImg"  :style="{ backgroundImage: 'url(&;quot;' + activityInfo.active_img + '&;quot;)' }"> -->
-            <div class="activityImg">   
+	        <div class="activityImg" v-if="activityInfo.active_img" :style="{ backgroundImage: 'url(' + activityInfo.active_img + ')' }">
 	            <p v-if="activityInfo.start_state==0">{{state}}</p>
 	            <p v-else :class="activityInfo.start_state==1?'activityState1':'activityState2' ">{{state}}</p>
 	        </div>
+	        <div class="activityImg" v-else>
+	            <p v-if="activityInfo.start_state==0">{{state}}</p>
+	            <p v-else :class="activityInfo.start_state==1?'activityState1':'activityState2' ">{{state}}</p>
+	        </div>  
 	        <!-- 中间活动内容：标题、地址、时间 -->
 	        <div class="activityDetail">
 	            <div class="activityTitle">
@@ -30,10 +33,10 @@
 	        </div>
 	        <!-- 底部：承办学校、主题 -->
 	        <div class="activityManager">
-	            <div class="line"></div>
+	            <div  class="line"></div>
 	            <div class="managerSchoolTitle">
 	                <div class="managerSchool">
-	                    <img src="../../assets/img/college1.jpg">
+                        <img key='a' :src="(activityInfo.magor_logo_name != '' || activityInfo.magor_logo_name != 'undefined') ? activityInfo.magor_logo_name : url">
 	                    <span v-if="activityInfo.start_state==2" style="color: #b1b1b1;">{{activityInfo.z_name}}</span>
 	                    <span v-else>{{activityInfo.z_name}}</span>
 	                </div>
@@ -59,6 +62,7 @@
 export default {
     data() {
         return {
+            url:'../../assets/img/college1.jpg',
             item: this.activityInfo,//活动信息
             state: '',//图片上标签——活动状态
             
@@ -84,7 +88,7 @@ export default {
     },
     props: ["activityInfo"],
     mounted(){
-        // console.log(this.activityInfo);
+        console.log(this.activityInfo);
         this.activityState();
     },
     watch:{

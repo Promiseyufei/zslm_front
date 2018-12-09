@@ -347,7 +347,7 @@ export default {
             if(state == 1){
                 self.allActivity = [];
             }
-            this.fetch('http://www.lishanlei.cn/front/activity/getActivity',{
+            this.fetch('/front/activity/getActivity',{
                 keyword:self.keyword,
                 province:self.activitySelected[0],
                 majorType:self.activitySelected[1],
@@ -387,7 +387,7 @@ export default {
         // 在活动列表页————筛选部分————获得活动的专业字典
         getCollegesType:function(){
             var self = this;
-            this.fetch('http://www.lishanlei.cn/front/colleges/getCollegesType',{
+            this.fetch('/front/colleges/getCollegesType',{
                
             }).then(function (res) {
                 // console.log(res);
@@ -406,7 +406,7 @@ export default {
         // 在活动列表页————筛选部分————获得活动的类型字典
         getActivityType:function(){
             var self = this;
-            this.fetch('http://www.lishanlei.cn/front/activity/getActivityType',{
+            this.fetch('/front/activity/getActivityType',{
                
             }).then(function (res) {
                 if(res.code == 0){

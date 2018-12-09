@@ -118,7 +118,7 @@ export default{
         * 推荐阅读跳转
         * */
         jump: function (id) {
-            this.$router.push('/front/firstMenuRouter/singleInformation/'+id.id);
+            this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/'+id.id);
         },
         /*
         * 展示广告
