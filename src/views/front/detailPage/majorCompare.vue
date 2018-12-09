@@ -79,7 +79,7 @@
                         </div>
                         <div class="clearfloat">
                             <div v-for="(item,index) in information" class="collage-font collage-position">
-                                <div>333</div>
+                                <div class="languageMajor"><img src="" alt=""></div>
                                 (课程均为{{ item.language }})
                             </div>
                         </div>
@@ -273,6 +273,14 @@
 <style scoped>
     .footer-con-collage{
         padding-bottom: 20px;
+    }
+    .languageMajor{
+        width: 34px;
+        height: 34px;
+    }
+    .languageMajor > img{
+        width: 100%;
+        height: 100%;
     }
     .informationPhone{
         font-family: MicrosoftYaHei;

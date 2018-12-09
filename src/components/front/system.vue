@@ -1,6 +1,6 @@
 <template>
 
-    <div class="c-div div_v60iAm guanzhu huodong" style="border-bottom:1px dashed #C0C0C0;" @click="test">
+    <div class="c-div div_v60iAm guanzhu huodong" style="border-bottom:1px dashed #C0C0C0;" @click="updateStatus">
         <div class="row c-row row_E5qvBw">
             <span v-if="news.status == 0" style="width:5px;height:5px;background-color:#FF9900;border-radius:5px;margin-top:15px;margin-right:5px;"></span>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_KR9WLK">
@@ -18,7 +18,7 @@
                 </p>
                 <div class="c-div div_QcKVUN kanzixun">
                     <div class="c-div div_IIlwIU kanzixun">
-                        <h1 class="c-heading heading_3hU4sb grey">链接：{{ news.url }}</h1>
+                        <h1 class="c-heading heading_3hU4sb grey">链接：<a :href="news.url">{{ news.url }}</a></h1>
                     </div>
                 </div>
             </div>
@@ -37,10 +37,26 @@ export default {
     methods: {
         test() {
             
+        },
+        updateStatus() {
+            let phone = this.getUserState('user');
+            let newsId = this.news.news_id;
+            if((typeof phone != 'undefined' || phone != '') && newsId != '') {
+                this.post('/front/usercore/changeNewsStatus', {
+                    newsId: newsId,
+                    userPhone: phone
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.news.status = 1;
+                        this.message(true, '标记已读', 'info');
+                    }
+                })
+            }
+            
         }
     },
     mounted() {
-
+        console.log(this.news)
     }
 }
 </script>

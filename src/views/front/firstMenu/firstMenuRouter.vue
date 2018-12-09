@@ -126,7 +126,7 @@
 	    			//未登录
 	    			this.$router.push('/front/Login/loginRoute');
 	    		} else{
-	    			this.$router.push('/front/usercore/myNews');
+	    			this.$router.push('/front/firstMenuRouter/usercore/myNews/dynamic');
 	    		}
 	    	},
 	    	//跳到我的关注
@@ -135,12 +135,12 @@
 	    			//未登录
 	    			this.$router.push('/front/Login/loginRoute');
 	    		} else{
-	    			this.$router.push('/front/usercore/myFollow');
+	    			this.$router.push('/front/firstMenuRouter/usercore/myFollow');
 	    		}
 	    	},
 	    	//跳到搜索
 	    	goSearch:function(){
-	    		this.$router.push('/front/search/searchMajor');
+	    		this.$router.push('/front/firstMenuRouter/search/major/' + this.$store.state.search['keyword']);
 	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
@@ -263,14 +263,12 @@
 	    mounted(){
 	    	this.rushRouter();
 	    	//手机端改变样式
-	     	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
-			if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
-				this.firstMenu = false;
-				this.logoInto = false;
-				this.mobileIcon = true;
-				// this.footer = false;
-			}
-
+	  //    	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
+			// if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
+			// 	this.firstMenu = false;
+			// 	this.logoInto = false;
+			// 	this.mobileIcon = true;
+			// }
 		},
 	};
 </script>

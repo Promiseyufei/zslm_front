@@ -25,7 +25,7 @@
                         <h1 class="c-heading heading_m2C6Qu mingcheng">{{ userInfo.create_time }}</h1>
                         <h1 class="c-heading heading_m2C6Qu bianji"></h1>
                     </div>
-                    <a class="btn c-button button_LsM2yn123 quguan quxiao mima" type="button">修改密码</a>
+                    <a class="btn c-button button_LsM2yn123 quguan quxiao mima" type="button" @click="$router.push('/front/Login/resetPassword')">修改密码</a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_wODSnC">
                     <div class="c-div div_c1UVgP" style="">

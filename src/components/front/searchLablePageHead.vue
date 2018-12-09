@@ -25,6 +25,13 @@ export default {
         },
         testClick(item, index) {
         //    this.$router.push(item.url);
+            $(".c-textlink").css("color","rgb(49, 49, 49)");
+            $(".c-textlink").css("border-bottom-width","0");
+//            $($(".c-textlink")[0]).css("color","rgb(0, 159, 160)");
+//            $($(".c-textlink")[0]).css("border-bottom","3px  rgb(0, 159, 160) solid");
+//            $($(".c-textlink")[0]).css("font-weight","bold");
+            $($(".c-textlink")[index]).css("color","rgb(0, 159, 160)");
+            $($(".c-textlink")[index]).css("border-bottom","2px  rgb(0, 159, 160) solid");
             if(this.forCancelStyle())
                 this.Names[index].selected_prop_value = index;
                 
@@ -107,7 +114,6 @@ export default {
     -webkit-transition: All 0.3s ease;
 }
 .search_label_page_head .textlink_jH6Kkn:hover {
-    font-weight: bold;
     border-style: none none solid;
     border-bottom-color: rgb(0, 159, 160);
     border-bottom-width: 2px;

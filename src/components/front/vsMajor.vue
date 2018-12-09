@@ -2,8 +2,7 @@
     <div class="body">
         <el-popover
                 placement="left"
-                width="160"
-                v-model="visible2">
+                width="160">
 
             <div style="text-align: right; margin: 0">
                 <div style="text-align: center;font-size: 18px;padding-bottom:10px;border-bottom: solid 2px #ccc;color: rgb(42, 173, 115)" >
@@ -18,10 +17,10 @@
                            style="padding: 12px;width: 100%;margin: 10px auto;background-color:rgb(42, 173, 115) !important;
                            color: white !important;"
                 @click="vs">
-                    院校对比
+                    开始对比
                 </el-button>
             </div>
-            <el-button slot="reference" class="el-icon-back" style="padding: 12px"></el-button>
+            <!-- <el-button slot="reference" class="el-icon-back" style="padding: 12px"></el-button> -->
         </el-popover>
     </div>
 </template>
@@ -39,7 +38,7 @@
     export default {
         data() {
             return {
-                visible2: false,
+                // visible2:'' ,
                 colleges:[
 
                 ],
@@ -51,6 +50,7 @@
                 this.colleges =   JSON.parse(this.getMajors())
             },
             addMajor(name,id){
+
                var obj = {college:name,id:id}
                var obj_arr =  JSON.parse(this.getMajors())
 
