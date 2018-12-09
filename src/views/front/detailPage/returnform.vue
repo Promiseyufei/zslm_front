@@ -53,53 +53,51 @@
                             <span>退款信息填写</span>
                             <el-form :label-position="location" label-width="180px" :model="formLabelAlign">
                                 <el-form-item label="课程全称：">
-                                    <el-input v-model="formLabelAlign.name" style="width:340px"></el-input>
+                                    <el-input v-model="formLabelAlign.c_name" style="width:340px"></el-input>
                                 </el-form-item>
                                 <el-form-item label="退款金额：">
                                     <el-input v-model="formLabelAlign.money" style="width:200px"></el-input>
                                 </el-form-item>
                                 <el-form-item label="是否使用优惠卷：">
-                                    <el-radio-group v-model="formLabelAlign.coach">
-                                        <el-radio label="是"></el-radio>
-                                        <el-radio label="否"></el-radio>
+                                    <el-radio-group v-model="formLabelAlign.is_coupon">
+                                        <el-radio label="是" value="0"></el-radio>
+                                        <el-radio label="否" value="1"></el-radio>
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="优惠卷序列号：">
-                                    <el-input v-model="formLabelAlign.order" style="width:340px"></el-input>
+                                    <el-input v-model="formLabelAlign.cou_id" style="width:340px"></el-input>
                                 </el-form-item>
                                 <el-form-item label="报名日期：">
                                     <el-date-picker
-                                        v-model="formLabelAlign.date"
+                                        v-model="formLabelAlign.time"
                                         type="date"
                                         placeholder="选择日期">
                                     </el-date-picker>
                                 </el-form-item>
                                 <el-form-item label="联系电话：">
-                                    <el-input v-model="formLabelAlign.tel" style="width:340px"></el-input>
+                                    <el-input v-model="formLabelAlign.phone" style="width:340px"></el-input>
                                 </el-form-item>
                                 <el-form-item label="退款选择途径：">
-                                    <el-radio-group v-model="formLabelAlign.coach">
-                                        <el-radio label="支付宝"></el-radio>
-                                        <el-radio label="银行卡转账"></el-radio>
+                                    <el-radio-group v-model="formLabelAlign.refund_type">
+                                        <el-radio label="支付宝" value="0"></el-radio>
+                                        <el-radio label="银行卡转账" value="1"></el-radio>
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item label="支付宝账号：">
-                                    <el-input v-model="formLabelAlign.name" style="width:340px"></el-input>
+                                    <el-input v-model="formLabelAlign.alipay_account" style="width:340px"></el-input>
                                 </el-form-item>
                                 <el-form-item label="姓名：">
                                     <el-input v-model="formLabelAlign.name" style="width:200px"></el-input>
                                 </el-form-item>
                                 <el-form-item label="银行卡号：">
-                                    <el-input v-model="formLabelAlign.name" style="width:340px"></el-input>
+                                    <el-input v-model="formLabelAlign.card" style="width:340px"></el-input>
                                 </el-form-item>
                                 <el-form-item label="开户行：">
-                                    <el-input v-model="formLabelAlign.name" style="width:200px"></el-input>
+                                    <el-input v-model="formLabelAlign.blank_addr" style="width:200px"></el-input>
                                 </el-form-item>
-                                <el-form-item label="姓名：">
-                                    <el-input v-model="formLabelAlign.name" style="width:200px"></el-input>
-                                </el-form-item>
+
                                 <el-form-item label="申诉说明：">
-                                    <el-input v-model="formLabelAlign.name" style="width:510px"></el-input>
+                                    <el-input v-model="formLabelAlign.message" style="width:510px"></el-input>
                                 </el-form-item>
                                 <el-form-item label="相关说明：">
                                     <el-upload
@@ -110,13 +108,13 @@
                                     :on-preview="handlePreview"
                                     :on-remove="handleRemove"
                                     :on-progress="test"
-                                    :file-list="formLabelAlign.fileList"
+                                    :file-list="formLabelAlign.img"
                                     :auto-upload="false">
                                     <el-button slot="trigger" size="small" type="primary">上传图片</el-button>
                                     </el-upload>
                                 </el-form-item>
                                 <el-form-item label="">
-                                    <el-button type="primary" class="sumitbutton">提交</el-button>
+                                    <el-button type="primary" class="sumitbutton" @click="sublimt">提交</el-button>
                                 </el-form-item>
                             </el-form>
                         </div>
@@ -145,19 +143,6 @@ export default {
                 coach_name:""
             },
             formLabelAlign: {
-                name: '',
-                money: '',
-                coach: '',
-                fileList: [
-                    {
-                        name: 'food.jpeg',
-                        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                    }, 
-                    {
-                        name: 'food2.jpeg', 
-                        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                    }
-                ]
             }
         }
     },
@@ -167,6 +152,7 @@ export default {
             this.fifnish = this.select;
             this.selectfif = this.coach[this.fifnish];
             console.log(this.selectfif);
+            this.formLabelAlign.f_id = this.selectfif.id
             this.dialogVisible = false;
         },
         
@@ -207,10 +193,16 @@ export default {
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
+
         },
         handlePreview(file) {
             console.log(file);
-            console.log(1234);
+        },
+        sublimt(){
+            this.formLabelAlign.time = Date.parse( this.formLabelAlign.time)/1000
+            let self = this
+            console.log(this.formLabelAlign)
+            // this.post("/front/usercore/refund",  self.formLabelAlign)
         }
     },
     mounted(){
