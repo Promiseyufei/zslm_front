@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <div v-for="(item,index) in this.majors" :key="index">
             <user-college :data="item"></user-college>
         </div>

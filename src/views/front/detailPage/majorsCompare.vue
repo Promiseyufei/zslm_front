@@ -345,6 +345,7 @@
         },
 
         mounted(){
+            this.stringpage = this.$route.params.id
             this.getInformation();
             // this.imgurl = longUrl
         }

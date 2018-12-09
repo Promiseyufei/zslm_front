@@ -165,6 +165,7 @@
 						this.saveUserState('userName', response.result.user_name);
 						this.saveUserState('userHead', response.result.head_portrait);
 						this.message(true, response.msg, 'success');
+						this.$router.push('/front/index');
 					}
 					else if(response.code == 1) this.message(true, response.msg, 'info');
 					else if(response.code == 3) {

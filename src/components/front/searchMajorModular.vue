@@ -14,11 +14,16 @@
                             <label class="c-label label_OVUgJH">{{ majorInfo.province.city }}</label>
                         </div>
                         <div class="div_sfz9WV">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_confirm_id == 'EQUIS'" src="../../assets/img/equsSmall.png">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_confirm_id == 'AACSB'" src="../../assets/img/aacsbSmall.png">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '原211'" src="../../assets/img/211.png">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '原985'" src="../../assets/img/985.png">
-                            <img class="c-image image_2pnGPP" v-if="majorInfo.major_follow_id == '双一流'" src="../../assets/img/shuangyiliu.png">
+                            <template v-for="(item, index) in majorInfo.major_confirm_id">
+                                <img class="c-image image_2pnGPP" :key="index+'equis'" v-if="item == 'EQUIS'" src="../../assets/img/equsSmall.png">
+                                <img class="c-image image_2pnGPP" :key="index+'aacsb'" v-if="item == 'AACSB'" src="../../assets/img/aacsbSmall.png">
+                            </template>
+                            <template v-for="(item, index) in majorInfo.major_follow_id">
+                                <img class="c-image image_2pnGPP" :key="index + '211'" v-if="item == '原211'" src="../../assets/img/211.png">
+                                <img class="c-image image_2pnGPP" :key="index + '985'" v-if="item == '原985'" src="../../assets/img/985.png">
+                                <img class="c-image image_2pnGPP" :key="index + '111'" v-if="item == '双一流'" src="../../assets/img/shuangyiliu.png">
+
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -40,6 +45,10 @@ export default {
         addContrast() {
             
         }
+    },
+    mounted() {
+        if(this.majorInfo.major_confirm_id != '') this.majorInfo.major_confirm_id = this.majorInfo.major_confirm_id.split(',');
+        if(this.majorInfo.major_follow_id != '') this.majorInfo.major_follow_id = this.majorInfo.major_follow_id.split(',');
     }
 }
 </script>
