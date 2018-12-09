@@ -2,7 +2,7 @@
     <div>
         <div class="content-whole">
             <div class="content-whole-article">
-                <div class="content-head clearfloat" v-for="(item, index) in mbaHead">
+                <div class="content-head clearfloat" v-for="(item, index) in headArticle">
                     <div class="head-left">
                             <img :src="item.z_image" alt="未加载">
                     </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div class="content-son" v-for="(item,index) in mbaShort">
+                <div class="content-son" v-for="(item,index) in shortArticles">
                     <div class="article-con-posiion clearfloat" @click="jumpArticle(item.id)">
                         <div class="son-left">
                             <img :src="item.z_image" alt="未加载">
@@ -53,8 +53,11 @@
                     </div>
                 </div>
 
-                <div class="button-div">
-                    <a @click="addAtricle" class="load-button">{{ mbaTitle }}</a>
+                <div class="button-div" v-if="mbatitle == 1">
+                    <a @click="addAtricle" class="load-button">加载更多</a>
+                </div>
+                <div class="button-div" v-else>
+                    <a @click="addAtricle" id="complete-page">--------------已加载完成--------------</a>
                 </div>
             </div>
         </div>
@@ -71,6 +74,9 @@
         },
         methods:{
             addAtricle:function () {
+                this.mbaHead=this.headArticle;
+                this.mbaShort=this.shortArticles;
+                this.mbaTitle=this.mbatitle;
                 this.$emit('addAtricle');
             },
             jump: function (id) {
@@ -88,6 +94,13 @@
 </script>
 
 <style scoped>
+    #complete-page{
+        text-align: center;
+        color: #c0c4cc;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
     a{
         cursor: pointer;
         cursor: hand;
