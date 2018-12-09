@@ -4,7 +4,7 @@
         <!-- 活动列表模块 -->
         <div class="activityList">
             <!-- 搜索框 -->
-            <div class="search">
+            <div class="searchs">
                 <el-input
                     placeholder=" 复旦大学    北京大学"
                     suffix-icon="el-icon-search"
@@ -493,14 +493,14 @@ export default {
 </script>
 <style>
     /*搜索框*/
-    .search .el-input__inner {
+    .searchs .el-input__inner {
         border-radius: 60px;
         height: 32px;
     }
-    .search .el-input__icon{
+    .searchs .el-input__icon{
         line-height: 0;
     }
-    .search>div{
+    .searchs>div{
         width: 407px;
         /*margin: 20px 0;*/
         margin: 49px 0 44px 0;
@@ -510,7 +510,7 @@ export default {
 </style>
 <style scoped>
     
-    .search, .activitySelt .selectedTag, .selectedTag .selected, .activityListBox, .activityListBox>div{
+    .searchs, .activitySelt .selectedTag, .selectedTag .selected, .activityListBox, .activityListBox>div{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -550,10 +550,10 @@ export default {
     }
 
     @media only screen and (max-width: 767px) {
-        .search .pcSeach{
+        .searchs .pcSeach{
             display: none;
         }
-        .search>div{
+        .searchs>div{
             width: 95%;
             margin: 20px 0;
         }
@@ -562,14 +562,14 @@ export default {
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
         /*搜索-判断手机还是电脑的请求*/
-        .search .pcSeach{
+        .searchs .pcSeach{
             display: block;
         }
-        .search .phoneSeach{
+        .searchs .phoneSeach{
             display: none;
         }
         /*搜索框样式*/
-        .search{
+        .searchs{
             margin-left: 10px;
             justify-content: left;
         }
@@ -584,11 +584,11 @@ export default {
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1200px) {
-        .search{
+        .searchs{
             margin: 0 auto;
         }
         /*整体布局：搜索块、筛选结果块、活动列表块*/
-        .search, .selectedTag .selected, .activityListBox>div{
+        .searchs, .selectedTag .selected, .activityListBox>div{
             width: 1300px;
         }
     }   
