@@ -24,7 +24,7 @@ let admin_router = {
                 },
                 {
                     path: 'UniversMajorList',
-                    name: '选择院校专业',
+                    name: '选择院校专业2',
                     component: resolve =>void(require(['@/views/admin/UniversMajorList'], resolve))
                 },
                 {
@@ -87,7 +87,7 @@ let admin_router = {
                 },
                 {
                     path: 'active/selectUnivers/:actid',
-                    name: '选择院校专业',
+                    name: '选择院校专业3',
                     component: resolve =>void(require(['@/views/admin/message/activityInformation/selectMajor'], resolve))
                 },
                 {

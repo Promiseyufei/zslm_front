@@ -95,13 +95,14 @@
 	    },
 	    data() {
 	        return {
-	        	loginOr:require('../../../assets/img/nologin.png'),
+	        	loginOr:require('../../../assets/img/noLogin.png'),
 	        	userName:'未登录',
 	        	dialogVisible: false,
 	        	activeIndex: '1',
 	        	firstMenu:true,
 	        	logoInto:true,
 	        	mobileIcon:false,
+	        	userId:0,
 	        }
 	    },
 	    methods: {
@@ -121,20 +122,25 @@
 	    	},
 	    	//跳到我的消息
 	    	goMessage:function(){
-	    		this.$router.push('/front/usercore/myNews');
+	    		if (!this.getUserState('user')){
+	    			//未登录
+	    			this.$router.push('/front/Login/loginRoute');
+	    		} else{
+	    			this.$router.push('/front/usercore/myNews');
+	    		}
 	    	},
 	    	//跳到我的关注
 	    	goFollow:function(){
-	    		let a = 1;
-	    		this.getUserState('user');
-	    		if (a==1){
+	    		if (!this.getUserState('user')){
 	    			//未登录
 	    			this.$router.push('/front/Login/loginRoute');
+	    		} else{
+	    			this.$router.push('/front/usercore/myFollow');
 	    		}
 	    	},
 	    	//跳到搜索
 	    	goSearch:function(){
-	    		this.$router.push('/front/search/search');
+	    		this.$router.push('/front/search/searchMajor');
 	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
@@ -150,7 +156,7 @@
 	    		}
 		    },
 		    major:function(){
-		    	this.$router.push('/front/firstMenuRouter/selectCollege');
+		    	// this.$router.push('/front/firstMenuRouter/selectCollege');
 		    },
 		    //改变路由菜单高亮不变
 		    rushRouter:function(){
@@ -176,33 +182,17 @@
 		    	this.getUserState('userHead');
 		    	//用户名称
 		    	this.getUserState('userName');
-		    	// let aa = 2;
-		    	// if (aa==login1) {
-		    	// 	let  = document.getElementById('login');
-			    // 	if (login.style.display == "none") 
-			    // 		login.style.display = "block";
-			    // 	else
-			    // 		login.style.display = "none";
-		    	// } else{
-		    	// 	let noLogin = document.getElementById('noLogin');
-			    // 	if (noLogin.style.display == "none") 
-			    // 		noLogin.style.display = "block";
-			    // 	else
-			    // 		noLogin.style.display = "none";
-		    	// }
-		    	// if (this.getUserState('user')){
-		    		
-		    	// } else{
-
-		    	// }
+		    	if (this.getUserState('user')) {
+		    		this.userName = this.getUserState('userName');
+		    		this.loginOr = this.getUserState('userHead');
+		    		this.userId = this.getUserState('userId');
+		    	}
 		    },
 		    //跳到我的关注or登录
 		    myCare:function(){
-		    	//模拟登陆是否成功
-		    	// let a=1
 		    	this.getUserState('user');
 		    	if (!this.getUserState('user')) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	} else{
 		    		this.$router.push('/front/usercore/myFollow');
 		    	}
@@ -211,7 +201,7 @@
 		    myActivity:function(){
 		    	this.getUserState('user');
 		    	if (!this.getUserState) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	} else{
 		    		this.$router.push('/front/usercore/myFollow');
 		    	}
@@ -220,7 +210,7 @@
 		    myCoupon:function(){
 		    	this.getUserState('user');
 		    	if (!this.getUserState) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    		this.$router.push('/front/Login/loginRout/shortMessagee');
 		    	} else{
 		    		this.$router.push('/front/usercore/myFollow');
 		    	}
@@ -229,7 +219,7 @@
 		    myMessage:function(){
 		    	this.getUserState('user');
 		    	if (!this.getUserState) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	} else{
 		    		this.$router.push('/front/usercore/myNews');
 		    	}
@@ -238,7 +228,7 @@
 		    myAccount:function(){
 		    	this.getUserState('user');
 		    	if (!this.getUserState) {
-		    		this.$router.push('/front/Login/loginRoute');
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	} else{
 		    		this.$router.push('/front/usercore/myAccount');
 		    	}
