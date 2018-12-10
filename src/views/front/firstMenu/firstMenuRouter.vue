@@ -262,7 +262,7 @@
 	    },
 	    mounted(){
 	    	this.rushRouter();
-	    	手机端改变样式
+	    	//手机端改变样式
 	     	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
 			if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
 				this.firstMenu = false;
