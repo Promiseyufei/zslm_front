@@ -25,9 +25,9 @@
                 <div class="advertisement" @click="jumpStudent">
                     <img src="../../../assets/img/advertisement.png" alt="">
                 </div>
-                <div class="advertisement">
-                    <a v-if="advertisementB != ''" :href="advertisementB.re_url">
-                        <img :src="advertisementB.img" alt="advertisementB.img_alt">
+                <div class="advertisement" v-for="(item,index) in advertisementB">
+                    <a :href="item.re_url">
+                        <img :src="item.img" alt="item.img_alt">
                     </a>
                 </div>
                 <Article @refreshs="refresh" @jump="jump" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
@@ -148,7 +148,7 @@ export default {
         * */
         refreshBusiness: function (data) {
             this.businessPage++;
-            if (this.businessPage*4>=this.industryTatol){
+            if (this.businessPage*4>=this.businessTatol){
                 this.businessPage = 0;
             }
             this.presentation();
@@ -182,6 +182,7 @@ export default {
                 pageNumber:_this.businessPage
             })
                 .then((response) => {
+                console.log(response)
                     if(response.code == 0){
                         _this.businessTatol = response.result.count;
                         _this.informbusiness=response.result.info;

@@ -184,7 +184,7 @@
 		    	this.getUserState('userName');
 		    	if (this.getUserState('user')) {
 		    		this.userName = this.getUserState('userName');
-		    		this.loginOr = this.getUserState('userHead');
+		    		this.loginOr = require(this.getUserState('userHead'));
 		    		this.userId = this.getUserState('userId');
 		    	}
 		    },
@@ -268,13 +268,14 @@
 				this.firstMenu = false;
 				this.logoInto = false;
 				this.mobileIcon = true;
-				// this.footer = false;
 			}
-
 		},
 	};
 </script>
 <style>
+	.el-menu.el-menu--horizontal {
+		/*border-bottom: 0;*/
+	}
 	.mobileIcon .el-dialog__wrapper {
 		overflow:hidden; 
 	}
@@ -327,8 +328,8 @@
 	.firstMenu .el-menu--horizontal {
 		border-bottom: 0;
 		background-color: #fff;
+		border-bottom: 0;
 	}
-
 
 </style>
 
@@ -714,6 +715,9 @@
 		}
 		.logoPicture {
 			width: 100%;
+		}
+		.logoPicture img {
+			/*width:166px;*/
 		}
 	}
 </style>

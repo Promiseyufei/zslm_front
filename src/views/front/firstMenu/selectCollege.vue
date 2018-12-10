@@ -33,7 +33,7 @@
                             <i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="moneyBottom"></i>
                         </div>
                     </div>
-                    <div class="countMajor">共1242所院校</div>
+                    <div class="countMajor">共{{ this.count }}所院校</div>
                 </div>
             </div>
             <div class="buttonCollege"></div>
@@ -50,7 +50,6 @@
         </div> 
         <!-- 分页 -->
         <div class="page">
-           <!--  <activityPage :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum"></activityPage> -->
             <pcPhonePage :loading="loading" :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum" @getPage="getPage"></pcPhonePage>
         </div>
         <!-- 分页 -->
@@ -281,8 +280,8 @@ export default {
             z_name:'',
             professional_direction:'',
             major_order:0,
-            min:0,
-            max:1000000,
+            min:1,
+            max:0,
             money_order:0,
             score_type:'',
             enrollment_mode:'',
@@ -317,11 +316,12 @@ export default {
             this.page++;
             this.getmajorInform(0);
         },
-        // 筛选块-从组件中获取选中结果
+        // 点击筛选块-从组件中获取选中结果
         change(data){
             this.selectData = data;
             this.getselt();
-            console.log(this.selectData)
+             
+            // console.log(this.selectData)
             // this.getmajorInform();
         },
         handleClose(tag) {
@@ -338,20 +338,35 @@ export default {
         },
         //转换选中参数的格式——数组，以便传参
         getselt:function(){
-            // let list = [];
-            // for (var i = 0; i < this.selectData.length; i++) {
-            //     var little = [];
-            //     for (var j = 0; j < this.selectData[i].length; j++) {
-            //         if(i == 1)
-            //             little.push(this.selectData[i][j].name);
-            //         else
-            //             little.push(this.selectData[i][j].id);
-            //     }
-            //     list.push(little);
-            // }
-            // console.log(list[0]);
-            // this.activitySelected = list;
-            this.getmajorInform();
+            let list = [];
+            for (var i = 0; i < this.selectData.length; i++) {
+                var little = [];
+                for (var j = 0; j < this.selectData[i].length; j++) {
+                    if(i == 2||i == 4){
+                        little.push(this.selectData[i][j].name);
+                        little.push(this.selectData[i][j].name);
+
+                    } else {
+                        little.push(this.selectData[i][j].id);
+                    }
+                }
+                list.push(little);
+            }
+            this.z_type = list[0].join(",");//专业类型——字符串
+            this.professional_direction = list[1].join(",");//专业方向——字符串
+            this.provice = list[2].join(",");//院校地点——字符串
+            this.enrollment_mode = list[3].join(",");//统招模式——字符串
+            this.max = list[4];//学习费用——int
+            this.score_type = list[5].join(",");//分数线——字符串
+            let MIN = list[4][0];
+            let MAX;
+                for (var j = 0; j < list[4].length; j++) {
+                    if (list[4][j] < MIN)
+                        MIN = list[4][j];
+                    else 
+                        MAX = list[4][j];
+                }
+            // console.log(MAX)
         },
         //获取按钮内容
         getmajorType:function(){
@@ -382,7 +397,6 @@ export default {
         //搜索框失去焦点——传搜索内容
         search:function() {
             this.getmajorInform();
-            console.log(123)
         },
         //获得院校信息
         getmajorInform:function(){
@@ -405,7 +419,6 @@ export default {
             }).then(function (response) {
                         let res = response.result[0];
                         if (response.code==0) {
-                            // console.log(res)
                             that.count =response.result[1];
                             that.majorInform=res;
                             that.majorInform.forEach((item,index) => {
@@ -417,7 +430,6 @@ export default {
                             });
                             that.major_confirm_id = res[0].major_confirm_id;
                             that.major_follow_id = res[0].major_follow_id;
-                            console.log(res[2].id)
                         }
 
             }).catch(function (error) {
@@ -448,7 +460,7 @@ export default {
             let hotTop = document.getElementById('hotTop');
             let hotBottom = document.getElementById('hotBottom');
             if (hotTop.style.color=='rgb(191, 191, 191)'&&hotBottom.style.color=='rgb(191, 191, 191)'){
-                console.log(paixu.style.color)
+                // console.log(paixu.style.color)
                 //首次点击热度，升序，1为升序
                 this.major_order = 1;
                 this.getmajorInform();
@@ -499,7 +511,7 @@ export default {
     mounted(){
         this.getmajorInform();
         this.getmajorType();
-        console.log(this.selectData)
+        // console.log(this.selectData)
     },
 };
 </script>

@@ -1,5 +1,7 @@
 <template>
     <div class="allInforma" @change="getViewIcon">
+        
+        <!-- <vsmajor v-show="compare" slot="reference"></vsmajor> -->
         <div class="c-div div_BMsaOd guanzhu" style="margin-bottom:30px;align-items:flex-end;">
             <div class="c-div div_ARD2As">
                 <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url(http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png); ">
@@ -10,16 +12,55 @@
                         <label class="c-label label_OVUgJH">{{collegeInfo.province}}</label>
                         <label class="c-label label_OVUgJH">{{collegeInfo.city}}</label>
                     </div>
-                    <div class="c-div cs-repeatable div_sfz9WV">
-                        <img class="c-image image_2pnGPP" v-show="equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                        <img class="c-image image_2pnGPP" v-show="aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                        <img class="c-image image_2pnGPP" v-show="two" src="http://qty83k.creatby.com/materials/2771/origin/4a927421d269514312c8e280be7c5f32_origin.png">
-                        <img class="c-image image_2pnGPP" v-show="nine" src="http://qty83k.creatby.com/materials/2771/origin/70280919fb394c9c97e8f8c20eee6a31_origin.png">
-                        <img class="c-image image_2pnGPP" v-show="both29" src="http://qty83k.creatby.com/materials/2771/origin/e8ecd15f5fdb4cd47b820a13ded104ff_origin.png">
+                    <div class="c-div cs-repeatable div_sfz9WV" style="display: flex;">
+                        <div v-for="(item,index) in datas.major_confirm_id" class="majorType">
+<<<<<<< HEAD
+                            <img class="c-image image_2pnGPP" v-if="item==equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="item==aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="item == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+                            <img class="c-image image_2pnGPP" v-if="item == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
+=======
+                             <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/equs.png">
+                            <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/aacsb.jpg">
+                            <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
+                            <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/camea.png">
+>>>>>>> e63b91ca244731190f9e0bee21289b0affbba02e
+                            
+                        </div>
+                        <div v-for="(item,index) in datas.major_follow_id" class="majorType">
+                            <img class="c-image image_2pnGPP" v-if="item==two" src="../../assets/img/211.png">
+                            <img class="c-image image_2pnGPP" v-if="item==nine" src="../../assets/img/985.png">
+                            <img class="c-image image_2pnGPP" v-if="item==both29" src="../../assets/img/all985211.png">
+                        </div>
+                       
                     </div>
                 </div>
             </div>
-            <div class="joinContrast"><el-button>+ 加入对比</el-button></div>
+            <div class="joinContrast">
+                    <el-popover
+                    placement="right"
+                    width="160"
+                    v-model="visible2"
+                    slot="reference">
+                        <div style="text-align: right; margin: 0">
+                            <div style="text-align: center;font-size: 18px;padding-bottom:10px;border-bottom: solid 2px #ccc;color: rgb(42, 173, 115)" >
+                                院校对比
+                                <i @click="removeAll()" style="cursor: pointer;float: right;font-size: 13px;line-height: 27.4px;color: #c6c5c5">清空</i>
+                            </div>
+                            <div v-for="(item,index) in colleges" style="text-align: left;padding: 10px;border-bottom: solid 1px #c6c5c5">
+                                {{item.college}}
+                                <i  class="el-icon-close" @click="remove(index)" style="cursor: pointer;float: right"></i>
+                            </div>
+                            <el-button slot="reference"
+                                       style="padding: 12px;width: 100%;margin: 10px auto;background-color:rgb(42, 173, 115) !important;
+                                       color: white !important;"
+                            @click="vs">
+                                开始对比
+                            </el-button>
+                        </div>
+                        <el-button slot="reference" @click="compareMajor">+ 加入对比</el-button>
+                    </el-popover>
+            </div>
         </div>
         <div class="forThree">
             <div class="specificInform" v-for="(t,index) in collegeInfo.showProduct" :key="index">
@@ -82,6 +123,7 @@
             <div class="moreInform" @click="viewMore">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
         </div>
     </div>
+
 </template>
 
 
@@ -90,25 +132,95 @@
     export default {
         data() {
             return {
+            compare:false,
             /*按钮参数*/
             viewMoreIcon:true,
             productShow:false,
             viewMoreButt:'查看更多项目',
             majorInform:[],
             nature:null,
-            equis:true,
-            aascb:false,
-            //211
-            two:false,
-            //985
-            nine:false,
-            //双一流
-            both29:false,
+            datas:{},
             moreMajor:false,
-            update_time:1996,
+            equis:"EQUIS",
+            aascb:"AASCB",
+            two:"原211",
+            nine:"原985",
+            both29:"双一流",
+            amba:"AMBA",
+            camea:"CAMEA",
+            update_time:0,
+            visible2:false ,
+            colleges:[],
+            cookieName:'vsMajor'
             }
         },
         methods: {
+            //加入对比弹出框
+            info(){
+                console.log(222)
+                console.log(this.getMajors())
+                // console.log(JSON.parse(this.getMajors()))
+                let obj = this.getMajors();
+                this.colleges =  obj == '' ?[]:JSON.parse(obj)
+            },
+            addMajor(){
+                var obj = {college:this.collegeInfo.z_name,id:this.collegeInfo.id}
+                console.log(obj)
+                var objs = this.getMajors()
+                console.log(objs)
+                var obj_arr = objs == ""?[]: JSON.parse(this.getMajors())
+
+                if(obj_arr != null && obj_arr.length == 4){
+                    this.message(true,"对比列表已满", 'info');
+                    return
+                }else{
+                    if(obj_arr == null)
+                        obj_arr = []
+                    obj_arr.push(obj)
+                    this.setCookie(obj_arr)
+                    this.colleges = obj_arr
+                }
+            },
+            setCookie(obj_arr){
+                var obj_json = JSON.stringify(obj_arr)
+                document.cookie = this.cookieName + "="+ escape (obj_json)+ ";"
+            },
+            getMajors(){
+                let cookie = document.cookie.split(";")
+                let index = 0;
+                let i = 0
+                for( i in cookie){
+                    if(cookie[i].indexOf(this.cookieName) != -1)
+                        index = i;
+                }
+                if(index == 0)
+                    return null
+                let obj = cookie[i]
+                obj = obj.split('=')
+                let obj_arr = unescape(obj[1]);
+                console.log(this.cookieName)
+                return obj_arr
+            },
+            remove(index){
+                this.colleges.splice(index,1)
+                this.setCookie(this.colleges)
+            },
+            removeAll(){
+                this.colleges = [];
+                this.setCookie(this.colleges)
+            },
+            vs(){
+                let id = '';
+                for(let i in this.colleges){
+                    id+=this.colleges[i].  id+','
+                }
+                id = id.substr(0,id.length-1)
+                this.$router.push("/front/firstMenuRouter/majorsCompare/"+id)
+            },
+            //加入对比按钮
+            compareMajor:function(){
+                this.addMajor();
+            },
             //跳到单个院校
             goItemDetail:function(){
                 let id = this.collegeInfo.id;
@@ -138,8 +250,8 @@
         },
         props:["collegeInfo","followId","confirmId","missPorduct"],//需要传一个数组
         mounted() {
-            // this.goItemDetail();
-            // console.log(this.missPorduct);
+            // console.log(this.collegeInfo.id)
+            this.info();
             //是否显示查看更多
             if (this.collegeInfo.missPorduct.length==0) {
                 // console.log(this.missPorduct)
@@ -148,17 +260,19 @@
             //向父组件传参数
             this.getViewIcon();
             // 院校性质标签是否显示
-            if(this.followId == '原985')
-                this.nine= true;
-            else if(this.followId=='原211')
-                this.two = true;
-            else
-                this.both29 = true;
-            if (this.confirmId=='AASCB') {
-                this.aascb = true;
-            } else {
-                this.equis = true;
-            }
+            this.datas.major_follow_id = this.collegeInfo.major_follow_id.split(',')
+            this.datas.major_confirm_id = this.collegeInfo.major_confirm_id.split(',')
+            // if(this.followId == '原985')
+            //     this.nine= true;
+            // else if(this.followId=='原211')
+            //     this.two = true;
+            // else
+            //     this.both29 = true;
+            // if (this.confirmId=='AASCB') {
+            //     this.aascb = true;
+            // } else {
+            //     this.equis = true;
+            // }
         }
 
     }
@@ -168,7 +282,14 @@
 </style>
 
 <style scoped>
+    .body{
+        display: inline-block;
+        z-index: 1000;
+    }
     /*不同院校——院校信息*/
+        .majorType img {
+            margin-left: 5px;
+        }
         .moreInform:hover {
             color: #009fa0;
             cursor: pointer;

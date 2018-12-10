@@ -103,13 +103,22 @@
                                     <div class="detailMajor">
                                         <div class="detailTitle">专业认证</div>
                                         <div class="majorPicture" >
-                                            <div v-for="(m,index) in majorPicture" :key="index"><img :src="m.src"></div>
+                                            <div v-for="(item,index) in typeId.major_confirm_id" :key="index">
+                                                <img class="c-image image_2pnGPP" v-if="item==equis" src="../../../assets/img/equsSmall.png">
+                                                <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../../assets/img/aacsbSmall.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == amba" src="../../../assets/img/amba.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == camea" src="../../../assets/img/camea.png">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="detailType">
                                         <div class="detailTitle">院校性质</div>
                                         <div class="typePicture">
-                                            <div v-for="(t,index) in typePicture" :key="index"><img :src="t.src"></div>
+                                            <div v-for="(item,index) in typeId.major_follow_id" :key="index">
+                                                <img class="c-image image_2pnGPP" v-if="item==two" src="../../../assets/img/211.png">
+                                                <img class="c-image image_2pnGPP" v-if="item==nine" src="../../../assets/img/985.png">
+                                                <img class="c-image image_2pnGPP" v-if="item==both29" src="../../../assets/img/shuangyiliu.png">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="detailCity">
@@ -177,7 +186,7 @@
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="pdf">
-                                    <div class="pdfDetail">
+                                    <div class="pdfDetail" @click="loadPdf">
                                         <pdfDetail :pdfPicture="pdfPicture" v-for="(t,index) in pdfPicture" @thisTesta="(b) => {bb = b}" @thisTest="(a) => {aa = a}" :t="index" :key="index" :class="{testa: index == aa ? true : false, testb: index == bb ? true : false}" :id="city(index)"></pdfDetail>
                                     </div>
                                 </div>
@@ -203,7 +212,7 @@ export default {
             //院校二维码
             // wxCode:require("../../../assets/img/weixin2.png"),
             wxCode:[],
-            xlCode:require("../../../assets/img/xinlang2.png"),
+            xlCode:[],
             //模态框
             dialogVisible: false,
             dialogVisible2:false,
@@ -242,18 +251,15 @@ export default {
                 weixin:require("../../../assets/img/weixin2.png"),
                 contact:require("../../../assets/img/contact.png"), 
             }],
-            //基本信息
-            majorPicture:[
-                {src:require("../../../assets/img/amba.png")},
-                {src:require("../../../assets/img/aacsbSmall.png")},
-                {src:require("../../../assets/img/camea.png")},
-                {src:require("../../../assets/img/equsSmall.png")},
-            ],
-            typePicture:[
-                {src:require("../../../assets/img/211.png")},
-                {src:require("../../../assets/img/985.png")},
-                {src:require("../../../assets/img/shuangyiliu.png")},
-            ]
+            //基本信息——院校性质图片
+            typeId:[],
+            equis:"EQUIS",
+            aascb:"AASCB",
+            two:"原211",
+            nine:"原985",
+            both29:"双一流",
+            amba:"AMBA",
+            camea:"CAMEA",
         }
     },
     methods: {
@@ -280,6 +286,10 @@ export default {
         //院校微信
         majorWx:function(){
             this.dialogVisible = true;
+        },
+        //下载pdf
+        loadPdf:function(){
+            window.open("http://www.lishanlei.cn/storage/major_file");
         },
         //点击关注
         clickFollow:function(){
@@ -375,8 +385,10 @@ export default {
                 u_id: that.u_id,
                 id: that.id,
             }).then(function (response) {
+                // console.log(response)
                 if (response.code==0) {
                     let res = response.result[0];
+                    // console.log(res.major_follow_id.split(','))
                     that.singleItem = res.project;
                     that.phonNumber = res.phone;
                     that.year = res.access_year;
@@ -386,14 +398,16 @@ export default {
                     that.is_guanzhu = res.is_guanzhu;
                     that.index_web = res.index_web;
                     that.admissions_web = res.admissions_web;
-                    that.wxCode = res.wc_image;
-                    that.xlCode = res.wb_image;
-                    // String[] splitAddress=xlCode.split(“\\,”); 
-                    console.log(that.wxCode);
-                    console.log(123)
+                    // console.log(res.major_follow_id);
+                    that.typeId.major_confirm_id = res.major_confirm_id.split(',');
+                    that.typeId.major_follow_id = res.major_follow_id.split(',');
+                    console.log(that.typeId.major_confirm_id)
+                    //字符串转化为数组
+                    that.wxCode = res.wc_image.split(',');
+                    that.xlCode = res.wb_image.split(',');
+
                 }
             }).catch(function (error) {
-                // console.log(132)
             });
         },
         //联系方式logo——鼠标滑过样式
@@ -433,22 +447,11 @@ export default {
         
     },
     mounted(){
+        // console.log(369)
         this.isFollow();
         this.getaboutAcitivity();
         this.getContent();
         this.getItemInform();
-        // count:function(){
-            // let i = 0;
-            // i++;
-            // this.t = i;
-        // }
-        // console.log(this.pdfDetail[0].src)
-        // let w = document.documentElement.offsetWidth || document.body.offsetWidth;
-        // if (w<991) {
-        //     this.basicInform = false;
-        // } else {
-        //     this.basicInform = true;
-        // }
     },
 };
 </script>
