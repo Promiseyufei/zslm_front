@@ -15,7 +15,7 @@
                         <a href="javaScript:void(0)" @click="allInformation">
                             全部年分
                         </a>
-                        <a href="javaScript:void(0)" v-for="(item,index) in time" class="time-a" @click="choiceTime(index)">
+                        <a href="javaScript:void(0)" v-for="(item,index) in time" :key="index" class="time-a" @click="choiceTime(index)">
                             {{ item }}
                         </a>
                     </div>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="recruitContent clearfloat">
-                    <div class="university" @click="studentInformation(index)" v-for="(item , index) in information">
+                    <div class="university" @click="studentInformation(index)" v-for="(item , index) in information" :key="index">
                         <div class="university-icon" @mouseover="overStyle(item,index)" @mouseout="outStyle(item,index)">
                             <img :src="item.magor_logo_name" alt="">
                         </div>
@@ -54,7 +54,7 @@
                 width="30%"
                 center>
             <div v-if="centerDialogVisible">
-                <div class="title-span" v-for="(item,index) in information[number].ZSJZF" @click="showPdf(item)">
+                <div class="title-span" v-for="(item,index) in information[number].ZSJZF" :key="index" @click="showPdf(item)">
                     <span>{{index+1}}</span>&nbsp;&nbsp;&nbsp;
                     <span>{{item.file_alt}}</span>
                 </div>

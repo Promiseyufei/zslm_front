@@ -33,7 +33,7 @@
                             <i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="moneyBottom"></i>
                         </div>
                     </div>
-                    <div class="countMajor">共1242所院校</div>
+                    <div class="countMajor">共{{ this.count }}所院校</div>
                 </div>
             </div>
             <div class="buttonCollege"></div>

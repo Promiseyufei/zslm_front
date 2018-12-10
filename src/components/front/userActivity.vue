@@ -587,21 +587,20 @@
         methods: {
             unsetActive(a_id){
                 let self = this;
-                this.post("http://www.zslm.com/front/activity/unsetactive",{
+                this.post("/front/activity/unsetactive",{
                     id:self.id,
                     a_id :a_id
                 }).then(res=>{
-                    if(res.data == 0){
-                        self.$message({
-                            message: '取消成功',
-                            type: 'success'
-                        });
+                    if(res.code == 0){
+                        this.message(true,"取消成功",'success')
+                        this.$parent.pageinfo()
                     }else{
-                        this.$message.error('取消失败');
+                        this.message(true,"取消失败","error")
                     }
 
                 })
-            }
+            },
+
         },
         props: ["data","id"],
         mounted() {
