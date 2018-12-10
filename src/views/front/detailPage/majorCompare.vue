@@ -79,7 +79,8 @@
                         </div>
                         <div class="clearfloat">
                             <div v-for="(item,index) in information" class="collage-font collage-position">
-                                <div class="languageMajor"><img src="" alt=""></div>
+                                <div class="languageMajor" v-if="item.language == Chinese"><img src="../../../assets/img/chinese4.jpg" alt=""></div>
+                                <div class="languageMajor" v-else><img src="../../../assets/img/english.jpg" alt=""></div>
                                 (课程均为{{ item.language }})
                             </div>
                         </div>
