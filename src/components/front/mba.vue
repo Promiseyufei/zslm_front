@@ -2,7 +2,7 @@
     <div>
         <div class="content-whole">
             <div class="content-whole-article">
-                <div class="content-head clearfloat" v-for="(item, index) in headArticle">
+                <div class="content-head clearfloat" v-for="(item, index) in headArticle" :key="index">
                     <div class="head-left">
                             <img :src="item.z_image" alt="未加载">
                     </div>
