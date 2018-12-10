@@ -23,6 +23,7 @@
                     <div class="coachNav">
                         <div class="coachNavleft">
                             <span>选院校&gt;</span>
+
                             <tags :tags = "tags" @handleClose="handleClose"></tags>
                         </div>
                         <div class="coachNavright">
