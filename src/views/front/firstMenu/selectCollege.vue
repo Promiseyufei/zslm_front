@@ -9,7 +9,7 @@
                         suffix-icon="el-icon-search"
                         v-model="z_name" @keyup.enter.native="search">
                     </el-input>
-                </div>count
+                </div>
             </div>
             <selectAll :checkboxGroup1="checkboxGroup" :list="collegeInform" @change="change"></selectAll>
             <div class="tagSort">

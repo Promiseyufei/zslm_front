@@ -148,7 +148,7 @@ export default {
         * */
         refreshBusiness: function (data) {
             this.businessPage++;
-            if (this.businessPage*4>=this.industryTatol){
+            if (this.businessPage*4>=this.businessTatol){
                 this.businessPage = 0;
             }
             this.presentation();
@@ -182,6 +182,7 @@ export default {
                 pageNumber:_this.businessPage
             })
                 .then((response) => {
+                console.log(response)
                     if(response.code == 0){
                         _this.businessTatol = response.result.count;
                         _this.informbusiness=response.result.info;

@@ -103,17 +103,22 @@
                                     <div class="detailMajor">
                                         <div class="detailTitle">专业认证</div>
                                         <div class="majorPicture" >
-                                            <div v-for="(m,index) in majorPicture" :key="index"><img :src="m.src"></div>
-                                            <!-- <img class="c-image image_2pnGPP" v-if="item_ == equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                                            <img class="c-image image_2pnGPP" v-if="item_ == aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                                            <img class="c-image image_2pnGPP" v-if="item_ == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                                            <img class="c-image image_2pnGPP" v-if="item_ == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png"> -->
+                                            <div v-for="(item,index) in typeId.major_confirm_id" :key="index">
+                                                <img class="c-image image_2pnGPP" v-if="item==equis" src="../../../assets/img/equsSmall.png">
+                                                <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../../assets/img/aacsbSmall.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == amba" src="../../../assets/img/amba.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == camea" src="../../../assets/img/camea.png">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="detailType">
                                         <div class="detailTitle">院校性质</div>
                                         <div class="typePicture">
-                                            <div v-for="(t,index) in typePicture" :key="index"><img :src="t.src"></div>
+                                            <div v-for="(item,index) in typeId.major_follow_id" :key="index">
+                                                <img class="c-image image_2pnGPP" v-if="item==two" src="../../../assets/img/211.png">
+                                                <img class="c-image image_2pnGPP" v-if="item==nine" src="../../../assets/img/985.png">
+                                                <img class="c-image image_2pnGPP" v-if="item==both29" src="../../../assets/img/shuangyiliu.png">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="detailCity">
@@ -246,18 +251,15 @@ export default {
                 weixin:require("../../../assets/img/weixin2.png"),
                 contact:require("../../../assets/img/contact.png"), 
             }],
-            //基本信息
-            majorPicture:[
-                {src:require("../../../assets/img/amba.png")},
-                {src:require("../../../assets/img/aacsbSmall.png")},
-                {src:require("../../../assets/img/camea.png")},
-                {src:require("../../../assets/img/equsSmall.png")},
-            ],
-            typePicture:[
-                {src:require("../../../assets/img/211.png")},
-                {src:require("../../../assets/img/985.png")},
-                {src:require("../../../assets/img/shuangyiliu.png")},
-            ]
+            //基本信息——院校性质图片
+            typeId:[],
+            equis:"EQUIS",
+            aascb:"AASCB",
+            two:"原211",
+            nine:"原985",
+            both29:"双一流",
+            amba:"AMBA",
+            camea:"CAMEA",
         }
     },
     methods: {
@@ -383,8 +385,10 @@ export default {
                 u_id: that.u_id,
                 id: that.id,
             }).then(function (response) {
+                // console.log(response)
                 if (response.code==0) {
                     let res = response.result[0];
+                    // console.log(res.major_follow_id.split(','))
                     that.singleItem = res.project;
                     that.phonNumber = res.phone;
                     that.year = res.access_year;
@@ -394,11 +398,14 @@ export default {
                     that.is_guanzhu = res.is_guanzhu;
                     that.index_web = res.index_web;
                     that.admissions_web = res.admissions_web;
+                    // console.log(res.major_follow_id);
+                    that.typeId.major_confirm_id = res.major_confirm_id.split(',');
+                    that.typeId.major_follow_id = res.major_follow_id.split(',');
+                    console.log(that.typeId.major_confirm_id)
                     //字符串转化为数组
                     that.wxCode = res.wc_image.split(',');
                     that.xlCode = res.wb_image.split(',');
-                    console.log(res.major_follow_id);
-                    console.log(123)
+
                 }
             }).catch(function (error) {
             });
