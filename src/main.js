@@ -79,6 +79,11 @@ Object.keys(httpServer).forEach((key) => {
   Vue.prototype[key] = httpServer[key];
 })
 
+import wxShare from './config/wx/share.js'
+Object.keys(wxShare).forEach((key) => {
+  Vue.prototype[key] = wxShare[key];
+})
+
 
 /* eslint-disable no-new */
 new Vue({
