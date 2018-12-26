@@ -13,21 +13,13 @@
                         <label class="c-label label_OVUgJH">{{collegeInfo.city}}</label>
                     </div>
                     <div class="c-div cs-repeatable div_sfz9WV" style="display: flex;">
-                        <div v-for="(item,index) in datas.major_confirm_id" class="majorType">
-<<<<<<< HEAD
-                            <img class="c-image image_2pnGPP" v-if="item==equis" src="http://qty83k.creatby.com/materials/2771/origin/6dafa65ca7969bd1332d32af843573b4_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="item==aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="item == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-                            <img class="c-image image_2pnGPP" v-if="item == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
-=======
+                        <div v-for="(item,index) in datas.major_confirm_id" class="majorType" :key="index">
                              <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/equs.png">
                             <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/aacsb.jpg">
                             <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
                             <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/camea.png">
->>>>>>> e63b91ca244731190f9e0bee21289b0affbba02e
-                            
                         </div>
-                        <div v-for="(item,index) in datas.major_follow_id" class="majorType">
+                        <div v-for="(item,index) in datas.major_follow_id" class="majorType" :key="index">
                             <img class="c-image image_2pnGPP" v-if="item==two" src="../../assets/img/211.png">
                             <img class="c-image image_2pnGPP" v-if="item==nine" src="../../assets/img/985.png">
                             <img class="c-image image_2pnGPP" v-if="item==both29" src="../../assets/img/all985211.png">
