@@ -19,12 +19,14 @@
                     <img src="../../assets/img/MBA.png" alt="">
                     <p>MBA报考、资讯、活动，一站搞定！</p>
                     <!-- 四个大的按钮 -->
-                    <div class="indexBigBlock">
-                        <div @click = "toJump(1)"><img src="../../assets/img/college.png" alt=""><p>选院校</p></div>
-                        <div @click = "toJump(2)"><img src="../../assets/img/activity.png" alt=""><p>找活动</p></div>
-                        <div @click = "toJump(3)"><img src="../../assets/img/information.png" alt=""><p>看资讯</p></div>
-                        <div @click = "toJump(4)"><img src="../../assets/img/coach.png" alt=""><p>搜辅导</p></div>
-                    </div>
+                    <!-- <div class="singleCollegeBox"> -->
+                        <div class="indexBigBlock">
+                            <div @click = "toJump(1)"><img src="../../assets/img/college.png" alt=""><p>选院校</p></div>
+                            <div @click = "toJump(2)"><img src="../../assets/img/activity.png" alt=""><p>找活动</p></div>
+                            <div @click = "toJump(3)"><img src="../../assets/img/information.png" alt=""><p>看资讯</p></div>
+                            <div @click = "toJump(4)"><img src="../../assets/img/coach.png" alt=""><p>搜辅导</p></div>
+                        </div>
+                    <!-- </div> -->
                 </div>
             </div>
 
@@ -759,6 +761,7 @@ export default {
         margin: 10% 0 3%;
         cursor: pointer;
     }
+    
     .indexBigBlock>div {
         margin: 2%;
         padding: 4% 5%;

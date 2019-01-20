@@ -184,7 +184,7 @@
 		    	this.getUserState('userName');
 		    	if (this.getUserState('user')) {
 		    		this.userName = this.getUserState('userName');
-		    		this.loginOr = this.getUserState('userHead');
+		    		this.loginOr = require(this.getUserState('userHead'));
 		    		this.userId = this.getUserState('userId');
 		    	}
 		    },
@@ -263,16 +263,19 @@
 	    mounted(){
 	    	this.rushRouter();
 	    	//手机端改变样式
-	  //    	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
-			// if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
-			// 	this.firstMenu = false;
-			// 	this.logoInto = false;
-			// 	this.mobileIcon = true;
-			// }
+	     	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
+			if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
+				this.firstMenu = false;
+				this.logoInto = false;
+				this.mobileIcon = true;
+			}
 		},
 	};
 </script>
 <style>
+	.el-menu.el-menu--horizontal {
+		/*border-bottom: 0;*/
+	}
 	.mobileIcon .el-dialog__wrapper {
 		overflow:hidden; 
 	}
@@ -325,8 +328,8 @@
 	.firstMenu .el-menu--horizontal {
 		border-bottom: 0;
 		background-color: #fff;
+		border-bottom: 0;
 	}
-
 
 </style>
 
@@ -712,6 +715,9 @@
 		}
 		.logoPicture {
 			width: 100%;
+		}
+		.logoPicture img {
+			/*width:166px;*/
 		}
 	}
 </style>

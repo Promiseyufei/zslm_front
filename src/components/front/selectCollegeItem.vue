@@ -13,14 +13,13 @@
                         <label class="c-label label_OVUgJH">{{collegeInfo.city}}</label>
                     </div>
                     <div class="c-div cs-repeatable div_sfz9WV" style="display: flex;">
-                        <div v-for="(item,index) in datas.major_confirm_id" class="majorType">
+                        <div v-for="(item,index) in datas.major_confirm_id" class="majorType" :key="index">
                              <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/equs.png">
                             <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/aacsb.jpg">
                             <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
                             <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/camea.png">
-                            
                         </div>
-                        <div v-for="(item,index) in datas.major_follow_id" class="majorType">
+                        <div v-for="(item,index) in datas.major_follow_id" class="majorType" :key="index">
                             <img class="c-image image_2pnGPP" v-if="item==two" src="../../assets/img/211.png">
                             <img class="c-image image_2pnGPP" v-if="item==nine" src="../../assets/img/985.png">
                             <img class="c-image image_2pnGPP" v-if="item==both29" src="../../assets/img/all985211.png">

@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="icon-right">
                                     <i>分享到&nbsp;&nbsp;&nbsp;&nbsp;</i>
-                                    <i class="fa fa-weixin weixin" aria-hidden="true"></i>
+                                    <i class="fa fa-weixin weixin" aria-hidden="true" @click="testShare"></i>
                                     &nbsp;&nbsp;<i class="fa fa-weibo weibo" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="weitten-right">
-                        <div class="advertisement" v-if="advertisement.length != 0" v-for="(item,index) in advertisement">
+                        <div class="advertisement" v-if="advertisement.length != 0" v-for="(item,index) in advertisement" :key="index">
                             <a :href="item.re_url"><img :src="item.img" alt="未加载"></a>
                         </div>
                         <Article @jump="jump" @refreshs="refresh" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
@@ -65,6 +65,13 @@ export default{
         }
     },
     methods: {
+
+        testShare() {
+            console.log('aaa')
+            this.share();
+        },
+
+
         /*
          * 推荐阅读刷新
          * */

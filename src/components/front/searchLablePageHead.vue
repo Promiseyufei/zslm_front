@@ -24,7 +24,6 @@ export default {
             return true;
         },
         testClick(item, index) {
-        //    this.$router.push(item.url);
             $(".c-textlink").css("color","rgb(49, 49, 49)");
             $(".c-textlink").css("border-bottom-width","0");
 //            $($(".c-textlink")[0]).css("color","rgb(0, 159, 160)");
