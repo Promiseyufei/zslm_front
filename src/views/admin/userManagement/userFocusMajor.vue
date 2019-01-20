@@ -30,16 +30,16 @@
 
                 <el-form label-width="80px" style="width: 100%">
                     <el-form-item label="院校专业">
-                        <el-input size="medium" placeholder="请输入院校专业" v-model="major" ></el-input>
+                        <el-input size="medium" placeholder="请输入院校专业" v-model="major_v" ></el-input>
                     </el-form-item>
                     <el-form-item label="昵称">
-                        <el-input size="medium" placeholder="请输入用户昵称" v-model="name" ></el-input>
+                        <el-input size="medium" placeholder="请输入用户昵称" v-model="name_v" ></el-input>
                     </el-form-item>
                     <el-form-item label="真实姓名">
-                        <el-input size="medium" placeholder="请输入用户姓名" v-model="realname" ></el-input>
+                        <el-input size="medium" placeholder="请输入用户姓名" v-model="realname_v" ></el-input>
                     </el-form-item>
                     <el-form-item style="float: right">
-                        <el-button size="mini" class="query-button" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
+                        <el-button size="mini" class="query-button" type="primary" icon="el-icon-search"  @click.native = "selectQuery">查询</el-button>
                     </el-form-item>
                 </el-form>
 
@@ -49,13 +49,13 @@
             <i class="el-icon-tickets"></i>
             <p class="screen">数据列表</p>
                 <div class="datalist-selecttwo">
-                <el-select size="mini" v-model="Sorting" placeholder="默认顺序" style="width: 100px">
+                <el-select size="mini" v-model="Sorting" placeholder="默认顺序" style="width: 150px"  @change="sortingChage">
                     <el-option v-for="(item,index) in sorting" :key="index" :label="item.label" :value="item.value">
                     </el-option>
                 </el-select>
                 </div>
         </div>
-        <div class="file-table">
+        <div class="file-table" v-loading="table_loading">
             <el-table :data="tableData" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
@@ -81,14 +81,17 @@
         name: "userFocusMajor",
         data(){
             return {
+				 name_v:'',
+				major_v:'',
+				realname_v:'',
                 name:'',
                 major:'',
                 realname:'',
-                Sorting:0,
+                Sorting:'',
                 userFrom: '',
                 sorting:[
-                    { value:'0',label:'id升序' },
-                    { value:'1',label:'id降序' }
+                    { value:'0',label:'用户创建时间升序' },
+                    { value:'1',label:'用户创建时间降序' }
                 ],
                 sort:[
                     {value: '选项一',label: '10条'},
@@ -114,12 +117,36 @@
                     page:1,
                     limit:5,
                 },
-                oneUserMsg:null
+                oneUserMsg:null,
+				user_img_path:"http://www.lishanlei.cn/storage/front/user/",
+				table_loading:true,
             }
         },
         methods:{
+			/**
+			 * 当选择框改变是执行方法
+			 */
+			sortingChage:function(){
+				this.selectQuery()
+			},
+			
+			/**
+			 * 点击查询按钮是执行方法
+			 */
+			selectQuery:function(){
+				this.name = this.name_v
+				this.major = this.major_v
+				this.realname = this.realname_v
+				this.searchContent.page = 1
+				this.query()
+			},
+			
+			/**
+			 * 页码改变时执行该方法
+			 */
             query:function () {
                 var that = this;
+				this.table_loading = true
                 this.fetch('/admin/accounts/getmajoruser',{
                     //后台参数，前台参数(传向后台)
 
@@ -128,13 +155,15 @@
                         name: that.name,
                         major: that.major,
                         realname: that.realname,
-
+						sorting : that.Sorting == '' ? 0 : that.Sorting
                 })
                     .then(function (response) {
                         var res = response;
+						that.table_loading = false
                         if (res.code == 0) {
                             that.tableData =res.result[0];
-                            that.total = 10;
+							
+                             that.total =res.result[1];
                         };
                     })
                     .catch(function (error) {
@@ -158,10 +187,46 @@
                         id:id
 
                 }).then(res=>{
-                    if(res.code == 0){
-                        that.oneUserMsg = res.result;
-                        return 0;
-                    }
+                       if(res.code == 0){
+                   	let majors = res.result[1]
+                   	let major_str = ''
+                   	for(let i in majors){
+                   		major_str+= '<div class="motai-line-content">'+majors[i].z_name+'</div>'
+                   	}
+               
+                   	let sex = res.result[0].sex == 0 ? '<i class="fa fa-mars"></i>' : '<i class="fa fa-mars"></i>'
+                        this.$alert('<div class="motai-body">' +
+                         '<div class="selfDetail">' +
+                         '<img class="motai-img" src="'+that.htmlDecode(that.user_img_path+res.result[0].head_portrait)+'">' +
+                         '<div class="selfDetailText"><span>'+that.htmlDecode(res.result[0].real_name)+
+                   	  '</span><span style="display:block">'+that.htmlDecode(res.result[0].user_name)+'</span><div>'+
+                   	 sex
+                   	  +'<i>'+res.result[0].address+'</i></div></div></div>' +
+                         '</div>' +
+                         '<div><div class="motai-line">' +
+                         '<div class="motai-line-title">毕业院校:</div>' +
+                         '<div class="motai-line-content">'+res.result[0].graduate_school+
+                         '</div></div></div>'+
+                   	  '<div><div class="motai-line">' +
+                   	  '<div class="motai-line-title">最高学历:</div>' +
+                   	  '<div class="motai-line-content">'+res.result[0].schooling_id+
+                   	  '</div></div></div>'+
+                   	  '<div><div class="motai-line">' +
+                   	  '<div class="motai-line-title">所属行业:</div>' +
+                   	  '<div class="motai-line-content">'+res.result[0].industry+
+                   	  '</div></div></div>'+
+                   	  '<div><div class="motai-line">' +
+                   	  '<div class="motai-line-title">工作年限:</div>' +
+                   	  '<div class="motai-line-content">'+res.result[0].worked_year+
+                   	  '</div></div></div>'+
+                   	  '<div><div class="motai-line">' +
+                   	  '<div class="motai-line-title">关注院校:</div><div>' +
+                   		major_str+
+                   	  '</div></div></div>',
+                         {
+                             dangerouslyUseHTMLString: true
+                         });
+                   }
                     else{
                         return 1;
                     }
@@ -170,29 +235,12 @@
                 })
             },
             handleClick:function(val){
-                let that = this;
-                if(this.oneUserMsg == null){
-                    let requestJudge = this.getOneUser(val.user_account_id)
-                    if(requestJudge == 0){
-                        console.log(111)
-                    }
-                }
-                val.head_portrait='http://img5.imgtn.bdimg.com/it/u=415293130,2419074865&fm=27&gp=0.jpg'
-                val.user_name='test'
-                this.$alert('<div class="motai-body">' +
-                    '<div>' +
-                    '<img class="motai-img" src="'+that.htmlDecode(val.head_portrait)+'">' +
-                    '<p class="motai-name"><b>'+that.htmlDecode(val.real_name)+'</b></p></div>' +
-                    '</div>' +
-                    '<div>' +
-                    '<div class="motai-line">' +
-                    '<div class="motai-line-title">test</div>' +
-                    '<div class="motai-line-content">testtesttesttesttesttesttesttesttesttesttesttesttesttestte</br>sttesttesttesttesttest</div>' +
-                    '</div>' +
-                    '</div>',
-                    {
-                        dangerouslyUseHTMLString: true
-                    });
+                 let that = this;
+                   let requestJudge = this.getOneUser(val.user_account_id)
+                   if(requestJudge == 1){
+                     return;
+                   }
+                          
             },
             pageChange(msg){
 
@@ -223,37 +271,31 @@
         width: 80%;
         margin: 0 auto;
     }
-    .motai-img{
-        width: 100px;
-        height: 100px;
-        border: solid 1px #c7c7c7;
-        border-radius: 50%;
-        background-size: cover;
-    }
-    .motai-name{
-        font-size: 20px;
-        width: 100px;
-        display: inline-block;
-        position: relative;
-        bottom: 44px;
-        padding-left: 20px;
-    }
-    .motai-line{
-        width: 100%;
-        margin-top: 20px;
-    }
-    .motai-line-title{
-        width: 25%;
-        display: inline-block;
-        text-align: end;
-        font-size: 18px;
-    }
-    .motai-line-content{
-        padding-left: 20px;
-        width: 64%;
-        display: inline-block;
-        font-size: 18px;
-    }
+   .motai-img {
+       width: 100px;
+       height: 100px;
+       border-radius: 50%;
+       margin: 10px 10px;
+   }
+   .selfDetail {
+       display: flex;
+       justify-content: flex-start;
+       align-items: center;
+   }
+   .selfDetailText {
+       display: flex;
+       flex-direction: column;
+   }
+   .motai-line {
+       margin: 10px 10px;
+       display: flex;
+       justify-content: space-between;
+       overflow: hidden;
+   }
+   .motai-line-title{
+       width: 100px !important;
+   }
+	
 </style>
 <style scoped>
     /**当前面包屑**/

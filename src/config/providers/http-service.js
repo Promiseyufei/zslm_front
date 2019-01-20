@@ -4,7 +4,7 @@ import axios from 'axios';
 axios.defaults.timeout = 5000;
 
 // axios.defaults.baseURL = 'http://www.zslm.com';
-axios.defaults.baseURL = 'http://www.lishanlei.cn';
+axios.defaults.baseURL = 'http://www.zslm.com';
 
 axios.interceptors.request.use(
     config => {
