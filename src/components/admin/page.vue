@@ -26,18 +26,10 @@ export default {
 	    handleCurrentChange(val) { 
 	    	this.page.page = val;
 	    	this.$emit('pageChange',this.page);
-	    	// if (this.page.page) {
-	    	// 	this.$emit('query');
-	    	// 	console.log(this.page.page);
-
-	    	// };
-	    	// this.$emit('gettable_info');
-	    	// this.$emit('showbox',val);
 	    },
     },
     mounted(){
-            // this.handleCurrentChange();
-            // console.log(this.total);
+          
     }
 }
 </script>

@@ -22,26 +22,26 @@
         <div class="filesquery">
             <i class="el-icon-search"></i>
             <p class="screen">筛选查询</p>
-            <el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "query">刷新</el-button>
+            <el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "selectQuery()">刷新</el-button>
         </div>
 
         <div class="filesForm">
 
             <el-form class="input"  label-width="80px" style="width: 100%">
                 <el-form-item label="优惠券id">
-                    <el-input size="medium" placeholder="请输入优惠券id" v-model="cid"></el-input>
+                    <el-input size="medium" placeholder="请输入优惠券id" v-model="cid_v"></el-input>
                 </el-form-item>
                 <el-form-item label="优惠券">
-                    <el-input size="medium" placeholder="请输入优惠券" v-model="cname"></el-input>
+                    <el-input size="medium" placeholder="请输入优惠券" v-model="cname_v"></el-input>
                 </el-form-item>
                 <el-form-item label="昵称">
-                    <el-input size="medium" placeholder="请输入用户昵称" v-model="name"></el-input>
+                    <el-input size="medium" placeholder="请输入用户昵称" v-model="name_v"></el-input>
                 </el-form-item>
                 <el-form-item label="真实姓名">
-                    <el-input size="medium" placeholder="请输入用户姓名" v-model="realname"></el-input>
+                    <el-input size="medium" placeholder="请输入用户姓名" v-model="realname_v"></el-input>
                 </el-form-item>
                 <el-form-item style="float: right;width: 200px">
-                    <el-button size="mini" class="query-button" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
+                    <el-button size="mini" class="query-button" type="primary" icon="el-icon-search"  @click.native = "selectQuery()">查询</el-button>
                 </el-form-item>
             </el-form>
 
@@ -51,13 +51,13 @@
             <i class="el-icon-tickets"></i>
             <p class="screen">数据列表</p>
             <div class="datalist-selecttwo">
-                <el-select size="mini" v-model="Sorting" placeholder="默认顺序" style="width: 100px">
+                <el-select size="mini" v-model="Sorting" placeholder="默认顺序" style="width: 150px" @change ="selectQuery">
                     <el-option v-for="(item,index) in sorting" :key="index" :label="item.label" :value="item.value">
                     </el-option>
                 </el-select>
             </div>
         </div>
-        <div class="file-table">
+        <div class="file-table" v-loading="table_loading">
             <el-table :data="tableData" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
                 <el-table-column label="操作">
                     <template slot-scope="scope">
@@ -83,14 +83,18 @@
         name: "userFocusMajor",
         data(){
             return {
+				cid_v:'',
+				cname_v:'',
+				name_v:'',
+				realname_v:'',
                 cid:'',
                 cname:'',
                 name:'',
                 realname:'',
-                Sorting:0,
+                Sorting:'',
                 sorting:[
-                    { value:'0',label:'id升序' },
-                    { value:'1',label:'id降序' }
+                    { value:'0',label:'用户创建时间升序' },
+                    { value:'1',label:'用户创建时间降序' }
                 ],
                 sort:[
                     {value: '选项一',label: '10条'},
@@ -118,28 +122,42 @@
                     page:1,
                     limit:5,
                 },
+				user_img_path:"http://www.lishanlei.cn/storage/front/user/",
+				table_loading:true,
             }
         },
         methods:{
+			
+			selectQuery:function(){
+				
+				this.cid = this.cid_v
+				this.name = this.name_v
+				this.cname = this.cname_v
+				this.realname = this.realname_v
+				this.searchContent.page = 1
+				this.query()
+			},
+			
             query:function () {
                 var that = this;
+				this.table_loading = true,
                 this.fetch('/admin/accounts/getcoupon',{
                     //后台参数，前台参数(传向后台)
 
                         page: that.searchContent.page,
                         pageSize: that.searchContent.limit,
                         name: that.name,
-                        cname: that.major,
+                        cname: that.cname,
                         cid:that.cid,
                         realname: that.realname,
-
+						sorting : that.Sorting == '' ? 0 : that.Sorting
                 })
                     .then(function (response) {
                         var res = response;
-                        console.log(res)
+						that.table_loading = false
                         if (res.code == 0) {
                             that.tableData =res.result[0];
-                            that.total = 10;
+                            that.total =res.result[1];
                         };
                     })
                     .catch(function (error) {
@@ -163,10 +181,46 @@
                         id:id
 
                 }).then(res=>{
-                    if(res.code == 0){
-                        that.oneUserMsg = res.result;
-                        return 0;
-                    }
+                      if(res.code == 0){
+            
+                  	let coupons =res.result[1]
+                  	let coupon_str = ''
+                  	for(let i in coupons){
+                  		coupon_str+= '<div class="motai-line-content">'+coupons[i].name+'</div>'
+                  	}
+                  	let sex = res.result[0].sex == 0 ? '<i class="fa fa-mars"></i>' : '<i class="fa fa-mars"></i>'
+                       this.$alert('<div class="motai-body">' +
+                        '<div class="selfDetail">' +
+                        '<img class="motai-img" src="'+that.htmlDecode(that.user_img_path+res.result[0].head_portrait)+'">' +
+                        '<div class="selfDetailText"><span>'+that.htmlDecode(res.result[0].real_name)+
+                  	  '</span><span style="display:block">'+that.htmlDecode(res.result[0].user_name)+'</span><div>'+
+                  	 sex
+                  	  +'<i>'+res.result[0].address+'</i></div></div></div>' +
+                        '</div>' +
+                        '<div><div class="motai-line">' +
+                        '<div class="motai-line-title">毕业院校:</div>' +
+                        '<div class="motai-line-content">'+res.result[0].graduate_school+
+                        '</div></div></div>'+
+                  	  '<div><div class="motai-line">' +
+                  	  '<div class="motai-line-title">最高学历:</div>' +
+                  	  '<div class="motai-line-content">'+res.result[0].schooling_id+
+                  	  '</div></div></div>'+
+                  	  '<div><div class="motai-line">' +
+                  	  '<div class="motai-line-title">所属行业:</div>' +
+                  	  '<div class="motai-line-content">'+res.result[0].industry+
+                  	  '</div></div></div>'+
+                  	  '<div><div class="motai-line">' +
+                  	  '<div class="motai-line-title">工作年限:</div>' +
+                  	  '<div class="motai-line-content">'+res.result[0].worked_year+
+                  	  '</div></div></div>'+
+                  	  '<div><div class="motai-line">' +
+                  	  '<div class="motai-line-title">领优惠券:</div><div>' +
+                  		coupon_str+
+                  	  '</div></div></div>',
+                        {
+                            dangerouslyUseHTMLString: true
+                        });
+                  }
                     else{
                         return 1;
                     }
@@ -175,29 +229,13 @@
                 })
             },
             handleClick:function(val){
-                let that = this;
-                if(this.oneUserMsg == null){
+                  let that = this;
                     let requestJudge = this.getOneUser(val.user_account_id)
-                    if(requestJudge == 0){
-                        console.log(111)
+                    if(requestJudge == 1){
+                      return;
                     }
-                }
-                val.head_portrait='http://img5.imgtn.bdimg.com/it/u=415293130,2419074865&fm=27&gp=0.jpg'
-                val.user_name='test'
-                this.$alert('<div class="motai-body">' +
-                    '<div>' +
-                    '<img class="motai-img" src="'+that.htmlDecode(val.head_portrait)+'">' +
-                    '<p class="motai-name"><b>'+that.htmlDecode(val.real_name)+'</b></p></div>' +
-                    '</div>' +
-                    '<div>' +
-                    '<div class="motai-line">' +
-                    '<div class="motai-line-title">test</div>' +
-                    '<div class="motai-line-content">testtesttesttesttesttesttesttesttesttesttesttesttesttestte</br>sttesttesttesttesttest</div>' +
-                    '</div>' +
-                    '</div>',
-                    {
-                        dangerouslyUseHTMLString: true
-                    });
+                           
+             
             },
             pageChange(msg){
 
@@ -229,37 +267,30 @@
         width: 80%;
         margin: 0 auto;
     }
-    .motai-img{
-        width: 100px;
-        height: 100px;
-        border: solid 1px #c7c7c7;
-        border-radius: 50%;
-        background-size: cover;
-    }
-    .motai-name{
-        font-size: 20px;
-        width: 100px;
-        display: inline-block;
-        position: relative;
-        bottom: 44px;
-        padding-left: 20px;
-    }
-    .motai-line{
-        width: 100%;
-        margin-top: 20px;
-    }
-    .motai-line-title{
-        width: 25%;
-        display: inline-block;
-        text-align: end;
-        font-size: 18px;
-    }
-    .motai-line-content{
-        padding-left: 20px;
-        width: 64%;
-        display: inline-block;
-        font-size: 18px;
-    }
+  .motai-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 10px 10px;
+  }
+  .selfDetail {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+  }
+  .selfDetailText {
+      display: flex;
+      flex-direction: column;
+  }
+  .motai-line {
+      margin: 10px 10px;
+      display: flex;
+      justify-content: space-between;
+      overflow: hidden;
+  }
+  .motai-line-title{
+      width: 100px !important;
+  }
 </style>
 
 <style scoped>
