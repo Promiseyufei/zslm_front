@@ -5,7 +5,20 @@
             <el-breadcrumb-item><div class="now-page">退款管理</div></el-breadcrumb-item>
         </el-breadcrumb>
         <div style="width: 1500px;margin: 0 auto 20px">
-            <el-button size="small" type="info" icon="el-icon-upload2"  @click.native = "query" style="float: none" plain>导出</el-button>
+			<!-- refund -->
+           <!-- <el-button size="small" type="info" icon="el-icon-upload2" style="float: none" plain>导出</el-button> -->
+		    <a style="display: block;
+		           float: none;
+		           width: 80px;
+		           height: 30px;
+		           text-align: center;
+		           line-height: 30px;
+		           text-decoration: none;"
+		      class="export-button"
+		      href="http://www.zslm.com/admin/refund/export">
+		       <!--需要配置域名-->
+		       导出
+		   </a>
         </div>
         <div class="filesquery">
             <p class="screen"><i class="el-icon-search"></i> 筛选查询</p>
@@ -15,26 +28,26 @@
         <div class="filesForm">
             <el-form v-model="userFrom" label-width="80px">
                 <el-form-item label="手机号">
-                    <el-input v-model="phone"  size="medium" placeholder="请输入手机号"></el-input>
+                    <el-input v-model="phone_v"  size="medium" placeholder="请输入手机号"></el-input>
                 </el-form-item>
                 <el-form-item label="真实姓名">
-                    <el-input v-model="name" size="medium" placeholder="请输入用户姓名"></el-input>
+                    <el-input v-model="name_v" size="medium" placeholder="请输入用户姓名"></el-input>
                 </el-form-item>
                 <el-form-item label="处理结果">
-                    <el-select v-model="type" placeholder="请选择">
+                    <el-select v-model="type_v" placeholder="请选择">
                         <el-option v-for="(item,index) in sorting" :key="index" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="流程状态">
-                    <el-select v-model="type1" placeholder="请选择">
+                    <el-select v-model="type1_v" placeholder="请选择">
                         <el-option v-for="(item,index) in sorting1" :key="index" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 
             </el-form>
-            <el-button size="small" class="query-button" type="primary" icon="el-icon-search"  @click.native = "query">查询</el-button>
+            <el-button size="small" class="query-button" type="primary" icon="el-icon-search"  @click.native = "selectQuery">查询</el-button>
 
         </div>
 
@@ -64,7 +77,7 @@
 
         <!-- 分页 -->
         <div class="footer">
-            <Page :total="total" @pageChange="pageChange" @click.native = "query"></Page>
+            <Page :total="total" @pageChange="pageChange" ></Page>
         </div>
 
         <el-dialog :visible.sync="dialogFormVisible">
@@ -100,6 +113,10 @@
         name: "userFocusMajor",
         data(){
             return {
+				  phone_v:'',
+				name_v:'',
+				type_v:3,
+				type1_v:2,
                 phone:'',
                 name:'',
                 type:3,
@@ -189,6 +206,15 @@
                     }
                 })
             },
+			
+			selectQuery:function(){
+				this.name = this.name_v
+				this.type = this.type_v
+				this.type1 = this.type1_v
+				this.phone = this.phone_v
+				 this.searchContent.page = 1
+				 this.query()
+			},
             query:function () {
                 var that = this;
                 this.post('/admin/refund/getrefund',{
@@ -254,7 +280,7 @@
                 this.dialogFormVisible = true
             },
             jumpPage:function(val) {
-                this.$router.push('/refund/refunddetails/'+val);
+                this.$router.push('/admin/refund/refunddetails/'+val);
             }
         },
         mounted(){
@@ -365,4 +391,11 @@
         color: #999;
         font-weight: 500;
     }
+	 .export-button{
+	    float: right;
+	    color: #666;
+	    background-color: #fff;
+	    border:1px solid #CCC;
+	    border-radius:0;
+	}
 </style>
