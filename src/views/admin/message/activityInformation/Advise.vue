@@ -262,7 +262,7 @@
                 this.$router.push('/message/notice/' + this.id+'/'+this.majorid);
             },
             toNotice: function () {
-                this.$router.push('/active/selectUnivers/' + this.id);
+                this.$router.push('/admin/active/selectUnivers/' + this.id);
             },
 
             getImg: function () {

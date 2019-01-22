@@ -182,11 +182,11 @@
 		    	this.getUserState('userHead');
 		    	//用户名称
 		    	this.getUserState('userName');
-		    	if (this.getUserState('user')) {
+		    	// if (this.getUserState('user')) {
 		    		this.userName = this.getUserState('userName');
-		    		this.loginOr = require(this.getUserState('userHead'));
+		    		this.loginOr = this.getUserState('userHead');
 		    		this.userId = this.getUserState('userId');
-		    	}
+		    	// }
 		    },
 		    //跳到我的关注or登录
 		    myCare:function(){
@@ -261,6 +261,8 @@
 	    	}
 	    },
 	    mounted(){
+	    	console.log(this.getUserState('userHead'))
+	    	console.log(133);
 	    	this.rushRouter();
 	    	//手机端改变样式
 	     	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
