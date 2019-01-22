@@ -294,7 +294,7 @@
                  * this.one 数组记录了选中的值
                  */
                 // console.log(this.one)
-                this.$router.push('/filesManage/fileup/' + this.majorname);
+                this.$router.push('/admin/filesManage/fileup/' + this.majorname);
 
             },
         },

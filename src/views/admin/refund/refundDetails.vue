@@ -122,11 +122,12 @@
                     {type:'',prop:'process_status',label:'流程状态',width:100},
                     {type:'',prop:'approve_status',label:'审批结果',width:100},
                 ],
+				imgSrc:"http://www.lishanlei.cn/admin/"
             }
         },
         methods:{
             goBake: function() {
-                this.$router.push('/refund/refundlist');
+                this.$router.push('/admin/refund/refundlist');
             },
             changeForm(){
                 this.formdis = false
