@@ -7,18 +7,18 @@
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
-            <el-button type="primary" @click.native = "jumpPage">新建</el-button>
+            <el-button type="primary" @click.native="jumpPage">新建</el-button>
         </div>
         <div class="majorlist-query">
             <i class="el-icon-search"></i>
             <p>筛选查询</p>
             <div></div>
-            <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native = "gettableInfo">刷新</el-button>
+            <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native="refreshActivityPage">刷新</el-button>
         </div> 
         <div class="majorlist-form">
             <el-form class="majorlist-input" label-width="80px">
-                <el-form-item label="院校专业">
-                    <el-input size="medium" v-model="name" placeholder="输入文件名称"></el-input>
+                <el-form-item label="活动名称">
+                    <el-input size="medium" v-model="name" placeholder="请输入..."></el-input>
                 </el-form-item>
                 <el-form-item label="展示状态">
                     <el-select size="medium" v-model="type1" placeholder="全部">
@@ -48,8 +48,8 @@
             <i class="el-icon-tickets"></i>
             <p>内容列表</p>
             <div></div>
-            <el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="显示条数">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettableInfo">
+            <el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="默认序列">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native="gettableInfo">
                 </el-option>
             </el-select>
         </div>
@@ -69,11 +69,11 @@
                         <el-switch v-model="majorlisttable[scope.$index].show_state"
                                    @change="changeStatusOne(scope.$index,majorlisttable[scope.$index].show_state)">
                         </el-switch>
-                    </template>changeStatusTwo
+                    </template>
                 </el-table-column>
                 <el-table-column label="推荐状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="majorlisttable[scope.$index].recommended_state" active-color="#999" inactive-color="#409eff"
+                        <el-switch v-model="majorlisttable[scope.$index].recommended_state"
                             @change="changeStatusTwo(scope.$index,majorlisttable[scope.$index].recommended_state)">
                         </el-switch>
                     </template>
@@ -81,8 +81,8 @@
                 <el-table-column label="操作" width="120">
                     <template slot-scope="scope">
                         <div class="majorlist-icon">
-                            <i class="el-icon-search" @click = "jumpActivityDet"></i>
-                            <i class="el-icon-edit-outline" @click = "jumpActivityInfo(majorlisttable[scope.$index].id)"></i>
+                            <i class="el-icon-search" @click="jumpActivityDet(majorlisttable[scope.$index].id)"></i>
+                            <i class="el-icon-edit-outline" @click="jumpActivityInfo(majorlisttable[scope.$index].id)"></i>
                             <i class="el-icon-delete" @click="deleteRow(scope.$index, majorlisttable)"></i>
                         </div>
                     </template>
@@ -95,7 +95,7 @@
         </div>
         <div class="footer"> 
             <el-button size="mini" icon="el-icon-delete" @click="BatchDelete">删除</el-button>
-            <Page :total="total" @pageChange="pageChange" ></Page>
+            <Page :total="total" :limit="searchContent.limit" @pageChange="pageChange" ></Page>
         </div>
     </div>
 </template>
@@ -109,7 +109,7 @@
                 total:0,
                 searchContent:{
                     page:1,
-                    limit:5,
+                    limit:10,
                 },
                 tableTop:[
                   {prop:'active_name',label:'活动名称',width:380},
@@ -119,8 +119,7 @@
                   {prop:'sign_up_state',label:'报名状态',width:80},
                   {prop:'create_time',label:'发布时间',width:160},
                 ],
-                majorlisttable:[{
-                }],
+                majorlisttable:[],
                 value:'',
                 // input:'',
                 name:'',
@@ -129,33 +128,28 @@
                 type3:'',
                 showweight:0,
                 options: [
-                    {
-                      value: '选项1',
-                      label: '10条'
-                    }, 
-                    {
-                      value: '选项2',
-                      label: '50条'
-                    }, 
-                    {
-                      value: '选项3',
-                      label: '100条'
-                    }
+					{value: 0,　label: '按权重升序'}, 
+					{value: 1,label: '按权重降序'}, 
+					{value: 2,label: '按信息更新时间'}
                 ],
             }
         },
         methods:{
             //新建跳转页面——跳转到活动信息
             jumpPage:function(){
-                this.$router.push('/message/activity/0');
+                this.$router.push('/admin/message/activity/0');
             },
             //表格搜索——跳转到相应的活动详情页
-            jumpActivityDet:function(){
-                // 此页面未给
+            jumpActivityDet:function(activityId){
+				let routeUrl = this.$router.resolve({
+					path:'/front/firstMenuRouter/lookActivity/singleActivity/'+activityId,
+					// query:{id: activityId}
+				});
+				window.open(routeUrl.href, '_blank');
             },
             //表格编辑——跳转到活动信息页面
             jumpActivityInfo:function(id){
-                this.$router.push('/message/activity/'+id);
+                this.$router.push('/admin/message/activity/'+id);
             },
             //表格删除——
             singleDele:function(){
@@ -176,12 +170,12 @@
 
             changeStatusOne(index,val){
                 let that = this;
-                 let id = that.majorlisttable[index].id
+                let id = that.majorlisttable[index].id
                 this.confirm(() => {
                     this.post('/admin/information/updateActivityShow',{
                         //后台参数，前台参数(传向后台)
                         id:id,
-                        rec:val ? 0 : 1
+                        showState:val ? 0 : 1
                     }).then(res=>{
                         if (res.code == 0){
                             that.message(true,'修改成功','success');
@@ -197,7 +191,6 @@
             },
 
             changeStatusTwo(index,val){
-                console.log(val)
                 let that = this;
                 let id = that.majorlisttable[index].id
                 this.confirm(() => {
@@ -281,9 +274,9 @@
                                 showWeight: that.majorlisttable[index].show_weight
                             }).then(res=>{
                                 if (res.code == 0){
-                                    that.message(true,'删除成功','success');
+                                    that.message(true,'修改成功','success');
                                 }else{
-                                    that.message(true,'删除失败','error');
+                                    that.message(true,'修改失败','error');
                                     that.majorlisttable[index].show_weight = that.showweight;
                                 }
 
@@ -305,15 +298,28 @@
                 console.log(this.TableValue);
             },
 
+            //刷新页面
+			refreshActivityPage() {
+				this.name = '';
+				this.type1 = '';
+                this.type2 = '';
+                this.type3 = '';
+                this.total = 0;
+                this.searchContent.page = 1;
+                this.searchContent.limit = 10;
+                this.majorlisttable = [];
+				this.value = '';
+				this.gettableInfo();
+			},
+
             gettableInfo:function(){
                 var that = this;
-                console.log(that.searchContent.page)
                 this.post('/admin/information/getActivityPageMessage',{
                     soachNameKeyword:'',
                     showType:that.type1 != '' ? parseInt(that.type1) : 2,
                     recommendedState:that.type2 != '' ? parseInt(that.type2): 2,
                     activityState:that.type3 != '' ? parseInt(that.type3) : 2,
-                    sortType:0,
+                    sortType:that.value == '' ? that.options[2].value : that.value,
                     pageCount:that.searchContent.limit,
                     pageNumber:that.searchContent.page
                 })

@@ -38,7 +38,7 @@
 			<p>内容列表</p>
 			<div></div>
 			<el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="默认顺序">
-				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native="gettableInfo">
+				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click="gettableInfo">
 				</el-option>
 			</el-select>
 		</div>
@@ -104,7 +104,7 @@
 		</div>
 		<div class="footer"> 
 			<el-button size="mini" icon="el-icon-delete" @click.native = "BatchDelete">删除</el-button>
-			<Page :total="total" @pageChange="pageChange" ></Page>
+			<Page :total="total" :limit="searchContent.limit" @pageChange="pageChange" ></Page>
 		</div>
 	</div>
 </template>
@@ -396,6 +396,7 @@
 				.then(function (response) {
 					console.log(response);
 					if (response.code == 0) {
+						console.log(response.result);
 						that.majorlisttable = response.result.get_page_msg;
 						that.total = response.result.count;
 					};
