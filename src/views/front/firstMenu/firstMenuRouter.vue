@@ -182,11 +182,11 @@
 		    	this.getUserState('userHead');
 		    	//用户名称
 		    	this.getUserState('userName');
-		    	if (this.getUserState('user')) {
+		    	// if (this.getUserState('user')) {
 		    		this.userName = this.getUserState('userName');
-		    		this.loginOr = require(this.getUserState('userHead'));
+		    		this.loginOr = this.getUserState('userHead');
 		    		this.userId = this.getUserState('userId');
-		    	}
+		    	// }
 		    },
 		    //跳到我的关注or登录
 		    myCare:function(){
@@ -261,8 +261,10 @@
 	    	}
 	    },
 	    mounted(){
+	    	console.log(this.getUserState('userHead'))
+	    	console.log(133);
 	    	this.rushRouter();
-	    	手机端改变样式
+	    	//手机端改变样式
 	     	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
 			if(w < 992){ //手机端不显示一级菜单和右侧图标，右侧显示list图标
 				this.firstMenu = false;
