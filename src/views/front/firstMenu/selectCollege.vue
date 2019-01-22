@@ -549,7 +549,7 @@ export default {
         border-radius: 60px;
         height: 32px;
     }
-    .selectCollege ..el-input__icon {
+    .selectCollege .el-input__icon {
         line-height: 30px;
     }
 </style>

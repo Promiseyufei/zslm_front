@@ -338,7 +338,7 @@
                 });
             },
             collegeFinish: function() {
-                this.$router.push('/message/universMajorList');
+                this.$router.push('/admin/message/universMajorList');
             },
 	    	startChange: function() {
 	    		this.disabled = false;
@@ -438,7 +438,9 @@
             },
             
             handleClick: function (row) { 
-                
+                this.proId = row.id;
+                this.getAppointProject();
+                this.$router.push('/admin/message/universityMessage/' + this.majorId + '/' + this.majorName + '/' + row.id);
             },
             // 添加专业方向标签输入框
             showInput() {

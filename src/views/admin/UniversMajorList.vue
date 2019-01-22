@@ -38,7 +38,7 @@
 			<p>内容列表</p>
 			<div></div>
 			<el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="默认顺序">
-				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native="gettableInfo">
+				<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click="gettableInfo">
 				</el-option>
 			</el-select>
 		</div>
@@ -66,26 +66,26 @@
 					<template slot-scope="scope">
 						<div class="majorlist-icon">
 							<i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
-							<i class="el-icon-tickets" @click="dialogTableVisible = true"></i>
+							<!-- <i class="el-icon-tickets" @click="dialogTableVisible = true"></i> -->
 							<el-dialog title="查看招生项目" :visible.sync="dialogTableVisible" class="dialog">
 							  <el-table :data="gridData"  border>
 								<el-table-column property="id" label="编号" width="80"></el-table-column>
-								<el-table-column property="name" label="展示顺序" width="100">
+								<el-table-column property="weight" label="展示顺序" width="100">
 									<template slot-scope="scope">
-										<el-input v-model="gridData[scope.$index].showInput" @focus="focusMajorWeigthCount(gridData[scope.$index].showInput)" v-on:blur="changeMajorWeight(gridData[scope.$index].id, gridData[scope.$index].showInput, scope.$index)"></el-input>
+										<el-input v-model="gridData[scope.$index].weight" @focus="focusMajorWeigthCount(gridData[scope.$index].weight)" v-on:blur="changeMajorWeight(gridData[scope.$index].id, gridData[scope.$index].weight, scope.$index, 1)"></el-input>
 									</template>
 								</el-table-column>
-								<el-table-column property="name" label="展示状态" width="100">
+								<el-table-column property="is_show" label="展示状态" width="100">
 									<template slot-scope="scope">
-										<el-switch v-model="gridData[scope.$index].if_recommended" @change="setMajorState(gridData[scope.$index].id, gridData[scope.$index].if_recommended, 2, scope.$index)">
+										<el-switch v-model="gridData[scope.$index].is_show" @change="changeMajorProjectState(gridData[scope.$index].id, () => {return gridData[scope.$index].is_show == true ? 0:1}, 2, scope.$index)">
 										</el-switch>
 									</template>
 								</el-table-column>
-								<el-table-column property="address" label="招生项目"></el-table-column>
+								<el-table-column property="project_name" label="招生项目"></el-table-column>
 								<el-table-column property="address" label="操作" width="140">
 									<template slot-scope="scope">
-										<i class="el-icon-search"  @click="jumpItemInfo"></i>
-										<i class="el-icon-delete"></i>
+										<i class="el-icon-search"  @click="jumpItemInfo(majorlisttable[scope.$index].id, majorlisttable[scope.$index].z_name, gridData[scope.$index].id)"></i>
+										<i class="el-icon-delete" @click="delMajorProject(gridData[scope.$index].id, gridData[scope.$index])"></i>
 									</template>
 								</el-table-column>
 							  </el-table>
@@ -104,7 +104,7 @@
 		</div>
 		<div class="footer"> 
 			<el-button size="mini" icon="el-icon-delete" @click.native = "BatchDelete">删除</el-button>
-			<Page :total="total" @pageChange="pageChange" ></Page>
+			<Page :total="total" :limit="searchContent.limit" @pageChange="pageChange" ></Page>
 		</div>
 	</div>
 </template>
@@ -135,10 +135,11 @@
 					limit:10,
 				},
 				iconname:[
-					{name:'el-icon-search'},
+					{name:'el-icon-search', event:'jumpFontMajorPage'},
 					{name:'el-icon-edit-outline', event:'jumpMajorMsgPage'},
 					{name:'el-icon-delete', event:"delAppointMajor"},
 					{name:'el-icon-refresh', event:"updateMajorTime"},
+					{name:'el-icon-tickets', event:"checkAllProject"}
 				],
 				options: [
 					{value: 0,　label: '按权重升序'}, 
@@ -165,13 +166,33 @@
 			}
 		},
 		methods:{
+			checkAllProject(major) {
+                let self = this;
+
+                this.post('/admin/information/getAllProject', {
+                    majorId: major.id,
+                    pageNum: 0
+                }).then((response) => {
+                    if(response.code == 0) {
+						// self.total = response.result.total;
+						console.log(response.result.data);
+						this.gridData = response.result.data
+                    }
+                    else 
+                        this.message(true, response.msg, 'error');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+				this.dialogTableVisible = true;
+			},
 			//表格编辑-查找-跳到招生项目信息编辑页面
-			jumpItemInfo:function() {
-				this.$router.push('/message/universityMessage/'+"");
+			jumpItemInfo:function(majorId, majorName, projectId) {
+				this.$router.push('/admin/message/universityMessage/'+majorId + '/' + majorName + '/' + projectId);
 			},
 			//新建-跳转院校专业信息页面页面
 			jumpPage:function() {
-				this.$router.push('/message/messageHome/'+"");
+				this.$router.push('/admin/message/messageHome/'+"");
 			},
 			//操作方法回调
 			clickEvent(eventName, row) {
@@ -215,6 +236,25 @@
 				})
 			},
 
+			//删除指定的招生项目
+            delMajorProject(proId, row) {
+                this.confirm(() => {
+                   this.post('/admin/information/deleteAppointProject', {
+                       projectId: proId
+                   }).then((response) => {
+                        if(response.code == 0) {
+							this.gridData.splice(this.gridData.indexOf(row), 1);
+							this.gettableInfo();
+                            this.message(true, response.msg, 'success');
+                        }
+                        else
+                            this.message(true, response.msg, 'error');
+                   })
+                }, () => {
+                    this.message(true, '已取消操作', 'info');
+                });
+            },
+
 			//更新指定院校专业的更新时间
 			updateMajorTime(val) {
 				let _this = this;
@@ -236,11 +276,16 @@
 
 			//跳转到指定的院校专业编辑页面
 			jumpMajorMsgPage(val) {
-				this.$router.push('/message/messageHome/' + val.id);
+				this.$router.push('/admin/message/messageHome/' + val.id);
 			},
 			//跳到相应的前台院校专业主页
-			jumpFontMajorPage(){
-				//此页面还未给
+			jumpFontMajorPage(major){
+				let routeUrl = this.$router.resolve({
+					path:'/front/firstMenuRouter/selectCollege/singleCollage',
+					query:{id:major.id}
+				});
+				window.open(routeUrl.href, '_blank');
+				
 			},
 			//刷新页面
 			refreshMajorPage() {
@@ -292,7 +337,8 @@
 			},
 
 			//改变权重值时进行判断
-			changeMajorWeight(id, weight, row) {
+			changeMajorWeight(id, weight, row, type = 0) {
+				console.log(weight);
 				var re = /^[0-9]+.?[0-9]*$/;
 				if (!re.test(weight)) {
 					this.message(true,'请输入数值','warning');
@@ -301,9 +347,29 @@
 					this.message(true,'权值范围为0~100','warning');
 					this.majorlisttable[row].weight = this.cacheMajorWeight;
 				} else {
-					this.setMajorState(id, weight, 0);
+					type == 1 ? this.changeMajorProjectState(id, 0, weight) : this.setMajorState(id, weight, 0);
 				}
 			},
+
+			//设置招生项目的状态
+            changeMajorProjectState(proId, type, state) {
+                let status = true;
+                this.post('/admin/information/setProjectState' , {
+                    projectId: proId,
+                    type:type,
+                    state: state
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.message(true, response.msg, 'success');
+                    }
+                    else {
+                        status = false;
+                        this.message(true, response.msg, 'error');
+                    }
+                })
+                return status;
+
+            },
 
 			//分页发生变化时调用
 			pageChange(msg) {
@@ -330,6 +396,7 @@
 				.then(function (response) {
 					console.log(response);
 					if (response.code == 0) {
+						console.log(response.result);
 						that.majorlisttable = response.result.get_page_msg;
 						that.total = response.result.count;
 					};

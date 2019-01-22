@@ -34,14 +34,14 @@
                         <el-input v-model="majorInfo.z_name" :disabled = "disabled"></el-input>
                     </el-form-item>
                     <el-form-item label="专业认证"> 
-                        <el-radio-group v-model="majorInfo.major_confirm_id" :disabled = "disabled">
-                            <el-radio v-for="(item, index) in majorAuthentication" :key="index" :label="item.id">{{ item.name }}</el-radio>
-                        </el-radio-group>
+                        <el-checkbox-group v-model="majorInfo.major_confirm" :disabled = "disabled">
+                            <el-checkbox v-for="(item, index) in majorAuthentication" :key="index" :label="item.id +''">{{ item.name }}</el-checkbox>
+                        </el-checkbox-group>
                     </el-form-item>
                     <el-form-item label="院校性质">
-                        <el-radio-group v-model="majorInfo.major_follow_id" :disabled = "disabled">
-                            <el-radio v-for="(item, index) in majorNature" :key="index" :label="item.id">{{ item.name }}</el-radio>
-                        </el-radio-group>
+                        <el-checkbox-group v-model="majorInfo.major_follow" :disabled = "disabled">
+                            <el-checkbox v-for="(item, index) in majorNature" :key="index" :label="item.id + ''">{{ item.name }}</el-checkbox>
+                        </el-checkbox-group>
                     </el-form-item>
                     <el-form-item label="审批年限">
                         <el-select v-model="majorInfo.access_year" placeholder="请选择活动区域" :disabled = "disabled">
@@ -227,7 +227,10 @@ export default {
             
             //院校名称
             restaurants:[],
-            majorInfo:{},
+            majorInfo:{
+                major_confirm:[],
+                major_follow:[]
+            },
             majorLogoFile:{},
             majorCoverMapFile:{},
             majorLogoUrl:'',
@@ -247,6 +250,10 @@ export default {
         }
     },
     methods:{
+
+        test(data) {
+            console.log(data)
+        },
 
         //获取logo图片file，并图片预览
         changeLogoUpload: function(file,fileList) {
@@ -279,10 +286,13 @@ export default {
         },
 
 		putMajorMainMsg() {
-			let formdata = new FormData();
+            // return false;
+            let formdata = new FormData();
+            if(this.majorId != null)
+                formdata.append('majorId', this.majorId);
 			formdata.append('majorName', this.majorInfo.z_name);
-			formdata.append('majorAuth', this.majorInfo.major_confirm_id);
-			formdata.append('majorNature', this.majorInfo.major_follow_id);
+			formdata.append('majorAuth', this.majorInfo.major_confirm.toString());
+            formdata.append('majorNature', this.majorInfo.major_follow.toString());
 			formdata.append('approval', this.majorInfo.access_year);
             formdata.append('majorProvince', this.changeMajorProvince(this.majorInfo.province));
 			formdata.append('majorAddress', this.majorInfo.address);
@@ -291,14 +301,18 @@ export default {
 			formdata.append('admissionsWeb', this.majorInfo.admissions_web);
 			formdata.append('schoolId', this.changeMajorSchoolNameToId(this.majorInfo.school_id));
             formdata.append('majorType', this.changeMajorType(this.majorInfo.z_type));
-			this.wxSendImg.forEach((item) => {
-				formdata.append('wcImage[]', item);
+            // console.log(this.wxSendImg);return false;
+			this.wxSendImg.forEach((item, index) => {
+				formdata.append('wcImage['+index+']', item);
             });
-            this.wbSendImg.forEach((item) => {
-                formdata.append('wbImage[]', item);
+            this.wbSendImg.forEach((item, index) => {
+                formdata.append('wbImage[' + index + ']', item);
             });
-            formdata.append('majorLogo', this.majorLogoFile);
-            formdata.append('majorCover', this.majorCoverMapFile);
+
+            JSON.stringify(this.majorLogoFile) == "{}" ? formdata.append('majorLogo', this.majorInfo.magor_logo_name.split('/').pop()) : formdata.append('majorLogo', this.majorLogoFile);
+            JSON.stringify(this.majorCoverMapFile) == "{}" ? formdata.append('majorCover', this.majorInfo.major_cover_name.split('/').pop()) : formdata.append('majorCover', this.majorCoverMapFile);
+
+
 			let config = {
 				headers: {
 					'Content-Type': 'multipart/form-data'
@@ -308,7 +322,7 @@ export default {
 				if(response.code == 0) {
                     this.message(true, response.msg, 'success');
                     setTimeout(() => {
-                        this.$router.push('/message/messageHome/' + response.result);
+                        this.$router.push('/admin/message/messageHome/' + response.result);
                     }, 2000);
                 }
                 else this.message(true, response.msg, 'error');
@@ -337,12 +351,13 @@ export default {
 		},
 		changeMajorProvince(majorProvinceName) {
             let pro = '';
-			this.province.forEach((province) => {
-				province.citys.forEach((city) =>{
-					if((typeof(majorProvinceName) == 'String' && city.name == majorProvinceName) || (typeof(majorProvinceName) == 'number' && city.id == majorProvinceName)) {
-                        pro = ""+city.father_id + ',' + (""+city.id);
-                    }
-				})
+			this.province.forEach((provincees) => {
+                if(provincees.hasOwnProperty('citys') || provincees.city != undefined)
+                    provincees.citys.forEach((city) =>{
+                        if((typeof(majorProvinceName) == 'String' && city.name == majorProvinceName) || (typeof(majorProvinceName) == 'number' && city.id == majorProvinceName)) {
+                            pro = ""+city.father_id + ',' + (""+city.id);
+                        }
+                    })
             });
             return pro;
         },
@@ -360,7 +375,7 @@ export default {
                 return id;
         },
 		jumpPage:function(){
-			this.$router.push('/message/universityMessage/' + this.majorId + '/' + this.majorInfo.z_name);
+			this.$router.push('/admin/message/universityMessage/' + this.majorId + '/' + this.majorInfo.z_name);
 		},
         test: function() {
         //   console.log(this.province);
@@ -530,7 +545,7 @@ export default {
 			let height = img.height;
 			//如果图片大于四百万像素，计算压缩比并将大小压至400万以下
 			let ratio;
-			if ((ratio = width * height / 4000000) > 1) {magor_logo_name
+			if ((ratio = width * height / 4000000) > 1) {
 				console.log("大于400万像素");
 				ratio = Math.sqrt(ratio);
 				width /= ratio;
@@ -638,10 +653,11 @@ export default {
 
 		if(this.$route.params.majorId != null) {
             this.majorId = this.$route.params.majorId;
-			this.post('/admin/information/selectReception', {
+			this.fetch('/admin/information/selectReception', {
 				majorId: this.$route.params.majorId
 			}).then((response) => {
 				if(response.code == 0) {
+                    console.log(response.result);
                     _this.majorInfo = response.result;
                     _this.majorLogoUrl = response.result.magor_logo_name;
                      _this.majorCoverMapUrl = response.result.major_cover_name;

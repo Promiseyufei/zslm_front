@@ -220,7 +220,7 @@ export default {
         // 获取活动主办院校信息
         getAcHostMajor:function(){
             let self = this;
-            if(self.u_id){
+            if(self.userId){
                 this.fetch('http://www.lishanlei.cn/front/colleges/getactivemajor',{
                     // acId:this.id,
                     a_id:this.id,
@@ -245,7 +245,29 @@ export default {
                     console.log("error");
                 });
             }else{
-                self.message(true, "记得先去登陆~", 'info');
+                this.fetch('http://www.lishanlei.cn/front/activity/getAcHostMajor',{
+                    acId:this.id,
+                    // a_id:this.id,
+                    // u_id:this.userId,
+                }).then(function (res) {
+                    console.log(res.result);
+                    // let res = response[0];
+                    // console.log(res.result[0]);
+                    if(res.code == 0){
+                        self.acHostInfo = res.result;
+                        // 设置背景图
+                        if(self.acHostInfo.major_cover_name != ""){
+                            self.hostBgimg = self.acHostInfo.major_cover_name;
+                        }
+                        // if(self.acHostInfo.is_guanzhu == true){
+                        //     self.GuanZhu = "取消关注";
+                        // }
+                    }else{
+                        self.message(true, "主办院校不存在", 'errors');
+                    }
+                }).catch(function(error){
+                    console.log("error");
+                });
             }
             
         },

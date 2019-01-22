@@ -7,14 +7,19 @@
 export default {
 	data() {
 		return {
-			pageSizes:[5,20,50],
+			pageSizes:[10,20,50],
 			page:{
 				page:1,//默认第一页
-				limit:5//默认显示一百条
+				limit:10//默认显示一百条
 			},
 		};
 	},
-	props:["total"],
+	props:["total", "limit"],
+	watch:{
+		limit(limit) {
+			this.page.limit = limit;
+		}
+	},
     methods:{
     	//每页总条数变更
     	handleSizeChange(val) {
@@ -26,18 +31,10 @@ export default {
 	    handleCurrentChange(val) { 
 	    	this.page.page = val;
 	    	this.$emit('pageChange',this.page);
-	    	// if (this.page.page) {
-	    	// 	this.$emit('query');
-	    	// 	console.log(this.page.page);
-
-	    	// };
-	    	// this.$emit('gettable_info');
-	    	// this.$emit('showbox',val);
 	    },
     },
     mounted(){
-            // this.handleCurrentChange();
-            // console.log(this.total);
+          
     }
 }
 </script>

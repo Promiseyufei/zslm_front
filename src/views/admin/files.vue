@@ -18,25 +18,25 @@
 		   <div>
 				<el-form class="input" label-width="80px">
 					<el-form-item label="文件名称">
-						<el-input size="medium" v-model="filesName" placeholder="请输入文件名称">
+						<el-input size="medium" v-model="filesName_v" placeholder="请输入文件名称">
 						</el-input>
 					</el-form-item>
 					<el-form-item label="院校名称">
-						<el-input v-model="majorName" size="medium" placeholder="请输入院校名称"></el-input>
+						<el-input v-model="majorName_v" size="medium" placeholder="请输入院校名称"></el-input>
 					</el-form-item>
 					<el-form-item label="文件年份">
-						  <el-date-picker v-model="fileYear" type="year" placeholder="选择年" size="medium" value-format="yyyy">
+						  <el-date-picker v-model="fileYear_v" type="year" placeholder="选择年" size="medium" value-format="yyyy">
 						  </el-date-picker>
 					</el-form-item>
 					<el-form-item label="文件类型">
-						<el-select v-model="fileType" size="medium" placeholder="请选择">
+						<el-select v-model="fileType_v" size="medium" placeholder="请选择">
 							<el-option v-for="(opt,index) in input" :key="index" :label="opt.label" :value="opt.value">
 							</el-option>
 						</el-select>
 					</el-form-item>
 				</el-form>  
 		   </div>
-		   <el-button size="mini" class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "query">查询</el-button> 
+		   <el-button size="mini" class="filesForm-query" type="primary" icon="el-icon-search" @click.native = "selectQuery">查询</el-button> 
 		</div>
 
 		<!-- 数据列表 -->
@@ -47,7 +47,7 @@
 
 	  	<!-- 表格 -->
 	    <div class="file-table">
-		      <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
+		      <el-table v-loading="loading" :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
 		          <el-table-column type="selection" width="50"></el-table-column>
 		          <el-table-column label="编号" prop="id" width="70"></el-table-column>
 		          <el-table-column label="展示权重" width="100">
@@ -60,7 +60,7 @@
                   </el-table-column>
 		          <el-table-column label="操作" width="220">
 		              <template slot-scope="scope">
-		              	<el-button @click="dialogFormVisible = true" type="text" size="small">编辑</el-button>
+		              	<el-button @click="editFile(tableData[scope.$index])" type="text" size="small">编辑</el-button>
 		              	<!-- 模态框 -->
 		              	<el-dialog title="编辑文件信息" :visible.sync="dialogFormVisible" class="dialog">
 							<el-form :model="form">
@@ -70,9 +70,9 @@
 						    	</el-form-item>
 						    	<div class="dialogRadio">
 						    		<div>文件类型</div>
-						    		<el-radio-group v-model="radio2">
-										<el-radio :label="3">招生简章</el-radio>
-								    	<el-radio :label="6">其他文件</el-radio>
+						    		<el-radio-group v-model="form.type">
+										<el-radio label="0">招生简章</el-radio>
+								    	<el-radio label="1">其他文件</el-radio>
 									</el-radio-group>
 						    	</div>
 						    	<el-form-item label="年份信息" :label-width="formLabelWidth">
@@ -85,7 +85,7 @@
 						    		<div>是否展示</div>
 						    		<el-tooltip :content="'Switch value: ' + value5" placement="top">
 										<el-switch
-										    v-model="value5"
+										    v-model="form.is_show"
 										    active-color="#13ce66"
 										    inactive-color="#ff4949"
 										    active-value="100"
@@ -97,7 +97,7 @@
 							</el-form>
 							<div slot="footer" class="dialog-footer">
 						    	<el-button @click="dialogFormVisible = false">取 消</el-button>
-						    	<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+						    	<el-button type="primary" @click="updateFile">确 定</el-button>
 						  	</div>
 						</el-dialog>
 
@@ -144,17 +144,21 @@
             	allFilesCount:1000,
             	recrIntroCount:200,
             	otherFilesCount:7000,
-            	radio2: "",
+            	// radio2:"",
     			i: 0,//当前选项卡id
   	    		/*查询输入框*/
+				filesName_v:'',
+				fileType_v:'全部',
+				fileYear_v:'',
+				majorName_v:'',
   	    		filesName:'',
-  	    		fileType:2,
+  	    		fileType:'全部',
   	    		fileYear:'',
   	    		majorName:'',
   	    		input: [	
-		           	{value: '选项一',label:'类型一'},
-		           	{value: '选项二',label:'类型二'},
-		           	{value: '选项三',label:'类型三'},
+		           	{value: '2',label:'全部'},
+		           	{value: '0',label:'招生简章'},
+		           	{value: '1',label:'其他文件'},
           		],
           		/*数据列表  排序方式*/
           		Sort:'',
@@ -177,9 +181,9 @@
 		            show_weight: '',
                     file_name: '',
                     z_name:'',
-                    file_type: '',
+                    file_type: 0,
                     file_year: '',
-		            is_show: '',
+		            is_show:false,
                     create_time: '',
 		        }],
 		        showweight:'',
@@ -191,6 +195,8 @@
 		              page:1,
 		              limit:5,
 		        },
+				judgeadd:true,
+				loading:true
     	    }
   	    },
        	watch: {
@@ -205,10 +211,35 @@
 		   //    this.dialogVisible = false 
 		   //  },
 	  		//变量和字符串拼接——头部导航按钮内字体显示
-	  		adds:function() {
-	  				this.banner[0].name = `全部文件(${this.allFilesCount})`;
-	  				this.banner[1].name = `招生简介(${this.recrIntroCount})`;
-	  				this.banner[2].name = `其他文件(${this.otherFilesCount})`;
+			editFile:function(val){
+				console.log(val)
+				this.form.fileId = val.id
+				this.form.name = val.file_name
+				this.form.type = val.file_type
+				this.form.yearInfo = val.file_year
+				this.form.fileDesc = val.file_alt
+				this.form.is_show = val.is_show
+				console.log(this.form.type)
+				this.dialogFormVisible = true
+				
+			},
+			updateFile:function(){
+				
+				this.dialogFormVisible = false
+			},
+			
+			selectQuery:function(){
+				this.majorName = this.majorName_v
+				this.fileType = this.fileType_v
+				this.fileYear = this.fileYear_v
+				this.filesName = this.filesName_v
+				this.searchContent.page = 1
+				this.query()
+			},
+	  		adds:function(allfilecount,zhaosheng,other) {
+	  				this.banner[0].name = `全部文件(${allfilecount})`;
+	  				this.banner[1].name = `招生简介(${zhaosheng})`;
+	  				this.banner[2].name = `其他文件(${other})`;
 	  		},
 	  		//跳转页面
 	  		jumpPage:function() {
@@ -223,10 +254,12 @@
 		    	var that = this;
 		    	let selectId = [];//存放删除的数据
 		    	for (var i = 0; i < that.multipleSelection.length; i++) {
-		    		that.selectId.push(that.multipleSelection[i].id);
+		    		selectId.push(that.multipleSelection[i].id);
 		    		//删除数组——删除选择的行
-		    		selectId.splice(0,that.multipleSelection.length);
+					
+		    	
 		    	};
+				console.log(selectId)
 		    	this.deleteRequest(selectId);
 		    },
 	      	toshow2(msg) {
@@ -265,6 +298,7 @@
                         fileId: filesId,
                     }).then(function (response) {
                         var res = response;
+						that.judgeadd = true
                         if (res.code == 0) {
                             that.query();
                             that.message(true,'删除成功','success');
@@ -316,6 +350,7 @@
 	      	},
 	      	query: function (){
 	        	var that = this;
+				this.loading = true;
 	        	this.fetch('/admin/files/getuploadfile',
 		          //后台参数，前台参数(传向后台)
                     {
@@ -324,7 +359,7 @@
                       fileName: that.filesName,
                       majorName: that.majorName,
                       fileYear: that.fileYear,
-                      fileType: that.fileType
+                      fileType: that.fileType == '全部'?2:that.fileType
                     }
 	        	)
 	        	.then(function (response) {
@@ -334,8 +369,11 @@
                         that.tableData =res.result.data;
 
                         that.total = res.result.dataCount;
-                        console.log(that.total);
-                    };
+						if(that.judgeadd)
+							that.adds(res.result.dataCount,res.result.zhaos,res.result.dataCount-res.result.zhaos)
+						that.judgeadd = false;
+						that.loading = false;
+					};
 	        	})
 	        	.catch(function (error) {
 	        	});

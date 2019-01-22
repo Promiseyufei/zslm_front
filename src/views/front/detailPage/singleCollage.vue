@@ -164,8 +164,8 @@
                                       width="30%">
                                       <span><img :src="all" v-for="(all, index) in wxCode" :key="index"></span>
                                     </el-dialog>
-                                    <div class="logonLine"></div>
-                                    <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut" @click="majorWb">
+                                    <!-- <div class="logonLine"></div> -->
+                                    <!-- <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut" @click="majorWb">
                                         <div><img :src="logoPicture[0].xinlang"></div>
                                         <div class="weibo" id="xinlang">微博主页</div>
                                     </div>
@@ -173,7 +173,7 @@
                                       :visible.sync="dialogVisible2"
                                       width="30%">
                                       <span><img :src="xlCode"></span>
-                                    </el-dialog>
+                                    </el-dialog> -->
                                 </div>
                             </el-card>
                         </el-col>
