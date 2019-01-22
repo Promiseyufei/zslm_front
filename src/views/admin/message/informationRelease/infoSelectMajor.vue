@@ -262,7 +262,7 @@
                     }, '确定设置选中院校专业为该资讯的相关院校吗？');
                 }
 
-                this.$router.push('/message/recommend/' + this.infoId);
+                this.$router.push('/admin/message/recommend/' + this.infoId);
 
             },
         },

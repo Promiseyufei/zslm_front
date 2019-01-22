@@ -10,13 +10,11 @@
                 <!-- 选项卡 -->
                 <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i"></operateNav>
                 <div class="operateUpfiles operateHeader">
-                    <p>当前操作页面：<span>{{this.radio2}}</span></p>
+                    <p>当前操作页面：<span>{{this.nowPage}}</span></p>
                     <el-button type="info" plain @click.native="operateUpdate"><i class="fa fa-refresh fa-fw"></i>&nbsp;刷新</el-button>
                 </div>
             
-                <div v-loading="loading"
-                    element-loading-text="拼命加载中"
-                    element-loading-spinner="el-icon-loading">
+                <div >
                     <!-- 上传banner -->
                     <div class="operateUpfiles operateUp">
                         <div class="operateUpfilesLeft">
@@ -72,21 +70,18 @@ export default {
     },
     data() {
       return {
+				nowPage:'',
         dis: true,
         disp: "inline-block",
         adviseName: "",
         adviseName2: "",
         loading: false,
         banner: [
-            {
-                id: 1,
-                name: "区域一"
-            },
-            {
-                id: 2,
-                name: "区域二"
-            }
-        ],
+					{
+						id:0,
+						name:'test'
+					}
+				],
         radio2: "",
         src: "",
         fileList: [{name: '', url: 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658',file: ''}],
@@ -153,6 +148,8 @@ export default {
                 self.dis = true;
                 self.disp = "inline-block";
                 self.adviseName2 = self.adviseName;
+								
+									self.getAdviseName();
               }else {
                 self.adviseName = self.adviseName2;
                 self.message(true,response.msg,'warning');
@@ -172,9 +169,18 @@ export default {
           })
           .then(function (response) {
             if (response.code == 0) {
+								self.banner=[]
               self.adviseName = response.result.region_name;
               self.adviseName2 = response.result.region_name;
               self.tableData3 = response.result.zx_id;
+							self.nowPage =  response.result.region_name;
+							for(var i = 0;i<response.result.region.length;i++){
+									var banner_n = {id:0,name:''}
+									console.log(response.result.region[i])
+								  banner_n.id = response.result.region[i].id
+									banner_n.name = response.result.region[i].region_name
+									self.banner.push(banner_n)
+							}
               if(self.tableData3 !== null)
                 for (var i = 0; i < self.tableData3.length; i++) {
                   self.$set(self.tableData3[i],'show_weight',self.tableData3[i].weight);

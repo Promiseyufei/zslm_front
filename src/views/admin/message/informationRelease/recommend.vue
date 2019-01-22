@@ -190,33 +190,33 @@ export default {
     methods: {
         // 跳转到“院校专业”页面添加院校
         adviseAdd: function() {
-          this.$router.push('/message/infoSelectMajor/' + this.infoId + '/' + 0);
+          this.$router.push('/admin/message/infoSelectMajor/' + this.infoId + '/' + 0);
         },
         //跳转到推荐阅读添加页面
         adviseRead() {
-            this.$router.push('/message/setReRead/' + this.infoId);
+            this.$router.push('/admin/message/setReRead/' + this.infoId);
         },
         pushInfoSelectMajor() {
-            this.$router.push('/message/infoSelectMajor/' + this.infoId + '/' + 1);
+            this.$router.push('/admin/message/infoSelectMajor/' + this.infoId + '/' + 1);
         },
         
         // 返回上一步
         toBack: function() {
-            this.$router.push('/message/changeInformation/' + this.infoId);
+            this.$router.push('/admin/message/changeInformation/' + this.infoId);
         },
 
         // 跳转到消息通知页面
         toNotice: function() {
-            this.$router.push('/message/informationNotice/' + this.infoId);
+            this.$router.push('/admin/message/informationNotice/' + this.infoId);
         },
 
         //点击完成，跳转到资讯列表首页
         finish:function() {
-            this.$router.push('/message/informationList');
+            this.$router.push('/admin/message/informationList');
         },
 
         adviseRead:function() {
-            this.$router.push('/message/adviseRead');
+            this.$router.push('/admin/message/adviseRead');
         },
 
         //删除主办院校

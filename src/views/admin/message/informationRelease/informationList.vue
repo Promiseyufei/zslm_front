@@ -206,16 +206,16 @@
                             break;
                     }
                     this.message(true, '已取消修改', 'info');    
-                })
+                },"是否执行操作")
             },
     
             //新建+表格编辑——页面跳转到资讯内容
             jumpPage:function(infoId){
                 if(infoId < 1) {
-                    this.$router.push('/message/changeInformation')
+                    this.$router.push('/admin/message/changeInformation')
                 }
                 else {
-                    this.$router.push('/message/changeInformation/' + infoId);
+                    this.$router.push('/admin/message/changeInformation/' + infoId);
                 }
             },
             //跳到相应的资讯详情页
@@ -237,7 +237,7 @@
                     })
                 }, ()=> {
                     this.message(true, "已取消操作", "info");
-                })
+                },"是否删除这条咨询")
             },
             
             /*分页  获得当前页码和总页数*/
@@ -252,6 +252,9 @@
             focusCount:function(){
                 this.input = val;
             },
+			selectQuery:function(){
+				
+			},
             gettableInfo:function() {
                 var that = this;
                 this.post('/admin/information/getInfoPageMsg',{

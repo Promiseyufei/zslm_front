@@ -208,7 +208,7 @@ export default {
         // 跳转到推荐内容设置页面
         toAdvise: function() {
             if(this.$route.params.infoId != null) {
-                this.$router.push('/message/recommend/' + this.$route.params.infoId);
+                this.$router.push('/admin/message/recommend/' + this.$route.params.infoId);
             }
             else 
                 this.message(true, '请先完成当前资讯的创建', 'info');

@@ -131,6 +131,8 @@
 		         	name: '',
 		         	fileDesc: '',
 		         	yearInfo: '',
+					type:'0',
+					is_show:'0'
 		        },
 		        formLabelWidth: '120px',
 		        radio2:3,
@@ -171,9 +173,9 @@
 	            tableTop:[
 		            {type:'',prop:'file_name',label:'文件名称',width:260},
 		            {type:'',prop:'z_name',label:'所属院校专业',width:320},
-		            {type:'',prop:'file_type',label:'文件类型',width:100},
+		            {type:'',prop:'type_name',label:'文件类型',width:100},
 		            {type:'',prop:'file_year',label:'文件年份',width:100},
-		            {type:'',prop:'show_weight',label:'主页展示',width:100},
+		            {type:'',prop:'show_name',label:'主页展示',width:100},
 		            {type:'',prop:'create_time',label:'上传时间',width:180},
 		        ],
 		        tableData:[{
@@ -367,7 +369,10 @@
                     if (res.code == 0) {
                         console.log(res.result.data)
                         that.tableData =res.result.data;
-
+						for(var i = 0;i<that.tableData.length;i++){
+							that.tableData[i].type_name = that.tableData[i].file_type == 0?"招生简章":"其他文件"
+							that.tableData[i].show_name = that.tableData[i].is_show == 0?"展示":"展示"
+						}
                         that.total = res.result.dataCount;
 						if(that.judgeadd)
 							that.adds(res.result.dataCount,res.result.zhaos,res.result.dataCount-res.result.zhaos)
