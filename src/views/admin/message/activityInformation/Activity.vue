@@ -415,9 +415,10 @@
                         .then(res => {
                             if (res.code == 0) {
                                 self.message(true, '上传成功', 'success');
-                                self.record = res.result
+                                self.record = res.result;
+                                this.$router.push('/admin/message/activity/' + self.record);
                             } else {
-                                self.message(true, '上传失败', 'success');
+                                self.message(true, '上传失败', 'info');
                             }
                         })
                 } else {
@@ -502,7 +503,7 @@
                 //     this.message(true,'请先创建活动','error');
                 //     return;
                 // }
-                this.$router.push('/admin/message/advise/' + this.record+'/'+this.hostId);
+                this.$router.push('/admin/message/advise/' + this.record);
             },
 
             // 提交修改数据

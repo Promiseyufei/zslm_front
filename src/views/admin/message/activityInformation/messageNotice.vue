@@ -2,7 +2,8 @@
     <div class="recordDetail">
         <div class="reDetBread">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item>活动信息</el-breadcrumb-item>
+                <el-breadcrumb-item>活动发布</el-breadcrumb-item>
+                <el-breadcrumb-item>活动发布</el-breadcrumb-item>
                 <el-breadcrumb-item>推荐信息</el-breadcrumb-item>
                 <el-breadcrumb-item>消息通知</el-breadcrumb-item>
             </el-breadcrumb>
@@ -45,7 +46,7 @@
                    <div class="updateCon">
                        <div style="position: relative;">
                            <div class="upQuotes"><img src="../../../../assets/img/upQuotes.png"></div>
-                           <div class="contentDetail">
+                           <div class="contentDetail" style="width: 400px;">
 
                                <p >{{content}}</p>
                                <el-button type="text" @click="change()" >修改</el-button>
@@ -79,6 +80,7 @@
             </div>
         </div>
         <div class="sendMess">
+            <el-button type="primary" @click="$router.push('/admin/message/advise/' + activeId)" plain>&#8195返回上一步&#8195</el-button>
             <el-button type="primary" @click.native = "jumpPage">&#8195&#8195完成！&#8195&#8195</el-button>     
         </div> 
     </div>
@@ -93,30 +95,27 @@
                 sendMessage:'请输入信息',
                 sendMessagedis:false,
                 content:'请输入信息',
-                majorId:1,
                 activeId:0
             };
         },
         methods: {
             jumpPage:function() {
-                this.$router.push('/message/activityList');
+                this.$router.push('/admin/message/activityList');
             },
 
+
+
+            //活动作为院校动态进行发送
             addNewsFirst:function(){
                 let self = this;
-                this.post('/admin/information/sendActivityDynamic',
-                        {
-                            activityId:parseInt(self.activeId),
-                            majorId:parseInt(self.majorId),
-                            newOrDyna:0,
-                            contents:self.content
-                        }
-                ).then(res=>{
+                this.post('/admin/information/setActivitydynamic',{
+                    activityId:parseInt(self.activeId),
+                }).then(res=>{
                     if(res.code == 0){
-                        self.message(true,'修改成功')
+                        self.message(true,'发送成功','success')
                         self.contentdis = true;
                     }else{
-                        self.message(true,'修改成功','error')
+                        self.message(true,res.msg,'info')
                     }
 
                 })
@@ -126,18 +125,17 @@
                 this.post('/admin/information/sendActivityDynamic',
                     {
                         activityId:parseInt(self.activeId),
-                        majorId:parseInt(self.majorId),
-                        newOrDyna:1,
-                        contents:self.sendMessage
+                        contents:self.sendMessage,
+                        type: 1,
+                        url: 'http://' + window.location.host + '/front/firstMenuRouter/lookActivity/singleActivity/' + parseInt(self.activeId)
                     }
                 ).then(res=>{
                     if(res.code == 0){
-                        self.message(true,'修改成功')
+                        self.message(true,'发送成功', 'success')
                         self.sendMessagedis = true;
                     }else{
-                        self.message(true,'修改成功','error')
+                        self.message(true,res.msg,'info')
                     }
-
                 })
             },
             modify() {
@@ -161,28 +159,28 @@
             }
             ,
             change() {
-                this.$prompt('', '', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    inputPattern: '',//输入框内容判断，前台要加吗？
-                    inputErrorMessage: '邮箱格式不正确'//判断提示语
-                }).then(({ value }) => {
-                    this.content = value
-                    this.$message({
-                        type: 'success',
-                        message: '您已修改为: ' + value
-                    });
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '您已取消修改'
-                    });
-                });
+                // this.$prompt('', '', {
+                //     confirmButtonText: '确定',
+                //     cancelButtonText: '取消',
+                //     inputPattern: '',//输入框内容判断，前台要加吗？
+                //     inputErrorMessage: '邮箱格式不正确'//判断提示语
+                // }).then(({ value }) => {
+                //     this.content = value
+                //     this.$message({
+                //         type: 'success',
+                //         message: '您已修改为: ' + value
+                //     });
+                // }).catch(() => {
+                //     this.$message({
+                //         type: 'info',
+                //         message: '您已取消修改'
+                //     });
+                // });
+                this.message(true, '发送院校动态更新不需要输入信息哦', 'info');
             }
         },
         mounted(){
             this.activeId = this.$route.params.id;
-            this.majorId = this.$route.params.mid
         }
     }
 

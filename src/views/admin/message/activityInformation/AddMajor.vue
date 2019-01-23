@@ -5,9 +5,9 @@
           <!-- 面包屑 -->
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>信息发布</el-breadcrumb-item>
-            <el-breadcrumb-item>院校信息</el-breadcrumb-item>
-              <el-breadcrumb-item>院校信息编辑</el-breadcrumb-item>
-            <el-breadcrumb-item class="selectedNavPublic">添加推荐</el-breadcrumb-item>
+            <el-breadcrumb-item>活动信息</el-breadcrumb-item>
+              <el-breadcrumb-item>活动信息编辑</el-breadcrumb-item>
+            <el-breadcrumb-item class="selectedNavPublic">设置推荐院校专业</el-breadcrumb-item>
           </el-breadcrumb>
 
           <!-- 返回按钮 -->
@@ -25,7 +25,7 @@
           <div class="addadviseSelect">
               <div class="addadviseInput">
                   <el-form ref="form" :model="form" label-width="120px">
-                      <el-form-item label="是否展示">
+                      <el-form-item label="是否推荐">
                         <el-select v-model="form.region" clearable placeholder="请选择">
                           <el-option :label="list.name" :value="list.id" v-for="(list,i) in banner" :key = "i"></el-option>
                         </el-select>
@@ -35,7 +35,7 @@
                       </el-form-item>
                   </el-form>
               </div>
-              <el-button type="info" plain @click="getInformationType" size="small"><i class="fa fa-search fa-fw"></i>查询</el-button>
+              <el-button type="info" plain @click="getAllMajor" size="small"><i class="fa fa-search fa-fw"></i>查询</el-button>
           </div>
 
           <!-- 筛选头部 -->
@@ -82,7 +82,7 @@
 
             <!-- 已选资讯 -->
             <div class="operateUpfiles operateHeader">
-                <p><i class="fa fa-window-restore"></i> 已选活动</p>
+                <p><i class="fa fa-window-restore"></i> 已选院校专业</p>
             </div>
 
             <!-- 选中状态 -->
@@ -130,11 +130,12 @@ export default {
             message: ''
           },
           banner: [
-              {'id':0,'name':'展示'},
-              {'id':1,'name':'不展示'},
+              {'id':0,'name':'推荐'},
+              {'id':1,'name':'不推荐'},
+              {'id':2, 'name': '全部'}
           ],
           total: 0,
-          count: 100,
+          count: 20,
           page: 1,
           sort: 0,
           count2: [
@@ -178,7 +179,6 @@ export default {
         }
     },
     methods:{
-
         //从选中表格中删除指定的资讯
         delectSelect: function(row) {
             this.$refs.order.toggleRowSelection(row,false);
@@ -190,7 +190,7 @@ export default {
         },
 
         handleClick(val){
-
+			this.$router.push('/admin/message/messageHome/' + val.id);
         },
         //获得需要添加的资讯的id数组
         handleSelectionChange(val) {
@@ -207,77 +207,73 @@ export default {
         
         //向指定区域添加相关咨讯
         setInfoRecommend: function() {
-          if(this.infoIdArr.length == 0) {
-            this.message(true, '没有选择要推荐的资讯', 'warning');
-            return false;
-          }
-          this.confirm(() => {
-            var load = this.openFullScreen2();
-            this.post('/admin/information/setManualRecMajors', {
-                activityId: parseInt(this.id),
-                majorArr: this.infoIdArr
-            }).then((response) => {
-              load.close();
-              console.log(typeof response);
-              if(response.code == 0) {
-                  this.infoIdArr = [];
-                  this.tableData = [];
-                  this.message(true, response.msg, 'seccess');
-                  // this.$router.push('/operate/advise');
-              }
-              else 
-                this.message(true, response.msg, 'error');
-            })
-          }, () => {
-              this.message(true, '已取消修改', 'info');
-              load.close();
-          })
-
+			if(this.infoIdArr.length == 0) {
+				this.message(true, '没有选择要推荐的院校专业', 'warning');
+				return false;
+			}
+			this.confirm(() => {
+				this.post('/admin/information/setManualRecMajors', {
+					activityId: parseInt(this.id),
+					majorArr: this.infoIdArr
+				}).then((response) => {
+					if(response.code == 0) {
+						this.infoIdArr = [];
+						this.tableData = [];
+						this.message(true, response.msg, 'success');
+						
+					}
+					else 
+						this.message(true, response.msg, 'info');
+					this.$router.push('/admin/message/advise/' + this.id);
+				})
+			}, () => {
+				this.message(true, '已取消修改', 'info');
+			}, '确认将所选院校专业设为推荐院校?')
         },
 
         // 每页显示条数改变时触发事件
         handleSizeChange: function(val) {
             this.count = val;
-            this.getInformationType()
+            this.getAllMajor()
         },
 
         // 点击小分页触发事件
         handleCurrentChange: function(val) {
             this.page = val;
-            this.getInformationType()
+            this.getAllMajor()
         },
 
-        // 获取所有资讯类型
-        getInformationType: function() {
+        // 获取所有院校专业
+        getAllMajor: function() {
           var self = this;
           this.post('/admin/information/getMajorPageMessage', {
               screenType:0,
-              activityState:3,
-              sortType:0,
-              screenState:self.form.region == '' ? 0 : self.form.region,
+              sortType:2,
+              screenState:self.form.region == '' ? this.banner[2].id : self.form.region,
               majorNameKeyword:self.form.message,
               pageCount: self.count,
               pageNumber: self.page - 1,
-          })
-              .then(function (response) {
-                  // response = response.data;
-                  if (response.code == 0) {
-                      self.tableData3 = response.result['get_page_msg'];
-                      self.total = response.result['count'];
-                  }else {
-                      self.message(true, response.msg, 'error');
-                  }
-                  load.close();
-              })
-              .catch(function (error) {
-                  load.close();
-              });
+          }).then(function (response) {
+				console.log(response.result);
+					// response = response.data;
+					if (response.code == 0) {
+						self.tableData3 = response.result['get_page_msg'];
+						self.total = response.result['count'];
+					}else {
+						self.message(true, response.msg, 'error');
+					}
+					load.close();
+				})
+				.catch(function (error) {
+					load.close();
+				});
+              
         },
 
         // 获取咨询列表添加分页数据
     },
     mounted(){
-      this.getInformationType();
+      this.getAllMajor();
     }
 }
 </script>

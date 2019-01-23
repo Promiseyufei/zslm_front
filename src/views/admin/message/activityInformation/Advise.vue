@@ -31,30 +31,25 @@
                             </div>
 
                             <div class="shoolTotal">
-                                <div v-if="shoolCount.length==0">
+                                <div v-if="hostMajor.majorid != null">
                                     <!-- 主办院校logo -->
                                     <div class="messageSchool">
-                                        <img :src="img" alt="">
+                                        <img :src="hostMajor.img" alt="主办院校logo">
                                     </div>
-
                                     <!-- 院校名称 -->
-                                    <p style="text-align: center;">{{ this.zname}}</p>
+                                    <p style="text-align: center;">{{ this.hostMajor.zname}}</p>
+                                    <p style="margin-top:2%;text-align: center; color: #1ABC9C;cursor: pointer;"
+                                       @click="deleteSchool">删除</p>
                                 </div>
-
-                                <div v-for="(item, index) in shoolCount" :key="index">
+                                <div  v-if="hostMajor.majorid == null ">
                                     <!-- 主办院校logo -->
                                     <div class="messageSchool">
-                                        <img v-bind:src="item.logo" alt="">
+                                        <img v-bind:src="defaultMajorLogo" alt="">
                                     </div>
-
                                     <!-- 院校名称 -->
-                                    <p style="text-align: center;">{{item.name}}</p>
-                                    <p style="text-align: center; color: #1ABC9C;cursor: pointer;" v-if="index >= 0"
-                                       @click="deleteSchool(index)">删除</p>
+                                    <p style="text-align: center;">请添加主办院校</p>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 
@@ -65,7 +60,7 @@
                         </div>
                         <div class="operateUpfilesRight2">
                             <template>
-                                <el-radio-group v-model="setSwitch" @change="valuechange">
+                                <el-radio-group v-model="setSwitch">
                                     <el-radio :label="1">自动设置</el-radio>
                                     <el-radio :label="2">手动设置</el-radio>
                                 </el-radio-group>
@@ -80,7 +75,7 @@
                                     </div>
                                     <!-- 表格 -->
                                     <messageTable :tableData3="tableData" :isSelect="1" :listTable="listTable"
-                                                  @setInfoRelation="setOpAd" @del="delAdvise"></messageTable>
+                                                  @setInfoRelation="setOpAd" @del="delAdvise" @handleClick="(activity) => {$router.push('/admin/message/activity/' + activity.id)}"></messageTable>
                                 </div>
                             </template>
                         </div>
@@ -93,7 +88,7 @@
                         </div>
                         <div class="operateUpfilesRight2">
                             <template>
-                                <el-radio-group v-model="setSwitch2" @change="valuechange">
+                                <el-radio-group v-model="setSwitch2">
                                     <el-radio :label="1">自动设置</el-radio>
                                     <el-radio :label="2">手动设置</el-radio>
                                 </el-radio-group>
@@ -102,13 +97,13 @@
                                         <el-button type="info" plain @click="majorAdd"><i
                                                 class="fa fa-plus fa-fw fa-lg"></i>添加
                                         </el-button>
-                                        <el-button type="info" plain @click="activityDelete"><i
+                                        <el-button type="info" plain @click="majorDelete"><i
                                                 class="fa fa-trash-o fa-fw fa-lg"></i>清空
                                         </el-button>
                                     </div>
                                     <!-- 表格 -->
                                     <messageTable1 :tableData3="tableData2" :listTable="listTable2"
-                                                   @setInfoRelation="setOpM" @del="delAdvise"></messageTable1>
+                                                   @setInfoRelation="setOpM" @del="delAdviseMajor" @handleClick="(major) => {$router.push('/admin/message/messageHome/' + major.id)}"></messageTable1>
                                 </div>
                             </template>
                         </div>
@@ -118,7 +113,7 @@
                     <div class="operateFinalUp">
                         <el-button type="primary" @click="toBack" plain>返回上一步</el-button>
                         <el-button type="primary" @click="toM">下一步，消息通知</el-button>
-                        <el-button type="primary" @click="">完成！</el-button>
+                        <el-button type="primary" @click="$router.push('/admin/message/activityList')">完成！</el-button>
                     </div>
 
                 </div>
@@ -134,19 +129,23 @@
         data() {
             return {
                 // 上个页面传过来的参数（xx活动的id）
-                zname:'',
-                id: this.$route.params.id,
-                majorid: this.$route.params.major,
-                img:'',
-                shoolCount: [
-                    // {
-                    //     logo: require('../../../../assets/img/collegeLogo.png'),
-                    //     name: "新乡医学院",
-                    // },
-                ],
+                hostMajor: {
+                    zname:'',
+                    majorid: 0,
+                    img:'',
+
+                },
+                id: 0,
+                defaultMajorLogo: require('../../../../assets/img/collegeLogo.png'),
+                // shoolCount: [
+                //     {
+                //         logo: ,
+                //         name: "请设置主办院校",
+                //     },
+                // ],
                 imageUrl: '',
-                setSwitch: 1,
-                setSwitch2: 1,
+                setSwitch: 2,
+                setSwitch2: 2,
                 listTable: [
                     {
                         prop: 'id',
@@ -155,7 +154,7 @@
                     },
                     {
                         prop: "show_weight",
-                        lable: "展示顺序",
+                        lable: "展示权重",
                         width: "80px"
                     },
                     {
@@ -212,16 +211,11 @@
                 if (val == 1 && oldval != val) {
                     this.setActivity();
                 }
-                if (val == 2 && oldval != val) {
 
-                }
             },
             setSwitch2: function (val, oldval) {
                 if (val == 1 && oldval != val) {
                     this.setCollege();
-                }
-                if (val == 2 && oldval != val) {
-
                 }
             }
         },
@@ -240,16 +234,16 @@
             },
 
             adviseAdd: function () {
-                this.$router.push('/message/addActivity/' + this.id);
+                this.$router.push('/admin/message/addActivity/' + this.id);
             },
 
             majorAdd: function () {
-                this.$router.push('/message/AddMajor/' + this.id);
+                this.$router.push('/admin/message/addmajor/' + this.id);
             },
 
             // 返回上一步
             toBack: function () {
-                this.$router.push('/message/activity');
+                this.$router.push('/admin/message/activity/' + this.id);
             },
 
             setInfoRelation(index,val){
@@ -259,56 +253,81 @@
 
             toM:function(){
 
-                this.$router.push('/message/notice/' + this.id+'/'+this.majorid);
+                this.$router.push('/admin/message/notice/' + this.id);
             },
             toNotice: function () {
                 this.$router.push('/admin/active/selectUnivers/' + this.id);
             },
 
+
+            //获得主办院校
             getImg: function () {
                 let that = this;
                 this.fetch('/admin/information/getimg', {
-                    id: this.majorid
+                    id: this.id
                 }).then(
                     res=>{
-                       that.zname = res.result.z_name
-                        that.img = res.img;
+                        console.log(res.result);
+                        that.hostMajor.zname = res.result.z_name;
+                        that.hostMajor.img = res.result.magor_logo_name;
+                        that.hostMajor.majorid = res.result.id;
                     }
                 )
             },
 
             //删除主办院校
-            deleteSchool: function (index) {
-                console.log(index);
+            deleteSchool: function () {
+                this.confirm(() => {
+                    this.post('/admin/information/setHostMajor', {
+                        activityId: this.id,
+                        majorId: 0
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            this.getImg();
+                            this.message(true,'删除成功','success');
+                        }
+                        else this.message(ture, '删除失败', 'info');
+                    }) 
+                }, () => {
+
+                }, '确认取消该活动的主办院校？');
                 this.shoolCount.splice(index);
             },
 
             // 自动设置推荐活动
             setActivity: function () {
-                let self = this;
-                axios.post('/admin/information/setAutomaticRecActivitys', {
-                    activityId: self.id
-                })
-                    .then(function (response) {
-                        // console.log("测试123");
+                this.confirm(() => {
+                    let self = this;
+                    this.post('/admin/information/setAutomaticRecActivitys', {
+                        activityId: self.id
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            this.info();
+                            this.message(true, '自动设置推荐活动成功', 'success');
+                        }
+                        else this.message(true, response.msg, 'info');
                     })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                }, () => {
+
+                },'确认更改为自动设置推荐活动吗？该操作将覆盖之前的设置。');
             },
 
             // 自动设置院校专业
             setCollege: function () {
-                let self = this;
-                this.post('/admin/information/setAutomaticRecMajors', {
-                    activityId: self.id
-                })
-                    .then(function (response) {
-                        // console.log("测试123");
+                this.confirm(() => {
+                    let self = this;
+                    this.post('/admin/information/setAutomaticRecMajors', {
+                        activityId: self.id
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            this.info();
+                            this.message(true, '自动设置推荐院校专业成功', 'success');
+                        }
+                        else this.message(true, response.msg, 'info');
                     })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
+                }, () => {
+
+                },'确认更改为自动设置推荐院校专业吗？该操作将覆盖之前的设置。');
             },
 
             // 得到所有的推荐活动
@@ -349,113 +368,144 @@
                     });
             },
 
-            setOpAd: function (weight, val) {
-                // let that = this;
-                // console.log(that)
-                // this.post('/admin/information/updateActivityWeight',{
-                //     //后台参数，前台参数(传向后台)
-                //     id: that.tableData[weight].id,
-                //     showWeight: val
-                // }).then(res=>{
-                //     if (res.code == 0){
-                //         that.message(true,'删除成功','success');
-                //     }else{
-                //         that.message(true,'删除失败','error');
-                //     }
-                //
-                // })
-                // this.$confirm('操作需谨慎, 是否继续?', '提示', {
-                //     confirmButtonText: '确定',
-                //     cancelButtonText: '取消',
-                //     type: 'warning'
-                // }).then(() => {
-                //
-                // }).catch(() => {
-                //     this.$message({
-                //         type: 'info',
-                //         message: '已取消修改'
-                //     });
-                // });
+            setOpAd: function (id, weight) {
+                let that = this;
+                this.post('/admin/information/updateActivityWeight',{
+                    //后台参数，前台参数(传向后台)
+                    id: id,
+                    showWeight: weight
+                }).then(res=>{
+                    if (res.code == 0){
+                        that.message(true,'修改成功','success');
+                    }else{
+                        that.message(true,'修改失败','error');
+                    }
+                
+                })
+                this.$confirm('操作需谨慎, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消修改'
+                    });
+                });
             },
 
-            setOpM(weight, val){
-                // let that = this;
-                //
-                // this.$confirm('操作需谨慎, 是否继续?', '提示', {
-                //     confirmButtonText: '确定',
-                //     cancelButtonText: '取消',
-                //     type: 'warning'
-                // }).then(() => {
-                //     that.post('/admin/information/updateActivityWeight',{
-                //         //后台参数，前台参数(传向后台)
-                //         id: that.tableData[val].id,
-                //         showWeight: weight
-                //     }).then(res=>{
-                //         if (res.code == 0){
-                //             that.message(true,'删除成功','success');
-                //         }else{
-                //             that.message(true,'删除失败','error');
-                //             // that.majorlisttable[index].show_weight = that.showweight;
-                //         }
-                //
-                //     })
-                // }).catch(() => {
-                //     this.$message({
-                //         type: 'info',
-                //         message: '已取消修改'
-                //     });
-                // });
+
+
+            setOpM(id, weight){
+                let that = this;
+                this.$confirm('操作需谨慎, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    that.post('/admin/information/updateActivityWeight',{
+                        id: id,
+                        showWeight: parseInt(weight)
+                    }).then(res=>{
+                        if (res.code == 0){
+                            that.message(true,'权值修改成功','success');
+                        }else{
+                            that.message(true,'权值修改失败','info');
+                        }
+                
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消修改'
+                    });
+                });
             },
+
+
+
+            //取消指定的推荐活动
             delAdvise: function (res, row) {
-                // this.confirm(() => {
-                //     this.post('/admin/operate/deleteAppoinInformation', {
-                //         RegionId: this.i,
-                //         InformationId: res
-                //     }).then((response) => {
-                //         if(response.code == 0) {
-                //             this.tableData3.splice(this.tableData3.indexOf(row), 1);
-                //             this.message(true, response.msg, 'success');
-                //         }
-                //         else {
-                //             this.message(true, response.msg, 'error');
-                //         }
-                //     })
-                // }, () => {
-                //     this.message(true, '已取消修改', 'info')
-                // })
+                this.confirm(() => {
+                    this.post('/admin/information/cancelAppointRecommendActivity', {
+                        acId: this.id,
+                        cancelAcId: res
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            this.tableData.splice(this.tableData.indexOf(row), 1);
+                            this.message(true, response.msg, 'success');
+                        }
+                        else {
+                            this.message(true, response.msg, 'error');
+                        }
+                    })
+                }, () => {
+                    this.message(true, '已取消修改', 'info')
+                })
+            },
+            //取消指定的推荐专业
+            delAdviseMajor(res, row) {
+                this.confirm(() => {
+                    this.post('/admin/information/cancelAppointRecommendMajor', {
+                        acId: this.id,
+                        cancelMaId: res
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            this.tableData2.splice(this.tableData2.indexOf(row), 1);
+                            this.message(true, response.msg, 'success');
+                        }
+                        else {
+                            this.message(true, response.msg, 'error');
+                        }
+                    })
+                }, () => {
+                    this.message(true, '已取消修改', 'info')
+                })
             },
             // 清空所有推荐活动
             activityDelete: function () {
-                var table = this.tableData;
-                var arrayTableId = [];
-                for (var i = 0; i < table.length; i++) {
-                    arrayTableId.push(table[i].id);
-                }
-                ;
-                if (arrayTableId.length < 1) {
-                    this.message(true, '没有要清空的数据', 'error');
-                    return;
-                }
-                this.post('/admin/operate/deleteAppoinInformation', {
-                    RegionId: this.id,
-                    InformationId: arrayTableId
-                }).then((response) => {
-                    if (response.code == 0) {
-                        this.tableData = [];
-                        this.message(true, response.msg, 'success');
-                    }
-                    else this.message(true, response.msg, 'error');
-                })
+                this.confirm(() => {
+                    this.post('/admin/information/cancelAppointActicityAllRe', {
+                        acId: this.id,
+                    }).then((response) => {
+                        if (response.code == 0) {
+                            this.tableData = [];
+                            this.message(true, response.msg, 'success');
+                        }
+                        else this.message(true, response.msg, 'info');
+                    })
+                }, () => {
+                    this.message(true, '取消操作成功', 'info')
+                }, "确定清空所有的推荐活动吗？请谨慎操作。")
             },
+
+            // 清空所有推荐院校专业
+            majorDelete: function () {
+                this.confirm(() => {
+                    this.post('/admin/information/cancelAppointMajorAllRe', {
+                        acId: this.id,
+                    }).then((response) => {
+                        if (response.code == 0) {
+                            this.tableData2 = [];
+                            this.message(true, response.msg, 'success');
+                        }
+                        else this.message(true, response.msg, 'info');
+                    })
+                }, () => {
+                    this.message(true, '取消操作成功', 'info')
+                }, "确定清空所有的推荐院校专业吗？请谨慎操作。")
+            },
+
+
             startChange: function () {
                 this.disabled = false;
             },
             startChange2: function () {
                 this.disabled2 = false;
             },
-            valuechange: function (res) {
-                console.log(res);
-            },
+
             // 上传院校logo
             handleAvatarSuccess(res, file) {
                 this.imageUrl = URL.createObjectURL(file.raw);
@@ -472,15 +522,18 @@
                 }
                 return isJPG && isLt2M;
             },
-            changeCount: function (val, index) {
-                console.log(1)
-            },
+            // changeCount: function (val, index) {
+            //     console.log(1)
+            // },
 
             del() {
                 console.log(111111)
             }
         },
         mounted() {
+            if(this.$route.params.id != 'undefined' || this.$route.params.id != undefined) {
+                this.id = this.$route.params.id;
+            }
             this.info();
             this.getImg();
         },
