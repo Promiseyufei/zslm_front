@@ -166,7 +166,7 @@ export default {
         // 得到所有的咨询推荐
         getAdviseName: function() {
           var self = this;
-          var load = this.openFullScreen2();
+          // var load = this.openFullScreen2();
           this.post('/admin/operate/getAppointRegionData', {
             regionId: self.i
           })
@@ -180,7 +180,7 @@ export default {
                   self.$set(self.tableData3[i],'show_weight',self.tableData3[i].weight);
                 };
             };
-            load.close();
+            // load.close();
           })
           .catch(function (error) {
             console.log(error);

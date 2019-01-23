@@ -246,14 +246,14 @@ export default {
     },
 
     //加载是否显示
-    openFullScreen2() {
-        return Loading.service({
-            lock: true,
-            text: 'Loading',
-            spinner: 'el-icon-loading',
-            background: 'rgba(0, 0, 0, 0.7)'
-        });
-    },
+    // openFullScreen2() {
+    //     return Loading.service({
+    //         lock: true,
+    //         text: 'Loading',
+    //         spinner: 'el-icon-loading',
+    //         background: 'rgba(0, 0, 0, 0.7)'
+    //     });
+    // },
 
     // 删除所给id序列的banner
     deleteBanner: function (arrayTableId) {

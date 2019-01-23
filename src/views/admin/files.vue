@@ -71,8 +71,8 @@
 						    	<div class="dialogRadio">
 						    		<div>文件类型</div>
 						    		<el-radio-group v-model="form.type">
-										<el-radio  label="0" >招生简章</el-radio>
-								    	<el-radio  label="1">其他文件</el-radio>
+										<el-radio label="0">招生简章</el-radio>
+								    	<el-radio label="1">其他文件</el-radio>
 									</el-radio-group>
 						    	</div>
 						    	<el-form-item label="年份信息" :label-width="formLabelWidth">
@@ -128,9 +128,11 @@
   	    		dialogFormVisible: false,
   	    		form: {
   	    		 	fileId:0,
-		         	name: '',
+		         	name:'',
 		         	fileDesc: '',
-		         	yearInfo: '',
+		         	yearInfo: 0,
+		         	type:'0',
+		         	is_show:true,
 		        },
 		        formLabelWidth: '120px',
 		        radio2:3,
@@ -144,7 +146,7 @@
             	allFilesCount:1000,
             	recrIntroCount:200,
             	otherFilesCount:7000,
-            	radio2:"",
+            	// radio2:"",
     			i: 0,//当前选项卡id
   	    		/*查询输入框*/
 				filesName_v:'',
@@ -183,7 +185,7 @@
                     z_name:'',
                     file_type: '',
                     file_year: '',
-		            is_show: '',
+		            is_show:'',
                     create_time: '',
 		        }],
 		        showweight:'',

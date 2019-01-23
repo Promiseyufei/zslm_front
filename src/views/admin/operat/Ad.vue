@@ -374,7 +374,7 @@ export default {
 				// 获得页面的广告信息
 				getIndexAd: function() {
 					var self = this;
-					var load =this.openFullScreen2();
+					// var load =this.openFullScreen2();
 					axios.post('/admin/operate/getAppointPageBillboard', {
 						pageId: self.i,
 						btType: 1
@@ -383,12 +383,12 @@ export default {
 						response = response.data;
 						if (response.code == 0) {
 							self.tableData3 = response.result;
-							load.close();
+							// load.close();
 						}
 					})
 					.catch(function (error) {
 						console.log(error);
-						load.close();
+						// load.close();
 					});
 				}
 		},
