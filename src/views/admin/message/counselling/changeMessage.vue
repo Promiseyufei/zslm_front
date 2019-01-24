@@ -40,14 +40,14 @@
                                 <el-input v-model="counsellForm.name" :disabled="disabled"></el-input>
                             </el-form-item>
 
-                            <el-form-item label="所在省市">
+                            <el-form-item label="机构所在省">
                                 <el-select v-model="counsellForm.region" placeholder="请选择活动区域" :disabled="disabled">
                                     <el-option :label="item.name" :value="item.id" v-for="(item, index) in province"
                                                :key="index"></el-option>
                                 </el-select>
                             </el-form-item>
 
-                            <el-form-item label="总部">
+                            <el-form-item label="所在总部">
                                 <el-select v-model="counsellForm.father" placeholder="请选择总部" :disabled="disabled">
                                     <el-option :label="item.coach_name" :value="item.id" v-for="(item, index) in coach"
                                                :key="index"></el-option>
@@ -87,10 +87,40 @@
                                 </el-radio-group>
                             </el-form-item>
                             <el-form-item label="院校logo">
-                                <div class="major_img">
+                                <div class="coach_logo_img">
+                                    <i v-if="coachLogoAndCoverImg.coachLogoUrl" @click="dialogLogoTableVisible = true">更改</i>
+                                    <el-dialog title="上传Logo" :visible.sync="dialogLogoTableVisible" class="dialog">
+                                        <el-form :model="coachLogoAndCoverImg" label-position="left">
+                                            <el-form-item>
+                                                <el-upload
+                                                class="upload-demo"
+                                                action=""
+                                                :show-file-list="false"
+                                                :auto-upload="false"
+                                                :multiple="false"
+                                                :on-change="changeLogoUpload" 
+                                                >
+                                                    <i style="display: inline-flex;flex-direction:row;flex-wrap:nowrap">
+                                                        <el-button size="small" type="primary">点击上传</el-button>
+                                                        <span>当前以选择：<i>{{ coachLogoAndCoverImg.coachLogoDefultName }}</i></span>
+                                                    </i>
+                                                </el-upload>
+                                            </el-form-item>
+                                            <el-form-item label="图片名称" :label-width="formLabelWidth">
+                                                <el-input v-model="coachLogoAndCoverImg.coachLogoImgName"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="图片描述" :label-width="formLabelWidth">
+                                                <el-input v-model="coachLogoAndCoverImg.coachLogoDiscribe"></el-input>
+                                            </el-form-item>
+                                            <el-form-item>
+                                                <el-button @click="dialogLogoTableVisible = false">取 消</el-button>
+                                                <el-button type="primary" @click="changeCoachLogoImgMsg">确 定</el-button>
+                                            </el-form-item>
+                                        </el-form>
+                                    </el-dialog>
                                     <el-upload class="avatar-uploader" action="" :auto-upload="false"
                                                :on-change="changeLogoUpload" :multiple="false" :show-file-list="false">
-                                        <img v-if="majorLogoUrl" :src="majorLogoUrl" class="avatar" alt="院校logo">
+                                        <img v-if="coachLogoAndCoverImg.coachLogoUrl" :src="coachLogoAndCoverImg.coachLogoUrl" class="avatar" alt="院校logo">
                                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                     </el-upload>
                                 </div>
@@ -99,16 +129,44 @@
 
                             <!-- 院校封面图 -->
                             <el-form-item label="院校封面图">
-                                <div class="major_img">
-                                    <div id="major_cover_map">
-                                        <el-upload class="avatar-uploader" action="" :auto-upload="false"
-                                                   :on-change="changeCoverMapUpload" :multiple="false"
-                                                   :show-file-list="false">
-                                            <img v-if="majorCoverMapUrl" :src="majorCoverMapUrl" class="avatar"
-                                                 alt="院校封面图">
-                                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                                        </el-upload>
-                                    </div>
+                                <div class="coach_cover_img">
+                                    <i v-if="coachLogoAndCoverImg.coachCoverMapUrl" @click="dialogCoverTableVisible = true">更改</i>
+                                    <el-dialog title="上传Logo" :visible.sync="dialogCoverTableVisible" class="dialog">
+                                        <el-form :model="coachLogoAndCoverImg" label-position="left">
+                                            <el-form-item>
+                                                <el-upload
+                                                class="upload-demo"
+                                                action=""
+                                                :show-file-list="false"
+                                                :auto-upload="false"
+                                                :multiple="false"
+                                                :on-change="changeCoverMapUpload" 
+                                                >
+                                                    <i style="display: inline-flex;flex-direction:row;flex-wrap:nowrap">
+                                                        <el-button size="small" type="primary">点击上传</el-button>
+                                                        <span>当前以选择：<i>{{ coachLogoAndCoverImg.coachCoverDefultName }}</i></span>
+                                                    </i>
+                                                </el-upload>
+                                            </el-form-item>
+                                            <el-form-item label="图片名称" :label-width="formLabelWidth">
+                                                <el-input v-model="coachLogoAndCoverImg.coachCoverImgName"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="图片描述" :label-width="formLabelWidth">
+                                                <el-input v-model="coachLogoAndCoverImg.coachCoverDiscribe"></el-input>
+                                            </el-form-item>
+                                            <el-form-item>
+                                                <el-button @click="dialogCoverTableVisible = false">取 消</el-button>
+                                                <el-button type="primary" @click="changeCoachCoverImgMsg">确 定</el-button>
+                                            </el-form-item>
+                                        </el-form>
+                                    </el-dialog>
+                                    <el-upload class="avatar-uploader" action="" :auto-upload="false"
+                                                :on-change="changeCoverMapUpload" :multiple="false"
+                                                :show-file-list="false">
+                                        <img v-if="coachLogoAndCoverImg.coachCoverMapUrl" :src="coachLogoAndCoverImg.coachCoverMapUrl" class="avatar"
+                                                alt="院校封面图">
+                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    </el-upload>
                                 </div>
                             </el-form-item>
 
@@ -157,7 +215,8 @@
                         <el-button type="primary" @click="startChange3">编辑</el-button>
                         <div class="messageBtn">
                             <div id="editor">
-                                <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+                                <!-- <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> -->
+                                 <div v-html="editorContent"></div>
                             </div>
                             <div class="messageEditor">
                                 <el-button type="primary" plain :disabled="disabled3" @click="messageEmpty">清空
@@ -183,25 +242,43 @@
         components: {},
         data() {
             return {
+                formLabelWidth: '120px',
+                dialogLogoTableVisible: false,
+                dialogCoverTableVisible: false,
                 form: {
                     Title: "123",
                     Keywords: "",
                     Description: ""
                 },
+                coachLogoAndCoverImg: {
+                    coachCoverMapFile: {},
+                    coachCoverMapUrl:'',
+                    coachCoverImgName:'',
+                    coachCoverDiscribe: '',
+                    coachCoverDefultName:'',
+
+                    coachLogoFile: {},
+                    coachLogoUrl:'',
+                    coachLogoImgName:'',
+                    coachLogoDiscribe: '',
+                    coachLogoDefultName:'',
+                },
                 counsellForm: {
                     counsell_type: '请选择',
-                    name: "河南科技学院",
-                    region: "河南省",
-                    tell: "18303612352",
-                    address: "河南省新乡市河南科技学院",
-                    web: "http://qinghua.cn",
+                    name: "",
+                    region: "",
+                    tell: "",
+                    address: "",
+                    web: "",
                     type: 0,
                     cheap: 0,
                     refund: 0,
                     father: 0,
                     show: '',
-                    logo: '',
-                    cover: ''
+                    logoName:'',
+                    logoImgDescribe:'',
+                    coverName:'',
+                    coverImgDescribe:''
                 },
                 disabled: true,
                 disabled2: true,
@@ -229,33 +306,79 @@
                 majorCoverMapFile: ''
             }
         },
+        computed: {
+            getCoachLogoFile() {
+                return this.coachLogoAndCoverImg.coachLogoFile;
+            },
+            getCoachCoverFile() {
+                return this.coachLogoAndCoverImg.coachCoverMapFile;
+            }
+        },
+        watch: {
+            getCoachLogoFile(newLogo, old) {
+                if(JSON.stringify(newLogo) != "{}") {
+                    this.counsellForm.logoName = '';
+                    this.coachLogoAndCoverImg.coachLogoImgName = '';
+                }
+            },
+            getCoachCoverFile(newCover, old) {
+                if(JSON.stringify(newCover) != "{}") {
+                    this.counsellForm.coverName = '';
+                    this.coachLogoAndCoverImg.coachCoverImgName = '';
+                }
+            }
+        },
         methods: {
+            changeCoachLogoImgMsg() {
+                this.counsellForm.logoName = this.coachLogoAndCoverImg.coachLogoImgName;
+                this.counsellForm.logoImgDescribe = this.coachLogoAndCoverImg.coachLogoDiscribe;
+                this.dialogLogoTableVisible = false;
+            },
+            changeCoachCoverImgMsg() {
+                this.counsellForm.coverName = this.coachLogoAndCoverImg.coachCoverImgName;
+                this.counsellForm.coverImgDescribe = this.coachLogoAndCoverImg.coachCoverDiscribe;
+                this.dialogCoverTableVisible = false;
+            },
 
             getOne() {
                 let self = this;
                 this.fetch('/admin/information/getonecoach', {
                     id: parseInt(self.id)
-                })
-                    .then(res => {
-                        if(res.code == 0){
-                            self.counsellForm.name = res.result.coach_name
-                            self.counsellForm.region =  parseInt(res.result.province)
-                            self.counsellForm.tell = res.result.phone
-                            self.counsellForm.address = res.result.address
-                            self.counsellForm.web = res.result.web_url
-                            self.counsellForm.type = res.result.coach_type == 0 ? '线上' : '线下'
-                            self.counsellForm.cheap = res.result.if_coupons == 0 ? '启用' : '禁用'
-                            self.counsellForm.refund = res.result.if_back_money == 0 ? '支持' : '不支持'
-                            self.counsellForm.show = res.result.is_show
-                            self.counsellForm.father = res.result.father_id
-                            self.form.Title = res.result.title
-                            self.form.Keywords = res.result.keywords
-                            self.form.Description = res.result.description
-                        }
-                    })
-                    .catch(error => {
+                }).then(res => {
+                    if(res.code == 0){
+                        self.editorContent = res.result.describe;
+                        self.counsellForm.name = res.result.coach_name
+                        self.counsellForm.region =  parseInt(res.result.province)
+                        self.counsellForm.tell = res.result.phone
+                        self.counsellForm.address = res.result.address
+                        self.counsellForm.web = res.result.web_url
+                        self.counsellForm.type = res.result.coach_type == 0 ? '线上' : '线下'
+                        self.counsellForm.cheap = res.result.if_coupons == 0 ? '启用' : '禁用'
+                        self.counsellForm.refund = res.result.if_back_money == 0 ? '支持' : '不支持'
+                        self.counsellForm.show = res.result.is_show
+                        self.counsellForm.father = res.result.father_id
 
-                    })
+                        self.counsellForm.logoName = res.result.logo_name.split('.')[0];
+                        self.counsellForm.logoImgDescribe = res.result.logo_alt;
+                        self.counsellForm.coverName = res.result.cover_name.split('.')[0];
+                        self.counsellForm.coverImgDescribe = res.result.cover_alt;
+
+                        self.form.Title = res.result.title;
+                        self.form.Keywords = res.result.keywords;
+                        self.form.Description = res.result.description;
+
+                        self.coachLogoAndCoverImg.coachLogoUrl = res.result.coach_logo_img_name;
+                        self.coachLogoAndCoverImg.coachLogoDefultName = res.result.logo_name;
+                        self.coachLogoAndCoverImg.coachLogoImgName = self.coachLogoAndCoverImg.coachLogoDefultName.split('.')[0];
+                        self.coachLogoAndCoverImg.coachLogoDiscribe = res.result.logo_alt;
+                        self.coachLogoAndCoverImg.coachCoverMapUrl = res.result.coach_cover_img_name;
+                        self.coachLogoAndCoverImg.coachCoverDefultName = res.result.cover_name;
+                        self.coachLogoAndCoverImg.coachCoverImgName = self.coachLogoAndCoverImg.coachCoverDefultName.split('.')[0];
+                        self.coachLogoAndCoverImg.coachCoverDiscribe = res.result.cover_alt;
+
+                    }
+                })
+                    
             },
 
 
@@ -278,16 +401,16 @@
             },
             changeLogoUpload: function (file, fileList) {
                 if (this.beforeAvatarUpload(file)) {
-                    console.log(file.url);
-                    this.majorLogoUrl = file.url;
-                    this.majorLogoFile = file.raw;
+                    this.coachLogoAndCoverImg.coachLogoUrl = file.url;
+                    this.coachLogoAndCoverImg.coachLogoFile = file.raw;
+                    this.coachLogoAndCoverImg.coachLogoDefultName = file.name;
                 }
             },
             changeCoverMapUpload: function (file, fileList) {
                 if (this.beforeAvatarUpload(file)) {
-                    console.log(file.url);
-                    this.majorCoverMapUrl = file.url;
-                    this.majorCoverMapFile = file.raw;
+                    this.coachLogoAndCoverImg.coachCoverMapUrl = file.url;
+                    this.coachLogoAndCoverImg.coachCoverMapFile = file.raw;
+                    this.coachLogoAndCoverImg.coachCoverDefultName = file.name;
                 }
             },
 
@@ -322,8 +445,6 @@
 
             },
             postC: function () {
-
-
                 let that = this;
                 var fd = new FormData();
                 let imgFile = {
@@ -346,12 +467,19 @@
                 fd.append('if_back_money', that.counsellForm.refund == '支持' ? 0 : 1)
                 fd.append('coach_type', that.counsellForm.type == '线上' ? 0 : 1);
                 fd.append('is_show', that.counsellForm.show);
-                fd.append('coachLogo', that.majorLogoFile);
-                fd.append('coachCover', that.majorCoverMapFile)
+
+                fd.append('logo_img_name', that.counsellForm.logoName);
+                fd.append('logo_img_describe', that.counsellForm.logoImgDescribe);
+                fd.append('logo_img', that.coachLogoAndCoverImg.coachLogoFile);
+
+                fd.append('cover_img_name', that.counsellForm.coverName);
+                fd.append('cover_img_describe', that.counsellForm.coverImgDescribe);
+                fd.append('cover_img', that.coachLogoAndCoverImg.coachCoverMapFile);
+
                 this.post(url, fd, imgFile).then(
                     res => {
                         if(that.id == 0)
-                            that.id = res.result
+                            that.id = res.result;
 
                         if(res.code == 0){
                             that.message(true,'提交成功','success')
@@ -398,20 +526,18 @@
             },
             //返回上一页
             toBack: function () {
-                this.$router.push('/message/coachList');
+                this.$router.push('/admin/message/coachList');
             },
             // 跳转到优惠卷设置页面
             toAdvise: function () {
-                this.$router.push('/message/coupon/' + this.id);
+                this.$router.push('/admin/message/coupon/' + this.id);
             },
 
         },
         mounted() {
             this.id = this.$route.params.cid
             this.info();
-            console.log(this.id)
             if (this.id != 0) {
-
                 this.getOne()
             }
             // 创建富文本编辑器
@@ -539,7 +665,15 @@
         text-align: left;
     }
 
-    .avatar-uploader .el-upload {
+
+
+
+
+</style>
+
+<style>
+    /* coach logo */
+    .coach_logo_img .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
@@ -547,22 +681,53 @@
         overflow: hidden;
     }
 
-    .avatar-uploader .el-upload:hover {
+    .coach_logo_img .el-upload:hover {
         border-color: #409EFF;
     }
 
-    .avatar-uploader-icon {
+    .coach_logo_img .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
-        width: 178px;
-        height: 178px;
-        line-height: 178px;
+        width: 120px;
+        height: 120px;
+        line-height: 120px;
         text-align: center;
     }
 
-    .avatar {
-        width: 178px;
-        height: 178px;
+    .coach_logo_img .avatar {
+        width: 120px;
+        height: 120px;
         display: block;
     }
+
+
+    /* coach cover */
+    .coach_cover_img .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .coach_cover_img .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .coach_cover_img .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 200px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+    }
+
+    .coach_cover_img .avatar {
+        width: 200px;
+        height: 200px;
+        display: block;
+    }
+
+
 </style>

@@ -13,7 +13,7 @@
             <i class="el-icon-search"></i>
             <p>筛选查询</p>
             <div></div>
-            <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native = "gettableInfo">刷新</el-button>
+            <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native="refreshCoachPage">刷新</el-button>
         </div> 
         <div class="majorlist-form">
             <el-form class="majorlist-input" label-width="80px">
@@ -55,8 +55,8 @@
             <i class="el-icon-tickets"></i>
             <p>辅导机构</p>
             <div></div>
-            <el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="显示条数">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native = "gettableInfo">
+            <el-select size="mini" class="majorlist-selectone" v-model="value" placeholder="默认排序">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" @click.native="gettableInfo">
                 </el-option>
             </el-select>
         </div>
@@ -76,28 +76,28 @@
                     <template slot-scope="scope">
                         <el-switch v-model="majorlisttable[scope.$index].is_show"
                                    @change="changeStatusOne(scope.$index,majorlisttable[scope.$index].is_show)"
-                                   active-color="#999" inactive-color="#409eff"></el-switch>
+                                   active-color="#409eff" inactive-color="#999"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="推荐状态" width="100">
                     <template slot-scope="scope">
                         <el-switch v-model="majorlisttable[scope.$index].is_recommend"
                                    @change="changeStatusTwo(scope.$index,majorlisttable[scope.$index].is_recommend)"
-                                   active-color="#999" inactive-color="#409eff"></el-switch>
+                                   active-color="#409eff" inactive-color="#999"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="优惠券" width="80">
                     <template slot-scope="scope">
                         <el-switch v-model="majorlisttable[scope.$index].if_coupons"
                                    @change="changeStatusThree(scope.$index,majorlisttable[scope.$index].if_coupons)"
-                                   active-color="#999" inactive-color="#409eff"></el-switch>
+                                   active-color="#409eff" inactive-color="#999"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="退款保障" width="80">
                     <template slot-scope="scope">
                         <el-switch v-model="majorlisttable[scope.$index].if_back_money"
                                    @change="changeStatusFour(scope.$index,majorlisttable[scope.$index].if_back_money)"
-                                   active-color="#999" inactive-color="#409eff"></el-switch>
+                                   active-color="#409eff" inactive-color="#999"></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="200">
@@ -107,22 +107,19 @@
                             <i v-for="(val, index) in iconname" :key="index" :class="val.name" @click="clickEvent(val.event, majorlisttable[scope.$index])"></i>
                             <i class="el-icon-edit-outline"   @click="jumpPage(majorlisttable[scope.$index].id)" slot="reference"></i>
                             <i class="el-icon-delete"   @click="deleteRow(scope.$index, majorlisttable)" slot="reference"></i>
-                            <i class="el-icon-tickets" @click = "dialogTableVisible = true" slot="reference"></i>
-                            <el-dialog title="查看招生项目" :visible.sync="dialogTableVisible" class="dialog">
+                            <i class="el-icon-tickets" @click="checkAllCoupon(majorlisttable[scope.$index].id)" slot="reference"></i>
+                            <el-dialog title="查看优惠券" :visible.sync="dialogTableVisible" class="dialog">
                               <el-table :data="gridData"  border>
-                                <el-table-column property="id" label="编号" width="80"></el-table-column>
-                                <el-table-column property="name" label="展示顺序" width="100">
+                                <el-table-column property="id" label="编号" width="120"></el-table-column>
+                                <el-table-column property="name" label="优惠券名称" width="140"></el-table-column>
+                                <el-table-column property="name" label="优惠券名称" width="140"></el-table-column>
+                                <el-table-column property="type" label="优惠券名称" width="140"></el-table-column>
+                                <el-table-column property="is_enable" label="启用状态" width="140">
                                     <template slot-scope="scope">
-                                        <el-input v-model="gridData[scope.$index].showInput" @focus="focusMajorWeigthCount(gridData[scope.$index].showInput)" v-on:blur="changeMajorWeight(gridData[scope.$index].id, gridData[scope.$index].showInput, scope.$index)"></el-input>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column property="name" label="展示状态" width="100">
-                                    <template slot-scope="scope">
-                                        <el-switch v-model="gridData[scope.$index].if_recommended" @change="setMajorState(gridData[scope.$index].id, gridData[scope.$index].if_recommended, 2, scope.$index)">
+                                        <el-switch v-model="gridData[scope.$index].is_enable" @change="setCouponEnable(gridData[scope.$index].id, gridData[scope.$index].is_enable)">
                                         </el-switch>
                                     </template>
                                 </el-table-column>
-                                <el-table-column property="address" label="招生项目"></el-table-column>
                                 <el-table-column property="address" label="操作" width="140">
                                     <template slot-scope="scope">
                                         <i class="el-icon-search"  @click="jumpItemInfo"></i>
@@ -153,19 +150,19 @@
                 /*模态框*/
                 dialogTableVisible: false,
                  gridData: [    //表格
-                    {
-                      id: 0,
-                      showInput: 0,
-                      showState: true,
-                      item:'',
-                    }, 
+                    // {
+                    //   id: 0,
+                    //   showInput: 0,
+                    //   showState: true,
+                    //   item:'',
+                    // }, 
                 ],
                 /*分页*/
                 multipleSelection:[],
                 total:0,
                 searchContent:{
-                    page:'',
-                    limit:'',
+                    page:1,
+                    limit:10,
                 },
                 tableTop:[
                   {prop:'coach_name',label:'辅导机构名称',width:300},
@@ -174,21 +171,22 @@
                   {prop:'coach_type',label:'辅导形式',width:80},
                   {prop:'update_time',label:'发布时间',width:160},
                 ],
-                majorlisttable:[{
-                    weight:'',
-                    id:'',
-                    coach_name:'',
-                    province:'',
-                    update_time:'',
-                    coach_type:'',
-                    father_id:'',
-                    discount:'',
-                    refund:'',
-                    if_coupons:'',
-                    is_recommend:'',
-                    is_show:'',
-                    if_back_money:''
-                }],
+                // majorlisttable:[{
+                //     weight:'',
+                //     id:'',
+                //     coach_name:'',
+                //     province:'',
+                //     update_time:'',
+                //     coach_type:'',
+                //     father_id:'',
+                //     discount:'',
+                //     refund:'',
+                //     if_coupons:'',
+                //     is_recommend:'',
+                //     is_show:'',
+                //     if_back_money:''
+                // }],
+                majorlisttable:[],
                 tableSwitch:[
                     {label:'展示状态',width:'100'},
                     {label:'推荐状态',width:'100'},
@@ -207,22 +205,57 @@
                 type4:'',
                 options: [
                     {
-                      value: '选项1',
-                      label: '10条'
+                      value: 0,
+                      label: '按权重升序'
                     }, 
                     {
-                      value: '选项2',
-                      label: '50条'
+                      value: 1,
+                      label: '按权重降序'
                     }, 
                     {
-                      value: '选项3',
-                      label: '100条'
+                      value: 2,
+                      label: '按更新时间'
                     }
                 ],
                 // visible:[{false}]
             }
         },
         methods:{
+            jumpItemInfo() {
+
+            },
+
+
+            //刷新页面
+            refreshCoachPage() {
+                this.name = '';
+                this.type1 = '';
+                this.type2 = '';
+                this.type3 = '';
+                this.type4 = '';
+                this.value = '';
+                this.total = 0;
+                this.searchContent.page = 1;
+                this.searchContent.limit = 10;
+                this.majorlisttable = [];
+                this.multipleSelection = [];
+                this.gridData = [];
+                this.gettableInfo();
+
+            },
+
+            setCouponEnable(couponId, state) {
+                state = state == true ? 0 : 1;
+                this.post('/admin/information/setAppointCouponEnable', {
+                    couponId: couponId,
+                    state: state
+                }).then((response) => {
+                    if(response.code == 0) {
+                        state == 0 ? this.message(true, '启用成功', 'success') : this.message(true, '禁用成功', 'success');
+                    }
+                    else state == 0 ? this.message(true, '启用失败', 'info') :  this.message(true, '禁用失败', 'info');
+                })
+            },
             loseFocus:function(val,index) {
                 var re = /^[0-9]+.?[0-9]*$/;
                 if (!re.test(val)) {
@@ -259,6 +292,18 @@
 
 
                 }
+            },
+
+            checkAllCoupon(coachId) {
+                this.fetch('/admin/information/getAppointCoachCoupon', {
+                    coachId: coachId
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.gridData = response.result;
+                        this.dialogTableVisible = true;
+                    }
+                    else this.message(true, response.msg, 'info');
+                })
             },
 
             changeStatusOne(index,val){
@@ -372,12 +417,13 @@
             },
 
             jumpPage:function(id){
-                this.$router.push('/message/changeMessage/'+id);
+                this.$router.push('/admin/message/changeMessage/'+id);
 
             },
             pageChange(msg) {
                 this.searchContent.page = msg.page;
                 this.searchContent.limit = msg.limit;
+                this.gettableInfo();
             },
             handleCurrentChange(val) {
                 this.currentRow = val;
@@ -392,8 +438,8 @@
                 }
             },
              //调到相应的辅导机构主页
-            jumpCoachHomePage() {
-                this.$router.push('');
+            jumpCoachHomePage(row) {
+                this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/' + row.id);
             },
             //跳转到辅导机构信息页面
             jumpMajorMsgPage(val) {
@@ -409,8 +455,17 @@
                 console.log(123)
             },
             //发布时间更新
-            timeUpdate() {
-                this.$message('发布时间更已新');
+            timeUpdate(row) {
+
+                this.post('admin/information/updateCoachTime', {
+                    coachId: row.id
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.majorlisttable[this.majorlisttable.indexOf(row)].update_time = response.result;
+                        this.message(true, '时间以更新', 'success');
+                    }
+                    else this.message(true, response.msg, 'info');
+                })
             },
             focusCount:function(){
                 this.input = val;
@@ -419,14 +474,14 @@
             gettableInfo:function(){
                 var that = this;
                 this.post('admin/information/getPageCoachOrganize',{
-                    soachNameKeyword:'',
+                    soachNameKeyword:that.name,
                     showType:that.type1 != '' ? that.type1 : 2,
                     recommendType:that.type2 != '' ? that.type2 : 2,
                     couponsType:that.type3 != '' ? that.type3 : 2,
                     moneyType:that.type4 != '' ? that.type4 : 2,
-                    sortType:0,
-                    pageCount:5,
-                    pageNumber:1
+                    sortType:that.value == '' ? this.options[2].value : that.value,
+                    pageCount:this.searchContent.limit,
+                    pageNumber:this.searchContent.page
                 })
                 .then(function (response) {
                     // that.page++;
@@ -463,6 +518,10 @@
             },
 
             BatchDelete: function(){
+                if(this.multipleSelection.length < 1) {
+                    this.message(true, '请选择让要删除的选项', 'info');
+                    return false;
+                }
                 var that = this;
                 let selectId = [];//存放删除的数据
                 for (var i = 0; i < that.multipleSelection.length; i++) {

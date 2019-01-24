@@ -188,7 +188,7 @@
                         majorname: '',
                     },
                 },
-                majorname: ' ',
+                majorname: '',
 
                 //分页
                 count: 17,//分页总数
@@ -292,13 +292,28 @@
                 /**
                  * this.one 数组记录了选中的值
                  */
-                // console.log(this.one)
-                this.$router.push('/message/advise/'+this.actid+'/' + this.majorname);
+                let self = this;
+                if(this.majorname != '') {
+                    this.post('/admin/information/setHostMajor', {
+                        activityId: parseInt(self.actid),
+                        majorId: self.majorname
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            self.message(true, '设置主办院校专业成功', 'success');
+                        }
+                        else self.message(true, '设置主办院校专业失败', 'info');
+                        
+                        self.$router.push('/admin/message/advise/'+this.actid);
+                    })
+                }
+                else 
+                    this.$router.push('/admin/message/advise/'+this.actid);
 
             },
         },
         mounted() {
             // this.getMajor();
+            
             this.actid = this.$route.params.actid
         }
     }

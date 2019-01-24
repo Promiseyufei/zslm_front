@@ -81,7 +81,7 @@ let admin_router = {
                     component: resolve =>void(require(['@/views/admin/message/activityInformation/Activity'], resolve))
                 },
                 {
-                    path: 'message/notice/:id/:mid',
+                    path: 'message/notice/:id',
                     name: '消息通知',
                     component: resolve =>void(require(['@/views/admin/message/activityInformation/messageNotice'], resolve))
                 },
@@ -91,7 +91,7 @@ let admin_router = {
                     component: resolve =>void(require(['@/views/admin/message/activityInformation/selectMajor'], resolve))
                 },
                 {
-                    path: 'message/advise/:id/:major',
+                    path: 'message/advise/:id',
                     name: '活动信息-活动信息编辑-推荐信息',
                     component: resolve =>void(require(['@/views/admin/message/activityInformation/Advise'], resolve))
                 },
@@ -121,12 +121,12 @@ let admin_router = {
                     component: resolve =>void(require(['@/views/admin/message/counselling/coachList'], resolve))
                 },
                 {
-                    path: 'message/changeMessage/:cid',
+                    path: 'message/changeMessage/:cid?',
                     name: '辅导-新建/编辑——基本信息',
                     component: resolve =>void(require(['@/views/admin/message/counselling/changeMessage'], resolve))
                 },
                 {
-                    path: 'message/coupon/:id?',
+                    path: 'message/coupon/:id?/:couponId?',
                     name: '辅导-新建/编辑——优惠卷设置',
                     component: resolve =>void(require(['@/views/admin/message/counselling/coupon'], resolve))
                 },

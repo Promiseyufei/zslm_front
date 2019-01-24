@@ -7,7 +7,7 @@
             <el-breadcrumb-item>信息发布</el-breadcrumb-item>
             <el-breadcrumb-item>活动信息</el-breadcrumb-item>
               <el-breadcrumb-item>活动信息编辑</el-breadcrumb-item>
-            <el-breadcrumb-item class="selectedNavPublic">添加推荐</el-breadcrumb-item>
+            <el-breadcrumb-item class="selectedNavPublic">添加推荐活动</el-breadcrumb-item>
           </el-breadcrumb>
 
           <!-- 返回按钮 -->
@@ -25,7 +25,7 @@
           <div class="addadviseSelect">
               <div class="addadviseInput">
                   <el-form ref="form" :model="form" label-width="120px">
-                      <el-form-item label="活动类型">
+                      <el-form-item label="推荐状态">
                         <el-select v-model="form.region" clearable placeholder="全部">
                           <el-option :label="list.name" :value="list.id" v-for="(list,i) in banner" :key = "i"></el-option>
                         </el-select>
@@ -35,7 +35,7 @@
                       </el-form-item>
                   </el-form>
               </div>
-              <el-button type="info" plain @click="getInformationType" size="small"><i class="fa fa-search fa-fw"></i>查询</el-button>
+              <el-button type="info" plain @click="getAllActivity" size="small"><i class="fa fa-search fa-fw"></i>查询</el-button>
           </div>
 
           <!-- 筛选头部 -->
@@ -60,7 +60,7 @@
                       label="操作"
                       width="140">
                       <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                        <el-button @click="$router.push('/admin/message/activity/' + scope.row.id)" type="text" size="small">查看</el-button>
                         <el-button type="text" size="small" @click="addadviseSelect(scope.row)">选中</el-button>
                       </template>
                     </el-table-column>
@@ -119,8 +119,6 @@
 
 <script>
 export default {
-    components: {
-    },
     
     data() {
       return {
@@ -130,8 +128,9 @@ export default {
             message: ''
           },
           banner: [
-              {'id':0,'name':'展示'},
-              {'id':1,'name':'不展示'},
+              {'id':0,'name':'推荐'},
+              {'id':1,'name':'不推荐'},
+              {'id': 2, 'name':'全部'}
           ],
           total: 0,
           count: 100,
@@ -151,7 +150,7 @@ export default {
           listTable: [
               {
                 prop: "id",
-                lable: "编号",
+                lable: "活动编号",
                 width: "250px"
               },
               {
@@ -160,13 +159,13 @@ export default {
                 width: "350px"
               },
               {
-                prop: 'title',
-                lable: '活动标题',
+                prop: 'address',
+                lable: '活动地址',
                 width: "354px"
               },
               {
-                prop: "create_time",
-                lable: "上传时间",
+                prop: "update_time",
+                lable: "更新时间",
                 width: "350px"
               }
           ],
@@ -190,7 +189,7 @@ export default {
         },
 
         handleClick(val){
-
+          this.$router.push('/admin/message/activity/' + val.id);
         },
         //获得需要添加的资讯的id数组
         handleSelectionChange(val) {
@@ -207,57 +206,52 @@ export default {
         
         //向指定区域添加相关咨讯
         setInfoRecommend: function() {
-          if(this.infoIdArr.length == 0) {
-            this.message(true, '没有选择要推荐的资讯', 'warning');
-            return false;
-          }
-          this.confirm(() => {
-            var load = this.openFullScreen2();
-            this.post('/admin/information/setManualRecActivitys', {
-                activityId: parseInt(this.id),
-                activityArr: this.infoIdArr
-            }).then((response) => {
-              load.close();
-              console.log(typeof response);
-              if(response.code == 0) {
-                  this.infoIdArr = [];
-                  this.tableData = [];
-                  this.message(true, response.msg, 'seccess');
-                  // this.$router.push('/operate/advise');
-              }
-              else 
-                this.message(true, response.msg, 'error');
-            })
-          }, () => {
-              this.message(true, '已取消修改', 'info');
-              load.close();
-          })
-
+			if(this.infoIdArr.length == 0) {
+				this.message(true, '没有选择要推荐的资讯', 'warning');
+				return false;
+			}
+			this.confirm(() => {
+				this.post('/admin/information/setManualRecActivitys', {
+					activityId: parseInt(this.id),
+					activityArr: this.infoIdArr
+				}).then((response) => {
+					if(response.code == 0) {
+						this.infoIdArr = [];
+						this.tableData = [];
+						this.message(true, response.msg, 'success');
+					}
+					else 
+						this.message(true, response.msg, 'info');
+					this.$router.push('/admin/message/advise/'+ this.id);
+				})
+			}, () => {
+				this.message(true, '已取消修改', 'info');
+			}, '确认将所选活动设为推荐活动?');
         },
 
         // 每页显示条数改变时触发事件
         handleSizeChange: function(val) {
             this.count = val;
-            this.getInformationType()
+            this.getAllActivity()
         },
 
         // 点击小分页触发事件
         handleCurrentChange: function(val) {
             this.page = val;
-            this.getInformationType()
+            this.getAllActivity()
         },
 
-        // 获取所有资讯类型
-        getInformationType: function() {
+        // 获取所有活动
+        getAllActivity: function() {
           var self = this;
           this.post('/admin/information/getActivityMessage', {
               screenType:0,
               activityState:3,
-              sortType:0,
-              screenState:self.form.region == '' ? 0 : self.form.region,
+              sortType:2,
+              screenState: self.form.region == '' ? this.banner[2].id : self.form.region,
               activityNameKeyword:self.form.message,
               pageCount: self.count,
-              pageNumber: self.page - 1,
+              pageNumber: self.page,
           })
               .then(function (response) {
                   // response = response.data;
@@ -277,7 +271,7 @@ export default {
         // 获取咨询列表添加分页数据
     },
     mounted(){
-      this.getInformationType();
+      this.getAllActivity();
     }
 }
 </script>

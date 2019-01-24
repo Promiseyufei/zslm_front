@@ -338,7 +338,6 @@
                             that.activityCoverImg.activityCoverMapUrl = res.result.active_img;
                             that.activityCoverImg.activityCoverDefultName = res.result.active_cover_img_name;
                             that.activityCoverImg.activityCoverImgName = that.activityCoverImg.activityCoverDefultName.split('.')[0];
-                            console.log(that.activityCoverImg.activityCoverImgName);
                             that.activityCoverImg.activityCoverDiscribe = res.result.active_alt;
 
                         } else {
@@ -388,9 +387,6 @@
             projectSubmit: function () {
 
                 let self = this;
-                // let img = this.imgUrls;
-                // img = this.dataURLtoFile(img[0], 'uploadfile');
-                
                 var fd = new FormData();
                 fd.append('activityName', self.ruleForm.name);
                 fd.append('activityType', self.ruleForm.type);
@@ -415,9 +411,10 @@
                         .then(res => {
                             if (res.code == 0) {
                                 self.message(true, '上传成功', 'success');
-                                self.record = res.result
+                                self.record = res.result;
+                                this.$router.push('/admin/message/activity/' + self.record);
                             } else {
-                                self.message(true, '上传失败', 'success');
+                                self.message(true, '上传失败', 'info');
                             }
                         })
                 } else {
@@ -502,7 +499,7 @@
                 //     this.message(true,'请先创建活动','error');
                 //     return;
                 // }
-                this.$router.push('/admin/message/advise/' + this.record+'/'+this.hostId);
+                this.$router.push('/admin/message/advise/' + this.record);
             },
 
             // 提交修改数据
@@ -579,7 +576,7 @@
 </script>
 <style>
     /*活动封面 */
-    .activity_cover .avatar-uploader .el-upload {
+    .activity_cover .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
