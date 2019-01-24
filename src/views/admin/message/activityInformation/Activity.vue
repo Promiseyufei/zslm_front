@@ -338,7 +338,6 @@
                             that.activityCoverImg.activityCoverMapUrl = res.result.active_img;
                             that.activityCoverImg.activityCoverDefultName = res.result.active_cover_img_name;
                             that.activityCoverImg.activityCoverImgName = that.activityCoverImg.activityCoverDefultName.split('.')[0];
-                            console.log(that.activityCoverImg.activityCoverImgName);
                             that.activityCoverImg.activityCoverDiscribe = res.result.active_alt;
 
                         } else {
@@ -388,9 +387,6 @@
             projectSubmit: function () {
 
                 let self = this;
-                // let img = this.imgUrls;
-                // img = this.dataURLtoFile(img[0], 'uploadfile');
-                
                 var fd = new FormData();
                 fd.append('activityName', self.ruleForm.name);
                 fd.append('activityType', self.ruleForm.type);
@@ -580,7 +576,7 @@
 </script>
 <style>
     /*活动封面 */
-    .activity_cover .avatar-uploader .el-upload {
+    .activity_cover .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;

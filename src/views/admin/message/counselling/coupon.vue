@@ -29,26 +29,25 @@
                                 <el-button type="primary" @click="startChange">开始编辑</el-button>
                             </el-form-item>
 
-                            
-
                             <el-form-item label="优惠卷名称">
                                 <el-input v-model="couponForm.name" :disabled = "disabled"></el-input>
                             </el-form-item>
 
                             <el-form-item label="优惠卷类型">
-                                <el-radio-group v-model="couponForm.region" :disabled = "disabled">
-                                    <el-radio label="折扣型">折扣型</el-radio>
-                                    <el-radio label="满减型">满减型</el-radio>
+                                <el-radio-group v-model="couponForm.type" :disabled = "disabled">
+                                    <el-radio :label="0" :value="0">满减型</el-radio>
+                                    <el-radio :label="1" :value="1">折扣型</el-radio>
                                 </el-radio-group>
                             </el-form-item>
 
                             <el-form-item label="优惠卷内容">
-                                <el-input v-model="couponForm.message" :disabled = "disabled"></el-input>
+                                <el-input v-model="couponForm.context" :disabled = "disabled"></el-input>
                             </el-form-item>
 
                             <el-form-item label="使用说明">
                                 <div id="editor">
-                                    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+                                    <!-- <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> -->
+                                    <div v-html="couponForm.zslm_couponcol"></div>
                                 </div>
                             </el-form-item>
 
@@ -68,9 +67,9 @@
                     <div class="operateUpfilesRight2">
                         <div class="messageBtn">
                             <el-form ref="form" label-width="100px">
-                                <el-form-item>
-                                    <el-button icon="el-icon-delete" @click="couponDelete">清空</el-button>
-                                </el-form-item>
+                                <!-- <el-form-item>
+                                    <el-button icon="el-icon-delete" @click="couponDelete">全部禁用</el-button>
+                                </el-form-item> -->
 
                                 <el-table
                                 ref="singleTable"
@@ -85,7 +84,7 @@
                                         label="编号"
                                         width="150">
                                     </el-table-column>
-                                    <el-table-column
+                                    <!-- <el-table-column
                                         prop="weight"
                                         label="展示顺序"
                                         width="100">
@@ -94,14 +93,16 @@
                                                       v-on:blur="loseFocus(tableData[scope.$index].weight,scope.$index)"
                                                       v-model="tableData[scope.$index].weight"></el-input>
                                         </template>
-                                        </el-table-column>
+                                    </el-table-column> -->
                                     <el-table-column
-                                        property="is_show"
-                                        label="展示状态"
+                                        property="is_enable"
+                                        label="启用状态"
                                         width="120">
                                         <template slot-scope="scope" >
                                             <el-switch
-                                                v-model="tableData[scope.$index].state" @click.native="changeState(tableData[scope.$index].state, scope.$index)">
+                                                active-color="#409eff" inactive-color="#999"
+                                                v-model="tableData[scope.$index].state" 
+                                                @click.native="changeState(tableData[scope.$index].state, tableData[scope.$index].id)">
                                             </el-switch>
                                         </template>
                                     </el-table-column>
@@ -112,14 +113,14 @@
                                         <el-table-column
                                         property="name"
                                         label="优惠卷名称"
-                                        width="100">
+                                        width="300">
                                     </el-table-column>
                                     <el-table-column
                                         property="test"
                                         label="操作"
                                         width="200">
                                         <template slot-scope="scope">
-                                            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                                            <el-button @click="handleClick(scope.row.id)" type="text" size="small">查看</el-button>
                                         </template>
                                     </el-table-column>									     
                                 </el-table>
@@ -146,6 +147,7 @@ export default {
     data() {
         return {
             id:0,
+            couponId: 0,
             disabled: true,
             form: {
                 Title: "123",
@@ -153,9 +155,9 @@ export default {
                 Description: ""
             },
             couponForm: {
-                name: "河南科技学院",
-                region: "折扣型",
-                message: "优惠卷要满1000才可以使用",
+                // name: "",
+                // region: "",
+                // message: "",
             },
             tableData: [],
             TableValue: 0,
@@ -167,9 +169,9 @@ export default {
     },
     methods: {
 
+
+        //获得该项目所有的优惠劵
         info:function(){
-            this.id = this.$route.params.id;
-            console.log(this.id)
             let that = this;
             this.fetch('/admin/information/getcoubycoach',{
                 id:that.id
@@ -184,17 +186,16 @@ export default {
             this.editor.$textElem.attr('contenteditable', true);
         },
         //改变展示状的时候触发事件
-        changeState: function(state,row) {
-            console.log(state)
-            let self = this;
-            axios.post('/admin/information/updateshow', {
-                id: self.id,
-                state: state ? 0:1
+        changeState: function(state,couponId) {
+            state = (state == true) ? 0 : 1;
+            this.post('/admin/information/setAppointCouponEnable', {
+                couponId: couponId,
+                state: state
             }).then((response) => {
-                var res = response.data;
-                if(res.code == 0) {
-                    self.message(true,"修改成功","success");
+                if(response.code == 0) {
+                    state == 0 ? this.message(true,"启用成功","success") : this.message(true,"禁用成功","success");
                 }
+                else this.message(true, response.msg, 'info');
             })
         },
         //得到所有的项目
@@ -219,73 +220,97 @@ export default {
             console.log(this.TableValue);
         },
         //查看详细内容
-        handleClick: function (row) { 
-            
+        handleClick: function (couponId) { 
+            this.$router.push('/admin/message/coupon/' + this.id + '/' + couponId);
+            this.couponId = couponId;
+            this.getAppointCoupon();
         },
         // 鼠标失去焦点时触发事件，val=>当前input里面的值，index=>当前行的下标
-        changeCount: function(val,index) {
-            var re = /^[0-9]+.?[0-9]*$/;
-            if (!re.test(val)) {
-                this.message(true,'请输入数值','warning');
-                this.tableData[index].weight = this.TableValue;
-            } else if (val<0||val>1000) {
-                this.message(true,'权值范围为0~1000','warning');
-                this.tableData[index].weight = this.TableValue;
-            } else {
-                this.$emit('setInfoRelation',this.tableData[index].id, this.tableData[index].weight);
-                let that = this
-                this.post('/admin/information/updateweight',{
-                    id:that.id,
-                    weight : that.tableData[index].weight
-                }).then(res=>{
+        // changeCount: function(val,index) {
+        //     var re = /^[0-9]+.?[0-9]*$/;
+        //     if (!re.test(val)) {
+        //         this.message(true,'请输入数值','warning');
+        //         this.tableData[index].weight = this.TableValue;
+        //     } else if (val<0||val>1000) {
+        //         this.message(true,'权值范围为0~1000','warning');
+        //         this.tableData[index].weight = this.TableValue;
+        //     } else {
+        //         this.$emit('setInfoRelation',this.tableData[index].id, this.tableData[index].weight);
+        //         let that = this
+        //         this.post('/admin/information/updateweight',{
+        //             id:that.id,
+        //             weight : that.tableData[index].weight
+        //         }).then(res=>{
 
-                })
-            }
-        },
-        // 清空所有优惠卷
-        couponDelete: function() {
-            var table = this.tableData;
-            var arrayTableId = [];
-            for (var i = 0; i < table.length; i++) {
-                arrayTableId.push(table[i].id);
-            };
-            console.log(arrayTableId);
-            if(arrayTableId.length < 1) {
-                this.message(true, '没有要清空的数据', 'error');
-                return;
-            }
-            axios.post('/deletecouponDelete', {
+        //         })
+        //     }
+        // },
+        // // 清空所有优惠卷
+        // couponDelete: function() {
+        //     var table = this.tableData;
+        //     var arrayTableId = [];
+        //     for (var i = 0; i < table.length; i++) {
+        //         arrayTableId.push(table[i].id);
+        //     };
+        //     if(arrayTableId.length < 1) {
+        //         this.message(true, '没有要修改的数据', 'error');
+        //         return;
+        //     }
+        //     this.post('/deletecouponDelete', {
                 
-            }).then((response) => {
-                if(response.code == 0) {
-                    this.tableData = [];
-                }
-            })
-        },
+        //     }).then((response) => {
+        //         if(response.code == 0) {
+        //             this.tableData = [];
+        //         }
+        //     })
+        // },
         postContent(){
             let that = this;
-            this.post('/admin/information/createCoupon',{
-                coachId:this.id,
-                couponName:that.couponForm.name,
-                couponType:0,
-                context:that.couponForm.message,
-                couponcol:that.editor.txt.html()
-            }).then(res=>{
-                if(res.code == 0){
-                    that.message(true,'提交成功','success')
-                    that.info();
-                }else{
-                    that.message(true,'提交失败','error')
+            // console.log(this.couponId);
+            // return false;
+            this.confirm(() => {
+                if(this.couponId == 0 || this.couponId == undefined) {
+                    this.post('/admin/information/createCoupon',{
+                        coachId:parseInt(this.id),
+                        couponName:that.couponForm.name,
+                        couponType:this.couponForm.type,
+                        context:that.couponForm.context,
+                        couponcol:that.editor.txt.html()
+                    }).then(res=>{
+                        if(res.code == 0){
+                            that.info();
+                            this.$router.push('/admin/message/coupon/' + parseInt(this.id) + '/' + res.result);
+                            that.message(true,'提交成功','success')
+                        }else{
+                            that.message(true,'提交失败','error')
+                        }
+                    })
                 }
-            })
+                else {
+                    this.post('/admin/information/updateAppointCoupon', {
+                        couponId: this.couponId,
+                        couponName: this.couponForm.name,
+                        couponType: this.couponForm.type,
+                        context: this.couponForm.context,
+                        couponcol: this.editor.txt.html()
+                    }).then((res) => {
+                        if(res.code == 0) {
+                            this.message(true, '修改优惠券信息成功', 'success');
+                        }
+                        else this.message(true, res.msg, 'info');
+                    })
+                }
+            }, () => {
+                this.message(true, '取消提交', 'info');
+            }, '确认提交修改的记录吗？');
         },
         //返回上一页
         toBack: function() {
-            this.$router.push('/message/coachList');
+            this.$router.push('/admin/message/changeMessage/' + this.id);
         },
         // 跳转到优惠卷设置页面
         toAdvise: function() {
-            this.$router.push('/message/aboutActivity/' + this.id);
+            this.$router.push('/admin/message/aboutActivity/' + this.id);
         },
         collegeFinish: function() {
             this.$router.push('/message/universMajorList');
@@ -349,13 +374,34 @@ export default {
                 that.majorlisttable[index].is_show = !val;
             },'确定修改么', '需要注意的操作');
         },
+        getAppointCoupon() {
+            this.fetch('/admin/information/getAppoCoupon', {
+                coachId: this.id,
+                couponId: this.couponId
+            }).then((res) => {
+                if(res.code == 0) {
+                    this.couponForm = res.result;
+                }
+                else this.message(true, res.msg, 'info');
+            })
+        }
     },
     mounted(){
-        this.info();
+        if(this.$route.params.id != undefined && this.$route.params.id != 'undefined'){
+            this.id = this.$route.params.id;
+            this.info();
+        } 
+        this.couponId = this.$route.params.couponId;
+        if(this.$route.params.couponId != undefined && this.$route.params.couponId != 'undefined') {
+            this.couponId = this.$route.params.couponId;
+            this.getAppointCoupon();
+        }
+        
+        
 
         // 创建富文本编辑器
         this.editor.customConfig.onchange = (html) => {
-            this.editorContent = html;
+            this.couponForm.zslm_couponcol = html;
         }
         this.editor.create();
         this.editor.$textElem.attr('contenteditable', false);
