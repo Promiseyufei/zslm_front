@@ -125,7 +125,7 @@ export default {
     },
     methods:{
         adviseAdd: function() {
-          this.$router.push('/operate/addAdvise/' + this.i);
+          this.$router.push('/admin/operate/addAdvise/' + this.i);
         },
 
         // 点击修改标题时，控制输入框和“更改”按钮的显示

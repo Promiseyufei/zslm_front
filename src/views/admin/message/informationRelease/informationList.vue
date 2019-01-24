@@ -24,27 +24,27 @@
         <div class="informationList-form">
             <el-form class="informationList-input" label-width="80px">
                 <el-form-item label="资讯标题" >
-                    <el-input size="medium" v-model="informationTitle" placeholder="输入文件名称"></el-input>
+                    <el-input size="medium" v-model="informationTitle_v" placeholder="输入文件名称"></el-input>
                 </el-form-item>
 
 
                 <el-form-item label="展示状态">
-                    <el-select size="medium" v-model="type1" placeholder="全部">
+                    <el-select size="medium" v-model="type1_v" placeholder="全部">
                         <el-option v-for="(item, index) in showArr" :key="index" :label="item.label" :value="item.value" ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="推荐状态">
-                    <el-select size="medium" v-model="type2" placeholder="全部">
+                    <el-select size="medium" v-model="type2_v" placeholder="全部">
                         <el-option v-for="(item, index) in recommendArr" :key="index" :label="item.label" :value="item.value" ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="咨询类型">
-                    <el-select size="medium" v-model="type3" placeholder="全部">
+                    <el-select size="medium" v-model="type3_v" placeholder="全部">
                         <el-option v-for="(item, index) in infoType"  :label="item.name" :value="item.id" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
-            <el-button size="mini" type="primary" icon="el-icon-search" class="informform-search" @click.native = "gettableInfo">查询</el-button>
+            <el-button size="mini" type="primary" icon="el-icon-search" class="informform-search" @click.native = "selectQuery">查询</el-button>
         </div>
 
         <!-- 内容列表   默认顺序需向后台传参-->
@@ -60,9 +60,9 @@
 
         <!-- 表格    需获得表格数据-->
         <div class="information-table">
-            <el-table :header-cell-style="{background:'#f9fafc'}" :data="informationListtTable" @current-change="handleCurrentChange" border style="width: 100%">
+            <el-table @selection-change="handleSelectionChange" :header-cell-style="{background:'#f9fafc'}" :data="informationListtTable" @current-change="handleCurrentChange" border style="width: 100%">
                 <el-table-column type="selection" width="60"></el-table-column>
-                <el-table-column label="编号" prop="id" width="100"></el-table-column>
+                <el-table-column label="编号" prop="id" width="100" ></el-table-column>
                 <el-table-column label="展示权重" width="80">
                     <template slot-scope="scope">
                         <el-input v-model="informationListtTable[scope.$index].weight" @focus="focusMajorWeigthCount(informationListtTable[scope.$index].weight)" v-on:blur="changeMajorWeight(informationListtTable[scope.$index].id, informationListtTable[scope.$index].weight, scope.$index)"></el-input>
@@ -75,7 +75,7 @@
                 </el-table-column>
                 <el-table-column label="推荐状态" width="100">
                     <template slot-scope="scope">
-                        <el-switch v-model="informationListtTable[scope.$index].is_recommend" @change="setInfoState(informationListtTable[scope.$index].id, informationListtTable[scope.$index].is_recommend, 2, scope.$index)" active-color="#999" inactive-color="#409eff"></el-switch>
+                        <el-switch v-model="informationListtTable[scope.$index].is_recommend" @change="setInfoState(informationListtTable[scope.$index].id, informationListtTable[scope.$index].is_recommend, 2, scope.$index)" ></el-switch>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="120">
@@ -94,7 +94,7 @@
             </el-table>
         </div>
         <div class="footer"> 
-            <el-button size="mini" icon="el-icon-delete">删除</el-button>
+            <el-button size="mini" icon="el-icon-delete" @click.native="deleteInfos()">删除</el-button>
             <Page :total="total" @pageChange="pageChange" @click.native = "gettableInfo"></Page>
         </div>
     </div>
@@ -104,12 +104,17 @@
     export default {
         data(){
             return{
+				  type1_v: 2,
+				type2_v: 2,
+				type3_v: 0,
+			
                 type1: 2,
                 type2: 2,
                 type3: 0,
                 cacheMajorWeight:'', 
                 /*查询输入框*/
                 informationTitle:'',
+				informationTitle_v:'',
                 //咨询类型
                 infoType:[{id:0, name:'全部'}],
                 showArr:[
@@ -150,18 +155,39 @@
                 total:0,
                 searchContent:{
                     page:1,
-                    limit:5,
+                    limit:10,
                 },  
+				multipleSelection:[],
             }
         },
         methods:{
+			handleSelectionChange(val) {
+				this.multipleSelection = val;
+			},
+			deleteInfos(){
+				var that = this;
+				var selectId = [];//存放删除的数据
+				for (var i = 0; i < that.multipleSelection.length; i++) {
+					selectId.push(that.multipleSelection[i].id);
+				
+				};
+				    this.confirm(() => {
+				this.post('/admin/information/delinfos',{ids:selectId}).then(res=>{
+					if(res.code == 0){
+						 that.gettableInfo();
+						 this.message(true,'删除成功','success');
+					}else{
+						this.message(true,'删除失败','success');
+					}
+				})},"是否删除数据操作")
+			},
             refreshInfoMsg() {
                 this.informationTitle = "";
                 this.type1 = 2;
                 this.type2 = 2;
                 this.type3 = 0;
                 this.searchContent.page = 1;
-                this.searchContent.limit = 5;
+                this.searchContent.limit = 10;
                 this.informationListtTable = [];
                 this.gettableInfo();
             },
@@ -253,18 +279,24 @@
                 this.input = val;
             },
 			selectQuery:function(){
-				
+				this.type1 = this.type1_v,
+				this.type2= this.type2_v,
+				this.type3= this.type3_v,
+				this.informationTitle= this.informationTitle_v,
+				this.gettableInfo()
 			},
             gettableInfo:function() {
                 var that = this;
+				console.log(this.type2)
                 this.post('/admin/information/getInfoPageMsg',{
-                    infoNameKeyword: this.informationTitle,
-                    screenType: this.type1 == '' ? 2 : this.type1,
-                    screenState: this.type2 == '' ? 2 : this.type2,
-                    infoType: this.type3 == '' ? 0 : this.type3,
-                    sortType: this.Sort == '' ? 2 : this.Sort,
-                    pageCount: this.searchContent.limit,
-                    pageNumber: this.searchContent.page
+		
+                    infoNameKeyword: that.informationTitle,
+                    screenType:  that.type1,
+                    screenState: that.type2,
+                    infoType: that.type3,
+                    sortType: that.Sort == '' ? 2 : that.Sort,
+                    pageCount: that.searchContent.limit,
+                    pageNumber: that.searchContent.page
                 })
                 .then((response) => {
                     if (response.code == 0) {
@@ -282,6 +314,9 @@
             let _this = this;
             this.getMajorPageOptions('post', '/admin/information/getInfoType', {}, (response) => {
                 response.code == 0 ? _this.infoType.concat(response.result) : this.message(true, response.msg, 'error'); 
+				for(var i = 0 ; i < response.result.length ; i++){
+					_this.infoType.push(response.result[i])
+				}
             }, (response) => {
                 this.message(true, '未查询到咨询类型的信息', 'error');
             });

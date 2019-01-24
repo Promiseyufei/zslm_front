@@ -176,9 +176,9 @@ let admin_router = {
                     component: resolve =>void(require(['@/views/admin/message/informationRelease/setReRead'], resolve))
                 },
                 {
-                    path: 'message/adviseRead',
+                    path: 'message/adviseRead/:id',
                     name: '信息发布——资讯发布-添加资讯推荐',
-                    component: resolve =>void(require(['@/views/admin/message/informationRelease/adviseRead'], resolve))//添加资讯页面，与@/views/admin/operat/AddAdvise页面相同
+                    component: resolve =>void(require(['@/views/admin/message/informationRelease/AddAdvise'], resolve))//添加资讯页面，与@/views/admin/operat/AddAdvise页面相同
                 },
                 
                 //消息管理

@@ -115,7 +115,7 @@
                 total:0,
                 searchContent:{
                     page:1,
-                    limit:5,
+                    limit:10,
                 },
                 oneUserMsg:null,
 				user_img_path:"http://www.lishanlei.cn/storage/front/user/",

@@ -44,8 +44,7 @@
         <div class="files-datalist">
             <i class="el-icon-tickets"></i>
             <p class="screen">数据列表</p>
-            <div
-			 class="datalist-selecttwo">
+            <div class="datalist-selecttwo">
                 <el-select size="mini" v-model="Sorting" placeholder="默认顺序" style="width: 120px" @change="sortingChage">
                     <el-option v-for="(item,index) in sorting" :key="index" :label="item.label" :value="item.value">
                     </el-option>
@@ -137,10 +136,10 @@
                 total:0,
                 searchContent:{
                     page:1,
-                    limit:5,
+                    limit:10,
                 },
 				oneUserMsg:null,
-				user_img_path:"http://www.lishanlei.cn/storage/front/user/"
+				user_img_path: this.globals.USERURL
             }
         },
         methods:{
@@ -400,7 +399,7 @@
     .datalist-selecttwo {
         display: inline-block;
         position: absolute;
-        right: 10px;
+        right: 40px;
 		width: 100px;
     }
 

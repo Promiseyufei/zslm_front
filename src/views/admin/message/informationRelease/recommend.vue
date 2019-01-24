@@ -43,7 +43,7 @@
                                 <div v-for="(item, index) in shoolCount" :key="index">
                                     <!-- 主办院校logo -->
                                     <div class="messageSchool">
-                                        <img v-bind:src="item.magor_logo_name" alt="暂无">
+                                        <img v-bind:src="imgHost+item.magor_logo_name" alt="暂无">
                                     </div>
 
                                     <!-- 院校名称 -->
@@ -69,7 +69,7 @@
                                 <div v-if="this.setSwitch == 2">
                                     <div class="messageUpfilesRight2Nav">
                                         <el-button type="info" plain @click="adviseRead"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
-                                        <el-button type="info" plain @click="delAdvise"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                                        <el-button type="info" plain @click="delAdvise(-1,-1)"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                                     </div>
                                     <!-- 表格 -->
                                     <messageTable :tableData3="tableData" :isSelect="0" :listTable="listTable" @setInfoRelation="setInfoState" @del="delAdvise"></messageTable>
@@ -92,7 +92,7 @@
                                 <div v-if="this.setSwitch2 == 2">
                                     <div class="messageUpfilesRight2Nav">
                                         <el-button type="info" plain @click="adviseAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
-                                        <el-button type="info" plain @click="delReMajor"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                                        <el-button type="info" plain @click="delReMajor(-1,-1)"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                                     </div>
                                     <!-- 表格 -->
                                     <messageTable :tableData3="tableData2" :listTable="listTable2" @setInfoRelation="setMajorState" @del="delReMajor"></messageTable>
@@ -123,6 +123,7 @@ export default {
       return {
         infoId: 0,
         imageUrl: '',
+		imgHost:this.globals.MAJORURL,
         //设置成功的主办院校：
         shoolCount: [],
         setSwitch: 0,
@@ -194,7 +195,7 @@ export default {
         },
         //跳转到推荐阅读添加页面
         adviseRead() {
-            this.$router.push('/admin/message/setReRead/' + this.infoId);
+			  this.$router.push('/admin/message/adviseRead/'+ this.infoId);
         },
         pushInfoSelectMajor() {
             this.$router.push('/admin/message/infoSelectMajor/' + this.infoId + '/' + 1);
@@ -215,9 +216,6 @@ export default {
             this.$router.push('/admin/message/informationList');
         },
 
-        adviseRead:function() {
-            this.$router.push('/admin/message/adviseRead');
-        },
 
         //删除主办院校
         deleteSchool: function(index) {
@@ -296,9 +294,9 @@ export default {
         //直接调用后台接口清除字符串中的删除id，因为添加页面点击完成已经添加到数据库中，所以在手动设置模块展示的一定是在数据库中的信息，所以直接删除就ok
         delAdvise: function(infoid, row) {
             let type = null;
-            if(typeof infoid != null && typeof row != null) type = 0;
-            else if(typeof infoid == null && typeof row == null) type = 1;
-
+            if( infoid == -1 &&  row == -1) type = 1;
+            else type = 0;
+			console.log(infoid)
             this.confirm(() => {
                 this.post('/admin/information/delAppointInfoRecommendRead', {
                     id: this.infoId,
@@ -320,8 +318,11 @@ export default {
         },
         delReMajor(majorId, row) {
             let type = null;
-            if(typeof majorId != null && typeof row != null) type = 0;
-            else if(typeof majorId == null && typeof row == null) type = 1;
+			
+            if( majorId != -1 &&  row != -1) 
+				type = 0;
+            else
+				type = 1;
 
             this.confirm(() => {
                 this.post('/admin/information/delAppointInfoRecommendRead', {

@@ -2,7 +2,7 @@
 	<div class="filesAll">
 		<!-- 选项卡 -->
 		<div class="files-tab">
-		  <operateNav :Banner="banner" :radio2 = "radio2" @showbox="toshow" :i="i">{{allFilesCount}}</operateNav>  
+		  <operateNav :Banner="banner" :radio2 = "radio2"  :i="i">{{allFilesCount}}</operateNav>  
 		  <el-button size="small" type="primary"  @click.native = "jumpPage" class="click">点击上传</el-button>
 		</div>
 
@@ -71,8 +71,8 @@
 						    	<div class="dialogRadio">
 						    		<div>文件类型</div>
 						    		<el-radio-group v-model="form.type">
-										<el-radio label="0">招生简章</el-radio>
-								    	<el-radio label="1">其他文件</el-radio>
+										<el-radio :label="0">招生简章</el-radio>
+								    	<el-radio :label="1">其他文件</el-radio>
 									</el-radio-group>
 						    	</div>
 						    	<el-form-item label="年份信息" :label-width="formLabelWidth">
@@ -88,8 +88,7 @@
 										    v-model="form.is_show"
 										    active-color="#13ce66"
 										    inactive-color="#ff4949"
-										    active-value="100"
-										    inactive-value="0">
+										>
 										</el-switch>
 									</el-tooltip>
 						    	</div>
@@ -101,7 +100,7 @@
 						  	</div>
 						</el-dialog>
 
-		                <el-button @click="view(scope.row)" type="text" size="small">查看</el-button>
+		                <el-button @click="view(tableData[scope.$index].file_url)" type="text" size="small">查看</el-button>
 		                <el-button type="text" size="small" @click.native.prevent="deleteRow(scope.$index, tableData)">删除</el-button>
 		              </template>
 		          </el-table-column>
@@ -195,10 +194,11 @@
 		        total:0,
 		        searchContent:{
 		              page:1,
-		              limit:5,
+		              limit:10,
 		        },
 				judgeadd:true,
-				loading:true
+				loading:true,
+				fileUrl:this.globals.FileUrl
     	    }
   	    },
        	watch: {
@@ -220,14 +220,30 @@
 				this.form.type = val.file_type
 				this.form.yearInfo = val.file_year
 				this.form.fileDesc = val.file_alt
-				this.form.is_show = val.is_show
-				console.log(this.form.type)
+				this.form.is_show = val.is_show == 0 ? true : false
 				this.dialogFormVisible = true
 				
 			},
 			updateFile:function(){
+				let that = this
+				this.post("/admin/files/updatefile",{
+					fileId:that.form.fileId,
+					fileName:that.form.name,
+					fileType:that.form.type,
+					fileYear:that.form.yearInfo,
+					fileDescribe:that.form.fileDesc,
+					isShow:that.form.is_show ? 0:1
+				}).then(res=>{
+					if(res.code == 0){
+						 this.message(true,'修改成功','success');
+						  that.dialogFormVisible = false
+						that.query()
+					}else{
+						 this.message(true,res.msg,'error');
+						
+					}
+				})
 				
-				this.dialogFormVisible = false
 			},
 			
 			selectQuery:function(){
@@ -245,7 +261,7 @@
 	  		},
 	  		//跳转页面
 	  		jumpPage:function() {
-	    		this.$router.push('/SelectUnivers');
+	    		this.$router.push('/admin/SelectUnivers');
 	    	},
 	  		//获得多选中表格行的id
 	  		handleSelectionChange(val) {
@@ -323,9 +339,13 @@
 
 	      	},
 	      	//查看表格某一行——弹出编辑文件信息框框
-	    	view(row) {
+	    	view:function(row) {
 	    		//当前行表格数据
-	    		var singledata = row;
+	    		// console.log(row)
+	
+				var url = this.fileUrl+row;
+				
+				 window.location.href = url
 	        	// 此弹出框未给
 	    	},
 	    	//编辑表格某一行——跳到PDF文件预览界面
@@ -339,6 +359,7 @@
 	        	this.i = i;
 	        	this.query();
 	      	},
+		
 	      	pageChange(msg) {
 	      		// var page = msg.page;
 	      		// var page = msg.limit;

@@ -37,7 +37,7 @@
                                     <strong class="title">申请凭证：</strong>
                                     <div label="申请凭证">
                                         <img class="img" v-for="(item, index) in data.imgs"
-                                             :src="item" preview="1" preview-text="描述文字">
+                                             :src="imgSrc+item" preview="1" preview-text="描述文字">
 
                                     </div>
                                 </div>
@@ -122,7 +122,7 @@
                     {type:'',prop:'process_status',label:'流程状态',width:100},
                     {type:'',prop:'approve_status',label:'审批结果',width:100},
                 ],
-				imgSrc:"http://www.lishanlei.cn/admin/"
+				imgSrc:this.globals.REFUNDURL
             }
         },
         methods:{

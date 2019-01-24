@@ -231,22 +231,24 @@ export default {
         
         //向指定区域添加相关咨讯
         setInfoRecommend: function() {
+					var that = this;
+					var url = '/admin/message/recommend/'+that.id;
           if(this.infoIdArr.length == 0) {
             this.message(true, '没有选择要推荐的资讯', 'warning');
             return false;
           }
           this.confirm(() => {
             // var load = this.openFullScreen2();
-            this.post('/admin/operate/addAppoinInformations', {
-              appointId: this.id,
-              informArr: this.infoIdArr
+            this.post('/admin/information/setManualRecInfos', {
+              infoId: this.id,
+              infoArr: this.infoIdArr
             }).then((response) => {
 
               if(response.code == 0) {
                   this.infoIdArr = [];
                   this.tableData = [];
                   this.message(true, response.msg, 'seccess');
-                  this.$router.push('/admin/operate/advise');
+                  this.$router.push(url);
               }
               else 
                 this.message(true, response.msg, 'error');

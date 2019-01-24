@@ -256,7 +256,7 @@ export default {
                 if(response.code == 0) {
                     this.infoId = response.result;
                     this.message(true, response.msg, 'success');
-                    this.$router.push('/message/changeInformation/' + this.infoId);
+                    this.$router.push('/admin/message/changeInformation/' + this.infoId);
                 }
             })
         },
