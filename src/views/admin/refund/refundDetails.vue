@@ -37,7 +37,7 @@
                                     <strong class="title">申请凭证：</strong>
                                     <div label="申请凭证">
                                         <img class="img" v-for="(item, index) in data.imgs"
-                                             :src="imgSrc+item" preview="1" preview-text="描述文字">
+                                             :src="item" preview="1" preview-text="描述文字">
 
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                             that.content = res.result[i].approve_context
                         }
                         that.data = res.result[0];
-                        if(that.data.approve_status == '通过' && that.data.process_status == '已结束'){
+                        if(that.data.process_status == '已结束'){
                             that.edit = true;
                             console.log(that.edit)
                         }

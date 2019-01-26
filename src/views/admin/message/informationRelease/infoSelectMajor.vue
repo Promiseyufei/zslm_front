@@ -258,6 +258,7 @@
                         }).then((response) => {
                             if(response.code == 0) {
                                 this.message(true, response.msg, 'success');
+								    this.$router.push('/admin/message/recommend/' + this.infoId);
                             }
                             else this.message(true, response.msg, 'error');
                         })
@@ -266,7 +267,7 @@
                     }, '确定设置选中院校专业为该资讯的相关院校吗？');
                 }
 
-                this.$router.push('/admin/message/recommend/' + this.infoId);
+            
 
             },
         },

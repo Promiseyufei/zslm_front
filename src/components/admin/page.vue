@@ -24,6 +24,7 @@ export default {
     	//每页总条数变更
     	handleSizeChange(val) {
     		this.page.limit = val;
+			console.log(111)
     		this.$emit('pageChange',this.page);
 	    },
 
