@@ -41,7 +41,7 @@
                                     <p style="margin-top:2%;text-align: center; color: #1ABC9C;cursor: pointer;"
                                        @click="deleteSchool">删除</p>
                                 </div>
-                                <div  v-if="hostMajor.majorid == null ">
+                                <div  v-else-if="hostMajor.majorid == null ">
                                     <!-- 主办院校logo -->
                                     <div class="messageSchool">
                                         <img v-bind:src="defaultMajorLogo" alt="">

@@ -65,7 +65,7 @@
                        <div style="position: relative;">
                            <div class="upQuotes"><img src="../../../../assets/img/upQuotes.png"></div>
                            <div class="contentDetail">
-                               <p>{{ xxnr }}</p>
+                               <p>{{ sendMessage }}</p>
                                <el-button type="text"  @click="modifyNewsSecond">修改</el-button>
                            </div>
                            <div class="lowQuotes"><img src="../../../../assets/img/lowQuotes.png"></div>
@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="sendMess">
-            <el-button type="primary" @click.native = "jumpPage">&#8195&#8195完成！&#8195&#8195</el-button>     
+            <el-button type="primary" @click.native="jumpPage">&#8195&#8195完成！&#8195&#8195</el-button>     
         </div> 
     </div>
 </template>
@@ -100,64 +100,87 @@
         },
         methods: {
             jumpPage:function() {
-                this.$router.push('/message/informationList');
+                this.$router.push('/admin/message/informationList');
             },
 
             addInfoNews:function(type){
                 let self = this;
-                this.post('/admin/information/sendInfoDynamic',{
-                    infoId:parseInt(self.infoId),
-                    newOrDyna:type
-                }).then((response) => {
+                let url = ''
+                let data = null;
+                if(type == 0) {
+                    url = '/admin/information/setInformationdynamic';
+                    data = {
+                        infoId:parseInt(self.infoId),
+                    }
+                }
+                else if(type == 1) {
+                    url = '/admin/information/sendInfoDynamic';
+                    data = {
+                        infoId: parseInt(self.infoId),
+                        contexts: this.sendMessage,
+                        url:'http://' + window.location.host + '/front/firstMenuRouter/viewInformation/singleInformation/' + parseInt(self.infoId)
+                    }
+                }
+                this.post(url, data).then((response) => {
                     if(response.code == 0) {
-                        this.message(true, response.msg, 'success');
+                        this.message(true, '发送成功', 'success');
                     }
                     else {
-                        this.message(true, response.msg, 'error');
+                        this.message(true, response.msg, 'info');
                     }
-                    console.log(response);
                 })
 
+
+
+                // this.post('/admin/information/sendActivityDynamic',
+                //     {
+                //         activityId:parseInt(self.activeId),
+                //         contents:self.sendMessage,
+                //         type: 1,
+                //         url: 'http://' + window.location.host + '/front/firstMenuRouter/lookActivity/singleActivity/' + parseInt(self.activeId)
+                //     }
+                // ).then(res=>{
+                //     if(res.code == 0){
+                //         self.message(true,'发送成功', 'success')
+                //         self.sendMessagedis = true;
+                //     }else{
+                //         self.message(true,res.msg,'info')
+                //     }
+                // })
             },
             modifyNewsFirst() {
-                this.$prompt('', '', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消',
-                  inputPattern: '',//输入框内容判断，前台要加吗？
-                  inputErrorMessage: '邮箱格式不正确',//判断提示语
-                  inputValue: this.yxdt
-                }).then(({ value }) => {
-                    this.yxdt = value;
-                    this.$message({
-                        type: 'success',
-                        message: '您已成功修改'
-                    });
-                }).catch(() => {
-                  this.$message({
-                    type: 'info',
-                    message: '您已取消修改'
-                  });       
-                });
+                // let self = this;
+                // this.post('/admin/information/setActivitydynamic',{
+                //     activityId:parseInt(self.activeId),
+                // }).then(res=>{
+                //     if(res.code == 0){
+                //         self.message(true,'发送成功','success')
+                //         self.contentdis = true;
+                //     }else{
+                //         self.message(true,res.msg,'info')
+                //     }
+
+                // })
+                this.message(true, '发送院校动态更新不需要输入信息哦', 'info');
             },
             modifyNewsSecond() {
                 this.$prompt('', '', {
                   confirmButtonText: '确定',
                   cancelButtonText: '取消',
                   inputPattern: '',//输入框内容判断，前台要加吗？
-                  inputErrorMessage: '邮箱格式不正确',//判断提示语
-                  inputValue: this.xxnr
+                  inputErrorMessage: '邮箱格式不正确'//判断提示语
                 }).then(({ value }) => {
-                    this.xxnr = value;
-                    this.$message({
-                        type: 'success',
-                        message: '您已成功修改'
-                    });
+                    this.sendMessage = value
+                  this.$message({
+                    type: 'success',
+                    message: '您已修改为: ' + value
+                  });
                 }).catch(() => {
                   this.$message({
                     type: 'info',
                     message: '您已取消修改'
                   });       
-                });    
+                });
             }
         },
         mounted(){
@@ -167,8 +190,8 @@
             }).then((response) => {
                 if(response.code == 0) {
                     this.info = response.result;
-                    this.yxdt = '【MBA小助手】新发布了一条资讯: ' + this.info.zx_name + '，快去看看吧！';
                     this.xxnr = '【MBA小助手】新发布了一条资讯: ' + this.info.zx_name + '，快去看看吧！';
+                    this.sendMessage = '【MBA小助手】新发布了一条资讯: ' + this.info.zx_name + '，快去看看吧！';
                 }
                 else
                     this.message(true, response.msg, 'error');

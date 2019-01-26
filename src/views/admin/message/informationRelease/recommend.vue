@@ -37,7 +37,7 @@
 									</div>
 
 									<!-- 院校名称 -->
-									<p style="text-align: center;">未设置主办院校</p>
+									<p style="text-align: center;">未设置相关院校</p>
 								</div>
 
 								<div v-for="(item, index) in shoolCount" :key="index">
