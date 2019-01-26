@@ -4,7 +4,7 @@
         <div class="recordHomeBread">
             <el-breadcrumb separator="/">
               <el-breadcrumb-item>信息发布</el-breadcrumb-item>
-              <el-breadcrumb-item  class="selectedNavPublic">院校专业</el-breadcrumb-item>
+              <el-breadcrumb-item  class="selectedNavPublic">历史记录</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
 
@@ -27,7 +27,7 @@
                         <el-date-picker v-model="overTime" type="date" placeholder="选择日期">
                         </el-date-picker>
                     </el-form-item>
-                    <el-form-item label="消息内容" label-width="180px">
+                    <el-form-item label="消息关键字" label-width="180px">
                         <el-input v-model="messageCont" size="medium" placeholder="输入"></el-input>
                     </el-form-item>
                 </el-form>  
@@ -44,7 +44,7 @@
         <!-- 表格 -->
         <div class="recordHomeTable">
               <el-table :data="tableData" border style="width: 100%">
-                  <el-table-column label="操作" width="210">
+                  <el-table-column label="操作" width="110">
                       <template slot-scope="scope">
                           <div class="recordHome-icon">
                             <i @click="jumpPage(scope.row.id)" class="el-icon-search"></i>
@@ -60,7 +60,7 @@
 
         <!-- 分页 -->
         <div class="footer">
-            <singlePage :currentPage="currentPage" :totalData="totalData"></singlePage>
+            <singlePage :currentPage="currentPage" :totalData="totalData" @use="handClick"></singlePage>
         </div>
     </div>
 </template>
@@ -75,10 +75,10 @@
                 
                 /*表格*/
                 tableTop:[
-                    {type:'',prop:'id',label:'消息ID',width:150},
-                    {type:'',prop:'carrier',label:'消息类型',width:150},
-                    // {type:'',prop:'messageObject',label:'消息对象',width:150},
-                    {type:'',prop:'create_time',label:'发送时间',width:200},
+                    {type:'',prop:'id',label:'消息ID',width:120},
+                    {type:'',prop:'type',label:'消息类型',width:140},
+                    {type:'',prop:'carrier',label:'消息载体类型',width:160},
+                    {type:'',prop:'create_time',label:'发送时间',width:180},
                     {type:'',prop:'success',label:'发送状态',width:100},
                     {type:'',prop:'news_title',label:'消息内容',width:690},
                 ],
@@ -91,6 +91,11 @@
             }
         },
         methods: {
+            handClick(val) {
+                // console.log(val)
+                this.currentPage = val;
+                this.intoPage();
+            },
             //跳转页面
             jumpPage:function(newsId) {
                 this.$router.push('/record/recordDetail/' + newsId);
@@ -99,7 +104,7 @@
             intoPage: function(){
                 var that = this;
                 this.post('/admin/news/getScreenNews',{
-                    newTitleKeywords: null,
+                    newTitleKeywords: this.messageCont,
                     startTime: this.startTime,
                     endTime: this.overTime,
                     pageCount: this.size,
