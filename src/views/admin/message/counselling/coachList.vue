@@ -7,7 +7,7 @@
             </el-breadcrumb>
         </div>
         <div class="majorlist-button">
-            <el-button type="primary" @click = "jumpPage">新建</el-button>
+            <el-button type="primary" @click="jumpPage(0)">新建</el-button>
         </div>
         <div class="majorlist-query">
             <i class="el-icon-search"></i>
