@@ -13,7 +13,7 @@
           <!-- 返回按钮 -->
           <div class="addadviseBtn">
               <el-row>
-                <el-button @click.native="$router.push('/operate/advise')">返回</el-button>
+                <el-button @click.native="$router.push('/admin/message/advise/' + id)">返回</el-button>
               </el-row>
           </div>
           

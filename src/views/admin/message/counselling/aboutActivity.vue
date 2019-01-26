@@ -26,10 +26,10 @@
                     <div class="operateUpfilesRight2">
                         <div class="operateUpfilesRight2Nav">
                             <el-button type="info" plain @click="couponAdd"><i class="fa fa-plus fa-fw fa-lg"></i>添加</el-button>
-                            <el-button type="info" plain @click="test"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
+                            <el-button type="info" plain @click="cancelAllActivity"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
                         </div>
                         <!-- 表格 -->
-                        <messageTable :isSelect="1" :tableData3 = "tableData3" :listTable="listTable" @del="test"></messageTable>
+                        <messageTable :isSelect="1" @setInfoRelation="changeWeight" @handleClick="handleClick" :tableData3 = "tableData3" :listTable="listTable" @del="cancelActivity"></messageTable>
                         <!-- 完成按钮 -->
                         <div class="operateFinalUp">
                             <el-button type="primary" @click="couponFinish">完成</el-button>
@@ -51,6 +51,7 @@ export default {
     },
     data() {
         return {
+            coachId:0,
             listTable: [
             {
                 prop: 'id',
@@ -58,17 +59,17 @@ export default {
                 width: "210px"
             },
             {
-                prop: "weight",
+                prop: "show_weight",
                 lable: "展示顺序",
                 width: "80px"
             },
             {
-                prop: "z_type",
+                prop: "active_type",
                 lable: "活动类型",
                 width: "210px"
             },
             {
-                prop: "name",
+                prop: "active_name",
                 lable: "活动名称",
                 width: "319px"
             },
@@ -83,20 +84,72 @@ export default {
         }
     },
     methods: {
+        //取消相关活动推荐
+        cancelActivity(activityId, activity) {
+            // this.confirm(() => {
+                this.post('/admin/information/cancelRelevanActivity', {
+                    coachId: this.coachId,
+                    activityId:activityId
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.getActivity();
+                        this.message(true, '取消该相关活动关联成功', 'success');
+                    }
+                })
+            // }, () => {
+            //     this.message(true, '取消修改', 'info');
+            // }, '确认要修改该关联活动权重吗？');
+
+        },
+        cancelAllActivity() {
+            this.confirm(() => {
+                this.post('/admin/information/cancelAllReActivity', {
+                    coachId: this.coachId
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.getActivity();
+                        this.message(true, '取消所有推荐活动关联成功', 'success');
+                    }
+                    else this.message(true, '修改操作失败', 'info');
+                })
+            }, () => {
+                this.message(true, '操作取消', 'info');
+            }, '确认清空所有推荐活动关联');
+        },
+        changeWeight(activityId, weight) {
+            this.confirm(() => {
+                this.post('/admin/information/updateActivityWeight', {
+                    id: activityId,
+                    showWeight:weight
+                }).then((response) => {
+                    if(response.code == 0) {
+                        this.message(true, '修改成功', 'success')
+                    }
+                    else this.message(true, response.msg, 'info');
+                })
+            }, () => {
+                this.message(true, '取消修改', 'info');
+            }, '确认要修改该关联活动权重吗？');
+        },
+        handleClick(activity) {
+				let routeUrl = this.$router.resolve({
+					path:'/front/firstMenuRouter/lookActivity/singleActivity/'+activity.id,
+				});
+				window.open(routeUrl.href, '_blank');
+        },
         // 跳转页面，跳到添加活动页面
         couponAdd: function() {
-            this.$router.push('/message/choiceactivity/');
+            this.$router.push('/admin/message/choiceactivity/' + this.coachId);
         },
         //获得相关活动页面
         getActivity: function() {
             let self = this;
 
-            axios.post('/admin/message/getActivity', {
-                
+            this.fetch('/admin/information/getAppoinCoachRelevantActivity', {
+                coachId: this.coachId
             }).then((response) => {
-                var res = response.data;
-                if(res.code == 0) {
-                    this.tableData3 = res.data;
+                if(response.code == 0) {
+                    this.tableData3 = response.result;
                     // this.message(true, response.msg, 'success');
                 }
                 // else this.message(true, response.msg, 'error');
@@ -104,12 +157,15 @@ export default {
         },
         //点击完成跳转页面
         couponFinish: function() {
-            this.$router.push('/message/coachList');
+            this.$router.push('/admin/message/coachList');
         }
 
     },
     mounted(){
-        this.getActivity();
+        if(this.$route.params.id != undefined) {
+            this.coachId = this.$route.params.id;
+            if(this.coachId > 0) this.getActivity();
+        } 
     },
 };
 </script>

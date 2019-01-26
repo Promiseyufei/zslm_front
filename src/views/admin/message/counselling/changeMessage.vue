@@ -216,7 +216,7 @@
                         <div class="messageBtn">
                             <div id="editor">
                                 <!-- <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> -->
-                                 <div v-html="editorContent"></div>
+                                 <!-- <div v-html="editorContent"></div> -->
                             </div>
                             <div class="messageEditor">
                                 <el-button type="primary" plain :disabled="disabled3" @click="messageEmpty">清空
@@ -246,7 +246,7 @@
                 dialogLogoTableVisible: false,
                 dialogCoverTableVisible: false,
                 form: {
-                    Title: "123",
+                    Title: "",
                     Keywords: "",
                     Description: ""
                 },
@@ -347,6 +347,8 @@
                 }).then(res => {
                     if(res.code == 0){
                         self.editorContent = res.result.describe;
+                        // console.log(self.editorContent)
+                        self.editor.txt.html(self.editorContent);
                         self.counsellForm.name = res.result.coach_name
                         self.counsellForm.region =  parseInt(res.result.province)
                         self.counsellForm.tell = res.result.phone
@@ -390,7 +392,6 @@
                             self.province = res.result['provice'];
                             res.result['coach'].unshift({'id': 0, 'coach_name': '自主办校'})
                             self.coach = res.result['coach'];
-                            console.log(self.coach)
                         } else {
 
                         }
@@ -452,10 +453,10 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }
-                let url = '/admin/information/createCoach';
-                if(this.id !=0){
+                let url = '/admin/information/updateCoach';
+                    // url = '/admin/information/updateCoach';
+                if(this.id != 0){
                     fd.append('id', this.id);
-                    url = '/admin/information/updateCoach';
                 }
                 fd.append('coach_name', that.counsellForm.name);
                 fd.append('provice', that.counsellForm.region)
@@ -478,9 +479,11 @@
 
                 this.post(url, fd, imgFile).then(
                     res => {
-                        if(that.id == 0)
+                        // console.log(res.result);return false;
+                        if(that.id == 0) {
                             that.id = res.result;
-
+                            this.$router.push('/admin/message/changeMessage/' + that.id);
+                        }
                         if(res.code == 0){
                             that.message(true,'提交成功','success')
                         }else{
@@ -515,7 +518,6 @@
             },
             // 提交修改数据
             messageSubmit: function () {
-                console.log(this.editor.txt.html());
                 this.disabled3 = true;
                 this.editor.$textElem.attr('contenteditable', false);
                 this.postD()
@@ -541,10 +543,12 @@
                 this.getOne()
             }
             // 创建富文本编辑器
-            this.editor.customConfig.onchange = (html) => {
-                this.editorContent = html;
-            }
+            // this.editor.customConfig.onchange = (html) => {
+            //     this.editorContent = html;
+            // }
+            // console.log(this.editorContent +'aaa')
             this.editor.create();
+            // this.editor.txt.html(this.editorContent);
             this.editor.$textElem.attr('contenteditable', false);
         },
     };
