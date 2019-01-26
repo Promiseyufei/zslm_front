@@ -71,7 +71,7 @@ export default {
         },
         
         handleClick: function (row) { 
-            console.log(this.listTable[1].prop);
+			this.$emit('showBox', row)
         }
     },
     mounted(){

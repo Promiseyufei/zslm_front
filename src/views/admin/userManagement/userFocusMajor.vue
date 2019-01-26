@@ -1,392 +1,450 @@
 <template>
-    <div>
+	<div>
 
-        <el-breadcrumb separator="/" style="width: 1500px;margin: 0 auto 20px">
-            <el-breadcrumb-item>账户管理</el-breadcrumb-item>
-            <el-breadcrumb-item>注册用户</el-breadcrumb-item>
-            <el-breadcrumb-item><div class="now-page">关注院校</div></el-breadcrumb-item>
-        </el-breadcrumb>
-        <div style="width: 1500px;margin: 0 auto 20px">
-            <a style="display: block;
+		<el-breadcrumb separator="/" style="width: 1500px;margin: 0 auto 20px">
+			<el-breadcrumb-item>账户管理</el-breadcrumb-item>
+			<el-breadcrumb-item>注册用户</el-breadcrumb-item>
+			<el-breadcrumb-item>
+				<div class="now-page">关注院校</div>
+			</el-breadcrumb-item>
+		</el-breadcrumb>
+		<div style="width: 1500px;margin: 0 auto 20px">
+			<a style="display: block;
                     float: none;
                     width: 80px;
                     height: 30px;
                     text-align: center;
                     line-height: 30px;
                     text-decoration: none;"
-               class="export-button"
-               href="http://www.zslm.com/admin/accounts/createmajorexcel">
-                <!--需要配置域名-->
-                导出
-            </a>
-        </div>
-        <div class="filesquery">
-            <i class="el-icon-search"></i>
-            <p class="screen">筛选查询</p>
-            <el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native = "query">刷新</el-button>
-        </div>
+			 class="export-button" href="http://www.zslm.com/admin/accounts/createmajorexcel">
+				<!--需要配置域名-->
+				导出
+			</a>
+		</div>
+		<div class="filesquery">
+			<i class="el-icon-search"></i>
+			<p class="screen">筛选查询</p>
+			<el-button size="mini" type="primary" icon="el-icon-refresh" class="dataquery-refresh" @click.native="f5">刷新</el-button>
+		</div>
 
-        <div class="filesForm">
+		<div class="filesForm">
 
-                <el-form label-width="80px" style="width: 100%">
-                    <el-form-item label="院校专业">
-                        <el-input size="medium" placeholder="请输入院校专业" v-model="major_v" ></el-input>
-                    </el-form-item>
-                    <el-form-item label="昵称">
-                        <el-input size="medium" placeholder="请输入用户昵称" v-model="name_v" ></el-input>
-                    </el-form-item>
-                    <el-form-item label="真实姓名">
-                        <el-input size="medium" placeholder="请输入用户姓名" v-model="realname_v" ></el-input>
-                    </el-form-item>
-                    <el-form-item style="float: right">
-                        <el-button size="mini" class="query-button" type="primary" icon="el-icon-search"  @click.native = "selectQuery">查询</el-button>
-                    </el-form-item>
-                </el-form>
+			<el-form label-width="80px" style="width: 100%">
+				<el-form-item label="院校专业">
+					<el-input size="medium" placeholder="请输入院校专业" v-model="major_v"></el-input>
+				</el-form-item>
+				<el-form-item label="昵称">
+					<el-input size="medium" placeholder="请输入用户昵称" v-model="name_v"></el-input>
+				</el-form-item>
+				<el-form-item label="真实姓名">
+					<el-input size="medium" placeholder="请输入用户姓名" v-model="realname_v"></el-input>
+				</el-form-item>
+				<el-form-item style="float: right">
+					<el-button size="mini" class="query-button" type="primary" icon="el-icon-search" @click.native="selectQuery">查询</el-button>
+				</el-form-item>
+			</el-form>
 
-        </div>
+		</div>
 
-        <div class="files-datalist">
-            <i class="el-icon-tickets"></i>
-            <p class="screen">数据列表</p>
-                <div class="datalist-selecttwo">
-                <el-select size="mini" v-model="Sorting" placeholder="默认顺序" style="width: 150px"  @change="sortingChage">
-                    <el-option v-for="(item,index) in sorting" :key="index" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
-                </div>
-        </div>
-        <div class="file-table" v-loading="table_loading">
-            <el-table :data="tableData" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
-                <el-table-column label="操作">
-                    <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="el-icon-search"></i></el-button>
-                    </template>
-                </el-table-column>
-                <div v-for="(val, index) in tableTop" :key="index">
-                    <el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
-                    </el-table-column>
-                </div>
-            </el-table>
-        </div>
+		<div class="files-datalist">
+			<i class="el-icon-tickets"></i>
+			<p class="screen">数据列表</p>
+			<div class="datalist-selecttwo">
+				<el-select size="mini" v-model="Sorting" placeholder="默认顺序" style="width: 150px" @change="sortingChage">
+					<el-option v-for="(item,index) in sorting" :key="index" :label="item.label" :value="item.value">
+					</el-option>
+				</el-select>
+			</div>
+		</div>
+		<div class="file-table" v-loading="table_loading">
+			<el-table :data="tableData" border style="width: 100%" :header-cell-style="{background:'#f9fafc'}">
+				<el-table-column label="操作">
+					<template slot-scope="scope">
+						<el-button @click="handleClick(scope.row)" type="text" size="small"><i class="el-icon-search"></i></el-button>
+					</template>
+				</el-table-column>
+				<div v-for="(val, index) in tableTop" :key="index">
+					<el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width">
+					</el-table-column>
+				</div>
+			</el-table>
+		</div>
 
-        <!-- 分页 -->
-        <div class="footer">
-            <Page :total="total" @pageChange="pageChange"></Page>
-        </div>
-    </div>
+		<!-- 分页 -->
+		<div class="footer">
+			<Page ref="page" :total="total" @pageChange="pageChange">
+			</Page>
+		</div>
+	</div>
 </template>
 
 <script>
-    export default {
-        name: "userFocusMajor",
-        data(){
-            return {
-				 name_v:'',
-				major_v:'',
-				realname_v:'',
-                name:'',
-                major:'',
-                realname:'',
-                Sorting:'',
-                userFrom: '',
-                sorting:[
-                    { value:'0',label:'用户创建时间升序' },
-                    { value:'1',label:'用户创建时间降序' }
-                ],
-                sort:[
-                    {value: '选项一',label: '10条'},
-                    {value: '选项二',label: '50条'},
-                    {value: '选项三',label: '100条'},
-                ],
-                tableTop:[
-                    {type:'',prop:'z_name',label:'院校专业',width:350},
-                    {type:'',prop:'user_account_id',label:'帐户ID',width:350},
-                    {type:'',prop:'user_name',label:'昵称',width:350},
-                    {type:'',prop:'real_name',label:'真实姓名',width:350},
-                ],
-                tableData:[{
-                    z_name:'test',
-                    user_account_id: 1,
-                    user_name: 'test',
-                    real_name:'test',
-                }],
+	export default {
+		name: "userFocusMajor",
+		data() {
+			return {
+				name_v: '',
+				major_v: '',
+				realname_v: '',
+				name: '',
+				major: '',
+				realname: '',
+				Sorting: '',
+				userFrom: '',
+				sorting: [{
+						value: '0',
+						label: '按院校专业升序'
+					},
+					{
+						value: '1',
+						label: '按院校专业降序'
+					},
+					{
+						value: '2',
+						label: '按用户id升序'
+					}
+				],
+				sort: [{
+						value: '选项一',
+						label: '10条'
+					},
+					{
+						value: '选项二',
+						label: '50条'
+					},
+					{
+						value: '选项三',
+						label: '100条'
+					},
+				],
+				tableTop: [{
+						type: '',
+						prop: 'z_name',
+						label: '院校专业',
+						width: 350
+					},
+					{
+						type: '',
+						prop: 'user_account_id',
+						label: '帐户ID',
+						width: 350
+					},
+					{
+						type: '',
+						prop: 'user_name',
+						label: '昵称',
+						width: 350
+					},
+					{
+						type: '',
+						prop: 'real_name',
+						label: '真实姓名',
+						width: 350
+					},
+				],
+				tableData: [{
+					z_name: 'test',
+					user_account_id: 1,
+					user_name: 'test',
+					real_name: 'test',
+				}],
 
-                /**分页**/
-                total:0,
-                searchContent:{
-                    page:1,
-                    limit:10,
-                },
-                oneUserMsg:null,
-				user_img_path:"http://www.lishanlei.cn/storage/front/user/",
-				table_loading:true,
-            }
-        },
-        methods:{
+				/**分页**/
+				total: 0,
+				searchContent: {
+					page: 1,
+					limit: 10,
+				},
+				oneUserMsg: null,
+				user_img_path: "http://www.lishanlei.cn/storage/front/user/",
+				table_loading: true,
+			}
+		},
+		methods: {
 			/**
 			 * 当选择框改变是执行方法
 			 */
-			sortingChage:function(){
+
+			f5: function() {
+				var that = this;
+				that.searchContent.page = 1;
+				that.searchContent.limit = 10;
+				that.name = "";
+				that.major = ''
+				that.realname = ''
+				that.name_v = "";
+				that.major_v = ''
+				that.realname_v = ''
+				that.Sorting = ''
+				that.searchContent.page = 1
+				this.$refs.page.handleSizeChange(10);
+			},
+			sortingChage: function() {
 				this.selectQuery()
 			},
-			
+
 			/**
 			 * 点击查询按钮是执行方法
 			 */
-			selectQuery:function(){
+			selectQuery: function() {
 				this.name = this.name_v
 				this.major = this.major_v
 				this.realname = this.realname_v
 				this.searchContent.page = 1
 				this.query()
 			},
-			
+
 			/**
 			 * 页码改变时执行该方法
 			 */
-            query:function () {
-                var that = this;
+			query: function() {
+				var that = this;
 				this.table_loading = true
-                this.fetch('/admin/accounts/getmajoruser',{
-                    //后台参数，前台参数(传向后台)
+				this.fetch('/admin/accounts/getmajoruser', {
+						//后台参数，前台参数(传向后台)
 
-                        page: that.searchContent.page,
-                        pageSize: that.searchContent.limit,
-                        name: that.name,
-                        major: that.major,
-                        realname: that.realname,
-						sorting : that.Sorting == '' ? 0 : that.Sorting
-                })
-                    .then(function (response) {
-                        var res = response;
+						page: that.searchContent.page,
+						pageSize: that.searchContent.limit,
+						name: that.name,
+						major: that.major,
+						realname: that.realname,
+						sorting: that.Sorting == '' ? 0 : that.Sorting
+					})
+					.then(function(response) {
+						var res = response;
 						that.table_loading = false
-                        if (res.code == 0) {
-                            that.tableData =res.result[0];
-							
-                             that.total =res.result[1];
-                        };
-                    })
-                    .catch(function (error) {
-                    });
-            },
-            //用户输入字符进行html解码
-            htmlDecode:function (text){
-                         //1.首先动态创建一个容器标签元素，如DIV
-                         var temp = document.createElement("div");
-                         //2.然后将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
-                         temp.innerHTML = text;
-                         //3.最后返回这个元素的innerText(ie支持)或者textContent(火狐，google支持)，即得到经过HTML解码的字符串了。
-                         var output = temp.innerText || temp.textContent;
-                         temp = null;
-                         return output;
-            },
-            getOneUser:function(id){
-                let that = this;
-                this.fetch('/admin/accounts/getmajorone',{
+						if (res.code == 0) {
+							that.tableData = res.result[0];
 
-                        id:id
+							that.total = res.result[1];
+						};
+					})
+					.catch(function(error) {});
+			},
+			//用户输入字符进行html解码
+			htmlDecode: function(text) {
+				//1.首先动态创建一个容器标签元素，如DIV
+				var temp = document.createElement("div");
+				//2.然后将要转换的字符串设置为这个元素的innerHTML(ie，火狐，google都支持)
+				temp.innerHTML = text;
+				//3.最后返回这个元素的innerText(ie支持)或者textContent(火狐，google支持)，即得到经过HTML解码的字符串了。
+				var output = temp.innerText || temp.textContent;
+				temp = null;
+				return output;
+			},
+			getOneUser: function(id) {
+				let that = this;
+				this.fetch('/admin/accounts/getmajorone', {
 
-                }).then(res=>{
-                       if(res.code == 0){
-                   	let majors = res.result[1]
-                   	let major_str = ''
-                   	for(let i in majors){
-                   		major_str+= '<div class="motai-line-content">'+majors[i].z_name+'</div>'
-                   	}
-               
-                   	let sex = res.result[0].sex == 0 ? '<i class="fa fa-mars"></i>' : '<i class="fa fa-mars"></i>'
-                        this.$alert('<div class="motai-body">' +
-                         '<div class="selfDetail">' +
-                         '<img class="motai-img" src="'+that.htmlDecode(that.user_img_path+res.result[0].head_portrait)+'">' +
-                         '<div class="selfDetailText"><span>'+that.htmlDecode(res.result[0].real_name)+
-                   	  '</span><span style="display:block">'+that.htmlDecode(res.result[0].user_name)+'</span><div>'+
-                   	 sex
-                   	  +'<i>'+res.result[0].address+'</i></div></div></div>' +
-                         '</div>' +
-                         '<div><div class="motai-line">' +
-                         '<div class="motai-line-title">毕业院校:</div>' +
-                         '<div class="motai-line-content">'+res.result[0].graduate_school+
-                         '</div></div></div>'+
-                   	  '<div><div class="motai-line">' +
-                   	  '<div class="motai-line-title">最高学历:</div>' +
-                   	  '<div class="motai-line-content">'+res.result[0].schooling_id+
-                   	  '</div></div></div>'+
-                   	  '<div><div class="motai-line">' +
-                   	  '<div class="motai-line-title">所属行业:</div>' +
-                   	  '<div class="motai-line-content">'+res.result[0].industry+
-                   	  '</div></div></div>'+
-                   	  '<div><div class="motai-line">' +
-                   	  '<div class="motai-line-title">工作年限:</div>' +
-                   	  '<div class="motai-line-content">'+res.result[0].worked_year+
-                   	  '</div></div></div>'+
-                   	  '<div><div class="motai-line">' +
-                   	  '<div class="motai-line-title">关注院校:</div><div>' +
-                   		major_str+
-                   	  '</div></div></div>',
-                         {
-                             dangerouslyUseHTMLString: true
-                         });
-                   }
-                    else{
-                        return 1;
-                    }
-                }).catch(function (error) {
-                    return 1;
-                })
-            },
-            handleClick:function(val){
-                 let that = this;
-                   let requestJudge = this.getOneUser(val.user_account_id)
-                   if(requestJudge == 1){
-                     return;
-                   }
-                          
-            },
-            pageChange(msg){
+					id: id
 
-                this.searchContent.page = msg.page;
-                this.searchContent.limit = msg.limit;
-                //分页改变时，更新表格数据
-                if (this.searchContent.page) {
-                    this.query();
-                };
+				}).then(res => {
+					if (res.code == 0) {
+						let majors = res.result[1]
+						let major_str = ''
+						for (let i in majors) {
+							major_str += '<div class="motai-line-content">' + majors[i].z_name + '</div>'
+						}
 
-            }
-        },
-        mounted(){
-            // this.getPage();
-            this.query();
-        }
-    }
+						let sex = res.result[0].sex == 0 ? '<i class="fa fa-mars"></i>' : '<i class="fa fa-mars"></i>'
+						this.$alert('<div class="motai-body">' +
+							'<div class="selfDetail">' +
+							'<img class="motai-img" src="' + that.htmlDecode(res.result[0].head_portrait) + '">' +
+							'<div class="selfDetailText"><span>' + that.htmlDecode(res.result[0].real_name) +
+							'</span><span style="display:block">' + that.htmlDecode(res.result[0].user_name) + '</span><div>' +
+							sex +
+							'<i>' + res.result[0].address + '</i></div></div></div>' +
+							'</div>' +
+							'<div><div class="motai-line">' +
+							'<div class="motai-line-title">毕业院校:</div>' +
+							'<div class="motai-line-content">' + res.result[0].graduate_school +
+							'</div></div></div>' +
+							'<div><div class="motai-line">' +
+							'<div class="motai-line-title">最高学历:</div>' +
+							'<div class="motai-line-content">' + res.result[0].schooling_id +
+							'</div></div></div>' +
+							'<div><div class="motai-line">' +
+							'<div class="motai-line-title">所属行业:</div>' +
+							'<div class="motai-line-content">' + res.result[0].industry +
+							'</div></div></div>' +
+							'<div><div class="motai-line">' +
+							'<div class="motai-line-title">工作年限:</div>' +
+							'<div class="motai-line-content">' + res.result[0].worked_year +
+							'</div></div></div>' +
+							'<div><div class="motai-line">' +
+							'<div class="motai-line-title">关注院校:</div><div>' +
+							major_str +
+							'</div></div></div>', {
+								dangerouslyUseHTMLString: true
+							});
+					} else {
+						return 1;
+					}
+				}).catch(function(error) {
+					return 1;
+				})
+			},
+			handleClick: function(val) {
+				let that = this;
+				let requestJudge = this.getOneUser(val.user_account_id)
+				if (requestJudge == 1) {
+					return;
+				}
+
+			},
+			pageChange(msg) {
+
+				this.searchContent.page = msg.page;
+				this.searchContent.limit = msg.limit;
+				//分页改变时，更新表格数据
+				if (this.searchContent.page) {
+					this.query();
+				};
+
+			}
+		},
+		mounted() {
+			// this.getPage();
+			this.query();
+		}
+	}
 </script>
 <style>
-    /*表头文字居中*/
-    .file-table .el-table td, .el-table th.is-leaf {
-        text-align: center;
-    }
-    .footer .el-pagination[data-v-8955d66e] {
-        padding-right: 20px;
-    }
-    .motai-body{
-        width: 80%;
-        margin: 0 auto;
-    }
-   .motai-img {
-       width: 100px;
-       height: 100px;
-       border-radius: 50%;
-       margin: 10px 10px;
-   }
-   .selfDetail {
-       display: flex;
-       justify-content: flex-start;
-       align-items: center;
-   }
-   .selfDetailText {
-       display: flex;
-       flex-direction: column;
-   }
-   .motai-line {
-       margin: 10px 10px;
-       display: flex;
-       justify-content: space-between;
-       overflow: hidden;
-   }
-   .motai-line-title{
-       width: 100px !important;
-   }
-	
+	/*表头文字居中*/
+	.motai-body {
+		width: 80%;
+		margin: 0 auto;
+	}
+
+	.motai-img {
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		margin: 10px 10px;
+	}
+
+	.selfDetail {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	.selfDetailText {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.motai-line {
+		margin: 10px 10px;
+		display: flex;
+		justify-content: space-between;
+		overflow: hidden;
+	}
+
+	.motai-line-title {
+		width: 100px !important;
+	}
 </style>
 <style scoped>
-    /**当前面包屑**/
-    .now-page{
-        padding-bottom: 3px;
-        border-bottom: solid 1px #68c368;
-    }
+	/**当前面包屑**/
+	.now-page {
+		padding-bottom: 3px;
+		border-bottom: solid 1px #68c368;
+	}
 
-    .el-form-item{
-        display: inline-block;
-        width: 20%;
-    }
-    .filesquery i, .files-datalist i {
-        margin: 0 10px 0 20px;
-    }
-    .filesquery {
-        width: 1500px;
-        height: 50px;
-        margin: 0 auto;
-        background-color: #F3F3F3;
-        position: relative;
-        display: flex;
-        align-items:center;
-    }
-    .screen {
-        font-weight: bold;
-        font-size: 16px;
-        color: #666;
-        font-family:'Tahoma';
-    }
-    .dataquery-refresh,.query-button {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        color: #666;
-        background-color: #fff;
-        border:1px solid #CCC;
-        border-radius:0;
-    }
+	.el-form-item {
+		display: inline-block;
+		width: 20%;
+	}
 
-    .export-button{
-        float: right;
-        color: #666;
-        background-color: #fff;
-        border:1px solid #CCC;
-        border-radius:0;
-    }
+	.filesquery i,
+	.files-datalist i {
+		margin: 0 10px 0 20px;
+	}
 
-    .datalist-selecttwo {
-        display: inline-block;
-        position: absolute;
-        right: 10px;
-    }
+	.filesquery {
+		width: 1500px;
+		height: 50px;
+		margin: 0 auto;
+		background-color: #F3F3F3;
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
 
-    .files-datalist {
-        display: flex;
-        align-items:center;
-        position: relative;
-        width: 1500px;
-        height: 50px;
-        background: #f3f3f3;
-        margin: 0 auto;
-    }
-    .file-table i {
-        font-size: 20px;
-    }
-    .file-table {
-        width: 1500px;
-        margin: 0 auto;
-        text-align: center;
-    }
-    .filesForm {
-        width: 1500px;
-        display: flex;
-        /*position: relative;*/
-        margin: 20px auto 0;
-    }
+	.screen {
+		font-weight: bold;
+		font-size: 16px;
+		color: #666;
+		font-family: 'Tahoma';
+	}
 
-    .footer {
-        border: 1px solid #E4E4E4;
-        text-align: right;
-        width: 1500px;
-        height: 50px;
-        background-color: #fdfdfe;
-        margin: 20px auto;
-        display: flex;
-        align-items:center;
-        justify-content:flex-end;
-    }
-    .el-pagination {
-        color: #999;
-        font-weight: 500;
-    }
+	.dataquery-refresh,
+	.query-button {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		color: #666;
+		background-color: #fff;
+		border: 1px solid #CCC;
+		border-radius: 0;
+	}
+
+	.export-button {
+		float: right;
+		color: #666;
+		background-color: #fff;
+		border: 1px solid #CCC;
+		border-radius: 0;
+	}
+
+	.datalist-selecttwo {
+		display: inline-block;
+		position: absolute;
+		right: 10px;
+	}
+
+	.files-datalist {
+		display: flex;
+		align-items: center;
+		position: relative;
+		width: 1500px;
+		height: 50px;
+		background: #f3f3f3;
+		margin: 0 auto;
+	}
+
+	.file-table i {
+		font-size: 20px;
+	}
+
+	.file-table {
+		width: 1500px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.filesForm {
+		width: 1500px;
+		display: flex;
+		/*position: relative;*/
+		margin: 20px auto 0;
+	}
+
+	.footer {
+		border: 1px solid #E4E4E4;
+		text-align: right;
+		width: 1500px;
+		height: 50px;
+		background-color: #fdfdfe;
+		margin: 20px auto;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	.el-pagination {
+		color: #999;
+		font-weight: 500;
+	}
 </style>

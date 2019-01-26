@@ -203,9 +203,23 @@ export default {
 				},
 
 				//编辑操作，修改表格信息
-				submitTableForm: function() {
-					console.log("假装修改成功！！！");
-				},
+			submitTableForm: function() {
+				var that  = this
+				this.post('/admin/operate/setBillboardMessage',{
+					btId:that.tableFormInformation.id,
+					btName:that.tableFormInformation.img,
+					btImgAlt:that.tableFormInformation.re_alt,
+					reUrl:that.tableFormInformation.re_url
+					
+				}).then(res=>{
+					if(res.code == 0){
+						that.message(true, '修改成功','success');
+						that.getIndexBanner()
+					}else{
+						that.message(true, '修改失败','error');
+					}
+				})
+			},
 				  
 				//点击关闭表格信息弹出框
 				handleClose: function(done) {

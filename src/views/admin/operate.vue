@@ -64,7 +64,7 @@
 									<el-button type="info" plain @click="operateDelete" size="small"><i class="fa fa-trash-o fa-fw fa-lg"></i>清空</el-button>
 								</div>
 								<!-- 表格 -->
-								<OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setInfoRelation" @del="delBanner" @editFather="editeMothed"></OperateTable>
+								<OperateTable :tableData3 = "tableData3" :listTable="listTable" @setInfoRelation="setInfoRelation" @del="delBanner" @editFather="editeMothed" @showBox='showBox' ></OperateTable>
 								<!-- 完成按钮 -->
 								<div class="operateFinalUp">
 									<el-button type="primary">完成</el-button>
@@ -74,6 +74,7 @@
 						</div>
 
 						<!-- 表格模态框 -->
+						
 						<el-dialog
 							title="编辑图片信息："
 							:visible.sync="dialogVisible"
@@ -122,11 +123,11 @@ export default {
 					rules: {
 						img: [
 							{ required: true, message: '请输入图片名称', trigger: 'blur' },
-							{ min: 3, max: 7, message: '长度在 3 到 7 个字符', trigger: 'blur' }
+							{ min: 3, max: 20, message: '长度在 3 到 7 个字符', trigger: 'blur' }
 						],
 						re_alt: [
 							{ required: true, message: '请输入图片描述', trigger: 'blur' },
-							{ min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+							{ min: 3, max: 30, message: '长度在 3 到 20 个字符', trigger: 'blur' }
 						],
 						re_url: [
 							{ required: true, message: '请输入图片url', trigger: 'blur' },
@@ -158,7 +159,7 @@ export default {
 							width: "80px"
 						},
 						{
-							prop: "re_alt",
+							prop: "img_alt",
 							lable: "图片描述",
 							width: "210px"
 						},
@@ -179,8 +180,26 @@ export default {
 		},
 		methods:{
 				//编辑操作，修改表格信息
+				
+				showBox:function(val){
+					console.log(val)
+				},
 				submitTableForm: function() {
-					console.log("假装修改成功！！！");
+					var that  = this
+					this.post('/admin/operate/setBtMessage',{
+						btId:that.tableFormInformation.id,
+						btName:that.tableFormInformation.img,
+						btImgAlt:that.tableFormInformation.re_alt,
+						reUrl:that.tableFormInformation.re_url
+						
+					}).then(res=>{
+						if(res.code == 0){
+							that.message(true, '修改成功','success');
+							that.getIndexBanner()
+						}else{
+							that.message(true, '修改失败','error');
+						}
+					})
 				},
 
 				//获取图片file，并图片预览
@@ -360,7 +379,6 @@ export default {
 				// 获得页面的banner信息
 				getIndexBanner: function() {
 				var self = this;
-				var load =this.openFullScreen2();
 				this.post('/admin/operate/getIndexBanner', {
 					indexId: self.i,
 					btType: 0
@@ -368,19 +386,18 @@ export default {
 				.then(function (response) {
 					if (response.code == 0) {
 					self.tableData3 = response.result;
-					load.close();
+					
 					};
 				})
 				.catch(function (error) {
 					console.log(error);
-					load.close();
 				});
 				
 				}
     },
     mounted(){
       	this.getInformationType();
-      
+		this.getIndexBanner()
     }
 };
 </script>
