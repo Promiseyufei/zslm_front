@@ -290,7 +290,6 @@
 			},
 
 			editFile: function(val) {
-				console.log(val)
 				this.form.fileId = val.id
 				this.form.name = val.file_name
 				this.form.type = val.file_type
@@ -369,7 +368,6 @@
 
 
 				};
-				console.log(selectId)
 				this.deleteRequest(selectId);
 			},
 			toshow2(msg) {
@@ -479,7 +477,6 @@
 					.then(function(response) {
 						var res = response;
 						if (res.code == 0) {
-							console.log(res.result.data)
 							that.tableData = res.result.data;
 							for (var i = 0; i < that.tableData.length; i++) {
 								that.tableData[i].type_name = that.tableData[i].file_type == 0 ? "招生简章" : "其他文件"
@@ -500,7 +497,6 @@
 			this.query();
 			this.adds();
 
-			console.log(this.radio2);
 		}
 	}
 </script>

@@ -224,7 +224,6 @@
 
 			//获取图片file，并图片预览
 			changeUpload: function(file, fileList) {
-				console.log(file);
 				if (this.beforeAvatarUpload(file)) {
 					this.initialImgUrl = file.url;
 					this.file = file.raw;
@@ -401,7 +400,7 @@
 						};
 					})
 					.catch(function(error) {
-						console.log(error);
+						this.message(true, error, 'error');
 					});
 			},
 
@@ -420,7 +419,7 @@
 						};
 					})
 					.catch(function(error) {
-						console.log(error);
+						this.message(true, error, 'error');
 					});
 
 			}
