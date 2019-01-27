@@ -202,7 +202,7 @@ export default {
         },
         //返回上一页
         toBack: function() {
-            this.$router.push('/message/informationList');
+            this.$router.push('/admin/message/informationList');
         },
         // 跳转到推荐内容设置页面
         toAdvise: function() {

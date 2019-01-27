@@ -8,7 +8,7 @@
         </div>
         <el-pagination
             @current-change="handleCurrentChange"
-            :current-page="currentPage"
+            :current-page="currentPage2"
             :page-size="size"
             layout="prev, pager, next, jumper"
             :total="totalData">
@@ -20,7 +20,7 @@
 export default {
     data() {
         return {
-            // currentPage2: this.currentPage,
+            currentPage2: this.currentPage,
             // totalData2: this.totalData,
             size: 10
         };
@@ -30,8 +30,9 @@ export default {
     methods:{
         //改变当前页时，触发事件,val为当前页
         handleCurrentChange(val) {
-            this.currentPage = val;
-            this.$emit('use',this.currentPage);
+            // console.log(val)
+            this.currentPage2 = val;
+            this.$emit('use',this.currentPage2);
         },
         childMethod: function(res) {
             this.totalData = res;
