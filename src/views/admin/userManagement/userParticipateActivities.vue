@@ -15,7 +15,7 @@
                     text-align: center;
                     line-height: 30px;
                     text-decoration: none;"
-			 class="export-button" href="http://www.zslm.com/admin/accounts/createActivityExcel">
+			 class="export-button" :href="uploadUrl">
 				<!--需要配置域名-->
 				导出
 			</a>
@@ -82,6 +82,7 @@
 		name: "userFocusMajor",
 		data() {
 			return {
+				uploadUrl: this.globals.excelUrl + '/admin/accounts/createActivityExcel',
 				name_v: '',
 				active_v: '',
 				realname_v: '',
@@ -235,13 +236,15 @@
 							actives_str += '<div class="motai-line-content">' + actives[i].active_name + '</div>'
 						}
 
-						let sex = res.result[0].sex == 0 ? '<i class="fa fa-mars"></i>' : '<i class="fa fa-mars"></i>'
+						let sex = res.result[0].sex == 0 ? '<i class="fa fa-mars"></i>' : '<i class="fa fa-venus"></i>'
+						let weixin = res.result[0].weixin == '绑定' ? '<i class="fa fa-weixin"></i>' : ''
+						let weibo = res.result[0].weibo == '绑定' ? '<i class="fa fa-weibo"></i>' : ''
 						this.$alert('<div class="motai-body">' +
 							'<div class="selfDetail">' +
 							'<img class="motai-img" src="' + that.htmlDecode(res.result[0].head_portrait) + '">' +
 							'<div class="selfDetailText"><span>' + that.htmlDecode(res.result[0].real_name) +
 							'</span><span style="display:block">' + that.htmlDecode(res.result[0].user_name) + '</span><div>' +
-							sex +
+							sex + weixin + weibo+
 							'<i>' + res.result[0].address + '</i></div></div></div>' +
 							'</div>' +
 							'<div><div class="motai-line">' +

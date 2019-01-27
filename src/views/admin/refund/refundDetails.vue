@@ -134,7 +134,6 @@
             },
             query(){
                 let that = this;
-                console.log(this.id)
                 this.fetch('/admin/refund/getOne',{
                     id:that.id
                 }).then(res=>{
@@ -160,9 +159,7 @@
                         that.data = res.result[0];
                         if(that.data.process_status == '已结束'){
                             that.edit = true;
-                            console.log(that.edit)
                         }
-                        console.log(that.data)
                     }else{
                         that.message(true,'出错了','error')
                     }

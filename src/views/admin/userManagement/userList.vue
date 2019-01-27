@@ -14,7 +14,7 @@
                     text-align: center;
                     line-height: 30px;
                     text-decoration: none;"
-			 class="export-button" :href="testUrl+'/admin/accounts/createUserExcel'">
+			 class="export-button" :href="uploadUrl">
 				<!--需要配置域名-->
 				导出
 			</a>
@@ -79,6 +79,8 @@
 		name: "userFocusMajor",
 		data() {
 			return {
+				
+				uploadUrl:this.globals.excelUrl+'/admin/accounts/createUserExcel',
 				testUrl: "http://www.zslm.com",
 				/**
 				 * 和视图绑定的 name，phone，realname字段
@@ -330,13 +332,15 @@
 						for (let i in coupons) {
 							coupon_str += '<div class="motai-line-content">' + coupons[i].name + '</div>'
 						}
-						let sex = res.result[0].sex == 0 ? '<i class="fa fa-mars"></i>' : '<i class="fa fa-mars"></i>'
+						let sex = res.result[0].sex == 0 ? '<i class="fa fa-mars"></i>' : '<i class="fa fa-venus"></i>'
+						let weixin = res.result[0].weixin == '绑定' ? '<i class="fa fa-weixin"></i>':''
+						let weibo = res.result[0].weibo == '绑定' ? '<i class="fa fa-weibo"></i>':''
 						this.$alert('<div class="motai-body">' +
 							'<div class="selfDetail">' +
 							'<img class="motai-img" src="' + that.htmlDecode(res.result[0].head_portrait) + '">' +
 							'<div class="selfDetailText"><span>' + that.htmlDecode(res.result[0].real_name) +
 							'</span><span style="display:block">' + that.htmlDecode(res.result[0].user_name) + '</span><div>' +
-							sex +
+							sex + weixin + weibo+
 							'<i>' + res.result[0].address + '</i></div></div></div>' +
 							'</div>' +
 							'<div><div class="motai-line">' +
@@ -399,6 +403,7 @@
 		mounted() {
 			// this.getPage();
 			this.query();
+			console.log(this.globals)
 		}
 	}
 </script>

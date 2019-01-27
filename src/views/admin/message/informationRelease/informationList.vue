@@ -330,7 +330,6 @@
 			},
 			gettableInfo: function() {
 				var that = this;
-				console.log(this.type2)
 				this.post('/admin/information/getInfoPageMsg', {
 
 						infoNameKeyword: that.informationTitle,
@@ -343,7 +342,6 @@
 					})
 					.then((response) => {
 						if (response.code == 0) {
-							console.log(response);
 							that.informationListtTable = response.result.data;
 							that.total = response.result.total;
 						};

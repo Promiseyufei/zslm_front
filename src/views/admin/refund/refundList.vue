@@ -16,7 +16,7 @@
 		           text-align: center;
 		           line-height: 30px;
 		           text-decoration: none;"
-			 class="export-button" href="http://www.zslm.com/admin/refund/export">
+			 class="export-button" :href="uploadUrl">
 				<!--需要配置域名-->
 				导出
 			</a>
@@ -107,9 +107,10 @@
 
 <script>
 	export default {
-		name: "userFocusMajor",
+		name: "userFocusMajor",	
 		data() {
 			return {
+				uploadUrl:this.globals.excelUrl+'/admin/refund/export',
 				phone_v: '',
 				name_v: '',
 				type_v: 3,
@@ -380,7 +381,6 @@
 			},
 
 			handleClick(val) {
-				console.log(val)
 				if (val.process_status == '进行中') {
 
 					this.formdis = false
@@ -418,6 +418,7 @@
 		mounted() {
 			// this.getPage();
 			this.query();
+			console.log(this.globals)
 		}
 	}
 </script>

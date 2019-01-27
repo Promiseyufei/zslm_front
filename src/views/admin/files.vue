@@ -255,7 +255,7 @@
 				},
 				judgeadd: true,
 				loading: true,
-				fileUrl: this.globals.FileUrl
+				
 			}
 		},
 		watch: {
@@ -435,7 +435,7 @@
 				//当前行表格数据
 				// console.log(row)
 
-				var url = this.fileUrl + row;
+				var url =  row;
 				window.open(url)
 				// 此弹出框未给
 			},
