@@ -308,7 +308,7 @@
 
 				this.post('/admin/refund/setApproveStatus', {
 					refundId: that.selectId,
-					approveStatus: that.type,
+					approveStatus: that.type2,
 					stat: that.status,
 					approveContext: that.content,
 

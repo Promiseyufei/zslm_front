@@ -405,9 +405,8 @@
 			// 获得所有页面的名称
 			getInformationType: function() {
 				var self = this;
-				this.post('/admin/operate/getAllPageListName', {})
+				this.post('/admin/operate/getAllPageListName')
 					.then(function(response) {
-						response = response.data;
 						if (response.code == 0) {
 							self.banner = response.result;
 							self.radio2 = response.result[0].name;
@@ -417,9 +416,7 @@
 							this.message(true, response.msg, 'error');
 						}
 					})
-					.catch(function(error) {
-						this.message(true, error, 'error');
-					});
+					
 			},
 
 			// 获得页面的广告信息
@@ -431,16 +428,11 @@
 						btType: 1
 					})
 					.then(function(response) {
-						response = response.data;
 						if (response.code == 0) {
 							self.tableData3 = response.result;
-							// load.close();
 						}
 					})
-					.catch(function(error) {
-						this.message(true, error, 'error');
-						// load.close();
-					});
+
 			}
 		},
 
