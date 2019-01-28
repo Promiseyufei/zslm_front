@@ -175,14 +175,13 @@
                 }).then((response) => {
                     if(response.code == 0) {
 						// self.total = response.result.total;
-						console.log(response.result.data);
 						this.gridData = response.result.data
                     }
                     else 
                         this.message(true, response.msg, 'error');
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    this.message(true, error, 'error');
                 });
 				this.dialogTableVisible = true;
 			},
@@ -338,7 +337,6 @@
 
 			//改变权重值时进行判断
 			changeMajorWeight(id, weight, row, type = 0) {
-				console.log(weight);
 				var re = /^[0-9]+.?[0-9]*$/;
 				if (!re.test(weight)) {
 					this.message(true,'请输入数值','warning');
@@ -394,9 +392,7 @@
 					pageNumber:that.searchContent.page - 1
 				})
 				.then(function (response) {
-					console.log(response);
 					if (response.code == 0) {
-						console.log(response.result);
 						that.majorlisttable = response.result.get_page_msg;
 						that.total = response.result.count;
 					};

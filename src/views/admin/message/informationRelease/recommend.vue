@@ -255,7 +255,7 @@
 						};
 					})
 					.catch(function(error) {
-						console.log(error);
+						this.message(true, error, 'error');
 					});
 			},
 
@@ -273,7 +273,7 @@
 						};
 					})
 					.catch(function(error) {
-						console.log(error);
+						this.message(true, error, 'error');
 					});
 			},
 
@@ -310,7 +310,6 @@
 				let type = null;
 				if (infoid == -1 && row == -1) type = 1;
 				else type = 0;
-				console.log(infoid)
 				this.confirm(() => {
 					this.post('/admin/information/delAppointInfoRecommendRead', {
 						id: this.infoId,
@@ -459,7 +458,6 @@
 				this.post('/admin/information/getAppointInfoRelevantMajor', {
 					infoId: this.infoId,
 				}).then((response) => {
-					console.log(response);
 					if (response.code == 0) {
 						this.shoolCount = response.result;
 					} 

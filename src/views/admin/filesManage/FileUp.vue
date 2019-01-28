@@ -370,7 +370,6 @@
 								'Content-Type': 'multipart/form-data'
 							}
 						}
-						console.log(self.fileList[0].raw)
 						this.post('/admin/files/upload', fd, imgFile)
 							.then(function(response) {
 								var date = response;
@@ -379,12 +378,20 @@
 										message: '上传成功',
 										type: 'success'
 									});
+
+									self.query()
 								} else {
-									console.log(date.msg, 123);
+									self.$message({
+										message: '上传失败',
+										type: 'error'
+									});
 								}
 							})
 							.catch(function(error) {
-								console.log(error);
+								self.$message({
+									message: error,
+									type: 'error'
+								});
 							});
 
 					} else {
@@ -403,9 +410,7 @@
 			},
 			// 动态更新资讯类型id
 
-			handleClick: function(row) {
-				console.log(row);
-			},
+			handleClick: function(row) {},
 			// 图片移除时触发该事件
 			handleRemove: function(file, fileList) {
 				var span = document.getElementsByClassName("el-upload__tip")[0];
@@ -413,9 +418,7 @@
 				this.fileList[0].url = 'http://img.hb.aicdn.com/cf629e62573f99793bf9c5621ecb5545534642ac1215-3wa44w_fw658';
 				this.fileList[0].file = '';
 			},
-			handlePreview: function(file) {
-				console.log(file);
-			},
+			handlePreview: function(file) {},
 			handleAvatarSuccess: function(res, file) {
 				this.fileList[0].url = URL.createObjectURL(file.raw);
 				this.fileList[0].file = file;
@@ -435,7 +438,7 @@
 			//  获得所有页面的名称
 			getInformationType: function() {
 				var self = this;
-				axios.post('/admin/operate/getAllPageListName', {})
+				this.post('/admin/operate/getAllPageListName', {})
 					.then(function(response) {
 						var date = response.data;
 						if (date.code == 0) {
@@ -445,13 +448,16 @@
 						};
 					})
 					.catch(function(error) {
-						console.log(error);
+						self.$message({
+							message: error,
+							type: 'error'
+						});
 					});
 			},
 			// 获得页面的banner信息
 			getIndexBanner: function() {
 				var self = this;
-				axios.post('/admin/operate/getIndexBanner', {
+				this.post('/admin/operate/getIndexBanner', {
 						indexId: self.i,
 						btType: 1
 					})
@@ -463,7 +469,10 @@
 						};
 					})
 					.catch(function(error) {
-						console.log(error);
+						self.$message({
+							message: error,
+							type: 'error'
+						});
 					});
 			},
 			editFile: function(val) {
@@ -585,9 +594,8 @@
 				//当前行表格数据
 				// console.log(row)
 
-				var url = this.fileUrl + row;
-
-				window.location.href = url
+				var url = row;
+				window.open(url)
 				// 此弹出框未给
 			},
 			//编辑表格某一行——跳到PDF文件预览界面

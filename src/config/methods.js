@@ -73,6 +73,17 @@ export default {
         else
             return null;
     },
+	
+	getUserStatePro(userName) {
+	    typeof userName == 'undefined' ? 'user' : userName;
+	    var arr, reg = new RegExp("(^| )" + userName + "=([^;]*)(;|$)");
+		arr = document.cookie.match(reg)
+	    if (arr != null) {
+	        return arr[2] == '0' ? null : arr[2];
+	    }
+	    else
+	        return null;
+	},
 
     /**
      * 

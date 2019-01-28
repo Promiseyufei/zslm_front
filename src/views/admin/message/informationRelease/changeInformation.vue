@@ -193,7 +193,6 @@ export default {
         },
         // 提交修改数据提交修改数据
         messageSubmit: function() {
-            console.log(this.editor.txt.html());
             this.disabled3 = true;
             this.editor.$textElem.attr('contenteditable', false);
         },

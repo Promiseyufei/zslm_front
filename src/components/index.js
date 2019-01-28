@@ -5,6 +5,7 @@ import Page from  './admin/page.vue'
 import operateNav from  './admin/OperateNav.vue'
 import OperateTable from  './admin/OperateTable.vue'
 import AdviseTable from  './admin/AdviseTable.vue'
+import AdviseTable1 from  './admin/AdviseTable1.vue'
 import messageTable from  './admin/messageTable.vue'
 import messageTable1 from  './admin/messageTable1.vue'
 import userTable from  './admin/userTable.vue'
@@ -52,6 +53,7 @@ export default {
     operateNav,
     OperateTable,
     AdviseTable,
+	AdviseTable1,
     messageTable,
     userTable,
     singlePage,
