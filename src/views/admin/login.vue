@@ -108,8 +108,9 @@
 			},
 			getUUID() {
 				var that = this
-
+				console.log('cccccccc');
 				this.fetch('/admin/createuuid').then(res => {
+					console.log('ddddd');
 					that.UUID = res.result
 					that.saveUserState('UUID', res.result)
 					that.change();
@@ -119,9 +120,12 @@
 			},
 		},
 		mounted: function() {
+			console.log("aaaaaaaaaa");
 			var loginjudge = this.getUserStatePro('admin_account')
-			if (loginjudge == null)
+			console.log(loginjudge);
+			if (loginjudge == null) {
 				this.getUUID();
+			}
 			else
 				this.$router.push('/admin');
 		}

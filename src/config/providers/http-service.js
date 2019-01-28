@@ -6,11 +6,8 @@ import axios from 'axios';
 axios.defaults.timeout = 5000;
 
 axios.defaults.baseURL = 'http://www.mbahelper.cn:8889';
-<<<<<<< HEAD
 
 //axios.defaults.baseURL = 'http://www.zslm.com';
-=======
->>>>>>> 52c2e9e2583cddb8a2c3ae361b039ab5fde0e880
 // axios.defaults.baseURL = 'http://localhost:81';
 // axios.defaults.baseURL = 'http://www.lishanlei.cn';
 var that = this
