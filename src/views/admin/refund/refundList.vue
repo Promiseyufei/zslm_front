@@ -315,7 +315,9 @@
 				}).then(res => {
 					if (res.code == 0) {
 						that.message(true, '修改成功', 'success')
+							that.dialogFormVisible = false
 						that.query()
+					
 					} else {
 						that.message(true, '修改失败', 'error')
 					}
