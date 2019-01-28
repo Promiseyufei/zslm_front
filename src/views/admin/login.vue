@@ -206,7 +206,7 @@
 
 	p {
 		margin: 0 auto;
-		color: #fff;
+		/* color: #fff; */
 		font-weight: bold;
 		font-size: 1.8em;
 	}

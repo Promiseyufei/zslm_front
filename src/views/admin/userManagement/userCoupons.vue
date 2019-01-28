@@ -384,7 +384,7 @@
 	}
 
 	.dataquery-refresh,
-	.query-button[data-v-3d988435] {
+	.query-button {
 		position: absolute;
 		right: 10px;
 		top: 10px;

@@ -73,7 +73,7 @@
 							</div>
 							<!-- 表格 -->
 							<div class="file-table" style="margin-top: 20px !important;">
-								<el-table v-loading="loading" :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%"
+								<el-table v-loading="loading" :data="tableData" @selection-change="handleSelectionChange"  style="width: 100%;overflow-x: hidden !important" 
 								 :header-cell-style="{background:'#f9fafc'}">
 									<el-table-column label="编号" prop="id" width="70"></el-table-column>
 									<el-table-column label="展示权重" width="100">
