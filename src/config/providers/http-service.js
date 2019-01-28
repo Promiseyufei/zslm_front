@@ -5,13 +5,15 @@ import axios from 'axios';
 
 axios.defaults.timeout = 5000;
 
-axios.defaults.baseURL = 'http://www.zslm.com';
+axios.defaults.baseURL = 'http://www.mbahelper.cn:8889';
+
+//axios.defaults.baseURL = 'http://www.zslm.com';
 // axios.defaults.baseURL = 'http://localhost:81';
 // axios.defaults.baseURL = 'http://www.lishanlei.cn';
 var that = this
 axios.interceptors.request.use(
 	config => {
-		console.log(that.a.getUUID())
+		console.log(that)
 		config.headers = {
 			'UUID': that.a.getUUID(),
 			'Content-Type': 'application/json',
