@@ -574,7 +574,7 @@
 <style>
     /*表格滚动条*/
     .majorlist-table .el-table--scrollable-x .el-table__body-wrapper {
-        overflow-x: hidden;
+        /* overflow-x: hidden; */
     }
     /*表头文本居中*/
     .majorlist-table .el-table th.is-leaf {

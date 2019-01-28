@@ -152,8 +152,11 @@
         margin-left: 37px;
     }
     /*表格滚动条*/
+	 .recordHomeTable{
+		 overflow-x: hidden;
+	 }
     .recordHomeTable .el-table--scrollable-x .el-table__body-wrapper {
-        overflow-x: hidden;
+        /* overflow-x: hidden; */
     }
     .recordHomeTable .el-input__inner {
         width: 60px;
