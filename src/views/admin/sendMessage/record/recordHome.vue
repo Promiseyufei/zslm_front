@@ -98,7 +98,7 @@
             },
             //跳转页面
             jumpPage:function(newsId) {
-                this.$router.push('/record/recordDetail/' + newsId);
+                this.$router.push('/admin/record/recordDetail/' + newsId);
             },
             //进入页面自动调用
             intoPage: function(){

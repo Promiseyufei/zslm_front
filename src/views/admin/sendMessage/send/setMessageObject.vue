@@ -32,7 +32,7 @@
                             <div class="operateUpfiles operateHeader">
                                 <p>已选院校专业</p>
                             </div>
-                            <div class="selectMajor" v-for="(list,index) in majorData" :key="index">
+                            <div style="margin-top:1%;" class="selectMajor" v-for="(list,index) in majorData" :key="index">
                                 <span @click="majorDelete(index)">删除</span>
                                 <p>{{list.z_name}}</p>
                             </div>
@@ -54,7 +54,7 @@
                             <div class="operateUpfiles operateHeader">
                                 <p>已选活动</p>
                             </div>
-                            <div class="selectMajor" v-for="(list,index) in activityData" :key="index">
+                            <div style="margin-top:1%" class="selectMajor" v-for="(list,index) in activityData" :key="index">
                                 <span @click="activityDelete(index)">删除</span>
                                 <p>{{list.active_name}}</p>
                             </div>
@@ -79,11 +79,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
             </div>
     	</div>
     	
@@ -139,11 +134,11 @@ export default {
         },
         // 跳转到“院校列表”
         adviseAdd: function() {
-          this.$router.push('/send/sendMessage');
+          this.$router.push('/admin/send/sendMessage');
         },
         //跳到"选择活动"页面
         adviseAdd2: function() {
-            this.$router.push('/send/selectAcitity');
+            this.$router.push('/admin/send/selectAcitity');
         },
         //删除单个活动
         activityDelete: function(index) {
@@ -159,12 +154,21 @@ export default {
         },
     },
     mounted(){
-        if(typeof this.$route.params.seMajor != undefined || typeof this.$route.params.seMajor != 'undefined') {
+        // console.log(this.majorData)
+            // console.log(this.$store.state.sendnewObj['majorArr'])
+        
+        if(typeof this.$route.params.seMajor != "undefined" ? true : false) {
+            this.$store.commit('changeSendnewObj', {name: 'majorArr', val: this.$route.params.seMajor});
             this.majorData = this.$route.params.seMajor;
         }
-        if(typeof this.$route.params.seActivity != undefined || typeof this.$route.params.seActivity != 'undefined') {
+        else this.majorData = this.$store.state.sendnewObj['majorArr'];
+
+
+        if(typeof this.$route.params.seActivity != "undefined" ? true : false) {
+            this.$store.commit('changeSendnewObj', {name: 'activityArr', val: this.$route.params.seActivity});
             this.activityData = this.$route.params.seActivity;
         }
+        else this.activityData = this.$store.state.sendnewObj['activityArr'];
     },
 };
 </script>

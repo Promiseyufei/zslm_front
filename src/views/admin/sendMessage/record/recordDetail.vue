@@ -19,7 +19,7 @@
             </div>
             <div class="historyDetail-right">
                <div class="rightUp">
-                   <h1>消息记录详情</h1>
+                   <h1 style="margin-bottom:5%;margin-top:3%;font-size:25px;font-weight:bold">消息记录详情</h1>
                    <div class="rightUpCon">
                        <div class="Nav">
                            <!-- <div>
@@ -125,6 +125,7 @@
                     newsId: this.newsId
                 }).then((response) => {
                     if(response.code == 0) {
+                        console.log(response.result);
                         this.tableData = response.result.map;
                         this.totalData = response.result.total;
                     }
@@ -134,7 +135,7 @@
             },
             //跳转页面按钮
             jumpPage:function() {
-                    this.$router.push('/record/recordHome');
+                    this.$router.push('/admin/record/recordHome');
             }
         },
         mounted(){

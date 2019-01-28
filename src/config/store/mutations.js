@@ -26,6 +26,11 @@ export const mutations= {
 	},
 	changeSearch(state, param) {
 		state.search[param.name] = param.val;
+	},
+
+	// 发消息时设置消息对象选择活动和专业数组的共存
+	changeSendnewObj(state, param) {
+		state.sendnewObj[param.name] = param.val;
 	}
     
 }

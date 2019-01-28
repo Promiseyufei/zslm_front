@@ -196,7 +196,7 @@ export default {
         getUser: function() {
             let self = this;
             this.post('/admin/news/getAllAccounts', {
-                pageCount: 100,
+                pageCount: 20,
                 pageNumber: self.currentPage
             }).then((response) => {
                 console.log(response);
@@ -252,9 +252,9 @@ export default {
         // 设置消息对象类型
         setUser: function() {
             if(this.radio == "2") {
-                this.$router.push('/send/setMessageObject');
+                this.$router.push('/admin/send/setMessageObject');
             }else if(this.radio == "3") {
-                this.$router.push('/send/setMessageSelf');
+                this.$router.push('/admin/send/setMessageSelf');
             }
         },
         //
@@ -283,17 +283,20 @@ export default {
                 activityIdArr: acIdArr,
                 condition: this.toType == 1 ? 1 : 0,
                 pageCount: this.size,
-                pageNumber:this.currentPage
+                pageNumber:(this.currentPage - 1)
             }).then((response) => {
                 if(response.code == 0) {
-                    this.table1 = response.result;
+                    this.tableData = response.result.users;
+                    this.totalData = response.result.count;
+                    // this.radio = 2;
+                    console.log(response.result);
                 }
                 else this.message(true, response.msg, 'error');
             })
         }
     },
     
-    mounted(){
+    mounted() {
         if(this.$route.params.setStr != undefined) {
             let setArray = this.$route.params.setStr;
 
@@ -305,11 +308,12 @@ export default {
         }
         if(this.$route.params.seTwo != undefined) {
             let seArray = this.$route.params.seTwo;
+            console.log(this.$route.params.seTwo);
             let t = seArray.pop();
             this.seMajor = seArray['semajor'] != undefined ? seArray['semajor'] : [];
             this.seAc = seArray['seactivity'] != undefined ? seArray['seactivity'] : [];
             this.toType = seArray['type'];
-            console.log(seArray);
+            // console.log(seArray);
             this.batchScreenUser();
             this.radio = t;
         }
