@@ -31,14 +31,18 @@
             <div class="setMessDeta-right">
                <div class="rightRedio">
                     <div class="checkbox">
-                        <div><el-checkbox v-model="shortMess" label="短信"></el-checkbox></div>
-                        <div><el-checkbox v-model="stationMess" label="站内信"></el-checkbox></div>
+                        <!-- <div><el-checkbox v-model="shortMess" label="短信"></el-checkbox></div>
+                        <div><el-checkbox v-model="stationMess" label="站内信"></el-checkbox></div> -->
+                        <el-radio-group v-model="shortMess">
+                            <div style="margin-bottom:2%"><el-radio :label="0">短信</el-radio></div>
+                            <div><el-radio :label="1">站内信</el-radio></div>
+                        </el-radio-group>
                     </div>
                     <div class="radio">
                         <el-radio-group v-model="radio">
-                            <div><el-radio label=1>小助手消息</el-radio></div>
-                            <div><el-radio label=2>系统员管理消息</el-radio></div>
-                            <div><el-radio label=3>院校动态消息</el-radio></div>
+                            <div><el-radio :disabled="disabled" label=1>小助手消息</el-radio></div>
+                            <div><el-radio :disabled="disabled" label=2>系统员管理消息</el-radio></div>
+                            <div><el-radio :disabled="disabled" label=3>院校动态消息</el-radio></div>
                         </el-radio-group>
                         <!-- <div><el-radio label="1">小助手消息</el-radio></div>
                         <div><el-radio label="2">系统员管理消息</el-radio></div>
@@ -53,6 +57,7 @@
                     type="textarea"
                     autosize
                     placeholder="请输入消息标题"
+                    :disabled="disabled"
                     v-model="textarea">
                     </el-input>
                 </div>
@@ -61,7 +66,7 @@
                </div>
 
                 <div>
-                    <el-input placeholder="请输入相关链接" v-model="input" style="margin-top:30px;">
+                    <el-input placeholder="请输入相关链接" v-model="input" style="margin-top:30px;" :disabled="disabled">
                         <template slot="prepend">Http://</template>
                     </el-input>
                 </div>
@@ -69,7 +74,9 @@
             </div>
         </div>
         <div class="sendMess">
-            <el-button type="primary" @click="send">发消息</el-button>     
+            <!-- <el-button type="primary" v-if="shortMess == ''" :disabled="false">发消息</el-button>   -->
+            <el-button type="primary" v-if="shortMess == 1" :disabled="disabled" @click="send">发消息</el-button>
+            <el-button type="primary" v-else-if="shortMess == 0" @click="putExcel">导出用户列表</el-button>     
         </div> 
     </div>
 </template>
@@ -77,9 +84,11 @@
     export default {
         data() {
             return {
+                uploadUrl: this.globals.excelUrl + '/admin/news/putExcel',
                 //设置消息类型
                 radio:'1',
-                shortMess:false,
+                disabled:true,
+                shortMess:-1,
                 stationMess:false,
                 // assisMess:'',
                 // adminMess:'',
@@ -98,12 +107,26 @@
         //         console.log(val);
         //     }
         // },
+        watch: {
+            shortMess(newval, oldval) {
+                if(newval == 0 || newval == '0') {
+                    this.disabled = true;
+                    this.editor.$textElem.attr('contenteditable', false);
+                }
+                else if(newval == 1 || newval == '1') {
+                    this.disabled = false;
+                    this.editor.$textElem.attr('contenteditable', true);
+                }
+            }
+        },
         methods: {
 
             judgeCarrier() {
-                if(this.shortMess == true && this.stationMess == false) this.carrier = 0;
-                else if(this.shortMess == false && this.stationMess == true) this.carrier = 1;
-                else if(this.shortMess == true && this.stationMess == true) this.carrier = 2;
+                // if(this.shortMess == true && this.stationMess == false) this.carrier = 0;
+                // else if(this.shortMess == false && this.stationMess == true) this.carrier = 1;
+                // else if(this.shortMess == true && this.stationMess == true) this.carrier = 2;
+
+                if(this.shortMess >= 0) this.carrier = this.shortMess;
             },
             validateParameter() {
                 this.judgeCarrier();
@@ -127,6 +150,7 @@
             },
             send() {
                 if(this.validateParameter()) {
+
                     // this.confirm(() => {
                         this.post('/admin/news/getNewNewsMessage', {
                             userArr: this.idArr,
@@ -147,6 +171,23 @@
                         // this.message(true, "已取消发送", 'info');
                     // }, "确定发送吗?");
                 }
+            },
+            putExcel() {
+                let str = '';
+                if(this.idArr.length < 1) {
+                    this.message(true, '请选择导出的用户','info');
+                    return false;
+                }
+                for(let i = 0; i < this.idArr.length; i++) {
+                    if(i == (this.idArr.length -1)) str += 'userArr[' + i + ']=' + this.idArr[i];
+                    else str += 'userArr[' + i + ']=' + this.idArr[i] + '&';
+                }
+                window.location.href = (this.uploadUrl + '?' + str);
+                // this.post('/admin/news/putExcel', {
+                //     userArr: this.idArr
+                // }).then((response) => {
+                //     console.log(response)
+                // })
             }
         },
         mounted(){
@@ -164,6 +205,7 @@
                 this.editorContent = html;
             }
             this.editor.create();
+            this.editor.$textElem.attr('contenteditable', false);
             
         }
     }

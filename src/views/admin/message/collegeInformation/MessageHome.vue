@@ -290,7 +290,10 @@ export default {
             let formdata = new FormData();
             if(this.majorId != null)
                 formdata.append('majorId', this.majorId);
-			formdata.append('majorName', this.majorInfo.z_name);
+            formdata.append('majorName', this.majorInfo.z_name);
+            // if(this.majorInfo.major_confirm == null)
+            //     this.majorInfo.major_confirm = [];
+            // return false;
 			formdata.append('majorAuth', this.majorInfo.major_confirm.toString());
             formdata.append('majorNature', this.majorInfo.major_follow.toString());
 			formdata.append('approval', this.majorInfo.access_year);
@@ -659,6 +662,8 @@ export default {
 				if(response.code == 0) {
                     console.log(response.result);
                     _this.majorInfo = response.result;
+                    if(_this.majorInfo.major_confirm == null) _this.majorInfo.major_confirm = [];
+                    if(_this.majorInfo.major_follow == null) _this.majorInfo.major_follow = [];
                     _this.majorLogoUrl = response.result.magor_logo_name;
                      _this.majorCoverMapUrl = response.result.major_cover_name;
 					if(response.result.wc_image instanceof Array && response.result.wc_image.length > 0) {
