@@ -77,7 +77,7 @@
 								</el-table-column>
 								<el-table-column property="is_show" label="展示状态" width="100">
 									<template slot-scope="scope">
-										<el-switch v-model="gridData[scope.$index].is_show" @change="changeMajorProjectState(gridData[scope.$index].id, () => {return gridData[scope.$index].is_show == true ? 0:1}, 2, scope.$index)">
+										<el-switch v-model="gridData[scope.$index].is_show" @change="changeMajorProjectState(gridData[scope.$index].id, 1, (() => {return gridData[scope.$index].is_show == true ? 0:1})())">
 										</el-switch>
 									</template>
 								</el-table-column>
@@ -351,6 +351,7 @@
 
 			//设置招生项目的状态
             changeMajorProjectState(proId, type, state) {
+				console.log(state)
                 let status = true;
                 this.post('/admin/information/setProjectState' , {
                     projectId: proId,

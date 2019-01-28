@@ -2,8 +2,10 @@
     <div class="Select">
         <div class="Select-top">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item>文件上传</el-breadcrumb-item>
-                <el-breadcrumb-item>选择院校专业</el-breadcrumb-item>
+                <el-breadcrumb-item>信息发布</el-breadcrumb-item>
+                <el-breadcrumb-item>活动信息</el-breadcrumb-item>
+                <el-breadcrumb-item>活动信息编辑</el-breadcrumb-item>
+                 <el-breadcrumb-item>设置主办院校</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="fileSteps Select-steps">
@@ -33,7 +35,7 @@
                 <!-- 城市按钮 -->
                 <el-tabs>
                     <div class="SelectUnivers-city">
-                        <el-checkbox-group v-model="checkboxGroup1" v-for="(vals,index) in button" :key="index">
+                        <el-checkbox-group v-model="checkboxGroup1_v" v-for="(vals,index) in button" :key="index">
                             <div class="region">{{vals.butregion}}</div>
                             <el-checkbox-button v-model="butname"
                                                 v-for="(val,indexs) in vals.city" :key="indexs" :label="val.name">
@@ -49,23 +51,28 @@
                     <el-radio-group v-for="(cityline, i) in oneCity" v-model="one" :key="i">
                         <el-radio-button v-for="(city, k) in cityline"
                                          :label="city.z_name" @click.native="selectCity(city.id,city.z_name)" :key="k"></el-radio-button>
+
                     </el-radio-group>
+
                 </div>
                 <div class="SelectUnivers-majorname">
                     <div class="cityname">{{twocityName}}</div>
                     <el-radio-group v-for="(cityline, i) in twoCity" v-model="one" :key="i">
                         <el-radio-button v-for="(city, k) in cityline"
                                          :label="city.z_name" @click.native="selectCity(city.id,city.z_name)" :key="k"></el-radio-button>
+
                     </el-radio-group>
+
+
                 </div>
-                <div class="ellipsis">……</div>
+                <div class="ellipsis"></div>
                 <div class="page">
                     <el-pagination background layout="prev, pager, next"
                                    :current-page="page"
                                    :page-size="1"
                                    :total="count"
                                    @current-change="handleCurrentChange"
-                    >
+                                  >
                     </el-pagination>
                 </div>
             </div>
@@ -74,7 +81,7 @@
             <span class="Selected" v-if="this.selectname">当前已选择：<span class="majorname">{{selectname}}</span></span>
         </div>
         <div class="jumpPage">
-            <el-button type="primary" @click.native="jumpPage">下一步</el-button>
+            <el-button type="primary" @click.native="jumpPage">设为主办院校</el-button>
         </div>
 
     </div>
@@ -84,70 +91,70 @@
         {
             butregion: '华北',
             city: [
-                {name: '北京市'},
-                {name: '天津市'},
-                {name: '河北省'},
-                {name: '山西省'},
+                {name: '北京'},
+                {name: '天津'},
+                {name: '河北'},
+                {name: '山西'},
                 {name: '内蒙古'}
             ]
         },
         {
-            butregion: '东北省',
+            butregion: '东北',
             city: [
-                {name: '辽宁省'},
-                {name: '吉林省'},
-                {name: '黑龙江省'},
+                {name: '辽宁'},
+                {name: '吉林'},
+                {name: '黑龙江'},
             ]
         },
         {
             butregion: '华东',
             city: [
-                {name: '上海市'},
-                {name: '江苏省'},
-                {name: '浙江省'},
-                {name: '江西省'},
-                {name: '安微省'},
-                {name: '福建省'},
-                {name: '山东省'}
+                {name: '上海'},
+                {name: '江苏'},
+                {name: '浙江'},
+                {name: '江西'},
+                {name: '安微'},
+                {name: '福建'},
+                {name: '山东'}
             ]
         },
         {
             butregion: '中南',
             city: [
-                {name: '河南省'},
-                {name: '湖北省'},
-                {name: '湖南省'},
-                {name: '广东省'},
-                {name: '广西省'},
-                {name: '海南省'}
+                {name: '河南'},
+                {name: '湖北'},
+                {name: '湖南'},
+                {name: '广东'},
+                {name: '广西'},
+                {name: '海南'}
             ]
         },
         {
             butregion: '西南',
             city: [
-                {name: '重庆市'},
-                {name: '四川省'},
-                {name: '贵州省'},
-                {name: '云南省'},
+                {name: '重庆'},
+                {name: '四川'},
+                {name: '贵州'},
+                {name: '云南'},
                 {name: '西藏'}
             ]
         },
         {
             butregion: '西北',
             city: [
-                {name: '陕西省'},
-                {name: '甘肃省'},
-                {name: '青海省'},
-                {name: '宁夏省'},
-                {name: '新疆省'}
+                {name: '陕西'},
+                {name: '甘肃'},
+                {name: '青海'},
+                {name: '宁夏'},
+                {name: '新疆'}
             ]
         },
         {
             butregion: '港澳台',
             city: [
-                {name: '香港市'},
-                {name: '澳门市'},
-                {name: '台湾省'},
+                {name: '香港'},
+                {name: '澳门'},
+                {name: '台湾'},
             ]
         },
     ];
@@ -163,15 +170,18 @@
                 butname: '',
 
                 //默认选择所有城市
-                checkboxGroup1: ['北京市', '天津市', '河北省', '山西省', '内蒙古', '辽宁省', '吉林省', '黑龙江省', '上海市', '江苏省',
-                    '浙江省', '江西省', '安微省', '福建省', '山东省', '河南省', '湖北省', '湖南省', '广东省', '广西省', '海南省',
-                    '重庆市', '四川省', '贵州省', '云南省', '西藏', '陕西省', '甘肃省', '青海省', '宁夏省', '新疆省', '香港市', '澳门市', '台湾省'],
-                test: ['河南省'],
+				checkboxGroup1_v: ['北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '上海', '江苏',
+				    '浙江', '江西', '安微', '福建', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南',
+				    '重庆', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '香港', '澳门', '台湾'],
+				test: ['河南省'],
+                checkboxGroup1: ['北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '上海', '江苏',
+                    '浙江', '江西', '安微', '福建', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南',
+                    '重庆', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '香港', '澳门', '台湾'],
                 button: buttons,//从const buttons 引入
-                checkboxGroupIndex : {'北京市':0, '天津市':1, '河北省':2, '山西省':3, '内蒙古':4, '辽宁省':5, '吉林省':6, '黑龙江省':7, '上海市':8, '江苏省':9,
-                    '浙江省':10, '江西省':11, '安微省':12, '福建省':13, '山东省':14, '河南省':15, '湖北省':16, '湖南省':17, '广东省':18, '广西省':19, '海南省':20,
-                    '重庆市':21, '四川省':22, '贵州省':23, '云南省':24, '西藏':25, '陕西省':26, '甘肃省':27, '青海省':28, '宁夏省':29, '新疆省':30,
-                    '香港市':31, '澳门市':32, '台湾省':33},
+                checkboxGroupIndex : {'北京':0, '天津':1, '河北':2, '山西':3, '内蒙古':4, '辽宁':5, '吉林':6, '黑龙江':7, '上海':8, '江苏':9,
+                    '浙江':10, '江西':11, '安微':12, '福建':13, '山东':14, '河南':15, '湖北':16, '湖南':17, '广东':18, '广西':19, '海南':20,
+                    '重庆':21, '四川':22, '贵州':23, '云南':24, '西藏':25, '陕西':26, '甘肃':27, '青海':28, '宁夏':29, '新疆':30,
+                    '香港':31, '澳门':32, '台湾':33},
                 //院校专业
                 onecityName: '',
                 twocityName: '',
@@ -213,9 +223,9 @@
             allCity: function () {
                 var that = this;
 
-                that.checkboxGroup1 = ['北京市', '天津市', '河北省', '山西省', '内蒙古', '辽宁省', '吉林省', '黑龙江省', '上海市', '江苏省',
-                    '浙江省', '江西省', '安微省', '福建省', '山东省', '河南省', '湖北省', '湖南省', '广东省', '广西省', '海南省',
-                    '重庆市', '四川省', '贵州省', '云南省', '西藏', '陕西省', '甘肃省', '青海省', '宁夏省', '新疆省', '香港市', '澳门市', '台湾省']
+                that.checkboxGroup1 = ['北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江', '上海', '江苏',
+                    '浙江', '江西', '安微', '福建', '山东', '河南', '湖北', '湖南', '广东', '广西', '海南',
+                    '重庆', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '香港', '澳门', '台湾']
             },
 
             paixu(){
@@ -234,6 +244,7 @@
             },
 
             searchMajor(){
+				this.checkboxGroup1 = this.checkboxGroup1_v
                 this.count = Math.ceil(this.checkboxGroup1.length/2);
                 this.oneCity = [];
                 this.twoCity = [];
@@ -245,13 +256,10 @@
                 this.page = val;
                 this.getMajor();
             },
-
-
             getMajor: function () {
-
                 let searchs = [];
-                this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
-                this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
+                    this.onecityName = searchs[0] = this.checkboxGroup1[ (this.page-1)*2]
+                    this.twocityName = searchs[1] = this.checkboxGroup1[2*this.page-1]
 
                 let that = this
                 this.fetch('/admin/files/getmajorbypro', {
