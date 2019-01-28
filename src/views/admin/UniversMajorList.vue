@@ -413,7 +413,7 @@
 <!-- 全局样式 -->
 <style>
 	/*表格滚动条*/
-	.majorlist-table .el-table--scrollable-x .el-table__body-wrapper {
+	.majorlist-table  {
 		overflow-x: hidden;
 	}
 	/*表头文本居中*/
