@@ -285,6 +285,7 @@
 				that.fileYear_v = ''
 				that.majorName_v = ''
 				that.Sorting = ''
+				that.radio2 = '全部文件'
 				that.searchContent.page = 1
 				this.$refs.page.handleSizeChange(10);
 			},
