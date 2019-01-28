@@ -198,7 +198,7 @@ export default {
             this.post('/admin/news/getAllAccounts', {
                 pageCount: 20,
                 pageNumber: self.currentPage
-            }).then((response) => {
+            }).then(response => {
                 console.log(response);
                 if(response.code == 0) {
                     self.totalData = response.result.total;

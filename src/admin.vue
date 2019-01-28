@@ -10,12 +10,12 @@
 					<span v-else @click="isCollapse = !isCollapse"><i class="fa fa-bars"></i></span>
 
 					<div class="appNav">
-						
+
 						<el-tooltip class="item" effect="light" placement="top-start">
 							<div slot="content">账户类型:超级管理员
 								<br />本次登录:{{nowtime}}
-								<br/>登录地区：{{city}}(Ip:{{ip}})
-								<br/>上次登录：{{lasttime}}</div>
+								<br />登录地区：{{city}}(Ip:{{ip}})
+								<br />上次登录：{{lasttime}}</div>
 							<i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
 						</el-tooltip>
 
@@ -26,7 +26,7 @@
 								<i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
 							</el-badge>
 						</el-tooltip>
-						<i class="fa fa-share fa-lg" aria-hidden="true"></i>
+						<i class="fa fa-share fa-lg" aria-hidden="true" @click="logout"></i>
 					</div>
 				</el-header>
 				<el-main>
@@ -44,14 +44,14 @@
 	export default {
 		data() {
 			return {
-				nowtime:'',
-				city:'',
-				ip:'',
-				lasttime:'',
+				nowtime: '',
+				city: '',
+				ip: '',
+				lasttime: '',
 				refund: 0,
 				opinion: 0,
 				testline: "",
-				count: 12,
+				count: 0,
 				heighttt: window.screen.availHeight,
 				isCollapse: true
 			};
@@ -59,7 +59,7 @@
 		methods: {
 			getding: function() {
 				var that = this
-				var t1 = window.setInterval(that.getMsg, 5000);
+				var t1 = window.setInterval(that.getMsg, 60000);
 			},
 
 			// 			getMsg: function() {
@@ -70,13 +70,13 @@
 			// 					}
 			// 	
 			// 				},
-			getAccountMsg:function(){
+			getAccountMsg: function() {
 				var that = this;
 				var account = this.getUserStatePro('admin_account')
-				this.fetch('/admin/accounts/getaccountloginmsg',{
-					account:account
-				}).then(res=>{
-					if(res.code == 0){
+				this.fetch('/admin/accounts/getaccountloginmsg', {
+					account: account
+				}).then(res => {
+					if (res.code == 0) {
 						that.ip = res.result.ip
 						that.nowtime = res.result.now_time
 						that.lasttime = res.result.last_time
@@ -84,7 +84,7 @@
 					}
 				})
 			},
-			
+
 			getMsg: function() {
 				var that = this;
 				this.fetch("/admin/information/getding").then(res => {
@@ -94,11 +94,29 @@
 						that.opinion = res.result.opinion
 					}
 				})
+			},
+
+			logout: function() {
+				var that = this;
+				this.post('/admin/loginout').then(res => {
+					if (res.code == 0) {
+						that.RemoveCookie('admin_account')
+						that.$router.push('/admin/login');
+					} else {
+						that.message(true, "退出失败", 'error')
+					}
+				})
 			}
 		},
 		mounted() {
-			this.getAccountMsg()
-			this.getding()
+			var loginjudge = this.getUserStatePro('admin_account')
+			if (loginjudge != null) {
+				this.getAccountMsg()
+				this.getMsg()
+				this.getding()
+			} else {
+				this.$router.push('/admin/login');
+			}
 		},
 	}
 </script>
