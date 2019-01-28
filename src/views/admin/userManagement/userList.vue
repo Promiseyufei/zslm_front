@@ -79,8 +79,8 @@
 		name: "userFocusMajor",
 		data() {
 			return {
-				
-				uploadUrl:this.globals.excelUrl+'/admin/accounts/createUserExcel',
+
+				uploadUrl: this.globals.excelUrl + '/admin/accounts/createUserExcel',
 				testUrl: "http://www.zslm.com",
 				/**
 				 * 和视图绑定的 name，phone，realname字段
@@ -333,14 +333,14 @@
 							coupon_str += '<div class="motai-line-content">' + coupons[i].name + '</div>'
 						}
 						let sex = res.result[0].sex == 0 ? '<i class="fa fa-mars"></i>' : '<i class="fa fa-venus"></i>'
-						let weixin = res.result[0].weixin == '绑定' ? '<i class="fa fa-weixin"></i>':''
-						let weibo = res.result[0].weibo == '绑定' ? '<i class="fa fa-weibo"></i>':''
+						let weixin = res.result[0].weixin == '绑定' ? '<i class="fa fa-weixin"></i>' : ''
+						let weibo = res.result[0].weibo == '绑定' ? '<i class="fa fa-weibo"></i>' : ''
 						this.$alert('<div class="motai-body">' +
 							'<div class="selfDetail">' +
 							'<img class="motai-img" src="' + that.htmlDecode(res.result[0].head_portrait) + '">' +
 							'<div class="selfDetailText"><span>' + that.htmlDecode(res.result[0].real_name) +
 							'</span><span style="display:block">' + that.htmlDecode(res.result[0].user_name) + '</span><div>' +
-							sex + weixin + weibo+
+							sex + weixin + weibo +
 							'<i>' + res.result[0].address + '</i></div></div></div>' +
 							'</div>' +
 							'<div><div class="motai-line">' +
@@ -370,7 +370,7 @@
 							'<div><div class="motai-line">' +
 							'<div class="motai-line-title">领优惠券:</div><div>' +
 							coupon_str +
-							'</div></div></div>','信息', {
+							'</div></div></div>', '信息', {
 								dangerouslyUseHTMLString: true
 							}).catch(() => {});
 					} else {
@@ -428,6 +428,7 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
+		color: black;
 	}
 
 	.selfDetailText {
@@ -440,6 +441,7 @@
 		display: flex;
 		justify-content: space-between;
 		overflow: hidden;
+		color: black;
 	}
 
 	.motai-line-title {

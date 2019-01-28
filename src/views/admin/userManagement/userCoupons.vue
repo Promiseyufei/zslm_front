@@ -312,6 +312,7 @@
 	.motai-body {
 		width: 80%;
 		margin: 0 auto;
+
 	}
 
 	.motai-img {
@@ -325,6 +326,7 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
+		color: black;
 	}
 
 	.selfDetailText {
@@ -337,6 +339,7 @@
 		display: flex;
 		justify-content: space-between;
 		overflow: hidden;
+		color: black;
 	}
 
 	.motai-line-title {
