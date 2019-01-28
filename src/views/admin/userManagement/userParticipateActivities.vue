@@ -244,7 +244,7 @@
 							'<img class="motai-img" src="' + that.htmlDecode(res.result[0].head_portrait) + '">' +
 							'<div class="selfDetailText"><span>' + that.htmlDecode(res.result[0].real_name) +
 							'</span><span style="display:block">' + that.htmlDecode(res.result[0].user_name) + '</span><div>' +
-							sex + weixin + weibo+
+							sex + weixin + weibo +
 							'<i>' + res.result[0].address + '</i></div></div></div>' +
 							'</div>' +
 							'<div><div class="motai-line">' +
@@ -307,6 +307,7 @@
 	.motai-body {
 		width: 80%;
 		margin: 0 auto;
+
 	}
 
 	.motai-img {
@@ -320,6 +321,7 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
+		color: black;
 	}
 
 	.selfDetailText {
@@ -332,6 +334,7 @@
 		display: flex;
 		justify-content: space-between;
 		overflow: hidden;
+		color: black;
 	}
 
 	.motai-line-title {
