@@ -233,6 +233,7 @@ export default {
 
         // 跳转页面
         toAdvise: function() {
+            
             let sendArr = [];
             if(this.radio == "1") {
                 this.tableData.forEach((item) => {
@@ -244,9 +245,20 @@ export default {
                     sendArr.push(item.id);
                 });
 
-
-            let setStr = encodeURIComponent(JSON.stringify(sendArr));
-            this.$router.push('/send/setMessageDetail?setStr=' + setStr);
+            
+            // let setStr = encodeURIComponent(JSON.stringify(sendArr));
+            if(sendArr.length < 1) {
+                this.message('没有指定要发送消息的用户');
+                return false;
+            }
+            else 
+                this.$router.push({
+                    name: '/send/setMessageDetail',
+                    params: {
+                        sendIdArr:sendArr
+                    }
+                });
+            // this.$router.push('/admin/send/setMessageDetail?setStr=' + setStr);
         },
 
         // 设置消息对象类型

@@ -59,7 +59,7 @@
 		methods: {
 			getding: function() {
 				var that = this
-				var t1 = window.setInterval(that.getMsg, 5000);
+				var t1 = window.setInterval(that.getMsg, 50000);
 			},
 
 			// 			getMsg: function() {

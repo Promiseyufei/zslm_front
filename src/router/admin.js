@@ -217,7 +217,7 @@ let admin_router = {
 
                 {
                     path: 'send/setMessageDetail',
-                    name: '消息管理-编辑发送',
+                    name: '/send/setMessageDetail',
                     component: resolve =>void(require(['@/views/admin/sendMessage/send/setMessageDetail'], resolve))
                 },
                 {

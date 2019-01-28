@@ -52,7 +52,7 @@
                     <el-input
                     type="textarea"
                     autosize
-                    placeholder="请输入内容"
+                    placeholder="请输入消息标题"
                     v-model="textarea">
                     </el-input>
                 </div>
@@ -61,7 +61,7 @@
                </div>
 
                 <div>
-                    <el-input placeholder="请输入内容" v-model="input" style="margin-top:30px;">
+                    <el-input placeholder="请输入相关链接" v-model="input" style="margin-top:30px;">
                         <template slot="prepend">Http://</template>
                     </el-input>
                 </div>
@@ -150,12 +150,12 @@
             }
         },
         mounted(){
-            // console.log(decodeURIComponent(JSON.parse(this.$route.query.setStr)));
-            if(JSON.parse(this.$route.query.setStr) instanceof Array && JSON.parse(this.$route.query.setStr).length > 0)
-                this.idArr = JSON.parse(this.$route.query.setStr);
+            console.log(this.$route.params.sendIdArr);
+            if(typeof this.$route.params.sendIdArr != "undefined" ? true : false && this.$route.params.sendIdArr.length > 0)
+                this.idArr = this.$route.params.sendIdArr
             else {
-                // this.message(true, "请先选择发送消息的用户");
-                // this.$router.go(-1);
+                this.message(true, "请先选择发送消息的用户");
+                this.$router.go(-1);
             }
 
             //生成编辑器
@@ -250,6 +250,7 @@
     }
     .setMessDeta-right {
         width: 1320px;
+        margin-left: 1.5%;
         border: 1px solid #DDD;
         border-left: 1px solid #fff;
     }

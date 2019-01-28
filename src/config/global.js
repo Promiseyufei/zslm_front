@@ -1,7 +1,7 @@
 
-const testUrl = 'http://localhost:81/html/zslm_back/public'
-const longUrl = 'http://www.lishanlei.cn'
-const excelUrl = "http://www.zslm.com"
+const testUrl = 'http://localhost:81'
+const longUrl = 'http://localhost:81'
+const excelUrl = "http://localhost:81"
 var vvv = this
 var UUID = ''
 
