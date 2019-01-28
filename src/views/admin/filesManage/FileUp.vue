@@ -721,7 +721,7 @@
 	}
 
 	.file-table .el-table--scrollable-x .el-table__body-wrapper {
-		/* overflow-x: hidden !important; */
+		overflow-x: auto !important;
 	}
 
 	.operateBox {
