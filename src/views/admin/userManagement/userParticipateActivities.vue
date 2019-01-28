@@ -266,9 +266,9 @@
 							'<div><div class="motai-line">' +
 							'<div class="motai-line-title">参与活动:</div><div>' +
 							actives_str +
-							'</div></div></div>', {
+							'</div></div></div>', '信息', {
 								dangerouslyUseHTMLString: true
-							});
+							}).catch(() => {});
 					} else {
 						return 1;
 					}

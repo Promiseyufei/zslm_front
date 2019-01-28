@@ -370,9 +370,9 @@
 							'<div><div class="motai-line">' +
 							'<div class="motai-line-title">领优惠券:</div><div>' +
 							coupon_str +
-							'</div></div></div>', {
+							'</div></div></div>','信息', {
 								dangerouslyUseHTMLString: true
-							});
+							}).catch(() => {});
 					} else {
 						return 1;
 					}
