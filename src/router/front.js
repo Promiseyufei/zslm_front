@@ -235,7 +235,7 @@ let front_router = {
 
                 // 首页
                 {
-                    path: 'index',
+                    path: 'index/:userData?',
                     name: '首页',
                     component: resolve => void(require(['@/views/front/index'], resolve))
                 },
