@@ -84,7 +84,6 @@
 				var that = this
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-
 						// this.message(true,'submit!','success');
 						this.post("/admin/login", {
 							account: that.ruleForm.name,

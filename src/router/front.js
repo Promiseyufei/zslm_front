@@ -43,6 +43,11 @@ let front_router = {
                     name: '注册会员',
                     component: resolve => void(require(['@/views/front/Login/register'], resolve))
                 },
+                {
+                    path: 'Login/thirdBind/:userOpenId',
+                    name: '绑定手机号',
+                    component: resolve => void(require(['@/views/front/Login/thirdBind'], resolve))
+                },
                 //一级导航,主页面，包括选院校、找活动、找资讯、搜辅导以及其详情页
                 {
                     path: 'firstMenuRouter',
@@ -235,7 +240,7 @@ let front_router = {
 
                 // 首页
                 {
-                    path: 'index',
+                    path: 'index/:userData?',
                     name: '首页',
                     component: resolve => void(require(['@/views/front/index'], resolve))
                 },
