@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 // const testUrl = 'http://localhost:81'
 // const longUrl = 'http://localhost:81'
 // const excelUrl = "http://localhost:81"
