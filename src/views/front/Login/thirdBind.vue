@@ -46,13 +46,22 @@
                     phone: this.phoneNumber,
                     userOpenId: this.userOpenId
                 }).then((response) => {
-                    // if(response.code == 0) {
-
-                    // }
-                    console.log(response.msg);
-                })
+                    switch (response.code) {
+                        case 0:
+                            this.$router.push('/front/Login/loginRoute/accountNumber');
+                            break;
+                        case 1:
+                            this.message(true, '绑定失败，请重新尝试', 'info');
+                            break;
+                        case 2:
+                            this.message(true, '您还没有注册。', 'info');
+                            this.$router.push('/front/Login/register');
+                        default:
+                            this.message(true, response.msg, 'error');
+                            break;
+                    }
+                });
             }
-
 		},
 		watch:{
 			//监听this.checked——选中"同意用户协议"，"成为会员按钮可用"
