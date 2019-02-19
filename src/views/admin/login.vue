@@ -173,9 +173,9 @@
 	}
 
 	.loginForm {
-		width: 68%;
+		width: 80%;
+		margin: 0 auto;
 		margin-top: 40px;
-		padding-left: 16%;
 	}
 
 	.loginBtn {
@@ -201,7 +201,7 @@
 
 	p {
 		margin: 0 auto;
-		color: #fff;
+		/* color: #fff; */
 		font-weight: bold;
 		font-size: 1.8em;
 	}

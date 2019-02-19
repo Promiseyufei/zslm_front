@@ -248,7 +248,7 @@
 							'<img class="motai-img" src="' + that.htmlDecode(res.result[0].head_portrait) + '">' +
 							'<div class="selfDetailText"><span>' + that.htmlDecode(res.result[0].real_name) +
 							'</span><span style="display:block">' + that.htmlDecode(res.result[0].user_name) + '</span><div>' +
-							sex + weixin + weibo+
+							sex + weixin + weibo +
 							'<i>' + res.result[0].address + '</i></div></div></div>' +
 							'</div>' +
 							'<div><div class="motai-line">' +
@@ -270,9 +270,9 @@
 							'<div><div class="motai-line">' +
 							'<div class="motai-line-title">领优惠券:</div><div>' +
 							coupon_str +
-							'</div></div></div>', {
+							'</div></div></div>', '信息', {
 								dangerouslyUseHTMLString: true
-							});
+							}).catch(() => {});
 					} else {
 						return 1;
 					}
@@ -312,6 +312,7 @@
 	.motai-body {
 		width: 80%;
 		margin: 0 auto;
+
 	}
 
 	.motai-img {
@@ -325,6 +326,7 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
+		color: black;
 	}
 
 	.selfDetailText {
@@ -337,6 +339,7 @@
 		display: flex;
 		justify-content: space-between;
 		overflow: hidden;
+		color: black;
 	}
 
 	.motai-line-title {
@@ -381,7 +384,7 @@
 	}
 
 	.dataquery-refresh,
-	.query-button[data-v-3d988435] {
+	.query-button {
 		position: absolute;
 		right: 10px;
 		top: 10px;

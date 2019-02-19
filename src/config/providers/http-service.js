@@ -11,9 +11,13 @@ axios.defaults.baseURL = 'http://www.mbahelper.cn:8889';
 var that = this
 axios.interceptors.request.use(
 	config => {
-		console.log(that.a.getUUID())
+		var arr, reg = new RegExp("(^| )" + 'UUID' + "=([^;]*)(;|$)");
+		var uuid = ''
+		if (arr = document.cookie.match(reg)) {
+			uuid = arr[2] == '0' ? '' : arr[2];
+		}
 		config.headers = {
-			'UUID': that.a.getUUID(),
+			'UUID': uuid,
 			'Content-Type': 'application/json',
 
 		}
