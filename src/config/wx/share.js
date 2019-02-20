@@ -1,8 +1,9 @@
 export default {
     share() {
         var signature = {};
+        let url = encodeURIComponent(window.location.href.split('#')[0]);
         this.fetch('/getToken', {
-            url: location.href.split('#')[0]
+            url: url
         }).then((response) => {
             if(response.code == 0) {
                 console.log(response.result);
