@@ -20,6 +20,9 @@ export default {
 
     },
     mounted() {
+        if(!this.getUserState('user')) {
+            this.$router.push('/front/Login/loginRoute/accountNumber')
+        }
         // let phone = this.getUserState('user');
         // if(!phone) {
         //     this.message(true, '您的会话已过期，请重新登录');

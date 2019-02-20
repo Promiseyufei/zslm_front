@@ -124,7 +124,7 @@
 	    	goMessage:function(){
 	    		if (!this.getUserState('user')){
 	    			//未登录
-	    			this.$router.push('/front/Login/loginRoute');
+	    			this.$router.push('/front/Login/loginRoute/accountNumber');
 	    		} else{
 	    			this.$router.push('/front/firstMenuRouter/usercore/myNews/dynamic');
 	    		}

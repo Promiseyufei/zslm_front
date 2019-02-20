@@ -2,7 +2,7 @@ export default {
     share() {
         var signature = {};
         this.fetch('/getToken', {
-            url: window.location.href
+            url: location.href.split('#')[0]
         }).then((response) => {
             if(response.code == 0) {
                 signature = response.result;
