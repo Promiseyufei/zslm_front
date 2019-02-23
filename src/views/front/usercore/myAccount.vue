@@ -263,8 +263,8 @@ export default {
             console.log(value);
         },
         getUserAccounts() {
-            // let phone = this.getUserState('user');
-            let phone = '15837587256';
+            let phone = this.getUserState('user');
+            // let phone = '15837587256';
             if(phone) {
                 this.fetch('/front/usercore/getUserAccountInfo', {
                     phone: phone
@@ -288,6 +288,9 @@ export default {
 
     },
     mounted() {
+        if(!this.getUserState('user')) {
+            this.$router.push('/front/Login/loginRoute/accountNumber')
+        }
         this.getUserAccounts();
         this.fetch('/front/usercore/getFrontProvince').then((response) => {
             if(response.code == 0)

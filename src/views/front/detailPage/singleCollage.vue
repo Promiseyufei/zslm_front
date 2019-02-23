@@ -265,7 +265,7 @@ export default {
     methods: {
         //分享到微信——接口没写~
         sharewx:function(){
-            
+            console.log('weixin');
         },
         //分享到新浪微博——接口没写~
         sharexl:function(){

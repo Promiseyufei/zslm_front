@@ -82,6 +82,9 @@
         },
 
         mounted() {
+            if(!this.getUserState('user')) {
+                this.$router.push('/front/Login/loginRoute/accountNumber')
+            }
             this.id = this.getUserState("userId")
             let divs = document.getElementsByTagName("div")
             divs[1].style.height = 0;

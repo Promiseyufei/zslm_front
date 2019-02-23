@@ -46,8 +46,12 @@ export default {
         }
     },
     mounted() {
+        if(!this.getUserState('user')) {
+            this.$router.push('/front/Login/loginRoute/accountNumber')
+        }
         this.id = this.getUserState("userId")
         this.getMajor();
+
 
     }
 }

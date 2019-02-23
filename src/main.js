@@ -4,6 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+
+//引入weixin-js-sdk
+import wx from 'weixin-js-sdk'
+
+
+
 //引入jquery
 import $ from 'jquery'
 

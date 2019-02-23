@@ -50,6 +50,8 @@
     	</div>
 </template>
 
+
+
 <script>
 	export default {
 		data() {
@@ -191,9 +193,10 @@
 				}
 			},
 			thirdLogin() {
-				this.fetch('/auth/weixin', {}).then((response) => {
-					console.log(response);
-				})
+				window.location.href = 'http://www.mbahelper.cn:8889/auth/weixin';
+				// this.fetch('/auth/weixin', {}).then((response) => {
+				// 	console.log(response);
+				// })
 			},
 			//不登录——跳到院校列表页
 			close:function(){
