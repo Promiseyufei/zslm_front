@@ -143,7 +143,7 @@ let admin_router = {
                 {
                     path: 'message/choiceactivitytest/:coachid',
                     name: '信息管理-辅导-相关活动-添加活动',
-                    component: resolve =>void(require(['@/views/admin/message/counselling/choiceactivity'], resolve))
+                    component: resolve =>void(require(['@/views/admin/message/counselling/choiceActivity'], resolve))
                 },
                 {
                     path: 'message/informationList',

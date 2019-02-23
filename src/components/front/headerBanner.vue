@@ -1,6 +1,6 @@
 <template>
     <!-- header -->
-    <div class="selectHeaderback">
+    <div class="selectHeaderback" id="headerback" @click="judgePage">
         <div>
             <div class="selectHeader">
                 <p><span></span><strong>{{enName}}</strong><span></span></p>
@@ -14,15 +14,23 @@
 export default {
     data() {
         return {
-
+			url:""
         }
     },
     methods: {
-
+		setImg:function(url){
+			document.getElementById('headerback').style.backgroundImage = "url('"+url+"')";
+		},
+		setJudgeUlr:function(paramurl){
+			this.url = paramurl
+		},
+		judgePage:function(){
+			window.open(this.url)
+		}
     },
     props:["enName","name"],
     mounted(){
-
+		
     },
 };
 </script>
