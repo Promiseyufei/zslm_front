@@ -3,7 +3,7 @@
     <div class="publicRowboxbig">
         <div class="publicRowbox">
             <!-- 循环出来列 -->
-            <div class="publicRow" v-for="(item,index) in list">
+            <div class="publicRow" v-for="(item,index) in list" :key="index">
                 <span>{{item.type}}</span>
                 <nav class="publicRowRight">
                     <div ref="publiccheckbox">
@@ -58,7 +58,6 @@ export default {
             }else {
                 a.style.height = this.arrayh[index]+"px";
             }
-        //    console.log(e.currentTarget.children[0].innerHTML);
             e.currentTarget.children[0].innerHTML = e.currentTarget.children[0].innerHTML=="查看更多"?"收起":"查看更多";
             e.currentTarget.children[1].className = e.currentTarget.children[1].className=="el-icon-caret-bottom"?"el-icon-caret-top":"el-icon-caret-bottom";
         },
@@ -77,7 +76,6 @@ export default {
                 }
             }, 1000);
         });
-        console.log(self.arrayh);
     }
 }
 </script>

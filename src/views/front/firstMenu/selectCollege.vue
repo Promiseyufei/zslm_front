@@ -318,11 +318,12 @@ export default {
         },
         // 点击筛选块-从组件中获取选中结果
         change(data){
+            // console.log(data)
             this.selectData = data;
             this.getselt();
-             
+            
             // console.log(this.selectData)
-            // this.getmajorInform();
+            this.getmajorInform();
         },
         handleClose(tag) {
             for (let index = 0; index < this.selectData.length; index++) {
@@ -334,6 +335,7 @@ export default {
                 }
             };
             this.getselt();
+            
             this.getmajorInform();
         },
         //转换选中参数的格式——数组，以便传参
@@ -360,12 +362,13 @@ export default {
             this.score_type = list[5].join(",");//分数线——字符串
             let MIN = list[4][0];
             let MAX;
-                for (var j = 0; j < list[4].length; j++) {
-                    if (list[4][j] < MIN)
-                        MIN = list[4][j];
-                    else 
-                        MAX = list[4][j];
-                }
+            for (var j = 0; j < list[4].length; j++) {
+                if (list[4][j] < MIN)
+                    MIN = list[4][j];
+                else 
+                    MAX = list[4][j];
+            }
+            
             // console.log(MAX)
         },
         //获取按钮内容
@@ -417,23 +420,29 @@ export default {
                     page: that.page,
                     page_size: that.page_size,
             }).then(function (response) {
-                        let res = response.result[0];
-                        if (response.code==0) {
-                            that.count =response.result[1];
-                            that.majorInform=res;
-                            that.majorInform.forEach((item,index) => {
-                                that.majorInform[index].showProduct = item.product.slice(0,3);
-                                that.majorInform[index].missPorduct = item.product.slice(3);
-                                // if (that.majorInform[index].missPorduct==0) {
-                                // }
-                                that.missPorduct = that.majorInform[index].missPorduct;
-                            });
-                            that.major_confirm_id = res[0].major_confirm_id;
-                            that.major_follow_id = res[0].major_follow_id;
-                        }
+                if (response.code==0) {
+                    let res = response.result[0];
+                    that.count =response.result[1];
+                    that.majorInform=res;
+                    that.majorInform.forEach((item,index) => {
+                        that.majorInform[index].showProduct = item.product.slice(0,3);
+                        that.majorInform[index].missPorduct = item.product.slice(3);
+                        // if (that.majorInform[index].missPorduct==0) {
+                        // }
+                        that.missPorduct = that.majorInform[index].missPorduct;
+                    });
+                    that.major_confirm_id = res[0].major_confirm_id;
+                    that.major_follow_id = res[0].major_follow_id;
+                }
+                else {
+                    
+                    that.count = 0;
+                    that.majorInform = [];
+                    that.major_confirm_id = '';
+                    that.major_follow_id = '';
+                }
 
-            }).catch(function (error) {
-            });
+            })
         },
         //默认排序
         paixu:function(){
