@@ -18,7 +18,15 @@ export default {
         }
     },
     methods: {
-
+		setImg:function(url){
+			document.getElementById('headerback').style.backgroundImage = "url('"+url+"')";
+		},
+		setJudgeUlr:function(paramurl){
+			this.url = paramurl
+		},
+		judgePage:function(){
+			window.open(this.url)
+		}
     },
     props:["enName","name", "banner"],
     mounted(){
