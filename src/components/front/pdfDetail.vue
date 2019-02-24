@@ -1,7 +1,7 @@
 <template>
-        <div class="detailPicture" @mouseover="pdfOne" @mouseout="pdfOneOut" >
+        <div @click="loadPdf(pdfPicture[0].file_name)" class="detailPicture" @mouseover="pdfOne" @mouseout="pdfOneOut" >
             <div><img :src="src" alt="加载中"></div>
-            <div class="detailCity">{{pdfPicture[0].file_alt}}</div>
+            <div class="detailCity">{{pdfPicture[0].file_name}}</div>
         </div>
 </template>
 
@@ -14,19 +14,22 @@ export default {
     },
     props:["t","pdfPicture"],
     methods:{
-       //资料下载区logo——鼠标滑过样式
-            pdfOne:function() {
-                    this.src = require("../../assets/img/pdfG.png")
-                    this.$emit('thisTest', this.t)
-                    // document.getElementById('t').style.color = "#009fa0"
-            },
-            pdfOneOut:function() {
-                    this.src = require("../../assets/img/pdf.png")
-                    this.$emit('thisTesta', this.t)
-                    // this.$emit('thisTest', this.t)
-                    // document.getElementById('t').style.color = "#6f6f6f"
-            },
-        //资料下载区logo——鼠标滑过样式
+    //资料下载区logo——鼠标滑过样式
+        pdfOne:function() {
+                this.src = require("../../assets/img/pdfG.png")
+                this.$emit('thisTest', this.t)
+                // document.getElementById('t').style.color = "#009fa0"
+        },
+        pdfOneOut:function() {
+                this.src = require("../../assets/img/pdf.png")
+                this.$emit('thisTesta', this.t)
+                // this.$emit('thisTest', this.t)
+                // document.getElementById('t').style.color = "#6f6f6f"
+        },
+    //资料下载区logo——鼠标滑过样式
+        loadPdf(fileName) {
+            this.$emit('loadPdf', fileName);
+        }
 
       
     },
