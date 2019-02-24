@@ -1,6 +1,6 @@
 <template>
     <!-- header -->
-    <div class="selectHeaderback">
+    <div class="selectHeaderback" :style="'background-image: url('+ bannerUrl +')'">
         <div>
             <div class="selectHeader">
                 <p><span></span><strong>{{enName}}</strong><span></span></p>
@@ -14,15 +14,15 @@
 export default {
     data() {
         return {
-
+            // bannerUrl:this.banner.img != '' ? this.banner.img : require("../../assets/img/banner.jpg"),
         }
     },
     methods: {
 
     },
-    props:["enName","name"],
+    props:["enName","name", "banner"],
     mounted(){
-
+        // console.log(this.banner);
     },
 };
 </script>

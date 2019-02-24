@@ -3,15 +3,15 @@
     <div class="singleCollage">
         <div class="singleCollageAll">
         <!-- 院校logo -->
-            <div class="itemPicture">
+            <div class="itemPicture" :style="{ backgroundImage: 'url(' + coverName + ') no-repeat' }">
                 <div class="backColor">
-                    <div class="collageLogo"><img src="../../../assets/img/picture.jpg"></div>
+                    <div class="collageLogo"><img :src="logoName"></div>
                     <div class="collageName">
                         <div class="nameLine"></div>
-                        <div class="concreteName">复旦大学MBA</div>
+                        <div class="concreteName">{{ z_name }}</div>
                         <div class="nameLine"></div>
                     </div>
-                    <p style="opacity: 0.8;text-align: center;color: rgb(255, 255, 255);font-size: 12px;font-weight: bold;">关注复旦大学MBA，获取最新信息！</p>
+                    <p style="opacity: 0.8;text-align: center;color: rgb(255, 255, 255);font-size: 12px;font-weight: bold;">关注{{ z_name }}，获取最新信息！</p>
                     <div class="collageButton">
                         <div class="buttoOne" @click="clickFollow"><el-button type="primary" id="followButt"><i class="el-icon-plus" id="symbol"></i>{{follow}}</el-button></div>
                         <div class="buttoTwo">
@@ -60,11 +60,11 @@
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="reflesh">
-                                    <a @click="getContent"><i class="fa fa-repeat">&nbsp;换一换</i></a>
+                                    <a @click="refresh"><i class="fa fa-repeat">&nbsp;换一换</i></a>
                                 </div>
                             </div>
                             <div class="recommedContent">
-                                <subPage :shortArticles="recommedContent"></subPage>
+                                <subPage :shortArticles="recommedContent" @detail="detail"></subPage>
                             </div>
                         </el-card>
                     </el-col>
@@ -76,7 +76,7 @@
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="reflesh">
-                                    <a><i class="fa fa-repeat">&nbsp;换一换</i></a>
+                                    <a @click="refreshActivity"><i class="fa fa-repeat">&nbsp;换一换</i></a>
                                 </div>
                             </div>
                             <div class="aboutActivity">
@@ -142,7 +142,7 @@
                                 </div>
                                 <div class="telephone">
                                     <div class="phoneText">咨询电话</div>
-                                    <div class="phoneNumber">{{phonNumber}}</div>
+                                    <div class="phoneNumber" v-html="phonNumber"></div>
                                 </div>
                                 <div class="fourLogon">
                                     <div class="majorLine" @mouseover="computer" @mouseout="computerOut" @click="majorWebsite">
@@ -164,8 +164,8 @@
                                       width="30%">
                                       <span><img :src="all" v-for="(all, index) in wxCode" :key="index"></span>
                                     </el-dialog>
-                                    <!-- <div class="logonLine"></div> -->
-                                    <!-- <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut" @click="majorWb">
+                                    <div class="logonLine"></div>
+                                    <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut" @click="majorWb">
                                         <div><img :src="logoPicture[0].xinlang"></div>
                                         <div class="weibo" id="xinlang">微博主页</div>
                                     </div>
@@ -173,7 +173,7 @@
                                       :visible.sync="dialogVisible2"
                                       width="30%">
                                       <span><img :src="xlCode"></span>
-                                    </el-dialog> -->
+                                    </el-dialog>
                                 </div>
                             </el-card>
                         </el-col>
@@ -186,8 +186,8 @@
                                     <div class="collageLine"></div>
                                 </div>
                                 <div class="pdf">
-                                    <div class="pdfDetail" @click="loadPdf">
-                                        <pdfDetail :pdfPicture="pdfPicture" v-for="(t,index) in pdfPicture" @thisTesta="(b) => {bb = b}" @thisTest="(a) => {aa = a}" :t="index" :key="index" :class="{testa: index == aa ? true : false, testb: index == bb ? true : false}" :id="city(index)"></pdfDetail>
+                                    <div class="pdfDetail" >
+                                        <pdfDetail @loadPdf="loadPdf" :pdfPicture="pdfPicture" v-for="(t,index) in pdfPicture" @thisTesta="(b) => {bb = b}" @thisTest="(a) => {aa = a}" :t="index" :key="index" :class="{testa: index == aa ? true : false, testb: index == bb ? true : false}" :id="city(index)"></pdfDetail>
                                     </div>
                                 </div>
                             </el-card>
@@ -211,6 +211,9 @@ export default {
         return {
             //院校二维码
             // wxCode:require("../../../assets/img/weixin2.png"),
+            logoName:'',
+            coverName:'../../../assets/img/singleCollege.jpg',
+            z_name:'',
             wxCode:[],
             xlCode:[],
             //模态框
@@ -233,7 +236,7 @@ export default {
             is_guanzhu:'',
             index_web:'',
             admissions_web:'',
-            u_id:1,
+            u_id: this.getUserState('userId') != null ? this.getUserState('userId') : 0,
             page:1,
             page_size:3,
             //招生项目
@@ -263,9 +266,12 @@ export default {
         }
     },
     methods: {
+        detail(id) {
+            this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + id);
+        },
         //分享到微信——接口没写~
         sharewx:function(){
-            console.log('weixin');
+            // console.log('weixin');
         },
         //分享到新浪微博——接口没写~
         sharexl:function(){
@@ -288,30 +294,59 @@ export default {
             this.dialogVisible = true;
         },
         //下载pdf
-        loadPdf:function(){
-            window.open("http://www.lishanlei.cn/storage/major_file");
+        loadPdf:function(file_name){
+            window.open(this.excelUrl + "/front/colleges/downloadfile/" + file_name);
         },
         //点击关注
         clickFollow:function(){
-             // let ab = 1;   
-             let followButt = document.getElementById('followButt');
-             if (this.is_guanzhu==false) {
-                this.message('judge', '您已成功关注！', 'success');
-                this.follow = '已关注';
-                $("#symbol").attr("class","el-icon-check");
-                followButt.style.background = '#009fa0';
-                this.is_guanzhu=true;
-            } else{
-                this.message('judge', '您已取消关注哦', 'warning')
-                this.follow = '关注';
-                $("#symbol").attr("class","el-icon-plus");
-                followButt.style.background = '#ffb957';
-                this.is_guanzhu=false;
+
+            if(this.getUserState('userId') != null) {
+                let followButt = document.getElementById('followButt');
+                if (this.is_guanzhu==false) {
+                    this.post('/front/colleges/setusermajor', {
+                        m_id: this.id,
+                        u_id: this.getUserState('userId')
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            this.message('judge', '您已成功关注！', 'success');
+                            this.follow = '已关注';
+                            $("#symbol").attr("class","el-icon-check");
+                            followButt.style.background = '#009fa0';
+                            this.is_guanzhu=true;
+                        }
+                        else {
+                            this.message(true, '关注失败，请重新尝试或联系服务人员', 'info');
+                        }
+                    })
+
+                } else{
+                    this.post('/front/colleges/unsetusermajor', {
+                        m_id: this.id,
+                        u_id: this.getUserState('userId')
+                    }).then((response) => {
+                        if(response.code == 0) {
+                            this.message('judge', '您已取消关注哦', 'warning')
+                            this.follow = '关注';
+                            $("#symbol").attr("class","el-icon-plus");
+                            followButt.style.background = '#ffb957';
+                            this.is_guanzhu=false;
+                        }
+                        else {
+                            this.message(true, '取消关注操作失败，请重新尝试或联系服务人员', 'info');
+                        }
+                    })
+                }
             }
+            else {
+                this.$router.push('/front/Login/loginRoute/accountNumber');
+                this.message(true, '您还未登录，请先登录后再完成关注。', 'info');
+            }
+
         },
         //判断是否关注
         isFollow:function(){
             let followButt = document.getElementById('followButt');
+            console.log(this.is_guanzhu)
             if (this.is_guanzhu==true) {
                 this.follow = '已关注';
                 $("#symbol").attr("class","el-icon-check");
@@ -322,7 +357,10 @@ export default {
                 followButt.style.background = '#ffb957';
             }
         },
-
+        refreshActivity() {
+            ++this.page;
+            this.getaboutAcitivity();
+        },
         // 相关活动
         getaboutAcitivity:function(){
             let that = this;
@@ -331,13 +369,11 @@ export default {
                 page:that.page,
                 page_size:that.page_size
             }).then((response) => {
+                // console.log(response.result)
                 if(response.code == 0){
                     let res = response.result.info;
                     that.aboutActivity = res;
                 }
-            })
-            .catch(error => function (error) {
-                // console.log(response)
             });
         },
         //推荐内容刷新
@@ -356,22 +392,23 @@ export default {
                 page:that.page,
                 page_size:that.page_size
             }).then((response) => {
-                // console.log(response.result)
                 if(response.code == 0){
                     let res = response.result;
+                    // console.log(res)
                     for(var i in res){
                         that.recommedContent.push({
+                            id: res[i].id,
                             img:res[i].z_image ,
                             title:res[i].zx_name,
                             content:res[i].brief_introduction,
-                            time:res[i].z_from,
-                            author:res[i].brief_introduction,
+                            time:res[i].update_time,
+                            author:res[i].author,
                         });
                     }
                 }
             })
             .catch(error => function (error) {
-                console.log(response)
+                // console.log(response)
             });
         },
         city:function(index){
@@ -381,14 +418,17 @@ export default {
         //获取招生项目和基本信息
         getItemInform:function(){
             let that = this;
+            this.u_id = ((this.getUserState('userId') != null) ? this.getUserState('userId') : 0);
             that.fetch('/front/colleges/getmajordetails',{
                 u_id: that.u_id,
                 id: that.id,
             }).then(function (response) {
-                // console.log(response)
+                // console.log(response.result[0])
                 if (response.code==0) {
                     let res = response.result[0];
-                    // console.log(res.major_follow_id.split(','))
+                    that.z_name = res.z_name;
+                    that.logoName = res.magor_logo_name != '' ? res.magor_logo_name : '../../../assets/img/picture.jpg';
+                    // that.coverName = res.major_cover_name != '' ? res.major_cover_name : '../../../assets/img/singleCollege.jpg';
                     that.singleItem = res.project;
                     that.phonNumber = res.phone;
                     that.year = res.access_year;
@@ -401,13 +441,14 @@ export default {
                     // console.log(res.major_follow_id);
                     that.typeId.major_confirm_id = res.major_confirm_id.split(',');
                     that.typeId.major_follow_id = res.major_follow_id.split(',');
-                    console.log(that.typeId.major_confirm_id)
                     //字符串转化为数组
-                    that.wxCode = res.wc_image.split(',');
-                    that.xlCode = res.wb_image.split(',');
+                    // that.wxCode = res.wc_image.split(',');
+                    // that.xlCode = res.wb_image.split(',');
+                    that.wxCode = res.wc_image;
+                    that.xlCode = res.wb_imag;
+                    that.isFollow();
 
                 }
-            }).catch(function (error) {
             });
         },
         //联系方式logo——鼠标滑过样式
@@ -448,7 +489,7 @@ export default {
     },
     mounted(){
         // console.log(369)
-        this.isFollow();
+        // this.isFollow();
         this.getaboutAcitivity();
         this.getContent();
         this.getItemInform();
@@ -667,7 +708,7 @@ export default {
             padding: 0 20px;
             display: flex;
             flex-wrap:wrap;
-            justify-content:space-between;
+            justify-content:flex-start;
         }
         .reflesh > a:hover{
             color: rgb(255, 255, 255);
@@ -759,7 +800,7 @@ export default {
             margin: 0 0 30px;
             border-radius: 5px;
             height: 360px;
-            background: url(../../../assets/img/singleCollege.jpg) no-repeat;
+            /* background: url(../../../assets/img/singleCollege.jpg) no-repeat; */
             background-position: 50% 50%;
             background-size: cover; 
         }

@@ -1,11 +1,11 @@
 <template>
     <div>
         <div style="overflow-x:hidden;background-color:#f5f5f5;">
-            <hearderBanner enName="COLLEGES" name="选院校"></hearderBanner>
+            <hearderBanner :banner="majorBanner" enName="COLLEGES" name="选院校"></hearderBanner>
             <div class="selectCollege">
                 <div class="selectCollegeSearch">
                     <el-input
-                        placeholder="复旦大学   北京大学"
+                        placeholder="请输入院校名称"
                         suffix-icon="el-icon-search"
                         v-model="z_name" @keyup.enter.native="search">
                     </el-input>
@@ -306,7 +306,8 @@ export default {
             update_time:1996,
             /*院校信息*/
             u_id:1,
-            id:1
+            id:1,
+            majorBanner:{}
         }
     },
     methods: {
@@ -518,8 +519,19 @@ export default {
         }
     },
     mounted(){
+        this.fetch('/front/colleges/getMajorBanner', {
+            path: this.$route.path
+        }).then((response) => {
+            if(response.code == 0) {
+                response.result.img = '';
+                // console.log(response.result);
+                this.majorBanner = response.result;
+            }
+        })
         this.getmajorInform();
         this.getmajorType();
+        // console.log(this.$route.path)
+
         // console.log(this.selectData)
     },
 };
