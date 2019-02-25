@@ -12,9 +12,9 @@
                 <div class="collage-major clearfloat">
                     <div class="collage-con">
                         <div class="clearfloat">
-                            <div class="collage-conten-article" v-for="(item,index) in information">
+                            <div class="collage-conten-article" v-for="(item,index) in information" :key="index">
                                 <div class="collage-title">
-                                    {{item.project_name}}<span class="collage-cancel"><i class="el-icon-close cancel"></i></span>
+                                    {{item.project_name}}<span class="collage-cancel"><i @click="delProcon(index)" class="el-icon-close cancel"></i></span>
                                     <div class="collage-mba">
                                         {{item.recruitment_pattern[0].name}}
                                     </div>
@@ -27,13 +27,14 @@
                             <el-button type="warning" round @click="choicePage(1)" :disabled="right">下一页</el-button>
                         </div>
 
+                        <!-- 项目经费 -->
                         <div class="authentication">
                             <p class="authentication-p">
                                 项目经费
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-position">
+                            <div v-for="(item,index) in information" class="collage-position" :key="index">
                                 <span class="span-big-font">
                                     {{item.cost }}
                                 </span>
@@ -42,46 +43,50 @@
                                 </span>
                             </div>
                         </div>
+
+                        <!-- 招生名额 -->
                         <div class="authentication">
                             <p class="authentication-p">
                                 招生名额
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-font collage-position">
-                                <span class="span-big-font">
-                                    {{item.student_count}}
+                            <div v-for="(item,index) in information" class="collage-font collage-position" :key="index">
+                                <span class="span-big-font" v-html="item.student_count">
+                                    <!-- {{item.student_count}} -->
                                 </span>
                                 <span class="span-short-font">
                                     名
                                 </span>
                             </div>
                         </div>
+
                         <div class="authentication">
                             <p class="authentication-p">
                                 学制
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-age collage-position">
-                                <span class="span-big-font">
-                                    2
+                            <div v-for="(item,index) in information" class="collage-age collage-position" :key="index">
+                                <span class="span-big-font" v-html="item.eductional_systme">
+                                    <!-- 2 -->
                                 </span>
                                 <span class="span-short-font">
                                     年
                                 </span>
                             </div>
                         </div>
+
                         <div class="authentication">
                             <p class="authentication-p">
                                 授课语言
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-font collage-position">
+                            <div v-for="(item,index) in information" class="collage-font collage-position" :key="index"> 
                                 <div class="languageMajor" v-if="item.language == Chinese"><img src="../../../assets/img/chinese4.jpg" alt=""></div>
                                 <div class="languageMajor" v-else><img src="../../../assets/img/english.jpg" alt=""></div>
-                                (课程均为{{ item.language }})
+                                <p style="color: #aaaaaa;">(课程均为{{ item.language }})</p>
                             </div>
                         </div>
 
@@ -91,8 +96,8 @@
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-age collage-position">
-                                {{ item.class_situation }}班
+                            <div v-for="(item,index) in information" class="collage-age collage-position" :key="index">
+                                <p style="color: #aaaaaa;" v-html="item.class_situation"></p>
                             </div>
                         </div>
 
@@ -102,8 +107,8 @@
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-age collage-position">
-                                {{ item.can_conditions }}
+                            <div v-for="(item,index) in information" class="collage-age collage-position" :key="index">
+                                <p style="color: #aaaaaa;" v-html="item.can_conditions"></p>
                             </div>
                         </div>
 
@@ -113,8 +118,8 @@
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-age collage-position">
-                                {{ item.score_describe }}
+                            <div v-for="(item,index) in information" class="collage-age collage-position" :key="index">
+                                <p style="color: #aaaaaa;" v-html="item.score_describe"></p>
                             </div>
                         </div>
 
@@ -124,8 +129,8 @@
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-age collage-position">
-                                {{ item.recruitment_pattern[0].name }}
+                            <div v-for="(item,index) in information" class="collage-age collage-position" :key="index">
+                                <p style="color: #aaaaaa;" v-html="item.recruitment_pattern[0].name"></p>
                             </div>
                         </div>
 
@@ -135,8 +140,8 @@
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-age collage-position">
-                                {{ item.enrollment_mode }}
+                            <div v-for="(item,index) in information" class="collage-age collage-position" :key="index">
+                                <p style="color: #aaaaaa;" v-html="item.enrollment_mode"></p>
                             </div>
                         </div>
 
@@ -146,8 +151,9 @@
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-age collage-position">
-                                {{ item.score_type[0].name }}
+                            <div v-for="(item,index) in information" class="collage-age collage-position" :key="index">
+                                <p style="color: #aaaaaa;" v-html="item.score_type[0].name"></p>
+                                <!-- {{ item.score_type[0].name }} -->
                             </div>
                         </div>
 
@@ -157,8 +163,9 @@
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-age collage-position">
-                                {{ item.graduation_certificate }}
+                            <div v-for="(item,index) in information" class="collage-age collage-position" :key="index">
+                                <p style="color: #aaaaaa;" v-html="item.graduation_certificate"></p>
+                                <!-- {{ item.graduation_certificate }} -->
                             </div>
                         </div>
 
@@ -168,12 +175,13 @@
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="footer-con-collage collage-age collage-position informationPhone">
+                            <div v-for="(item,index) in information" :key="index" class="footer-con-collage collage-age collage-position informationPhone">
                                 <span v-if="item.other_explain == null">
                                     无
                                 </span>
                                 <span v-else>
-                                    {{ item.other_explain }}
+                                    <p style="color: #aaaaaa;" v-html="item.other_explain"></p>
+                                    <!-- {{ item.other_explain }} -->
                                 </span>
                             </div>
                         </div>
@@ -187,6 +195,7 @@
     export default{
         data(){
             return{
+                Chinese:'中文',
                 information:[],
                 schoolCollage:[],
                 sendCollage:[],
@@ -202,12 +211,19 @@
             }
         },
         methods:{
+            delProcon(index) {
+                if(index < 0 || index > this.information.length -1 || this.information.length == 0) {
+                    return false;
+                }
+                else {
+                    this.information.splice(index, 1);
+                }
+            },
             getInformation: function () {
                 let _this = this;
                 _this.fetch('/front/colleges/vsproject',{
                     p_id:_this.stringpage
                 }).then(function (res) {
-                    console.log(res)
                     if (res.code == 0){
                         _this.information = res.result;
                     }
@@ -221,15 +237,15 @@
                 _this.fetch('/front/colleges/getmajorporject',{
                     m_id:_this.$route.params.id
                 }).then(function (res) {
-                    console.log(res)
                     if (res.code == 0){
                         _this.schoolCollage = res.result;
                         _this.pageTatol = res.result.length;
                         _this.pageCount = Math.ceil(res.result.length/_this.pagelength);
                         _this.choicePage(1);
                     }
-
-                }).catch(function (error) {
+                    else {
+                        _this.message(true, res.msg, 'info');
+                    }
 
                 })
             },
@@ -334,7 +350,7 @@
     .pageJudge{
         margin: auto;
         text-align: center;
-        margin-top: 15px
+        margin-top: 3%;
     ;
     }
     .collage-major{
@@ -405,7 +421,7 @@
     }
     .span-big-font{
         font-family: Ubuntu;
-        font-size: 60px;
+        font-size: 45px;
         font-weight: normal;
         font-stretch: normal;
         line-height: 66px;
