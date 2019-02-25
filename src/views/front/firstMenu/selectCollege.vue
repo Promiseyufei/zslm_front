@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="overflow-x:hidden;background-color:#f5f5f5;">
-            <hearderBanner :banner="majorBanner" enName="COLLEGES" name="选院校"></hearderBanner>
+            <hearderBanner ref="header" enName="COLLEGES" name="选院校"></hearderBanner>
             <div class="selectCollege">
                 <div class="selectCollegeSearch">
                     <el-input
@@ -519,20 +519,18 @@ export default {
         }
     },
     mounted(){
+		let that = this;
         this.fetch('/front/colleges/getMajorBanner', {
             path: this.$route.path
         }).then((response) => {
             if(response.code == 0) {
-                response.result.img = '';
-                // console.log(response.result);
-                this.majorBanner = response.result;
+				that.$refs.header.setImg(response.result.img);
+				that.$refs.header.setJudgeUlr(response.result.re_url);
             }
         })
         this.getmajorInform();
         this.getmajorType();
-        // console.log(this.$route.path)
 
-        // console.log(this.selectData)
     },
 };
 </script>

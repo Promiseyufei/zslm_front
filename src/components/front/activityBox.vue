@@ -88,7 +88,7 @@ export default {
     },
     props: ["activityInfo"],
     mounted(){
-        console.log(this.activityInfo);
+        // console.log(this.activityInfo);
         this.activityState();
     },
     watch:{

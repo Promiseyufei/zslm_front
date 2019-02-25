@@ -53,10 +53,10 @@
                                 <a v-else style="background-color:rgb(200,200,200);cursor: not-allowed;" href="javascript:;">{{acState}}</a>
                                 <div class="hostShare">
                                     <p>分享到</p>
-                                    <a class="shareweixin" href="">
+                                    <a class="shareweixin" @click="() => {this.message(true, '该功能还未开通，敬请期待。', 'info')}">
                                         <!-- <img src="../../../assets/img/weixin.png"> -->
                                     </a>
-                                    <a class="shareweibo" href="">
+                                    <a class="shareweibo" @click="() => {this.message(true, '该功能还未开通，敬请期待。', 'info')}">
                                         <!-- <img src="../../../assets/img/glayxinlang.png"> -->
                                     </a>
                                 </div>
@@ -86,7 +86,7 @@
                             <div class="asideLogo">
                                 <!-- <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name"> -->
                                 <!-- 默认图片 -->
-                                 <img v-if=" acHostInfo.magor_logo_name != '' " src="../../../assets/img/collegeLogo.png">
+                                 <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name">
                                 <img v-else src="../../../assets/img/collegeLogo.png">
                             </div>
                             <div class="asideTitle">
@@ -107,9 +107,19 @@
                         </div>
                     </div>
                     <!-- 广告位 -->
-                    <div class="advertisement">
-                        <img src="../../../assets/img/advertisementB.png" alt="">
+                    <!-- <div class="advertisement"> -->
+                    <div class="advertisement" v-if="rotationPicture.length > 0">
+                        <!-- <img v-if="rotationPicture.length == 1" src="../../../assets/img/advertisementB.png" :alt="rotationPicture[0].img_alt" @click="jumpreUrl(rotationPicture[0].re_url)"> -->
+                        <!-- <img src="../../../assets/img/advertisement.png" alt=""> -->
+                        <el-carousel style="border-radius: 5px;" trigger="click" height="100%" class="sowingContent test" :interval="5000" arrow="always">
+                            <el-carousel-item v-for="(item,index) in rotationPicture" :key="index" @click.native="jumpreUrl(item.re_url)">
+                                <!-- <img :src="item.img" alt="" @click="judgeBanner(item.re_url)" class="picture-header"> -->
+                                    <img :src="item.img" :alt="item.img_alt" class="picture-header">
+                            </el-carousel-item>
+                        </el-carousel>
                     </div>
+                        <!-- <img src="../../../assets/img/advertisementB.png" alt=""> -->
+                    <!-- </div> -->
                     <!-- 热门活动推荐 -->
                     <div class="HotAcList">
                         <Article @refreshs="refresh" v-if="hotInfor.length" title="热门活动" :inforArticle="hotInfor"></Article>
@@ -150,9 +160,39 @@ export default {
 
             // 院校背景图路径
             hostBgimg:'url(' + require('../../../assets/img/singleCollege.jpg') + ')',
+            rotationPicture:[]
         }
     },
     methods: {
+        jumpreUrl(jumpUrl) {
+            if(typeof jumpUrl !== 'undefined') {
+                if(jumpUrl.substr(0,7).toLowerCase() == "http://" || jumpUrl.substr(0,8).toLowerCase() == "https://") {
+                    window.open(jumpUrl);
+                }
+                else {
+                    var url = ('http://' + jumpUrl);
+                    window.open(url);
+                }
+            }
+        },
+        /**
+         * 获取banner图
+         */
+        getBanner: function() {
+            var that = this;
+            this.fetch('/front/banner/getbanner', {
+                b_name: '找活动页面',
+                limit: 3,
+                type: 1
+            }).then(res => {
+                if (res.code == 0) {
+                    // console.log(res.result)
+                    that.rotationPicture = res.result
+                } else {
+                    that.message(true, res.msg, 'error')
+                }
+            })
+        },
 
         // 关注院校、取消关注
         // state: false 未关注 true 已关注
@@ -164,8 +204,9 @@ export default {
         //关注院校
         follow:function(){
             let self = this;
+            this.userId = this.getUserState('userId')
             if(self.userId){
-                this.post('http://www.lishanlei.cn/front/colleges/setusermajor',{
+                this.post('/front/colleges/setusermajor',{
                     m_id:this.acHostInfo.id,     //院校id
                     u_id:this.userId, //用户id
                 }).then(function (res) {
@@ -180,15 +221,17 @@ export default {
                     console.log("error");
                 });
             }else{
-                self.message(true, "你还没有登录哦", 'info');
+                self.message(true, "你还没有登录哦,请先登录/注册。", 'info');
+                this.$router.push('/front/Login/loginRoute/accountNumber');
             }
             
         },
         // 取消关注
         remove:function(){
             let self = this;
+            this.userId = this.getUserState('userId')
             if(self.userId){
-                this.post('http://www.lishanlei.cn/front/colleges/unsetusermajor',{
+                this.post('/front/colleges/unsetusermajor',{
                     m_id:this.acHostInfo.id,     //院校id
                     u_id:this.userId, //用户id
                 }).then(function (res) {
@@ -204,7 +247,8 @@ export default {
                     console.log("error");
                 });
             }else{
-                self.message(true, "你还没有登录哦", 'info');
+                self.message(true, "你还没有登录哦,请先登录/注册。", 'info');
+                this.$router.push('/front/Login/loginRoute/accountNumber');
             }
         },
 
@@ -221,7 +265,7 @@ export default {
         getAcHostMajor:function(){
             let self = this;
             if(self.userId){
-                this.fetch('http://www.lishanlei.cn/front/colleges/getactivemajor',{
+                this.fetch('/front/colleges/getactivemajor',{
                     // acId:this.id,
                     a_id:this.id,
                     u_id:this.userId,
@@ -239,18 +283,18 @@ export default {
                             self.GuanZhu = "取消关注";
                         }
                     }else{
-                        self.message(true, "主办院校不存在", 'errors');
+                        self.message(true, "主办院校不存在", 'info');
                     }
                 }).catch(function(error){
                     console.log("error");
                 });
             }else{
-                this.fetch('http://www.lishanlei.cn/front/activity/getAcHostMajor',{
+                this.fetch('/front/activity/getAcHostMajor',{
                     acId:this.id,
                     // a_id:this.id,
                     // u_id:this.userId,
                 }).then(function (res) {
-                    console.log(res.result);
+                    // console.log(res.result);
                     // let res = response[0];
                     // console.log(res.result[0]);
                     if(res.code == 0){
@@ -263,7 +307,7 @@ export default {
                         //     self.GuanZhu = "取消关注";
                         // }
                     }else{
-                        self.message(true, "主办院校不存在", 'errors');
+                        self.message(true, "主办院校不存在", 'info');
                     }
                 }).catch(function(error){
                     console.log("error");
@@ -275,7 +319,7 @@ export default {
         // 热门活动推荐列表
         getPopularAcInfo:function(){
             let self = this;
-            this.fetch('http://www.lishanlei.cn/front/activity/getPopularAcInfo',{
+            this.fetch('/front/activity/getPopularAcInfo',{
                 acId:this.id,
                 pageNumber:this.hotInfopage,
             }).then(function (res) {
@@ -306,7 +350,7 @@ export default {
         // 获取活动内容详情
         getAppointAcInfo:function(){
             let self = this;
-            this.fetch('http://www.lishanlei.cn/front/activity/getAppointAcInfo',{
+            this.fetch('/front/activity/getAppointAcInfo',{
                 acId:this.id,
             }).then(function (res) {
                 // let res = result.data;
@@ -332,7 +376,7 @@ export default {
             // 需不需要前台判断多次点击时的情况
             let self = this;
             if(self.acSignClick == 0){
-                this.fetch('http://www.lishanlei.cn/front/activity/activitySign',{
+                this.fetch('/front/activity/activitySign',{
                     userId:this.userId,
                     acId:this.id,
                 }).then(function (res) {
@@ -362,6 +406,7 @@ export default {
         this.getAcHostMajor();//主办院校信息
         this.getPopularAcInfo();//热门活动列表
         this.getAppointAcInfo();//活动详细信息
+        this.getBanner()
     },
 };
 </script>
@@ -686,6 +731,38 @@ export default {
     }
     .advertisement img:hover, .InfoBox:hover{
         box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
+        -webkit-transition: All 0.3s ease;
+        -webkit-transform: rotate(0deg) scale(1) translate(0%,0%);
+        transform: rotate(0deg) scale(1) translate(0%,0%);
+        transition: All 0.3s ease;
+    }
+    .advertisement {
+        width: 100%;
+        height: auto;
+    }
+
+	.test {
+		height: 219.7px;
+	}
+	.el-carousel__item h3 {
+		color: #475669;
+		font-size: 18px;
+		opacity: 0.75;
+		line-height: 300px;
+		margin: 0;
+	}
+
+	.el-carousel__item:nth-child(2n) {
+		background-color: #99a9bf;
+	}
+
+	.el-carousel__item:nth-child(2n+1) {
+		background-color: #d3dce6;
+	}
+
+    .test:hover {
+        -webkit-box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
+        box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
         -webkit-transition: All 0.3s ease;
         -webkit-transform: rotate(0deg) scale(1) translate(0%,0%);
         transform: rotate(0deg) scale(1) translate(0%,0%);
