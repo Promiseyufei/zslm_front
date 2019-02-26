@@ -45,6 +45,7 @@ import staticNav from './front/staticNav.vue'
 import tags from './front/tags.vue'
 import vsmajor from './front/vsMajor.vue'
 import RemoteJs from './common/RemoteJs.vue'
+import selectCoach from './front/selectCoach.vue'
 export default {
     Test, 
     Test2,
@@ -91,5 +92,6 @@ export default {
     staticNav,
     tags,
     RemoteJs,
-    vsmajor
+    vsmajor,
+	selectCoach
 }

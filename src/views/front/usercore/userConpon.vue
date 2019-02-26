@@ -44,9 +44,11 @@
             <a class="c-textlink textlink_jH6Kkn userclick" @click="pageInfo(0,1)">已使用 ({{useCount}})</a>
             <a class="c-textlink textlink_jH6Kkn userclick" @click="pageInfo(1,2)">已失效 ({{enable}})</a>
         </div>
-        <div v-for="(item,index) in this.coupons">
-            <userCoupon :data="item" :use_show="use_show" :id="id"></userCoupon>
-        </div>
+		<div v-loading="coupon_loading">
+			<div v-for="(item,index) in this.coupons" >
+				<userCoupon :data="item" :use_show="use_show" :id="id"></userCoupon>
+			</div>
+		</div>
         <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
 
     </div>
@@ -711,12 +713,14 @@
                 useCount:0,
                 enable:0,
                 use_show:true,
+				coupon_loading:false,
             };
         },
         methods: {
 
             getCoupon(){
                 let self = this;
+				this.coupon_loading = true;
                 this.fetch('/front/coach/getusercoach',{
                     id:self.id,
                     page:self.page,
@@ -734,9 +738,13 @@
                                 self.coupons.push(data[i])
                             }
                         }else{
+							 self.noUseCount = res.result['nouse'];
+							self.useCount = res.result['use'];
+							self.enable = res.result['enable'];
                             self.disabled = true;
                             self.loadingBtnText = "已经到底了"
                         }
+						this.coupon_loading = false;
                     })
             },
             getPage(){

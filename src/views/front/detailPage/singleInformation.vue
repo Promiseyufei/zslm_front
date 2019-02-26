@@ -86,7 +86,6 @@
 		methods: {
 
 			testShare() {
-				console.log('aaa')
 				this.share();
 			},
 
@@ -119,7 +118,6 @@
 						}
 					})
 					.catch(error => function(error) {
-						console.log(response)
 					});
 			},
 			/*
@@ -131,13 +129,11 @@
 				this.fetch('/front/consult/getConsultDeyail', {
 						consultId: _this.$route.params.id
 					}).then((response) => {
-						console.log(response)
 						if (response.code == 0) {
 							_this.articleContent = response.result;
 						}
 					})
 					.catch(error => function(error) {
-						console.log(response)
 					});
 			},
 			/*
@@ -159,7 +155,6 @@
 						}
 					})
 					.catch(error => function(error) {
-						console.log(response)
 					});
 			},
 			getAd: function() {
@@ -177,7 +172,6 @@
 
 						if (ad_b.length > 3) {
 							let i = 0;
-							console.log(ad_b.length)
 							for (let j = 0; j < 3; j++) {
 								that.ad[j] = [];
 							}

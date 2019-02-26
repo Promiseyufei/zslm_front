@@ -4,84 +4,87 @@
 			<!-- header -->
 			<hearderBanner ref="header" enName="INSTITUTIONS" name="搜辅导"></hearderBanner>
 
-			<!-- 搜索框 -->
-			<div class="singlecoachBig">
-				<div class="singlecoachbox">
-					<div class="coachInput">
-						<input type="text" placeholder="输入关键字搜索" v-model="inputvalue" @blur.prevent="getCoach">
-						<i class="fa fa-search"></i>
-					</div>
-				</div>
-			</div>
 
-			<!-- 筛选框 -->
-			<selectAll :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectAll>
-
-			<!-- 选项卡 -->
-			<div class="singlecoachBig">
-				<div class="singlecoachbox">
-					<div class="coachNav">
-						<div class="coachNavleft">
-							<span>选院校&gt;</span>
-
-							<tags :tags="tags" @handleClose="handleClose"></tags>
-						</div>
-						<div class="coachNavright">
-							<span>共有{{count}}所学校</span>
+			<div v-loading="all_loading">
+				<!-- 搜索框 -->
+				<div class="singlecoachBig">
+					<div class="singlecoachbox">
+						<div class="coachInput">
+							<input type="text" placeholder="输入关键字搜索" v-model="inputvalue" @blur.prevent="getCoach">
+							<i class="fa fa-search"></i>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- 辅导机构小块块 -->
-			<div class="singlecoachBig">
-				<div class="singlecoachbox">
-					<div class="singlecoach" v-for="(item,index) in coachlist" :key="index">
-						<div class="singlecoachtop" @click="jump(item.id)">
-							<img src="../../../assets/img/xindongfang.png" alt="">
+				<!-- 筛选框 -->
+				<selectCoach  ref="select" :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectCoach>
+
+				<!-- 选项卡 -->
+				<div class="singlecoachBig">
+					<div class="singlecoachbox">
+						<div class="coachNav">
+							<div class="coachNavleft">
+								<span>选院校&gt;</span>
+
+								<tags :tags="tags" @handleClose="handleClose"></tags>
+							</div>
+							<div class="coachNavright">
+								<span>共有{{count}}所学校</span>
+							</div>
 						</div>
-						<span @click="jump(item.id)">{{item.coach_name}}</span>
-						<div class="singlecoachHoverbig">
-							<div class="singlecoachHoverbox" :class="index%4==2||index%4==3 ? 'activeClass' : ''">
-								<div class="singlecoachHover" v-if="index%4==0||index%4==1" @click="jump(item.id)">
-									<div class="singlecoachtop2">
-										<img src="../../../assets/img/xindongfangwhite.png" alt="">
-									</div>
-									<div class="singlecoachspan">
-										<span>{{item.coach_name}}</span>
-										<span>
-											<img src="../../../assets/img/money2.png" alt="" v-if="item.if_coupons==0">
-											<img src="../../../assets/img/return3.png" alt="" v-if="item.if_back_money==0">
-										</span>
-									</div>
-								</div>
-								<div class="littleCollage2" v-if="index%4==2||index%4==3">
-									<p class="coachHeader">{{item.son_coachs.length}}个分校</p>
-									<div class="coachLittle">
-										<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
-											<strong>{{dd+1}}</strong>
-											<span @click="jump(list.id)">{{list.coach_name}}</span>
+					</div>
+				</div>
+
+				<!-- 辅导机构小块块 -->
+				<div class="singlecoachBig" >
+					<div class="singlecoachbox">
+						<div class="singlecoach" v-for="(item,index) in coachlist" :key="index">
+							<div class="singlecoachtop" @click="jump(item.id)">
+								<img src="../../../assets/img/xindongfang.png" alt="">
+							</div>
+							<span @click="jump(item.id)">{{item.coach_name}}</span>
+							<div class="singlecoachHoverbig">
+								<div class="singlecoachHoverbox" :class="index%4==2||index%4==3 ? 'activeClass' : ''">
+									<div class="singlecoachHover" v-if="index%4==0||index%4==1" @click="jump(item.id)">
+										<div class="singlecoachtop2">
+											<img src="../../../assets/img/xindongfangwhite.png" alt="">
+										</div>
+										<div class="singlecoachspan">
+											<span>{{item.coach_name}}</span>
+											<span>
+												<img src="../../../assets/img/money2.png" alt="" v-if="item.if_coupons==0">
+												<img src="../../../assets/img/return3.png" alt="" v-if="item.if_back_money==0">
+											</span>
 										</div>
 									</div>
-								</div>
-								<div class="singlecoachHover" v-if="index%4==2||index%4==3" @click="jump(item.id)">
-									<div class="singlecoachtop2">
-										<img src="../../../assets/img/xindongfangwhite.png" alt="">
+									<div class="littleCollage2" v-if="index%4==2||index%4==3">
+										<p class="coachHeader">{{item.son_coachs.length}}个分校</p>
+										<div class="coachLittle">
+											<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
+												<strong>{{dd+1}}</strong>
+												<span @click="jump(list.id)">{{list.coach_name}}</span>
+											</div>
+										</div>
 									</div>
-									<div class="singlecoachspan">
-										<span>{{item.coach_name}}</span>
-										<span>
-											<img src="../../../assets/img/money2.png" alt="" v-if="item.if_coupons==0">
-											<img src="../../../assets/img/return3.png" alt="" v-if="item.if_back_money==0">
-										</span>
+									<div class="singlecoachHover" v-if="index%4==2||index%4==3" @click="jump(item.id)">
+										<div class="singlecoachtop2">
+											<img src="../../../assets/img/xindongfangwhite.png" alt="">
+										</div>
+										<div class="singlecoachspan">
+											<span>{{item.coach_name}}</span>
+											<span>
+												<img src="../../../assets/img/money2.png" alt="" v-if="item.if_coupons==0">
+												<img src="../../../assets/img/return3.png" alt="" v-if="item.if_back_money==0">
+											</span>
+										</div>
 									</div>
-								</div>
-								<div class="littleCollage" v-if="index%4==0||index%4==1">
-									<p class="coachHeader">{{item.son_coachs.length}}个分校</p>
-									<div class="coachLittle">
-										<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
-											<strong>{{dd+1}}</strong>
-											<span @click="jump(list.id)">{{list.coach_name}}</span>
+									<div class="littleCollage" v-if="index%4==0||index%4==1">
+										<p class="coachHeader">{{item.son_coachs.length}}个分校</p>
+										<div class="coachLittle">
+											<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
+												<strong>{{dd+1}}</strong>
+												<span @click="jump(list.id)">{{list.coach_name}}</span>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -89,13 +92,12 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- 分页或者加载更多 -->
+				<pcPhonePage class="pcPage" :loading="loading" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"
+				 @getPage="getPage" ></pcPhonePage>
 			</div>
-
-			<!-- 分页或者加载更多 -->
-			<pcPhonePage class="pcPage" :loading="loading" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"
-			 @getPage="getPage"></pcPhonePage>
 		</div>
-
 	</div>
 </template>
 
@@ -106,6 +108,7 @@
 		},
 		data() {
 			return {
+				all_loading: false, //该页面全局loading
 				loading: false, //加载小圈圈
 				pageNumber: 1,
 				count: 1234,
@@ -207,20 +210,43 @@
 			},
 			//标签栏，点击标签，删除标签
 			handleClose(tag) {
+
+
 				for (let index = 0; index < this.tags.length; index++) {
 					var temp = this.tags[index].indexOf(tag);
+
 					if (temp == -1) {
 						continue;
 					} else {
 						this.tags[index].splice(this.tags[index].indexOf(tag), 1);
+
+						this.change(this.tags)
 					}
 				}
+
+
 			},
+
+
 			//每次子组件改变时，父组件就会改变
 			change: function(checkboxGroup) {
-				this.tags = checkboxGroup;
+
 				//当选中全部时，清空当前行数组，通过*号匹配
-				for (let index = 0; index < this.tags.length; index++) {
+				let t = checkboxGroup
+				this.tags = t.concat();;
+				let city = this.tags[0];
+				console.log(city.name)
+				this.tags[0] = new Array();
+
+				if (city.name != undefined)
+					this.tags[0][0] = city;
+				else {
+
+					this.$refs.select.checkboxGroup[0] = []
+					// this.$refs.select.checkAll[0] = true;
+					console.log(this.$refs.select.checkAll)
+				}
+				for (let index = 1; index < this.tags.length; index++) {
 					if (this.tags[index].length == 0) {
 						this.tags[index].splice(this.tags[index].indexOf("*"), 1);
 					}
@@ -238,7 +264,7 @@
 				var str = '';
 				let len = that.tags[0].length;
 				for (let i = 0; i < len; i++) {
-					str = str + that.tags[0][i].name + ",";
+					str = str + that.tags[0][i].name;
 				}
 				let type = "";
 				if (that.tags[1].length == 2) {
@@ -264,6 +290,7 @@
 						coach = 0;
 					}
 				}
+				this.all_loading = true;
 				this.fetch('/front/coach/getcoach', {
 					provice: str,
 					coach_type: type,
@@ -287,9 +314,13 @@
 						that.count = 0;
 						that.message(true, res.msg, "error");
 					}
-				}).catch(function(error) {});
+					that.all_loading = false;
+				}).catch(function(error) {
+					that.message(true, rerror, "error");
+					that.all_loading = false;
+				});
 			},
-			
+
 			/**
 			 * 获取banner图
 			 */
