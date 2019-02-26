@@ -4,7 +4,7 @@
         <!-- <vsmajor v-show="compare" slot="reference"></vsmajor> -->
         <div class="c-div div_BMsaOd guanzhu" style="margin-bottom:30px;align-items:flex-end;">
             <div class="c-div div_ARD2As">
-                <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" :src="collegeInfo.magor_logo_name" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat;">
+                <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" :src="collegeInfo.magor_logo_name" :style="{ backgroundImage: 'url(' + collegeInfo.magor_logo_name + ')' }" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat;">
                 </div>
                 <div class="c-div div_mnG0wo">
                     <div class="c-div div_oLhlRV">
