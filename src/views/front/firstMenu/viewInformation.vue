@@ -33,13 +33,13 @@
 				<div class="advertisement" v-if="ad.length > 0">
 					<!-- <img src="../../../assets/img/advertisement.png" alt=""> -->
 					<el-carousel trigger="click" height="100%" class="sowingContent test" :interval="5000" arrow="always">
-						<el-carousel-item v-for="(item,index) in ad" :key="index">
+						<el-carousel-item v-for="(item,index) in ad" :key="index" @click.native="jumpreUrl(item.re_url)">
 							<!-- <img :src="item.img" alt="" @click="judgeBanner(item.re_url)" class="picture-header"> -->
-								<img :src="item.img" alt="" @click="judgeBanner(item.re_url)" class="picture-header">
+								<img :src="item.img" alt="" class="picture-header">
 						</el-carousel-item>
 					</el-carousel>
 				</div>
-				<div class="advertisement" v-for="(item,index) in advertisementB">
+				<div class="advertisement" v-for="(item,index) in advertisementB" :key="index">
 					<a :href="item.re_url">
 						<img :src="item.img" alt="item.img_alt">
 					</a>
@@ -126,6 +126,17 @@
 			}
 		},
 		methods: {
+			jumpreUrl(jumpUrl) {
+				if(typeof jumpUrl !== 'undefined') {
+					if(jumpUrl.substr(0,7).toLowerCase() == "http://" || jumpUrl.substr(0,8).toLowerCase() == "https://") {
+						window.open(jumpUrl);
+					}
+					else {
+						var url = ('http://' + jumpUrl);
+						window.open(url);
+					}
+				}
+			},
 			advertisementBS: function() {
 				let _this = this;
 				this.fetch('/front/consult/getBt', {

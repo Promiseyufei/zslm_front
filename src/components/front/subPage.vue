@@ -4,7 +4,7 @@
         <div class="content-whole">
             <div class="content-whole-article">
                 <div class="content-son" v-for="(item, index) in shortArticles" :key="index">
-                    <div class="article-con-posiion clearfloat">
+                    <div class="article-con-posiion clearfloat" @click="detail(item.id)">
                         <div class="son-left">
                             <img :src="item.img" alt="未加载">
                         </div>
@@ -42,7 +42,10 @@
             }
         },
         methods:{
-
+            detail(id) {
+                // console.log(id)
+                this.$emit('detail', id);
+            }
         },
         mounted(){
 

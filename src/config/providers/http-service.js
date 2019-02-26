@@ -8,6 +8,9 @@ axios.defaults.timeout = 5000;
 // axios.defaults.baseURL = 'http://www.mbahelper.cn:8889';
 // axios.defaults.baseURL = 'http://localhost:81/zslm_back/public';
 axios.defaults.baseURL = 'http://www.zslm.com';
+// axios.defaults.baseURL = 'http://localhost:81/zslm_back/public';
+// axios.defaults.baseURL = 'http://www.lishanlei.cn';
+
 var that = this
 axios.interceptors.request.use(
 	config => {
