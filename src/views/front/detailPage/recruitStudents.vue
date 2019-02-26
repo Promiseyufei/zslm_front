@@ -93,7 +93,6 @@
                     if (res.code == 0){
                         _this.information = res.result[0];
                         _this.pagecount = Math.ceil(res.result[1]/_this.pageSize);
-                        console.log(res)
                     }else if(res.code == 1) {
                         _this.information = [];
                         _this.pagecount = 0;
@@ -154,7 +153,8 @@
                 this.getRecruit();
             },
             showPdf: function (item) {
-                window.open('http://www.lishanlei.cn/storage/major_file/test.pdf');
+                window.open(this.excelUrl + '/front/colleges/downloadfile?filename=' + item.file_name)
+                // window.open('http://www.lishanlei.cn/storage/major_file/test.pdf');
 //                window.location.href = "http://www.lishanlei.cn/storage/major_file/"+item.file_name;
             }
         },

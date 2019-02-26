@@ -298,7 +298,7 @@ export default {
         },
         //下载pdf
         loadPdf:function(file_name){
-            window.open(this.excelUrl + "/front/colleges/downloadfile/" + file_name);
+            window.open(this.excelUrl + "/front/colleges/downloadfile?filename=" + file_name);
         },
         //点击关注
         clickFollow:function(){
