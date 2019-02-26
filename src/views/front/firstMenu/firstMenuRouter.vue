@@ -84,179 +84,170 @@
 </template>
 <script>
 	export default {
-		components: {},
-		data() {
-			return {
-				loginOr: require('../../../assets/img/noLogin.png'),
-				userName: '未登录',
-				dialogVisible: false,
-				activeIndex: '1',
-				firstMenu: true,
-				logoInto: true,
-				mobileIcon: false,
-				userId: 0,
-				news: 0,
-			}
-		},
-		methods: {
-			// footer链接:0关于我们 1用户条款 2帮助中心 3问题反馈 4法律声明
-			toJump(state) {
-				switch (state) {
-					case 0:
-						this.$router.push('/front/firstMenuRouter/aboutUs');
-						break;
-					case 1:
-						this.$router.push('/front/firstMenuRouter/userTerms');
-						break;
-					case 2:
-						this.$router.push('/front/firstMenuRouter/helpCenter');
-						break;
-					case 3:
-						this.$router.push('/front/firstMenuRouter/ href="javascript:0;"singleOpinion');
-						break;
-					default:
-						this.$router.push('/front/firstMenuRouter/legalNotice');
-						break;
-				};
-			},
-			//跳到首页
-			goIndex: function() {
-				this.$router.push('/front/index');
-			},
-			//跳到我的消息
-			goMessage: function() {
-				if (!this.getUserState('user')) {
-					//未登录
-					this.$router.push('/front/Login/loginRoute/accountNumber');
-				} else {
-					this.$router.push('/front/firstMenuRouter/usercore/myNews/dynamic');
-				}
-			},
-			//跳到我的关注
-			goFollow: function() {
-				if (!this.getUserState('user')) {
-					//未登录
-					this.$router.push('/front/Login/loginRoute');
-				} else {
-					this.$router.push('/front/firstMenuRouter/usercore/myFollow');
-				}
-			},
-			//跳到搜索
-			goSearch: function() {
-				this.$router.push('/front/firstMenuRouter/search/major/' + this.$store.state.search['keyword']);
-			},
-			//头部菜单——组件自带——key为选中的当前页面ID
-			handleSelect(key, keyPath) {
-				this.activeIndex = key;
-				if (this.activeIndex == 1) {
-					this.$router.push('/front/firstMenuRouter/selectCollege');
-				} else if (this.activeIndex == 2) {
-					this.$router.push('/front/firstMenuRouter/lookActivity');
-				} else if (this.activeIndex == 3) {
-					this.$router.push('/front/firstMenuRouter/viewInformation');
-				} else if (this.activeIndex == 4) {
-					this.$router.push('/front/firstMenuRouter/searchCoach');
-				}
-			},
-			major: function() {
-				// this.$router.push('/front/firstMenuRouter/selectCollege');
-			},
-			//改变路由菜单高亮不变
-			rushRouter: function() {
-				let path = this.$route.matched[2].path;
-				//当前输入的路由包括()中路由时，显示当前高亮
-				if (path.indexOf('/front/firstMenuRouter/selectCollege') != -1) {
-					this.activeIndex = '1';
-				} else if (path.indexOf('/front/firstMenuRouter/lookActivity') != -1) {
-					this.activeIndex = '2';
-				} else if (path.indexOf('/front/firstMenuRouter/viewInformation') != -1) {
-					this.activeIndex = '3';
-				} else if (path.indexOf('/front/firstMenuRouter/searchCoach') != -1) {
-					this.activeIndex = '4';
-				}
-			},
-			//判断是否登录
-			isLogin: function() {
-				//手机号
-				this.getUserState('user');
-				//用户id
-				this.getUserState('userId');
-				//用户头像
-				this.getUserState('userHead');
-				//用户名称
-				this.getUserState('userName');
-				// if (this.getUserState('user')) {
-				this.userName = this.getUserState('userName');
-				this.loginOr = this.getUserState('userHead');
-				this.userId = this.getUserState('userId');
-				// }
-			},
-			//跳到我的关注or登录
-			myCare: function() {
-				this.getUserState('user');
-				if (!this.getUserState('user')) {
-					this.$router.push('/front/Login/loginRoute/shortMessage');
-				} else {
-					this.$router.push('/front/usercore/myFollow');
-				}
-			},
-			//跳到我的活动or登录
-			myActivity: function() {
-				this.getUserState('user');
-				if (!this.getUserState) {
-					this.$router.push('/front/Login/loginRoute/shortMessage');
-				} else {
-					this.$router.push('/front/usercore/myFollow');
-				}
-			},
-			//跳到我的优惠券or登录
-			myCoupon: function() {
-				this.getUserState('user');
-				if (!this.getUserState) {
-					this.$router.push('/front/Login/loginRout/shortMessagee');
-				} else {
-					this.$router.push('/front/usercore/myFollow');
-				}
-			},
-			//跳到我的消息or登录
-			myMessage: function() {
-				this.getUserState('user');
-				if (!this.getUserState) {
-					this.$router.push('/front/Login/loginRoute/shortMessage');
-				} else {
-					this.$router.push('/front/usercore/myNews');
-				}
-			},
-			//跳到我的账户or登录
-			myAccount: function() {
-				this.getUserState('user');
-				if (!this.getUserState) {
-					this.$router.push('/front/Login/loginRoute/shortMessage');
-				} else {
-					this.$router.push('/front/usercore/myAccount');
-				}
-			},
-			//footer——跳到关于我们
-			aboutUs: function() {
+	    components: {
+	    },
+	    data() {
+	        return {
+	        	loginOr:require('../../../assets/img/noLogin.png'),
+	        	userName:'未登录',
+	        	dialogVisible: false,
+	        	activeIndex: '1',
+	        	firstMenu:true,
+	        	logoInto:true,
+	        	mobileIcon:false,
+	        	userId:0,
+				news:0,
+	        }
+	    },
+	    methods: {
+	    	// footer链接:0关于我们 1用户条款 2帮助中心 3问题反馈 4法律声明
+	    	toJump(state){
+	    		switch(state){
+	    			case 0:   this.$router.push('/front/firstMenuRouter/aboutUs'); break;
+	                case 1:   this.$router.push('/front/firstMenuRouter/userTerms'); break;
+	                case 2:   this.$router.push('/front/firstMenuRouter/helpCenter'); break;
+	                case 3:   this.$router.push('/front/firstMenuRouter/ href="javascript:0;"singleOpinion'); break;
+	                default:  this.$router.push('/front/firstMenuRouter/legalNotice'); break;
+	            };
+	    	},
+	    	//跳到首页
+	    	goIndex:function(){
+	    		this.$router.push('/front/index');
+	    	},
+	    	//跳到我的消息
+	    	goMessage:function(){
+	    		if (!this.getUserState('user')){
+	    			//未登录
+	    			this.$router.push('/front/Login/loginRoute/accountNumber');
+	    		} else{
+	    			this.$router.push('/front/firstMenuRouter/usercore/myNews/dynamic');
+	    		}
+	    	},
+	    	//跳到我的关注
+	    	goFollow:function(){
+	    		if (!this.getUserState('user')){
+	    			//未登录
+	    			this.$router.push('/front/Login/loginRoute/accountNumber');
+	    		} else{
+	    			this.$router.push('/front/firstMenuRouter/usercore/myFollow');
+	    		}
+	    	},
+	    	//跳到搜索
+	    	goSearch:function(){
+	    		this.$router.push('/front/firstMenuRouter/search/major/' + this.$store.state.search['keyword']);
+	    	},
+	    	//头部菜单——组件自带——key为选中的当前页面ID
+	    	handleSelect(key, keyPath) {
+	    		this.activeIndex = key;
+	    		if (this.activeIndex==1) {
+	    			this.$router.push('/front/firstMenuRouter/selectCollege');
+	    		} else if(this.activeIndex==2) {
+	    			this.$router.push('/front/firstMenuRouter/lookActivity');
+	    		} else if(this.activeIndex==3) {
+	    			this.$router.push('/front/firstMenuRouter/viewInformation');
+	    		} else if(this.activeIndex==4) {
+	    			this.$router.push('/front/firstMenuRouter/searchCoach');
+	    		}
+		    },
+		    major:function(){
+		    	// this.$router.push('/front/firstMenuRouter/selectCollege');
+		    },
+		    //改变路由菜单高亮不变
+		    rushRouter:function(){
+	    		let path = this.$route.matched[2].path;
+	    		//当前输入的路由包括()中路由时，显示当前高亮
+	    		if (path.indexOf('/front/firstMenuRouter/selectCollege') != -1) {
+	    			this.activeIndex = '1';
+	    		} else if(path.indexOf('/front/firstMenuRouter/lookActivity') != -1) {
+		    		this.activeIndex = '2';
+	    		} else if(path.indexOf('/front/firstMenuRouter/viewInformation') != -1) {
+		    		this.activeIndex = '3';
+		    	} else if(path.indexOf('/front/firstMenuRouter/searchCoach') != -1) {
+		    		this.activeIndex = '4';
+		    	}
+		    },
+		    //判断是否登录
+		    isLogin:function(){
+		    	//手机号
+		    	this.getUserState('user');
+		    	//用户id
+		    	this.getUserState('userId');
+		    	//用户头像
+		    	this.getUserState('userHead');
+		    	//用户名称
+		    	this.getUserState('userName');
+		    	// if (this.getUserState('user')) {
+		    		this.userName = this.getUserState('userName');
+		    		this.loginOr = this.getUserState('userHead');
+		    		this.userId = this.getUserState('userId');
+		    	// }
+		    },
+		    //跳到我的关注or登录
+		    myCare:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState('user')) {
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
+		    	} else{
+		    		this.$router.push('/front/usercore/myFollow');
+		    	}
+		    },
+		    //跳到我的活动or登录
+		    myActivity:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState) {
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
+		    	} else{
+		    		this.$router.push('/front/usercore/myFollow');
+		    	}
+		    },
+		    //跳到我的优惠券or登录
+		    myCoupon:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState) {
+		    		this.$router.push('/front/Login/loginRout/shortMessagee');
+		    	} else{
+		    		this.$router.push('/front/usercore/myFollow');
+		    	}
+		    },
+		    //跳到我的消息or登录
+		    myMessage:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState) {
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
+		    	} else{
+		    		this.$router.push('/front/usercore/myNews');
+		    	}
+		    },
+		    //跳到我的账户or登录
+		    myAccount:function(){
+		    	this.getUserState('user');
+		    	if (!this.getUserState) {
+		    		this.$router.push('/front/Login/loginRoute/shortMessage');
+		    	} else{
+		    		this.$router.push('/front/usercore/myAccount');
+		    	}
+		    },
+		    //footer——跳到关于我们
+		    aboutUs:function() {
 
-			},
-			//footer——跳到帮助中心
-			helpCenter: function() {
+		    },
+		    //footer——跳到帮助中心
+		    helpCenter:function() {
 
-			},
-			//footer——跳到法律声明
-			lawStatement: function() {
+		    },
+		    //footer——跳到法律声明
+		    lawStatement:function() {
 
-			},
-			//footer——跳到用户条款
-			userList: function() {
+		    },
+		    //footer——跳到用户条款
+		    userList:function() {
 
-			},
-			//footer——跳到问题反馈
-			problemBack: function() {
+		    },
+		    //footer——跳到问题反馈
+		    problemBack:function() {
 
-			},
-
+		    },
+		
 			getding: function() {
 				var that = this
 				var t1 = window.setInterval(that.getAccountMsg, 60000);

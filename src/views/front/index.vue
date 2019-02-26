@@ -51,8 +51,35 @@
                                 </div>
                                 <div class="singleCollegeHover">
                                     <div class="singleCollegeHeader">
-                                        <img src="../../assets/img/coach2.png" alt="">
+                                        <img :src="temp.magor_logo_name != '' ? temp.magor_logo_name : '../../assets/img/coach2.png'" alt="">
                                         <div>
+                                            <!-- <div v-for="(item,index) in temp.major_confirm_id" class="majorType">
+                                                <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/EQUIS.png">
+                                                <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/AACSB.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/AMBA.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/CAMEA.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'AAPEQ'" src="../../assets/img/AAPEQ.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'NASPAA'" src="../../assets/img/NASPAA.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'CEEMAN IQA'" src="../../assets/img/CEEMANIQA.png">
+                                            </div>
+                                            <div v-for="(item,indexs) in temp.major_follow_id" class="majorType" >
+                                                <img class="c-image image_2pnGPP" v-if="item=='原211'" src="../../assets/img/原211.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='原985'" src="../../assets/img/原985.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='双一流'" src="../../assets/img/双一流.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='中科院直属'" src="../../assets/img/中科院直属.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='社科院直属'" src="../../assets/img/社科院直属.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='部委直属'" src="../../assets/img/部委直属.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='省部共建'" src="../../assets/img/省部共建.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='省市属重点'" src="../../assets/img/省市属重点.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='普通高等院校'" src="../../assets/img/普通高等院校.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='中国与欧盟合办'" src="../../assets/img/中国与欧盟合办.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='中西部重点建设'" src="../../assets/img/中西部重点建设.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='宁波市与MIT共建'" src="../../assets/img/宁波市与MIT共建.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='省/市直属'" src="../../assets/img/省市直属.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='A线'" src="../../assets/img/A线.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='B线'" src="../../assets/img/B线.png">
+                                            </div> -->
+                                            
                                             <img src="../../assets/img/aacsb.jpg" alt="">
                                             <img src="../../assets/img/camea.png" alt="">
                                         </div>
@@ -182,7 +209,7 @@
                                 </div>
                             </div>
                             <div class="singActivitybox">
-                                <div class="singActivity selectMessage" v-for="(item,indd) in activity"  @click="toJumpActivity2(item.id)">
+                                <div class="singActivity selectMessage" v-for="(item,indd) in activity"  @click="toJumpActivity2(item.id)" :key="indd">
                                     <h3>{{item.active_name}}</h3>
                                     <div class="singActivityspan">
                                         <span><i class="fa fa-map-marker"></i>{{item.province.province}}{{item.province.city}}</span>
@@ -215,7 +242,7 @@
                     <!-- 看资讯----单个辅导机构小块块 -->
                     <div class="singleCollegeBox">
                         <div class="selectInformationHearder informationDiv">
-                            <div class="lookinformation" v-for="(item,index) in consult1" @click="toJumpInfor(item.id)">
+                            <div class="lookinformation" v-for="(item,index) in consult1" @click="toJumpInfor(item.id)" :key="index">
                                 <img src="../../assets/img/infor.jpg" alt="">
                                 <div class="lookinforMessage">
                                     <h3>{{item.zx_name}}</h3>
@@ -225,7 +252,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="lookinformationBig big" v-for="(item,index) in consult2" @click="toJumpInfor(item.id)">
+                            <div class="lookinformationBig big" v-for="(item,index) in consult2" @click="toJumpInfor(item.id)" :key="index">
                                 <div class="lookinforMessage">
                                     <h3>{{item.zx_name}}</h3>
                                     <p>{{item.brief_introduction}}</p>
@@ -236,7 +263,7 @@
                                 </div>
                                 <img src="../../assets/img/infor.jpg" alt="">
                             </div>
-                            <div class="lookinformation" v-for="(item,index) in consult3" @click="toJumpInfor(item.id)">
+                            <div class="lookinformation" v-for="(item,index) in consult3" @click="toJumpInfor(item.id)" :key="index">
                                 <img src="../../assets/img/infor.jpg" alt="">
                                 <div class="lookinforMessage">
                                     <h3>{{item.zx_name}}</h3>
@@ -271,7 +298,7 @@
                     <!-- 服务----单个服务小块块 -->
                     <div class="singleCollegeBox">
                         <div class="memberServe">
-                            <div v-for="(item,index) in member">
+                            <div v-for="(item,index) in member" :key="index">
                                 <div>
                                     <img :src="item.logo" alt="">
                                 </div>
@@ -330,6 +357,10 @@ export default {
     },
     data() {
         return {
+                equis:"EQUIS",
+                aascb:"AASCB",
+                amba:"AMBA",
+                camea:"CAMEA",
                 userData:[],
                 member:[
                     {
@@ -414,7 +445,16 @@ export default {
             var that = this;
             this.fetch('/front/indexinfo').then(function (res) {
                 if (res.code == 0) {
+                    
                     that.college = res.result.major;//返回学校
+                    if(that.college.length > 0) {
+                        for (let i = 0; i < that.college.length; i++) {
+                            if(that.college[i].major_confirm_id != '')
+                                that.college[i].major_confirm_id = that.college[i].major_confirm_id.split(',');
+                            if(that.college[i].major_follow_id != '')
+                                that.college[i].major_follow_id = that.college[i].major_follow_id.split(',');
+                        }
+                    }
                     that.coach = res.result.coach;//返回辅导机构
                     that.coach2.push(that.coach[1],that.coach[2]);//过滤掉第一个辅导机构
                     that.activity = res.result.actives.info;//返回活动
@@ -475,14 +515,14 @@ export default {
         },
         //跳到相应的单个院校
         toJumpCollege: function(id) {
-            this.$router.push('/front/firstMenuRouter/singleCollage/'+id);
+            this.$router.push('/front/firstMenuRouter/selectCollege/singleCollage/'+id);
         },
         //轮播图，图片前移
         next_pic: function() {
             this.index++;
             if(this.index > 2){
                 this.index = 0;
-            }
+            }   
             this.showCurrentDot();
             var newLeft;
             if(this.wrap.style.left === "-3820px"){

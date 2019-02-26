@@ -1,7 +1,7 @@
 <template>
     <div class="search_label_page_head">
         <div class="c-div div_v60iAm biaoqian">
-            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': item.selected_prop_value == index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="javaScript:void(0)">{{ item.name }}</a>
+            <a class="c-textlink textlink_jH6Kkn" :class="{'xuanzhong': i == index}" v-for="(item, index) in Names" :ref="index" @click="testClick(item, index)" :key="index" href="javaScript:void(0)">{{ item.name }}</a>
 
         </div>
     </div>
@@ -12,31 +12,43 @@ export default {
     props:['names'],
     data() {
         return {
-            Names: this.names
+            Names: this.names,
+            i: -2
         }
     },
     methods: {
         forCancelStyle() {
             let _this = this;
             for(let i = 0; i < this.Names.length; i++) {
-                _this.Names[i].selected_prop_value = null;
+                _this.Names[i].selected_prop_value = -1;
             }
             return true;
         },
         testClick(item, index) {
-            $(".c-textlink").css("color","rgb(49, 49, 49)");
-            $(".c-textlink").css("border-bottom-width","0");
+            this.i = index
+            // $(".c-textlink").css("color","rgb(49, 49, 49)");
+            // $(".c-textlink").css("border-bottom-width","0");
 //            $($(".c-textlink")[0]).css("color","rgb(0, 159, 160)");
 //            $($(".c-textlink")[0]).css("border-bottom","3px  rgb(0, 159, 160) solid");
 //            $($(".c-textlink")[0]).css("font-weight","bold");
-            $($(".c-textlink")[index]).css("color","rgb(0, 159, 160)");
-            $($(".c-textlink")[index]).css("border-bottom","2px  rgb(0, 159, 160) solid");
-            if(this.forCancelStyle())
-                this.Names[index].selected_prop_value = index;
-                
+            // $($(".c-textlink")[index]).css("color","rgb(0, 159, 160)");
+            // $($(".c-textlink")[index]).css("border-bottom","2px  rgb(0, 159, 160) solid");
+            // if(this.forCancelStyle()) {
+            //     this.Names[index].selected_prop_value = index;
+            // }
+
+            // if(this.forCancelStyle()) {
+
+            // }
             this.$emit('labelHeadClick', item);
+            sessionStorage.setItem('isSelect', this.i) 
+                
+            
             
         }
+    },
+    mounted() {
+        this.i = sessionStorage.getItem('isSelect') 
     }
 }
 </script>
@@ -140,12 +152,12 @@ export default {
 }
 
 
-.search_label_page_head .textlink_jH6Kkn:first-child{
+/* .search_label_page_head .textlink_jH6Kkn:first-child{
     font-weight: bold;
     border-style: none none solid;
     border-bottom-color: rgb(0, 159, 160);
     border-bottom-width: 3px;
     color: #009fa0;
-}
+} */
 
 </style>

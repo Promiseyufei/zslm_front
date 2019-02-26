@@ -17,16 +17,40 @@
 						</div>
 						<div class="c-div cs-repeatable div_sfz9WV">
 							<div v-for="(item_,index_) in datas.major_confirm_id" style="display: inline-block;margin: 5px 5px">
-								<img class="c-image image_2pnGPP" v-if="item_==equis" src="../../assets/img/equs.png">
+								<img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/EQUIS.png">
+								<img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/AACSB.png">
+								<img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/AMBA.png">
+								<img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/CAMEA.png">
+								<img class="c-image image_2pnGPP" v-if="item == 'AAPEQ'" src="../../assets/img/AAPEQ.png">
+								<img class="c-image image_2pnGPP" v-if="item == 'NASPAA'" src="../../assets/img/NASPAA.png">
+								<img class="c-image image_2pnGPP" v-if="item == 'CEEMAN IQA'" src="../../assets/img/CEEMANIQA.png">
+
+								<!-- <img class="c-image image_2pnGPP" v-if="item_==equis" src="../../assets/img/equs.png">
 								<img class="c-image image_2pnGPP" v-if="item_==aascb" src="../../assets/img/aacsb.jpg">
 								<img class="c-image image_2pnGPP" v-if="item_ == amba" src="../../assets/img/amba.png">
-								<img class="c-image image_2pnGPP" v-if="item_ == camea" src="../../assets/img/camea.png">
+								<img class="c-image image_2pnGPP" v-if="item_ == camea" src="../../assets/img/camea.png"> -->
 
 							</div>
 							<div v-for="(item_,index_) in datas.major_follow_id" style="display: inline-block;margin: 5px 5px">
-								<img class="c-image image_2pnGPP" v-if="item_==two" src="../../assets/img/211.png">
+								<img class="c-image image_2pnGPP" v-if="item=='原211'" src="../../assets/img/原211.png">
+								<img class="c-image image_2pnGPP" v-if="item=='原985'" src="../../assets/img/原985.png">
+								<img class="c-image image_2pnGPP" v-if="item=='双一流'" src="../../assets/img/双一流.png">
+								<img class="c-image image_2pnGPP" v-if="item=='中科院直属'" src="../../assets/img/中科院直属.png">
+								<img class="c-image image_2pnGPP" v-if="item=='社科院直属'" src="../../assets/img/社科院直属.png">
+								<img class="c-image image_2pnGPP" v-if="item=='部委直属'" src="../../assets/img/部委直属.png">
+								<img class="c-image image_2pnGPP" v-if="item=='省部共建'" src="../../assets/img/省部共建.png">
+								<img class="c-image image_2pnGPP" v-if="item=='省市属重点'" src="../../assets/img/省市属重点.png">
+								<img class="c-image image_2pnGPP" v-if="item=='普通高等院校'" src="../../assets/img/普通高等院校.png">
+								<img class="c-image image_2pnGPP" v-if="item=='中国与欧盟合办'" src="../../assets/img/中国与欧盟合办.png">
+								<img class="c-image image_2pnGPP" v-if="item=='中西部重点建设'" src="../../assets/img/中西部重点建设.png">
+								<img class="c-image image_2pnGPP" v-if="item=='宁波市与MIT共建'" src="../../assets/img/宁波市与MIT共建.png">
+								<img class="c-image image_2pnGPP" v-if="item=='省/市直属'" src="../../assets/img/省市直属.png">
+								<img class="c-image image_2pnGPP" v-if="item=='A线'" src="../../assets/img/A线.png">
+								<img class="c-image image_2pnGPP" v-if="item=='B线'" src="../../assets/img/B线.png">
+
+								<!-- <img class="c-image image_2pnGPP" v-if="item_==two" src="../../assets/img/211.png">
 								<img class="c-image image_2pnGPP" v-if="item_==nine" src="../../assets/img/985.png">
-								<img class="c-image image_2pnGPP" v-if="item_==both29" src="../../assets/img/shuangyiliu.png">
+								<img class="c-image image_2pnGPP" v-if="item_==both29" src="../../assets/img/shuangyiliu.png"> -->
 							</div>
 						</div>
 					</div>

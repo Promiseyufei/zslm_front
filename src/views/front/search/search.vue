@@ -41,10 +41,10 @@
                     <div class="advertisement">
                         <img src="../../../assets/img/advertisement.png" alt="">
                     </div>
-                    <div class="advertisement">
+                    <!-- <div class="advertisement">
                         <img src="../../../assets/img/advertisementB.png" alt="">
-                    </div>
-                    <Article @refreshs="refresh" v-if="information.length" :inforArticle="information"></Article>
+                    </div> -->
+                    <Article @refreshs="refresh" :title="title" @jump="jump" v-if="information.length" :inforArticle="information"></Article>
                 </div>
             </div>
         </div>
@@ -58,6 +58,7 @@ export default {
     // inject: ['reload'],
     data() {
         return {
+            title:'推荐阅读',
             page:0,
             keyword:'',
             pageNumber: 0,
@@ -65,14 +66,18 @@ export default {
             industryTatol:1,
             information:[],
             names: [
-                 {name:'院校', selected_prop_value:null, url:'/front/firstMenuRouter/search/major'},
-                {name:'咨询', selected_prop_value:null, url:'/front/firstMenuRouter/search/info'}, 
-                {name:'辅导', selected_prop_value:null, url:'/front/firstMenuRouter/search/coach'}, 
-                {name:'活动', selected_prop_value:null, url:'/front/firstMenuRouter/search/activity'}
+                 {name:'院校', selected_prop_value:-1, url:'/front/firstMenuRouter/search/major'},
+                {name:'咨询', selected_prop_value:-1, url:'/front/firstMenuRouter/search/info'}, 
+                {name:'辅导', selected_prop_value:-1, url:'/front/firstMenuRouter/search/coach'}, 
+                {name:'活动', selected_prop_value:-1, url:'/front/firstMenuRouter/search/activity'}
             ]
         }
     },
     methods: {
+        jump(zxId) {
+            // console.log(zxId);return false;
+            this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + zxId.id);
+        },
         refresh: function (data) {
             this.pageNumber++;
             if (this.pageNumber*4 >=this.industryTatol){
@@ -131,7 +136,7 @@ export default {
     margin-left: auto;
 }
 .mianbao .container_tPJRDM {
-    width: 100%;
+    width: 94%;
     min-height: auto;
     padding-left: 0px;
     padding-right: 0px;
