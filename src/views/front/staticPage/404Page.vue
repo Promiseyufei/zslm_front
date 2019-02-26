@@ -39,7 +39,7 @@ export default {
             };
         },
         toIndex:function(){
-            this.$router.push('/front/firstMenuRouter/index');
+            this.$router.push('/front/index');
         }
     },
     mounted(){
