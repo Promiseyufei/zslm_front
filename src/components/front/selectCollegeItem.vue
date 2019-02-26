@@ -18,7 +18,7 @@
                             <img class="c-image image_2pnGPP" v-if="item==aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
                             <img class="c-image image_2pnGPP" v-if="item == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
                             <img class="c-image image_2pnGPP" v-if="item == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png"> -->
-                        <div v-for="(item,index) in datas.major_confirm_id" class="majorType" >
+                        <div v-for="(item,index) in datas.major_confirm_id" class="majorType">
                              <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/equs.png">
                             <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/aacsb.jpg">
                             <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
