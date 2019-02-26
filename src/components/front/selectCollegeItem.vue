@@ -19,15 +19,31 @@
                             <img class="c-image image_2pnGPP" v-if="item == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
                             <img class="c-image image_2pnGPP" v-if="item == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png"> -->
                         <div v-for="(item,index) in datas.major_confirm_id" class="majorType">
-                             <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/equs.png">
-                            <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/aacsb.jpg">
-                            <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
-                            <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/camea.png">
+                             <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/EQUIS.png">
+                            <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/AACSB.png">
+                            <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/AMBA.png">
+                            <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/CAMEA.png">
+                            <img class="c-image image_2pnGPP" v-if="item == 'AAPEQ'" src="../../assets/img/AAPEQ.png">
+                            <img class="c-image image_2pnGPP" v-if="item == 'NASPAA'" src="../../assets/img/NASPAA.png">
+                            <img class="c-image image_2pnGPP" v-if="item == 'CEEMAN IQA'" src="../../assets/img/CEEMANIQA.png">
                         </div>
                         <div v-for="(item,indexs) in datas.major_follow_id" class="majorType" >
-                            <img class="c-image image_2pnGPP" v-if="item==two" src="../../assets/img/211.png">
-                            <img class="c-image image_2pnGPP" v-if="item==nine" src="../../assets/img/985.png">
-                            <img class="c-image image_2pnGPP" v-if="item==both29" src="../../assets/img/all985211.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='原211'" src="../../assets/img/原211.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='原985'" src="../../assets/img/原985.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='双一流'" src="../../assets/img/双一流.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='中科院直属'" src="../../assets/img/中科院直属.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='社科院直属'" src="../../assets/img/社科院直属.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='部委直属'" src="../../assets/img/部委直属.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='省部共建'" src="../../assets/img/省部共建.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='省市属重点'" src="../../assets/img/省市属重点.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='普通高等院校'" src="../../assets/img/普通高等院校.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='中国与欧盟合办'" src="../../assets/img/中国与欧盟合办.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='中西部重点建设'" src="../../assets/img/中西部重点建设.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='宁波市与MIT共建'" src="../../assets/img/宁波市与MIT共建.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='省/市直属'" src="../../assets/img/省市直属.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='A线'" src="../../assets/img/A线.png">
+                            <img class="c-image image_2pnGPP" v-if="item=='B线'" src="../../assets/img/B线.png">
+                            <!-- <img class="c-image image_2pnGPP" v-if="item=='省委共建'" src="../../assets/img/中西部重点建设.png"> -->
                         </div>
                     </div>
                     <!-- </div> -->
@@ -138,11 +154,11 @@
             nature:null,
             datas:{},
             moreMajor:false,
-            equis:"EQUIS",
-            aascb:"AASCB",
             two:"原211",
             nine:"原985",
             both29:"双一流",
+            equis:"EQUIS",
+            aascb:"AASCB",
             amba:"AMBA",
             camea:"CAMEA",
             update_time:0,
