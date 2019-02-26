@@ -59,7 +59,7 @@
 
 									</el-carousel-item>
 								</el-carousel>
-								<div v-else class="advertisement" >
+								<div v-else class="advertisement">
 									<img :src="oneAd[0].img" alt="" @click="judgeBanner(oneAd[0].re_url)" style="height: 219.7px;">
 								</div>
 							</div>
@@ -117,8 +117,7 @@
 							}
 						}
 					})
-					.catch(error => function(error) {
-					});
+					.catch(error => function(error) {});
 			},
 			/*
 			 *
@@ -133,8 +132,7 @@
 							_this.articleContent = response.result;
 						}
 					})
-					.catch(error => function(error) {
-					});
+					.catch(error => function(error) {});
 			},
 			/*
 			 * 推荐阅读跳转
@@ -154,8 +152,7 @@
 							_this.advertisement = response.result;
 						}
 					})
-					.catch(error => function(error) {
-					});
+					.catch(error => function(error) {});
 			},
 			getAd: function() {
 				var that = this;
@@ -192,14 +189,14 @@
 
 				})
 			},
-			
-				/**
+
+			/**
 			 * 跳转banner
 			 */
 			judgeBanner: function(url) {
 				window.open(url)
 			}
-			
+
 		},
 		mounted() {
 			this.readtation();
@@ -348,6 +345,10 @@
 		margin: auto;
 		min-height: 90px;
 		border-bottom: 1px solid rgb(239, 239, 239);
+		line-height: 21px;
+		color: #746565;
+		margin-top: 20px;
+		margin-bottom: 20px;
 	}
 
 	.footer-icon {

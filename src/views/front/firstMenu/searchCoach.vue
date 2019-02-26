@@ -39,15 +39,15 @@
 				<div class="singlecoachBig" >
 					<div class="singlecoachbox">
 						<div class="singlecoach" v-for="(item,index) in coachlist" :key="index">
-							<div class="singlecoachtop" @click="jump(item.id)">
-								<img src="../../../assets/img/xindongfang.png" alt="">
+							<div class="singlecoachtop" :style="{backgroundImage:'url('+item.cover_name+')'}" @click="jump(item.id)">
+								<img :src="item.logo_name" alt="">
 							</div>
 							<span @click="jump(item.id)">{{item.coach_name}}</span>
 							<div class="singlecoachHoverbig">
 								<div class="singlecoachHoverbox" :class="index%4==2||index%4==3 ? 'activeClass' : ''">
 									<div class="singlecoachHover" v-if="index%4==0||index%4==1" @click="jump(item.id)">
 										<div class="singlecoachtop2">
-											<img src="../../../assets/img/xindongfangwhite.png" alt="">
+											<img :src="item.logo_name" alt="">
 										</div>
 										<div class="singlecoachspan">
 											<span>{{item.coach_name}}</span>
@@ -68,7 +68,7 @@
 									</div>
 									<div class="singlecoachHover" v-if="index%4==2||index%4==3" @click="jump(item.id)">
 										<div class="singlecoachtop2">
-											<img src="../../../assets/img/xindongfangwhite.png" alt="">
+											<img :src="item.logo_name" alt="">
 										</div>
 										<div class="singlecoachspan">
 											<span>{{item.coach_name}}</span>

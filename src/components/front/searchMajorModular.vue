@@ -10,18 +10,44 @@
                     <div class="div_mnG0wo">
                         <div class="div_oLhlRV">
                             <h1 class="c-heading heading_IH2VnY">{{ majorInfo.z_name }}</h1>
-                            <label class="c-label label_OVUgJH">{{ majorInfo.province.province }}</label>
+                            <template v-if="majorInfo.province">
+                                <label class="c-label label_OVUgJH">{{ majorInfo.province.province }}</label>
+                            </template>
                             <!-- <label class="c-label label_OVUgJH">{{ majorInfo.province.city }}</label> -->
                         </div>
                         <div class="div_sfz9WV">
                             <template v-for="(item, index) in majorInfo.major_confirm_id">
-                                <img class="c-image image_2pnGPP" :key="index+'equis'" v-if="item == 'EQUIS'" src="../../assets/img/equsSmall.png">
-                                <img class="c-image image_2pnGPP" :key="index+'aacsb'" v-if="item == 'AACSB'" src="../../assets/img/aacsbSmall.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'EQUIS'" v-if="item=='EQUIS'" src="../../assets/img/EQUIS.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'AASCB'" v-if="item=='AASCB'" src="../../assets/img/AACSB.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'AMBA'" v-if="item == 'AMBA'" src="../../assets/img/AMBA.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'CAMEA'" v-if="item == 'CAMEA'" src="../../assets/img/CAMEA.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'AAPEQ'" v-if="item == 'AAPEQ'" src="../../assets/img/AAPEQ.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'NASPAA'" v-if="item == 'NASPAA'" src="../../assets/img/NASPAA.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'CEEMAN IQA'" v-if="item == 'CEEMAN IQA'" src="../../assets/img/CEEMANIQA.png">
+
+                                <!-- <img class="c-image image_2pnGPP" :key="index+'equis'" v-if="item == 'EQUIS'" src="../../assets/img/equsSmall.png">
+                                <img class="c-image image_2pnGPP" :key="index+'aacsb'" v-if="item == 'AACSB'" src="../../assets/img/aacsbSmall.png"> -->
                             </template>
                             <template v-for="(item, index) in majorInfo.major_follow_id">
-                                <img class="c-image image_2pnGPP" :key="index + '211'" v-if="item == '原211'" src="../../assets/img/211.png">
+                                <img class="c-image image_2pnGPP" :key="index + '原211'" v-if="item=='原211'" src="../../assets/img/原211.png">
+                                <img class="c-image image_2pnGPP" :key="index + '原985'" v-if="item=='原985'" src="../../assets/img/原985.png">
+                                <img class="c-image image_2pnGPP" :key="index + '双一流'" v-if="item=='双一流'" src="../../assets/img/双一流.png">
+                                <img class="c-image image_2pnGPP" :key="index + '中科院直属'" v-if="item=='中科院直属'" src="../../assets/img/中科院直属.png">
+                                <img class="c-image image_2pnGPP" :key="index + '社科院直属'" v-if="item=='社科院直属'" src="../../assets/img/社科院直属.png">
+                                <img class="c-image image_2pnGPP" :key="index + '部委直属'" v-if="item=='部委直属'" src="../../assets/img/部委直属.png">
+                                <img class="c-image image_2pnGPP" :key="index + '省部共建'" v-if="item=='省部共建'" src="../../assets/img/省部共建.png">
+                                <img class="c-image image_2pnGPP" :key="index + '省市属重点'" v-if="item=='省市属重点'" src="../../assets/img/省市属重点.png">
+                                <img class="c-image image_2pnGPP" :key="index + '普通高等院校'" v-if="item=='普通高等院校'" src="../../assets/img/普通高等院校.png">
+                                <img class="c-image image_2pnGPP" :key="index + '中国与欧盟合办'" v-if="item=='中国与欧盟合办'" src="../../assets/img/中国与欧盟合办.png">
+                                <img class="c-image image_2pnGPP" :key="index + '中西部重点建设'" v-if="item=='中西部重点建设'" src="../../assets/img/中西部重点建设.png">
+                                <img class="c-image image_2pnGPP" :key="index + '宁波市与MIT共建'" v-if="item=='宁波市与MIT共建'" src="../../assets/img/宁波市与MIT共建.png">
+                                <img class="c-image image_2pnGPP" :key="index + '省/市直属'" v-if="item=='省/市直属'" src="../../assets/img/省市直属.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'A线'" v-if="item=='A线'" src="../../assets/img/A线.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'B线'" v-if="item=='B线'" src="../../assets/img/B线.png">
+
+                                <!-- <img class="c-image image_2pnGPP" :key="index + '211'" v-if="item == '原211'" src="../../assets/img/211.png">
                                 <img class="c-image image_2pnGPP" :key="index + '985'" v-if="item == '原985'" src="../../assets/img/985.png">
-                                <img class="c-image image_2pnGPP" :key="index + '111'" v-if="item == '双一流'" src="../../assets/img/shuangyiliu.png">
+                                <img class="c-image image_2pnGPP" :key="index + '111'" v-if="item == '双一流'" src="../../assets/img/shuangyiliu.png"> -->
 
                             </template>
                         </div>
