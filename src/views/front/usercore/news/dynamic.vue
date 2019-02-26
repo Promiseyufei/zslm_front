@@ -26,13 +26,13 @@ export default {
     methods: {
         getDynamic() {
             let _this = this;
-            let phone = '15837587256';
-            // let phone = this.getUserState('user');
-            // if(!phone) {
-            //     this.message(true, '您的会话已过期，请重新登录');
-            //     // console.log(phone);
-            //     this.$router.push('/front/Login/loginRoute/shortMessage');
-            // }
+            let phone = this.getUserState('user');
+            if(!phone) {
+                this.message(true, '您的会话已过期，请重新登录');
+                // console.log(phone);
+                this.$router.push('/front/Login/loginRoute/shortMessage');
+				return;
+            }
             // else {
             this.fetch('/front/usercore/getUserNews', {
                 userPhone:      phone,
