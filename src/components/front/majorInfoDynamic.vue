@@ -50,7 +50,7 @@ export default {
     },
     methods: {
         viewDetails() {
-            this.$router.push('/front/firstMenuRouter/singleInformation/' + this.dynamic.id);
+            this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + this.dynamic.id);
         }
     },
     mounted() {

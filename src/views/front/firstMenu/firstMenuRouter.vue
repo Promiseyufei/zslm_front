@@ -45,7 +45,7 @@
 		        <div class="logoInto" v-show="logoInto">
 		        		<div style="cursor: pointer;" @click="goSearch"><i class="el-icon-search"></i></div>
 			        	<div style="cursor: pointer;" @click="goMessage">
-			        		<el-badge :value="200" :max="10" class="item">
+			        		<el-badge :value="200" :max="news" class="item">
 							  <img src="../../../assets/img/messageLogo.png">
 							</el-badge>
 			        	</div>
@@ -103,6 +103,7 @@
 	        	logoInto:true,
 	        	mobileIcon:false,
 	        	userId:0,
+				news:0,
 	        }
 	    },
 	    methods: {
@@ -133,7 +134,7 @@
 	    	goFollow:function(){
 	    		if (!this.getUserState('user')){
 	    			//未登录
-	    			this.$router.push('/front/Login/loginRoute');
+	    			this.$router.push('/front/Login/loginRoute/accountNumber');
 	    		} else{
 	    			this.$router.push('/front/firstMenuRouter/usercore/myFollow');
 	    		}
@@ -253,6 +254,31 @@
 		    problemBack:function() {
 
 		    },
+			
+			getding: function() {
+				var that = this
+				var t1 = window.setInterval(that.getAccountMsg, 60000);
+			},
+			
+			// 			getMsg: function() {
+			// 				this.fetch("/admin/information/getding").then(res => {
+			// 						if (res.code == 0) {
+			// 							console.log(res)
+			// 						}
+			// 					}
+			// 	
+			// 				},
+			getAccountMsg: function() {
+				var that = this;
+				var account = this.getUserStatePro('userId')
+				this.fetch('/front/usercore/getding', {
+					id: account
+				}).then(res => {
+					if (res.code == 0) {
+						that.news = res.result
+					}
+				})
+			},
 
 	    },
 	    watch:{
@@ -261,8 +287,6 @@
 	    	}
 	    },
 	    mounted(){
-	    	console.log(this.getUserState('userHead'))
-	    	console.log(133);
 	    	this.rushRouter();
 	    	//手机端改变样式
 	     	let w = document.documentElement.offsetWidth||document.body.offsetWidth;
@@ -271,6 +295,8 @@
 				this.logoInto = false;
 				this.mobileIcon = true;
 			}
+			this.getAccountMsg()
+			this.getding()
 		},
 	};
 </script>

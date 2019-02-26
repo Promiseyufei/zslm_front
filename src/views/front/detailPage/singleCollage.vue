@@ -46,7 +46,7 @@
                                         <p>招生项目</p>
                                         <div class="collageLine"></div>
                                     </div>
-                                    <div class="hover"><el-button size="mini">+ 对比</el-button></div>
+                                    <div class="hover"><el-button @click="contrastPro" size="mini">+ 对比</el-button></div>
                                 </div>
                                 <singleItem :detail="t" :i="index" v-for="(t,index) in singleItem" :key="index"></singleItem>
                             </el-card>
@@ -266,6 +266,9 @@ export default {
         }
     },
     methods: {
+        contrastPro() {
+            this.$router.push('/front/firstMenuRouter/majorCompare/' + this.id);
+        },
         detail(id) {
             this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + id);
         },
@@ -295,7 +298,7 @@ export default {
         },
         //下载pdf
         loadPdf:function(file_name){
-            window.open(this.excelUrl + "/front/colleges/downloadfile/" + file_name);
+            window.open(this.excelUrl + "/front/colleges/downloadfile?filename=" + file_name);
         },
         //点击关注
         clickFollow:function(){
@@ -346,7 +349,6 @@ export default {
         //判断是否关注
         isFollow:function(){
             let followButt = document.getElementById('followButt');
-            console.log(this.is_guanzhu)
             if (this.is_guanzhu==true) {
                 this.follow = '已关注';
                 $("#symbol").attr("class","el-icon-check");

@@ -5,10 +5,10 @@
 		<div class="activityList">
 			<!-- 搜索框 -->
 			<div class="searchs">
-				<el-input placeholder=" 复旦大学    北京大学" suffix-icon="el-icon-search" v-model="keyword" @keyup.enter.native="getActivityList(2)"
+				<el-input placeholder=" 请输入活动名称" suffix-icon="el-icon-search" v-model="keyword" @keyup.enter.native="getActivityList(2)"
 				 class="pcSeach">
 				</el-input>
-				<el-input placeholder=" 复旦大学    北京大学" suffix-icon="el-icon-search" v-model="keyword" @keyup.enter.native="getActivityList(1)"
+				<el-input placeholder=" 请输入活动名称" suffix-icon="el-icon-search" v-model="keyword" @keyup.enter.native="getActivityList(1)"
 				 class="phoneSeach">
 				</el-input>
 			</div>
@@ -336,6 +336,7 @@
 			 * @param  {[int]} val [0 手机端加载更多 1 手机端查询 2 电脑端查询]
 			 */
 			getActivityList: function(val) {
+				console.log(this.activitySelected);
 				var self = this;
 				let state = val;
 				if (state == 1) {
@@ -418,6 +419,7 @@
 
 			// 筛选块-从组件中获取选中结果
 			change(data) {
+				// console.log(data)
 				this.seltData = data;
 				for (let index = 0; index < this.seltData.length; index++) {
 					if (this.seltData[index].length == 0) {
@@ -480,16 +482,12 @@
 			 */
 			getBanner: function() {
 				var that = this;
-				this.fetch('/front/banner/getbanner', {
-					b_name: '找活动页面',
-					limit: 1,
-					type: 0
+				this.fetch('/front/colleges/getMajorBanner', {
+					path: that.$route.path
 				}).then(res => {
-
 					if (res.code == 0) {
-
-						that.$refs.header.setImg(res.result[0].img);
-						that.$refs.header.setJudgeUlr(res.result[0].re_url);
+						that.$refs.header.setImg(res.result.img);
+						that.$refs.header.setJudgeUlr(res.result.re_url);
 					} else {
 						that.message(true, res.msg, 'error')
 					}

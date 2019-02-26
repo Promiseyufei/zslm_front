@@ -25,7 +25,7 @@
                 userNews: 0,
                 userCoupon: 0,
                 page: 1,
-                page_size: 1,
+                page_size: 3,
                 active: [],
                 loading: false,
                 disabled: false,

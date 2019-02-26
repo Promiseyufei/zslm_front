@@ -149,7 +149,7 @@ export default {
         //获得分页数据
         singlecoach:function () {
             var that = this;
-            this.fetch('http://www.lishanlei.cn/front/coach/getcoachbyid',{
+            this.fetch('/front/coach/getcoachbyid',{
                 id: that.id,
                 u_id:1
             }).then(function (res) {
@@ -172,7 +172,7 @@ export default {
         useorget:function(re,id) {
             if(re==0) {
                 var that = this;
-                this.post('http://www.lishanlei.cn/front/coach/addcoupon',{
+                this.post('/front/coach/addcoupon',{
                     u_id:1,
                     c_id:id
                 }).then(function (res) {

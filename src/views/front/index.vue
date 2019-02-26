@@ -475,14 +475,14 @@ export default {
         },
         //跳到相应的单个院校
         toJumpCollege: function(id) {
-            this.$router.push('/front/firstMenuRouter/singleCollage/'+id);
+            this.$router.push('/front/firstMenuRouter/selectCollege/singleCollage/'+id);
         },
         //轮播图，图片前移
         next_pic: function() {
             this.index++;
             if(this.index > 2){
                 this.index = 0;
-            }
+            }   
             this.showCurrentDot();
             var newLeft;
             if(this.wrap.style.left === "-3820px"){
