@@ -19,8 +19,8 @@
 							<div v-for="(item_,index_) in datas.major_confirm_id" style="display: inline-block;margin: 5px 5px">
 								<img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/EQUIS.png">
 								<img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/AACSB.png">
-								<img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/AMBA.png">
-								<img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/CAMEA.png">
+								<img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
+								<img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/camea.png">
 								<img class="c-image image_2pnGPP" v-if="item == 'AAPEQ'" src="../../assets/img/AAPEQ.png">
 								<img class="c-image image_2pnGPP" v-if="item == 'NASPAA'" src="../../assets/img/NASPAA.png">
 								<img class="c-image image_2pnGPP" v-if="item == 'CEEMAN IQA'" src="../../assets/img/CEEMANIQA.png">

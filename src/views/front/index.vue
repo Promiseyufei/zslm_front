@@ -44,7 +44,7 @@
                     <div class="singleCollegeBox">
                         <div class="singleCollege" v-for="(temp,index) in college" :key="index" @click = "toJumpCollege(temp.id)">
                             <img src="../../assets/img/coach2.png" alt="">
-                            
+
                             <div class="hover">
                                 <div>
                                     <img src="../../assets/img/coach2.png" alt="" class="indeximg">
@@ -56,8 +56,8 @@
                                             <!-- <div v-for="(item,index) in temp.major_confirm_id" class="majorType">
                                                 <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/EQUIS.png">
                                                 <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/AACSB.png">
-                                                <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/AMBA.png">
-                                                <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/CAMEA.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/camea.png">
                                                 <img class="c-image image_2pnGPP" v-if="item == 'AAPEQ'" src="../../assets/img/AAPEQ.png">
                                                 <img class="c-image image_2pnGPP" v-if="item == 'NASPAA'" src="../../assets/img/NASPAA.png">
                                                 <img class="c-image image_2pnGPP" v-if="item == 'CEEMAN IQA'" src="../../assets/img/CEEMANIQA.png">
@@ -79,12 +79,12 @@
                                                 <img class="c-image image_2pnGPP" v-if="item=='A线'" src="../../assets/img/A线.png">
                                                 <img class="c-image image_2pnGPP" v-if="item=='B线'" src="../../assets/img/B线.png">
                                             </div> -->
-                                            
+
                                             <img src="../../assets/img/aacsb.jpg" alt="">
                                             <img src="../../assets/img/camea.png" alt="">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="collegeName">
                                         <p>{{temp.z_name}}</p>
                                         <p>点击进入院校主页<i class="fa fa-long-arrow-right"></i></p>
@@ -117,7 +117,7 @@
                     <!-- 搜辅导----单个辅导机构小块块 -->
                     <div class="singleCollegeBox">
                         <div class="selectInformationHearder">
-                            <div class="selectInformationLeft" @click="toJumpCoach(coach[0].id)"> 
+                            <div class="selectInformationLeft" @click="toJumpCoach(coach[0].id)">
                                 <img src="../../assets/img/sitanfu.jpg" alt="">
                                 <div>
                                     <div class="selectInformationLeftimg">
@@ -344,7 +344,7 @@
 	                    </p>
 	                </div>
 	            </div>
-	        </div> 
+	        </div>
             <!-- 页脚 -->
     	</div>
     </div>
@@ -353,7 +353,7 @@
 <script>
 export default {
     components: {
-        
+
     },
     data() {
         return {
@@ -445,7 +445,7 @@ export default {
             var that = this;
             this.fetch('/front/indexinfo').then(function (res) {
                 if (res.code == 0) {
-                    
+
                     that.college = res.result.major;//返回学校
                     if(that.college.length > 0) {
                         for (let i = 0; i < that.college.length; i++) {
@@ -522,7 +522,7 @@ export default {
             this.index++;
             if(this.index > 2){
                 this.index = 0;
-            }   
+            }
             this.showCurrentDot();
             var newLeft;
             if(this.wrap.style.left === "-3820px"){
@@ -570,7 +570,7 @@ export default {
         this.mes = messsa;
         var self = this;
 
-        
+
 
         clearInterval(self.timer);
         self.timer = setInterval(function () {
@@ -593,7 +593,7 @@ export default {
                     console.log(i);
                     var dis = self.index - i;
                     if(self.index == 2 && parseInt(self.wrap.style.left)!==-2865){
-                        dis = dis - 3;   
+                        dis = dis - 3;
                     }
                     //和使用prev和next相同，在最开始的照片5和最终的照片1在使用时会出现问题，导致符号和位数的出错，做相应地处理即可
                     if(self.index == 0 && parseInt(self.wrap.style.left)!== -955){
@@ -615,9 +615,9 @@ export default {
                 this.saveUserState('userHead', this.userData[2].head_portrait);
             }
         }
-        
-        
-        
+
+
+
     },
 };
 </script>
@@ -679,7 +679,7 @@ export default {
         overflow: hidden;
         cursor: pointer;
     }
-    
+
     .lookinformation>img {
         width: 100%;
         height: 170px;
@@ -814,7 +814,7 @@ export default {
         margin: 10% 0 3%;
         cursor: pointer;
     }
-    
+
     .indexBigBlock>div {
         margin: 2%;
         padding: 4% 5%;
@@ -1018,7 +1018,7 @@ export default {
         background-size: auto 100%;
         background-color: #6e6e6e90;
     }
-    
+
 
     /* 选院校模块样式 */
     .indexBlockMessageBox {
@@ -1078,7 +1078,7 @@ export default {
     .listMedo {
         background-color: #fff;
     }
-    
+
     .singleCollege:hover .hover{
         display: block;
         -moz-box-shadow: 5px 10px 15px #cac9c9; /* 老的 Firefox */
@@ -1254,7 +1254,7 @@ export default {
         height: 75%;
         background: rgba(56, 60, 61, 0.8);
     }
-    
+
     .selectInformationLeftimg>img {
         width: 37%;
     }
@@ -1285,7 +1285,7 @@ export default {
         margin-bottom: 20px;
         cursor: pointer;
     }
-    
+
     .selectInformationLittle>img {
         min-width: 100%;
         max-height: 100%;
@@ -1335,7 +1335,7 @@ export default {
         color: #000;
     }
 
-    
+
 
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
@@ -1415,8 +1415,8 @@ export default {
 
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
-        
-    } 
+
+    }
 
     /* Large devices (laptops/desktops, 992px and up) */
     @media only screen and (min-width: 992px) {
@@ -1427,7 +1427,7 @@ export default {
         .indexBigBlock img {
             width: 80%;
         }
-    } 
+    }
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1200px) {
