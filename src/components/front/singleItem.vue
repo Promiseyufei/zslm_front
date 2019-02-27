@@ -12,64 +12,64 @@
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/smoney.png"></div>
                     <div class="informationTwo">项目费用</div>
-                    <p class="informationThree">{{deta.cost}}</p>
+                    <p class="informationThree" v-html="deta.cost"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/friends.png"></div>
                     <div class="informationTwo">招生名额</div>
-                    <p class="informationThree">{{deta.student_count}}</p>
+                    <p class="informationThree" v-html="deta.student_count"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/class.png"></div>
                     <div class="informationTwo">授课语言</div>
-                    <p class="informationThree">{{deta.language}}</p>
+                    <p class="informationThree" v-html="deta.language"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/class2.png"></div>
                     <div class="informationTwo">班级情况</div>
-                    <p class="informationThree">{{deta.class_situation}}</p>
+                    <p class="informationThree" v-html="deta.class_situation"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/system.png"></div>
                     <div class="informationTwo">学制</div>
-                    <p class="informationThree">{{deta.eductional_systme}}</p>
+                    <p class="informationThree" v-html="deta.eductional_systme"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/exam.png"></div>
                     <div class="informationTwo">报考条件</div>
-                    <p class="informationThree">{{deta.can_conditions}}</p>
+                    <p class="informationThree" v-html="deta.can_conditions"></p>
                 </div>
             </div>
             <div class="right">
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/describe.png"></div>
                     <div class="informationTwo">分数线描述</div>
-                    <p class="informationThree">{{deta.score_describe}}</p>
+                    <p class="informationThree" v-html="deta.score_describe"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/type.png"></div>
                     <div class="informationTwo">分数线类型</div>
-                    <p class="informationThree">{{deta.score_type}}</p>
+                    <p class="informationThree" v-html="deta.score_type"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/model.png"></div>
                     <div class="informationTwo">统招模式</div>
-                    <p class="informationThree">{{deta.recruitment_pattern}}</p>
+                    <p class="informationThree" v-html="deta.recruitment_pattern"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/model2.png"></div>
                     <div class="informationTwo">招生模式</div>
-                    <p class="informationThree">{{deta.enrollment_mode}}</p>
+                    <p class="informationThree" v-html="deta.enrollment_mode"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/biye.png"></div>
                     <div class="informationTwo">毕业证书</div>
-                    <p class="informationThree">{{deta.graduation_certificate}}</p>
+                    <p class="informationThree" v-html="deta.graduation_certificate"></p>
                 </div>
                 <div class="informationLeft">
                     <div class="informationOne"><img src="../../assets/img/other.png"></div>
                     <div class="informationTwo">其他说明</div>
-                    <p class="informationThree">{{deta.other_explain}}</p>
+                    <p class="informationThree" v-html="deta.other_explain"></p>
                 </div>
             </div>
         </div>
