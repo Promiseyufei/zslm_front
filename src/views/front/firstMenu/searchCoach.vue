@@ -35,7 +35,7 @@
 					</div>
 				</div>
 
-				<!-- 辅导机构小块块 -->
+				<!-- 辅导机构小模块 -->
 				<div class="singlecoachBig" >
 					<div class="singlecoachbox">
 						<div class="singlecoach" v-for="(item,index) in coachlist" :key="index">
@@ -312,7 +312,7 @@
 					} else {
 						that.coachlist = [];
 						that.count = 0;
-						that.message(true, res.msg, "error");
+						// that.message(true, res.msg, "error");
 					}
 					that.all_loading = false;
 				}).catch(function(error) {
