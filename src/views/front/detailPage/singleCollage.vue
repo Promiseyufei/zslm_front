@@ -104,10 +104,13 @@
                                         <div class="detailTitle">专业认证</div>
                                         <div class="majorPicture" >
                                             <div v-for="(item,index) in typeId.major_confirm_id" :key="index">
-                                                <img class="c-image image_2pnGPP" v-if="item==equis" src="../../../assets/img/equsSmall.png">
-                                                <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../../assets/img/aacsbSmall.png">
-                                                <img class="c-image image_2pnGPP" v-if="item == amba" src="../../../assets/img/amba.png">
-                                                <img class="c-image image_2pnGPP" v-if="item == camea" src="../../../assets/img/camea.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='EQUIS'" src="../../../assets/img/EQUIS.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='AASCB'" src="../../../assets/img/AACSB.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'AMBA'" src="../../../assets/img/AMBA.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'CAMEA'" src="../../../assets/img/CAMEA.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'AAPEQ'" src="../../../assets/img/AAPEQ.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'NASPAA'" src="../../../assets/img/NASPAA.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'CEEMAN IQA'" src="../../../assets/img/CEEMANIQA.png">
                                             </div>
                                         </div>
                                     </div>
@@ -115,9 +118,21 @@
                                         <div class="detailTitle">院校性质</div>
                                         <div class="typePicture">
                                             <div v-for="(item,index) in typeId.major_follow_id" :key="index">
-                                                <img class="c-image image_2pnGPP" v-if="item==two" src="../../../assets/img/211.png">
-                                                <img class="c-image image_2pnGPP" v-if="item==nine" src="../../../assets/img/985.png">
-                                                <img class="c-image image_2pnGPP" v-if="item==both29" src="../../../assets/img/shuangyiliu.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='原211'" src="../../../assets/img/原211.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='原985'" src="../../../assets/img/原985.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='双一流'" src="../../../assets/img/双一流.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='中科院直属'" src="../../../assets/img/中科院直属.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='社科院直属'" src="../../../assets/img/社科院直属.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='部委直属'" src="../../../assets/img/部委直属.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='省部共建'" src="../../../assets/img/省部共建.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='省市属重点'" src="../../../assets/img/省市属重点.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='普通高等院校'" src="../../../assets/img/普通高等院校.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='中国与欧盟合办'" src="../../../assets/img/中国与欧盟合办.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='中西部重点建设'" src="../../../assets/img/中西部重点建设.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='宁波市与MIT共建'" src="../../../assets/img/宁波市与MIT共建.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='省/市直属'" src="../../../assets/img/省市直属.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='A线'" src="../../../assets/img/A线.png">
+                                                <img class="c-image image_2pnGPP" v-if="item=='B线'" src="../../../assets/img/B线.png">
                                             </div>
                                         </div>
                                     </div>
@@ -440,9 +455,10 @@ export default {
                     that.is_guanzhu = res.is_guanzhu;
                     that.index_web = res.index_web;
                     that.admissions_web = res.admissions_web;
-                    // console.log(res.major_follow_id);
-                    that.typeId.major_confirm_id = res.major_confirm_id.split(',');
-                    that.typeId.major_follow_id = res.major_follow_id.split(',');
+                    
+                    that.typeId.major_confirm_id = (res.major_confirm_id != false) ? res.major_confirm_id.split(',') : [];
+                    that.typeId.major_follow_id = (res.major_confirm_id != false ) ? res.major_follow_id.split(',') : [];
+                    // console.log(res.major_follow_id.split(','))
                     //字符串转化为数组
                     // that.wxCode = res.wc_image.split(',');
                     // that.xlCode = res.wb_image.split(',');
