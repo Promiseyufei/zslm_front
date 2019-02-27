@@ -94,6 +94,23 @@ Object.keys(wxShare).forEach((key) => {
  */
 router.beforeEach((to, from, next) => {
 
+	// console.log(to)
+	if(to.matched.length === 0) {
+		// if(to.path.substring(0, 12) == '/front/index') {
+		// 	next({
+		// 		name: from.name
+		// 	})
+		// 	// next()
+		// }
+		from.name ? next({
+			name: from.name
+		}) : next('/404');
+		
+	}
+	else {
+		next();
+	}
+
 
 	var paramPath = to.path.split('/');
 	if (paramPath[1] === 'admin') {
