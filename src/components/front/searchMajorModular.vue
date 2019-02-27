@@ -3,8 +3,8 @@
         <div class="c-div div_fFxH2L">
             <div class="div_BMsaOd">
                 <div class="div_ARD2As">
-                    <div class="c-inlineblock c-imageblock imageblock_VRWtPr" 
-                        mode="scaleToFill" :src="majorInfo.magor_logo_name" 
+                    <div class="c-inlineblock c-imageblock imageblock_VRWtPr"
+                        mode="scaleToFill" :src="majorInfo.magor_logo_name"
                         :style="'background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url('+ majorInfo.magor_logo_name +');'">
                     </div>
                     <div class="div_mnG0wo">
@@ -19,8 +19,8 @@
                             <template v-for="(item, index) in majorInfo.major_confirm_id">
                                 <img class="c-image image_2pnGPP" :key="index + 'EQUIS'" v-if="item=='EQUIS'" src="../../assets/img/EQUIS.png">
                                 <img class="c-image image_2pnGPP" :key="index + 'AASCB'" v-if="item=='AASCB'" src="../../assets/img/AACSB.png">
-                                <img class="c-image image_2pnGPP" :key="index + 'AMBA'" v-if="item == 'AMBA'" src="../../assets/img/AMBA.png">
-                                <img class="c-image image_2pnGPP" :key="index + 'CAMEA'" v-if="item == 'CAMEA'" src="../../assets/img/CAMEA.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'AMBA'" v-if="item == 'AMBA'" src="../../assets/img/amba.png">
+                                <img class="c-image image_2pnGPP" :key="index + 'CAMEA'" v-if="item == 'CAMEA'" src="../../assets/img/camea.png">
                                 <img class="c-image image_2pnGPP" :key="index + 'AAPEQ'" v-if="item == 'AAPEQ'" src="../../assets/img/AAPEQ.png">
                                 <img class="c-image image_2pnGPP" :key="index + 'NASPAA'" v-if="item == 'NASPAA'" src="../../assets/img/NASPAA.png">
                                 <img class="c-image image_2pnGPP" :key="index + 'CEEMAN IQA'" v-if="item == 'CEEMAN IQA'" src="../../assets/img/CEEMANIQA.png">
@@ -79,7 +79,7 @@
                     </el-popover>
                     <!-- <el-button class="btn c-button button_LsM2yn123 duibi" slot="reference" @click="compareMajor">+ 加入对比</el-button> -->
                 <!-- </div> -->
-                
+
             </div>
         </div>
     </div>
@@ -156,7 +156,7 @@ export default {
             this.setCookie(this.colleges)
         },
         addContrast() {
-            
+
         }
 
     },
