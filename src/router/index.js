@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import admin from './admin'
 import front from './front'
-
+    
 
 Vue.use(Router)
 

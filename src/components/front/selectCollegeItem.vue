@@ -1,6 +1,6 @@
 <template>
     <div class="allInforma" @change="getViewIcon">
-        
+
         <!-- <vsmajor v-show="compare" slot="reference"></vsmajor> -->
         <div class="c-div div_BMsaOd guanzhu" style="margin-bottom:30px;align-items:flex-end;">
             <div class="c-div div_ARD2As">
@@ -21,8 +21,8 @@
                         <div v-for="(item,index) in datas.major_confirm_id" class="majorType">
                              <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/EQUIS.png">
                             <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/AACSB.png">
-                            <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/AMBA.png">
-                            <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/CAMEA.png">
+                            <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
+                            <img class="c-image image_2pnGPP" v-if="item == camea" src="../../assets/img/camea.png">
                             <img class="c-image image_2pnGPP" v-if="item == 'AAPEQ'" src="../../assets/img/AAPEQ.png">
                             <img class="c-image image_2pnGPP" v-if="item == 'NASPAA'" src="../../assets/img/NASPAA.png">
                             <img class="c-image image_2pnGPP" v-if="item == 'CEEMAN IQA'" src="../../assets/img/CEEMANIQA.png">
@@ -265,7 +265,7 @@
             //向父组件传参数
             this.getViewIcon();
             // 院校性质标签是否显示
-            
+
             if(this.collegeInfo.major_follow_id != '')
                 this.datas.major_follow_id = this.collegeInfo.major_follow_id.split(',');
             if(this.collegeInfo.major_confirm_id != '')
@@ -286,7 +286,7 @@
     }
 </script>
 <style>
-    
+
 </style>
 
 <style scoped>
@@ -481,7 +481,7 @@
         .diffeCollege {
             width: 100%;
         }
-        
+
     }
     /*不同院校——院校信息*/
 

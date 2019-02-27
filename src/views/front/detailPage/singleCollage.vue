@@ -106,8 +106,8 @@
                                             <div v-for="(item,index) in typeId.major_confirm_id" :key="index">
                                                 <img class="c-image image_2pnGPP" v-if="item=='EQUIS'" src="../../../assets/img/EQUIS.png">
                                                 <img class="c-image image_2pnGPP" v-if="item=='AASCB'" src="../../../assets/img/AACSB.png">
-                                                <img class="c-image image_2pnGPP" v-if="item == 'AMBA'" src="../../../assets/img/AMBA.png">
-                                                <img class="c-image image_2pnGPP" v-if="item == 'CAMEA'" src="../../../assets/img/CAMEA.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'AMBA'" src="../../../assets/img/amba.png">
+                                                <img class="c-image image_2pnGPP" v-if="item == 'CAMEA'" src="../../../assets/img/camea.png">
                                                 <img class="c-image image_2pnGPP" v-if="item == 'AAPEQ'" src="../../../assets/img/AAPEQ.png">
                                                 <img class="c-image image_2pnGPP" v-if="item == 'NASPAA'" src="../../../assets/img/NASPAA.png">
                                                 <img class="c-image image_2pnGPP" v-if="item == 'CEEMAN IQA'" src="../../../assets/img/CEEMANIQA.png">
@@ -213,7 +213,7 @@
             </div>
         <!-- 招生项目 -->
         </div>
-        
+
     </div>
 </template>
 
@@ -267,7 +267,7 @@ export default {
                 computer:require("../../../assets/img/computer.png"),
                 xinlang:require("../../../assets/img/xinlang2.png"),
                 weixin:require("../../../assets/img/weixin2.png"),
-                contact:require("../../../assets/img/contact.png"), 
+                contact:require("../../../assets/img/contact.png"),
             }],
             //基本信息——院校性质图片
             typeId:[],
@@ -455,7 +455,7 @@ export default {
                     that.is_guanzhu = res.is_guanzhu;
                     that.index_web = res.index_web;
                     that.admissions_web = res.admissions_web;
-                    
+
                     that.typeId.major_confirm_id = (res.major_confirm_id != false) ? res.major_confirm_id.split(',') : [];
                     that.typeId.major_follow_id = (res.major_confirm_id != false ) ? res.major_follow_id.split(',') : [];
                     // console.log(res.major_follow_id.split(','))
@@ -503,7 +503,7 @@ export default {
                 document.getElementById('contact').style.color = "#6f6f6f"
             },
         //联系方式logo——鼠标滑过样式
-        
+
     },
     mounted(){
         // console.log(369)
@@ -591,7 +591,7 @@ export default {
                 width: 185px;
                 display: flex;
                 flex-wrap:wrap;
-            } 
+            }
             .typePicture {
                 display: flex;
                 flex-wrap:wrap;
@@ -637,7 +637,7 @@ export default {
             width: 325px;
             padding-left: 10px;
         }
-        
+
         .itemInform .el-button--mini, .el-button--mini.is-round {
             padding: 8px 18px;
         }
@@ -671,7 +671,7 @@ export default {
             font-size: 18px !important;
             border-radius: 5px;
             border: 0;
-            padding-right:25px; 
+            padding-right:25px;
             margin-left: 6px;
         }
         .buttoOne .el-button--primary {
@@ -706,7 +706,7 @@ export default {
             margin: 10px 0;
             cursor: pointer;
         }
-        
+
     /*<!-- 招生项目 -->*/
         .aboutActivity >>>.activityBox {
             width: 280px;
@@ -820,7 +820,7 @@ export default {
             height: 360px;
             /* background: url(../../../assets/img/singleCollege.jpg) no-repeat; */
             background-position: 50% 50%;
-            background-size: cover; 
+            background-size: cover;
         }
     /*<!-- 院校logo -->*/
         .singleCollageAll {
@@ -834,7 +834,7 @@ export default {
         }
     /** PC **/
     @media only screen and (min-width: 992px) and (max-width:1200px) {
-        
+
         .singleCollageAll {
             width: 100%;
         }
