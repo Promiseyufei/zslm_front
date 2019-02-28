@@ -93,10 +93,10 @@ Object.keys(wxShare).forEach((key) => {
  * 前端路由过滤
  */
 router.beforeEach((to, from, next) => {
-
-
+	
 	if(to.matched.length === 0) {
 		if(to.path == '/') {
+			
 			next('/front/index');
 		}
 		else {
