@@ -12,7 +12,7 @@ export default {
             names: [
                 {name:'院校动态', selected_prop_value:null, url:'/front/firstMenuRouter/usercore/myNews/dynamic'},
                 {name:'小助手消息', selected_prop_value:null, url:'/front/firstMenuRouter/usercore/myNews/assistant'},
-                {name:'小助手消息', selected_prop_value:null, url:'/front/firstMenuRouter/usercore/myNews/system'},
+                {name:'系统消息', selected_prop_value:null, url:'/front/firstMenuRouter/usercore/myNews/system'},
             ]
         }
     },
