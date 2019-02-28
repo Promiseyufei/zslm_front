@@ -29,7 +29,7 @@
                                 <el-tab-pane label="优惠卷" name="first">
                                     <div class="coachbig">
                                         <!-- n个优惠卷 -->
-                                        <div class="coachbox" v-for="(item,index) in collage.coupon" @click="useorget(item.is_have,item.id)">
+                                        <div class="coachbox" v-for="(item,index) in collage.coupon" @click="useorget(item.is_have,item.id , index)" v-show="item.is_enable == 0">
                                             <div class="coachleft" :class="item.is_have==1?'ff':'' ">
                                                 <div class="coachleftleft" v-if="item.type==0">折扣卷</div>
                                                 <div class="coachleftleft2" v-if="item.type==1">满减卷</div>
@@ -41,7 +41,7 @@
                                             <div class="coachleftright" v-if="item.is_have==0">
                                                 <span>点击领取</span>
                                             </div>
-                                            <div class="coachleftright coachleftright2" v-if="item.is_have==1">
+                                            <div class="coachleftright coachleftright2" v-if="item.is_have==1" @click="jumpUserCoupon()">
                                                 <span>去使用</span>
                                             </div>
                                         </div>
@@ -81,7 +81,7 @@
                             <h6>优惠卷</h6>
                             <div class="coachbig" style="margin-top: 15px;">
                               <!-- n个优惠卷 -->
-                              <div class="coachbox" v-for="(item,index) in collage.coupon" @click="useorget(item.is_have,item.id)">
+                              <div class="coachbox" v-for="(item,index) in collage.coupon" @click="useorget(item.is_have,item.id , index)"  v-show="item.is_enable == 0">
                                 <div class="coachleft" :class="item.is_have==1?'ff':'' ">
                                   <div class="coachleftleft" v-if="item.type==0">折扣卷</div>
                                   <div class="coachleftleft2" v-if="item.type==1">满减卷</div>
@@ -93,7 +93,7 @@
                                 <div class="coachleftright" v-if="item.is_have==0">
                                   <span>点击领取</span>
                                 </div>
-                                <div class="coachleftright coachleftright2" v-if="item.is_have==1">
+                                <div class="coachleftright coachleftright2" v-if="item.is_have==1" @click="jumpUserCoupon()">
                                   <span>去使用</span>
                                 </div>
                               </div>
@@ -147,6 +147,7 @@ export default {
     data() {
         return {
             id: 0,
+            userId:0,
             activeName: 'first',
             activity:{
                 id:1,
@@ -171,7 +172,7 @@ export default {
             var that = this;
             this.fetch('/front/coach/getcoachbyid',{
                 id: that.id,
-                u_id:1
+                u_id:this.userId?this.userId:0,
             }).then(function (res) {
                     // console.log(res);
                     if (res.code == 0) {
@@ -189,22 +190,33 @@ export default {
         jumpweb:function() {
             window.location.href=this.collage.web_url;
         },
-        useorget:function(re,id) {
-            if(re==0) {
+        // 领取优惠券
+        useorget:function(re,id , key) {
+            if(this.userId){
+              if(re==0) {
                 var that = this;
                 this.post('/front/coach/addcoupon',{
-                    u_id:1,
-                    c_id:id
+                  u_id:this.userId,
+                  c_id:id
                 }).then(function (res) {
-                        // console.log(res);
-                        if (res.code == 0) {
-                            that.message(true,res.msg,"succeed");
-                        }else {
-                            that.message(true,res.msg,"error");
-                        }
+                  console.log(res);
+                  if (res.code == 0) {
+                    that.collage.coupon[key].is_have = 1;
+                    that.message(true,res.msg,"succeed");
+                  }else {
+                    that.message(true,res.msg,"error");
+                  }
                 }).catch(function (error) {
                 });
+              }
+            }else{
+              this.message(true, '您还未登录，请先登录后再完成关注。', 'info');
+              this.$router.push('/front/Login/loginRoute/accountNumber');
             }
+        },
+        // 跳转到用户优惠券中心
+        jumpUserCoupon(){
+            this.$router.push('/front/firstMenuRouter/usercore/mycoupon');
         },
         //跳转到官网
         tolink:function(url) {
@@ -221,6 +233,7 @@ export default {
     },
     mounted(){
         this.id = this.$route.params.id;
+        this.userId = this.getUserState('userId');
         this.singlecoach();
     },
 };
