@@ -607,6 +607,8 @@ export default {
         }
 
         if(this.$route.params.userData != undefined || this.$route.params.userData != null) {
+            var dddd= decodeURIComponent (this.$route.params.userData);
+            console.log(dddd)
             this.userData = JSON.parse(this.$route.params.userData);
             if(this.userData[0] == 0) {
                 this.saveUserState('user', this.userData[2].phone);
