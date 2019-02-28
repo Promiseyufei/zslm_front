@@ -33,6 +33,10 @@
             <div id="my_box" class="c-div div_bWWE5A userlist_box" data-c_e_id="div8629c0b6"></div>
             <h1 id="my_h" class="c-heading heading_Bxhtr7" @click="jump(4)">我的帐户</h1>
         </div>
+      <div id="out" class="c-div div_jR3IYS userlist c-action-click">
+        <div id="my_box" class="c-div div_bWWE5A userlist_box" data-c_e_id="div8629c0b6"></div>
+        <h1 id="my_h" class="c-heading heading_Bxhtr7" @click="out()">退出</h1>
+      </div>
     </div>
 </template>
 <style scoped>
@@ -225,8 +229,6 @@
     }
 </style>
 <script>
-
-
     export default {
         data() {
             return {
@@ -267,6 +269,15 @@
             },
             jump(index){
                 this.$router.push(this.url[index])
+            },
+            out(){
+                this.saveUserState('user' , null);
+                this.saveUserState('userId' , null);
+                this.saveUserState('userName' , null);
+                this.saveUserState('userHead' , null);
+
+                this.message(true, '退出成功' , 'success');
+                this.$router.push('/front/index');
             }
 
         },
