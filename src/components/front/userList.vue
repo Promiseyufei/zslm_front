@@ -271,10 +271,10 @@
                 this.$router.push(this.url[index])
             },
             out(){
-                this.saveUserState('user' , null);
-                this.saveUserState('userId' , null);
-                this.saveUserState('userName' , null);
-                this.saveUserState('userHead' , null);
+                this.saveUserState('user');
+                this.saveUserState('userId');
+                this.saveUserState('userName');
+                this.saveUserState('userHead');
 
                 this.message(true, '退出成功' , 'success');
                 this.$router.push('/front/index');

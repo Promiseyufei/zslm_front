@@ -720,7 +720,7 @@
 
             getCoupon(){
                 let self = this;
-				this.coupon_loading = true;
+				        this.coupon_loading = true;
                 this.fetch('/front/coach/getusercoach',{
                     id:self.id,
                     page:self.page,
