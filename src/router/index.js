@@ -6,7 +6,9 @@ import front from './front'
 
 Vue.use(Router)
 
-let all_router = {}
+let all_router = {
+       mode: 'hash'
+}
 // let all_router = {
 //     mode: 'history'
 // }
