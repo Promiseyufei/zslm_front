@@ -50,7 +50,6 @@
                                         <img src="../../../assets/img/nonecoach.png" alt="">
                                         <span>暂无可用优惠卷</span>
                                     </div>
-                                    
                                 </el-tab-pane>
                                 <el-tab-pane label="分校列表" name="second">
                                     <div class="coachbig">
@@ -80,9 +79,30 @@
                         </div>
                         <div class="messageCoach" v-show="collage.son_coach=='' ">
                             <h6>优惠卷</h6>
-                            <div class="nonecoach">
-                                <img src="../../../assets/img/nonecoach.png" alt="">
-                                <span>暂无可用优惠卷</span>
+                            <div class="coachbig" style="margin-top: 15px;">
+                              <!-- n个优惠卷 -->
+                              <div class="coachbox" v-for="(item,index) in collage.coupon" @click="useorget(item.is_have,item.id)">
+                                <div class="coachleft" :class="item.is_have==1?'ff':'' ">
+                                  <div class="coachleftleft" v-if="item.type==0">折扣卷</div>
+                                  <div class="coachleftleft2" v-if="item.type==1">满减卷</div>
+                                  <div class="coachright">
+                                    <p :class="item.type==1?'ffff':'' ">{{item.name}}</p>
+                                    <span>2018.10.12-2018.11.12</span>
+                                  </div>
+                                </div>
+                                <div class="coachleftright" v-if="item.is_have==0">
+                                  <span>点击领取</span>
+                                </div>
+                                <div class="coachleftright coachleftright2" v-if="item.is_have==1">
+                                  <span>去使用</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div v-show="collage.coupon==''">
+                              <div class="nonecoach">
+                                  <img src="../../../assets/img/nonecoach.png" alt="">
+                                  <span>暂无可用优惠卷</span>
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -105,7 +125,7 @@
                         <activityBox :activityInfo="activity" class="activitystyle"></activityBox>
 
                         <!-- 意见反馈 -->
-                        <img src="../../../assets/img/advise.png" alt="" @click="advise"> 
+                        <img src="../../../assets/img/advise.png" alt="" @click="advise">
 
                         <!-- 退款保障 -->
                         <img src="../../../assets/img/returnmoney.png" alt="" @click="returnmoney">
@@ -419,7 +439,7 @@ export default {
     font-size: 16px;
     line-height: 30px;
     color: rgb(110, 110, 110);
-} 
+}
 .messageCoach {
     background-color: #fff;
     padding: 25px;
@@ -589,5 +609,4 @@ export default {
 }
 
 </style>
-    
-    
+

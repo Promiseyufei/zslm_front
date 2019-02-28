@@ -483,7 +483,9 @@ export default {
         },
         //跳到注册页面
         jump:function() {
-            this.$router.push('/front/Login/register');
+            if(!this.getUserState('userId')){
+              this.$router.push('/front/Login/register');
+            }
         },
         //跳到相应的单个活动页面
         toJumpActivity: function() {

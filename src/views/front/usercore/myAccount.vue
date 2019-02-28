@@ -291,7 +291,10 @@
 							response.result.industry = response.result.industry == 0 ? '' : response.result.industry
 							that.userInfo = response.result;
 
-						} else
+						} else if(response.code == 3){
+						  that.message(true , response.msg , 'error');
+              this.$router.push('/front/Login/loginRoute/accountNumber')
+            }else
 							that.message(true, "修改成功", 'success');
 
 						that.info_loading = false;
