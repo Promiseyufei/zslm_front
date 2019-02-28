@@ -1,11 +1,15 @@
 let front_router = {
 
     routes: [
+		// {
+		// 	path:'*',
+		// 	name:'error404',
+		// 	component: resolve => void(require(['@/views/front/staticPage/404Page'], resolve))
+		// },
 		{
 			path:'/404',
 			name:'error404',
 			component: resolve => void(require(['@/views/front/staticPage/404Page'], resolve))
-			// file:///D:/MYphp/Apache24/htdocs/zslm_rmfd/src/views/front/staticPage/404Page.vue
 		},
         {
             path: '/front',
