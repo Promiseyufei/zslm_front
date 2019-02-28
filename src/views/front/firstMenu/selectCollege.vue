@@ -237,28 +237,32 @@ export default {
                     cities:[
                         {
                             id:0,
-                            name:'1500'
+                            name:'5万'
                         },
                         {
                             id:1,
-                            name:'2500'
+                            name:'10万'
                         },
                         {
                             id:2,
-                            name:'3500'
+                            name:'15万'
                         },
                         {
                             id:3,
-                            name:'4500'
+                            name:'20万'
                         },
                         {
                             id:4,
-                            name:'5500'
+                            name:'25万'
                         },
                         {
                             id:5,
-                            name:'6500'
-                        },
+                            name:'30万'
+						},
+						// {
+						// 	id:6,
+						// 	name:'30万及以上'
+						// }
                     ],//所有专业类型的id数组
                     "fif":"查看更多"
                 },
@@ -280,7 +284,7 @@ export default {
             z_name:'',
             professional_direction:'',
             major_order:0,
-            min:1,
+            min:0,
             max:0,
             money_order:0,
             score_type:'',
@@ -341,13 +345,14 @@ export default {
         },
         //转换选中参数的格式——数组，以便传参
         getselt:function(){
+			// console.log(this.selectData)
             let list = [];
             for (var i = 0; i < this.selectData.length; i++) {
                 var little = [];
                 for (var j = 0; j < this.selectData[i].length; j++) {
                     if(i == 2||i == 4){
                         little.push(this.selectData[i][j].name);
-                        little.push(this.selectData[i][j].name);
+                        // little.push(this.selectData[i][j].name);
 
                     } else {
                         little.push(this.selectData[i][j].id);
@@ -359,16 +364,31 @@ export default {
             this.professional_direction = list[1].join(",");//专业方向——字符串
             this.provice = list[2].join(",");//院校地点——字符串
             this.enrollment_mode = list[3].join(",");//统招模式——字符串
-            this.max = list[4];//学习费用——int
+			this.max = list[4];//学习费用——int
+			// console.log(list[4])
+			if(list[4].length > 0 && list[4].length == 1) {
+				this.max = parseInt(list[4][0]);
+			}
+			else if(list[4].length > 0 && list[4].length == 2) {
+				this.min = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][1]) : parseInt(list[4][0]);
+				this.max = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][0]) : parseInt(list[4][1]);
+			}
+			else if(list[4].length > 2) {
+				this.min = this.max = parseInt(list[4][0]);
+				for (let index = 1; index < list[4].length; index++) {
+					if(this.min > parseInt(list[4][index])) this.min = parseInt(list[4][index]);
+					if(this.max <= parseInt(list[4][index])) this.max = parseInt(list[4][index]);
+				}
+			}
             this.score_type = list[5].join(",");//分数线——字符串
-            let MIN = list[4][0];
-            let MAX;
-            for (var j = 0; j < list[4].length; j++) {
-                if (list[4][j] < MIN)
-                    MIN = list[4][j];
-                else 
-                    MAX = list[4][j];
-            }
+            // let MIN = list[4][0];
+            // let MAX;
+            // for (var j = 0; j < list[4].length; j++) {
+            //     if (list[4][j] < MIN)
+            //         MIN = list[4][j];
+            //     else 
+            //         MAX = list[4][j];
+            // }
             
             // console.log(MAX)
         },

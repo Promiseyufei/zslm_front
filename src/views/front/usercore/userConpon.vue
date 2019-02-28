@@ -759,7 +759,7 @@
                 this.isUse = isUse;
                 this.coupons = [];
                 var doc = document.getElementsByClassName('userclick')
-                console.log(doc)
+                // console.log(doc)
                 for(var i = 0;i<doc.length;i++){
                     if(i == isUse)
                         doc[i].setAttribute('class', 'c-textlink textlink_jH6Kkn userclick xuanzhong')
