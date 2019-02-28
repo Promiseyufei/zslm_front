@@ -10,7 +10,7 @@
 				<div class="singlecoachBig">
 					<div class="singlecoachbox">
 						<div class="coachInput">
-							<input type="text" placeholder="输入关键字搜索" v-model="inputvalue" @blur.prevent="getCoach">
+							<input type="text" placeholder="输入关键字搜索" v-model="inputvalue" @blur.prevent="getCoach(1)">
 							<i class="fa fa-search"></i>
 						</div>
 					</div>
@@ -210,8 +210,6 @@
 			},
 			//标签栏，点击标签，删除标签
 			handleClose(tag) {
-
-
 				for (let index = 0; index < this.tags.length; index++) {
 					var temp = this.tags[index].indexOf(tag);
 
@@ -258,8 +256,11 @@
 				console.log(90);
 				this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/' + id);
 			},
+
 			//得到所有筛选过的辅导机构列表
-			getCoach: function() {
+			getCoach: function(page) {
+			  if(page) this.pageNumber = page;
+
 				var that = this;
 				var str = '';
 				let len = that.tags[0].length;
