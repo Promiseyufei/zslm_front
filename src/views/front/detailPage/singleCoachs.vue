@@ -41,7 +41,7 @@
                                             <div class="coachleftright" v-if="item.is_have==0">
                                                 <span>点击领取</span>
                                             </div>
-                                            <div class="coachleftright coachleftright2" v-if="item.is_have==1">
+                                            <div class="coachleftright coachleftright2" v-if="item.is_have==1" @click="jumpUserCoupon()">
                                                 <span>去使用</span>
                                             </div>
                                         </div>
@@ -93,7 +93,7 @@
                                 <div class="coachleftright" v-if="item.is_have==0">
                                   <span>点击领取</span>
                                 </div>
-                                <div class="coachleftright coachleftright2" v-if="item.is_have==1">
+                                <div class="coachleftright coachleftright2" v-if="item.is_have==1" @click="jumpUserCoupon()">
                                   <span>去使用</span>
                                 </div>
                               </div>
@@ -190,6 +190,7 @@ export default {
         jumpweb:function() {
             window.location.href=this.collage.web_url;
         },
+        // 领取优惠券
         useorget:function(re,id , key) {
             if(this.userId){
               if(re==0) {
@@ -212,7 +213,10 @@ export default {
               this.message(true, '您还未登录，请先登录后再完成关注。', 'info');
               this.$router.push('/front/Login/loginRoute/accountNumber');
             }
-
+        },
+        // 跳转到用户优惠券中心
+        jumpUserCoupon(){
+            this.$router.push('/front/firstMenuRouter/usercore/mycoupon');
         },
         //跳转到官网
         tolink:function(url) {
