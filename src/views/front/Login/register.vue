@@ -4,7 +4,7 @@
     		<div class="center">
     				<div class="loginPicture"></div>
     				<el-card class="box-card">
-	    				<el-menu :default-active="active" class="el-menu-demo" 
+	    				<el-menu :default-active="active" class="el-menu-demo"
 	    				mode="horizontal" @select="handleSelect" v-model="active"
 	    				text-color="#333" active-text-color="#009fa0">
 	    					<el-menu-item index="1">免费成为会员</el-menu-item>
@@ -14,7 +14,7 @@
 							</el-input>
 	    				</div>
 	    				<div class="registerCodeinput">
-					      	<el-input placeholder="请输入验证码" 
+					      	<el-input placeholder="请输入验证码"
 						      prefix-icon="el-icon-message" v-model="smsCode">
 							</el-input>
 							<el-button type="primary"  :disabled="disabled" @click="sendcode">
@@ -73,7 +73,7 @@
 					this.sendSmsCode(this.phoneNumber);
             	}
         	},
-		    
+
 		    //注册按钮
 		    registerTest: function() {
 				if(this.phoneNumber==''){
@@ -206,7 +206,7 @@
 
 <!-- 局部样式 -->
 <style scoped>
-	
+
 	.phoneInput,.registerLogin {
 		width: 340px;
 		margin: 0 auto;
@@ -267,7 +267,8 @@
         background-size: 100% 100%;
 	}
 	.center {
-		width: 1903px;
+		/* width: 1903px; */
+    width: 100%;
 		display: flex;
 		justify-content:center;
 		margin: 100px 0;

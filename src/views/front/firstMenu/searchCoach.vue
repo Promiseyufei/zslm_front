@@ -210,6 +210,7 @@
 			},
 			//标签栏，点击标签，删除标签
 			handleClose(tag) {
+			  console.log(tag);
 				for (let index = 0; index < this.tags.length; index++) {
 					var temp = this.tags[index].indexOf(tag);
 
@@ -228,21 +229,16 @@
 
 			//每次子组件改变时，父组件就会改变
 			change: function(checkboxGroup) {
-
 				//当选中全部时，清空当前行数组，通过*号匹配
 				let t = checkboxGroup
 				this.tags = t.concat();;
 				let city = this.tags[0];
-				console.log(city.name)
 				this.tags[0] = new Array();
 
 				if (city.name != undefined)
 					this.tags[0][0] = city;
 				else {
-
-					this.$refs.select.checkboxGroup[0] = []
-					// this.$refs.select.checkAll[0] = true;
-					console.log(this.$refs.select.checkAll)
+					this.$refs.select.checkboxGroup[0] = [];
 				}
 				for (let index = 1; index < this.tags.length; index++) {
 					if (this.tags[index].length == 0) {
@@ -283,11 +279,10 @@
 					back = 2;
 					coach = 2;
 				} else if (that.tags[2].length == 1) {
+				  console.log(that.tags[2]);
 					if (that.tags[2][0].name == "10天退款无忧") {
 						back = 0; //0:支持
-						coach = 1; //1:不支持
 					} else {
-						back = 1;
 						coach = 0;
 					}
 				}

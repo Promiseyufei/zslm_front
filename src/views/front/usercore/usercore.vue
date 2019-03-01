@@ -651,7 +651,7 @@
 		},
 		mounted() {
 			this.id = this.getUserState("userId")
-			console.log(this.id)
+			// console.log(this.id)
 			let divs = document.getElementsByTagName("div")
 			divs[1].style.height = 0;
 			divs[2].style.height = 0;

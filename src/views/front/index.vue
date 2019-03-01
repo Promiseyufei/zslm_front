@@ -50,7 +50,7 @@
 					</div>
 					<!-- 选择院校----单个院校小块块 -->
 					<div class="singleCollegeBox">
-						<div class="singleCollege" v-for="(temp,index) in college" :key="index" @click="toJumpCollege(temp.id)">
+						<div class="singleCollege" v-for="(temp,index) in college" :key="index + 'singleCollege'" @click="toJumpCollege(temp.id)">
 							<img src="../../assets/img/coach2.png" alt="">
 
 							<div class="hover">
@@ -144,7 +144,7 @@
 								</div>
 							</div>
 							<div class="selectInformationRight">
-								<div class="selectInformationLittle" v-for="(item, index) in coach2" :key="index" @click="toJumpCoach(item.id)">
+								<div class="selectInformationLittle" v-for="(item, index) in coach2" :key="index + 'little'" @click="toJumpCoach(item.id)">
 									<img src="../../assets/img/sitanfu.jpg" alt="">
 									<div>
 										<div class="selectInformationLeftimg">
@@ -217,7 +217,7 @@
 								</div>
 							</div>
 							<div class="singActivitybox">
-								<div class="singActivity selectMessage" v-for="(item,indd) in activity" @click="toJumpActivity2(item.id)" :key="indd">
+								<div class="singActivity selectMessage" v-for="(item,indd) in activity" @click="toJumpActivity2(item.id)" :key="indd + 'message'">
 									<h3>{{item.active_name}}</h3>
 									<div class="singActivityspan">
 										<span><i class="fa fa-map-marker"></i>{{item.province.province}}{{item.province.city}}</span>
@@ -250,7 +250,7 @@
 					<!-- 看资讯----单个辅导机构小块块 -->
 					<div class="singleCollegeBox">
 						<div class="selectInformationHearder informationDiv">
-							<div class="lookinformation" v-for="(item,index) in consult1" @click="toJumpInfor(item.id)" :key="index">
+							<div class="lookinformation" v-for="(item,index) in consult1" @click="toJumpInfor(item.id)" :key="index + 'mation'">
 								<img src="../../assets/img/infor.jpg" alt="">
 								<div class="lookinforMessage">
 									<h3>{{item.zx_name}}</h3>
@@ -260,7 +260,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="lookinformationBig big" v-for="(item,index) in consult2" @click="toJumpInfor(item.id)" :key="index">
+							<div class="lookinformationBig big" v-for="(item,index) in consult2" @click="toJumpInfor(item.id)" :key="index + 'big'">
 								<div class="lookinforMessage">
 									<h3>{{item.zx_name}}</h3>
 									<p>{{item.brief_introduction}}</p>
@@ -271,7 +271,7 @@
 								</div>
 								<img src="../../assets/img/infor.jpg" alt="">
 							</div>
-							<div class="lookinformation" v-for="(item,index) in consult3" @click="toJumpInfor(item.id)" :key="index">
+							<div class="lookinformation" v-for="(item,index) in consult3" @click="toJumpInfor(item.id)" :key="index + 'look'">
 								<img src="../../assets/img/infor.jpg" alt="">
 								<div class="lookinforMessage">
 									<h3>{{item.zx_name}}</h3>
@@ -306,7 +306,7 @@
 					<!-- 服务----单个服务小块块 -->
 					<div class="singleCollegeBox">
 						<div class="memberServe">
-							<div v-for="(item,index) in member" :key="index">
+							<div v-for="(item,index) in member" :key="index + 'serve'">
 								<div>
 									<img :src="item.logo" alt="">
 								</div>
