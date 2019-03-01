@@ -13,7 +13,7 @@ export default {
     data() {
         return {
             Names: this.names,
-            i: -2
+            i: 0
         }
     },
     methods: {
@@ -41,14 +41,14 @@ export default {
 
             // }
             this.$emit('labelHeadClick', item);
-            sessionStorage.setItem('isSelect', this.i) 
-                
-            
-            
+            sessionStorage.setItem('isSelect', this.i)
+
+
+
         }
     },
     mounted() {
-        this.i = sessionStorage.getItem('isSelect') 
+        this.i = sessionStorage.getItem('isSelect')
     }
 }
 </script>
