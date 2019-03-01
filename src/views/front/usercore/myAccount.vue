@@ -201,9 +201,10 @@
 					this.user_loading = true;
 					this.post('/front/usercore/changeName', formdata, this.globals.config).then((response) => {
 						if (response.code == 0) {
-							console.log(response);
+							this.message(true, '更改头像成功!', 'success')
+							// console.log(response);
 						} else
-							this.message(true, response.msg, 'info');
+							this.message(true, '出了一点小问题，更改头像失败。', 'info');
 						this.user_loading = false;
 						this.updateUserHeadText = '修改头像';
 					})
@@ -302,7 +303,7 @@
 					})
 
 				} else {
-					this.message(true, '该用户会话已过时', 'error');
+					this.message(true, '您的登录状态已经过期，请重新登录', 'info');
 					// this.$router.push('/front/Login/loginRoute/accountNumber');
 				}
 			}
@@ -321,7 +322,6 @@
 			});
 			this.fetch('/front/usercore/getIndustryList').then((response) => {
 				if (response.code == 0) {
-					console.log(response.result);
 					this.dictionaries = response.result;
 				} else this.message(true, '请尝试刷新', 'info');
 			})

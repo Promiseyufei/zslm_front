@@ -144,7 +144,7 @@ export default {
             // 关注
             GuanZhu:"+ 关注",
 
-            // 热门活动 
+            // 热门活动
             hotInfor:[],//活动信息
             hotInfoTatol:1,
             hotInfopage:0,
@@ -224,7 +224,7 @@ export default {
                 self.message(true, "你还没有登录哦,请先登录/注册。", 'info');
                 this.$router.push('/front/Login/loginRoute/accountNumber');
             }
-            
+
         },
         // 取消关注
         remove:function(){
@@ -266,13 +266,9 @@ export default {
             let self = this;
             if(self.userId){
                 this.fetch('/front/colleges/getactivemajor',{
-                    // acId:this.id,
                     a_id:this.id,
                     u_id:this.userId,
                 }).then(function (res) {
-                    // console.log(res);
-                    // let res = response[0];
-                    // console.log(res.result[0]);
                     if(res.code == 0){
                         self.acHostInfo = res.result[0];
                         // 设置背景图
@@ -291,29 +287,21 @@ export default {
             }else{
                 this.fetch('/front/activity/getAcHostMajor',{
                     acId:this.id,
-                    // a_id:this.id,
-                    // u_id:this.userId,
                 }).then(function (res) {
-                    // console.log(res.result);
-                    // let res = response[0];
-                    // console.log(res.result[0]);
                     if(res.code == 0){
                         self.acHostInfo = res.result;
                         // 设置背景图
                         if(self.acHostInfo.major_cover_name != ""){
                             self.hostBgimg = self.acHostInfo.major_cover_name;
                         }
-                        // if(self.acHostInfo.is_guanzhu == true){
-                        //     self.GuanZhu = "取消关注";
-                        // }
                     }else{
                         self.message(true, "主办院校不存在", 'info');
                     }
                 }).catch(function(error){
-                    console.log("error");
+                    console.log(error);
                 });
             }
-            
+
         },
 
         // 热门活动推荐列表
@@ -373,28 +361,33 @@ export default {
 
         // 我要报名
         activitySign:function(){
-            // 需不需要前台判断多次点击时的情况
-            let self = this;
-            if(self.acSignClick == 0){
-                this.fetch('/front/activity/activitySign',{
-                    userId:this.userId,
-                    acId:this.id,
-                }).then(function (res) {
-                    // let res = result.data;
-                    // console.log(res);
-                    if(res.code == 0){
-                        // self.acHostInfo = res.result[0];
-                        self.message(true, "报名成功", 'success');
-                        self.acSignClick = 1; 
-                        self.acState = "已报名";   
-                    }else{
-                        self.message(true, "报名已结束，下次早点来哦", 'info');
-                    }
-                }).catch(function(error){
-                    console.log("error");
-                });
+            if(this.userId){
+              // 需不需要前台判断多次点击时的情况
+              let self = this;
+              if(self.acSignClick == 0){
+                  this.post('/front/activity/activitySign',{
+                      userId:this.userId,
+                      acId:this.id,
+                  }).then(function (res) {
+                      // let res = result.data;
+                      // console.log(res);
+                      if(res.code == 0){
+                          // self.acHostInfo = res.result[0];
+                          self.message(true, "报名成功", 'success');
+                          self.acSignClick = 1;
+                          self.acState = "已报名";
+                      }else{
+                          self.message(true, "报名已结束，下次早点来哦", 'info');
+                      }
+                  }).catch(function(error){
+                      console.log(error);
+                  });
+              }else{
+                  self.message(true, "操作不正确", 'info');
+              }
             }else{
-                self.message(true, "操作不正确", 'info');
+              this.message(true, '您还未登录，请先登录后再完成关注。', 'info');
+              this.$router.push('/front/Login/loginRoute/accountNumber');
             }
         },
 
@@ -775,7 +768,7 @@ export default {
             padding-top: 25px;
             padding-bottom: 10px;
         }
-       
+
         /*活动详情大块元素*/
         .singleActivityBody{
             padding-bottom: 30px;
@@ -816,14 +809,14 @@ export default {
         .singleActivityBody aside{
             width: 31%;
         }
-    } 
+    }
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1200px) {
         /*中间活动大块样式*/
         .singleActivityBody>div{
             width: 1300px;
-        } 
+        }
         /*左右两边分布 布局*/
         .singleActivityBody section{
             width: 75%;

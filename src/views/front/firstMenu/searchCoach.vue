@@ -1,3 +1,4 @@
+
 <template>
 	<div>
 		<div class="bigBox">
@@ -10,7 +11,7 @@
 				<div class="singlecoachBig">
 					<div class="singlecoachbox">
 						<div class="coachInput">
-							<input type="text" placeholder="输入关键字搜索" v-model="inputvalue" @blur.prevent="getCoach">
+							<input type="text" placeholder="输入关键字搜索" v-model="inputvalue" @blur.prevent="getCoach(1)">
 							<i class="fa fa-search"></i>
 						</div>
 					</div>
@@ -579,3 +580,4 @@
 		}
 	}
 </style>
+

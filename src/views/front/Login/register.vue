@@ -267,7 +267,7 @@
         background-size: 100% 100%;
 	}
 	.center {
-		width: 1903px;
+		/* width: 1903px; */
 		display: flex;
 		justify-content:center;
 		margin: 100px 0;
