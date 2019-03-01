@@ -233,7 +233,7 @@
 				let t = checkboxGroup
 				this.tags = t.concat();;
 				let city = this.tags[0];
-				console.log(city.name)
+				// console.log(city.name)
 				this.tags[0] = new Array();
 
 				if (city.name != undefined)
@@ -242,7 +242,7 @@
 
 					this.$refs.select.checkboxGroup[0] = []
 					// this.$refs.select.checkAll[0] = true;
-					console.log(this.$refs.select.checkAll)
+					// console.log(this.$refs.select.checkAll)
 				}
 				for (let index = 1; index < this.tags.length; index++) {
 					if (this.tags[index].length == 0) {
@@ -253,7 +253,7 @@
 			},
 			//跳转辅导机构详情页
 			jump: function(id) {
-				console.log(90);
+				// console.log(90);
 				this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/' + id);
 			},
 
@@ -279,6 +279,7 @@
 				}
 				let back = 2;
 				let coach = 2;
+				console.log(that.tags);
 				if (that.tags[2].length == 2) {
 					back = 2;
 					coach = 2;

@@ -336,7 +336,7 @@
 			 * @param  {[int]} val [0 手机端加载更多 1 手机端查询 2 电脑端查询]
 			 */
 			getActivityList: function(val) {
-				console.log(this.activitySelected);
+				// console.log(this.activitySelected);
 				var self = this;
 				let state = val;
 				if (state == 1) {
@@ -344,8 +344,8 @@
 				}
 				this.fetch('/front/activity/getActivity', {
 					keyword: self.keyword,
-					province: self.activitySelected[0],
-					majorType: self.activitySelected[1],
+					majorType: self.activitySelected[0],
+					province: self.activitySelected[1],
 					activityType: self.activitySelected[2],
 					activityState: self.activitySelected[3],
 					activityDate: self.activitySelected[4],
@@ -460,6 +460,7 @@
 				}
 				// console.log(list[0]);
 				this.activitySelected = list;
+				// console.log(this.activitySelected)
 				// for (var i = 0; i < this.activitySelected.length; i++) {
 				//     console.log(this.activitySelected[i]);
 				// }
