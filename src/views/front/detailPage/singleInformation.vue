@@ -15,9 +15,9 @@
 				</div>
 				<div class="content-written clearfloat">
 					<div class="weitten-left">
-						<div id="single-img" v-if="articleContent.z_image != '' && articleContent.z_image != undefined">
+						<!--<div id="single-img" v-if="articleContent.z_image != '' && articleContent.z_image != undefined">
 							<img :src="articleContent.z_image" :alt="articleContent.z_alt">
-						</div>
+						</div>-->
 						<div class="content-title">
 							<h1>{{ articleContent.zx_name }}</h1>
 							<div class="icon-content">
