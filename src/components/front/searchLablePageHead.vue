@@ -13,7 +13,7 @@ export default {
     data() {
         return {
             Names: this.names,
-            i: -2
+            i: 0
         }
     },
     methods: {
@@ -26,29 +26,15 @@ export default {
         },
         testClick(item, index) {
             this.i = index
-            // $(".c-textlink").css("color","rgb(49, 49, 49)");
-            // $(".c-textlink").css("border-bottom-width","0");
-//            $($(".c-textlink")[0]).css("color","rgb(0, 159, 160)");
-//            $($(".c-textlink")[0]).css("border-bottom","3px  rgb(0, 159, 160) solid");
-//            $($(".c-textlink")[0]).css("font-weight","bold");
-            // $($(".c-textlink")[index]).css("color","rgb(0, 159, 160)");
-            // $($(".c-textlink")[index]).css("border-bottom","2px  rgb(0, 159, 160) solid");
-            // if(this.forCancelStyle()) {
-            //     this.Names[index].selected_prop_value = index;
-            // }
-
-            // if(this.forCancelStyle()) {
-
-            // }
             this.$emit('labelHeadClick', item);
-            sessionStorage.setItem('isSelect', this.i) 
-                
-            
-            
+            sessionStorage.setItem('isSelect', this.i)
+
+
+
         }
     },
     mounted() {
-        this.i = sessionStorage.getItem('isSelect') 
+        this.i = sessionStorage.getItem('isSelect')?sessionStorage.getItem('isSelect'):0;
     }
 }
 </script>

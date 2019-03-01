@@ -5,10 +5,10 @@
 		<div class="activityList">
 			<!-- 搜索框 -->
 			<div class="searchs">
-				<el-input placeholder=" 请输入活动名称" suffix-icon="el-icon-search" v-model="keyword" @keyup.enter.native="getActivityList(2)"
+				<el-input placeholder=" 请输入活动名称" suffix-icon="el-icon-search" v-model="keyword" @blur.prevent="getActivityList(2)"
 				 class="pcSeach">
 				</el-input>
-				<el-input placeholder=" 请输入活动名称" suffix-icon="el-icon-search" v-model="keyword" @keyup.enter.native="getActivityList(1)"
+				<el-input placeholder=" 请输入活动名称" suffix-icon="el-icon-search" v-model="keyword" @blur.prevent="getActivityList(1)"
 				 class="phoneSeach">
 				</el-input>
 			</div>
@@ -419,7 +419,7 @@
 
 			// 筛选块-从组件中获取选中结果
 			change(data) {
-				// console.log(data)
+				// console.log(data.length)
 				this.seltData = data;
 				for (let index = 0; index < this.seltData.length; index++) {
 					if (this.seltData[index].length == 0) {
@@ -458,17 +458,13 @@
 					}
 					list.push(little);
 				}
-				// console.log(list[0]);
+
 				this.activitySelected = list;
 				// console.log(this.activitySelected)
 				// for (var i = 0; i < this.activitySelected.length; i++) {
 				//     console.log(this.activitySelected[i]);
 				// }
 				this.getActivityList(2);
-				// this.getPcActivityList();
-				// console.log("======");
-				// console.log(this.seltData);
-				// console.log(this.activitySelected[0]);
 			},
 
 			// 电脑点击改变分页值
@@ -477,7 +473,7 @@
 				// this.getPcActivityList();
 				this.getActivityList(2);
 			},
-			
+
 			/**
 			 * 获取banner图
 			 */
