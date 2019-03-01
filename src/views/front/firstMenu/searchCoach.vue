@@ -284,9 +284,9 @@
 				} else if (that.tags[2].length == 1) {
 					if (that.tags[2][0].name == "10天退款无忧") {
 						back = 0; //0:支持
-						coach = 1; //1:不支持
+						coach = 2; //1:不支持
 					} else {
-						back = 1;
+						back = 2;
 						coach = 0;
 					}
 				}
@@ -527,14 +527,15 @@
 		justify-content: center;
 		align-items: center;
 		cursor: pointer;
+		background-size: auto;	
 	}
 
 	.singlecoachtop>img {
-		width: 40%;
+		width: 80%;
 	}
 
 	.singlecoachtop2>img {
-		width: 40%;
+		width: 80%;
 	}
 
 	.singlecoach>span {
