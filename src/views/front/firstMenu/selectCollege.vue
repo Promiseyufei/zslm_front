@@ -433,7 +433,7 @@ export default {
                     page_size: that.page_size,
             }).then(function (response) {
                 if (response.code==0) {
-                    console.log(response)
+                    // console.log(response)
                     let res = response.result.list;
                     that.count =response.result.count;
                     that.majorInform=res;
