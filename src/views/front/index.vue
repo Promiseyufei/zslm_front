@@ -872,7 +872,7 @@
 	}
 
 	.indexBigBlock>div {
-		margin: 2%;
+		margin: 2% 1%;
 		padding: 4% 5%;
 		background-color: rgba(255, 255, 255, 0.3);
 		text-align: center;
@@ -1652,8 +1652,8 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 265px;
-		height: 310px;
+		width: 305px;
+		height: 350px;
 		padding: 20px;
 		color: #fff;
 		background-color: rgba(56, 59, 61, 0.9);
