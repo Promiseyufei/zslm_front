@@ -193,7 +193,7 @@
                         }
                       }
                     }
-                  
+
                     obj_arr.push(obj)
                     this.setCookie(obj_arr)
                     this.colleges = obj_arr

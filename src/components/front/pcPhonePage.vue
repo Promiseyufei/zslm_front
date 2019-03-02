@@ -1,5 +1,5 @@
 <template>
-    <!-- 分页参数： 
+    <!-- 分页参数：
         手机端参数
             loading:false,//加载小圈圈
         pc端分页
@@ -61,7 +61,7 @@ export default {
                 this.count = 1;
             }
             this.$emit('getPage');
-        }, 
+        },
     },
     mounted(){
         //刚开始是否已经加载完
@@ -70,6 +70,15 @@ export default {
             this.loadingBtnText = "————我是有底线的————";
             this.count = 1;
         }
+    },
+    watch:{
+      currentPage: {
+        handler(val) {
+          console.log(val);
+          this.currentPage2 = val;
+        }
+      }
+
     }
 }
 </script>
@@ -95,7 +104,7 @@ export default {
 
     /*加载更多*/
     .phoneLeadBtn{
-        margin-bottom: 10px; 
+        margin-bottom: 10px;
         margin-left: 10px;
         margin-right: 10px;
         width: 95%;
