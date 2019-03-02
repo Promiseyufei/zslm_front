@@ -7,7 +7,7 @@
                     <el-input
                         placeholder="请输入院校名称"
                         suffix-icon="el-icon-search"
-                        v-model="z_name" @keyup.enter.native="search">
+                        v-model="z_name" @blur.prevent="search">
                     </el-input>
                 </div>
             </div>
@@ -46,8 +46,8 @@
                     </el-card>
                 </el-col>
             </div>
-            
-        </div> 
+
+        </div>
         <!-- 分页 -->
         <div class="page">
             <pcPhonePage :loading="loading" :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum" @getPage="getPage"></pcPhonePage>
@@ -225,7 +225,7 @@ export default {
                 {
                     type:'统招模式',
                     cities:[
-                       { 
+                       {
                             id:0,
                             name:''
                         }
@@ -326,7 +326,7 @@ export default {
             // console.log(data)
             this.selectData = data;
             this.getselt();
-            
+
             // console.log(this.selectData)
             this.getmajorInform();
         },
@@ -340,7 +340,7 @@ export default {
                 }
             };
             this.getselt();
-            
+
             this.getmajorInform();
         },
         //转换选中参数的格式——数组，以便传参
@@ -367,6 +367,7 @@ export default {
 			this.max = list[4];//学习费用——int
 			// console.log(list[4])
 			if(list[4].length > 0 && list[4].length == 1) {
+        this.min = 0;
 				this.max = parseInt(list[4][0]);
 			}
 			else if(list[4].length > 0 && list[4].length == 2) {
@@ -381,16 +382,6 @@ export default {
 				}
 			}
             this.score_type = list[5].join(",");//分数线——字符串
-            // let MIN = list[4][0];
-            // let MAX;
-            // for (var j = 0; j < list[4].length; j++) {
-            //     if (list[4][j] < MIN)
-            //         MIN = list[4][j];
-            //     else 
-            //         MAX = list[4][j];
-            // }
-            
-            // console.log(MAX)
         },
         //获取按钮内容
         getmajorType:function(){
@@ -442,8 +433,9 @@ export default {
                     page_size: that.page_size,
             }).then(function (response) {
                 if (response.code==0) {
-                    let res = response.result[0];
-                    that.count =response.result[1];
+                    // console.log(response)
+                    let res = response.result.list;
+                    that.count =response.result.count;
                     that.majorInform=res;
                     that.majorInform.forEach((item,index) => {
                         that.majorInform[index].showProduct = item.product.slice(0,3);
@@ -456,7 +448,7 @@ export default {
                     that.major_follow_id = res[0].major_follow_id;
                 }
                 else {
-                    
+
                     that.count = 0;
                     that.majorInform = [];
                     that.major_confirm_id = '';
@@ -477,9 +469,9 @@ export default {
             moneyTop.style.color='#bfbfbf';
             let paixu = document.getElementById('paixu');
             if (paixu.style.color='rgb(191, 191, 191)') {
-               paixu.style.color = '#009fa0'; 
+               paixu.style.color = '#009fa0';
             } else {
-                paixu.style.color = '#bfbfbf'; 
+                paixu.style.color = '#bfbfbf';
             }
             this.getmajorInform();
         },

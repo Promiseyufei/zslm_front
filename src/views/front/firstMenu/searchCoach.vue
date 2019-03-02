@@ -249,7 +249,7 @@
 			},
 			//跳转辅导机构详情页
 			jump: function(id) {
-				console.log(90);
+				// console.log(90);
 				this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/' + id);
 			},
 
@@ -275,6 +275,7 @@
 				}
 				let back = 2;
 				let coach = 2;
+				console.log(that.tags);
 				if (that.tags[2].length == 2) {
 					back = 2;
 					coach = 2;
