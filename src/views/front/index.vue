@@ -126,10 +126,10 @@
 					<div class="singleCollegeBox">
 						<div class="selectInformationHearder">
 							<div class="selectInformationLeft" @click="toJumpCoach(coach[0].id)">
-								<img src="../../assets/img/sitanfu.jpg" alt="">
+								<img :src="coach[0].cover_name" alt="">
 								<div>
 									<div class="selectInformationLeftimg">
-										<img src="../../assets/img/sheke.png" alt="">
+										<img :src="coach[0].logo_name" alt="">
 									</div>
 									<div class="selectInformationLeftMessage">
 										<div class="collegeName">
@@ -145,10 +145,10 @@
 							</div>
 							<div class="selectInformationRight">
 								<div class="selectInformationLittle" v-for="(item, index) in coach2" :key="index + 'little'" @click="toJumpCoach(item.id)">
-									<img src="../../assets/img/sitanfu.jpg" alt="">
+									<img :src="item.cover_name" alt="">
 									<div>
 										<div class="selectInformationLeftimg">
-											<img src="../../assets/img/dongfang.png" alt="">
+											<img :src="item.logo_name" alt="">
 										</div>
 										<div class="selectInformationLeftMessage">
 											<div class="collegeName">
@@ -203,7 +203,7 @@
 								</div>
 								<div class="wrapCover">
 									<div class="wrapCover1">
-										<span>招生宣讲</span>
+										<span>{{activity[index].activity_type}}</span>
 										<h3>{{activity[index].active_name}}</h3>
 									</div>
 									<div class="wrapCover2">
@@ -448,6 +448,7 @@
 			getCollage: function() {
 				var that = this;
 				this.fetch('/front/indexinfo').then(function(res) {
+				  // console.log(res);
 					if (res.code == 0) {
 
 						that.college = res.result.major; //返回学校
@@ -461,6 +462,7 @@
 						}
 						that.coach = res.result.coach; //返回辅导机构
 						that.coach2.push(that.coach[1], that.coach[2]); //过滤掉第一个辅导机构
+            console.log(that.coach);
 						that.activity = res.result.actives.info; //返回活动
 						var consult = res.result.consult.info; //返回资讯
 						if (consult.length == 1) {
@@ -483,7 +485,7 @@
 							that.consult3.push(consult[4], consult[5]);
 						}
 
-						// console.log(consult);
+						// console.log(that.activity);
 					} else {
 						that.message(true, res.msg, "error");
 					}

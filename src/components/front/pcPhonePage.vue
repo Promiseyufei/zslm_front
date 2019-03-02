@@ -74,7 +74,7 @@ export default {
     watch:{
       currentPage: {
         handler(val) {
-          console.log(val);
+          // console.log(val);
           this.currentPage2 = val;
         }
       }
