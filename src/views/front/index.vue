@@ -660,6 +660,12 @@
 		padding: 0;
 	}
 
+  *{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
 	/*
     看资讯样式
     */
@@ -724,8 +730,9 @@
 	.lookinforMessage {
 		background-color: #fff;
 		padding: 20px;
-		height: 127px;
+		height: 167px;
 		position: relative;
+    box-sizing:boder-box;
 	}
 
 	.lookinforMessage>h3 {
@@ -766,8 +773,9 @@
 	}
 
 	.lookinformationBig .lookinforMessage {
-		width: 265px;
-		height: 297px;
+		width: 305px;
+		height: 337px;
+    box-sizing:boder-box;
 	}
 
 	.lookinformationBig .lookinforMessage>p {
@@ -1286,7 +1294,7 @@
 	}
 
 	.singActivity {
-		height: 97px;
+		height: 117px;
 		color: rgba(255, 255, 255, 0.8);
 		padding: 10px 15px;
 		position: relative;
