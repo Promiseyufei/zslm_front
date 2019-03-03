@@ -45,10 +45,10 @@
 							</div>
 							<span @click="jump(item.id)">{{item.coach_name}}</span>
 							<div class="singlecoachHoverbig">
-								<div class="singlecoachHoverbox" :class="index%4==2||index%4==3 ? 'activeClass' : ''">
+								<div class="singlecoachHoverbox" :class="[index%4==2||index%4==3 ? 'activeClass' : '',item.son_coachs.length > 0?'maxWidth':'minWidth']" >
 									<div class="singlecoachHover" v-if="index%4==0||index%4==1" @click="jump(item.id)">
 										<div class="singlecoachtop2">
-											<img :src="item.logo_name" alt="">
+											<img :src="item.logo_white" alt="">
 										</div>
 										<div class="singlecoachspan">
 											<span>{{item.coach_name}}</span>
@@ -58,7 +58,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="littleCollage2" v-if="index%4==2||index%4==3">
+									<div class="littleCollage2" v-if="index%4==2||index%4==3" v-show="item.son_coachs.length > 0">
 										<p class="coachHeader">{{item.son_coachs.length}}个分校</p>
 										<div class="coachLittle">
 											<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
@@ -69,7 +69,7 @@
 									</div>
 									<div class="singlecoachHover" v-if="index%4==2||index%4==3" @click="jump(item.id)">
 										<div class="singlecoachtop2">
-											<img :src="item.logo_name" alt="">
+											<img :src="item.logo_white" alt="">
 										</div>
 										<div class="singlecoachspan">
 											<span>{{item.coach_name}}</span>
@@ -79,7 +79,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="littleCollage" v-if="index%4==0||index%4==1">
+									<div class="littleCollage" v-if="index%4==0||index%4==1" v-show="item.son_coachs.length > 0">
 										<p class="coachHeader">{{item.son_coachs.length}}个分校</p>
 										<div class="coachLittle">
 											<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
@@ -114,7 +114,7 @@
 				loading: false, //加载小圈圈
 				pageNumber: 1,
 				count: 1234,
-				pageCount: 12,
+				pageCount: 20,
 				load: 0,
 				tags: [
 					[],
@@ -138,9 +138,9 @@
 							{
 								name: "山西",
 							},
-							{
+							/*{
 								name: "台湾",
-							},
+							},*/
 							{
 								name: "辽宁",
 							},
@@ -257,8 +257,8 @@
 			},
 			//跳转辅导机构详情页
 			jump: function(id) {
-				console.log(90);
-				this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/' + id);
+          window.open(document.location.origin+'/#/front/firstMenuRouter/searchCoach/singleCoachs/'+id , '_blank');
+				// this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/' + id , '_blank');
 			},
 			//得到所有筛选过的辅导机构列表
 			getCoach: function() {
@@ -300,7 +300,7 @@
 					if_back: back,
 					if_coupon: coach,
 					page: that.pageNumber,
-					page_size: 12
+					page_size: that.pageCount
 				}).then(function(res) {
 					that.loading = false;
 					// console.log(res);
@@ -464,8 +464,7 @@
 		position: absolute;
 		display: flex;
 		justify-content: flex-start;
-		background-color: rgba(56, 59, 61, 0.95);
-		width: 955px;
+		background-color: rgba(56, 59, 61, 0.8);
 		top: 0;
 		left: 0;
 		z-index: 2;
@@ -476,6 +475,15 @@
 		top: 0;
 		left: -650px;
 	}
+
+  .maxWidth{
+    width: 955px;
+  }
+
+  .minWidth{
+    width: auto;
+    left: 0px;
+  }
 
 	.singlecoachHover {
 		width: 305px;
@@ -529,15 +537,15 @@
 		justify-content: center;
 		align-items: center;
 		cursor: pointer;
-		background-size: auto;	
+		background-size: auto;
 	}
 
 	.singlecoachtop>img {
-		width: 80%;
+		width: 100%;
 	}
 
 	.singlecoachtop2>img {
-		width: 80%;
+		width: 100%;
 	}
 
 	.singlecoach>span {

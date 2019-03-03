@@ -174,7 +174,6 @@ export default {
                 id: that.id,
                 u_id:this.userId?this.userId:0,
             }).then(function (res) {
-                    // console.log(res);
                     if (res.code == 0) {
                         that.collage = res.result[0];
                         that.activity = that.collage.best_hot_active.info[0];
