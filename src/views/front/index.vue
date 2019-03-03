@@ -54,8 +54,8 @@
 							<img :src="temp.magor_logo_name != '' ? temp.magor_logo_name : '../../assets/img/coach2.png'" alt="">
 
 							<div class="hover">
-								<div>
-									<img src="../../assets/img/coach2.png" alt="" class="indeximg">
+								<div style="height: 300px;background-position: center;background-size: auto 100%;background-repeat: no-repeat" :style="{backgroundImage:'url(' + temp.major_cover_name +')'}">
+									<!--<img :src="temp.major_cover_name != ''?temp.major_cover_name : '../../assets/img/coach2.png'" alt="" class="indeximg">-->
 								</div>
 								<div class="singleCollegeHover">
 									<div class="singleCollegeHeader">
@@ -464,7 +464,7 @@
 
 						that.coach2.push(that.coach[1], that.coach[2]); //过滤掉第一个辅导机构
 						that.activity = res.result.actives.info; //返回活动
-            
+
 						var consult = res.result.consult.info; //返回资讯
 
 						if (consult.length == 1) {
