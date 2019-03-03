@@ -26,7 +26,7 @@
 			</div>
 			<!--右边的的文章-->
 			<div class="float-right">
-				<Article @refreshs="refreshBusiness" @jump="jump" v-if="informbusiness.length" title="行业报告" :inforArticle="informbusiness"></Article>
+				<ArticleP @refreshs="refreshBusiness" @jump="jump" v-if="information[0].zx_info.length" :title="information[0].region_name" :inforArticle="information[0].zx_info"></ArticleP>
 				<div class="advertisement" @click="jumpStudent">
 					<img src="../../../assets/img/advertisement.png" alt="">
 				</div>
@@ -44,7 +44,7 @@
 						<img :src="item.img" alt="item.img_alt">
 					</a>
 				</div>
-				<Article @refreshs="refresh" @jump="jump" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
+				<ArticleP @refreshs="refresh" @jump="jump" v-if="information[1].zx_info.length" :title="information[1].region_name" :inforArticle="information[1].zx_info"></ArticleP>
 			</div>
 		</div>
 		<!-- <div class="footer">
@@ -97,7 +97,15 @@
 				 * 推荐阅读
 				 * */
 				page: 0,
-				information: [],
+				information: [{
+					id:0,
+					region_name : '',
+					zx_info:{}
+				},{
+					id:1,
+					region_name : '',
+					zx_info:{}
+				}],
 				industryTatol: 1,
 				/*
 				 * 行业报告
@@ -174,11 +182,7 @@
 			 * 行业报告刷新
 			 * */
 			refreshBusiness: function(data) {
-				this.businessPage++;
-				if (this.businessPage * 4 >= this.businessTatol) {
-					this.businessPage = 0;
-				}
-				this.presentation();
+				
 			},
 			/*
 			 *
@@ -224,12 +228,10 @@
 			 * */
 			readtation: function() {
 				let _this = this;
-				this.fetch('/front/consult/getRecommendRead', {
-						pageNumber: _this.page
+				this.fetch('/front/recommend/getrecommend', {
 					}).then((response) => {
 						if (response.code == 0) {
-							_this.information = response.result.info;
-							_this.industryTatol = response.result.count;
+							_this.information = response.result;
 						}
 					})
 					.catch(error => function(error) {

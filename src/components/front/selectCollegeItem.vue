@@ -133,7 +133,7 @@
         </div>
         <div class="viewMore" v-show="viewMoreIcon">
             <div class="updateInform">信息更新时间：{{collegeInfo.update_time}}</div>
-            <div class="moreInform" @click="viewMore">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
+            <div class="moreInform" @click="viewMore" v-show="collegeInfo.missPorduct.length > 3">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
         </div>
     </div>
 

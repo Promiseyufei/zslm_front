@@ -1,3 +1,4 @@
+
 <template>
 	<div>
 		<div class="bigBox">
@@ -101,6 +102,7 @@
 	</div>
 </template>
 
+<<<<<<< HEAD
 <script>
 	export default {
 		components: {
@@ -210,7 +212,8 @@
 			},
 			//标签栏，点击标签，删除标签
 			handleClose(tag) {
-			  console.log(tag);
+
+
 				for (let index = 0; index < this.tags.length; index++) {
 					var temp = this.tags[index].indexOf(tag);
 
@@ -229,16 +232,21 @@
 
 			//每次子组件改变时，父组件就会改变
 			change: function(checkboxGroup) {
+
 				//当选中全部时，清空当前行数组，通过*号匹配
 				let t = checkboxGroup
 				this.tags = t.concat();;
 				let city = this.tags[0];
+				console.log(city.name)
 				this.tags[0] = new Array();
 
 				if (city.name != undefined)
 					this.tags[0][0] = city;
 				else {
-					this.$refs.select.checkboxGroup[0] = [];
+
+					this.$refs.select.checkboxGroup[0] = []
+					// this.$refs.select.checkAll[0] = true;
+					console.log(this.$refs.select.checkAll)
 				}
 				for (let index = 1; index < this.tags.length; index++) {
 					if (this.tags[index].length == 0) {
@@ -249,14 +257,11 @@
 			},
 			//跳转辅导机构详情页
 			jump: function(id) {
-				// console.log(90);
+				console.log(90);
 				this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/' + id);
 			},
-
 			//得到所有筛选过的辅导机构列表
-			getCoach: function(page) {
-			  if(page) this.pageNumber = page;
-
+			getCoach: function() {
 				var that = this;
 				var str = '';
 				let len = that.tags[0].length;
@@ -275,15 +280,15 @@
 				}
 				let back = 2;
 				let coach = 2;
-				console.log(that.tags);
 				if (that.tags[2].length == 2) {
 					back = 2;
 					coach = 2;
 				} else if (that.tags[2].length == 1) {
-				  console.log(that.tags[2]);
 					if (that.tags[2][0].name == "10天退款无忧") {
 						back = 0; //0:支持
+						coach = 2; //1:不支持
 					} else {
+						back = 2;
 						coach = 0;
 					}
 				}
@@ -524,14 +529,15 @@
 		justify-content: center;
 		align-items: center;
 		cursor: pointer;
+		background-size: auto;	
 	}
 
 	.singlecoachtop>img {
-		width: 40%;
+		width: 80%;
 	}
 
 	.singlecoachtop2>img {
-		width: 40%;
+		width: 80%;
 	}
 
 	.singlecoach>span {
@@ -574,4 +580,6 @@
 			display: none;
 		}
 	}
+
 </style>
+

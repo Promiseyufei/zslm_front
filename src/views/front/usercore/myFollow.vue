@@ -1,7 +1,8 @@
 <template>
     <div >
-        <div v-for="(item,index) in this.majors" :key="index">
-            <user-college :data="item" :id="id"></user-college>
+        <div v-for="(item,index) in majors" :key="index">
+			
+            <user-college  :data="item" :id="id"></user-college>
         </div>
         <el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
     </div>

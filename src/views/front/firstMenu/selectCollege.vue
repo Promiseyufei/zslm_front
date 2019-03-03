@@ -107,10 +107,10 @@ export default {
                             id:6,
                             name:"山西"
                         },
-                        {
+                       /* {
                             id:7,
                             name:"台湾"
-                        },
+                        },*/
                         {
                             id:8,
                             name:"辽宁"
@@ -211,14 +211,14 @@ export default {
                             id:32,
                             name:"内蒙古"
                         },
-                        {
+                        /*{
                             id:33,
                             name:"澳门"
                         },
                         {
                             id:34,
                             name:"香港"
-                        },
+                        },*/
                     ],//所有专业类型的id数组
                     "fif":"查看更多"
                 },
@@ -237,27 +237,27 @@ export default {
                     cities:[
                         {
                             id:0,
-                            name:'5万'
+                            name:'6万元以下'
                         },
                         {
                             id:1,
-                            name:'10万'
+                            name:'6-10万元'
                         },
                         {
                             id:2,
-                            name:'15万'
+                            name:'10-20万元'
                         },
                         {
                             id:3,
-                            name:'20万'
+                            name:'20-30万元'
                         },
                         {
                             id:4,
-                            name:'25万'
+                            name:'30-40万元'
                         },
                         {
                             id:5,
-                            name:'30万'
+                            name:'40万元以上'
 						},
 						// {
 						// 	id:6,
@@ -291,7 +291,7 @@ export default {
             enrollment_mode:'',
             project_count:0,
             page:1,
-            page_size:3,
+            page_size:20,
             count:10,
             productShow:false,
             /*按钮参数*/
@@ -365,14 +365,35 @@ export default {
             this.provice = list[2].join(",");//院校地点——字符串
             this.enrollment_mode = list[3].join(",");//统招模式——字符串
 			      this.max = list[4];//学习费用——int
-			// console.log(list[4])
-            if(list[4].length > 0 && list[4].length == 1) {
-              this.min = 0;
-              this.max = parseInt(list[4][0]);
+
+			      var num = [];
+			      var n;
+
+			      if(list[4].length > 0){
+			        for(var i = 0; i < list[4].length; i++){
+			          n = list[4][i].split('-');
+
+			          for(var j = 0; j < n.length; j++){
+			            num.push(parseInt(n[j]));
+                }
+              }
             }
-            else if(list[4].length > 0 && list[4].length == 2) {
-              this.min = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][1]) : parseInt(list[4][0]);
-              this.max = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][0]) : parseInt(list[4][1]);
+
+			      /*console.log(num);
+			      console.log(Math.max.apply(null, num));
+			      console.log(Math.min.apply(null, num));*/
+
+            if(list[4].length > 0 && num.length == 1) {
+              this.min = 0;
+              this.max = Math.max.apply(null, num);
+            }else if(list[4].length > 0){
+              this.min = Math.min.apply(null, num);
+              this.max = Math.max.apply(null, num);
+            }
+            /*else if(num.length > 0 && list[4].length == 2) {
+              var num = list[4][1].split('-');
+              this.min = num[0];
+              this.max = parseInt(num[1]);
             }
             else if(list[4].length > 2) {
               this.min = this.max = parseInt(list[4][0]);
@@ -380,7 +401,10 @@ export default {
                 if(this.min > parseInt(list[4][index])) this.min = parseInt(list[4][index]);
                 if(this.max <= parseInt(list[4][index])) this.max = parseInt(list[4][index]);
               }
-			      }
+			      }*/
+
+            // console.log(this.min);
+            // console.log(this.max);
             this.score_type = list[5].join(",");//分数线——字符串
         },
         //获取按钮内容
@@ -435,7 +459,9 @@ export default {
                 if (response.code==0) {
                     // console.log(response)
                     let res = response.result.list;
+                    // let res = response.result[0];
                     that.count =response.result.count;
+                    // that.count =response.result[1];
                     that.majorInform=res;
                     that.majorInform.forEach((item,index) => {
                         that.majorInform[index].showProduct = item.product.slice(0,3);
