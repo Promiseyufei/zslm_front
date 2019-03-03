@@ -102,6 +102,7 @@
 	</div>
 </template>
 
+<<<<<<< HEAD
 <script>
 	export default {
 		components: {
@@ -579,5 +580,6 @@
 			display: none;
 		}
 	}
+
 </style>
 

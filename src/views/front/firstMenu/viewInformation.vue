@@ -310,15 +310,14 @@
 			 * */
 			navigationKind: function() {
 				let _this = this;
-				this.fetch('/front/consult/getConsultType')
-					.then((response) => {
+				this.fetch('/front/consult/getConsultType').then((response) => {
 						if (response.code == 0) {
 							_this.kind = response.result;
-							_this.kindClick = _this.kind[0].name;
+							_this.kindClick = _this.kind[0].id;
 						}
 					})
-					.catch(error => function(error) {
-						console.log(response)
+					.catch((error) => {
+						console.log(error)
 					});
 			},
 

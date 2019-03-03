@@ -32,6 +32,7 @@
                     name:_this.$route.params.name,
                 }).then((response) => {
                     if(response.code == 0){
+                        this.text = '';
                         _this.message(true,"您已经成功提交反馈建议",'success');
                     }else {
                         _this.message(true,"您提交反馈建议失败",'error');

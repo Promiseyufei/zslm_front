@@ -126,10 +126,10 @@
 					<div class="singleCollegeBox">
 						<div class="selectInformationHearder">
 							<div class="selectInformationLeft" @click="toJumpCoach(coach[0].id)">
-								<img src="../../assets/img/sitanfu.jpg" alt="">
+								<img :src="coach[0].cover_name" alt="">
 								<div>
 									<div class="selectInformationLeftimg">
-										<img src="../../assets/img/sheke.png" alt="">
+										<img :src="coach[0].logo_name" alt="">
 									</div>
 									<div class="selectInformationLeftMessage">
 										<div class="collegeName">
@@ -145,10 +145,10 @@
 							</div>
 							<div class="selectInformationRight">
 								<div class="selectInformationLittle" v-for="(item, index) in coach2" :key="index + 'little'" @click="toJumpCoach(item.id)">
-									<img src="../../assets/img/sitanfu.jpg" alt="">
+									<img :src="item.cover_name" alt="">
 									<div>
 										<div class="selectInformationLeftimg">
-											<img src="../../assets/img/dongfang.png" alt="">
+											<img :src="item.logo_name" alt="">
 										</div>
 										<div class="selectInformationLeftMessage">
 											<div class="collegeName">
@@ -203,7 +203,7 @@
 								</div>
 								<div class="wrapCover">
 									<div class="wrapCover1">
-										<span>招生宣讲</span>
+										<span>{{activity[index].activity_type}}</span>
 										<h3>{{activity[index].active_name}}</h3>
 									</div>
 									<div class="wrapCover2">
@@ -448,6 +448,7 @@
 			getCollage: function() {
 				var that = this;
 				this.fetch('/front/indexinfo').then(function(res) {
+				  // console.log(res);
 					if (res.code == 0) {
 
 						that.college = res.result.major; //返回学校
@@ -461,6 +462,7 @@
 						}
 						that.coach = res.result.coach; //返回辅导机构
 						that.coach2.push(that.coach[1], that.coach[2]); //过滤掉第一个辅导机构
+            console.log(that.coach);
 						that.activity = res.result.actives.info; //返回活动
 						var consult = res.result.consult.info; //返回资讯
 						if (consult.length == 1) {
@@ -483,7 +485,7 @@
 							that.consult3.push(consult[4], consult[5]);
 						}
 
-						// console.log(consult);
+						// console.log(that.activity);
 					} else {
 						that.message(true, res.msg, "error");
 					}
@@ -658,6 +660,12 @@
 		padding: 0;
 	}
 
+  *{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
 	/*
     看资讯样式
     */
@@ -722,8 +730,9 @@
 	.lookinforMessage {
 		background-color: #fff;
 		padding: 20px;
-		height: 127px;
+		height: 167px;
 		position: relative;
+    box-sizing:boder-box;
 	}
 
 	.lookinforMessage>h3 {
@@ -764,8 +773,9 @@
 	}
 
 	.lookinformationBig .lookinforMessage {
-		width: 265px;
-		height: 297px;
+		width: 305px;
+		height: 337px;
+    box-sizing:boder-box;
 	}
 
 	.lookinformationBig .lookinforMessage>p {
@@ -870,7 +880,7 @@
 	}
 
 	.indexBigBlock>div {
-		margin: 2%;
+		margin: 2% 1%;
 		padding: 4% 5%;
 		background-color: rgba(255, 255, 255, 0.3);
 		text-align: center;
@@ -1284,7 +1294,7 @@
 	}
 
 	.singActivity {
-		height: 97px;
+		height: 117px;
 		color: rgba(255, 255, 255, 0.8);
 		padding: 10px 15px;
 		position: relative;
@@ -1650,8 +1660,8 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 265px;
-		height: 310px;
+		width: 305px;
+		height: 350px;
 		padding: 20px;
 		color: #fff;
 		background-color: rgba(56, 59, 61, 0.9);
