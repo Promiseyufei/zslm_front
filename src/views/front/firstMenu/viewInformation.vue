@@ -137,11 +137,11 @@
 			jumpreUrl(jumpUrl) {
 				if(typeof jumpUrl !== 'undefined') {
 					if(jumpUrl.substr(0,7).toLowerCase() == "http://" || jumpUrl.substr(0,8).toLowerCase() == "https://") {
-						window.open(jumpUrl);
+						window.open(jumpUrl , '_blank');
 					}
 					else {
 						var url = ('http://' + jumpUrl);
-						window.open(url);
+						window.open(url , '_blank');
 					}
 				}
 			},
@@ -166,6 +166,7 @@
 				this.$router.push({
 					path: '/front/firstMenuRouter/recruitStudents'
 				});
+        // window.open(document.location.origin+'/#/front/firstMenuRouter/recruitStudents' , '_blank');
 			},
 			/*
 			 * 推荐阅读刷新
@@ -201,7 +202,9 @@
 				// 					});
 			},
 			jump: function(id) {
-				this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + id.id);
+			  // alert(1);
+        window.open(document.location.origin+'/#/front/firstMenuRouter/viewInformation/singleInformation/' + id.id , '_blank');
+				// this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + id.id);
 			},
 			/*
 			 * 行业报告
