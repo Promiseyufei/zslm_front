@@ -47,13 +47,14 @@
             * 跳转页面
             * */
             jump:function (id) {
-                console.log(id)
-                this.$emit('jump',{id:id});
+                console.log();
+                // this.$emit('jump',{id:id});
+                window.open(document.location.origin+'/#/front/firstMenuRouter/lookActivity/singleActivity/'+id , '_blank');
             },
         },
 
         mounted(){
-          
+
         }
     }
 </script>
