@@ -501,7 +501,7 @@ export default {
     width: 100%;
 }
 .selectHeaderboxhover {
-    background-color: rgba(56, 59, 61, 0.85);
+    background-color: rgba(56, 59, 61, 0.8);
     width: 100%;
     padding: 80px 0;
 }
