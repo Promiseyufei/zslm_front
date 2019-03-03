@@ -817,7 +817,7 @@ export default {
         .backColor {
             border-radius: 5px;
             padding: 40px 0 0;
-            height: 320px;
+            height: 360px;
             background-color: rgba(56, 59, 61, 0.85);
         }
         .itemPicture {
