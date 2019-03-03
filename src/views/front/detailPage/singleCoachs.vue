@@ -4,10 +4,10 @@
             <!--header-->
             <div class="singlecoachBig">
                 <div class="singlecoachbox">
-                    <div class="selectHeaderbox">
+                    <div class="selectHeaderbox" :style="{backgroundImage:'url('+collage.cover_name+')'}">
                         <div class="selectHeaderboxhover">
                             <div class="selectHeader">
-                                <img src="../../../assets/img/xindongfang.png" alt="">
+                                <img :src="collage.logo_name" alt="">
                                 <p><span></span><strong>{{collage.coach_name}}</strong><span></span></p>
                             </div>
                         </div>
@@ -26,13 +26,13 @@
                         <!-- 切换卡 -->
                         <div class="messageCoach" v-show="collage.son_coach!='' ">
                             <el-tabs v-model="activeName">
-                                <el-tab-pane label="优惠卷" name="first">
+                                <el-tab-pane label="优惠券" name="first">
                                     <div class="coachbig">
-                                        <!-- n个优惠卷 -->
+                                        <!-- n个优惠券 -->
                                         <div class="coachbox" v-for="(item,index) in collage.coupon" @click="useorget(item.is_have,item.id , index)" v-show="item.is_enable == 0">
                                             <div class="coachleft" :class="item.is_have==1?'ff':'' ">
-                                                <div class="coachleftleft" v-if="item.type==0">折扣卷</div>
-                                                <div class="coachleftleft2" v-if="item.type==1">满减卷</div>
+                                                <div class="coachleftleft" v-if="item.type==0">折扣券</div>
+                                                <div class="coachleftleft2" v-if="item.type==1">满减券</div>
                                                 <div class="coachright">
                                                     <p :class="item.type==1?'ffff':'' ">{{item.name}}</p>
                                                     <span>2018.10.12-2018.11.12</span>
@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="nonecoach" v-show="collage.coupon=='' ">
                                         <img src="../../../assets/img/nonecoach.png" alt="">
-                                        <span>暂无可用优惠卷</span>
+                                        <span>暂无可用优惠券</span>
                                     </div>
                                 </el-tab-pane>
                                 <el-tab-pane label="分校列表" name="second">
@@ -78,13 +78,13 @@
                             </el-tabs>
                         </div>
                         <div class="messageCoach" v-show="collage.son_coach=='' ">
-                            <h6>优惠卷</h6>
+                            <h6>优惠券</h6>
                             <div class="coachbig" style="margin-top: 15px;">
-                              <!-- n个优惠卷 -->
+                              <!-- n个优惠券 -->
                               <div class="coachbox" v-for="(item,index) in collage.coupon" @click="useorget(item.is_have,item.id , index)"  v-show="item.is_enable == 0">
                                 <div class="coachleft" :class="item.is_have==1?'ff':'' ">
-                                  <div class="coachleftleft" v-if="item.type==0">折扣卷</div>
-                                  <div class="coachleftleft2" v-if="item.type==1">满减卷</div>
+                                  <div class="coachleftleft" v-if="item.type==0">折扣券</div>
+                                  <div class="coachleftleft2" v-if="item.type==1">满减券</div>
                                   <div class="coachright">
                                     <p :class="item.type==1?'ffff':'' ">{{item.name}}</p>
                                     <span>2018.10.12-2018.11.12</span>
@@ -101,7 +101,7 @@
                             <div v-show="collage.coupon==''">
                               <div class="nonecoach">
                                   <img src="../../../assets/img/nonecoach.png" alt="">
-                                  <span>暂无可用优惠卷</span>
+                                  <span>暂无可用优惠券</span>
                               </div>
                             </div>
                         </div>
@@ -177,7 +177,7 @@ export default {
                     if (res.code == 0) {
                         that.collage = res.result[0];
                         that.activity = that.collage.best_hot_active.info[0];
-                        console.log(that.collage);
+                        // console.log(that.collage);
                         // that.count = res.count;
                     }else {
                         that.message(true,res.msg,"error");
@@ -187,7 +187,8 @@ export default {
         },
         //跳转到官网
         jumpweb:function() {
-            window.location.href=this.collage.web_url;
+            window.open(this.collage.web_url , '_blank');
+            // window.location.href=this.collage.web_url;
         },
         // 领取优惠券
         useorget:function(re,id , key) {
@@ -223,11 +224,13 @@ export default {
         },
         //点击跳到意见反馈页面
         advise: function() {
-            this.$router.push('/front/firstMenuRouter/singleOpinion');
+            window.open(document.location.origin+'/#/front/firstMenuRouter/singleOpinion' , '_blank');
+            // this.$router.push('/front/firstMenuRouter/singleOpinion');
         },
         //点击跳到退款保障页面
         returnmoney: function() {
-            this.$router.push('/front/firstMenuRouter/returnmoney');
+            window.open(document.location.origin+'/#/front/firstMenuRouter/returnmoney' , '_blank');
+            // this.$router.push('/front/firstMenuRouter/returnmoney');
         }
     },
     mounted(){
@@ -508,9 +511,9 @@ export default {
 }
 .selectHeader>img {
     margin-bottom: 30px;
-    max-width: 110px;
-    border-radius: 5px;
-    border: 5px solid rgba(255, 255, 255, 0.1);
+    max-width: 200px;
+    /*border-radius: 5px;*/
+    /*border: 5px solid rgba(255, 255, 255, 0.1);*/
 }
 .selectHeader>p {
     display: flex;

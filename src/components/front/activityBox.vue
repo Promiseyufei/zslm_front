@@ -3,7 +3,7 @@
     <!-- <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox> -->
 
 	<!-- 单个活动块 -->
-    <div class="activityBox" @click="jump">
+    <div class="activityBox" @click="jump" v-show="activityInfo.length > 0">
 	    <div>
 	        <!-- 头部图片及状态 -->
 	        <div class="activityImg" v-if="activityInfo.active_img" :style="{ backgroundImage: 'url(' + activityInfo.active_img + ')' }">
