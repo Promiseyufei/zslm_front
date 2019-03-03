@@ -447,23 +447,24 @@
 			//得到7个院校
 			getCollage: function() {
 				var that = this;
-				this.fetch('/front/indexinfo').then(function(res) {
-				  // console.log(res);
-					if (res.code == 0) {
 
+				this.fetch('/front/indexinfo').then(function(res) {
+
+					if (res.code == 0) {
+            console.log(res);
 						that.college = res.result.major; //返回学校
 						if (that.college.length > 0) {
 							for (let i = 0; i < that.college.length; i++) {
 								if (that.college[i].major_confirm_id != '')
 									that.college[i].major_confirm_id = that.college[i].major_confirm_id.split(',');
-								if (that.college[i].major_follow_id != '')
-									that.college[i].major_follow_id = that.college[i].major_follow_id.split(',');
 							}
 						}
+
 						that.coach = res.result.coach; //返回辅导机构
+
 						that.coach2.push(that.coach[1], that.coach[2]); //过滤掉第一个辅导机构
-            console.log(that.coach);
 						that.activity = res.result.actives.info; //返回活动
+            
 						var consult = res.result.consult.info; //返回资讯
 
 						if (consult.length == 1) {
