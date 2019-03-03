@@ -63,7 +63,8 @@
 										<div class="coachLittle">
 											<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
 												<strong>{{dd+1}}</strong>
-												<span @click="jump(list.id)">{{list.coach_name}}</span>
+												<!--<span @click="jump(list.id)">{{list.coach_name}}</span>-->
+												<span>{{list.coach_name}}</span>
 											</div>
 										</div>
 									</div>
@@ -84,7 +85,8 @@
 										<div class="coachLittle">
 											<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
 												<strong>{{dd+1}}</strong>
-												<span @click="jump(list.id)">{{list.coach_name}}</span>
+												<!--<span @click="jump(list.id)">{{list.coach_name}}</span>-->
+												<span>{{list.coach_name}}</span>
 											</div>
 										</div>
 									</div>
