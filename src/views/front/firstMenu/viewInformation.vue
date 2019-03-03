@@ -39,11 +39,11 @@
 						</el-carousel-item>
 					</el-carousel>
 				</div>
-				<div class="advertisement" v-for="(item,index) in advertisementB" :key="index">
+				<!--<div class="advertisement" v-for="(item,index) in advertisementB" :key="index">
 					<a :href="item.re_url">
 						<img :src="item.img" alt="item.img_alt">
 					</a>
-				</div>
+				</div>-->
 				<ArticleP @refreshs="refresh" @jump="jump" v-if="information[1].zx_info.length" :title="information[1].region_name" :inforArticle="information[1].zx_info"></ArticleP>
 			</div>
 		</div>
@@ -182,7 +182,7 @@
 			 * 行业报告刷新
 			 * */
 			refreshBusiness: function(data) {
-				
+
 			},
 			/*
 			 *
@@ -564,7 +564,7 @@
 	.advertisement {
 		border-radius: 3px;
 		width: 305px;
-		height: 188px;
+		/*height: 188px;*/
 		margin-bottom: 14px;
 		margin-top: 14px;
 	}
