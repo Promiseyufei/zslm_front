@@ -510,19 +510,19 @@ export default {
             if (hotTop.style.color=='rgb(191, 191, 191)'&&hotBottom.style.color=='rgb(191, 191, 191)'){
                 // console.log(paixu.style.color)
                 //首次点击热度，升序，1为升序
-                this.major_order = 1;
+                this.major_order = 0;
                 this.getmajorInform();
                 hotTop.style.color= '#009fa0';//绿色rgb(0, 159, 160)
                 hotBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
             } else if(hotTop.style.color=='rgb(0, 159, 160)'&& hotBottom.style.color=='rgb(191, 191, 191)') {
                 //再次点击，降序，0为降序
-                this.major_order = 0;
+                this.major_order = 1;
                 this.getmajorInform();
                 hotTop.style.color='#bfbfbf';
                 hotBottom.style.color= '#009fa0';
             } else if (hotTop.style.color=='rgb(191, 191, 191)'||hotBottom.style.color=='rgb(0, 159, 160)') {
                 //循环点击，升序，1为升序
-                this.major_order = 1;
+                this.major_order = 0;
                 this.getmajorInform();
                 hotBottom.style.color= '#bfbfbf';
                 hotTop.style.color='#009fa0';
@@ -536,19 +536,19 @@ export default {
             let hotBottom = document.getElementById('moneyBottom');
             if (moneyTop.style.color=='rgb(191, 191, 191)'&& moneyBottom.style.color=='rgb(191, 191, 191)'){
                 //首次点击费用，升序，1为升序
-                this.money_order = 1;
+                this.money_order = 0;
                 this.getmajorInform();
                 moneyTop.style.color='#009fa0';//绿色rgb(0, 159, 160)
                 moneyBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
             } else if(moneyTop.style.color=='rgb(0, 159, 160)'&& moneyBottom.style.color=='rgb(191, 191, 191)') {
                 //再次点击费用，降序，0为降序
-                this.money_order = 0;
+                this.money_order = 1;
                 this.getmajorInform();
                 moneyTop.style.color='#bfbfbf';
                 moneyBottom.style.color= '#009fa0';
             } else if (moneyTop.style.color=='rgb(191, 191, 191)'||moneyBottom.style.color=='rgb(0, 159, 160)') {
                 //循环点击，升序，1为升序
-                this.money_order = 1;
+                this.money_order = 0;
                 this.getmajorInform();
                 // console.log(this.money_order)
                 moneyBottom.style.color= '#bfbfbf';

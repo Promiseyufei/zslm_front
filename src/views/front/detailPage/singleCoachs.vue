@@ -149,20 +149,7 @@ export default {
             id: 0,
             userId:0,
             activeName: 'first',
-            activity:{
-                id:1,
-                active_name:'活动名称',
-                province:[
-                    {province:'陕西省'},
-                    {city:'西安市'},
-                ],
-                begin_time:'5-23',
-                end_time:'8-15',
-                active_img:'http://www.xxx.com/ssdsd/dds',
-                activity_type:'活动类型名称',
-                z_name:'主办院校专业名称',
-                start_state: 0
-            },
+            activity:{},
             collage:{},
         }
     },
