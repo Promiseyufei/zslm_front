@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="bigBox">
+        <div class="bigBox" style="padding-bottom: 20px">
             <!--header-->
             <div class="singlecoachBig">
                 <div class="singlecoachbox">
@@ -54,12 +54,12 @@
                                 <el-tab-pane label="分校列表" name="second">
                                     <div class="coachbig">
                                         <div class="collagebox" v-for="(item,index) in collage.son_coach">
-                                            <img src="../../../assets/img/collageimg.jpg" alt="">
+                                            <img :src="item.cover_name" alt="">
                                             <div class="collagemessage detailCoach">
                                                 <nav>
                                                     <h4>{{item.coach_name}}</h4>
-                                                    <img src="../../../assets/img/money2.png" alt="">
-                                                    <img src="../../../assets/img/return3.png" alt="">
+                                                    <img src="../../../assets/img/money2.png" v-show="item.if_back_money == 0">
+                                                    <img src="../../../assets/img/return3.png" v-show="item.if_coupons == 0">
                                                 </nav>
                                                 <div><span>所在省市</span><strong>{{item.province}}</strong></div>
                                                 <div><span>联系电话</span><strong>{{item.phone}}</strong></div>
@@ -70,7 +70,7 @@
                                                     <strong v-if="item.coach_type==1">线下</strong>
                                                     <strong v-if="item.coach_type==2">线上、线下</strong>
                                                 </div>
-                                                <div><span>信息更新日期</span><strong>{{item.update_time}}</strong></div>
+                                                <div><span>信息更新</span><strong>{{item.update_time}}</strong></div>
                                             </div>
                                         </div>
                                     </div>
@@ -220,7 +220,8 @@ export default {
         },
         //跳转到官网
         tolink:function(url) {
-            window.location.href=url;
+            window.open(url , '_blank');
+            // window.location.href=url;
         },
         //点击跳到意见反馈页面
         advise: function() {
@@ -248,6 +249,14 @@ export default {
     .messageCoach .el-tabs__item {
         width: 50%;
         text-align: center;
+    }
+
+    .el-tabs__active-bar{
+      background-color:#1abc9c;
+    }
+
+    .el-tabs__item:hover,.el-tabs__item.is-active{
+      color: #1abc9c;
     }
 </style>
 <style scoped>
