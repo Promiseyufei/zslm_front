@@ -24,11 +24,11 @@
 	    				<div class="registerLogin">
 	    					<el-button type="primary" @click="registerTest" :disabled="comeVip">成为会员</el-button>
 	    				</div>
-	    				<div class="greeUser">
-	    					<el-checkbox v-model="checked" @click="agree">同意用户协议</el-checkbox>
+	    				<div class="greeUser" style="position: relative">
+	    					<el-checkbox v-model="checked"></el-checkbox><a @click="agree" style="position: absolute;left: 30px;">同意用户协议</a>
 	    				</div>
 	    				<div class="registerThreeLogin">
-	    					<div class="registerFastIn">快捷账号登录</div>
+	    					<!--<div class="registerFastIn">快捷账号登录</div>-->
 	    					<div class="registerLogonIn">
 	    						<div class="xinlang"></div>
 	    						<div class="registerDiviLine">|</div>
@@ -47,11 +47,11 @@
 				active:'1',
 				phoneNumber:'',
 				smsCode:'',
-				checked:'',
+				checked:true,
 				btntxt:"获取验证码",
-		        disabled:false,
-		        comeVip:true,
-		        time:0,
+        disabled:false,
+        comeVip:false,
+        time:0,
 			};
 		},
 		methods:{
@@ -60,7 +60,7 @@
 		    },
 		    //同意用户协议
 		    agree:function(){
-
+          window.open(document.location.origin+'/#/front/firstMenuRouter/userTerms');
 		    },
 		    //获取验证码方法
 			sendcode:function(){
@@ -149,6 +149,7 @@
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
+
 	.registerCodeinput .el-input__inner {
 		border: 0;
 		border-bottom: solid 1px #e6e6e6;
@@ -197,7 +198,7 @@
 		border-color:  #ffb957;
 		font-size: 14px;
 	}
-	.registerLogin .el-button--primary:hover {
+  .registerCodeinput .el-button--primary:hover,.registerLogin .el-button--primary:hover {
 		background-color:  #009fa0;
 		border-color:  #009fa0;
 	}
@@ -279,7 +280,7 @@
 		justify-content:center;
 		align-items:center;
 		width: 412px;
-		height: 100px;
+		height: 50px;
 		font-size: 14px;
 		background-color: #fcfcfc;
 		border-radius: 0px 0px 5px 5px;
