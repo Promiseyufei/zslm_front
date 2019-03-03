@@ -809,9 +809,9 @@ export default {
             width: 120px;
             height: 120px;
             margin: 0 auto 30px;
-            border-radius: 5px;
+           /* border-radius: 5px;
             border: rgba(255, 255, 255, 0.1) 2px solid;
-            border-width: 5px;
+            border-width: 5px;*/
             z-index: 99;
         }
         .backColor {
