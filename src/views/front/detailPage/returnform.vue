@@ -64,8 +64,8 @@
 								</el-form-item>
 								<el-form-item label="是否使用优惠卷：" prop="is_coupon">
 									<el-radio-group v-model="formLabelAlign.is_coupon">
-										<el-radio label="0">是</el-radio>
-										<el-radio label="1">否</el-radio>
+										<el-radio :label="0">是</el-radio>
+										<el-radio :label="1">否</el-radio>
 									</el-radio-group>
 								</el-form-item>
 								<el-form-item label="优惠卷序列号：" prop="cou_id">
@@ -80,8 +80,8 @@
 								</el-form-item>
 								<el-form-item label="退款选择途径：" prop="refund_type">
 									<el-radio-group v-model="formLabelAlign.refund_type">
-										<el-radio label="0">支付宝</el-radio>
-										<el-radio label="1">银行卡转账</el-radio>
+										<el-radio :label="0">支付宝</el-radio>
+										<el-radio :label="1">银行卡转账</el-radio>
 
 									</el-radio-group>
 								</el-form-item>
@@ -347,7 +347,7 @@
 				}
 				box[index].classList.add("active");
 				this.select = index;
-			},
+			},	
 			//点击关闭弹框时触发事件
 			handleClose(done) {
 				this.$confirm('确认关闭？')
@@ -371,7 +371,6 @@
 				console.log(this.formLabelAlign.img)
 			},
 			BASEisNotFloat(theFloat) {
-
 				var len = theFloat.length;
 				var dotNum = 0;
 				if (len == 0)
@@ -393,48 +392,61 @@
 				var regPos = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/
 				var phonereg = /^[1][3,4,5,7,8][0-9]{9}$/;
 				if (this.formLabelAlign.c_name == undefined || this.formLabelAlign.c_name == '') {
-					this.message(true, '请输入正确的课程名称', 'error')
+					this.message(true, '请输入正确的课程名称', 'error');
+					this.$refs.c_name.focus();
 					return false;
 				} else if (this.formLabelAlign.money == undefined || !regPos.test(this.formLabelAlign.money)) {
-					this.message(true, "请输入正确的金额", 'error')
+					this.message(true, "请输入正确的金额", 'error');
+          this.$refs.money.focus();
 					return false;
 				} else if (this.formLabelAlign.is_coupon == undefined || !(this.formLabelAlign.is_coupon == '0' || this.formLabelAlign
 						.is_coupon == '1')) {
 
-					this.message(true, "请选择是否使用优惠券", 'error')
+					this.message(true, "请选择是否使用优惠券", 'error');
+          this.$refs.cou_id.focus();
 					return false;
-				} else if (this.formLabelAlign.time == undefined || !this.isDate(this.formLabelAlign.time)) {
+				} else if (this.formLabelAlign.is_coupon == 0 && (this.formLabelAlign.cou_id == undefined || !regPos.test(this.formLabelAlign.cou_id))) {
+          this.message(true, "优惠券序列号不能为空，且必须为数字", "error");
+          this.$refs.cou_id.focus();
+          return false;
+        }else if (this.formLabelAlign.time == undefined || !this.isDate(this.formLabelAlign.time)) {
 
-					this.message(true, "日期格式错误", 'error')
+					this.message(true, "日期格式错误", 'error');
+          this.$refs.time.focus();
 					return false;
 				} else if (this.formLabelAlign.phone == undefined || !phonereg.test(this.formLabelAlign.phone)) {
-					this.message(true, "请输入正确的手机号", 'error')
+					this.message(true, "请输入正确的手机号", 'error');
+          this.$refs.phone.focus();
 					return false;
 				} else if (this.formLabelAlign.refund_type == undefined || !(this.formLabelAlign.refund_type == '0' || this.formLabelAlign
 						.refund_type == '1')) {
-					this.message(true, "退款方式格式错误", 'error')
+					this.message(true, "退款方式格式错误", 'error');
+          this.$refs.refund_type.focus();
 					return false;
 				} else if (this.formLabelAlign.alipay_account == undefined || this.formLabelAlign.alipay_account == '') {
-					this.message(true, "请输入支付宝账号", 'error')
+					this.message(true, "请输入支付宝账号", 'error');
+          this.$refs.alipay_account.focus();
 					return false;
 				} else if (this.formLabelAlign.name == undefined || this.formLabelAlign.name == '') {
-					this.message(true, "请输入姓名", 'error')
+					this.message(true, "请输入姓名", 'error');
+          this.$refs.name.focus();
 					return false;
 				} else if (this.formLabelAlign.card == undefined || this.formLabelAlign.card == '' || !this.isBankCard(this.formLabelAlign
 						.card)) {
-					this.message(true, "请输入银行卡号", 'error')
+					this.message(true, "请输入银行卡号", 'error');
+          this.$refs.card.focus();
 					return false;
 				} else if (this.formLabelAlign.blank_addr == undefined || this.formLabelAlign.blank_addr == '') {
-					this.message(true, "请输入开户行信息", 'error')
+					this.message(true, "请输入开户行信息", 'error');
+          this.$refs.blank_addr.focus();
 					return false;
 				} else if (this.formLabelAlign.message == undefined || this.formLabelAlign.message == '') {
-					this.message(true, "请输入详细信息", "error")
+					this.message(true, "请输入详细信息", "error");
+          this.$refs.message.focus();
 					return false;
-				} else if (this.formLabelAlign.cou_id == undefined || !regPos.test(this.formLabelAlign.cou_id)) {
-					this.message(true, "优惠券序列号不能为空，且必须为数字", "error")
-					return false;
-				} else if (this.formLabelAlign.f_id == undefined) {
-					this.message(true, "请选择辅导机构", "error")
+				}  else if (this.formLabelAlign.f_id == undefined) {
+					// this.message(true, "请选择辅导机构", "error");
+          this.selectCoach();
 					return false;
 				}
 
@@ -468,8 +480,11 @@
 					}
 				};
 
-				if (!this.judge())
-					return
+				if (!this.judge()){
+          return false;
+        }
+
+
 				this.all_loading = true;
 				this.post("/front/usercore/refund", fd, config)
 					.then(res => {
@@ -480,7 +495,28 @@
 						}
 						self.all_loading = false;
 					})
-			}
+			},
+      // 搜索辅导机构
+      searchCoach(){
+        var that = this;
+
+			  if(!this.searchCon){
+          this.message(true, '请输入您要搜索的内容' , "info");
+        }else{
+			    this.fetch('/front/coach/getallcoupon' , {
+            name:that.searchCon,
+          }).then(function(res){
+            if (res.code == 0) {
+              that.searchCon = '';
+              that.coach = res.result;
+            } else {
+              that.message(true, res.msg, "error");
+            }
+          }).catch(function(error){
+            that.message(true, error , "error");
+          });
+        }
+      }
 		},
 		mounted() {
 			//当屏幕宽度小于992像素时，即为手机端时，表单提示居左显示
@@ -488,6 +524,13 @@
 			if (withnow <= 1280) {
 				this.location = "left";
 			}
+
+			if(!this.getUserState('userId')){
+        this.message(true, "您还没有登陆，请先登陆", "error");
+        this.$router.push('/front/Login/loginRoute/accountNumber');
+      }else{
+			  this.u_id = this.getUserState('userId');
+      }
 		},
 		created () {
 			this.changeTile('专硕联盟-退款申请');
@@ -500,6 +543,25 @@
 		font-weight: bold !important;
 	}
   .el-button--primary,.el-button--primary:hover{
+    background-color: #009fa0;
+    border-color: #009fa0;
+  }
+
+  .el-input-group__append, .el-input-group__prepend{
+    background-color: #009fa0;
+    border-color: #009fa0;
+    color: #FFFFFF;
+  }
+
+  .searchInput,.el-input__inner:hover,.el-input__inner:focus{
+    border-color: #009fa0;
+  }
+
+  .el-radio__input.is-checked+.el-radio__label{
+    color: #009fa0;
+  }
+
+  .el-radio__input.is-checked .el-radio__inner{
     background-color: #009fa0;
     border-color: #009fa0;
   }
