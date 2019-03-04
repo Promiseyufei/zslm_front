@@ -567,7 +567,7 @@
 
 		},
 		created() {
-			this.changeTile('专硕联盟-选院校')
+			this.changeTile('选院校 | 管理类专硕招生信息大全：MBA、MPA、MPAcc、MEM、MAud、MTA、MLIS')
 		}
 	};
 
