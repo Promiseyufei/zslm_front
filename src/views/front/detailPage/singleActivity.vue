@@ -89,7 +89,7 @@
                                  <img v-if=" acHostInfo.magor_logo_name != '' " :src="acHostInfo.magor_logo_name">
                                 <img v-else src="../../../assets/img/collegeLogo.png">
                             </div>
-                            <div class="asideTitle">
+                            <div class="asideTitle" @click="goItemDetail(acHostInfo.id)" style="cursor: pointer">
                                 <span></span>
                                 <p>{{acHostInfo.z_name}}</p>
                                 <span></span>
@@ -250,6 +250,14 @@ export default {
                 self.message(true, "你还没有登录哦,请先登录/注册。", 'info');
                 this.$router.push('/front/Login/loginRoute/accountNumber');
             }
+        },
+
+        //跳到单个院校
+        goItemDetail:function(id){
+          // console.log(id);
+          this.$router.push({
+            path:'/front/firstMenuRouter/selectCollege/singleCollage/'+id
+          });
         },
 
         // 热门活动——换一换

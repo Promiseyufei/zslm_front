@@ -39,11 +39,11 @@
 						</el-carousel-item>
 					</el-carousel>
 				</div>
-				<div class="advertisement" v-for="(item,index) in advertisementB" :key="index">
+				<!--<div class="advertisement" v-for="(item,index) in advertisementB" :key="index">
 					<a :href="item.re_url">
 						<img :src="item.img" alt="item.img_alt">
 					</a>
-				</div>
+				</div>-->
 				<ArticleP @refreshs="refresh" @jump="jump" v-if="information[1].zx_info.length" :title="information[1].region_name" :inforArticle="information[1].zx_info"></ArticleP>
 			</div>
 		</div>
@@ -137,11 +137,11 @@
 			jumpreUrl(jumpUrl) {
 				if(typeof jumpUrl !== 'undefined') {
 					if(jumpUrl.substr(0,7).toLowerCase() == "http://" || jumpUrl.substr(0,8).toLowerCase() == "https://") {
-						window.open(jumpUrl);
+						window.open(jumpUrl , '_blank');
 					}
 					else {
 						var url = ('http://' + jumpUrl);
-						window.open(url);
+						window.open(url , '_blank');
 					}
 				}
 			},
@@ -166,6 +166,7 @@
 				this.$router.push({
 					path: '/front/firstMenuRouter/recruitStudents'
 				});
+        // window.open(document.location.origin+'/#/front/firstMenuRouter/recruitStudents' , '_blank');
 			},
 			/*
 			 * 推荐阅读刷新
@@ -182,7 +183,7 @@
 			 * 行业报告刷新
 			 * */
 			refreshBusiness: function(data) {
-				
+
 			},
 			/*
 			 *
@@ -201,7 +202,9 @@
 				// 					});
 			},
 			jump: function(id) {
-				this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + id.id);
+			  // alert(1);
+        window.open(document.location.origin+'/#/front/firstMenuRouter/viewInformation/singleInformation/' + id.id , '_blank');
+				// this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + id.id);
 			},
 			/*
 			 * 行业报告
@@ -564,7 +567,7 @@
 	.advertisement {
 		border-radius: 3px;
 		width: 305px;
-		height: 188px;
+		/*height: 188px;*/
 		margin-bottom: 14px;
 		margin-top: 14px;
 	}

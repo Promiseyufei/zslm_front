@@ -567,6 +567,7 @@
 
 		},
 	};
+
 </script>
 <style>
 	.moreInform i {

@@ -3,7 +3,7 @@
     <!-- <activityBox v-for="(item,index) in info"  :key="index" :activityInfo="item"></activityBox> -->
 
 	<!-- 单个活动块 -->
-    <div class="activityBox" @click="jump">
+    <div class="activityBox" @click="jump" v-show="activityInfo.active_name != ''">
 	    <div>
 	        <!-- 头部图片及状态 -->
 	        <div class="activityImg" v-if="activityInfo.active_img" :style="{ backgroundImage: 'url(' + activityInfo.active_img + ')' }">
@@ -13,7 +13,7 @@
 	        <div class="activityImg" v-else>
 	            <p v-if="activityInfo.start_state==0">{{state}}</p>
 	            <p v-else :class="activityInfo.start_state==1?'activityState1':'activityState2' ">{{state}}</p>
-	        </div>  
+	        </div>
 	        <!-- 中间活动内容：标题、地址、时间 -->
 	        <div class="activityDetail">
 	            <div class="activityTitle">
@@ -65,7 +65,7 @@ export default {
             url:'../../assets/img/college1.jpg',
             item: this.activityInfo,//活动信息
             state: '',//图片上标签——活动状态
-            
+
         };
     },
     methods:{
@@ -115,7 +115,7 @@ export default {
         /*颜色会根据状态不同而变化*/
         background-color: #ffb957;
     }
-	
+
 </style>
 
 <style scoped>
@@ -133,6 +133,9 @@ export default {
         /*包括边框和padding的大小*/
         box-sizing: border-box;
         min-height: 80px;
+        float: left;
+        /*margin: 20px auto;*/
+      justify-content:flex-start;
     }
     .activityBox>div{
         background-color: #ffffff;
@@ -144,7 +147,7 @@ export default {
         transition: all 0.3s ease;
         -webkit-transition: all 0.3s ease;
     }
-    
+
     /*单个活动块儿上部图片*/
     .activityImg{
         height: 191px;
@@ -242,7 +245,7 @@ export default {
         background-color: rgba(239,239,239,1);
         min-height: auto;
         height: 1px;
-    }   
+    }
 
     /*底部块儿中的：学校和主题*/
     .managerSchoolTitle{

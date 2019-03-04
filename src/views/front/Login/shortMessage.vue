@@ -2,7 +2,7 @@
 <template>
     <div>
     	<div class="codeInput">
-	      	<el-input placeholder="请输入验证码" 
+	      	<el-input placeholder="请输入验证码"
 		      prefix-icon="el-icon-message" v-model="smsCode">
 			</el-input>
 			<el-button  type="primary" :disabled="disabled" @click="sendcode">
@@ -56,6 +56,10 @@
 		background-color:  #ffb957;
 		border-color:  #ffb957;
 	}
+  .codeInput .el-button--primary:hover{
+    background-color: #009fa0;
+    border-color: #009fa0;
+  }
 	.codeInput .el-input__inner {
 		width: 219px;
 		position: absolute;
@@ -78,5 +82,5 @@
 		/*justify-content:space-between;*/
 		/*margin-left: 37px;*/
 	}
-	
+
 </style>

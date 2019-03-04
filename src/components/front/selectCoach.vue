@@ -8,10 +8,10 @@
 				<nav class="publicRowRight" style="">
 					<div ref="publiccheckbox">
 						<el-checkbox :indeterminate="isIndeterminate[0]" v-model="checkAll[0]" @change="handleCheckAllChange(0)" :class="checkboxGroup[0]==''?'ff':'' ">全部</el-checkbox>
-						<el-radio-group v-model="checkboxGroup[0]" @change="handleChange">
+						<el-checkbox-group v-model="checkboxGroup[0]" @change="handleChange">
 
-							<el-radio-button v-for="(city,ind) in list[0].cities" :label="city" :key="ind">{{city.name}}</el-radio-button>
-						</el-radio-group>
+							<el-checkbox-button v-for="(city,ind) in list[0].cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
+						</el-checkbox-group>
 					</div>
 					<p @click="getMore(index,$event)" v-show="list[0].cities.length>=14" class="pcspan">
 						<span>查看更多</span>
@@ -171,10 +171,10 @@
 		color: #fff;
 	}
 
-	
+
 
 	.publicRowRight .el-radio-button__orig-radio:checked+.el-radio-button__inner {
-		
+
 		background-color: #ffb957 !important;
 		border-color: #ffb957 !important;
 		border-radius: 5px !important;
@@ -187,7 +187,7 @@
 	.publicRowRight .el-radio-button .el-radio-button__inner{
 		border: 0;
 	}
-	
+
 	.publicRowRight .el-radio-button__orig-radio:checked+.el-radio-button__inner:hover {
 		color: #fff;
 	}
