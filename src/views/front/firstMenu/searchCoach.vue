@@ -250,6 +250,7 @@
 			change: function(checkboxGroup) {
 				this.pageNumber = 1
 				this.getPageCoach(checkboxGroup)
+				console.log(checkboxGroup)
 				//当选中全部时，清空当前行数组，通过*号匹配
 
 			},
