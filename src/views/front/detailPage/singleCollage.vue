@@ -446,6 +446,7 @@ export default {
                 if (response.code==0) {
                     console.log(response)
                     let res = response.result[0];
+                    that.changeTile(res.title)
                     that.z_name = res.z_name;
                     that.logoName = res.magor_logo_name != '' ? res.magor_logo_name : '../../../assets/img/picture.jpg';
                     that.coverName = res.major_cover_name != '' ? res.major_cover_name : '../../../assets/img/singleCollege.jpg';
@@ -470,6 +471,7 @@ export default {
                     that.dialogTitle = res.wc_image.length > 0?'扫码关注官方微信公众号':'暂无官方微信公众号信息！';
 
                     that.isFollow();
+                    
 
                 }
             });

@@ -97,6 +97,9 @@
             		this.sendSmsCode(this.resetPass.phoneNumber);
             	}
         	},
+		},
+		created() {
+			this.changeTile('专硕联盟-忘记密码')
 		}
 	}
 </script>

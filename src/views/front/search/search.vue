@@ -107,6 +107,7 @@ export default {
     },
     mounted() {
         this.presentation();
+        this.changeTile('专硕联盟-搜索')
     }
 }
 </script>

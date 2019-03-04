@@ -211,6 +211,9 @@
 				this.phone = true;
 				this.computer = false;
 			}
+		},
+		created () {
+			this.changeTile('专硕联盟-用户登录')
 		}
 	}
 </script>

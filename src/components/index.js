@@ -47,6 +47,8 @@ import vsmajor from './front/vsMajor.vue'
 import RemoteJs from './common/RemoteJs.vue'
 import selectCoach from './front/selectCoach.vue'
 import ArticleP from './front/article_P.vue'
+import selectHeadItem from './front/selectHeadItem.vue'
+
 export default {
     Test, 
     Test2,
@@ -95,5 +97,6 @@ export default {
     RemoteJs,
     vsmajor,
 	selectCoach,
-	ArticleP
+	ArticleP,
+	selectHeadItem
 }

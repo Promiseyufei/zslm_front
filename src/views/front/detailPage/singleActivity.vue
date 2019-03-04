@@ -353,6 +353,7 @@ export default {
                 // console.log(res);
                 if(res.code == 0){
                     self.AppointAcInfo = res.result;
+                    self.changeTile(self.AppointAcInfo.title);
                     switch(self.AppointAcInfo.start_state){
                         case 0:   self.acState = "+ 我要报名"; break;//未开始
                         case 1:   self.acState = "活动进行中"; break;//进行中
