@@ -505,7 +505,7 @@
 			// this.getPcActivityList();
 		},
 		created () {
-			this.changeTile('专硕联盟-找活动')
+			this.changeTile('找活动 | 管理类专硕招生活动：MBA、MPA、MPAcc、MEM、MAud、MTA、MLIS')
 			// document.title = '专硕联盟-找活动';
 		}
 	};
@@ -528,8 +528,15 @@
 		/*margin-top: 49px;*/
 		/*margin-bottom: 44px;*/
 	}
+	/* 设置输入框获取焦点时的颜色 */
+	.searchs .el-input.is-active .el-input__inner, .el-input__inner:focus {
+		border-color: #1abc9c ;
+	}
 </style>
 <style scoped>
+
+
+
 	.searchs,
 	.activitySelt .selectedTag,
 	.selectedTag .selected,
