@@ -30,16 +30,8 @@
 
 						<!-- 弹出层 -->
 						<el-dialog :visible.sync="dialogVisible" width="1280px" center :before-close="handleClose">
-							<el-form :inline="true" :model="formInline" class="demo-form-inline">
-								<el-form-item label="关键字查询">
-									<el-input v-model="formInline.keyword" placeholder="请输入关键字"></el-input>
-								</el-form-item>
-								<el-form-item>
-									<el-button type="primary" @click="onKeySubmit">点击筛选</el-button>
-								</el-form-item>
-							</el-form>
 							<div class="boxdialog">
-								<div class="singlecoach" v-for="(item,index) in coachKeyword" :key="index" @click="selectsingle(index)">
+								<div class="singlecoach" v-for="(item,index) in coach" :key="index" @click="selectsingle(index)">
 									<div class="singlecoachtop">
 										<img :src="item.logo_name" alt="">
 									</div>
@@ -55,50 +47,50 @@
 						<!-- 表单 -->
 						<div class="formbox">
 							<span>退款信息填写</span>
-							<el-form :label-position="location" status-icon :rules="rules2" ref="ruleForm2" label-width="180px" :model="formLabelAlign">
-								<el-form-item label="课程全称：" prop="c_name">
+							<el-form :label-position="location" label-width="180px" :model="formLabelAlign">
+								<el-form-item label="课程全称：">
 									<el-input v-model="formLabelAlign.c_name" style="width:340px"></el-input>
 								</el-form-item>
-								<el-form-item label="退款金额：" prop="money">
-									<el-input v-model.number="formLabelAlign.money" style="width:200px"></el-input>
+								<el-form-item label="退款金额：">
+									<el-input v-model="formLabelAlign.money" style="width:200px"></el-input>
 								</el-form-item>
-								<el-form-item label="是否使用优惠卷：" prop="is_coupon">
+								<el-form-item label="是否使用优惠卷：">
 									<el-radio-group v-model="formLabelAlign.is_coupon">
-										<el-radio :label="0">是</el-radio>
-										<el-radio :label="1">否</el-radio>
+										<el-radio label="0">是</el-radio>
+										<el-radio label="1">否</el-radio>
 									</el-radio-group>
 								</el-form-item>
-								<el-form-item label="优惠卷序列号：" prop="cou_id">
+								<el-form-item label="优惠卷序列号：">
 									<el-input v-model="formLabelAlign.cou_id" style="width:340px"></el-input>
 								</el-form-item>
-								<el-form-item label="报名日期：" prop="time">
+								<el-form-item label="报名日期：">
 									<el-date-picker v-model="formLabelAlign.time" type="date" placeholder="选择日期">
 									</el-date-picker>
 								</el-form-item>
-								<el-form-item label="联系电话：" prop="phone">
+								<el-form-item label="联系电话：">
 									<el-input v-model="formLabelAlign.phone" style="width:340px"></el-input>
 								</el-form-item>
-								<el-form-item label="退款选择途径：" prop="refund_type">
+								<el-form-item label="退款选择途径：">
 									<el-radio-group v-model="formLabelAlign.refund_type">
-										<el-radio :label="0">支付宝</el-radio>
-										<el-radio :label="1">银行卡转账</el-radio>
+										<el-radio label="0">支付宝</el-radio>
+										<el-radio label="1">银行卡转账</el-radio>
 
 									</el-radio-group>
 								</el-form-item>
-								<el-form-item label="支付宝账号：" prop="alipay_account">
+								<el-form-item label="支付宝账号：">
 									<el-input v-model="formLabelAlign.alipay_account" style="width:340px"></el-input>
 								</el-form-item>
-								<el-form-item label="姓名：" prop="name">
+								<el-form-item label="姓名：">
 									<el-input v-model="formLabelAlign.name" style="width:200px"></el-input>
 								</el-form-item>
-								<el-form-item label="银行卡号：" prop="card">
+								<el-form-item label="银行卡号：">
 									<el-input v-model="formLabelAlign.card" style="width:340px"></el-input>
 								</el-form-item>
-								<el-form-item label="开户行：" prop="blank_addr">
+								<el-form-item label="开户行：">
 									<el-input v-model="formLabelAlign.blank_addr" style="width:200px"></el-input>
 								</el-form-item>
 
-								<el-form-item label="申诉说明：" prop="message">
+								<el-form-item label="申诉说明：">
 									<el-input v-model="formLabelAlign.message" style="width:510px"></el-input>
 								</el-form-item>
 								<el-form-item label="相关说明：">
@@ -109,7 +101,7 @@
 									</el-upload>
 								</el-form-item>
 								<el-form-item label="">
-									<el-button type="primary" class="sumitbutton" @click="submitForm('ruleForm2')">提交</el-button>
+									<el-button type="primary" class="sumitbutton" @click="sublimt">提交</el-button>
 								</el-form-item>
 							</el-form>
 						</div>
@@ -127,194 +119,24 @@
 	export default {
 		components: {},
 		data() {
-			let validateCName = (rule, value, callback) => {
-				if(this.formLabelAlign.c_name == '' || this.formLabelAlign.c_name == undefined) {
-					callback(new Error('请输入正确的课程名称'));
-				}
-				else callback();
-			};
-			let validateMoney = (rule, value, callback) => {
-				var regPos = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
-				if(this.formLabelAlign.money == undefined || !regPos.test(this.formLabelAlign.money)) {
-					callback(new Error('请输入正确的金额'));
-				}
-				else callback();
-			};
-			// let validateIsCoupon = (rule, value, callback) => {
-			// 	if(this.formLabelAlign.is_coupon == undefined || !(this.formLabelAlign.is_coupon == '0' || this.formLabelAlign
-			// 			.is_coupon == '1')) {
-			// 		callback(new Error('请选择是否使用优惠券'));
-			// 	}
-			// 	else callback();
-			// };
-			let validateCouId = (rule, value, callback) => {
-				var regPos = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/
-				if(this.formLabelAlign.cou_id == undefined || !regPos.test(this.formLabelAlign.cou_id)) {
-					callback(new Error('优惠券序列号不能为空，且必须为数字'));
-				}
-				else callback();
-			};
-			let validateTime = (rule, value, callback) => {
-				if(this.formLabelAlign.time == undefined || !this.isDate(this.formLabelAlign.time)) {
-					callback(new Error('日期格式错误'));
-				}
-				else callback();
-			};
-			let validatePhone = (rule, value, callback) => {
-				var phonereg = /^[1][3,4,5,7,8][0-9]{9}$/;
-				if(this.formLabelAlign.phone == undefined || !phonereg.test(this.formLabelAlign.phone)) {
-					callback(new Error('请输入正确的手机号'));
-				}
-				else callback();
-			};
-			// let validateRefundType = (rule, value, callback) => {
-			// 	console.log(this.formLabelAlign)
-				
-			// 	if(this.formLabelAlign.refund_type == undefined || !(this.formLabelAlign.refund_type == '0' || this.formLabelAlign
-			// 			.refund_type == '1')) {
-			// 		callback(new Error('退款方式格式错误'));
-			// 	}
-			// 	else callback();
-			// };
-			let validateAlipayAccount = (rule, value, callback) => {
-				if(this.formLabelAlign.alipay_account == undefined || this.formLabelAlign.alipay_account == '') {
-					callback(new Error('请输入支付宝账号'));
-				}
-				else callback();
-			};
-
-			let validateName = (rule, value, callback) => {
-				if(this.formLabelAlign.name == undefined || this.formLabelAlign.name == '') {
-					callback(new Error('请输入姓名'));
-				}
-				else callback();
-			};
-			let validateCard = (rule, value, callback) => {
-				if(this.formLabelAlign.card == undefined || this.formLabelAlign.card == '' || !this.isBankCard(this.formLabelAlign
-						.card)) {
-					callback(new Error('请输入银行卡号'));
-				}
-				else callback();
-			}
-			let validateBlankAddr = (rule, value, callback) => {
-				if(this.formLabelAlign.blank_addr == undefined || this.formLabelAlign.blank_addr == '') {
-					callback(new Error('请输入开户行信息'));
-				}
-				else callback();
-			};
-
-			let validateMessage = (rule, value, callback) => {
-				if(this.formLabelAlign.message == undefined || this.formLabelAlign.message == '') {
-					callback(new Error('请输入开户行信息'));
-				}
-				else callback();
-			};
-
 			return {
-				formInline: {
-					keyword: ''
-				},
 				all_loading: false,
 				location: "right",
 				dialogVisible: false,
 				select: null,
 				fifnish: null,
 				coach: [],
-				coachKeyword: [],
 				u_id: '1',
 				selectfif: {
 					coach_name: ""
 				},
 				formLabelAlign: {
-					is_coupon:undefined,
-					time:undefined,
-					cou_id: undefined,
-					phone: undefined,
-					refund_type: undefined,
-					alipay_account: undefined,
-					name: undefined,
-					card: undefined,
-					blank_addr: undefined,
-					message: undefined,
-					money:'',
-					c_name:'', 
 					img: []
 				},
-				tests: [],
-
-
-				rules2: {
-					c_name: [
-						{ validator: validateCName, trigger: 'blur' }
-					],
-					money: [
-						{ validator: validateMoney, trigger: 'blur' }
-					],
-					is_coupon: [
-						{ required: true, message: '请选择是否使用优惠券', trigger: 'change' }
-						// { validator: validateIsCoupon, trigger: 'blur' }
-					],
-					cou_id: [
-						{ validator: validateCouId, trigger: 'blur' }
-					],
-					time: [
-						{ validator: validateTime, trigger: 'blur' }
-					],
-					phone: [
-						{ validator: validatePhone, trigger: 'blur' }
-					],
-					refund_type: [
-						{ required: true, message: '退款方式格式错误', trigger: 'change' }
-						// { validator: validateRefundType, trigger: 'blur' }
-					],
-					alipay_account: [
-						{ validator: validateAlipayAccount, trigger: 'blur' }
-					],
-					name:[
-						{ validator: validateName, trigger: 'blur' }
-					],
-					card: [
-						{ validator: validateCard, trigger: 'blur' }
-					],
-					blank_addr: [
-						{ validator: validateBlankAddr, trigger: 'blur' }
-					],
-					message: [
-						{ validator: validateMessage, trigger: 'blur' }
-					]
-				}
+				tests: []
 			}
 		},
 		methods: {
-			onKeySubmit() {
-				
-				if(this.coach.length > 0) {
-					if(this.formInline.keyword == '') {
-						this.coachKeyword = this.coach;
-					} 
-					else {
-						
-						let i = 0;
-						this.coachKeyword = [];
-						while (i < this.coach.length) {
-							if(this.coach[i].coach_name.indexOf(this.formInline.keyword) != -1) {
-								this.coachKeyword.push(this.coach[i]);
-							}
-							i++;
-						}
-					}
-				}
-			},
-			submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						this.sublimt();
-					} else {
-						console.log('error submit!!');
-						return false;
-					}
-				});
-			},
 			//选择辅导机构，点击确认之后，关闭弹出层
 			successselect: function() {
 				this.fifnish = this.select;
@@ -331,7 +153,6 @@
 					console.log(res);
 					if (res.code == 0) {
 						that.coach = res.result;
-						that.coachKeyword = that.coach;
 						// console.log(that.collage);
 						// that.count = res.count;
 					} else {
@@ -347,7 +168,7 @@
 				}
 				box[index].classList.add("active");
 				this.select = index;
-			},	
+			},
 			//点击关闭弹框时触发事件
 			handleClose(done) {
 				this.$confirm('确认关闭？')
@@ -371,6 +192,7 @@
 				console.log(this.formLabelAlign.img)
 			},
 			BASEisNotFloat(theFloat) {
+
 				var len = theFloat.length;
 				var dotNum = 0;
 				if (len == 0)
@@ -392,61 +214,48 @@
 				var regPos = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/
 				var phonereg = /^[1][3,4,5,7,8][0-9]{9}$/;
 				if (this.formLabelAlign.c_name == undefined || this.formLabelAlign.c_name == '') {
-					this.message(true, '请输入正确的课程名称', 'error');
-					this.$refs.c_name.focus();
+					this.message(true, '请输入正确的课程名称', 'error')
 					return false;
 				} else if (this.formLabelAlign.money == undefined || !regPos.test(this.formLabelAlign.money)) {
-					this.message(true, "请输入正确的金额", 'error');
-          this.$refs.money.focus();
+					this.message(true, "请输入正确的金额", 'error')
 					return false;
 				} else if (this.formLabelAlign.is_coupon == undefined || !(this.formLabelAlign.is_coupon == '0' || this.formLabelAlign
 						.is_coupon == '1')) {
 
-					this.message(true, "请选择是否使用优惠券", 'error');
-          this.$refs.cou_id.focus();
+					this.message(true, "请选择是否使用优惠券", 'error')
 					return false;
-				} else if (this.formLabelAlign.is_coupon == 0 && (this.formLabelAlign.cou_id == undefined || !regPos.test(this.formLabelAlign.cou_id))) {
-          this.message(true, "优惠券序列号不能为空，且必须为数字", "error");
-          this.$refs.cou_id.focus();
-          return false;
-        }else if (this.formLabelAlign.time == undefined || !this.isDate(this.formLabelAlign.time)) {
+				} else if (this.formLabelAlign.time == undefined || !this.isDate(this.formLabelAlign.time)) {
 
-					this.message(true, "日期格式错误", 'error');
-          this.$refs.time.focus();
+					this.message(true, "日期格式错误", 'error')
 					return false;
 				} else if (this.formLabelAlign.phone == undefined || !phonereg.test(this.formLabelAlign.phone)) {
-					this.message(true, "请输入正确的手机号", 'error');
-          this.$refs.phone.focus();
+					this.message(true, "请输入正确的手机号", 'error')
 					return false;
 				} else if (this.formLabelAlign.refund_type == undefined || !(this.formLabelAlign.refund_type == '0' || this.formLabelAlign
 						.refund_type == '1')) {
-					this.message(true, "退款方式格式错误", 'error');
-          this.$refs.refund_type.focus();
+					this.message(true, "退款方式格式错误", 'error')
 					return false;
 				} else if (this.formLabelAlign.alipay_account == undefined || this.formLabelAlign.alipay_account == '') {
-					this.message(true, "请输入支付宝账号", 'error');
-          this.$refs.alipay_account.focus();
+					this.message(true, "请输入支付宝账号", 'error')
 					return false;
 				} else if (this.formLabelAlign.name == undefined || this.formLabelAlign.name == '') {
-					this.message(true, "请输入姓名", 'error');
-          this.$refs.name.focus();
+					this.message(true, "请输入姓名", 'error')
 					return false;
 				} else if (this.formLabelAlign.card == undefined || this.formLabelAlign.card == '' || !this.isBankCard(this.formLabelAlign
 						.card)) {
-					this.message(true, "请输入银行卡号", 'error');
-          this.$refs.card.focus();
+					this.message(true, "请输入银行卡号", 'error')
 					return false;
 				} else if (this.formLabelAlign.blank_addr == undefined || this.formLabelAlign.blank_addr == '') {
-					this.message(true, "请输入开户行信息", 'error');
-          this.$refs.blank_addr.focus();
+					this.message(true, "请输入开户行信息", 'error')
 					return false;
 				} else if (this.formLabelAlign.message == undefined || this.formLabelAlign.message == '') {
-					this.message(true, "请输入详细信息", "error");
-          this.$refs.message.focus();
+					this.message(true, "请输入详细信息", "error")
 					return false;
-				}  else if (this.formLabelAlign.f_id == undefined) {
-					// this.message(true, "请选择辅导机构", "error");
-          this.selectCoach();
+				} else if (this.formLabelAlign.cou_id == undefined || !regPos.test(this.formLabelAlign.cou_id)) {
+					this.message(true, "优惠券序列号不能为空，且必须为数字", "error")
+					return false;
+				} else if (this.formLabelAlign.f_id == undefined) {
+					this.message(true, "请选择辅导机构", "error")
 					return false;
 				}
 
@@ -480,11 +289,8 @@
 					}
 				};
 
-				if (!this.judge()){
-          return false;
-        }
-
-
+				if (!this.judge())
+					return
 				this.all_loading = true;
 				this.post("/front/usercore/refund", fd, config)
 					.then(res => {
@@ -495,28 +301,7 @@
 						}
 						self.all_loading = false;
 					})
-			},
-      // 搜索辅导机构
-      searchCoach(){
-        var that = this;
-
-			  if(!this.searchCon){
-          this.message(true, '请输入您要搜索的内容' , "info");
-        }else{
-			    this.fetch('/front/coach/getallcoupon' , {
-            name:that.searchCon,
-          }).then(function(res){
-            if (res.code == 0) {
-              that.searchCon = '';
-              that.coach = res.result;
-            } else {
-              that.message(true, res.msg, "error");
-            }
-          }).catch(function(error){
-            that.message(true, error , "error");
-          });
-        }
-      }
+			}
 		},
 		mounted() {
 			//当屏幕宽度小于992像素时，即为手机端时，表单提示居左显示
@@ -524,17 +309,7 @@
 			if (withnow <= 1280) {
 				this.location = "left";
 			}
-
-			if(!this.getUserState('userId')){
-        this.message(true, "您还没有登陆，请先登陆", "error");
-        this.$router.push('/front/Login/loginRoute/accountNumber');
-      }else{
-			  this.u_id = this.getUserState('userId');
-      }
 		},
-		created () {
-			this.changeTile('专硕联盟-退款申请');
-		}
 	};
 </script>
 <style>
@@ -543,25 +318,6 @@
 		font-weight: bold !important;
 	}
   .el-button--primary,.el-button--primary:hover{
-    background-color: #009fa0;
-    border-color: #009fa0;
-  }
-
-  .el-input-group__append, .el-input-group__prepend{
-    background-color: #009fa0;
-    border-color: #009fa0;
-    color: #FFFFFF;
-  }
-
-  .searchInput,.el-input__inner:hover,.el-input__inner:focus{
-    border-color: #009fa0;
-  }
-
-  .el-radio__input.is-checked+.el-radio__label{
-    color: #009fa0;
-  }
-
-  .el-radio__input.is-checked .el-radio__inner{
     background-color: #009fa0;
     border-color: #009fa0;
   }
