@@ -129,6 +129,7 @@
 						consultId: _this.$route.params.id
 					}).then((response) => {
 						if (response.code == 0) {
+							_this.changeTile(response.result.title);
 							_this.articleContent = response.result;
 						}
 					})

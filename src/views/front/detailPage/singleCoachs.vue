@@ -179,6 +179,7 @@ export default {
                         that.collage = res.result[0];
                         that.activity = that.collage.best_hot_active.info[0];
                         console.log(that.collage);
+                        that.changeTile(that.collage.title);
                         // that.count = res.count;
                     }else {
                         that.message(true,res.msg,"error");

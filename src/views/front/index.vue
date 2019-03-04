@@ -639,10 +639,10 @@
 					this.saveUserState('userHead', this.userData[2].head_portrait);
 				}
 			}
-
-
-
 		},
+		created () {
+			this.changeTile('专硕联盟-首页')
+		}
 	};
 </script>
 <style>

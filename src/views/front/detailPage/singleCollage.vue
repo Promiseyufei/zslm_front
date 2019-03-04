@@ -443,6 +443,7 @@ export default {
                 // console.log(response.result[0])
                 if (response.code==0) {
                     let res = response.result[0];
+                    that.changeTile(res.title)
                     that.z_name = res.z_name;
                     that.logoName = res.magor_logo_name != '' ? res.magor_logo_name : '../../../assets/img/picture.jpg';
                     // that.coverName = res.major_cover_name != '' ? res.major_cover_name : '../../../assets/img/singleCollege.jpg';
@@ -465,6 +466,7 @@ export default {
                     that.wxCode = res.wc_image;
                     that.xlCode = res.wb_imag;
                     that.isFollow();
+                    
 
                 }
             });

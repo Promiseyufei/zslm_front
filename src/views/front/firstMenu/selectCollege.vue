@@ -442,9 +442,9 @@ export default {
                     page_size: that.page_size,
             }).then(function (response) {
                 if (response.code==0) {
-                    let res = response.result[0];
-                    that.count =response.result[1];
-                    that.majorInform=res;
+                    let res = response.result.list;
+                    that.count =response.result.count;
+					that.majorInform=res;
                     that.majorInform.forEach((item,index) => {
                         that.majorInform[index].showProduct = item.product.slice(0,3);
                         that.majorInform[index].missPorduct = item.product.slice(3);
@@ -544,14 +544,19 @@ export default {
             path: this.$route.path
         }).then((response) => {
             if(response.code == 0) {
-				that.$refs.header.setImg(response.result.img);
-				that.$refs.header.setJudgeUlr(response.result.re_url);
+				if(response.result != null) {
+					that.$refs.header.setImg(response.result.img);
+					that.$refs.header.setJudgeUlr(response.result.re_url);
+				}
             }
         })
         this.getmajorInform();
         this.getmajorType();
 
-    },
+	},
+	created() {
+		document.title = '专硕联盟-选院校';
+	}
 };
 </script>
 <style>

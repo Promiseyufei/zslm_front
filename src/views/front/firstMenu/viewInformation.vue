@@ -375,6 +375,9 @@
 			this.getBanner();
 			this.getAd();
 		},
+		created () {
+			this.changeTile('专硕联盟-看资讯')
+		}
 	};
 </script>
 

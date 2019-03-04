@@ -657,6 +657,9 @@
 			divs[2].style.height = 0;
 			this.info();
 			// this.getMajor();
+		},
+		created () {
+			this.changeTile('专硕联盟-个人中心');
 		}
 	}
 </script>

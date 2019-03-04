@@ -132,6 +132,9 @@
 		},
 		mounted() {
 			if(this.$store.state.userInfo['userPhone'] !== '') this.phoneNumber = this.$store.state.userInfo['userPhone'];
+		},
+		created() {
+			this.changeTile('专硕联盟-新用户注册')
 		}
 	}
 </script>
