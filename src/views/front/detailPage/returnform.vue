@@ -276,7 +276,7 @@
           this.$refs.message.focus();
 					return false;
 				}  else if (this.formLabelAlign.f_id == undefined) {
-					this.message(true, "请选择辅导机构", "error");
+					// this.message(true, "请选择辅导机构", "error");
           this.selectCoach();
 					return false;
 				}
@@ -355,6 +355,13 @@
 			if (withnow <= 1280) {
 				this.location = "left";
 			}
+
+			if(!this.getUserState('userId')){
+        this.message(true, "您还没有登陆，请先登陆", "error");
+        this.$router.push('/front/Login/loginRoute/accountNumber');
+      }else{
+			  this.u_id = this.getUserState('userId');
+      }
 		},
 	};
 </script>
@@ -375,6 +382,15 @@
   }
 
   .searchInput,.el-input__inner:hover,.el-input__inner:focus{
+    border-color: #009fa0;
+  }
+
+  .el-radio__input.is-checked+.el-radio__label{
+    color: #009fa0;
+  }
+
+  .el-radio__input.is-checked .el-radio__inner{
+    background-color: #009fa0;
     border-color: #009fa0;
   }
 
