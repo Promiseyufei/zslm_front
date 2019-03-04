@@ -3,69 +3,45 @@
 	<div class="publicRowboxbig">
 		<div class="publicRowbox">
 			<!-- 循环出来列 -->
-			<div class="publicRow" >
-				<span>{{list[0].type}}</span>
-				<nav class="publicRowRight" style="">
-					<div ref="publiccheckbox">
-						<el-checkbox :indeterminate="isIndeterminate[0]" v-model="checkAll[0]" @change="handleCheckAllChange(0)" :class="checkboxGroup[0]==''?'ff':'' ">全部</el-checkbox>
-						<el-radio-group v-model="checkboxGroup[0]" @change="handleChange">
-
-							<el-radio-button v-for="(city,ind) in list[0].cities" :label="city" :key="ind">{{city.name}}</el-radio-button>
-						</el-radio-group>
-					</div>
-					<p @click="getMore(index,$event)" v-show="list[0].cities.length>=14" class="pcspan">
-						<span>查看更多</span>
-						<i class="el-icon-caret-bottom"></i>
-					</p>
-					<p @click="getMore(0,$event)" class="photospan">
-						<span>查看更多</span>
-						<i class="el-icon-caret-bottom"></i>
-					</p>
-				</nav>
+			   <div class="publicRow" v-for="(item,index) in list" :key="index">
+			        <span>{{item.type}}</span>
+			        <nav class="publicRowRight" v-if="item.type != '院校地点' && item.type != '活动省市'">
+			            <div ref="publiccheckbox">
+			                <el-checkbox :indeterminate="isIndeterminate[index]" v-model="checkAll[index]" @change="handleCheckAllChange(index)" :class="checkboxGroup[index]==''?'ff':'' ">全部</el-checkbox>
+			                <el-checkbox-group v-model="checkboxGroup[index]" @change="handleChange">
+			                    <!-- 循环出来行 -->
+			                    <el-checkbox-button v-for="(city,ind) in item.cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
+			                </el-checkbox-group>
+			            </div>
+			            <p @click="getMore(index,$event)" v-show="list[index].cities.length>=14" class="pcspan">
+			                <span>查看更多</span>
+			                <i class="el-icon-caret-bottom"></i>
+			            </p>
+			            <p @click="getMore(index,$event)" class="photospan">
+			                <span>查看更多</span>
+			                <i class="el-icon-caret-bottom"></i>
+			            </p>
+			        </nav>
+					
+					<nav class="publicRowRight"  v-else>
+						<div ref="publiccheckbox">
+							<el-checkbox :indeterminate="isIndeterminate[index]" v-model="checkAll[index]" @change="handleCheckAllChange(index)" :class="checkboxGroup[index]==''?'ff':'' ">全部</el-checkbox>
+							<el-radio-group v-model="checkboxGroup[index]" @change="handleChange">
+					
+								<el-radio-button v-for="(city,ind) in list[index].cities" :label="city" :key="ind">{{city.name}}</el-radio-button>
+							</el-radio-group>
+						</div>
+						<p @click="getMore(index,$event)" v-show="list[index].cities.length>=14" class="pcspan">
+							<span>查看更多</span>
+							<i class="el-icon-caret-bottom"></i>
+						</p>
+						<p @click="getMore(index,$event)" class="photospan">
+							<span>查看更多</span>
+							<i class="el-icon-caret-bottom"></i>
+						</p>
+					</nav>
+			    </div>
 			</div>
-
-			<div class="publicRow">
-				<span>{{list[1].type}}</span>
-				<nav class="publicRowRight">
-					<div ref="publiccheckbox">
-						<el-checkbox :indeterminate="isIndeterminate[1]" v-model="checkAll[1]" @change="handleCheckAllChange(1)" :class="checkboxGroup[1]==''?'ff':'' ">全部</el-checkbox>
-						<el-checkbox-group v-model="checkboxGroup[1]" @change="handleChange">
-
-							<el-checkbox-button v-for="(city,ind) in list[1].cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
-						</el-checkbox-group>
-					</div>
-					<p @click="getMore(index,$event)" v-show="list[1].cities.length>=14" class="pcspan">
-						<span>查看更多</span>
-						<i class="el-icon-caret-bottom"></i>
-					</p>
-					<p @click="getMore(1,$event)" class="photospan">
-						<span>查看更多</span>
-						<i class="el-icon-caret-bottom"></i>
-					</p>
-				</nav>
-			</div>
-
-			<div class="publicRow">
-				<span>{{list[2].type}}</span>
-				<nav class="publicRowRight">
-					<div ref="publiccheckbox">
-						<el-checkbox :indeterminate="isIndeterminate[2]" v-model="checkAll[2]" @change="handleCheckAllChange(2)" :class="checkboxGroup[2]==''?'ff':'' ">全部</el-checkbox>
-						<el-checkbox-group v-model="checkboxGroup[2]" @change="handleChange">
-
-							<el-checkbox-button v-for="(city,ind) in list[2].cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
-						</el-checkbox-group>
-					</div>
-					<p @click="getMore(index,$event)" v-show="list[2].cities.length>=14" class="pcspan">
-						<span>查看更多</span>
-						<i class="el-icon-caret-bottom"></i>
-					</p>
-					<p @click="getMore(2,$event)" class="photospan">
-						<span>查看更多</span>
-						<i class="el-icon-caret-bottom"></i>
-					</p>
-				</nav>
-			</div>
-
 		</div>
 	</div>
 </template>
@@ -110,6 +86,7 @@
 				if (a.offsetHeight == this.arrayh[index]) {
 					a.style.height = "46px";
 				} else {
+					
 					a.style.height = this.arrayh[index] + "px";
 				}
 				//    console.log(e.currentTarget.children[0].innerHTML);
@@ -117,6 +94,11 @@
 				e.currentTarget.children[1].className = e.currentTarget.children[1].className == "el-icon-caret-bottom" ?
 					"el-icon-caret-top" : "el-icon-caret-bottom";
 			},
+			deleteCheck:function(index){
+				console.log(222)
+				console.log(this.checkboxGroup)
+				this.checkboxGroup[index] = []
+			}
 		},
 		props: ["list", "checkboxGroup1"],
 		mounted() {
@@ -133,6 +115,12 @@
 				}, 1000);
 			});
 			// console.log(this.list);
+			
+		},
+		watch:{
+			checkboxGroup:function(){
+				console.log(this.checkboxGroup)
+			}
 		}
 	}
 </script>

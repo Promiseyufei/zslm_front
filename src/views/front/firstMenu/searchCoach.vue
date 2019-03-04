@@ -1,4 +1,3 @@
-
 <template>
 	<div>
 		<div class="bigBox">
@@ -18,7 +17,7 @@
 				</div>
 
 				<!-- 筛选框 -->
-				<selectCoach  ref="select" :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectCoach>
+				<selectCoach ref="select" :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectCoach>
 
 				<!-- 选项卡 -->
 				<div class="singlecoachBig">
@@ -37,7 +36,7 @@
 				</div>
 
 				<!-- 辅导机构小模块 -->
-				<div class="singlecoachBig" >
+				<div class="singlecoachBig">
 					<div class="singlecoachbox">
 						<div class="singlecoach" v-for="(item,index) in coachlist" :key="index">
 							<div class="singlecoachtop" :style="{backgroundImage:'url('+item.cover_name+')'}" @click="jump(item.id)">
@@ -96,13 +95,12 @@
 
 				<!-- 分页或者加载更多 -->
 				<pcPhonePage class="pcPage" :loading="loading" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"
-				 @getPage="getPage" ></pcPhonePage>
+				 @getPage="getPage"></pcPhonePage>
 			</div>
 		</div>
 	</div>
 </template>
 
-<<<<<<< HEAD
 <script>
 	export default {
 		components: {
@@ -213,31 +211,25 @@
 			//标签栏，点击标签，删除标签
 			handleClose(tag) {
 
-
 				for (let index = 0; index < this.tags.length; index++) {
 					var temp = this.tags[index].indexOf(tag);
 
 					if (temp == -1) {
 						continue;
 					} else {
+						
 						this.tags[index].splice(this.tags[index].indexOf(tag), 1);
-
-						this.change(this.tags)
+					
 					}
 				}
-
+				this.change(this.tags)
 
 			},
 
-
-			//每次子组件改变时，父组件就会改变
-			change: function(checkboxGroup) {
-
-				//当选中全部时，清空当前行数组，通过*号匹配
+			getPageCoach: function(checkboxGroup) {
 				let t = checkboxGroup
 				this.tags = t.concat();;
 				let city = this.tags[0];
-				console.log(city.name)
 				this.tags[0] = new Array();
 
 				if (city.name != undefined)
@@ -246,7 +238,6 @@
 
 					this.$refs.select.checkboxGroup[0] = []
 					// this.$refs.select.checkAll[0] = true;
-					console.log(this.$refs.select.checkAll)
 				}
 				for (let index = 1; index < this.tags.length; index++) {
 					if (this.tags[index].length == 0) {
@@ -254,6 +245,13 @@
 					}
 				}
 				this.getCoach();
+			},
+			//每次子组件改变时，父组件就会改变
+			change: function(checkboxGroup) {
+				this.pageNumber = 1
+				this.getPageCoach(checkboxGroup)
+				//当选中全部时，清空当前行数组，通过*号匹配
+
 			},
 			//跳转辅导机构详情页
 			jump: function(id) {
@@ -329,7 +327,7 @@
 			getBanner: function() {
 				var that = this;
 				this.fetch('/front/banner/getbanner', {
-					b_name: '搜辅导页面',
+					b_name: this.$route.path,
 					limit: 1,
 					type: 0
 				}).then(res => {
@@ -529,7 +527,7 @@
 		justify-content: center;
 		align-items: center;
 		cursor: pointer;
-		background-size: auto;	
+		background-size: auto;
 	}
 
 	.singlecoachtop>img {
@@ -580,6 +578,4 @@
 			display: none;
 		}
 	}
-
 </style>
-

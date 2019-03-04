@@ -327,7 +327,7 @@
 			getBanner: function() {
 				var that = this;
 				this.fetch('/front/banner/getbanner', {
-					b_name: '看资讯页面',
+					b_name: this.$route.path,
 					limit: 4,
 					type: 0
 				}).then(res => {
