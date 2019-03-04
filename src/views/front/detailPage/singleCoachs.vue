@@ -55,7 +55,9 @@
                                     <div class="coachbig">
                                         <div class="collagebox" v-for="(item,index) in collage.son_coach">
                                             <img :src="item.cover_name" alt="">
-                                            <div class="collagemessage detailCoach">
+                                            <div class="collagemessage detailCoach" @click="jumpCoach(item.id)">
+
+                                                <!--{{item}}-->
                                                 <nav>
                                                     <h4>{{item.coach_name}}</h4>
                                                     <img src="../../../assets/img/money2.png" v-show="item.if_back_money == 0">
@@ -122,7 +124,9 @@
                         </div>
 
                         <!-- 活动小块 -->
-                        <activityBox :activityInfo="activity" class="activitystyle"></activityBox>
+                        <div v-if="activity != null">
+                            <activityBox  :activityInfo="activity" class="activitystyle"></activityBox>
+                        </div>
 
                         <!-- 意见反馈 -->
                         <img src="../../../assets/img/advise.png" alt="" @click="advise">
@@ -163,7 +167,10 @@ export default {
             }).then(function (res) {
                     if (res.code == 0) {
                         that.collage = res.result[0];
-                        that.activity = that.collage.best_hot_active.info[0];
+                        if(that.collage.best_hot_active.info.length > 0)
+                            that.activity = that.collage.best_hot_active.info[0];
+                        else
+                            that.activity = null
                         that.changeTile(that.collage.title);
                         // that.count = res.count;
                     }else {
@@ -219,6 +226,9 @@ export default {
         returnmoney: function() {
             window.open(document.location.origin+'/#/front/firstMenuRouter/returnmoney' , '_blank');
             // this.$router.push('/front/firstMenuRouter/returnmoney');
+        },
+        jumpCoach:function (id) {
+            this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/'+id);
         }
     },
     mounted(){

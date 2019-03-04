@@ -645,7 +645,7 @@
 			}
 		},
 		created () {
-			this.changeTile('专硕联盟-首页')
+			this.changeTile('MBA Helper | MBA 报考、资讯、活动，一站搞定！')
 		}
 	};
 </script>
