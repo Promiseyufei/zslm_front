@@ -609,4 +609,9 @@ export default {
 	isDate: function(varName) {
 		return Object.prototype.toString.call(varName) === '[object Date]';
 	},
+
+	changeTile(title) {
+		let oldtitle = 'MBA Helper';
+		document.title = (title == '' || title == null) ? oldtitle : title;
+	}
 }

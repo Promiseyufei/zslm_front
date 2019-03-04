@@ -566,6 +566,9 @@
 			this.getmajorType();
 
 		},
+		created() {
+			this.changeTile('专硕联盟-选院校')
+		}
 	};
 
 </script>

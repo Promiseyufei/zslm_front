@@ -504,6 +504,10 @@
 			this.$refs.header.setJudgeUlr();
 			// this.getPcActivityList();
 		},
+		created () {
+			this.changeTile('专硕联盟-找活动')
+			// document.title = '专硕联盟-找活动';
+		}
 	};
 </script>
 <style>

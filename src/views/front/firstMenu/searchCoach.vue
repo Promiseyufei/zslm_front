@@ -349,6 +349,9 @@
 			this.$refs.header.setImg();
 			this.$refs.header.setJudgeUlr();
 		},
+		created () {
+			this.changeTile('专硕联盟-搜辅导')
+		}
 	};
 </script>
 <style>
