@@ -1,563 +1,576 @@
 <template>
-    <div>
-        <div style="overflow-x:hidden;background-color:#f5f5f5;">
-            <hearderBanner ref="header" enName="COLLEGES" name="选院校"></hearderBanner>
-            <div class="selectCollege">
-                <div class="selectCollegeSearch">
-                    <el-input
-                        placeholder="请输入院校名称"
-                        suffix-icon="el-icon-search"
-                        v-model="z_name" @keyup.enter.native="search">
-                    </el-input>
-                </div>
-            </div>
-            <selectAll :checkboxGroup1="checkboxGroup" :list="collegeInform" @change="change"></selectAll>
-            <div class="tagSort">
-                <div class="tag">
-                    <span>选院校 &gt;</span>
-                    <tags :tags="selectData" @handleClose="handleClose"></tags>
-                </div>
-                <div class="sort">
-                    <div class="paixu" id="paixu" style="color: #009fa0;" @click="paixu">默认排序</div>
-                    <div class="hot" @click="changeHot">
-                        <div>热度</div>
-                        <div class="topBott">
-                            <i style="color: #bfbfbf;" class="el-icon-caret-top" id="hotTop"></i>
-                            <i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="hotBottom"></i>
-                        </div>
-                    </div>
-                    <div class="publicMoney" @click="changeMoney">
-                        <div class="publicCost">费用</div>
-                        <div class="topBott">
-                            <i style="color: #bfbfbf;" class="el-icon-caret-top" id="moneyTop"></i>
-                            <i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="moneyBottom"></i>
-                        </div>
-                    </div>
-                    <div class="countMajor">共{{ this.count }}所院校</div>
-                </div>
-            </div>
-            <div class="buttonCollege"></div>
-            <div class="diffeCollege">
-                <el-col :span="8">
-                    <el-card shadow="hover">
-                        <!-- 每个院校情况组件 -->
-                        <selectCollegeItem v-for="(all, index) in majorInform" :key="index" :collegeInfo="all" :followId="major_follow_id" :confirmId="major_confirm_id" @getViewIcon="getView" :missPorduct="missPorduct"></selectCollegeItem>
-                        <!-- 每个院校情况组件 -->
-                    </el-card>
-                </el-col>
-            </div>
-            
-        </div> 
-        <!-- 分页 -->
-        <div class="page">
-            <pcPhonePage :loading="loading" :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum" @getPage="getPage"></pcPhonePage>
-        </div>
-        <!-- 分页 -->
-    </div>
+	<div>
+		<div style="overflow-x:hidden;background-color:#f5f5f5;">
+			<hearderBanner ref="header" enName="COLLEGES" name="选院校"></hearderBanner>
+			<div class="selectCollege">
+				<div class="selectCollegeSearch">
+					<el-input placeholder="请输入院校名称" suffix-icon="el-icon-search" v-model="z_name" @blur.prevent="search">
+					</el-input>
+				</div>
+			</div>
+			<selectHeadItem ref="select" :checkboxGroup1="checkboxGroup" :list="collegeInform" @change="change"></selectHeadItem>
+			<div class="tagSort">
+				<div class="tag">
+					<span>选院校 &gt;</span>
+					<tags :tags="selectData" @handleClose="handleClose"></tags>
+				</div>
+				<div class="sort">
+					<div class="paixu" id="paixu" style="color: #009fa0;" @click="paixu">默认排序</div>
+					<div class="hot" @click="changeHot">
+						<div>热度</div>
+						<div class="topBott">
+							<i style="color: #bfbfbf;" class="el-icon-caret-top" id="hotTop"></i>
+							<i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="hotBottom"></i>
+						</div>
+					</div>
+					<div class="publicMoney" @click="changeMoney">
+						<div class="publicCost">费用</div>
+						<div class="topBott">
+							<i style="color: #bfbfbf;" class="el-icon-caret-top" id="moneyTop"></i>
+							<i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="moneyBottom"></i>
+						</div>
+					</div>
+					<div class="countMajor">共{{ this.count }}所院校</div>
+				</div>
+			</div>
+			<div class="buttonCollege"></div>
+			<div class="diffeCollege">
+				<el-col :span="8">
+					<el-card shadow="hover">
+						<!-- 每个院校情况组件 -->
+						<selectCollegeItem v-for="(all, index) in majorInform" :key="index" :collegeInfo="all" :followId="major_follow_id"
+						 :confirmId="major_confirm_id" @getViewIcon="getView" :missPorduct="missPorduct"></selectCollegeItem>
+						<!-- 每个院校情况组件 -->
+					</el-card>
+				</el-col>
+			</div>
+
+		</div>
+		<!-- 分页 -->
+		<div class="page">
+			<pcPhonePage :loading="loading" :currentPage="page" :totalData="count" :size="page_size" @use="changePageNum"
+			 @getPage="getPage"></pcPhonePage>
+		</div>
+		<!-- 分页 -->
+	</div>
 </template>
 
 <script>
-export default {
-    components: {
-    },
-    data() {
-        return {
-            //加载更多
-            loading:false,
-            selectData:[],//tags数组
-            collegeInform:[
-                {
-                    type:'专业类型',
-                    cities:[],//所有专业类型的id数组
-                    "fif":"查看更多"
-                },
-                {
-                    type:'专业方向',
-                    cities:[],//所有专业类型的id数组
-                    "fif":"查看更多"
-                },
-                {
-                    type:'院校地点',
-                    cities:[
-                        {
-                            id:1,
-                            name:"北京"
-                        },
-                        {
-                            id:2,
-                            name:"天津"
-                        },
-                        {
-                            id:3,
-                            name:"上海"
-                        },
-                        {
-                            id:4,
-                            name:"重庆"
-                        },
-                        {
-                            id:5,
-                            name:"河北"
-                        },
-                        {
-                            id:1,
-                            name:"北京"
-                        },
-                        {
-                            id:6,
-                            name:"山西"
-                        },
-                        {
-                            id:7,
-                            name:"台湾"
-                        },
-                        {
-                            id:8,
-                            name:"辽宁"
-                        },
-                        {
-                            id:9,
-                            name:"吉林"
-                        },
-                        {
-                            id:10,
-                            name:"黑龙江"
-                        },
-                        {
-                            id:11,
-                            name:"江苏"
-                        },
-                        {
-                            id:12,
-                            name:"浙江"
-                        },
-                        {
-                            id:13,
-                            name:"安微"
-                        },
-                        {
-                            id:14,
-                            name:"福建"
-                        },
-                        {
-                            id:15,
-                            name:"江西"
-                        },
-                        {
-                            id:16,
-                            name:"山东"
-                        },
-                        {
-                            id:17,
-                            name:"河南"
-                        },
-                        {
-                            id:18,
-                            name:"湖北"
-                        },
-                        {
-                            id:19,
-                            name:"湖南"
-                        },
-                        {
-                            id:20,
-                            name:"广东"
-                        },
-                        {
-                            id:21,
-                            name:"甘肃"
-                        },
-                        {
-                            id:22,
-                            name:"四川"
-                        },
-                        {
-                            id:23,
-                            name:"贵州"
-                        },
-                        {
-                            id:24,
-                            name:"海南"
-                        },
-                        {
-                            id:25,
-                            name:"云南"
-                        },
-                        {
-                            id:26,
-                            name:"青海"
-                        },
-                        {
-                            id:27,
-                            name:"陕西"
-                        },
-                        {
-                            id:28,
-                            name:"广西"
-                        },
-                        {
-                            id:29,
-                            name:"西藏"
-                        },
-                        {
-                            id:30,
-                            name:"宁夏"
-                        },
-                        {
-                            id:31,
-                            name:"新疆"
-                        },
-                        {
-                            id:32,
-                            name:"内蒙古"
-                        },
-                        {
-                            id:33,
-                            name:"澳门"
-                        },
-                        {
-                            id:34,
-                            name:"香港"
-                        },
-                    ],//所有专业类型的id数组
-                    "fif":"查看更多"
-                },
-                {
-                    type:'统招模式',
-                    cities:[
-                       { 
-                            id:0,
-                            name:''
-                        }
-                    ],//所有专业类型的id数组
-                    "fif":"查看更多"
-                },
-                {
-                    type:'学习费用',
-                    cities:[
-                        {
-                            id:0,
-                            name:'5万'
-                        },
-                        {
-                            id:1,
-                            name:'10万'
-                        },
-                        {
-                            id:2,
-                            name:'15万'
-                        },
-                        {
-                            id:3,
-                            name:'20万'
-                        },
-                        {
-                            id:4,
-                            name:'25万'
-                        },
-                        {
-                            id:5,
-                            name:'30万'
-						},
-						// {
-						// 	id:6,
-						// 	name:'30万及以上'
-						// }
-                    ],//所有专业类型的id数组
-                    "fif":"查看更多"
-                },
-                {
-                    type:'分数线',
-                    cities:[],//所有专业类型的id数组
-                    "fif":"查看更多"
-                },
-            ],
-            checkboxGroup:[[],[],[],[],[],[]],
-            major_follow_id:'',
-            major_confirm_id:'',
-            viewMoreIcon:true,
-            missPorduct:0,
-            // showProduct:[],
-            /*按钮参数*/
-            provice:'',
-            z_type:'',
-            z_name:'',
-            professional_direction:'',
-            major_order:0,
-            min:0,
-            max:0,
-            money_order:0,
-            score_type:'',
-            enrollment_mode:'',
-            project_count:0,
-            page:1,
-            page_size:3,
-            count:10,
-            productShow:false,
-            /*按钮参数*/
-            viewMoreButt:'查看更多',
-            majorInform:[],
-            nature:null,
-            equis:false,
-            aascb:false,
-            //211
-            two:false,
-            //985
-            nine:false,
-            //双一流
-            both29:false,
-            moreMajor:false,
-            update_time:1996,
-            /*院校信息*/
-            u_id:1,
-            id:1,
-            majorBanner:{}
-        }
-    },
-    methods: {
-        //手机端加载更多
-        getPage:function(){
-            this.loading = true;
-            this.page++;
-            this.getmajorInform(0);
-        },
-        // 点击筛选块-从组件中获取选中结果
-        change(data){
-            // console.log(data)
-            this.selectData = data;
-            this.getselt();
-            
-            // console.log(this.selectData)
-            this.getmajorInform();
-        },
-        handleClose(tag) {
-            for (let index = 0; index < this.selectData.length; index++) {
-                var temp = this.selectData[index].indexOf(tag);
-                if(temp==-1){
-                    continue;
-                }else {
-                    this.selectData[index].splice(this.selectData[index].indexOf(tag), 1);
-                }
-            };
-            this.getselt();
-            
-            this.getmajorInform();
-        },
-        //转换选中参数的格式——数组，以便传参
-        getselt:function(){
-			// console.log(this.selectData)
-            let list = [];
-            for (var i = 0; i < this.selectData.length; i++) {
-                var little = [];
-                for (var j = 0; j < this.selectData[i].length; j++) {
-                    if(i == 2||i == 4){
-                        little.push(this.selectData[i][j].name);
-                        // little.push(this.selectData[i][j].name);
+	export default {
+		components: {},
+		data() {
+			return {
+				//加载更多
+				loading: false,
+				selectData: [], //tags数组
+				collegeInform: [{
+						type: '专业类型',
+						cities: [], //所有专业类型的id数组
+						"fif": "查看更多"
+					},
+					{
+						type: '专业方向',
+						cities: [], //所有专业类型的id数组
+						"fif": "查看更多"
+					},
+					{
+						type: '院校地点',
+						cities: [{
+								id: 1,
+								name: "北京"
+							},
+							{
+								id: 2,
+								name: "天津"
+							},
+							{
+								id: 3,
+								name: "上海"
+							},
+							{
+								id: 4,
+								name: "重庆"
+							},
+							{
+								id: 5,
+								name: "河北"
+							},
+							{
+								id: 6,
+								name: "山西"
+							},
+							{
+								id: 7,
+								name: "台湾"
+							},
+							{
+								id: 8,
+								name: "辽宁"
+							},
+							{
+								id: 9,
+								name: "吉林"
+							},
+							{
+								id: 10,
+								name: "黑龙江"
+							},
+							{
+								id: 11,
+								name: "江苏"
+							},
+							{
+								id: 12,
+								name: "浙江"
+							},
+							{
+								id: 13,
+								name: "安微"
+							},
+							{
+								id: 14,
+								name: "福建"
+							},
+							{
+								id: 15,
+								name: "江西"
+							},
+							{
+								id: 16,
+								name: "山东"
+							},
+							{
+								id: 17,
+								name: "河南"
+							},
+							{
+								id: 18,
+								name: "湖北"
+							},
+							{
+								id: 19,
+								name: "湖南"
+							},
+							{
+								id: 20,
+								name: "广东"
+							},
+							{
+								id: 21,
+								name: "甘肃"
+							},
+							{
+								id: 22,
+								name: "四川"
+							},
+							{
+								id: 23,
+								name: "贵州"
+							},
+							{
+								id: 24,
+								name: "海南"
+							},
+							{
+								id: 25,
+								name: "云南"
+							},
+							{
+								id: 26,
+								name: "青海"
+							},
+							{
+								id: 27,
+								name: "陕西"
+							},
+							{
+								id: 28,
+								name: "广西"
+							},
+							{
+								id: 29,
+								name: "西藏"
+							},
+							{
+								id: 30,
+								name: "宁夏"
+							},
+							{
+								id: 31,
+								name: "新疆"
+							},
+							{
+								id: 32,
+								name: "内蒙古"
+							},
+							{
+								id: 33,
+								name: "澳门"
+							},
+							{
+								id: 34,
+								name: "香港"
+							},
+						], //所有专业类型的id数组
+						"fif": "查看更多"
+					},
+					{
+						type: '统招模式',
+						cities: [{
+							id: 0,
+							name: ''
+						}], //所有专业类型的id数组
+						"fif": "查看更多"
+					},
+					{
+						type: '学习费用',
+						cities: [{
+								id: 0,
+								name: '5万'
+							},
+							{
+								id: 1,
+								name: '10万'
+							},
+							{
+								id: 2,
+								name: '15万'
+							},
+							{
+								id: 3,
+								name: '20万'
+							},
+							{
+								id: 4,
+								name: '25万'
+							},
+							{
+								id: 5,
+								name: '30万'
+							},
+							// {
+							// 	id:6,
+							// 	name:'30万及以上'
+							// }
+						], //所有专业类型的id数组
+						"fif": "查看更多"
+					},
+					{
+						type: '分数线',
+						cities: [], //所有专业类型的id数组
+						"fif": "查看更多"
+					},
+				],
+				checkboxGroup_region_index: 2,
+				checkboxGroup: [
+					[],
+					[],
+					[],
+					[],
+					[],
+					[]
+				],
+				major_follow_id: '',
+				major_confirm_id: '',
+				viewMoreIcon: true,
+				missPorduct: 0,
+				// showProduct:[],
+				/*按钮参数*/
+				provice: '',
+				z_type: '',
+				z_name: '',
+				professional_direction: '',
+				major_order: 0,
+				min: 0,
+				max: 0,
+				money_order: 0,
+				score_type: '',
+				enrollment_mode: '',
+				project_count: 0,
+				page: 1,
+				page_size: 3,
+				count: 10,
+				productShow: false,
+				/*按钮参数*/
+				viewMoreButt: '查看更多',
+				majorInform: [],
+				nature: null,
+				equis: false,
+				aascb: false,
+				//211
+				two: false,
+				//985
+				nine: false,
+				//双一流
+				both29: false,
+				moreMajor: false,
+				update_time: 1996,
+				/*院校信息*/
+				u_id: 1,
+				id: 1,
+				majorBanner: {}
+			}
+		},
+		methods: {
+			//手机端加载更多
+			getPage: function() {
+				this.loading = true;
+				this.page++;
+				this.getmajorInform(0);
+			},
+			// 点击筛选块-从组件中获取选中结果
+			change(data) {
 
-                    } else {
-                        little.push(this.selectData[i][j].id);
-                    }
-                }
-                list.push(little);
-            }
-            this.z_type = list[0].join(",");//专业类型——字符串
-            this.professional_direction = list[1].join(",");//专业方向——字符串
-            this.provice = list[2].join(",");//院校地点——字符串
-            this.enrollment_mode = list[3].join(",");//统招模式——字符串
-			this.max = list[4];//学习费用——int
-			// console.log(list[4])
-			if(list[4].length > 0 && list[4].length == 1) {
-				this.max = parseInt(list[4][0]);
-			}
-			else if(list[4].length > 0 && list[4].length == 2) {
-				this.min = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][1]) : parseInt(list[4][0]);
-				this.max = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][0]) : parseInt(list[4][1]);
-			}
-			else if(list[4].length > 2) {
-				this.min = this.max = parseInt(list[4][0]);
-				for (let index = 1; index < list[4].length; index++) {
-					if(this.min > parseInt(list[4][index])) this.min = parseInt(list[4][index]);
-					if(this.max <= parseInt(list[4][index])) this.max = parseInt(list[4][index]);
+				this.page = 1;
+				this.getAllCollege(data);
+			},
+			getAllCollege(data) {
+				
+				this.selectData = data;
+				
+				
+				let city = this.selectData[this.checkboxGroup_region_index];
+
+				if (Array.isArray(city) && city.length == 0) {
+			
+					this.$refs.select.deleteCheck(this.checkboxGroup_region_index);
+					// checkboxGroup_region_index = 2,这里下标是2,在checkboxGroup数组中下标为2的元素存放着地址，如果不是2请修改
+					// this.checkboxGroup[this.checkboxGroup_region_index] = []
+					
+				}
+
+				if (city.name != undefined) {
+					this.selectData[this.checkboxGroup_region_index][0] = [];
+					this.selectData[this.checkboxGroup_region_index][0].id = city.id;
+					this.selectData[this.checkboxGroup_region_index][0].id = city.name;
+				}
+
+
+				// 				if(city.name == undefined){
+				// 					
+				// 					
+				// 					this.$refs.select.checkboxGroup[this.checkboxGroup_region_index] = []
+				// 				}
+
+				// 				this.getselt();
+				// 				this.getmajorInform();
+			},
+			handleClose(tag) {
+
+				for (let index = 0; index < this.selectData.length; index++) {
+					var temp = this.selectData[index].indexOf(tag);
+					if (temp == -1) {
+						continue;
+					} else {
+						this.selectData[index].splice(this.selectData[index].indexOf(tag), 1);
+					}
+				};
+				this.change(this.selectData)
+
+			},
+			//转换选中参数的格式——数组，以便传参
+			getselt: function() {
+				let list = [];
+				for (var i = 0; i < this.selectData.length; i++) {
+					var little = [];
+					for (var j = 0; j < this.selectData[i].length; j++) {
+						if (i == 4 || i == 2) {
+							little.push(this.selectData[i][j].name);
+							// little.push(this.selectData[i][j].name);
+
+						} else {
+							little.push(this.selectData[i][j].id);
+						}
+					}
+					list.push(little);
+				}
+				this.z_type = list[0].join(","); //专业类型——字符串
+				this.professional_direction = list[1].join(","); //专业方向——字符串
+
+				this.provice = list[2]; //院校地点——字符串
+				this.enrollment_mode = list[3].join(","); //统招模式——字符串
+				this.max = list[4]; //学习费用——int
+				// console.log(list[4])
+				if (list[4].length > 0 && list[4].length == 1) {
+					this.min = 0;
+					this.max = parseInt(list[4][0]);
+				} else if (list[4].length > 0 && list[4].length == 2) {
+					this.min = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][1]) : parseInt(list[4][0]);
+					this.max = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][0]) : parseInt(list[4][1]);
+				} else if (list[4].length > 2) {
+					this.min = this.max = parseInt(list[4][0]);
+					for (let index = 1; index < list[4].length; index++) {
+						if (this.min > parseInt(list[4][index])) this.min = parseInt(list[4][index]);
+						if (this.max <= parseInt(list[4][index])) this.max = parseInt(list[4][index]);
+					}
+				}
+				this.score_type = list[5].join(","); //分数线——字符串
+			},
+			//获取按钮内容
+			getmajorType: function() {
+				let that = this;
+				this.fetch('/front/colleges/info', {}).then(function(response) {
+					if (response.code == 0) {
+						let res = response.result;
+						that.collegeInform[0].cities = res.type;
+						that.collegeInform[1].cities = res.direction;
+						that.collegeInform[3].cities = res.pattern;
+						that.collegeInform[5].cities = res.socre;
+					}
+					// console.log(res)
+				}).catch(function(error) {});
+			},
+			//查看更多是否显示
+			getView: function(iconView) {
+				// console.log(iconView)
+				this.viewMoreIcon = iconView;
+			},
+			//分页请求
+			changePageNum: function(pageNum) {
+				this.page = pageNum;
+				this.getmajorInform();
+			},
+			//搜索框失去焦点——传搜索内容
+			search: function() {
+				this.getmajorInform();
+			},
+			//获得院校信息
+			getmajorInform: function() {
+				let that = this;
+				this.fetch('/front/colleges/getmajor', {
+					//搜索内容fetc
+					z_name: that.z_name,
+					provice: that.provice,
+					z_type: that.z_type,
+					professional_direction: that.professional_direction,
+					major_order: that.major_order,
+					min: that.min,
+					max: that.max,
+					money_order: that.money_order,
+					score_type: that.score_type,
+					enrollment_mode: that.enrollment_mode,
+					project_count: that.project_count,
+					page: that.page,
+					page_size: that.page_size,
+				}).then(function(response) {
+					if (response.code == 0) {
+						// console.log(response)
+						let res = response.result.list;
+						that.count = response.result.count;
+						that.majorInform = res;
+						that.majorInform.forEach((item, index) => {
+							that.majorInform[index].showProduct = item.product.slice(0, 3);
+							that.majorInform[index].missPorduct = item.product.slice(3);
+							// if (that.majorInform[index].missPorduct==0) {
+							// }
+							that.missPorduct = that.majorInform[index].missPorduct;
+						});
+						that.major_confirm_id = res[0].major_confirm_id;
+						that.major_follow_id = res[0].major_follow_id;
+					} else {
+
+						that.count = 0;
+						that.majorInform = [];
+						that.major_confirm_id = '';
+						that.major_follow_id = '';
+					}
+
+				})
+			},
+			//默认排序
+			paixu: function() {
+				let hotTop = document.getElementById('hotTop');
+				let hotBottom = document.getElementById('hotBottom');
+				let moneyTop = document.getElementById('moneyTop');
+				let moneyBottom = document.getElementById('moneyBottom');
+				hotTop.style.color = '#bfbfbf';
+				hotBottom.style.color = '#bfbfbf';
+				moneyBottom.style.color = '#bfbfbf';
+				moneyTop.style.color = '#bfbfbf';
+				let paixu = document.getElementById('paixu');
+				if (paixu.style.color = 'rgb(191, 191, 191)') {
+					paixu.style.color = '#009fa0';
+				} else {
+					paixu.style.color = '#bfbfbf';
+				}
+				this.getmajorInform();
+			},
+			//点击热度改变颜色，排序
+			changeHot: function() {
+				let paixu = document.getElementById('paixu');
+				paixu.style.color = '#bfbfbf';
+				let hotTop = document.getElementById('hotTop');
+				let hotBottom = document.getElementById('hotBottom');
+				if (hotTop.style.color == 'rgb(191, 191, 191)' && hotBottom.style.color == 'rgb(191, 191, 191)') {
+					// console.log(paixu.style.color)
+					//首次点击热度，升序，1为升序
+					this.major_order = 1;
+					this.getmajorInform();
+					hotTop.style.color = '#009fa0'; //绿色rgb(0, 159, 160)
+					hotBottom.style.color = '#bfbfbf'; //灰色rgb(191, 191, 191)
+				} else if (hotTop.style.color == 'rgb(0, 159, 160)' && hotBottom.style.color == 'rgb(191, 191, 191)') {
+					//再次点击，降序，0为降序
+					this.major_order = 0;
+					this.getmajorInform();
+					hotTop.style.color = '#bfbfbf';
+					hotBottom.style.color = '#009fa0';
+				} else if (hotTop.style.color == 'rgb(191, 191, 191)' || hotBottom.style.color == 'rgb(0, 159, 160)') {
+					//循环点击，升序，1为升序
+					this.major_order = 1;
+					this.getmajorInform();
+					hotBottom.style.color = '#bfbfbf';
+					hotTop.style.color = '#009fa0';
+				}
+			},
+			//点击费用改变颜色，排序
+			changeMoney: function() {
+				let paixu = document.getElementById('paixu');
+				paixu.style.color = '#bfbfbf';
+				let hotTop = document.getElementById('moneyTop');
+				let hotBottom = document.getElementById('moneyBottom');
+				if (moneyTop.style.color == 'rgb(191, 191, 191)' && moneyBottom.style.color == 'rgb(191, 191, 191)') {
+					//首次点击费用，升序，1为升序
+					this.money_order = 1;
+					this.getmajorInform();
+					moneyTop.style.color = '#009fa0'; //绿色rgb(0, 159, 160)
+					moneyBottom.style.color = '#bfbfbf'; //灰色rgb(191, 191, 191)
+				} else if (moneyTop.style.color == 'rgb(0, 159, 160)' && moneyBottom.style.color == 'rgb(191, 191, 191)') {
+					//再次点击费用，降序，0为降序
+					this.money_order = 0;
+					this.getmajorInform();
+					moneyTop.style.color = '#bfbfbf';
+					moneyBottom.style.color = '#009fa0';
+				} else if (moneyTop.style.color == 'rgb(191, 191, 191)' || moneyBottom.style.color == 'rgb(0, 159, 160)') {
+					//循环点击，升序，1为升序
+					this.money_order = 1;
+					this.getmajorInform();
+					// console.log(this.money_order)
+					moneyBottom.style.color = '#bfbfbf';
+					moneyTop.style.color = '#009fa0';
 				}
 			}
-            this.score_type = list[5].join(",");//分数线——字符串
-            // let MIN = list[4][0];
-            // let MAX;
-            // for (var j = 0; j < list[4].length; j++) {
-            //     if (list[4][j] < MIN)
-            //         MIN = list[4][j];
-            //     else 
-            //         MAX = list[4][j];
-            // }
-            
-            // console.log(MAX)
-        },
-        //获取按钮内容
-        getmajorType:function(){
-            let that = this;
-            this.fetch('/front/colleges/info',{
-            }).then(function (response) {
-                if (response.code==0) {
-                    let res = response.result;
-                    that.collegeInform[0].cities = res.type;
-                    that.collegeInform[1].cities = res.direction;
-                    that.collegeInform[3].cities = res.pattern;
-                    that.collegeInform[5].cities = res.socre;
-                }
-                // console.log(res)
-            }).catch(function (error) {
-            });
-        },
-        //查看更多是否显示
-        getView:function(iconView){
-            // console.log(iconView)
-            this.viewMoreIcon = iconView;
-        },
-        //分页请求
-        changePageNum:function(pageNum) {
-            this.page = pageNum;
-            this.getmajorInform();
-        },
-        //搜索框失去焦点——传搜索内容
-        search:function() {
-            this.getmajorInform();
-        },
-        //获得院校信息
-        getmajorInform:function(){
-            let that = this;
-            this.fetch('/front/colleges/getmajor',{
-                    //搜索内容fetc
-                    z_name: that.z_name,
-                    provice: that.provice,
-                    z_type: that.z_type,
-                    professional_direction: that.professional_direction,
-                    major_order:that.major_order,
-                    min: that.min,
-                    max: that.max,
-                    money_order:that.money_order,
-                    score_type: that.score_type,
-                    enrollment_mode: that.enrollment_mode,
-                    project_count: that.project_count,
-                    page: that.page,
-                    page_size: that.page_size,
-            }).then(function (response) {
-                if (response.code==0) {
-                    let res = response.result.list;
-                    that.count =response.result.count;
-					that.majorInform=res;
-                    that.majorInform.forEach((item,index) => {
-                        that.majorInform[index].showProduct = item.product.slice(0,3);
-                        that.majorInform[index].missPorduct = item.product.slice(3);
-                        // if (that.majorInform[index].missPorduct==0) {
-                        // }
-                        that.missPorduct = that.majorInform[index].missPorduct;
-                    });
-                    that.major_confirm_id = res[0].major_confirm_id;
-                    that.major_follow_id = res[0].major_follow_id;
-                }
-                else {
-                    
-                    that.count = 0;
-                    that.majorInform = [];
-                    that.major_confirm_id = '';
-                    that.major_follow_id = '';
-                }
-
-            })
-        },
-        //默认排序
-        paixu:function(){
-            let hotTop = document.getElementById('hotTop');
-            let hotBottom = document.getElementById('hotBottom');
-            let moneyTop = document.getElementById('moneyTop');
-            let moneyBottom = document.getElementById('moneyBottom');
-            hotTop.style.color='#bfbfbf';
-            hotBottom.style.color='#bfbfbf';
-            moneyBottom.style.color='#bfbfbf';
-            moneyTop.style.color='#bfbfbf';
-            let paixu = document.getElementById('paixu');
-            if (paixu.style.color='rgb(191, 191, 191)') {
-               paixu.style.color = '#009fa0'; 
-            } else {
-                paixu.style.color = '#bfbfbf'; 
-            }
-            this.getmajorInform();
-        },
-        //点击热度改变颜色，排序
-        changeHot:function() {
-            let paixu = document.getElementById('paixu');
-            paixu.style.color = '#bfbfbf';
-            let hotTop = document.getElementById('hotTop');
-            let hotBottom = document.getElementById('hotBottom');
-            if (hotTop.style.color=='rgb(191, 191, 191)'&&hotBottom.style.color=='rgb(191, 191, 191)'){
-                // console.log(paixu.style.color)
-                //首次点击热度，升序，1为升序
-                this.major_order = 1;
-                this.getmajorInform();
-                hotTop.style.color= '#009fa0';//绿色rgb(0, 159, 160)
-                hotBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
-            } else if(hotTop.style.color=='rgb(0, 159, 160)'&& hotBottom.style.color=='rgb(191, 191, 191)') {
-                //再次点击，降序，0为降序
-                this.major_order = 0;
-                this.getmajorInform();
-                hotTop.style.color='#bfbfbf';
-                hotBottom.style.color= '#009fa0';
-            } else if (hotTop.style.color=='rgb(191, 191, 191)'||hotBottom.style.color=='rgb(0, 159, 160)') {
-                //循环点击，升序，1为升序
-                this.major_order = 1;
-                this.getmajorInform();
-                hotBottom.style.color= '#bfbfbf';
-                hotTop.style.color='#009fa0';
-            }
-        },
-        //点击费用改变颜色，排序
-        changeMoney:function() {
-            let paixu = document.getElementById('paixu');
-            paixu.style.color = '#bfbfbf';
-            let hotTop = document.getElementById('moneyTop');
-            let hotBottom = document.getElementById('moneyBottom');
-            if (moneyTop.style.color=='rgb(191, 191, 191)'&& moneyBottom.style.color=='rgb(191, 191, 191)'){
-                //首次点击费用，升序，1为升序
-                this.money_order = 1;
-                this.getmajorInform();
-                moneyTop.style.color='#009fa0';//绿色rgb(0, 159, 160)
-                moneyBottom.style.color='#bfbfbf';//灰色rgb(191, 191, 191)
-            } else if(moneyTop.style.color=='rgb(0, 159, 160)'&& moneyBottom.style.color=='rgb(191, 191, 191)') {
-                //再次点击费用，降序，0为降序
-                this.money_order = 0;
-                this.getmajorInform();
-                moneyTop.style.color='#bfbfbf';
-                moneyBottom.style.color= '#009fa0';
-            } else if (moneyTop.style.color=='rgb(191, 191, 191)'||moneyBottom.style.color=='rgb(0, 159, 160)') {
-                //循环点击，升序，1为升序
-                this.money_order = 1;
-                this.getmajorInform();
-                // console.log(this.money_order)
-                moneyBottom.style.color= '#bfbfbf';
-                moneyTop.style.color='#009fa0';
-            }
-        }
-    },
-    mounted(){
-		let that = this;
-        this.fetch('/front/colleges/getMajorBanner', {
-            path: this.$route.path
-        }).then((response) => {
-            if(response.code == 0) {
-				if(response.result != null) {
+		},
+		mounted() {
+			let that = this;
+			this.fetch('/front/banner/getbanner', {
+				b_name: this.$route.path,
+				limit: 1,
+				type: 0
+			}).then((response) => {
+				if (response.code == 0) {
 					that.$refs.header.setImg(response.result.img);
 					that.$refs.header.setJudgeUlr(response.result.re_url);
 				}
-            }
-        })
-        this.getmajorInform();
-        this.getmajorType();
+			})
+			this.getmajorInform();
+			this.getmajorType();
 
-	},
-	created() {
-		document.title = '专硕联盟-选院校';
-	}
-};
+		},
+		created() {
+			this.changeTile('专硕联盟-选院校')
+		}
+	};
+
 </script>
 <style>
 	.moreInform i {

@@ -3,7 +3,8 @@
     <div class="singleCollage">
         <div class="singleCollageAll">
         <!-- 院校logo -->
-            <div class="itemPicture" :style="{ backgroundImage: 'url(' + coverName + ') no-repeat' }">
+            <!--<div class="itemPicture" :style="{ backgroundImage: 'url(' + coverName + ') no-repeat' }">-->
+            <div class="itemPicture" :style="{backgroundImage:'url(' + coverName + ')', backgroundRepeat:'no-repeat', backgroundPosition:'center center', backgroundSize: 'contain'}">
                 <div class="backColor">
                     <div class="collageLogo"><img :src="logoName"></div>
                     <div class="collageName">
@@ -175,6 +176,7 @@
                                         <div class="weixin" id="weixin">院校微信</div>
                                     </div>
                                     <el-dialog
+                                      :title=dialogTitle
                                       :visible.sync="dialogVisible"
                                       width="30%">
                                       <span><img :src="all" v-for="(all, index) in wxCode" :key="index"></span>
@@ -224,6 +226,7 @@ export default {
     },
     data() {
         return {
+            dialogTitle:'',
             //院校二维码
             // wxCode:require("../../../assets/img/weixin2.png"),
             logoName:'',
@@ -440,13 +443,13 @@ export default {
                 u_id: that.u_id,
                 id: that.id,
             }).then(function (response) {
-                // console.log(response.result[0])
                 if (response.code==0) {
+                    console.log(response)
                     let res = response.result[0];
                     that.changeTile(res.title)
                     that.z_name = res.z_name;
                     that.logoName = res.magor_logo_name != '' ? res.magor_logo_name : '../../../assets/img/picture.jpg';
-                    // that.coverName = res.major_cover_name != '' ? res.major_cover_name : '../../../assets/img/singleCollege.jpg';
+                    that.coverName = res.major_cover_name != '' ? res.major_cover_name : '../../../assets/img/singleCollege.jpg';
                     that.singleItem = res.project;
                     that.phonNumber = res.phone;
                     that.year = res.access_year;
@@ -458,19 +461,22 @@ export default {
                     that.admissions_web = res.admissions_web;
 
                     that.typeId.major_confirm_id = (res.major_confirm_id != false) ? res.major_confirm_id.split(',') : [];
-                    that.typeId.major_follow_id = (res.major_confirm_id != false ) ? res.major_follow_id.split(',') : [];
+                    that.typeId.major_follow_id = (res.major_follow_id != false ) ? res.major_follow_id.split(',') : [];
                     // console.log(res.major_follow_id.split(','))
                     //字符串转化为数组
                     // that.wxCode = res.wc_image.split(',');
                     // that.xlCode = res.wb_image.split(',');
                     that.wxCode = res.wc_image;
                     that.xlCode = res.wb_imag;
+                    that.dialogTitle = res.wc_image.length > 0?'扫码关注官方微信公众号':'暂无官方微信公众号信息！';
+
                     that.isFollow();
                     
 
                 }
             });
         },
+
         //联系方式logo——鼠标滑过样式
             computer:function() {
                 this.logoPicture[0].computer = require("../../../assets/img/computerG.png")
@@ -586,7 +592,7 @@ export default {
             }
             .telephone {
                 width: 200px;
-                height: 56px;
+                /*height: 56px;*/
                 margin-top: 11px;
             }
             .majorPicture {
@@ -805,15 +811,15 @@ export default {
             width: 120px;
             height: 120px;
             margin: 0 auto 30px;
-            border-radius: 5px;
+           /* border-radius: 5px;
             border: rgba(255, 255, 255, 0.1) 2px solid;
-            border-width: 5px;
+            border-width: 5px;*/
             z-index: 99;
         }
         .backColor {
             border-radius: 5px;
             padding: 40px 0 0;
-            height: 320px;
+            height: 360px;
             background-color: rgba(56, 59, 61, 0.85);
         }
         .itemPicture {

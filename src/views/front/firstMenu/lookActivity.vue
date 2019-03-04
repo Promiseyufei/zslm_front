@@ -84,7 +84,7 @@
 					//     activityDate:1,//月份 1~12
 					// },
 				],
-				pageCount: 12, //分页显示的行数
+				pageCount: 20, //分页显示的行数
 				pageNumber: 1, //分页显示的下标
 
 				count: 0, //筛选后活动总数
@@ -123,10 +123,10 @@
 								id: 6,
 								name: "山西"
 							},
-							{
+							/*{
 								id: 7,
 								name: "台湾"
-							},
+							},*/
 							{
 								id: 8,
 								name: "辽宁"
@@ -227,14 +227,14 @@
 								id: 32,
 								name: "内蒙古"
 							},
-							{
+							/*{
 								id: 33,
 								name: "澳门"
 							},
 							{
 								id: 34,
 								name: "香港"
-							},
+							},*/
 						], //所有省份数组
 						"fif": "查看更多"
 					},
@@ -263,13 +263,13 @@
 						type: '活动时间',
 						cities: [{
 								id: 1,
-								name: "一月"
+								name: "本周"
 							},
 							{
 								id: 2,
-								name: "二月"
+								name: "本月"
 							},
-							{
+							/*{
 								id: 3,
 								name: "三月"
 							},
@@ -308,7 +308,7 @@
 							{
 								id: 12,
 								name: "十二月"
-							},
+							},*/
 						], //时间1-12月
 						"fif": "查看更多"
 					},
@@ -536,9 +536,10 @@
 	.activityListBox,
 	.activityListBox>div {
 		display: flex;
-		justify-content: center;
+		/*justify-content: center;*/
 		align-items: center;
 		flex-wrap: wrap;
+    margin: 0 auto;
 	}
 
 	/*筛选块*/
@@ -624,6 +625,11 @@
 		.selectedTag .selected,
 		.activityListBox>div {
 			width: 1300px;
+      margin: 0 auto;
 		}
+
+    .activityListBox>div{
+      margin: 20px auto;
+    }
 	}
 </style>

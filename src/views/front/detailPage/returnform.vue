@@ -317,8 +317,13 @@
 		color: #009FA1 !important;
 		font-weight: bold !important;
 	}
+  .el-button--primary,.el-button--primary:hover{
+    background-color: #009fa0;
+    border-color: #009fa0;
+  }
 
-	/* Large devices (laptops/desktops, 1280px and up) */
+
+  /* Large devices (laptops/desktops, 1280px and up) */
 	@media only screen and (max-width: 1280px) {
 		.returnform .el-form-item__label {
 			width: 100% !important;

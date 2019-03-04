@@ -17,7 +17,7 @@
 				</div>
 
 				<!-- 筛选框 -->
-				<selectCoach  ref="select" :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectCoach>
+				<selectCoach ref="select" :list="list" :checkboxGroup1="checkboxGroup1" @change="change"></selectCoach>
 
 				<!-- 选项卡 -->
 				<div class="singlecoachBig">
@@ -36,7 +36,7 @@
 				</div>
 
 				<!-- 辅导机构小模块 -->
-				<div class="singlecoachBig" >
+				<div class="singlecoachBig">
 					<div class="singlecoachbox">
 						<div class="singlecoach" v-for="(item,index) in coachlist" :key="index">
 							<div class="singlecoachtop" :style="{backgroundImage:'url('+item.cover_name+')'}" @click="jump(item.id)">
@@ -95,7 +95,7 @@
 
 				<!-- 分页或者加载更多 -->
 				<pcPhonePage class="pcPage" :loading="loading" :currentPage="pageNumber" :totalData="count" :size="pageCount" @use="changePageNum"
-				 @getPage="getPage" ></pcPhonePage>
+				 @getPage="getPage"></pcPhonePage>
 			</div>
 		</div>
 	</div>
@@ -210,26 +210,23 @@
 			},
 			//标签栏，点击标签，删除标签
 			handleClose(tag) {
-			  console.log(tag);
+
 				for (let index = 0; index < this.tags.length; index++) {
 					var temp = this.tags[index].indexOf(tag);
 
 					if (temp == -1) {
 						continue;
 					} else {
+						
 						this.tags[index].splice(this.tags[index].indexOf(tag), 1);
-
-						this.change(this.tags)
+					
 					}
 				}
-
+				this.change(this.tags)
 
 			},
 
-
-			//每次子组件改变时，父组件就会改变
-			change: function(checkboxGroup) {
-				//当选中全部时，清空当前行数组，通过*号匹配
+			getPageCoach: function(checkboxGroup) {
 				let t = checkboxGroup
 				this.tags = t.concat();;
 				let city = this.tags[0];
@@ -238,7 +235,9 @@
 				if (city.name != undefined)
 					this.tags[0][0] = city;
 				else {
-					this.$refs.select.checkboxGroup[0] = [];
+
+					this.$refs.select.checkboxGroup[0] = []
+					// this.$refs.select.checkAll[0] = true;
 				}
 				for (let index = 1; index < this.tags.length; index++) {
 					if (this.tags[index].length == 0) {
@@ -247,16 +246,20 @@
 				}
 				this.getCoach();
 			},
+			//每次子组件改变时，父组件就会改变
+			change: function(checkboxGroup) {
+				this.pageNumber = 1
+				this.getPageCoach(checkboxGroup)
+				//当选中全部时，清空当前行数组，通过*号匹配
+
+			},
 			//跳转辅导机构详情页
 			jump: function(id) {
-				// console.log(90);
+				console.log(90);
 				this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/' + id);
 			},
-
 			//得到所有筛选过的辅导机构列表
-			getCoach: function(page) {
-			  if(page) this.pageNumber = page;
-
+			getCoach: function() {
 				var that = this;
 				var str = '';
 				let len = that.tags[0].length;
@@ -275,15 +278,15 @@
 				}
 				let back = 2;
 				let coach = 2;
-				console.log(that.tags);
 				if (that.tags[2].length == 2) {
 					back = 2;
 					coach = 2;
 				} else if (that.tags[2].length == 1) {
-				  console.log(that.tags[2]);
 					if (that.tags[2][0].name == "10天退款无忧") {
 						back = 0; //0:支持
+						coach = 2; //1:不支持
 					} else {
+						back = 2;
 						coach = 0;
 					}
 				}
@@ -324,7 +327,7 @@
 			getBanner: function() {
 				var that = this;
 				this.fetch('/front/banner/getbanner', {
-					b_name: '搜辅导页面',
+					b_name: this.$route.path,
 					limit: 1,
 					type: 0
 				}).then(res => {
@@ -527,14 +530,15 @@
 		justify-content: center;
 		align-items: center;
 		cursor: pointer;
+		background-size: auto;
 	}
 
 	.singlecoachtop>img {
-		width: 40%;
+		width: 80%;
 	}
 
 	.singlecoachtop2>img {
-		width: 40%;
+		width: 80%;
 	}
 
 	.singlecoach>span {
@@ -577,4 +581,7 @@
 			display: none;
 		}
 	}
+
+
+
 </style>

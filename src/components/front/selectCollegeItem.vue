@@ -52,20 +52,19 @@
             <div class="joinContrast">
                     <el-popover
                     placement="right"
-                    width="160"
                     v-model="visible2"
                     slot="reference">
                         <div style="text-align: right; margin: 0">
-                            <div style="text-align: center;font-size: 18px;padding-bottom:10px;border-bottom: solid 2px #ccc;color: rgb(42, 173, 115)" >
+                            <div style="text-align: center;font-size: 18px;padding-bottom:10px;border-bottom: solid 2px #ccc;color: rgb(0, 159, 160)" >
                                 院校对比
                                 <i @click="removeAll()" style="cursor: pointer;float: right;font-size: 13px;line-height: 27.4px;color: #c6c5c5">清空</i>
                             </div>
                             <div v-for="(item,indexss) in colleges" :key="indexss" style="text-align: left;padding: 10px;border-bottom: solid 1px #c6c5c5">
                                 {{item.college}}
-                                <i  class="el-icon-close" @click="remove(index)" style="cursor: pointer;float: right"></i>
+                                <i  class="el-icon-close" @click="remove(indexss)" style="cursor: pointer;float: right"></i>
                             </div>
                             <el-button slot="reference"
-                                       style="padding: 12px;width: 100%;margin: 10px auto;background-color:rgb(42, 173, 115) !important;
+                                       style="padding: 12px;width: 100%;margin: 10px auto;background-color:rgb(0, 159, 160) !important;
                                        color: white !important;"
                             @click="vs">
                                 开始对比
@@ -133,7 +132,7 @@
         </div>
         <div class="viewMore" v-show="viewMoreIcon">
             <div class="updateInform">信息更新时间：{{collegeInfo.update_time}}</div>
-            <div class="moreInform" @click="viewMore">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
+            <div class="moreInform" @click="viewMore" v-show="collegeInfo.missPorduct.length > 3">{{viewMoreButt}}<span><i class="el-icon-caret-bottom" id="moreButton"></i></span></div>
         </div>
     </div>
 
@@ -176,14 +175,27 @@
             addMajor(){
                 var obj = {college:this.collegeInfo.z_name,id:this.collegeInfo.id}
                 var objs = this.getMajors()
-                var obj_arr = objs == ""?[]: JSON.parse(this.getMajors())
+                var obj_arr = objs == ""?[]: JSON.parse(this.getMajors());
+
+                // console.log(this.colleges);
 
                 if(obj_arr != null && obj_arr.length == 4){
                     this.message(true,"对比列表已满", 'info');
-                    return
+                    this.setCookie(obj_arr)
+                    this.colleges = obj_arr
+                    return true;
                 }else{
-                    if(obj_arr == null)
-                        obj_arr = []
+                    if(obj_arr == null){
+                      obj_arr = [];
+                    }else{
+                      for(var i = 0; i < obj_arr.length;i++){
+                        if(obj_arr[i].id == this.collegeInfo.id){
+                          this.message(true,"已经在对比列表里", 'info');
+                          return true;
+                        }
+                      }
+                    }
+
                     obj_arr.push(obj)
                     this.setCookie(obj_arr)
                     this.colleges = obj_arr
@@ -195,14 +207,14 @@
             },
             getMajors(){
                 let cookie = document.cookie.split(";")
-                let index = 0;
+                let index = 1000;
                 let i = 0
                 for( i in cookie){
-                    if(cookie[i].indexOf(this.cookieName) != -1)
-                        index = i;
+                    if(cookie[i].indexOf(this.cookieName) != -1){
+                      index = i;
+                    }
                 }
-                if(index == 0)
-                    return null
+                if(index == 1000) return null;
                 let obj = cookie[index]
                 obj = obj.split('=')
                 let obj_arr = unescape(obj[1]);

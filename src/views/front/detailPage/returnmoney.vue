@@ -7,7 +7,7 @@
                     <img src="../../../assets/img/homeIcon.png">
                     <el-breadcrumb separator-class="el-icon-arrow-right" class="collagebreadcrumb">
                         <el-breadcrumb-item>首页</el-breadcrumb-item>
-                        <el-breadcrumb-item class="activelist">正文</el-breadcrumb-item>
+                        <el-breadcrumb-item class="activelist">退款服务</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
             </div>
@@ -55,9 +55,9 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
-        
+
     </div>
 </template>
 
@@ -174,5 +174,4 @@ export default {
     }
 }
 </style>
-    
-    
+

@@ -4,10 +4,10 @@
     		<div class="loginRouterCenter" v-show="computer">
     			<div class="loginPicture"><img src="../../../assets/img/login.png"></div>
 				<el-card class="boxCard">
-    				<el-menu :default-active="active" class="el-menu-demo" 
+    				<el-menu :default-active="active" class="el-menu-demo"
     					mode="horizontal" @select="handleSelect" v-model="active"
     					text-color="#333" active-text-color="#009fa0">
-    					<el-menu-item index="1">账号登录</el-menu-item>
+    					<el-menu-item index="1">帐号登录</el-menu-item>
     					<el-menu-item index="2">短信登录</el-menu-item>
     				</el-menu>
     				<div class="phoneInput">
@@ -23,7 +23,7 @@
     					<div><span @click="resetPass">忘记密码</span> | <span class="register" @click="register">注册</span></div>
     				</div>
     				<div class="threeLogin" style="text-align: center;">
-    					<div class="fastIn">快捷登录</div>
+    					<!--<div class="fastIn">快捷登录</div>-->
     					<div class="logonIn">
     						<div class="xinlang"></div>
     						<div class="diviLine"></div>
@@ -104,7 +104,7 @@
 	    			this.active = '2';
 	    		} else if(path.indexOf('/front/Login/loginRoute/accountNumber') != -1) {
 		    		this.active = '1';
-	    		} 
+	    		}
 	    		// else if(path.indexOf('/front/firstMenuRouter/viewInformation') != -1) {
 		    	// 	this.activeIndex = '3';
 		    	// } else if(path.indexOf('/front/firstMenuRouter/searchCoach') != -1) {
@@ -125,7 +125,7 @@
 		    	// 		this.$router.push('/front/Login/loginRoute/shortMessage');
 		    	// 	}
 		    	// }
-		    	
+
 		    },
 		    //跳转到重置密码页面
 		    resetPass:function() {
@@ -202,7 +202,7 @@
 			close:function(){
 				this.$router.push('/front/firstMenuRouter/selectCollege');
 			}
-			
+
 		},
 		mounted() {
 			this.accountNumber();
@@ -326,7 +326,7 @@
 	}
 	.threeLogin {
 		width: 412px;
-		height: 100px;
+		height: 50px;
 		background-color: #fcfcfc;
 		border-radius: 0px 0px 5px 5px;
 		display: flex;
@@ -365,7 +365,7 @@
 		margin: 100px 0;
 		overflow:hidden;
 	}
-	
+
 	/** iPhone + ipad**/
 	@media only screen and (min-width: 320px) and (max-width: 1024px) {
 		.mobileCode,.mobileLogin {

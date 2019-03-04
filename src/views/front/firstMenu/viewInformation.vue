@@ -26,7 +26,7 @@
 			</div>
 			<!--右边的的文章-->
 			<div class="float-right">
-				<Article @refreshs="refreshBusiness" @jump="jump" v-if="informbusiness.length" title="行业报告" :inforArticle="informbusiness"></Article>
+				<ArticleP @refreshs="refreshBusiness" @jump="jump" v-if="information[0].zx_info.length" :title="information[0].region_name" :inforArticle="information[0].zx_info"></ArticleP>
 				<div class="advertisement" @click="jumpStudent">
 					<img src="../../../assets/img/advertisement.png" alt="">
 				</div>
@@ -39,12 +39,12 @@
 						</el-carousel-item>
 					</el-carousel>
 				</div>
-				<div class="advertisement" v-for="(item,index) in advertisementB" :key="index">
+				<!--<div class="advertisement" v-for="(item,index) in advertisementB" :key="index">
 					<a :href="item.re_url">
 						<img :src="item.img" alt="item.img_alt">
 					</a>
-				</div>
-				<Article @refreshs="refresh" @jump="jump" v-if="information.length" title="推荐阅读" :inforArticle="information"></Article>
+				</div>-->
+				<ArticleP @refreshs="refresh" @jump="jump" v-if="information[1].zx_info.length" :title="information[1].region_name" :inforArticle="information[1].zx_info"></ArticleP>
 			</div>
 		</div>
 		<!-- <div class="footer">
@@ -97,7 +97,15 @@
 				 * 推荐阅读
 				 * */
 				page: 0,
-				information: [],
+				information: [{
+					id:0,
+					region_name : '',
+					zx_info:{}
+				},{
+					id:1,
+					region_name : '',
+					zx_info:{}
+				}],
 				industryTatol: 1,
 				/*
 				 * 行业报告
@@ -129,11 +137,11 @@
 			jumpreUrl(jumpUrl) {
 				if(typeof jumpUrl !== 'undefined') {
 					if(jumpUrl.substr(0,7).toLowerCase() == "http://" || jumpUrl.substr(0,8).toLowerCase() == "https://") {
-						window.open(jumpUrl);
+						window.open(jumpUrl , '_blank');
 					}
 					else {
 						var url = ('http://' + jumpUrl);
-						window.open(url);
+						window.open(url , '_blank');
 					}
 				}
 			},
@@ -158,6 +166,7 @@
 				this.$router.push({
 					path: '/front/firstMenuRouter/recruitStudents'
 				});
+        // window.open(document.location.origin+'/#/front/firstMenuRouter/recruitStudents' , '_blank');
 			},
 			/*
 			 * 推荐阅读刷新
@@ -174,11 +183,7 @@
 			 * 行业报告刷新
 			 * */
 			refreshBusiness: function(data) {
-				this.businessPage++;
-				if (this.businessPage * 4 >= this.businessTatol) {
-					this.businessPage = 0;
-				}
-				this.presentation();
+
 			},
 			/*
 			 *
@@ -197,7 +202,9 @@
 				// 					});
 			},
 			jump: function(id) {
-				this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + id.id);
+			  // alert(1);
+        window.open(document.location.origin+'/#/front/firstMenuRouter/viewInformation/singleInformation/' + id.id , '_blank');
+				// this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + id.id);
 			},
 			/*
 			 * 行业报告
@@ -224,12 +231,10 @@
 			 * */
 			readtation: function() {
 				let _this = this;
-				this.fetch('/front/consult/getRecommendRead', {
-						pageNumber: _this.page
+				this.fetch('/front/recommend/getrecommend', {
 					}).then((response) => {
 						if (response.code == 0) {
-							_this.information = response.result.info;
-							_this.industryTatol = response.result.count;
+							_this.information = response.result;
 						}
 					})
 					.catch(error => function(error) {
@@ -325,7 +330,7 @@
 			getBanner: function() {
 				var that = this;
 				this.fetch('/front/banner/getbanner', {
-					b_name: '看资讯页面',
+					b_name: this.$route.path,
 					limit: 4,
 					type: 0
 				}).then(res => {
@@ -565,7 +570,7 @@
 	.advertisement {
 		border-radius: 3px;
 		width: 305px;
-		height: 188px;
+		/*height: 188px;*/
 		margin-bottom: 14px;
 		margin-top: 14px;
 	}

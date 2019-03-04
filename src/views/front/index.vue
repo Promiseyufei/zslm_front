@@ -51,15 +51,15 @@
 					<!-- 选择院校----单个院校小块块 -->
 					<div class="singleCollegeBox">
 						<div class="singleCollege" v-for="(temp,index) in college" :key="index + 'singleCollege'" @click="toJumpCollege(temp.id)">
-							<img src="../../assets/img/coach2.png" alt="">
+							<img :src="temp.magor_logo_name != '' ? temp.magor_logo_name : '../../assets/img/coach2.png'" alt="">
 
 							<div class="hover">
-								<div>
-									<img src="../../assets/img/coach2.png" alt="" class="indeximg">
+								<div style="height: 300px;background-position: center;background-size: auto 100%;background-repeat: no-repeat" :style="{backgroundImage:'url(' + temp.major_cover_name +')'}">
+									<!--<img :src="temp.major_cover_name != ''?temp.major_cover_name : '../../assets/img/coach2.png'" alt="" class="indeximg">-->
 								</div>
 								<div class="singleCollegeHover">
 									<div class="singleCollegeHeader">
-										<img :src="temp.magor_logo_name != '' ? temp.magor_logo_name : '../../assets/img/coach2.png'" alt="">
+										<img :src="temp.magor_logo_name != '' ? temp.magor_logo_name : '../../assets/img/coach2.png'" alt="" style="width: 100px;height: 100px;">
 										<div>
 											<!-- <div v-for="(item,index) in temp.major_confirm_id" class="majorType">
                                                 <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/EQUIS.png">
@@ -126,10 +126,10 @@
 					<div class="singleCollegeBox">
 						<div class="selectInformationHearder">
 							<div class="selectInformationLeft" @click="toJumpCoach(coach[0].id)">
-								<img src="../../assets/img/sitanfu.jpg" alt="">
+								<img :src="coach[0].cover_name" alt="">
 								<div>
 									<div class="selectInformationLeftimg">
-										<img src="../../assets/img/sheke.png" alt="">
+										<img :src="coach[0].logo_name" alt="">
 									</div>
 									<div class="selectInformationLeftMessage">
 										<div class="collegeName">
@@ -145,10 +145,10 @@
 							</div>
 							<div class="selectInformationRight">
 								<div class="selectInformationLittle" v-for="(item, index) in coach2" :key="index + 'little'" @click="toJumpCoach(item.id)">
-									<img src="../../assets/img/sitanfu.jpg" alt="">
+									<img :src="item.cover_name" alt="">
 									<div>
 										<div class="selectInformationLeftimg">
-											<img src="../../assets/img/dongfang.png" alt="">
+											<img :src="item.logo_name" alt="">
 										</div>
 										<div class="selectInformationLeftMessage">
 											<div class="collegeName">
@@ -197,13 +197,13 @@
 									<img src="../../assets/img/banner1.jpg" alt="">
 								</div>
 								<div class="buttons">
-									<b class="on"></b>
+									<b class="on" style="margin-left: 250px"></b>
 									<b></b>
 									<b></b>
 								</div>
 								<div class="wrapCover">
 									<div class="wrapCover1">
-										<span>招生宣讲</span>
+										<span>{{activity[index].activity_type}}</span>
 										<h3>{{activity[index].active_name}}</h3>
 									</div>
 									<div class="wrapCover2">
@@ -228,8 +228,8 @@
 						</div>
 						<div class="selectInformationFooter Footerblack">
 							<div>
-								<p>全国N个省市，M个辅导机构</p>
-								<p>领优惠卷更实惠，退款保障更放心！</p>
+								<p>提供最新的活动信息</p>
+								<p>及时提醒，精彩不错过！</p>
 							</div>
 							<homeBtn text="查看更多活动" @click.native="toJump(2)"></homeBtn>
 						</div>
@@ -251,7 +251,7 @@
 					<div class="singleCollegeBox">
 						<div class="selectInformationHearder informationDiv">
 							<div class="lookinformation" v-for="(item,index) in consult1" @click="toJumpInfor(item.id)" :key="index + 'mation'">
-								<img src="../../assets/img/infor.jpg" alt="">
+								<img :src="item.z_image" alt="">
 								<div class="lookinforMessage">
 									<h3>{{item.zx_name}}</h3>
 									<div>
@@ -269,10 +269,10 @@
 										<p><i class="fa fa-map-marker"></i>{{item.publisher}}</p>
 									</div>
 								</div>
-								<img src="../../assets/img/infor.jpg" alt="">
+								<img :src="item.z_image" alt="">
 							</div>
 							<div class="lookinformation" v-for="(item,index) in consult3" @click="toJumpInfor(item.id)" :key="index + 'look'">
-								<img src="../../assets/img/infor.jpg" alt="">
+								<img :src="item.z_image" alt="">
 								<div class="lookinforMessage">
 									<h3>{{item.zx_name}}</h3>
 									<div>
@@ -447,22 +447,26 @@
 			//得到7个院校
 			getCollage: function() {
 				var that = this;
-				this.fetch('/front/indexinfo').then(function(res) {
-					if (res.code == 0) {
 
+				this.fetch('/front/indexinfo').then(function(res) {
+
+					if (res.code == 0) {
+            console.log(res);
 						that.college = res.result.major; //返回学校
 						if (that.college.length > 0) {
 							for (let i = 0; i < that.college.length; i++) {
 								if (that.college[i].major_confirm_id != '')
 									that.college[i].major_confirm_id = that.college[i].major_confirm_id.split(',');
-								if (that.college[i].major_follow_id != '')
-									that.college[i].major_follow_id = that.college[i].major_follow_id.split(',');
 							}
 						}
+
 						that.coach = res.result.coach; //返回辅导机构
+
 						that.coach2.push(that.coach[1], that.coach[2]); //过滤掉第一个辅导机构
 						that.activity = res.result.actives.info; //返回活动
+
 						var consult = res.result.consult.info; //返回资讯
+
 						if (consult.length == 1) {
 							that.consult1.push(consult[0]);
 						} else if (consult.length == 2) {
@@ -483,7 +487,7 @@
 							that.consult3.push(consult[4], consult[5]);
 						}
 
-						// console.log(consult);
+						// console.log(that.activity);
 					} else {
 						that.message(true, res.msg, "error");
 					}
@@ -658,6 +662,12 @@
 		padding: 0;
 	}
 
+  *{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
 	/*
     看资讯样式
     */
@@ -722,8 +732,9 @@
 	.lookinforMessage {
 		background-color: #fff;
 		padding: 20px;
-		height: 127px;
+		height: 167px;
 		position: relative;
+    box-sizing:boder-box;
 	}
 
 	.lookinforMessage>h3 {
@@ -764,8 +775,9 @@
 	}
 
 	.lookinformationBig .lookinforMessage {
-		width: 265px;
-		height: 297px;
+		width: 305px;
+		height: 337px;
+    box-sizing:boder-box;
 	}
 
 	.lookinformationBig .lookinforMessage>p {
@@ -870,7 +882,7 @@
 	}
 
 	.indexBigBlock>div {
-		margin: 2%;
+		margin: 2% 1%;
 		padding: 4% 5%;
 		background-color: rgba(255, 255, 255, 0.3);
 		text-align: center;
@@ -1284,7 +1296,7 @@
 	}
 
 	.singActivity {
-		height: 97px;
+		height: 117px;
 		color: rgba(255, 255, 255, 0.8);
 		padding: 10px 15px;
 		position: relative;
@@ -1650,8 +1662,8 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 265px;
-		height: 310px;
+		width: 305px;
+		height: 350px;
 		padding: 20px;
 		color: #fff;
 		background-color: rgba(56, 59, 61, 0.9);
