@@ -182,10 +182,10 @@
                                       <span><img :src="all" v-for="(all, index) in wxCode" :key="index"></span>
                                     </el-dialog>
                                     <div class="logonLine"></div>
-                                    <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut" @click="majorWb">
+                                   <!-- <div class="weiboLine" @mouseover="xinlang" @mouseout="xinlangOut" @click="majorWb">
                                         <div><img :src="logoPicture[0].xinlang"></div>
                                         <div class="weibo" id="xinlang">微博主页</div>
-                                    </div>
+                                    </div>-->
                                     <el-dialog
                                       :visible.sync="dialogVisible2"
                                       width="30%">
@@ -285,7 +285,8 @@ export default {
     },
     methods: {
         contrastPro() {
-            this.$router.push('/front/firstMenuRouter/majorCompare/' + this.id);
+            window.open(document.location.origin+'/#/front/firstMenuRouter/majorCompare/' + this.id , '_blank');
+            // this.$router.push('/front/firstMenuRouter/majorCompare/' + this.id);
         },
         detail(id) {
             this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + id);
@@ -471,7 +472,7 @@ export default {
                     that.dialogTitle = res.wc_image.length > 0?'扫码关注官方微信公众号':'暂无官方微信公众号信息！';
 
                     that.isFollow();
-                    
+
 
                 }
             });
