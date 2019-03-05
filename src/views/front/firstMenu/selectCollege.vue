@@ -288,7 +288,7 @@
 				enrollment_mode: '',
 				project_count: 0,
 				page: 1,
-				page_size: 3,
+				page_size: 20,
 				count: 10,
 				productShow: false,
 				/*按钮参数*/
@@ -325,18 +325,18 @@
 				this.getAllCollege(data);
 			},
 			getAllCollege(data) {
-				
+
 				this.selectData = data;
-				
-				
+
+
 				let city = this.selectData[this.checkboxGroup_region_index];
 
 				if (Array.isArray(city) && city.length == 0) {
-			
+
 					this.$refs.select.deleteCheck(this.checkboxGroup_region_index);
 					// checkboxGroup_region_index = 2,这里下标是2,在checkboxGroup数组中下标为2的元素存放着地址，如果不是2请修改
 					// this.checkboxGroup[this.checkboxGroup_region_index] = []
-					
+
 				}
 
 				if (city.name != undefined) {
@@ -347,8 +347,8 @@
 
 
 				// 				if(city.name == undefined){
-				// 					
-				// 					
+				//
+				//
 				// 					this.$refs.select.checkboxGroup[this.checkboxGroup_region_index] = []
 				// 				}
 
