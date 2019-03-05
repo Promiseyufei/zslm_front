@@ -129,7 +129,7 @@
 								<img :src="coach[0].cover_name" alt="">
 								<div>
 									<div class="selectInformationLeftimg">
-										<img :src="coach[0].logo_name" alt="">
+										<img :src="coach[0].logo_white" alt="">
 									</div>
 									<div class="selectInformationLeftMessage">
 										<div class="collegeName">
@@ -148,7 +148,7 @@
 									<img :src="item.cover_name" alt="">
 									<div>
 										<div class="selectInformationLeftimg">
-											<img :src="item.logo_name" alt="">
+											<img :src="item.logo_white" alt="">
 										</div>
 										<div class="selectInformationLeftMessage">
 											<div class="collegeName">
@@ -210,7 +210,7 @@
 										<p><i class="fa fa-map-marker"></i>{{activity[index].province.province}}{{activity[index].province.city}}</p>
 										<p><i class="fa fa-calendar"></i>{{activity[index].begin_time}}-{{activity[index].end_time}}</p>
 										<div>
-											<img src="../../assets/img/college.png" alt="">
+											<img :src="activity[index].magor_logo_name" alt="">
 											<span>{{activity[index].z_name}}</span>
 										</div>
 									</div>
@@ -370,57 +370,8 @@
 				amba: "AMBA",
 				camea: "CAMEA",
 				userData: [],
-				member: [{
-						logo: require("../../assets/img/coach2.png"),
-						name: "优惠卷",
-						detail: "报名培训班享受会员专属优惠价！折扣多多！"
-					},
-					{
-						logo: require("../../assets/img/return2.png"),
-						name: "退款管理",
-						detail: "会员享受辅导班10天内无条件退款保障！"
-					},
-					{
-						logo: require("../../assets/img/remind.png"),
-						name: "活动提醒",
-						detail: "感兴趣的活动，小助手来提醒你不怕错过！"
-					},
-					{
-						logo: require("../../assets/img/attention.png"),
-						name: "关注院校",
-						detail: "心仪的院校，任何风吹草动，第一时间全知道！"
-					},
-					{
-						logo: require("../../assets/img/helper.png"),
-						name: "个人助手",
-						detail: "备考全程陪伴，重要事件时时提醒，不耽误事儿！"
-					}
-				],
-				activity: [{
-						name: "商学院MBA2019年提前面试第四批",
-						type: 1,
-						province: "武汉",
-						time: "5月15日-8月23日",
-						school: "广东外语外贸大学",
-						logo: require("../../assets/img/college.png")
-					},
-					{
-						name: "2019聚英计划第一批提前面试申请时间表（武汉）",
-						type: 1,
-						province: "武汉",
-						time: "6月15日-8月23日",
-						school: "河南科技大学",
-						logo: require("../../assets/img/college.png")
-					},
-					{
-						name: "2018聚英计划第一批提前面试申请时间表（武汉）",
-						type: 1,
-						province: "武汉",
-						time: "7月15日-8月23日",
-						school: "北京大学",
-						logo: require("../../assets/img/college.png")
-					},
-				],
+				member: [],
+				activity: [],
 				wrap: document.querySelector(".wrap"),
 				timer: null,
 				index: 0,
