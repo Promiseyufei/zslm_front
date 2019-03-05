@@ -356,7 +356,7 @@
         background-color: #FFFFFF;
     }
     .collage-conten-article{
-        width: 306px;
+        width: 25%;
         float: left;
     }
     .collage-title{
