@@ -60,8 +60,8 @@
                                     {{item_.project_name}}费用{{item_.cost}}&nbsp;&nbsp;
                                     招生名额：{{item_.student_count}}名&nbsp;&nbsp;
                                     授课语言：{{item_.language}}&nbsp;&nbsp;
-                                    班级情况：{{item_.class_situation}} 
-                                    
+                                    班级情况：{{item_.class_situation}}
+
                                     <!-- <p style="margin-top: 10px"><b>学制：</b>{{item_.eductional_systme}}</p>
                                     <p style="margin-top: 10px"><b>毕业证：</b>{{item_.graduation_certificate}}</p>
                                     <p style="margin-top: 10px"><b>报考条件：</b>{{item_.can_conditions}}</p>
@@ -190,7 +190,7 @@
                         </div>
                         <div class="clearfloat">
                             <div v-for="(item,index) in information" :key="index" class="collage-position">
-                                <a style="text-decoration: none;color:rgb(38, 218, 183)" v-bind:href=" item.index_web ">点击进入官网</a>
+                                <a style="text-decoration: none;color:rgb(38, 218, 183)" v-bind:href=" item.index_web " target="_blank">点击进入官网</a>
                             </div>
                         </div>
 
@@ -203,7 +203,7 @@
                         <div class="clearfloat">
                             <div v-for="(item,index) in information" :key="index" class="collage-position">
 
-                                <a style="text-decoration: none;color:rgb(38, 218, 183)" v-bind:href=" item.admissions_web ">点击此链接进入专题页面</a>
+                                <a style="text-decoration: none;color:rgb(38, 218, 183)" v-bind:href=" item.admissions_web " target="_blank">点击此链接进入专题页面</a>
                             </div>
                         </div>
                         <div class="authentication">
