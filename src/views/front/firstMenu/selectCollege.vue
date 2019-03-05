@@ -75,144 +75,8 @@
 					},
 					{
 						type: '院校地点',
-						cities: [{
-								id: 1,
-								name: "北京"
-							},
-							{
-								id: 2,
-								name: "天津"
-							},
-							{
-								id: 3,
-								name: "上海"
-							},
-							{
-								id: 4,
-								name: "重庆"
-							},
-							{
-								id: 5,
-								name: "河北"
-							},
-							{
-								id: 6,
-								name: "山西"
-							},
-							// {
-							// 	id: 7,
-							// 	name: "台湾"
-							// },
-							{
-								id: 8,
-								name: "辽宁"
-							},
-							{
-								id: 9,
-								name: "吉林"
-							},
-							{
-								id: 10,
-								name: "黑龙江"
-							},
-							{
-								id: 11,
-								name: "江苏"
-							},
-							{
-								id: 12,
-								name: "浙江"
-							},
-							{
-								id: 13,
-								name: "安微"
-							},
-							{
-								id: 14,
-								name: "福建"
-							},
-							{
-								id: 15,
-								name: "江西"
-							},
-							{
-								id: 16,
-								name: "山东"
-							},
-							{
-								id: 17,
-								name: "河南"
-							},
-							{
-								id: 18,
-								name: "湖北"
-							},
-							{
-								id: 19,
-								name: "湖南"
-							},
-							{
-								id: 20,
-								name: "广东"
-							},
-							{
-								id: 21,
-								name: "甘肃"
-							},
-							{
-								id: 22,
-								name: "四川"
-							},
-							{
-								id: 23,
-								name: "贵州"
-							},
-							{
-								id: 24,
-								name: "海南"
-							},
-							{
-								id: 25,
-								name: "云南"
-							},
-							{
-								id: 26,
-								name: "青海"
-							},
-							{
-								id: 27,
-								name: "陕西"
-							},
-							{
-								id: 28,
-								name: "广西"
-							},
-							{
-								id: 29,
-								name: "西藏"
-							},
-							{
-								id: 30,
-								name: "宁夏"
-							},
-							{
-								id: 31,
-								name: "新疆"
-							},
-							{
-								id: 32,
-								name: "内蒙古"
-							},
-							// {
-							// 	id: 33,
-							// 	name: "澳门"
-							// },
-							// {
-							// 	id: 34,
-							// 	name: "香港"
-							// },
-						], //所有专业类型的id数组
-						"fif": "查看更多"
+						cities: [], //所有专业类型的id数组
+						fif: "查看更多"
 					},
 					{
 						type: '统招模式',
@@ -312,7 +176,7 @@
 				enrollment_mode: '',
 				project_count: 0,
 				page: 1,
-				page_size: 3,
+				page_size: 20,
 				count: 10,
 				productShow: false,
 				/*按钮参数*/
@@ -350,18 +214,18 @@
 				this.getAllCollege(data);
 			},
 			getAllCollege(data) {
-				
+
 				this.selectData = data;
-				
-				
+
+
 				let city = this.selectData[this.checkboxGroup_region_index];
 
 				if (Array.isArray(city) && city.length == 0) {
-			
+
 					this.$refs.select.deleteCheck(this.checkboxGroup_region_index);
 					// checkboxGroup_region_index = 2,这里下标是2,在checkboxGroup数组中下标为2的元素存放着地址，如果不是2请修改
 					// this.checkboxGroup[this.checkboxGroup_region_index] = []
-					
+
 				}
 
 				if (city.name != undefined) {
@@ -372,8 +236,8 @@
 
 
 				// 				if(city.name == undefined){
-				// 					
-				// 					
+				//
+				//
 				// 					this.$refs.select.checkboxGroup[this.checkboxGroup_region_index] = []
 				// 				}
 
@@ -597,7 +461,62 @@
 					moneyBottom.style.color = '#bfbfbf';
 					moneyTop.style.color = '#009fa0';
 				}
-			}
+			},
+
+      // 获取院校专业方向
+      getMajorDirection:function(){
+        this.fetch('/front/dict/getMajorDirection', {}).then((response)=>{
+          if (response.code == 0) {
+            this.collegeInform[1].cities = response.result;
+          }
+        }).catch((error)=>{
+          console.log(error);
+        });
+      },
+
+      // 获取院校地点
+      getRegion:function(){
+        this.fetch('/front/dict/getRegion', {}).then((response)=>{
+          if (response.code == 0) {
+            this.collegeInform[2].cities = response.result;
+          }
+        }).catch((error)=>{
+          console.log(error);
+        });
+      },
+
+      // 获取专业类型
+      getMajorType:function(){
+        this.fetch('/front/dict/getMajorType', {}).then((response)=>{
+          if (response.code == 0) {
+            this.collegeInform[0].cities = response.result;
+          }
+        }).catch((error)=>{
+          console.log(error);
+        });
+      },
+
+      // 获取统招模式
+      getRecruitmentPattern:function(){
+        this.fetch('/front/dict/getRecruitmentPattern', {}).then((response)=>{
+          if (response.code == 0) {
+            this.collegeInform[3].cities = response.result;
+          }
+        }).catch((error)=>{
+          console.log(error);
+        });
+      },
+
+      // 获取分数线
+      getFractionType:function(){
+        this.fetch('/front/dict/getFractionType', {}).then((response)=>{
+          if (response.code == 0) {
+            this.collegeInform[5].cities = response.result;
+          }
+        }).catch((error)=>{
+          console.log(error);
+        });
+      }
 		},
 		mounted() {
 			let that = this;
@@ -612,7 +531,11 @@
 				}
 			})
 			this.getmajorInform();
-			this.getmajorType();
+			this.getMajorDirection();
+			this.getRegion();
+			this.getMajorType();
+			this.getRecruitmentPattern();
+			this.getFractionType();
 
 		},
 		created() {

@@ -233,8 +233,9 @@
                 for(let i in this.colleges){
                     id+=this.colleges[i].  id+','
                 }
-                id = id.substr(0,id.length-1)
-                this.$router.push("/front/firstMenuRouter/majorsCompare/"+id)
+                id = id.substr(0,id.length-1);
+                window.open(document.location.origin+"/#/front/firstMenuRouter/majorsCompare/"+id , '_blank');
+                // this.$router.push("/front/firstMenuRouter/majorsCompare/"+id)
             },
             //加入对比按钮
             compareMajor:function(){
