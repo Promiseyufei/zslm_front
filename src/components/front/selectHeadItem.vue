@@ -95,8 +95,8 @@
 					"el-icon-caret-top" : "el-icon-caret-bottom";
 			},
 			deleteCheck:function(index){
-				console.log(222)
-				console.log(this.checkboxGroup)
+				// console.log(222)
+				// console.log(this.checkboxGroup)
 				this.checkboxGroup[index] = []
 			}
 		},
@@ -119,7 +119,7 @@
 		},
 		watch:{
 			checkboxGroup:function(){
-				console.log(this.checkboxGroup)
+				// console.log(this.checkboxGroup)
 			}
 		}
 	}

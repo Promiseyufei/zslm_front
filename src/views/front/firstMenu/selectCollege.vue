@@ -226,27 +226,51 @@
 						type: '学习费用',
 						cities: [{
 								id: 0,
-								name: '6万元以下'
+								name: '6万元以下',
+								section: {
+									min: 0,
+									max: 6
+								}
 							},
 							{
 								id: 1,
-								name: '6-10万元'
+								name: '6-10万元',
+								section: {
+									min: 6,
+									max: 10
+								}
 							},
 							{
 								id: 2,
-								name: '10-20万元'
+								name: '10-20万元',
+								section: {
+									min: 10,
+									max: 20
+								}
 							},
 							{
 								id: 3,
-								name: '20-30万元'
+								name: '20-30万元',
+								section: {
+									min: 20,
+									max: 30
+								}
 							},
 							{
 								id: 4,
-								name: '30-40万元'
+								name: '30-40万元',
+								section: {
+									min: 30,
+									max: 40
+								}
 							},
 							{
 								id: 5,
-								name: '40万元以上'
+								name: '40万元以上',
+								section: {
+									min: 40,
+									max: 65535
+								}
 							},
 							// {
 							// 	id:6,
@@ -320,6 +344,7 @@
 			},
 			// 点击筛选块-从组件中获取选中结果
 			change(data) {
+				// console.log(data)
 
 				this.page = 1;
 				this.getAllCollege(data);
@@ -352,8 +377,8 @@
 				// 					this.$refs.select.checkboxGroup[this.checkboxGroup_region_index] = []
 				// 				}
 
-				// 				this.getselt();
-				// 				this.getmajorInform();
+								this.getselt();
+								this.getmajorInform();
 			},
 			handleClose(tag) {
 
@@ -371,14 +396,20 @@
 			//转换选中参数的格式——数组，以便传参
 			getselt: function() {
 				let list = [];
+				// console.log(this.selectData)
 				for (var i = 0; i < this.selectData.length; i++) {
 					var little = [];
 					for (var j = 0; j < this.selectData[i].length; j++) {
-						if (i == 4 || i == 2) {
+						
+						if (i == 2) {
 							little.push(this.selectData[i][j].name);
 							// little.push(this.selectData[i][j].name);
 
-						} else {
+						}
+						else if(i == 4) {
+							little.push(this.selectData[i][j].section)
+						}
+						 else {
 							little.push(this.selectData[i][j].id);
 						}
 					}
@@ -389,21 +420,38 @@
 
 				this.provice = list[2]; //院校地点——字符串
 				this.enrollment_mode = list[3].join(","); //统招模式——字符串
-				this.max = list[4]; //学习费用——int
-				// console.log(list[4])
-				if (list[4].length > 0 && list[4].length == 1) {
-					this.min = 0;
-					this.max = parseInt(list[4][0]);
-				} else if (list[4].length > 0 && list[4].length == 2) {
-					this.min = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][1]) : parseInt(list[4][0]);
-					this.max = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][0]) : parseInt(list[4][1]);
-				} else if (list[4].length > 2) {
-					this.min = this.max = parseInt(list[4][0]);
-					for (let index = 1; index < list[4].length; index++) {
-						if (this.min > parseInt(list[4][index])) this.min = parseInt(list[4][index]);
-						if (this.max <= parseInt(list[4][index])) this.max = parseInt(list[4][index]);
+				// this.max = list[4]; //学习费用——int
+				// console.log((list[4]))
+
+				if(list[4].length > 0) {
+					let minArr = [];
+					let maxArr = [];
+					for (let index = 0; index < list[4].length; index++) {
+						minArr.push(list[4][index].min);
+						maxArr.push(list[4][index].max);
 					}
+					this.max = Math.max.apply(null, maxArr);
+					this.min = Math.min.apply(null, minArr);
 				}
+				else {
+					this.min = 0;
+					this.max = 0;
+				}
+
+				// if (list[4].length > 0 && list[4].length == 1) {
+				// 	this.min = 0;
+				// 	this.max = parseInt(list[4][0]);
+				// } else if (list[4].length > 0 && list[4].length == 2) {
+				// 	this.min = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][1]) : parseInt(list[4][0]);
+				// 	this.max = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][0]) : parseInt(list[4][1]);
+				// } else if (list[4].length > 2) {
+				// 	this.min = this.max = parseInt(list[4][0]);
+				// 	for (let index = 1; index < list[4].length; index++) {
+				// 		if (this.min > parseInt(list[4][index])) this.min = parseInt(list[4][index]);
+				// 		if (this.max <= parseInt(list[4][index])) this.max = parseInt(list[4][index]);
+				// 	}
+				// }
+
 				this.score_type = list[5].join(","); //分数线——字符串
 			},
 			//获取按钮内容
@@ -413,6 +461,7 @@
 					if (response.code == 0) {
 						let res = response.result;
 						that.collegeInform[0].cities = res.type;
+						// console.log(res.type)
 						that.collegeInform[1].cities = res.direction;
 						that.collegeInform[3].cities = res.pattern;
 						that.collegeInform[5].cities = res.socre;
