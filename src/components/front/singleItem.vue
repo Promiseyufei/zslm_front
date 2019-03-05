@@ -1,11 +1,11 @@
 <template>
     <div style="padding:0 20px;">
-        <div :id="back(this.backData)" class="singleItemName" @click="showInform" >
+        <div :id="back(this.backData)" class="singleItemName" @click="showInform" :style="{'backgroundColor':i == 0?'#009fa0':'#fff'}">
             <div>
-                <h1 style="color:rgb(111, 111, 111);" :id="title(this.titleData)">{{deta.project_name}}</h1>
-                <p :id="p(this.pData)">非全日制</p>
+                <h1 style="color:rgb(111, 111, 111);" :id="title(this.titleData)" :style="{'color':i == 0?'#fff':'#6f6f6f'}">{{deta.project_name}}</h1>
+                <p :id="p(this.pData)" :style="{'color':i == 0?'#fff':'#6f6f6f'}">{{deta.recruitment_pattern}}</p>
             </div>
-            <div><i class="el-icon-arrow-down" :id="icon(this.upData)" style="color: #a2a2a2;"></i></div>
+            <div><i class="el-icon-arrow-down" :id="icon(this.upData)" :style="{'color':i == 0?'#fff':'#a2a2a2'}"></i></div>
         </div>
         <div class="singleItemDetail" v-show="singleItemDetail">
             <div class="left">
@@ -86,6 +86,8 @@ export default {
             titleData:this.i,
             deta:this.detail,
             singleItemDetail:false,
+            showContent:'block',
+            hideContent:'none',
             // itemInformLeft:[
             //     {itemName:'项目费用',src:require("../../assets/img/smoney.png")},
             //     {itemName:'招生名额',src:require("../../assets/img/friends.png")},
@@ -118,12 +120,14 @@ export default {
         icon:function(index){
                 return "icon_" +this.upData
         },
+
         //点击单个项目标题
         showInform:function() {
             let h = $("#title_"+this.titleData);
             let p = $("#p_"+this.pData);
             let back = $("#back_"+this.backData);
             let icon = $("#icon_"+this.upData);
+
             if (!this.singleItemDetail) {
                 this.singleItemDetail = true;
                 //动态id——标题样式改变
@@ -149,7 +153,10 @@ export default {
 
     },
     mounted(){
-        
+      if(this.i == 0){
+        this.singleItemDetail =true;
+      }
+
     },
 }
 </script>
@@ -160,7 +167,15 @@ export default {
         font-weight: bold;
         color: #a2a2a2;
     }
-    
+
+    .showContent{
+      display: block;
+    }
+
+    .hideContent{
+      display: none;
+    }
+
 </style>
 
 <style scoped>
@@ -181,7 +196,7 @@ export default {
     .informationTwo {
         width: 70px;
         line-height: 22px;
-        margin: 0 10px 0; 
+        margin: 0 10px 0;
         color: rgb(110, 110, 110);
         font-size: 14px;
     }
@@ -229,7 +244,7 @@ export default {
 
      /** PC **/
     @media only screen and (min-width: 1024px) and (max-width:1300px) {
-        
+
 
     }
     /** iPad **/
@@ -274,12 +289,12 @@ export default {
         }
         .singleItemDetail {
             width: 100%;
-            padding-left: 0; 
+            padding-left: 0;
         }
         .singleItemName {
             width: 100%;
             padding: 0;
         }
-        
+
     }
 </style>
