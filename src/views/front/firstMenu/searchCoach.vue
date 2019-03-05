@@ -44,10 +44,10 @@
 							</div>
 							<span @click="jump(item.id)">{{item.coach_name}}</span>
 							<div class="singlecoachHoverbig">
-								<div class="singlecoachHoverbox" :class="index%4==2||index%4==3 ? 'activeClass' : ''">
+								<div class="singlecoachHoverbox" :class="[index%4==2||index%4==3 ? 'activeClass' : '',item.son_coachs.length > 0?'maxWidth':'minWidth']">
 									<div class="singlecoachHover" v-if="index%4==0||index%4==1" @click="jump(item.id)">
 										<div class="singlecoachtop2">
-											<img :src="item.logo_name" alt="">
+											<img :src="item.logo_white" alt="">
 										</div>
 										<div class="singlecoachspan">
 											<span>{{item.coach_name}}</span>
@@ -57,7 +57,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="littleCollage2" v-if="index%4==2||index%4==3">
+									<div class="littleCollage2" v-if="index%4==2||index%4==3" v-show="item.son_coachs.length > 0">
 										<p class="coachHeader">{{item.son_coachs.length}}个分校</p>
 										<div class="coachLittle">
 											<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
@@ -68,7 +68,7 @@
 									</div>
 									<div class="singlecoachHover" v-if="index%4==2||index%4==3" @click="jump(item.id)">
 										<div class="singlecoachtop2">
-											<img :src="item.logo_name" alt="">
+											<img :src="item.logo_white" alt="">
 										</div>
 										<div class="singlecoachspan">
 											<span>{{item.coach_name}}</span>
@@ -78,7 +78,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="littleCollage" v-if="index%4==0||index%4==1">
+									<div class="littleCollage" v-if="index%4==0||index%4==1" v-show="item.son_coachs.length > 0">
 										<p class="coachHeader">{{item.son_coachs.length}}个分校</p>
 										<div class="coachLittle">
 											<div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
@@ -112,7 +112,7 @@
 				loading: false, //加载小圈圈
 				pageNumber: 1,
 				count: 1234,
-				pageCount: 12,
+				pageCount: 20,
 				load: 0,
 				tags: [
 					[],
@@ -121,46 +121,143 @@
 				],
 				list: [{
 						type: "热门地区",
-						cities: [{
-								name: "北京",
-							},
-							{
-								name: "天津",
-							},
-							{
-								name: "上海",
-							},
-							{
-								name: "重庆",
-							},
-							{
-								name: "山西",
-							},
-							{
-								name: "台湾",
-							},
-							{
-								name: "辽宁",
-							},
-							{
-								name: "吉林",
-							},
-							{
-								name: "黑龙江",
-							},
-							{
-								name: "江苏",
-							},
-							{
-								name: "浙江",
-							},
-							{
-								name: "安徽",
-							},
-							{
-								name: "江西",
-							}
-						],
+            cities: [{
+              id: 1,
+              name: "北京"
+            },
+              {
+                id: 2,
+                name: "天津"
+              },
+              {
+                id: 3,
+                name: "上海"
+              },
+              {
+                id: 4,
+                name: "重庆"
+              },
+              {
+                id: 5,
+                name: "河北"
+              },
+              {
+                id: 6,
+                name: "山西"
+              },
+              // {
+              // 	id: 7,
+              // 	name: "台湾"
+              // },
+              {
+                id: 8,
+                name: "辽宁"
+              },
+              {
+                id: 9,
+                name: "吉林"
+              },
+              {
+                id: 10,
+                name: "黑龙江"
+              },
+              {
+                id: 11,
+                name: "江苏"
+              },
+              {
+                id: 12,
+                name: "浙江"
+              },
+              {
+                id: 13,
+                name: "安微"
+              },
+              {
+                id: 14,
+                name: "福建"
+              },
+              {
+                id: 15,
+                name: "江西"
+              },
+              {
+                id: 16,
+                name: "山东"
+              },
+              {
+                id: 17,
+                name: "河南"
+              },
+              {
+                id: 18,
+                name: "湖北"
+              },
+              {
+                id: 19,
+                name: "湖南"
+              },
+              {
+                id: 20,
+                name: "广东"
+              },
+              {
+                id: 21,
+                name: "甘肃"
+              },
+              {
+                id: 22,
+                name: "四川"
+              },
+              {
+                id: 23,
+                name: "贵州"
+              },
+              {
+                id: 24,
+                name: "海南"
+              },
+              {
+                id: 25,
+                name: "云南"
+              },
+              {
+                id: 26,
+                name: "青海"
+              },
+              {
+                id: 27,
+                name: "陕西"
+              },
+              {
+                id: 28,
+                name: "广西"
+              },
+              {
+                id: 29,
+                name: "西藏"
+              },
+              {
+                id: 30,
+                name: "宁夏"
+              },
+              {
+                id: 31,
+                name: "新疆"
+              },
+              {
+                id: 32,
+                name: "内蒙古"
+              },
+              // {
+              // 	id: 33,
+              // 	name: "澳门"
+              // },
+              // {
+              // 	id: 34,
+              // 	name: "香港"
+              // },
+            ], //所有专业类型的id数组
 						fif: "更多地区"
 					},
 					{
@@ -217,9 +314,9 @@
 					if (temp == -1) {
 						continue;
 					} else {
-						
+
 						this.tags[index].splice(this.tags[index].indexOf(tag), 1);
-					
+
 					}
 				}
 				this.change(this.tags)
@@ -299,7 +396,7 @@
 					if_back: back,
 					if_coupon: coach,
 					page: that.pageNumber,
-					page_size: 12
+					page_size: that.pageCount
 				}).then(function(res) {
 					that.loading = false;
 					// console.log(res);
@@ -467,7 +564,7 @@
 		display: flex;
 		justify-content: flex-start;
 		background-color: rgba(56, 59, 61, 0.95);
-		width: 955px;
+		/*width: 955px;*/
 		top: 0;
 		left: 0;
 		z-index: 2;
@@ -575,6 +672,15 @@
 	.singlecoachspan>span>img {
 		margin-left: 10px;
 	}
+
+  .maxWidth{
+    width: 955px;
+  }
+
+  .minWidth{
+    width: auto;
+    left: 0px;
+  }
 
 	/* Large devices (laptops/desktops, 992px and up) */
 	@media only screen and (max-width: 992px) {
