@@ -1,60 +1,63 @@
 <template>
     <div>
-        <div style="overflow-x:hidden;background-color:#f5f5f5;">
-            <hearderBanner ref="header" enName="COLLEGES" name="选院校"></hearderBanner>
-            <div class="selectCollege">
-                <div class="selectCollegeSearch">
-                    <el-input placeholder="请输入院校名称" suffix-icon="el-icon-search" v-model="z_name"
-                              @blur.prevent="search">
-                    </el-input>
-                </div>
-            </div>
-            <selectAll ref="select" :checkboxGroup1="checkboxGroup" :list="collegeInform" @change="change"></selectAll>
-            <div class="tagSort">
-                <div class="tag">
-                    <span>选院校 &gt;</span>
-                    <tags :tags="selectData" @handleClose="handleClose"></tags>
-                </div>
-                <div class="sort">
-                    <div class="paixu" id="paixu" style="color: #009fa0;" @click="paixu">默认排序</div>
-                    <div class="hot" @click="changeHot">
-                        <div>热度</div>
-                        <div class="topBott">
-                            <i style="color: #bfbfbf;" class="el-icon-caret-top" id="hotTop"></i>
-                            <i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="hotBottom"></i>
-                        </div>
+        <div v-loading="all_loading">
+            <div style="overflow-x:hidden;background-color:#f5f5f5;">
+                <hearderBanner ref="header" enName="COLLEGES" name="选院校"></hearderBanner>
+                <div class="selectCollege">
+                    <div class="selectCollegeSearch">
+                        <el-input placeholder="请输入院校名称" suffix-icon="el-icon-search" v-model="z_name"
+                                  @blur.prevent="search">
+                        </el-input>
                     </div>
-                    <div class="publicMoney" @click="changeMoney">
-                        <div class="publicCost">费用</div>
-                        <div class="topBott">
-                            <i style="color: #bfbfbf;" class="el-icon-caret-top" id="moneyTop"></i>
-                            <i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="moneyBottom"></i>
-                        </div>
-                    </div>
-                    <div class="countMajor">共{{ this.count }}所院校</div>
                 </div>
-            </div>
-            <div class="buttonCollege"></div>
-            <div class="diffeCollege">
-                <el-col :span="8">
-                    <el-card shadow="hover">
-                        <!-- 每个院校情况组件 -->
-                        <selectCollegeItem v-for="(all, index) in majorInform" :key="index" :collegeInfo="all"
-                                           @getViewIcon="getView"
-                                           :missPorduct="missPorduct"></selectCollegeItem>
-                        <!-- 每个院校情况组件 -->
-                    </el-card>
-                </el-col>
-            </div>
+                <selectAll ref="select" :checkboxGroup1="checkboxGroup" :list="collegeInform"
+                           @change="change"></selectAll>
+                <div class="tagSort">
+                    <div class="tag">
+                        <span>选院校 &gt;</span>
+                        <tags :tags="selectData" @handleClose="handleClose"></tags>
+                    </div>
+                    <div class="sort">
+                        <div class="paixu" id="paixu" style="color: #009fa0;" @click="paixu">默认排序</div>
+                        <div class="hot" @click="changeHot">
+                            <div>热度</div>
+                            <div class="topBott">
+                                <i style="color: #bfbfbf;" class="el-icon-caret-top" id="hotTop"></i>
+                                <i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="hotBottom"></i>
+                            </div>
+                        </div>
+                        <div class="publicMoney" @click="changeMoney">
+                            <div class="publicCost">费用</div>
+                            <div class="topBott">
+                                <i style="color: #bfbfbf;" class="el-icon-caret-top" id="moneyTop"></i>
+                                <i style="color: #bfbfbf;" class="el-icon-caret-bottom" id="moneyBottom"></i>
+                            </div>
+                        </div>
+                        <div class="countMajor">共{{ this.count }}所院校</div>
+                    </div>
+                </div>
+                <div class="buttonCollege"></div>
+                <div class="diffeCollege">
+                    <el-col :span="8">
+                        <el-card shadow="hover">
+                            <!-- 每个院校情况组件 -->
+                            <selectCollegeItem v-for="(all, index) in majorInform" :key="index" :collegeInfo="all"
+                                               @getViewIcon="getView"
+                                               :missPorduct="missPorduct"></selectCollegeItem>
+                            <!-- 每个院校情况组件 -->
+                        </el-card>
+                    </el-col>
+                </div>
 
+            </div>
+            <!-- 分页 -->
+            <div class="page">
+                <pcPhonePage :loading="loading" :currentPage="page" :totalData="count" :size="page_size"
+                             @use="changePageNum"
+                             @getPage="getPage"></pcPhonePage>
+            </div>
+            <!-- 分页 -->
         </div>
-        <!-- 分页 -->
-        <div class="page">
-            <pcPhonePage :loading="loading" :currentPage="page" :totalData="count" :size="page_size"
-                         @use="changePageNum"
-                         @getPage="getPage"></pcPhonePage>
-        </div>
-        <!-- 分页 -->
     </div>
 </template>
 
@@ -64,7 +67,8 @@
         data() {
             return {
                 //加载更多
-                loading: false,
+                all_loading: false, //该页面全局loading
+                loading: false,//加载小圈圈
                 selectData: [], //tags数组
                 collegeInform: [{
                     type: '专业类型',
@@ -175,15 +179,18 @@
                 /*院校信息*/
                 u_id: 1,
                 id: 1,
+                load: 0,
                 majorBanner: {}
             }
         },
         methods: {
             //手机端加载更多
+
             getPage: function () {
                 this.loading = true;
                 this.page++;
-                this.getmajorInform(0);
+                this.load = 1;
+                this.getmajorInform();
             },
 
             // 点击筛选块-从组件中获取选中结果
@@ -333,6 +340,7 @@
             //获得院校信息
             getmajorInform: function () {
                 let that = this;
+                this.all_loading = true;
                 this.fetch('/front/colleges/getmajor', {
                     //搜索内容fetc
                     z_name: that.z_name,
@@ -349,16 +357,20 @@
                     page: that.page,
                     page_size: that.page_size,
                 }).then(function (response) {
+                    that.loading = false;
                     if (response.code == 0) {
                         // console.log(response)
                         let res = response.result.list;
                         that.count = response.result.count;
-                        that.majorInform = res;
+
+                        if (that.load == 1)
+                            that.majorInform = that.majorInform.concat(res);
+                        else
+                            that.majorInform = res;
+
                         that.majorInform.forEach((item, index) => {
                             that.majorInform[index].showProduct = item.product.slice(0, 3);
                             that.majorInform[index].missPorduct = item.product.slice(3);
-                            // if (that.majorInform[index].missPorduct==0) {
-                            // }
                             that.missPorduct = that.majorInform[index].missPorduct;
                         });
 
@@ -367,8 +379,11 @@
                         that.count = 0;
                         that.majorInform = [];
                     }
-
-                })
+                    that.all_loading = false;
+                }).catch((error)=>{
+                    that.message(true, "出错了，请刷新一下", 'error')
+                    that.all_loading = false;
+                });
             },
             //默认排序
             paixu: function () {
@@ -1578,7 +1593,7 @@
         }
 
         .buttonCollege {
-            width: 90% ；
+            width: 90%;
         }
 
         .div_v60iAm {
@@ -1868,7 +1883,7 @@
         }
 
         .buttonCollege {
-            width: 90% ；
+            width: 90%;
         }
 
         .viewMore {

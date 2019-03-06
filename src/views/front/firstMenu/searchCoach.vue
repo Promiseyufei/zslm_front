@@ -44,10 +44,10 @@
               </div>
               <span @click="jump(item.id)">{{item.coach_name}}</span>
               <div class="singlecoachHoverbig">
-                <div class="singlecoachHoverbox" :class="index%4==2||index%4==3 ? 'activeClass' : ''">
+                <div class="singlecoachHoverbox" :class="[index%4==2||index%4==3 ? 'activeClass' : '',item.son_coachs.length > 0?'maxWidth':'minWidth']">
                   <div class="singlecoachHover" v-if="index%4==0||index%4==1" @click="jump(item.id)">
                     <div class="singlecoachtop2">
-                      <img :src="item.logo_name" alt="">
+                      <img :src="item.logo_white" alt="">
                     </div>
                     <div class="singlecoachspan">
                       <span>{{item.coach_name}}</span>
@@ -57,7 +57,7 @@
 											</span>
                     </div>
                   </div>
-                  <div class="littleCollage2" v-if="index%4==2||index%4==3">
+                  <div class="littleCollage2" v-if="index%4==2||index%4==3" v-show="item.son_coachs.length > 0">
                     <p class="coachHeader">{{item.son_coachs.length}}个分校</p>
                     <div class="coachLittle">
                       <div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
@@ -68,7 +68,7 @@
                   </div>
                   <div class="singlecoachHover" v-if="index%4==2||index%4==3" @click="jump(item.id)">
                     <div class="singlecoachtop2">
-                      <img :src="item.logo_name" alt="">
+                      <img :src="item.logo_white" alt="">
                     </div>
                     <div class="singlecoachspan">
                       <span>{{item.coach_name}}</span>
@@ -78,7 +78,7 @@
 											</span>
                     </div>
                   </div>
-                  <div class="littleCollage" v-if="index%4==0||index%4==1">
+                  <div class="littleCollage" v-if="index%4==0||index%4==1" v-show="item.son_coachs.length > 0">
                     <p class="coachHeader">{{item.son_coachs.length}}个分校</p>
                     <div class="coachLittle">
                       <div class="coachLittleshort" v-for="(list,dd) in item.son_coachs" :key="dd">
@@ -111,8 +111,8 @@
         all_loading: false, //该页面全局loading
         loading: false, //加载小圈圈
         pageNumber: 1,
-        count: 1234,
-        pageCount: 12,
+        count: 0,
+        pageCount: 20,
         load: 0,
         tags: [
           [],
@@ -146,7 +146,6 @@
             ],
             fif: "更多特权"
           }
-
         ],
         checkboxGroup1: [
           [],
@@ -163,16 +162,16 @@
         this.pageNumber = currentPage2;
         this.getCoach();
       },
+
       getPage: function() {
         this.loading = true;
         this.pageNumber++;
         this.load = 1;
         this.getCoach();
       },
+
       //标签栏，点击标签，删除标签
       handleClose(tag) {
-
-
         for (let index = 0; index < this.tags.length; index++) {
           var temp = this.tags[index].indexOf(tag);
 
@@ -257,7 +256,9 @@
             coach = 0;
           }
         }
+
         this.all_loading = true;
+
         this.fetch('/front/coach/getcoach', {
           provice: str.substring(0,str.length-1),
           coach_type: type,
@@ -265,17 +266,19 @@
           if_back: back,
           if_coupon: coach,
           page: that.pageNumber,
-          page_size: 12
+          page_size: that.pageCount
         }).then(function(res) {
           that.loading = false;
           // console.log(res);
           if (res.code == 0) {
+            that.count = res.result[1];
+            console.log(that.count);
+
             if (that.load == 1) {
               that.coachlist = that.coachlist.concat(res.result[0]);
             } else {
               that.coachlist = res.result[0];
             }
-            that.count = res.result[1];
           } else {
             that.coachlist = [];
             that.count = 0;
@@ -283,7 +286,7 @@
           }
           that.all_loading = false;
         }).catch(function(error) {
-          that.message(true, rerror, "error");
+          that.message(true, error, "error");
           that.all_loading = false;
         });
       },
@@ -327,6 +330,7 @@
     },
     mounted() {
       this.getCoach();
+
       this.getBanner();
       this.getRegion();
       this.$refs.header.setImg();
@@ -447,7 +451,7 @@
     display: flex;
     justify-content: flex-start;
     background-color: rgba(56, 59, 61, 0.95);
-    width: 955px;
+    /*width: 955px;*/
     top: 0;
     left: 0;
     z-index: 2;
@@ -555,10 +559,27 @@
     margin-left: 10px;
   }
 
+  .maxWidth{
+    width: 955px;
+  }
+
+  .minWidth{
+    width: auto;
+    left: 0px;
+  }
+
   /* Large devices (laptops/desktops, 992px and up) */
   @media only screen and (max-width: 992px) {
     .activitypage {
       display: none;
+    }
+  }
+
+  /** iPhone **/
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    .singlecoach{
+      width: 90%;
+      margin: 10px auto;
     }
   }
 </style>

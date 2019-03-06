@@ -17,7 +17,7 @@
         <el-pagination
           background
           layout="prev, pager, next"
-          :total="totalData"
+          :total="totalData2"
           :current-page="currentPage2"
           @current-change="handleCurrentChange"
           :page-size="size"
@@ -39,7 +39,8 @@ export default {
             // totalData2: this.totalData,
             disabled:false,
             loadingBtnText:'加载更多',
-            count:1
+            count:1,
+            totalData2: this.totalData,
         };
     },
 
@@ -54,8 +55,8 @@ export default {
         getPage(){
             // 当前页*每页显示个数 >= 总数 时加载全部结束
             this.count = this.count+1;
-            console.log(this.count)
-            if(this.count*this.size >= this.totalData){
+            // console.log(this.count)
+            if(this.count*this.size >= this.totalData2){
                 this.disabled = true;
                 this.loadingBtnText = "————我是有底线的————";
                 this.count = 1;
@@ -65,7 +66,10 @@ export default {
     },
     mounted(){
         //刚开始是否已经加载完
-        if(this.count*this.size >= this.totalData){
+        console.log(this.count);
+        console.log(this.size);
+        console.log(this.totalData2);
+        if(this.count*this.size >= this.totalData2){
             this.disabled = true;
             this.loadingBtnText = "————我是有底线的————";
             this.count = 1;
@@ -76,6 +80,13 @@ export default {
         handler(val) {
           // console.log(val);
           this.currentPage2 = val;
+        }
+      },
+      totalData:{
+        handler(val) {
+          console.log(1111);
+          console.log(val);
+          this.totalData2 = val;
         }
       }
 
