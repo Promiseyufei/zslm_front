@@ -267,7 +267,7 @@
                 }
             },
         },
-        props:["collegeInfo","followId","confirmId","missPorduct"],//需要传一个数组
+        props:["collegeInfo","missPorduct"],//需要传一个数组
         mounted() {
             this.info();
             //是否显示查看更多
