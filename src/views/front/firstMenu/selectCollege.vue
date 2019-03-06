@@ -157,7 +157,7 @@
 				project_count: 0,
 				page: 1,
 				page_size: 20,
-				count: 10,
+				count: 10000,
 				productShow: false,
 				/*按钮参数*/
 				viewMoreButt: '查看更多',
@@ -176,6 +176,7 @@
 				/*院校信息*/
 				u_id: 1,
 				id: 1,
+        load: 0,
 				majorBanner: {}
 			}
 		},
@@ -184,7 +185,8 @@
 			getPage: function() {
 				this.loading = true;
 				this.page++;
-				this.getmajorInform(0);
+				this.load = 1;
+				this.getmajorInform();
 			},
 
 			// 点击筛选块-从组件中获取选中结果
@@ -344,11 +346,22 @@
 					page: that.page,
 					page_size: that.page_size,
 				}).then(function(response) {
+          that.loading = false;
+
+
 					if (response.code == 0) {
 						// console.log(response)
 						let res = response.result.list;
 						that.count = response.result.count;
-						that.majorInform = res;
+
+            if (that.load == 1) {
+              that.majorInform = that.majorInform.concat(res);
+            } else {
+              that.majorInform = res;
+            }
+
+						// console.log(res);
+
 						that.majorInform.forEach((item, index) => {
 							that.majorInform[index].showProduct = item.product.slice(0, 3);
 							that.majorInform[index].missPorduct = item.product.slice(3);
@@ -358,6 +371,7 @@
 						});
 						that.major_confirm_id = res[0].major_confirm_id;
 						that.major_follow_id = res[0].major_follow_id;
+
 					} else {
 
 						that.count = 0;
@@ -366,10 +380,10 @@
 						that.major_follow_id = '';
 					}
 
-          this.all_loading = false;
+          that.all_loading = false;
 				}).catch((error)=>{
 				  console.log(error);
-          this.all_loading = false;
+          that.all_loading = false;
         });
 			},
 			//默认排序
@@ -512,13 +526,13 @@
 					that.$refs.header.setJudgeUlr(response.result.re_url);
 				}
 			})
-			this.getmajorInform();
+
 			this.getMajorDirection();
 			this.getRegion();
 			this.getMajorType();
 			this.getRecruitmentPattern();
 			this.getFractionType();
-
+      this.getmajorInform();
 		},
 		created() {
 			this.changeTile('选院校 | 管理类专硕招生信息大全：MBA、MPA、MPAcc、MEM、MAud、MTA、MLIS')

@@ -111,7 +111,7 @@
         all_loading: false, //该页面全局loading
         loading: false, //加载小圈圈
         pageNumber: 1,
-        count: 1234,
+        count: 0,
         pageCount: 20,
         load: 0,
         tags: [
@@ -146,7 +146,6 @@
             ],
             fif: "更多特权"
           }
-
         ],
         checkboxGroup1: [
           [],
@@ -163,6 +162,7 @@
         this.pageNumber = currentPage2;
         this.getCoach();
       },
+
       getPage: function() {
         this.loading = true;
         this.pageNumber++;
@@ -172,8 +172,6 @@
 
       //标签栏，点击标签，删除标签
       handleClose(tag) {
-
-
         for (let index = 0; index < this.tags.length; index++) {
           var temp = this.tags[index].indexOf(tag);
 
@@ -273,12 +271,14 @@
           that.loading = false;
           // console.log(res);
           if (res.code == 0) {
+            that.count = res.result[1];
+            console.log(that.count);
+
             if (that.load == 1) {
               that.coachlist = that.coachlist.concat(res.result[0]);
             } else {
               that.coachlist = res.result[0];
             }
-            that.count = res.result[1];
           } else {
             that.coachlist = [];
             that.count = 0;
@@ -286,7 +286,7 @@
           }
           that.all_loading = false;
         }).catch(function(error) {
-          that.message(true, rerror, "error");
+          that.message(true, error, "error");
           that.all_loading = false;
         });
       },
@@ -330,6 +330,7 @@
     },
     mounted() {
       this.getCoach();
+
       this.getBanner();
       this.getRegion();
       this.$refs.header.setImg();
