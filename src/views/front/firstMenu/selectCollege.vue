@@ -84,7 +84,7 @@
 							id: 0,
 							name: ''
 						}], //所有专业类型的id数组
-						"fif": "查看更多"
+						fif: "查看更多"
 					},
 					{
 						type: '学习费用',
@@ -117,12 +117,12 @@
 							// 	name:'30万及以上'
 							// }
 						], //所有专业类型的id数组
-						"fif": "查看更多"
+						fif: "查看更多"
 					},
 					{
 						type: '分数线',
 						cities: [], //所有专业类型的id数组
-						"fif": "查看更多"
+						fif: "查看更多"
 					},
 				],
 				checkboxGroup_region_index: 2,
@@ -182,18 +182,18 @@
 				this.page++;
 				this.getmajorInform(0);
 			},
+
 			// 点击筛选块-从组件中获取选中结果
 			change(data) {
-
 				this.page = 1;
 				this.getAllCollege(data);
 			},
-			getAllCollege(data) {
 
+			getAllCollege(data) {
 				this.selectData = data;
 
 
-				let city = this.selectData[this.checkboxGroup_region_index];
+				/*let city = this.selectData[this.checkboxGroup_region_index];
 
 				if (Array.isArray(city) && city.length == 0) {
 
@@ -207,7 +207,7 @@
 					this.selectData[this.checkboxGroup_region_index][0] = [];
 					this.selectData[this.checkboxGroup_region_index][0].id = city.id;
 					this.selectData[this.checkboxGroup_region_index][0].id = city.name;
-				}
+				}*/
 
 
 				// 				if(city.name == undefined){
@@ -216,11 +216,10 @@
 				// 					this.$refs.select.checkboxGroup[this.checkboxGroup_region_index] = []
 				// 				}
 
-				// 				this.getselt();
-				// 				this.getmajorInform();
+								this.getselt();
+								this.getmajorInform();
 			},
 			handleClose(tag) {
-
 				for (let index = 0; index < this.selectData.length; index++) {
 					var temp = this.selectData[index].indexOf(tag);
 					if (temp == -1) {
@@ -238,7 +237,8 @@
 				for (var i = 0; i < this.selectData.length; i++) {
 					var little = [];
 					for (var j = 0; j < this.selectData[i].length; j++) {
-						if (i == 4 || i == 2) {
+						// if (i == 4 || i == 2) {
+						if (i == 4) {
 							little.push(this.selectData[i][j].name);
 							// little.push(this.selectData[i][j].name);
 
@@ -248,17 +248,50 @@
 					}
 					list.push(little);
 				}
+
+				console.log(list);
+
 				this.z_type = list[0].join(","); //专业类型——字符串
 				this.professional_direction = list[1].join(","); //专业方向——字符串
 
 				this.provice = list[2]; //院校地点——字符串
 				this.enrollment_mode = list[3].join(","); //统招模式——字符串
+
+
+        let num = [];
+        if(list[4].length > 0) {
+          for (var i = 0; i < list[4].length; i++) {
+            var n = list[4][i].split('-');
+
+            for (var j = 0; j < n.length; j++) {
+              num.push(parseInt(n[j]));
+            }
+          }
+        }
+
+        // console.log(num);
+
 				this.max = list[4]; //学习费用——int
 				// console.log(list[4])
 				if (list[4].length > 0 && list[4].length == 1) {
-					this.min = 0;
-					this.max = parseInt(list[4][0]);
-				} else if (list[4].length > 0 && list[4].length == 2) {
+
+				  if(num[0] > 10){
+            this.min = Math.max.apply(null, num);
+            this.max = 100;
+          }else{
+            this.min = 0;
+            this.max = Math.max.apply(null, num);
+          }
+
+				}else if(list[4].length > 0){
+          this.min = Math.min.apply(null, num);
+          this.max = Math.max.apply(null, num);
+        }
+
+				// console.log(this.min);
+				// console.log(this.max);
+
+				/*else if (list[4].length > 0 && list[4].length == 2) {
 					this.min = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][1]) : parseInt(list[4][0]);
 					this.max = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][0]) : parseInt(list[4][1]);
 				} else if (list[4].length > 2) {
@@ -267,7 +300,8 @@
 						if (this.min > parseInt(list[4][index])) this.min = parseInt(list[4][index]);
 						if (this.max <= parseInt(list[4][index])) this.max = parseInt(list[4][index]);
 					}
-				}
+				}*/
+
 				this.score_type = list[5].join(","); //分数线——字符串
 			},
 
