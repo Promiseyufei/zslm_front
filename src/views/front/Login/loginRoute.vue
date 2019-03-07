@@ -44,7 +44,7 @@
     					<el-input v-model="smsCode" placeholder="验证码"></el-input>
     					<el-button type="success" :disabled="disabled" @click="sendcode">{{btntxt}}</el-button>
     				</div>
-    				<div class="mobileLogin"><el-button type="success" @click="loginTest">登录</el-button></div>
+    				<div class="mobileLogin"><el-button type="success" @click="phoneLogin">登录</el-button></div>
     			</div>
     		</div>
     	</div>
@@ -76,6 +76,10 @@
 			}
 		},
 		methods:{
+			phoneLogin() {
+				this.active = 2;
+				this.loginTest();
+			},
 			//获取验证码方法
 			sendcode:function(){
             	if(this.$store.state.userInfo['userPhone'] == ''){

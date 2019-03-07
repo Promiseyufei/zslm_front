@@ -38,8 +38,8 @@
                 <div class="row_right row_padding">
                     <searchSearchInput :keyword="keyword" @changeKeyword="getKeyword"></searchSearchInput>
 
-                    <div class="advertisement">
-                        <img src="../../../assets/img/advertisement.png" alt="">
+                    <div class="advertisement" @click="jumpStudent">
+                        <img src="../../../assets/img/advertisement.png" alt="招生简章">
                     </div>
                     <!-- <div class="advertisement">
                         <img src="../../../assets/img/advertisementB.png" alt="">
@@ -74,6 +74,12 @@ export default {
         }
     },
     methods: {
+        jumpStudent: function() {
+            let routeUrl = this.$router.resolve({
+                path:'/front/firstMenuRouter/recruitStudents',
+            });
+            window.open(routeUrl.href, '_blank');
+        },
         jump(zxId) {
             // console.log(zxId);return false;
             this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + zxId.id);

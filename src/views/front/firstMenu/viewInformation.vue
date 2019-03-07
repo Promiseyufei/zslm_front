@@ -163,10 +163,13 @@
 			 * 找生简章
 			 * */
 			jumpStudent: function() {
-				this.$router.push({
-					path: '/front/firstMenuRouter/recruitStudents'
+				let routeUrl = this.$router.resolve({
+					path:'/front/firstMenuRouter/recruitStudents',
 				});
-        // window.open(document.location.origin+'/#/front/firstMenuRouter/recruitStudents' , '_blank');
+				window.open(routeUrl.href, '_blank');
+				// this.$router.push({
+				// 	path: '/front/firstMenuRouter/recruitStudents'
+				// });
 			},
 			/*
 			 * 推荐阅读刷新
