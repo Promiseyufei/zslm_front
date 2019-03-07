@@ -177,7 +177,6 @@
                 var objs = this.getMajors()
                 var obj_arr = objs == ""?[]: JSON.parse(this.getMajors());
 
-                // console.log(this.colleges);
 
                 if(obj_arr != null && obj_arr.length == 4){
                     this.message(true,"对比列表已满", 'info');
@@ -273,7 +272,6 @@
             this.info();
             //是否显示查看更多
             if (this.collegeInfo.product.length == 0) {
-                // console.log(this.missPorduct)
                 this.viewMoreIcon = false;
             };
             //向父组件传参数
