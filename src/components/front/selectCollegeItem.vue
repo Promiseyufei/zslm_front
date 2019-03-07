@@ -191,6 +191,7 @@
                       for(var i = 0; i < obj_arr.length;i++){
                         if(obj_arr[i].id == this.collegeInfo.id){
                           this.message(true,"已经在对比列表里", 'info');
+                          this.colleges = obj_arr;
                           return true;
                         }
                       }
