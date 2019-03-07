@@ -310,6 +310,7 @@ export default {
       margin: 0 auto;
       padding-left: 0px;
       padding-right: 0px;
+      min-height: 25px;
     }
 }
 
