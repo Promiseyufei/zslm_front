@@ -33,7 +33,7 @@ export default {
             }
 		},
 		judgePage:function(){
-			window.open(this.url)
+			// window.open(this.url)
 		}
     },
     props:["enName","name", "banner"],
@@ -53,7 +53,7 @@ export default {
     height: 287px;
     background-position: 50% 50%;
     background-size: cover;
-    
+
 }
 .selectHeaderback>div {
     background-color: rgba(56,59,61,0.85);
