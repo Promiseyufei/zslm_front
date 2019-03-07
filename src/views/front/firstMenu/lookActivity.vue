@@ -16,12 +16,12 @@
 			<div class="activitySelt">
 				<selectAll :list='activitySelect' :checkboxGroup1='checkboxGroup' @change="change"></selectAll>
 				<div class="selectedTag">
-					<div class="selected">
+					<div class="selected" style="position: relative">
 						<div class="slectedLeft">
 							<span>选活动&gt;</span>
 							<tags :tags="seltData" @handleClose="handleClose"></tags>
 						</div>
-						<div>
+						<div style="position: absolute;right: 0;">
 							<span>共{{count}}场活动</span>
 						</div>
 					</div>

@@ -132,6 +132,8 @@ export default {
 @media (max-width: 767px) {
     .column_iVg8a1 {
         width: 100%;
+        padding-left: 0px;
+        padding-right: 10px;
     }
 }
 @media (max-width: 767px) {
@@ -157,6 +159,11 @@ export default {
 @media (max-width: 767px) {
     .heading_qcvvsp {
         font-size: 16px;
+    }
+
+    .image_LP7GSV.fudao {
+      height: 100%;
+      width: auto;
     }
 }
 

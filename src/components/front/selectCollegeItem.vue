@@ -1130,6 +1130,7 @@
             -webkit-box-pack: center;
             -ms-flex-pack: center;
             justify-content: center;
+          margin: 0 auto;
         }
 
         .div_ARD2As {
@@ -1149,6 +1150,7 @@
             -webkit-box-pack: center;
             -ms-flex-pack: center;
             justify-content: center;
+          margin: 20px auto;
         }
         .image_2pnGPP {
             margin-right: 5px;
@@ -1163,6 +1165,9 @@
         }
         .column_WvUK7W {
             margin-bottom: 10px;
+        }
+        .joinContrast{
+          margin: 0 auto;
         }
     }
 

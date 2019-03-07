@@ -1630,6 +1630,7 @@
             -webkit-box-pack: center;
             -ms-flex-pack: center;
             justify-content: center;
+          margin: 0 auto;
         }
 
         .div_ARD2As {

@@ -3,7 +3,7 @@
 		<div class="c-div div_lPV1oN guanzhu">
 			<div class="c-div div_BMsaOd guanzhu">
 				<div class="c-div div_ARD2As">
-					<div id="logo" class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" src="http://qty83k.creatby.com/materials/2771/origin/1f7fb8acff94af6f93a34de300842574_origin.png"
+					<div id="logo" class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill"
 					 style="background-size:  100% 100%; background-position:  0% 0%;
                          background-repeat:  no-repeat;
                        ">
@@ -695,6 +695,7 @@
 		-webkit-box-align: center;
 		-ms-flex-align: center;
 		align-items: center;
+    margin: 0 auto;
 	}
 
 	.heading_IH2VnY {
@@ -1121,7 +1122,7 @@
 
 			this.datas = this.data
 
-			let url = "http://www.lishanlei.cn/storage/admin/info/" + this.data.magor_logo_name;
+			let url = this.data.magor_logo_name;
 
 			document.getElementById("logo").style.backgroundImage = "url('" + url + "')";
 			if (this.datas.major_follow_id != null && this.datas.major_follow_id)

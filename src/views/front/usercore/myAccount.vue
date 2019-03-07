@@ -870,12 +870,6 @@
 		/* border: 1px solid #ccc; */
 	}
 
-	@media (max-width: 767px) {
-		.select_1BZvOz {
-			width: 100%;
-		}
-	}
-
 	.el-input {
 		width: auto !important;
 	}
@@ -894,4 +888,14 @@
 		border-right-style: none;
 		border-left-style: none;
 	}
+
+  @media (max-width: 767px) {
+    .select_1BZvOz {
+      width: 100%;
+    }
+
+    .select_1BZvOz.kuan {
+      width: 240px;
+    }
+  }
 </style>
