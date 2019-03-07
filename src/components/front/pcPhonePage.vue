@@ -84,9 +84,12 @@ export default {
       },
       totalData:{
         handler(val) {
-          console.log(1111);
-          console.log(val);
           this.totalData2 = val;
+          if(this.count*this.size <= this.totalData2){
+            this.disabled = false;
+            this.loadingBtnText = "加载更多";
+            this.count = 1;
+          }
         }
       }
 
