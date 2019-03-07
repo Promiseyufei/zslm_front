@@ -194,7 +194,7 @@ export default {
         font-size: 14px;
     }
     .informationTwo {
-        width: 70px;
+        width: 100px;
         line-height: 22px;
         margin: 0 10px 0;
         color: rgb(110, 110, 110);
@@ -292,8 +292,8 @@ export default {
             padding-left: 0;
         }
         .singleItemName {
-            width: 100%;
-            padding: 0;
+            width: 90%;
+            padding: 0 5%;
         }
 
     }
