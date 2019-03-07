@@ -346,6 +346,7 @@ export default {
         -webkit-box-pack: center;
         -ms-flex-pack: center;
         justify-content: center;
+        margin: 0 auto;
     }
 }
 @media (max-width: 767px) {
@@ -373,6 +374,7 @@ export default {
     .div_BMsaOd .button_LsM2yn123.duibi {
         margin-top: 26px;
         width: 100%;
+        margin-left: 60%;
     }
 }
 #btn_a:hover{
