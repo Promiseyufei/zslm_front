@@ -177,7 +177,6 @@
                 var objs = this.getMajors()
                 var obj_arr = objs == ""?[]: JSON.parse(this.getMajors());
 
-                // console.log(this.colleges);
 
                 if(obj_arr != null && obj_arr.length == 4){
                     this.message(true,"对比列表已满", 'info');
@@ -191,6 +190,7 @@
                       for(var i = 0; i < obj_arr.length;i++){
                         if(obj_arr[i].id == this.collegeInfo.id){
                           this.message(true,"已经在对比列表里", 'info');
+                          this.colleges = obj_arr;
                           return true;
                         }
                       }
@@ -267,12 +267,11 @@
                 }
             },
         },
-        props:["collegeInfo","followId","confirmId","missPorduct"],//需要传一个数组
+        props:["collegeInfo","missPorduct"],//需要传一个数组
         mounted() {
             this.info();
             //是否显示查看更多
             if (this.collegeInfo.product.length == 0) {
-                // console.log(this.missPorduct)
                 this.viewMoreIcon = false;
             };
             //向父组件传参数
@@ -483,8 +482,8 @@
         }
         .specificInform {
             margin: 0 auto 10px;
-            width: 200px;
-            height: 150px;
+            width: 290px;
+            /*height: 150px;*/
             padding: 30px 25px;
         }
         .diffeCollege .el-col-8 {
