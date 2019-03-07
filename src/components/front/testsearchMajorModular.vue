@@ -3,8 +3,8 @@
         <div class="c-div div_fFxH2L">
             <div class="div_BMsaOd">
                 <div class="div_ARD2As">
-                    <div class="c-inlineblock c-imageblock imageblock_VRWtPr" 
-                        mode="scaleToFill" :src="majorInfo.magor_logo_name" 
+                    <div class="c-inlineblock c-imageblock imageblock_VRWtPr"
+                        mode="scaleToFill" :src="majorInfo.magor_logo_name"
                         :style="'background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat; background-image: url('+ majorInfo.magor_logo_name +');'">
                     </div>
                     <div class="div_mnG0wo">
@@ -43,7 +43,7 @@ export default {
     },
     methods: {
         addContrast() {
-            
+
         }
     },
     mounted() {
@@ -257,6 +257,7 @@ export default {
     .div_BMsaOd .button_LsM2yn123.duibi {
         margin-top: 26px;
         width: 100%;
+        margin-left: 60%;
     }
 }
 

@@ -5,7 +5,8 @@
 			<!-- 循环出来列 -->
 			   <div class="publicRow" v-for="(item,index) in list" :key="index">
 			        <span>{{item.type}}</span>
-			        <nav class="publicRowRight" v-if="item.type != '院校地点' && item.type != '活动省市'">
+			        <!--<nav class="publicRowRight" v-if="item.type != '院校地点' && item.type != '活动省市'">-->
+			        <nav class="publicRowRight">
 			            <div ref="publiccheckbox">
 			                <el-checkbox :indeterminate="isIndeterminate[index]" v-model="checkAll[index]" @change="handleCheckAllChange(index)" :class="checkboxGroup[index]==''?'ff':'' ">全部</el-checkbox>
 			                <el-checkbox-group v-model="checkboxGroup[index]" @change="handleChange">
@@ -22,12 +23,12 @@
 			                <i class="el-icon-caret-bottom"></i>
 			            </p>
 			        </nav>
-					
-					<nav class="publicRowRight"  v-else>
+
+					<!--<nav class="publicRowRight"  v-else>
 						<div ref="publiccheckbox">
 							<el-checkbox :indeterminate="isIndeterminate[index]" v-model="checkAll[index]" @change="handleCheckAllChange(index)" :class="checkboxGroup[index]==''?'ff':'' ">全部</el-checkbox>
 							<el-radio-group v-model="checkboxGroup[index]" @change="handleChange">
-					
+
 								<el-radio-button v-for="(city,ind) in list[index].cities" :label="city" :key="ind">{{city.name}}</el-radio-button>
 							</el-radio-group>
 						</div>
@@ -39,11 +40,10 @@
 							<span>查看更多</span>
 							<i class="el-icon-caret-bottom"></i>
 						</p>
-					</nav>
+					</nav>-->
 			    </div>
 			</div>
 		</div>
-	</div>
 </template>
 
 <script>
@@ -86,7 +86,6 @@
 				if (a.offsetHeight == this.arrayh[index]) {
 					a.style.height = "46px";
 				} else {
-					
 					a.style.height = this.arrayh[index] + "px";
 				}
 				//    console.log(e.currentTarget.children[0].innerHTML);
@@ -95,8 +94,6 @@
 					"el-icon-caret-top" : "el-icon-caret-bottom";
 			},
 			deleteCheck:function(index){
-				// console.log(222)
-				// console.log(this.checkboxGroup)
 				this.checkboxGroup[index] = []
 			}
 		},
@@ -115,7 +112,7 @@
 				}, 1000);
 			});
 			// console.log(this.list);
-			
+
 		},
 		watch:{
 			checkboxGroup:function(){
@@ -159,10 +156,10 @@
 		color: #fff;
 	}
 
-	
+
 
 	.publicRowRight .el-radio-button__orig-radio:checked+.el-radio-button__inner {
-		
+
 		background-color: #ffb957 !important;
 		border-color: #ffb957 !important;
 		border-radius: 5px !important;
@@ -175,7 +172,7 @@
 	.publicRowRight .el-radio-button .el-radio-button__inner{
 		border: 0;
 	}
-	
+
 	.publicRowRight .el-radio-button__orig-radio:checked+.el-radio-button__inner:hover {
 		color: #fff;
 	}

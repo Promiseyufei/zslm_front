@@ -16,13 +16,9 @@
                                 <p class="head-paragraph">
                                     {{ item.content }}
                                 </p>
-                                <div class="icon-head">
-                                    <i class="fa fa-calendar position">
-                                        {{ item.time }}
-                                    </i>
-                                    <i class="fa fa-paper-plane">
-                                        {{ item.author }}
-                                    </i>
+                                <div class="icon-head" style="margin-top: 10px;color:#6f6f6f;">
+                                    <i class="fa fa-calendar position"></i>{{ item.time }}
+                                    <i class="fa fa-paper-plane position" style="margin-left: 10px;"></i>{{ item.author }}
                                 </div>
                             </div>
                         </div>
@@ -105,7 +101,7 @@
         color: rgb(72, 72, 72);
     }
     .head-paragraph{
-        height: 93px;
+        /*height: 93px;*/
         font-family: MicrosoftYaHei;
         font-size: 14px;
         font-weight: normal;
@@ -114,13 +110,16 @@
         letter-spacing: 0px;
         color: #6f6f6f;
     }
+    icon-head{
+      margin-top: 10px;
+    }
     .icon-head>i{
         color: #383b3d;
         opacity: 0.6;
         font-size: 14px;
     }
     .icon-head > .position{
-        margin-right: 27px;
+        margin-right: 10px;
     }
     @media (max-width: 991px){
         .content-son{
@@ -139,4 +138,12 @@
             margin-bottom: 17px;
         }
     }
+
+  @media (max-width: 767px) {
+    .content-whole-article{
+      margin-right: 0px;
+      margin-left: 0px;
+    }
+
+  }
 </style>

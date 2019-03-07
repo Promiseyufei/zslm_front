@@ -3,7 +3,7 @@
 
         <!-- 搜索页面导航 -->
         <!-- <div class="search_header" style="z-index:1;">
-            <search-header></search-header>    
+            <search-header></search-header>
         </div> -->
 
         <!-- 面包屑 -->
@@ -67,8 +67,8 @@ export default {
             information:[],
             names: [
                  {name:'院校', selected_prop_value:-1, url:'/front/firstMenuRouter/search/major'},
-                {name:'咨询', selected_prop_value:-1, url:'/front/firstMenuRouter/search/info'}, 
-                {name:'辅导', selected_prop_value:-1, url:'/front/firstMenuRouter/search/coach'}, 
+                {name:'咨询', selected_prop_value:-1, url:'/front/firstMenuRouter/search/info'},
+                {name:'辅导', selected_prop_value:-1, url:'/front/firstMenuRouter/search/coach'},
                 {name:'活动', selected_prop_value:-1, url:'/front/firstMenuRouter/search/activity'}
             ]
         }
@@ -95,7 +95,7 @@ export default {
                     this.information = response.result.info;
                 }
             })
-                
+
         },
         changeUrl(item) {
             this.$router.push(item.url + '/' + this.$store.state.search['keyword']);
@@ -137,10 +137,8 @@ export default {
     margin-left: auto;
 }
 .mianbao .container_tPJRDM {
-    width: 94%;
-    min-height: auto;
-    padding-left: 0px;
-    padding-right: 0px;
+    width: 1270px;
+    margin: 0 auto;
 }
 /* @media (max-width: 767px) {
     .container_tPJRDM {
@@ -305,6 +303,14 @@ export default {
     .advertisement {
         width: 100%;
         height: auto;
+    }
+
+  .mianbao .container_tPJRDM {
+      width: 93%;
+      margin: 0 auto;
+      padding-left: 0px;
+      padding-right: 0px;
+      min-height: 25px;
     }
 }
 
