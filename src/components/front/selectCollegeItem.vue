@@ -482,8 +482,8 @@
         }
         .specificInform {
             margin: 0 auto 10px;
-            width: 200px;
-            height: 150px;
+            width: 290px;
+            /*height: 150px;*/
             padding: 30px 25px;
         }
         .diffeCollege .el-col-8 {
