@@ -19,7 +19,7 @@
                     </p>
                     <p @click="getMore(index,$event)" class="photospan">
                         <span>查看更多</span>
-                        <i class="el-icon-caret-bottom"></i>
+                        <i class="el-icon-caret-bottom" style="font-size: 12px"></i>
                     </p>
                 </nav>
             </div>
