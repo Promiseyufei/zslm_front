@@ -292,7 +292,7 @@ export default {
             padding-left: 0;
         }
         .singleItemName {
-            width: 90%;
+            width: 100%;
             padding: 0 5%;
         }
 
