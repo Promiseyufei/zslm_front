@@ -13,8 +13,8 @@
                                 <h1 class="son-title">
                                     {{ item.title }}
                                 </h1>
-                                <p class="head-paragraph">
-                                    {{ item.content }}
+                                <p class="head-paragraph" v-html="item.content">
+                                    <!-- {{ item.content }} -->
                                 </p>
                                 <div class="icon-head" style="margin-top: 10px;color:#6f6f6f;">
                                     <i class="fa fa-calendar position"></i>{{ item.time }}

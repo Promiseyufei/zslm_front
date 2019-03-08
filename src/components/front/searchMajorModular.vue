@@ -9,7 +9,7 @@
                     </div>
                     <div class="div_mnG0wo">
                         <div class="div_oLhlRV">
-                            <h1 class="c-heading heading_IH2VnY">{{ majorInfo.z_name }}</h1>
+                            <h1 class="c-heading heading_IH2VnY" style="cursor:pointer;" @click="putMajor(majorInfo.id)">{{ majorInfo.z_name }}</h1>
                             <template v-if="majorInfo.province">
                                 <label class="c-label label_OVUgJH">{{ majorInfo.province.province }}</label>
                             </template>
@@ -127,10 +127,23 @@ export default {
 
                 if(obj_arr != null && obj_arr.length == 4){
                     this.message(true,"对比列表已满", 'info');
+                    this.setCookie(obj_arr)
+                    this.colleges = obj_arr
                     return
                 }else{
-                    if(obj_arr == null)
+                    if(obj_arr == null) {
                         obj_arr = []
+                    }
+                    else {
+                        for(var i = 0; i < obj_arr.length;i++){
+                            if(obj_arr[i].id == this.majorInfo.id){
+                                this.message(true,"已经在对比列表里", 'info');
+                                this.colleges = obj_arr;
+                                return true;
+                            }
+                        }
+                    }
+
                     obj_arr.push(obj)
                     this.setCookie(obj_arr)
                     this.colleges = obj_arr
@@ -157,6 +170,12 @@ export default {
         },
         addContrast() {
 
+        },
+        putMajor(majorId) {
+            let routeUrl = this.$router.resolve({
+                path:'/front/firstMenuRouter/selectCollege/singleCollage/' + majorId,
+            });
+            window.open(routeUrl.href, '_blank');
         }
 
     },

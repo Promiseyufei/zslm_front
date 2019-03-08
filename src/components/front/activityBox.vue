@@ -83,7 +83,10 @@ export default {
         // 跳转到活动详情页
         jump: function(){
             let id = this.activityInfo.id;
-            this.$router.push('/front/firstMenuRouter/lookActivity/singleActivity/'+id);
+            let routeUrl = this.$router.resolve({
+                path:'/front/firstMenuRouter/lookActivity/singleActivity/' + id,
+            });
+            window.open(routeUrl.href, '_blank');
         },
     },
     props: ["activityInfo"],

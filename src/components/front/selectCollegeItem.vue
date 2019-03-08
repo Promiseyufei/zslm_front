@@ -18,7 +18,7 @@
                             <img class="c-image image_2pnGPP" v-if="item==aascb" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
                             <img class="c-image image_2pnGPP" v-if="item == amba" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png">
                             <img class="c-image image_2pnGPP" v-if="item == camea" src="http://qty83k.creatby.com/materials/2771/origin/a441ca693a7edd636e46d70f405471f2_origin.png"> -->
-                        <div v-for="(item,index) in datas.major_confirm_id" class="majorType">
+                        <div v-for="(item,index) in datas.major_confirm_id" class="majorType" :key="index + 'confirm'">
                              <img class="c-image image_2pnGPP" v-if="item==equis" src="../../assets/img/EQUIS.png">
                             <img class="c-image image_2pnGPP" v-if="item==aascb" src="../../assets/img/AACSB.png">
                             <img class="c-image image_2pnGPP" v-if="item == amba" src="../../assets/img/amba.png">
@@ -27,7 +27,7 @@
                             <img class="c-image image_2pnGPP" v-if="item == 'NASPAA'" src="../../assets/img/NASPAA.png">
                             <img class="c-image image_2pnGPP" v-if="item == 'CEEMAN IQA'" src="../../assets/img/CEEMANIQA.png">
                         </div>
-                        <div v-for="(item,indexs) in datas.major_follow_id" class="majorType" >
+                        <div v-for="(item,indexs) in datas.major_follow_id" class="majorType" :key="indexs + 'follow'">
                             <img class="c-image image_2pnGPP" v-if="item=='原211'" src="../../assets/img/原211.png">
                             <img class="c-image image_2pnGPP" v-if="item=='原985'" src="../../assets/img/原985.png">
                             <img class="c-image image_2pnGPP" v-if="item=='双一流'" src="../../assets/img/双一流.png">

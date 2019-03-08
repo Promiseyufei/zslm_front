@@ -619,6 +619,30 @@ export default {
     .coachleftright>span {
         font-size: 12px;
     }
+
+    .singlerightbox img{
+      width: 100%;
+      height: auto;
+    }
+
+    .selectHeaderbox{
+      background-repeat: no-repeat;
+      background-size: auto 100%;
+      background-position: center;
+    }
+
+    .selectHeaderboxhover{
+      padding: 40px 0;
+    }
+
+    .collagebox>img{
+      width: 100%;
+      height: auto;
+    }
+
+    .collagemessage>nav>h4{
+      margin-bottom: 10px;
+    }
 }
 @media only screen and (max-width: 1280px) {
     .singlecoachbox {

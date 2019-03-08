@@ -2,7 +2,7 @@
     <div id="search_info">
         <div class="div_v60iAm xiangqingye">
             <h1 class="c-heading heading_XwQWQq">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
-            <subPage :shortArticles="info"></subPage>
+            <subPage :shortArticles="info" @detail="putInfoDetail"></subPage>
         </div>
         <pcPhonePage :totalData="count" :size="pageCount" :currentPage="pageNumber" :loading="loading" @use="getInfo" @getPage="getPage"></pcPhonePage>
     </div>
@@ -49,6 +49,12 @@ export default {
                 }
                 else this.message(true, response.msg, 'info');
             })
+        },
+        putInfoDetail(infoId) {
+            let routeUrl = this.$router.resolve({
+                path:'/front/firstMenuRouter/viewInformation/singleInformation/' + infoId,
+            });
+            window.open(routeUrl.href, '_blank');
         }
     },
     mounted() {

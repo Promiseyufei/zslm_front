@@ -1,6 +1,6 @@
 <template>
-    <div class="column_iVg8a1">
-        <div class="c-div div_u9SQpS white">
+    <div class="column_iVg8a1" style="z-index:1;">
+        <div class="c-div div_u9SQpS white" @click="putCoachDetail(coachInfo.id)">
             <img class="c-image image_LP7GSV fudao" :src="coachInfo.cover_name">
             <div class="c-div div_90yeFT">
                 <h1 class="c-heading heading_qcvvsp">{{ coachInfo.coach_name }}</h1>
@@ -18,7 +18,12 @@ export default {
         }
     },
     methods: {
-
+        putCoachDetail(coachId) {
+            let routeUrl = this.$router.resolve({
+                path:'/front/firstMenuRouter/searchCoach/singleCoachs/' + coachId,
+            });
+            window.open(routeUrl.href, '_blank');
+        }
     }
 }
 </script>
