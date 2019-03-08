@@ -103,13 +103,13 @@ export default {
             },
             getMajors(){
                 let cookie = document.cookie.split(";")
-                let index = 0;
+                let index = 1000;
                 let i = 0
                 for( i in cookie){
                     if(cookie[i].indexOf(this.cookieName) != -1)
                         index = i;
                 }
-                if(index == 0)
+                if(index == 1000)
                     return null
                 let obj = cookie[index]
                 obj = obj.split('=')
