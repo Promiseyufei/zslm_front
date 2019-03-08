@@ -186,7 +186,7 @@
 						</div>
 					</div>
 					<!-- 找活动----三个活动小块块 -->
-					<div class="singleCollegeBox">
+					<div class="singleCollegeBox" v-show="activity.length > 0">
 						<div class="selectActivity">
 							<div class="homeContainer" @click="toJumpActivity">
 								<div class="wrap" style="left: -955px;">
@@ -197,7 +197,7 @@
 									<img src="../../assets/img/banner1.jpg" alt="">
 								</div>
 								<div class="buttons">
-									<b class="on" style="margin-left: 250px"></b>
+									<b class="on"></b>
 									<b></b>
 									<b></b>
 								</div>
@@ -370,7 +370,33 @@
 				amba: "AMBA",
 				camea: "CAMEA",
 				userData: [],
-				member: [],
+        member:[
+          {
+            logo: require("../../assets/img/coach2.png"),
+            name: "优惠卷",
+            detail: "报名培训班享受会员专属优惠价！折扣多多！"
+          },
+          {
+            logo: require("../../assets/img/return2.png"),
+            name: "退款管理",
+            detail: "会员享受辅导班10天内无条件退款保障！"
+          },
+          {
+            logo: require("../../assets/img/remind.png"),
+            name: "活动提醒",
+            detail: "感兴趣的活动，小助手来提醒你不怕错过！"
+          },
+          {
+            logo: require("../../assets/img/attention.png"),
+            name: "关注院校",
+            detail: "心仪的院校，任何风吹草动，第一时间全知道！"
+          },
+          {
+            logo: require("../../assets/img/helper.png"),
+            name: "个人助手",
+            detail: "备考全程陪伴，重要事件时时提醒，不耽误事儿！"
+          }
+        ],
 				activity: [],
 				wrap: document.querySelector(".wrap"),
 				timer: null,
@@ -402,7 +428,7 @@
 				this.fetch('/front/indexinfo').then(function(res) {
 
 					if (res.code == 0) {
-            console.log(res);
+            // console.log(res);
 						that.college = res.result.major; //返回学校
 						if (that.college.length > 0) {
 							for (let i = 0; i < that.college.length; i++) {
@@ -456,6 +482,7 @@
 					this.$router.push('/front/firstMenuRouter/usercore/myAccount');
 				}
 			},
+
 			//跳到注册页面
 			jump: function() {
 				if (!this.getUserState('userId')) {
@@ -494,36 +521,48 @@
 			toJumpCollege: function(id) {
 				this.$router.push('/front/firstMenuRouter/selectCollege/singleCollage/' + id);
 			},
-			//轮播图，图片前移
-			next_pic: function() {
-				this.index++;
-				if (this.index > 2) {
-					this.index = 0;
-				}
-				this.showCurrentDot();
-				var newLeft;
-				if (this.wrap.style.left === "-3820px") {
-					newLeft = -1910;
-				} else {
-					newLeft = parseInt(this.wrap.style.left) - 955;
-				}
-				this.wrap.style.left = newLeft + "px";
-			},
-			//轮播图，图片右移
-			prev_pic: function() {
-				this.index--;
-				if (this.index < 0) {
-					this.index = 2;
-				}
-				this.showCurrentDot();
-				var newLeft;
-				if (this.wrap.style.left === "0px") {
-					newLeft = -3820;
-				} else {
-					newLeft = parseInt(this.wrap.style.left) + 955;
-				}
-				this.wrap.style.left = newLeft + "px";
-			},
+      //轮播图，图片前移
+      next_pic: function() {
+        this.index++;
+        if (this.index > 2) {
+          this.index = 0;
+        }
+        this.showCurrentDot();
+        var newLeft;
+        var left = $('.wrap').css('left');
+        // console.log($('.wrap').css('left'));
+        if (left === "-3820px") {
+          newLeft = -1910;
+        } else {
+          newLeft = parseInt(left) - 955;
+        }
+
+        $('.wrap').css('left' , newLeft + "px");
+
+        // this.wrap.style.left = newLeft + "px";
+      },
+      //轮播图，图片右移
+      prev_pic: function() {
+        this.index--;
+        if (this.index < 0) {
+          this.index = 2;
+        }
+        this.showCurrentDot();
+        var newLeft;
+        var left = $('.wrap').css('left');
+
+        // if (this.wrap.style.left === "0px") {
+        if (left === "0px") {
+          newLeft = -3820;
+        } else {
+          // newLeft = parseInt(this.wrap.style.left) + 955;
+          newLeft = parseInt(left) + 955;
+        }
+        // this.wrap.style.left = newLeft + "px";
+        this.wrap.style.left = newLeft + "px";
+        $('.wrap').css('left' , newLeft + "px");
+      },
+
 			//轮播图的圆点
 			showCurrentDot: function() {
 				for (var i = 0, len = this.dots.length; i < len; i++) {
@@ -540,12 +579,17 @@
 		mounted() {
 			this.getCollage();
 			var wrap = document.querySelector(".wrap");
+			// var wrap = $('.wrap');
 			this.wrap = wrap;
 			var dots = document.getElementsByTagName("b");
+			// var dots = $('b');
 			this.dots = dots;
 			var messsa = document.getElementsByClassName("selectMessage");
+			// var messsa = $('selectMessage');
 			this.mes = messsa;
 			var self = this;
+
+			// console.log(this.mes);
 
 
 
@@ -554,19 +598,25 @@
 				self.next_pic();
 			}, 1000);
 			var container = document.querySelector(".homeContainer");
+			// var container = $('.homeContainer');
+
 			container.onmouseenter = function() {
+			// container.mouseenter = function() {
 				clearInterval(self.timer);
 			}
 			container.onmouseleave = function() {
+			// container.mouseleave = function() {
 				clearInterval(self.timer);
 				self.timer = setInterval(function() {
 					self.next_pic();
 				}, 1000);
 			}
+
 			// var self = this;
 			for (var i = 0, len = self.dots.length; i < len; i++) {
 				(function(i) {
-					self.dots[i].onclick = function() {
+					// self.dots[i].onclick = function() {
+					self.dots[i].click = function() {
 						console.log(i);
 						var dis = self.index - i;
 						if (self.index == 2 && parseInt(self.wrap.style.left) !== -2865) {
@@ -1449,6 +1499,10 @@
 		color: #000;
 	}
 
+  .homeContainer .buttons b:first-child{
+    margin-left: 250px;
+  }
+
 
 
 	/* Extra small devices (phones, 600px and down) */
@@ -1464,6 +1518,7 @@
 		.selectHeader>p>span {
 			width: 30px;
 			border: 1px solid #009fa0;
+      margin: 0 10px;
 		}
 
 		.selectHeader>p>strong {
@@ -1475,30 +1530,35 @@
 		}
 
 		.selectInformationLeft {
-			width: 305px;
-			height: 220px;
+			width: 90%;
+			height: 180px;
 		}
 
 		.selectInformationRight {
 			margin-left: 0;
+      width: 90%;
 		}
 
 		.selectInformationFooter {
 			justify-content: center;
 		}
 
+    .selectInformationFooter>div{
+      width: 90%;
+    }
+
 		.selectInformationFooter .yellowBtn {
 			margin-top: 5%;
-			width: 241px;
+			width: 90%;
 		}
 
 		.selectInformationFooter .homeBtn {
 			margin-top: 5%;
-			width: 241px;
+			width: 90%;
 		}
 
 		.selectActivity {
-			width: 300px;
+			width: 90%;
 			overflow: hidden;
 		}
 
@@ -1513,6 +1573,56 @@
 		.little {
 			display: block;
 		}
+
+    .singleCollege{
+      width: 45%;
+      height: 150px;
+    }
+
+    .listTxt{
+      font-size: 12px;
+    }
+
+    .indexBlockMessage{
+      width: 100%;
+    }
+
+    .homeContainer .buttons b:first-child{
+      margin-left: 0px;
+    }
+
+    .singActivitybox{
+      width: 100%;
+    }
+
+    .wrapCover{
+      width: 100%;
+    }
+
+    .lookinformation{
+      width: 90%;
+    }
+
+    .memberServe{
+      margin-top: 20px;
+    }
+
+    .memberServe>div{
+      width: 40%;
+      margin: 0 5% 5%;
+    }
+
+    .memberServe p{
+      font-size: 12px;
+    }
+
+    .memberServe>div>div>img{
+      width: 70%;
+    }
+
+    .memberServe span{
+      margin: 10px 0;
+    }
 	}
 
 	/* Small devices (portrait tablets and large phones, 600px and up) */
@@ -1697,4 +1807,18 @@
 		background-color: #ffb957;
 		border: 1px solid #ffb957;
 	}
+
+  @media only screen and (max-width: 600px) {
+    .wrapCover {
+      width: 100%;
+    }
+
+    .wrapCover1{
+      right: 20px;
+    }
+
+    /*.homeContainer .wrap img{*/
+      /*width: 100%;*/
+    /*}*/
+  }
 </style>

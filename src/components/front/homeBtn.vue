@@ -21,7 +21,7 @@ export default {
         outStyle: function(se) {
             this.src = require('../../assets/img/green.png');
         }
-        
+
     },
     props:["text"],
     mounted(){
@@ -55,5 +55,11 @@ export default {
     img {
         width: 25px;
         margin-left: 3px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .homeBtn {
+        padding: 10px;
+      }
     }
 </style>
