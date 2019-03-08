@@ -190,11 +190,12 @@
 						<div class="selectActivity">
 							<div class="homeContainer" @click="toJumpActivity">
 								<div class="wrap" style="left: -955px;">
-									<img src="../../assets/img/sitanfu.jpg" alt="">
-									<img src="../../assets/img/banner1.jpg" alt="">
-									<img src="../../assets/img/banner4.jpeg" alt="">
-									<img src="../../assets/img/sitanfu.jpg" alt="">
-									<img src="../../assets/img/banner1.jpg" alt="">
+                  <img v-for="item in activity" :src="item.active_img" />
+                  <img v-for="(item,index) in activity" :src="item.active_img" v-if="index < 2" />
+									<!--<img src="../../assets/img/banner1.jpg" alt="">-->
+									<!--<img src="../../assets/img/banner4.jpeg" alt="">-->
+									<!--<img src="../../assets/img/sitanfu.jpg" alt="">-->
+									<!--<img src="../../assets/img/banner1.jpg" alt="">-->
 								</div>
 								<div class="buttons">
 									<b class="on"></b>
@@ -596,7 +597,7 @@
 			clearInterval(self.timer);
 			self.timer = setInterval(function() {
 				self.next_pic();
-			}, 1000);
+			}, 2000);
 			var container = document.querySelector(".homeContainer");
 			// var container = $('.homeContainer');
 
@@ -609,7 +610,7 @@
 				clearInterval(self.timer);
 				self.timer = setInterval(function() {
 					self.next_pic();
-				}, 1000);
+				}, 2000);
 			}
 
 			// var self = this;
