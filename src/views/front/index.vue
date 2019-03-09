@@ -118,7 +118,7 @@
 					<!-- 搜辅导----header -->
 					<div>
 						<div class="selectHeader blackHeader">
-							<p><span></span><strong>INSTITUTUONS</strong><span></span></p>
+							<p><span class="yellow"></span><strong>INSTITUTUONS</strong><span class="yellow"></span></p>
 							<strong>搜辅导</strong>
 						</div>
 					</div>
@@ -244,7 +244,7 @@
 					<!-- 看资讯----header -->
 					<div>
 						<div class="selectHeader blackHeader">
-							<p><span></span><strong>INFORMATION</strong><span></span></p>
+							<p><span class="yellow"></span><strong>INFORMATION</strong><span class="yellow"></span></p>
 							<strong>看资讯</strong>
 						</div>
 					</div>
@@ -879,13 +879,15 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		margin: 10% 0 3%;
+		margin: 154px 0 86px;
 		cursor: pointer;
 	}
 
 	.indexBigBlock>div {
-		margin: 2% 1%;
-		padding: 4% 5%;
+    width: 180px;
+    height: 180px;
+    margin-left: 10px;
+    margin-right: 10px;
 		background-color: rgba(255, 255, 255, 0.3);
 		text-align: center;
 		border-radius: 5px;
@@ -1137,15 +1139,16 @@
 		width: 100%;
 		display: flex;
 		justify-content: center;
+    padding: 100px 0;
 	}
 
 	.indexBlockMessage {
-		width: 1280px;
-		margin: 5% auto 5%;
+		width: 1300px;
+		margin:0 auto;
 	}
 
 	.selectHeader {
-		margin: 0 auto;
+		margin: 0 auto 80px;
 		text-align: center;
 	}
 
@@ -1183,13 +1186,15 @@
 	}
 
 	.singleCollege {
-		margin: 1%;
-		background-color: #e6e6e6;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin:0px 10px 20px;
+		background-color: rgb(245, 245, 245);
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 280px;
-		height: 300px;
+		width: 305px;
+		height: 305px;
 		border-radius: 5px;
 		position: relative;
 		cursor: pointer;
@@ -1224,14 +1229,16 @@
 	.singleCollege>img {
 		display: block;
 		margin: 20px;
-		max-width: 50%;
+		/*max-width: 50%;*/
+    width: 95px;
+    height:95px;
 	}
 
 	.listTxt {
 		position: absolute;
 		top: 0;
 		right: 0;
-		color: rgb(110, 110, 110);
+		color: rgb(0, 0, 0);
 		font-size: 16px;
 		line-height: 1.75em;
 		font-weight: lighter;
@@ -1545,21 +1552,21 @@
 		}
 
     .selectInformationFooter>div{
-      width: 90%;
+      width: 100%;
     }
 
 		.selectInformationFooter .yellowBtn {
 			margin-top: 5%;
-			width: 90%;
+			width: 100%;
 		}
 
 		.selectInformationFooter .homeBtn {
 			margin-top: 5%;
-			width: 90%;
+			width: 100%;
 		}
 
 		.selectActivity {
-			width: 90%;
+			width: 100%;
 			overflow: hidden;
 		}
 
@@ -1601,7 +1608,7 @@
     }
 
     .lookinformation{
-      width: 90%;
+      width: 100%;
     }
 
     .memberServe{
@@ -1654,10 +1661,13 @@
 		.little {
 			display: block;
 		}
+
+
 	}
 
 	/* Medium devices (landscape tablets, 768px and up) */
-	@media only screen and (min-width: 768px) {}
+	@media only screen and (min-width: 768px) {
+  }
 
 	/* Large devices (laptops/desktops, 992px and up) */
 	@media only screen and (min-width: 992px) {
@@ -1668,7 +1678,11 @@
 		}
 
 		.indexBigBlock img {
-			width: 80%;
+			/*width: 80%;*/
+      height: auto;
+      width: auto;
+      max-width: 100%;
+      display: inline-block;
 		}
 	}
 
@@ -1681,7 +1695,12 @@
 		}
 
 		.indexBigBlock img {
-			width: 80%;
+			/*width: 80%;*/
+      height: auto;
+      width: auto;
+      max-width: 100%;
+      display: inline-block;
+      margin-top: 30px;
 		}
 	}
 
@@ -1821,5 +1840,136 @@
     /*.homeContainer .wrap img{*/
       /*width: 100%;*/
     /*}*/
+  }
+
+  @media only screen and (max-width: 600px) {
+    .indexBigBlock{
+      margin-top: 43px;
+      margin-bottom: 27px;
+    }
+
+    .indexBigBlock>div{
+      width: 142px;
+      height: 130px;
+      margin-bottom: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .indexBigBlock img{
+      width: 40%;
+      height: auto;
+      margin-top: 20px;
+    }
+
+    .indexBlockMessageBox{
+      padding: 50px 0;
+    }
+
+    .selectHeader{
+      margin-bottom: 30px;
+    }
+
+    .singleCollege{
+      padding: 0 5px;
+      margin-bottom: 10px;
+      height: 160px;
+      margin: 0 5px 10px;
+    }
+
+    .singleCollege>img{
+      width: 60%;
+      height: auto;
+    }
+
+    .listTxt{
+      font-size: 13px;
+    }
+
+    .selectHeader{
+      width: auto;
+    }
+
+    .selectHeader>p>span{
+      width: 26px;
+      height: 4px;
+      background-color: #009fa0;
+      border: none;
+    }
+
+    .indexBlockMessage > .singleCollegeBox{
+      width: 100%;
+    }
+
+    .selectInformationHearder{
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .singleCollegeBox > .selectInformationHearder{
+      width: 100%;
+    }
+
+    .selectInformationLeft,.selectInformationLeft>div,.selectInformationLittle{
+      width: 100%;
+      height: 180px;
+    }
+
+    .selectInformationLittle{
+      margin: 0 auto 20px;
+    }
+
+    .selectInformationRight{
+      width: 100%;
+    }
+
+    .selectInformationFooter p{
+      font-size: 13px;
+    }
+
+    .selectInformationFooter .yellowBtn{
+      font-size: 14px;
+    }
+
+    .singleCollegeBox{
+      margin: 0 auto;
+      width: 90%;
+    }
+
+    .homeContainer{
+      margin-top: 0px;
+    }
+
+    .informationDiv>div{
+      margin: 0 0 10px 0;
+    }
+
+    .memberServe{
+      width: 335px;
+      margin-top: 0px;
+    }
+
+    .memberServe>div>div{
+      height: auto;
+    }
+
+    .memberServe span{
+      margin-top: 26px;
+    }
+
+    .memberServe>div{
+      margin: 0 5%;
+      height: 230px;
+    }
+
+    .selectInformationFooter .homeBtn{
+      height: 48px;
+      line-height: 48px;
+      padding: 0;
+    }
+  }
+
+  .selectHeader>p>span.yellow{
+    background-color: rgb(255, 185, 87);
   }
 </style>
