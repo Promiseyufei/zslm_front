@@ -730,6 +730,7 @@
 		width: 100%;
 		height: 170px;
 		display: block;
+    overflow: hidden;
 	}
 
 	.lookinforMessage {
