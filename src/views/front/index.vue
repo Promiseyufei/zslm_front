@@ -1897,7 +1897,11 @@
       border: none;
     }
 
-    .indexBlockMessage > .singleCollegeBox{
+    .indexBlockMessageBox > .indexBlockMessage > .singleCollegeBox{
+      width: 90%;
+    }
+
+    .indexBlockMessageBox:nth-child(2) > .indexBlockMessage > .singleCollegeBox{
       width: 100%;
     }
 
