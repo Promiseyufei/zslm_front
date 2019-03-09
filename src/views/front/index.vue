@@ -12,7 +12,8 @@
 								<i class="fa fa-search" @click="jumpsearch(1)"></i>
 							</div>
 							<i class="fa fa-bell" @click="jumpsearch(2)"></i>
-							<i class="fa fa-user-circle" @click="jumpsearch(3)"></i>
+              <img src="../../assets/img/user.png" @click="jumpsearch(3)" style="margin-left: 10px;" />
+							<!--<i class="fa fa-user-circle" @click="jumpsearch(3)"></i>-->
 						</div>
 					</div>
 					<!-- logo按钮 -->
@@ -824,12 +825,14 @@
 
 	.indexHeader>div {
 		margin: 0 10px;
-		color: rgb(56, 56, 56);
-		background-color: #fff;
+		/*color: rgb(56, 56, 56);*/
+		/*background-color: #fff;*/
+    color: #ffffff;
 		border-radius: 20px;
-		padding: 3px;
+		/*padding: 3px;*/
 		display: flex;
 		align-items: center;
+    font-size: 22px;
 	}
 
 	.indexHeader>div>i {
@@ -850,6 +853,7 @@
 		border: none;
 		border-radius: 20px;
 		outline: none;
+    background:none;
 	}
 
 	.indexHeader>div:hover .indexinput {
@@ -1843,6 +1847,12 @@
   }
 
   @media only screen and (max-width: 600px) {
+    .indexHeader>div{
+      background: none;
+      color: #ffffff;
+    }
+
+
     .indexBigBlock{
       margin-top: 43px;
       margin-bottom: 27px;
