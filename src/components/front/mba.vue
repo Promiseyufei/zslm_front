@@ -304,7 +304,7 @@
       z-index: 0;
       bottom: 0px;
       left: 0px;
-      width: 122px;
+      width: 160px;
     }
 
     .head-right{
