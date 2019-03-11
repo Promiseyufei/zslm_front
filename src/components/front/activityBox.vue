@@ -194,7 +194,7 @@ export default {
         -webkit-line-clamp: 2;
         overflow: hidden;
 
-        font-size: 16px;
+        font-size: 15px;
         color: #6f6f6f;
         line-height: 1.75em;
         margin: 0 0 10px;

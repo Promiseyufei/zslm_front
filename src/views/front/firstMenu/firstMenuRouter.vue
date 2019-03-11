@@ -247,7 +247,7 @@
 		    problemBack:function() {
 
 		    },
-		
+
 			getding: function() {
 				var that = this
 				var t1 = window.setInterval(that.getAccountMsg, 60000);
@@ -259,7 +259,7 @@
 			// 							console.log(res)
 			// 						}
 			// 					}
-			// 	
+			//
 			// 				},
 			getAccountMsg: function() {
 				var that = this;
@@ -839,7 +839,7 @@
 
 		.headLeft {
 			width: 100%;
-			padding: 0 10px;
+			padding: 0 20px;
 		}
 
 		.head {

@@ -80,6 +80,11 @@ export default {
 }
 </script>
 <style>
+  .el-checkbox-button__inner{
+    font-weight: normal;
+    font-size: 12px;
+  }
+
     /*筛选块*/
     .fourtags .el-tag{
         color: #009fa0;
@@ -118,9 +123,9 @@ export default {
         cursor: pointer;
         border-radius: 2px;
         font-size: 13px;
-        padding: 12px 20px;
-        font-size: 14px;
-        line-height: 1;
+        padding: 5px 13px 5px 12px;
+        font-size: 12px;
+        /*line-height: 1;*/
     }
     .publicRowRight .el-checkbox__input {
         display: none;
@@ -137,7 +142,7 @@ export default {
     /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 1200px) {
     .publicRowRight .ff span{
-        width: 10px !important;
+        /*width: 10px !important;*/
         margin: 0 5px;
     }
     .publicRowRight .fff span{
@@ -145,11 +150,16 @@ export default {
         margin: 0 5px;
     }
     .publicRowRight .el-checkbox-button__inner {
-        padding: 12px 10px;
+        padding: 10px 13px;
     }
 }
 </style>
 <style scoped>
+  .el-checkbox-button__inner{
+    font-weight: normal;
+    font-size: 12px;
+  }
+
 .el-checkbox-button {
     margin-bottom: 8px;
     border-radius: 2px !important;
@@ -181,6 +191,7 @@ export default {
     cursor: pointer;
     margin-top: 14px;
 }
+
 .publicRow {
     width: 100%;
     overflow: hidden;
@@ -189,7 +200,13 @@ export default {
     align-items: flex-start;
     margin: 15px 30px 0;
     border-bottom: 1px solid #e6e6e6;
+  /*height: 61px;*/
 }
+
+  .publicRow:last-child{
+    border-bottom: none;
+  }
+
 .publicRow>span {
     width: 90px;
     flex-shrink:0;
@@ -224,14 +241,16 @@ export default {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 1200px) {
     .publicRowRight span {
-        display: none;
+        /*display: none;*/
     }
     .publicRow>span {
         width: auto;
         font-size: 12px;
+        margin-right: 14px;
     }
     .publicRowRight>p {
-        width: 20px;
+        width: 65px;
+      margin-top: 10px;
     }
     .ff span{
         width: 10px !important;
@@ -245,5 +264,15 @@ export default {
     .pcspan {
         display: none !important;
     }
+
+  .publicRowbox{
+    margin-bottom: 30px;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .publicRow{
+    margin: 15px 10px 0;
+  }
 }
 </style>

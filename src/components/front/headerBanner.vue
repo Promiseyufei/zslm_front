@@ -19,26 +19,28 @@ export default {
         }
     },
     methods: {
-		setImg:function(url){
-			document.getElementById('headerback').style.backgroundImage = "url('"+url+"')";
-		},
-		setJudgeUlr:function(paramurl){
-            if(typeof paramurl != "undefined") {
-                if(paramurl.substr(0,7).toLowerCase() == "http://" || paramurl.substr(0,8).toLowerCase() == "https://") {
-                    this.url = paramurl;
-                }
-                else {
-                    this.url = 'http://' + paramurl;
-                }
-            }
-		},
-		judgePage:function(){
-			// window.open(this.url)
-		}
+      setImg:function(url){
+        if(url){
+          document.getElementById('headerback').style.backgroundImage = "url('"+url+"')";
+        }
+      },
+      setJudgeUlr:function(paramurl){
+              if(typeof paramurl != "undefined") {
+                  if(paramurl.substr(0,7).toLowerCase() == "http://" || paramurl.substr(0,8).toLowerCase() == "https://") {
+                      this.url = paramurl;
+                  }
+                  else {
+                      this.url = 'http://' + paramurl;
+                  }
+              }
+      },
+      judgePage:function(){
+        // window.open(this.url)
+		  }
     },
     props:["enName","name", "banner"],
     mounted(){
-        // console.log(this.banner);
+        //this.setImg(this.banner);
     },
 };
 </script>

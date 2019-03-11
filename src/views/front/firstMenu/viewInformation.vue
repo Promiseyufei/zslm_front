@@ -648,6 +648,16 @@
 			height: auto;
 		}
 	}
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    .content-information{
+      padding-top: 20px;
+    }
+
+    .content{
+      margin-top: 20px;
+    }
+  }
 </style>
 
 <style>

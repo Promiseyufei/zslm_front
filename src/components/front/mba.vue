@@ -109,6 +109,7 @@
         width: 100%;
         background-color: #ffffff;
         padding-bottom: 44px;
+        border-radius: 5px;
     }
     .content-whole:hover{
         box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
@@ -269,6 +270,51 @@
             margin-bottom: 17px;
         }
     }
+
+  @media (max-width: 767px) {
+    .content-whole-article{
+      margin: 25px 10px;
+    }
+
+    .head-left > img{
+      border-radius: 5px;
+    }
+
+    .head-paragraph{
+      height: auto;
+      font-size: 12px;
+      color: rgb(111, 111, 111);
+    }
+
+    .head-title{
+      height: auto;
+      margin-bottom: 18px;
+      font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
+    }
+
+    .icon-head{
+      margin-top: 19px;
+    }
+
+    .button{
+      margin-top: 37px;
+      margin-left: 0px;
+      margin-right: auto;
+      position: relative;
+      z-index: 0;
+      bottom: 0px;
+      left: 0px;
+      width: 122px;
+    }
+
+    .head-right{
+      height: auto;
+    }
+
+    .content-head{
+      padding-bottom: 0px;
+    }
+  }
 </style>
 
 <style>

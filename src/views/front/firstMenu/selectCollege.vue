@@ -185,7 +185,6 @@
         },
         methods: {
             //手机端加载更多
-
             getPage: function () {
                 this.loading = true;
                 this.page++;
@@ -540,6 +539,23 @@
 
 </script>
 <style>
+  .el-input__inner{
+    border-color: #ccc;
+  }
+
+  .el-checkbox{
+    margin-right: 0px;
+  }
+
+  .el-card{
+    border: none;
+    border-radius: 5px;
+  }
+
+  .el-card__body{
+    padding: 0 25px;
+  }
+
     .moreInform i {
         font-size: 13px !important;
     }
@@ -583,8 +599,26 @@
     .selectCollege .el-input__icon {
         line-height: 30px;
     }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    .el-card__body{
+      padding: 0 10px;
+    }
+  }
 </style>
 <style scoped>
+  .el-input__inner{
+    border-color: #ccc;
+  }
+
+  .el-checkbox-button__inner{
+    font-weight: normal;
+  }
+
+  .el-checkbox{
+    margin-right: 0px;
+  }
+
     .tag span {
         font-size: 16px;
         color: rgb(110, 110, 110);
@@ -677,9 +711,9 @@
 
     /*不同院校——院校信息*/
     .allInforma {
-        margin-bottom: 40px;
+        /*margin-bottom: 40px;*/
         border-bottom: 1px solid #efefef;
-        padding-bottom: 40px;
+        padding: 40px 0px;
     }
 
     .moneyType p {
@@ -758,7 +792,7 @@
     .buttonCollege {
         width: 1280px;
         height: 2px;
-        background-color: #009fa0;
+        background-color: rgba(0, 0, 0, 0.6);
         opacity: 0.06;
         margin: 19px auto 48px;
     }
@@ -1826,9 +1860,6 @@
             justify-content: center;
         }
 
-        .buttonCollege {
-        }
-
         .diffeCollege {
             width: 100%;
             overflow: hidden;
@@ -1872,11 +1903,11 @@
         }
 
         .buttonCollege {
-            margin: 0 0 20px;
+            margin: 0 auto 20px;
         }
 
         .selectCollegeSearch {
-            margin: 20px 0 20px 0;
+            margin: 49px 0 44px;
         }
 
         .selectCollege .el-input__inner {
@@ -1906,8 +1937,8 @@
         }
 
         .diffeCollege .el-col-8 {
-            width: 90%;
-            margin-left: 20px;
+            width: 100%;
+            padding: 0px 10px;
         }
 
         .forY,
@@ -1929,5 +1960,17 @@
         .selectCollege {
             width: 100%;
         }
+
+      .tag{
+        display:none;
+      }
+
+      .tagSort{
+        margin-bottom: 13px;
+      }
+
+      .allInforma{
+        padding:40px 0px;
+      }
     }
 </style>

@@ -4,7 +4,7 @@
         <!-- <vsmajor v-show="compare" slot="reference"></vsmajor> -->
         <div class="c-div div_BMsaOd guanzhu" style="margin-bottom:30px;align-items:flex-end;">
             <div class="c-div div_ARD2As">
-                <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" :src="collegeInfo.magor_logo_name" :style="{ backgroundImage: 'url(' + collegeInfo.magor_logo_name + ')' }" style="background-size:  100% 100%; background-position:  0% 0%; background-repeat:  no-repeat;">
+                <div class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" :src="collegeInfo.magor_logo_name" :style="{ backgroundImage: 'url(' + collegeInfo.magor_logo_name + ')' }" style="background-size:  100% auto; background-position:center; background-repeat:  no-repeat;">
                 </div>
                 <div class="c-div div_mnG0wo">
                     <div class="c-div div_oLhlRV">
@@ -80,23 +80,23 @@
                 <div class="moneyType">
                     <div style="display:flex;align-items:center;margin:0 44px 0 0;">
                         <div style="margin:2px 0 0 0;"><img src="../../assets/img/smoney.png"></div>
-                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
+                        <div class="SchoolType" style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
                         <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>
                     </div>
                     <div style="display:flex;align-items:center;">
                         <div style="margin:3px 0 0 0;"><img src="../../assets/img/class.png"></div>
-                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
+                        <div class="SchoolType" style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
                         <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>
                     </div>
                 </div>
-                <div style="display:flex;align-items:center;margin:15px 0;">
+                <div style="display:flex;align-items:center;margin:11px 0;">
                         <div style="margin:2px 0 0 0;"><img src="../../assets/img/friends.png"></div>
-                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
+                        <div class="SchoolType" style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
                         <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>
                 </div>
                 <div style="display:flex;align-items:center;">
                         <div style="margin:2px 0 0 0;"><img src="../../assets/img/friends.png"></div>
-                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
+                        <div class="SchoolType" style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
                         <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>
                 </div>
             </div>
@@ -108,23 +108,23 @@
                 <div class="moneyType">
                     <div style="display:flex;align-items:center;margin:0 44px 0 0;">
                         <div style="margin:2px 0 0 0;"><img src="../../assets/img/smoney.png"></div>
-                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
+                        <div class="SchoolType" style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">学费</div>
                         <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.cost}}</div>
                     </div>
                     <div style="display:flex;align-items:center;">
                         <div style="margin:3px 0 0 0;"><img src="../../assets/img/class.png"></div>
-                        <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
+                        <div class="SchoolType" style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">授课语言</div>
                         <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.language}}</div>
                     </div>
                 </div>
-                <div style="display:flex;align-items:center;margin:15px 0;">
+                <div style="display:flex;align-items:center;margin:11px 0;">
                     <div style="margin:2px 0 0 0;"><img src="../../assets/img/friends.png"></div>
-                    <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
+                    <div class="SchoolType" style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">招生名额</div>
                     <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>
                 </div>
                 <div style="display:flex;align-items:center;">
                     <div style="margin:2px 0 0 0;"><img src="../../assets/img/friends.png"></div>
-                    <div style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
+                    <div class="SchoolType" style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
                     <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>
                 </div>
             </div>
@@ -306,6 +306,11 @@
         display: inline-block;
         z-index: 1000;
     }
+
+    body{
+      font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
+    }
+
     /*不同院校——院校信息*/
         .majorType img {
             margin-left: 5px;
@@ -324,11 +329,12 @@
             justify-content:space-between;
             font-size: 12px;
             color: #a4a4a4;
+            margin-top: 30px;
         }
         .allInforma {
-            margin-bottom: 40px;
+            /*margin-bottom: 40px;*/
             border-bottom: 1px solid #efefef;
-            padding-bottom: 40px;
+            padding: 40px 0px;
         }
         .moneyType p {
             height: 21px;
@@ -370,7 +376,7 @@
             display: flex;
         }
         .specificInform {
-            width: 375px;
+            width: 30.4%;
             padding: 30px 0 30px 25px;
             margin: 10px 5px;
             background-color: #f5f5f5;
@@ -456,6 +462,27 @@
     }
     /** iPhone **/
     @media only screen and (min-width: 320px) and (max-width: 767px) {
+      .div_ARD2As{
+        width: 100%;
+      }
+
+      .viewMore{
+        margin-top: 30px;
+      }
+      .joinContrast{
+        width: 100%;
+      }
+      .joinContrast .el-button{
+        width: 100%;
+        height: 48px;
+      }
+
+      .SchoolType{
+        width: 60px;
+        font-weight: normal;
+        font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
+      }
+
         .updateInform {
             font-size: 12px;
         }
@@ -482,7 +509,7 @@
         }
         .specificInform {
             margin: 0 auto 10px;
-            width: 290px;
+            width: 100%;
             /*height: 150px;*/
             padding: 30px 25px;
         }
@@ -875,6 +902,7 @@
     }
 
     .div_mnG0wo {
+        width: 100%;
         min-height: auto;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -889,6 +917,7 @@
         -webkit-box-align: start;
         -ms-flex-align: start;
         align-items: flex-start;
+        margin-left: 10px;
     }
 
     .div_oLhlRV {
@@ -1112,6 +1141,7 @@
             width: 100%;
             text-align: center;
             margin-top: 17px;
+            font-weight: normal;
         }
 
         .div_BMsaOd.guanzhu {

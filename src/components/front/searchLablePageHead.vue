@@ -135,6 +135,10 @@ export default {
         margin-right: 15px;
         font-size: 12px;
     }
+
+  .search_label_page_head .textlink_jH6Kkn{
+    height: 98%;
+  }
 }
 
 

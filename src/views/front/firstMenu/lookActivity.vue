@@ -18,10 +18,10 @@
 				<div class="selectedTag">
 					<div class="selected" style="position: relative">
 						<div class="slectedLeft">
-							<span>选活动&gt;</span>
+							<span>选活动 &gt;</span>
 							<tags :tags="seltData" @handleClose="handleClose"></tags>
 						</div>
-						<div style="position: absolute;right: 0;">
+						<div style="position: absolute;right: 0;font-size: 14px;color: rgb(110, 110, 110);">
 							<span>共{{count}}场活动</span>
 						</div>
 					</div>
@@ -467,6 +467,7 @@
 		margin-left: 7px;
 		margin-right: 7px;
 		min-width: 60px;
+    font-size: 14px;
 	}
 
 	.activityList {
@@ -486,26 +487,7 @@
 
 		.searchs>div {
 			width: 95%;
-			margin: 20px 0;
-		}
-	}
-
-	/* Medium devices (landscape tablets, 768px and up) */
-	@media only screen and (min-width: 768px) {
-
-		/*搜索-判断手机还是电脑的请求*/
-		.searchs .pcSeach {
-			display: block;
-		}
-
-		.searchs .phoneSeach {
-			display: none;
-		}
-
-		/*搜索框样式*/
-		.searchs {
-			margin-left: 10px;
-			justify-content: left;
+			margin: 49px auto 44px;
 		}
 	}
 
@@ -534,4 +516,27 @@
       margin: 20px auto;
     }
 	}
+
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+
+    /*搜索-判断手机还是电脑的请求*/
+    .searchs .pcSeach {
+      display: block;
+    }
+
+    .searchs .phoneSeach {
+      display: none;
+    }
+
+    /*搜索框样式*/
+    .searchs {
+      margin-left: 10px;
+      justify-content: left;
+    }
+
+    .selectedTag .selected{
+      margin-bottom: 20px;
+    }
+  }
 </style>
