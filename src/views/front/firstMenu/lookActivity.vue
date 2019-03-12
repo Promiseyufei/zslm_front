@@ -480,13 +480,17 @@
 		margin-bottom: 20px;
 	}
 
+  .searchs .phoneSeach {
+    display: none;
+  }
+
 	@media only screen and (max-width: 767px) {
 		.searchs .pcSeach {
 			display: none;
 		}
 
 		.searchs>div {
-			width: 95%;
+			width: 100%;
 			margin: 49px auto 44px;
 		}
 	}
@@ -522,16 +526,17 @@
 
     /*搜索-判断手机还是电脑的请求*/
     .searchs .pcSeach {
-      display: block;
+      display: none;
     }
 
     .searchs .phoneSeach {
-      display: none;
+      display: block;
     }
 
     /*搜索框样式*/
     .searchs {
       margin-left: 10px;
+      margin-right: 10px;
       justify-content: left;
     }
 

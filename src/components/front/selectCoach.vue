@@ -225,12 +225,12 @@
   @media only screen and (max-width: 1200px) {
     .publicRowRight .ff span {
       /*width: 10px !important;*/
-      margin: 0 5px;
+      margin: 2px 5px;
     }
 
     .publicRowRight .fff span {
       width: 10px !important;
-      margin: 0 5px;
+      margin: 2px 5px;
     }
 
     .publicRowRight .el-checkbox-button__inner {
