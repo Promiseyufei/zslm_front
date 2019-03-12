@@ -8,7 +8,7 @@
                     <h1 class="c-heading textlink_e6pE3X daliebiao wode">{{data.coach_name}}</h1>
                     <p class="c-ellipse c-paragraph paragraph_XjkcYS">{{data.province}}+{{data.city}}</p>
                 </div><div class="c-div div_m9HjXA c-action-click" >
-                <h1 class="c-heading heading_6Bjcro"><a :href="data.web_url">进入主页</a>></h1>
+                <h1 class="c-heading heading_6Bjcro"><a :href="data.web_url">进入主页</a></h1>
             </div></div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_PITz90">
             <div class="c-div cs-repeatable div_2wrISM">
                 <div class="c-div div_x27uqU wode"  v-for="(item,index) in this.data.coupon">
@@ -72,7 +72,7 @@
         margin-bottom: 10px;
     }
     h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-        font-family: inherit;
+        font-family: "Microsoft YaHei", "Hiragino Sans GB", SimHei, STHeiti;
         font-weight: 500;
         line-height: 1.1;
         color: inherit;
@@ -157,7 +157,7 @@
     }
 
     a {
-        color: #428bca;
+        color: rgb(89, 89, 89);
         text-decoration: none;
     }
 

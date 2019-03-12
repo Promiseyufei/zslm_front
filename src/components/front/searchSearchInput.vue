@@ -33,7 +33,7 @@ export default {
 }
 .search_search_input input {
     outline: none;
-    font-family: inherit;
+    font-family: "Microsoft YaHei", "Hiragino Sans GB", SimHei, STHeiti;
     font-size: inherit;
     line-height: inherit;
     margin: 0;

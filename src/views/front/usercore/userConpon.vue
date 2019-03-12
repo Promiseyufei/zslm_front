@@ -61,7 +61,7 @@
 				</div>
 			</div>
 		</div>
-		<div v-loading="coupon_loading" style="height: 345px;">
+		<div v-loading="coupon_loading">
 			<div class="c-div div_v60iAm biaoqian">
 				<a class="c-textlink textlink_jH6Kkn userclick xuanzhong" @click="pageInfo(0,0)">未使用 ({{noUseCount}})</a>
 				<a class="c-textlink textlink_jH6Kkn userclick" @click="pageInfo(0,1)">已使用 ({{useCount}})</a>
@@ -73,7 +73,7 @@
 				</div>
 			</div>
 		</div>
-		<el-button style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>
+		<!--<el-button style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>-->
 
 	</div>
 </template>
@@ -169,7 +169,7 @@
 	.h4,
 	.h5,
 	.h6 {
-		font-family: inherit;
+		font-family: "Microsoft YaHei", "Hiragino Sans GB", SimHei, STHeiti;
 		font-weight: 500;
 		line-height: 1.1;
 		color: inherit;
@@ -555,6 +555,7 @@
 		.textlink_jH6Kkn {
 			margin-right: 15px !important;
 			font-size: 12px !important;
+      height: 98% !important;
 		}
 
 	}

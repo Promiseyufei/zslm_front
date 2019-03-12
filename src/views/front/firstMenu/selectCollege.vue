@@ -884,7 +884,7 @@
     .h4,
     .h5,
     .h6 {
-        font-family: inherit;
+        font-family: "Microsoft YaHei", "Hiragino Sans GB", SimHei, STHeiti;
         font-weight: 500;
         line-height: 1.1;
         color: inherit;

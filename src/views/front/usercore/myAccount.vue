@@ -486,6 +486,11 @@
 		.column_0l18QF {
 			text-align: left;
 		}
+
+    .c-column{
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+    }
 	}
 
 	.c-column {

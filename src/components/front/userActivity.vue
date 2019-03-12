@@ -101,7 +101,7 @@
     }
 
     h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-        font-family: inherit;
+        font-family: "Microsoft YaHei", "Hiragino Sans GB", SimHei, STHeiti;
         font-weight: 500;
         line-height: 1.1;
         color: inherit;
@@ -531,6 +531,7 @@
         .div_v60iAm.guanzhu.huodong {
             padding: 25px 10px 20px;
             padding-top: 20px;
+            overflow: hidden;
         }
 
         .heading_EVacHm {

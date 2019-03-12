@@ -116,7 +116,7 @@
 	.h4,
 	.h5,
 	.h6 {
-		font-family: inherit;
+		font-family: "Microsoft YaHei", "Hiragino Sans GB", SimHei, STHeiti;
 		font-weight: 500;
 		line-height: 1.1;
 		color: inherit;
@@ -486,6 +486,14 @@
 			padding-bottom: 20px;
 		}
 
+    .section_bUBpNL{
+      padding-bottom: 30px;
+    }
+
+    .column_aLEhx8{
+      padding-bottom: 0px;
+    }
+
 	}
 
 
@@ -619,19 +627,19 @@
 		},
 		methods: {
 
-			
+
 			info() {
-				
+
 				var arr, reg = new RegExp("(^| )" + 'userId' + "=([^;]*)(;|$)");
 				var uid = ''
 				if (arr = document.cookie.match(reg)) {
 					uid = arr[2] == '0' ? '' : arr[2];
 				}
-				
+
 				if(uid == '0'){
-					
+
 				}
-				
+
 				let self = this;
 				this.fetch('/front/usercore/getuserinfo?id=' + self.id)
 					.then(res => {

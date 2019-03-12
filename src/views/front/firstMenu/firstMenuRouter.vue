@@ -361,6 +361,7 @@
 		height: 11px;
 		line-height: 11px;
 		color: #009fa0;
+    font-weight: normal !important;
 	}
 
 	.firstMenu .el-menu--horizontal {

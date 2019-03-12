@@ -61,8 +61,9 @@ export default {
       .homeBtn {
         /*padding: 10px;*/
         width: 100%;
-        padding:15px 17px;
+        padding:6px 12px;
         display: block;
+        border-width: 1px;
       }
     }
 </style>

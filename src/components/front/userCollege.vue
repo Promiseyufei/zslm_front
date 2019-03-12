@@ -16,9 +16,9 @@
 							<label v-if="data.city != '' " class="c-label label_OVUgJH">{{ data.city }}</label>
 						</div>
 						<div class="c-div cs-repeatable div_sfz9WV">
-							<div v-for="(item_,index_) in datas.major_confirm_id" style="display: inline-block;margin: 5px 5px">
-								<img class="c-image image_2pnGPP" v-if="item_==equis" src="../../assets/img/EQUIS.png">
-								<img class="c-image image_2pnGPP" v-if="item_==aascb" src="../../assets/img/AACSB.png">
+							<div v-for="(item_,index) in datas.major_confirm_id" style="display: inline-block">
+								<img class="c-image image_2pnGPP" v-if="item_== 'EQUIS'" src="../../assets/img/EQUIS.png">
+								<img class="c-image image_2pnGPP" v-if="item_== 'AACSB'" src="../../assets/img/AACSB.png">
 								<img class="c-image image_2pnGPP" v-if="item_ == amba" src="../../assets/img/amba.png">
 								<img class="c-image image_2pnGPP" v-if="item_ == camea" src="../../assets/img/camea.png">
 								<img class="c-image image_2pnGPP" v-if="item_ == 'AAPEQ'" src="../../assets/img/AAPEQ.png">
@@ -31,7 +31,7 @@
 								<img class="c-image image_2pnGPP" v-if="item_ == camea" src="../../assets/img/camea.png"> -->
 
 							</div>
-							<div v-for="(item_,index_) in datas.major_follow_id" style="display: inline-block;margin: 5px 5px">
+							<div v-for="(item_,index_) in datas.major_follow_id" style="display: inline-block">
 								<img class="c-image image_2pnGPP" v-if="item_=='原211'" src="../../assets/img/原211.png">
 								<img class="c-image image_2pnGPP" v-if="item_=='原985'" src="../../assets/img/原985.png">
 								<img class="c-image image_2pnGPP" v-if="item_=='双一流'" src="../../assets/img/双一流.png">
@@ -96,7 +96,8 @@
 						</div>
 
 					</div>
-					<a class="btn c-button button_LsM2yn123 quguan jinruzhuye" @click="majorWeb" type="button" >进入院校主页</a>
+          <homeBtn class="btn c-button button_LsM2yn123 quguan jinruzhuye" text="进入院校主页" @click="majorWeb"></homeBtn>
+					<!--<a class="btn c-button button_LsM2yn123 quguan jinruzhuye" @click="majorWeb" type="button" >进入院校主页</a>-->
 				</div>
 				<a class="c-textlink textlink_wzNM3e dakai c-action-click" data-c_act_id="M_ab06ccb710e44532|M_126530613a6d5d52"
 				 data-c_e_id="textlink_d64f3c03" style="color: rgb(160, 160, 160);" v-show="show" @click="showProject">查看招生项目</a>
@@ -106,6 +107,12 @@
 		</div>
 	</div>
 </template>
+<style>
+  .homeBtn{
+    padding: 6px 12px 6px 12px !important;
+    color: rgb(0, 159, 160);
+  }
+</style>
 <style scoped>
 	* {
 		margin: 0;
@@ -144,7 +151,7 @@
 	h5,
 	h6,
 	a {
-		font-family: "Microsoft YaHei", "Hiragino Sans GB", SimHei, STHeiti;
+    font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti !important;
 	}
 
 	img,
@@ -186,8 +193,8 @@
 	.h4,
 	.h5,
 	.h6 {
-		font-family: inherit;
-		font-weight: 500;
+		font-family: "Microsoft YaHei", "Hiragino Sans GB", SimHei, STHeiti;
+		font-weight: normal;
 		line-height: 1.1;
 		color: inherit;
 	}
@@ -525,6 +532,7 @@
 	.c-imageblock {
 		width: 100px;
 		height: 100px;
+    margin-right: 10px;
 	}
 
 	.c-inlineblock {
@@ -539,6 +547,11 @@
 		border-color: rgb(220, 220, 220);
 		font-weight: bold;
 	}
+
+  .div_PiRYSQ > .button_LsM2yn123,.div_PiRYSQ > .quguan{
+    color:rgb(0, 159, 160);
+    border-color: rgb(0, 159, 160);
+  }
 
 	.c-button {
 		background-color: #000000;
@@ -569,10 +582,10 @@
 
 	.button_LsM2yn123.quguan:hover {
 		background-color: rgb(255, 185, 87);
+    border-color: rgb(255, 185, 87);
 		color: #ffffff;
 		text-decoration: none;
 	}
-
 
 	.div_Sd6WRB {
 		padding-left: 5px;
@@ -696,6 +709,7 @@
 		-ms-flex-align: center;
 		align-items: center;
     margin: 0 auto;
+    margin-left: 0px;
 	}
 
 	.heading_IH2VnY {
@@ -1016,6 +1030,33 @@
 		.column_WvUK7W {
 			margin-bottom: 10px;
 		}
+
+    .c-imageblock{
+      margin-right: 0px;
+    }
+
+    .div_oLhlRV{
+      width: 100%;
+    }
+
+    .div_Sd6WRB{
+      position: relative;
+    }
+
+    .textlink_wzNM3e.dakai{
+      position: absolute;
+      right: 0px;
+    }
+
+    .button_LsM2yn123.quguan{
+      font-weight: normal;
+    }
+
+    .homeBtn{
+      width: 136px !important;
+      float: right;
+      margin-top: 22px !important;
+    }
 	}
 
 
