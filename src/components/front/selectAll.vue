@@ -82,7 +82,7 @@ export default {
 <style>
   .el-checkbox-button__inner{
     font-weight: normal;
-    font-size: 12px;
+    font-size: 16px;
   }
 
     /*筛选块*/
@@ -153,12 +153,14 @@ export default {
         padding: 10px 13px;
     }
 }
-</style>
-<style scoped>
-  .el-checkbox-button__inner{
-    font-weight: normal;
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .el-checkbox-button__inner {
     font-size: 12px;
   }
+}
+</style>
+<style scoped>
 
 .el-checkbox-button {
     margin-bottom: 8px;
@@ -273,6 +275,10 @@ export default {
 @media only screen and (min-width: 320px) and (max-width: 767px) {
   .publicRow{
     margin: 15px 10px 0;
+  }
+
+  .el-checkbox-button__inner{
+    font-size: 12px;
   }
 }
 </style>
