@@ -339,6 +339,9 @@
   };
 </script>
 <style>
+  .el-checkbox-button__inner{
+    font-weight: normal;
+  }
 </style>
 <style scoped>
   .coachInput {
@@ -515,6 +518,8 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden;
   }
 
   .singlecoachtop>img {

@@ -129,6 +129,11 @@
     border-color: rgb(210, 210, 210);
   }
 
+  .el-checkbox{
+    margin-right: 0px !important;
+    margin-top:2px;
+  }
+
   .publicRowRight .el-checkbox-button.is-checked .el-checkbox-button__inner {
     background-color: #ffb957;
     border-color: #ffb957;
@@ -195,7 +200,7 @@
     cursor: pointer;
     border-radius: 2px;
     font-size: 13px;
-    padding: 12px 20px;
+    padding: 5px 13px 5px 12px;
     font-size: 14px;
     /*line-height: 1;*/
   }
