@@ -342,6 +342,10 @@
   .el-checkbox-button__inner{
     font-weight: normal;
   }
+
+  .publicRowRight .el-checkbox__label{
+    line-height: normal !important;
+  }
 </style>
 <style scoped>
   .coachInput {

@@ -416,6 +416,10 @@
 		line-height: 0;
 	}
 
+  .publicRowRight .el-checkbox__label{
+    line-height: normal !important;
+  }
+
 	.searchs>div {
 		width: 407px;
 		/*margin: 20px 0;*/

@@ -556,6 +556,10 @@
     padding: 0 25px;
   }
 
+  .publicRowRight .el-checkbox__label{
+    line-height: normal !important;
+  }
+
     .moreInform i {
         font-size: 13px !important;
     }

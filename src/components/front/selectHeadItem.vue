@@ -197,7 +197,7 @@
 		font-size: 13px;
 		padding: 12px 20px;
 		font-size: 14px;
-		line-height: 1;
+		/*line-height: 1;*/
 	}
 
 	.publicRowRight .el-checkbox__input {
