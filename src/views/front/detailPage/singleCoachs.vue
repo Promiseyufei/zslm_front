@@ -259,6 +259,14 @@ export default {
 <style scoped>
 .bigBox {
     background-color: rgb(245, 245, 245);
+  overflow: hidden;
+}
+.singlecoachBig{
+  margin: 30px 0px 0px;
+}
+
+.singlecoachbox{
+  border-radius: 5px;
 }
 .nonecoach {
     display: flex;
@@ -407,7 +415,7 @@ export default {
 }
 .singlerightbox {
     width: 305px;
-    margin: 30px 0 0 20px;
+    margin: 0px 0 0 20px;
 }
 .singlerightbox>img {
     margin-bottom: 20px;
@@ -417,7 +425,7 @@ export default {
     box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
 }
 .singlemessage {
-    margin: 30px 0 0;
+    /*margin: 30px 0 0;*/
 }
 .detailCoach>h6 {
     color: #009FA1;
@@ -439,6 +447,7 @@ export default {
     flex-shrink:0;
     line-height: 1.6em;
     color: rgb(110, 110, 110);
+    font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
 }
 .ff {
     background-image: url("../../../assets/img/finish.png") !important;
@@ -448,6 +457,7 @@ export default {
     font-weight: bold;
     line-height: 1.6em;
     color: rgb(110, 110, 110);
+    font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
 }
 .collagemessage>div>span {
     font-size: 14px;
@@ -460,10 +470,12 @@ export default {
     font-size: 16px;
     line-height: 30px;
     color: rgb(110, 110, 110);
+    font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
 }
 .messageCoach {
     background-color: #fff;
     padding: 25px;
+    border-radius: 5px;
 }
 .messageCoach:hover {
     box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
@@ -476,6 +488,7 @@ export default {
     padding: 25px;
     margin-bottom: 20px;
     background-color: #fff;
+    border-radius: 5px;
 }
 .detailCoach:hover {
     box-shadow:rgba(0, 0, 0, 0.18) 0px 0px 15px 0px;
@@ -509,10 +522,12 @@ export default {
     background: url("../../../assets/img/room.jpg");
     background-size: 100%;
     width: 100%;
+    height: 360px;
 }
 .selectHeaderboxhover {
     background-color: rgba(56, 59, 61, 0.8);
     width: 100%;
+    height: 100%;
     padding: 80px 0;
 }
 .selectHeader>img {
@@ -651,6 +666,40 @@ export default {
     .singlemessage {
         width: 95%;
     }
+}
+
+/** iPhone **/
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .bigBox{
+    overflow: hidden;
+  }
+  .singlecoachBig{
+    margin: 20px 0px 0px;
+  }
+
+  .singlemessage{
+    margin-top: 0px;
+  }
+
+  .singlecoachbox{
+    border-radius: 5px;
+  }
+
+  .selectHeaderboxhover{
+    padding-top: 81px;
+    padding-bottom: 0px;
+    height: 279px;
+  }
+
+  .detailCoach,.messageCoach{
+    padding: 25px 10px;
+    border-radius: 5px;
+  }
+
+  .detailCoach>p{
+    font-weight:normal;
+    font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
+  }
 }
 
 </style>

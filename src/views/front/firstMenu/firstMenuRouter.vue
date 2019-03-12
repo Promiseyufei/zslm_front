@@ -430,7 +430,7 @@
 	}
 
 	.float-middle>ul>li>a {
-		font-family: MicrosoftYaHei;
+    font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
 		font-size: 14px;
 		font-weight: normal;
 		font-stretch: normal;
