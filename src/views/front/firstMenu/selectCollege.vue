@@ -602,7 +602,7 @@
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     .el-card__body{
-      padding: 0 10px !important;;
+      padding: 0 10px !important;
     }
   }
 </style>

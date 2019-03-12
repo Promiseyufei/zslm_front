@@ -123,7 +123,7 @@ export default {
         cursor: pointer;
         border-radius: 2px;
         font-size: 13px;
-        padding: 5px 13px 5px 12px;
+        padding: 5px 13px 5px 12px !important;
         font-size: 12px;
         /*line-height: 1;*/
     }

@@ -197,7 +197,7 @@
     font-size: 13px;
     padding: 12px 20px;
     font-size: 14px;
-    line-height: 1;
+    /*line-height: 1;*/
   }
 
   .publicRowRight .el-checkbox__input {
@@ -230,6 +230,32 @@
 
     .publicRowRight .el-checkbox-button__inner {
       padding: 12px 10px;
+    }
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    .publicRowRight .el-checkbox__label{
+      padding: 5px 13px 5px 12px !important;
+      font-size: 12px;
+      font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
+    }
+
+    .publicRowRight .ff span{
+      width: auto !important;
+      margin:2px 5px;
+    }
+
+    .publicRow>span{
+      margin-right: 14px;
+    }
+
+    .el-checkbox{
+      margin-right: 0px !important;
+    }
+
+    .el-checkbox-button__inner{
+      font-size: 12px;
+      font-weight: normal;
     }
   }
 </style>
@@ -288,6 +314,10 @@
     border-bottom: 1px solid #e6e6e6;
   }
 
+  .publicRow:last-child{
+    border-bottom: 0px;
+  }
+
   .publicRow>span {
     width: 90px;
     flex-shrink: 0;
@@ -327,7 +357,7 @@
   /* Extra large devices (large laptops and desktops, 1200px and up) */
   @media only screen and (max-width: 1200px) {
     .publicRowRight span {
-      display: none;
+      /*display: none;*/
     }
 
     .publicRow>span {
@@ -336,7 +366,7 @@
     }
 
     .publicRowRight>p {
-      width: 20px;
+      width: 65px;
     }
 
     .ff span {
@@ -353,6 +383,20 @@
 
     .pcspan {
       display: none !important;
+    }
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    .publicRow{
+      margin: 15px 10px 0;
+    }
+
+    .publicRowRight .el-checkbox__label{
+      padding: 5px 13px 5px 12px;
+    }
+
+    .publicRowbox{
+      margin-bottom: 30px;
     }
   }
 </style>

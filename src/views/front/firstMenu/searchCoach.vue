@@ -24,7 +24,7 @@
           <div class="singlecoachbox">
             <div class="coachNav">
               <div class="coachNavleft">
-                <span>选院校&gt;</span>
+                <span>选院校 &gt;</span>
 
                 <tags :tags="tags" @handleClose="handleClose"></tags>
               </div>
@@ -387,7 +387,7 @@
   }
 
   .coachInput>i {
-    color: #666;
+    color: #c0c4cc;
   }
 
   .coachLittleshort {
@@ -580,6 +580,42 @@
     .singlecoach{
       width: 90%;
       margin: 10px auto;
+    }
+
+    .coachNav{
+      padding-bottom: 13px;
+      margin-bottom: 20px;
+    }
+
+    .coachInput{
+      width: 100%;
+      padding: 4px 12px;
+      margin: 49px 10px 44px;
+    }
+
+    .coachInput>input{
+      width: 93%;
+    }
+
+    .singlecoachBig{
+      padding: 0 10px;
+    }
+
+    .coachNavleft>span, .coachNavright>span{
+      font-size: 14px;
+      font-weight: normal;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    .singlecoachbox{
+      width: 100%;
+    }
+
+    .singlecoach{
+      width: 100%;
+      overflow: hidden;
+      margin-top: 0px;
+      margin-bottom: 20px;
     }
   }
 </style>
