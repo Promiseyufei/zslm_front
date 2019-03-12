@@ -219,7 +219,7 @@
   /* Extra large devices (large laptops and desktops, 1200px and up) */
   @media only screen and (max-width: 1200px) {
     .publicRowRight .ff span {
-      width: 10px !important;
+      /*width: 10px !important;*/
       margin: 0 5px;
     }
 
