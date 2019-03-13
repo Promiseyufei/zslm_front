@@ -90,6 +90,9 @@ export default {
 </script>
 
 <style>
+  .c-container{
+    min-height: auto !important;
+  }
   .university{
     width: 300px;
     height: 300px;
