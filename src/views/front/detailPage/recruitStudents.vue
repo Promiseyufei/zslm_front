@@ -23,7 +23,7 @@
                         <el-input
                                 placeholder="请输入内容"
                                 suffix-icon="el-icon-search"
-                                v-model="search">
+                                v-model="search" @blur.prevent="showInformation()">
                         </el-input>
                     </div>
                 </div>
@@ -244,6 +244,7 @@
         cursor: pointer;
         float: left;
         margin-top: 33px;
+        overflow: hidden;
     }
     .university:nth-child(4n){
         margin-right: 0px;
@@ -276,6 +277,7 @@
         color: #ffffff;
         line-height: 50px;
         margin: auto;
+        white-space: nowrap;
     }
     .tips{
         width: 82%;
