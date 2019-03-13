@@ -281,7 +281,7 @@ export default {
     /** iPhone **/
     @media only screen and (min-width: 320px) and (max-width: 767px) {
         .itemInform .el-card__body {
-            padding: 25px 5px;
+            padding: 25px 5px !important;
         }
         .informationLeft {
             width: 100%;
@@ -302,8 +302,8 @@ export default {
             padding-left: 0;
         }
         .singleItemName {
-            width: 90%;
-            padding: 0 5%;
+          width: 100%;
+          /*padding: 0 5%;*/
           border-radius: 5px;
         }
 

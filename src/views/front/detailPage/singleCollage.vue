@@ -527,6 +527,7 @@ export default {
     .el-icon-share{
       position: relative;
       right: 5px;
+      font-size: 15px !important;
     }
     .leftTwo .el-dialog__body {
         text-align: center;
@@ -696,8 +697,7 @@ export default {
         /*<!-- 院校logo -->*/
     @media only screen and (min-width: 320px) and (max-width: 767px) {
       .el-card__body {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
+        padding: 25px 10px !important;
       }
     }
 </style>
