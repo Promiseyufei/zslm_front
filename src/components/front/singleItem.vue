@@ -1,5 +1,5 @@
 <template>
-    <div style="padding:0 20px;">
+    <div>
         <div :id="back(this.backData)" class="singleItemName" @click="showInform" :style="{'backgroundColor':i == 0?'#009fa0':'#fff'}">
             <div>
                 <h1 style="color:rgb(111, 111, 111);" :id="title(this.titleData)" :style="{'color':i == 0?'#fff':'#6f6f6f'}">{{deta.project_name}}</h1>
@@ -155,6 +155,8 @@ export default {
     mounted(){
       if(this.i == 0){
         this.singleItemDetail =true;
+        let icon = $("#icon_"+this.upData);
+        $(icon[this.i]).attr("class","el-icon-arrow-up");
       }
 
     },
@@ -174,6 +176,10 @@ export default {
 
     .hideContent{
       display: none;
+    }
+
+    .itemInform .el-card__body {
+      padding: 25px;
     }
 
 </style>
@@ -236,6 +242,7 @@ export default {
         height: 71px;
         padding: 0 20px 0;
         cursor: pointer;
+        border-radius: 5px;
     }
     * {
         margin: 0;
@@ -292,8 +299,9 @@ export default {
             padding-left: 0;
         }
         .singleItemName {
-            width: 100%;
+            width: 90%;
             padding: 0 5%;
+          border-radius: 5px;
         }
 
     }

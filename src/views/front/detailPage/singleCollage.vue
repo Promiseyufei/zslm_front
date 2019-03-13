@@ -4,7 +4,7 @@
         <div class="singleCollageAll">
         <!-- 院校logo -->
             <!--<div class="itemPicture" :style="{ backgroundImage: 'url(' + coverName + ') no-repeat' }">-->
-            <div class="itemPicture" :style="{backgroundImage:'url(' + coverName + ')', backgroundRepeat:'no-repeat', backgroundPosition:'center center', backgroundSize: 'contain'}">
+            <div class="itemPicture" :style="{backgroundImage:'url(' + coverName + ')', backgroundRepeat:'no-repeat'}">
                 <div class="backColor">
                     <div class="collageLogo"><img :src="logoName"></div>
                     <div class="collageName">
@@ -524,8 +524,9 @@ export default {
 };
 </script>
 <style>
-    .diffeCollege>>>.div_BMsaOd[data-v-0ea0cb0a] {
-        /*margin-top: 20px !important;*/
+    .el-icon-share{
+      position: relative;
+      right: 5px;
     }
     .leftTwo .el-dialog__body {
         text-align: center;
@@ -692,7 +693,13 @@ export default {
             border-radius: 5px;
             border: 0;
         }
-    /*<!-- 院校logo -->*/
+        /*<!-- 院校logo -->*/
+    @media only screen and (min-width: 320px) and (max-width: 767px) {
+      .el-card__body {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+      }
+    }
 </style>
 <style scoped>
         /*分享按钮*/
@@ -773,8 +780,8 @@ export default {
             display: flex;
             justify-content:space-between;
             width: 900px;
-            margin-bottom: 5px;
-            padding: 25px;
+            margin-bottom:30px;
+            /*padding: 25px;*/
         }
         .itemDetails {
             display: flex;
@@ -785,7 +792,7 @@ export default {
         .collageButton {
             display: flex;
             justify-content:center;
-            margin: 9px 0 0;
+            margin: 9px 0 40px;
         }
         .concreteName {
             margin: 0 23px;
@@ -820,16 +827,17 @@ export default {
         .backColor {
             border-radius: 5px;
             padding: 40px 0 0;
-            height: 360px;
+            /*height: 360px;*/
             background-color: rgba(56, 59, 61, 0.85);
+            overflow: hidden;
         }
         .itemPicture {
             margin: 0 0 30px;
             border-radius: 5px;
-            height: 360px;
+            /*height: 360px;*/
             /* background: url(../../../assets/img/singleCollege.jpg) no-repeat; */
-            background-position: 50% 50%;
-            background-size: cover;
+            background-position:center;
+            background-size: 100% auto;
         }
     /*<!-- 院校logo -->*/
         .singleCollageAll {
@@ -901,8 +909,8 @@ export default {
             width: 100%;
         }
         .itemInformOne {
-            width: 95%;
-            padding: 10px;
+            width: 100%;
+            padding: 10px 0;
         }
         .itemInform .el-col-8 {
             width: 96%;
@@ -915,5 +923,20 @@ export default {
         .singleCollageAll {
             width: 100%;
         }
+
+      .concreteName{
+        width: 60%;
+        line-height: 40px;
+        text-align: center;
+      }
+
+      .singleCollage{
+        padding-top: 20px;
+      }
+
+      .itemPicture{
+        margin-bottom: 20px;
+        background-size: auto 100%;
+      }
     }
 </style>
