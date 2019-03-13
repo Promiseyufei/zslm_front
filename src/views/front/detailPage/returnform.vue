@@ -31,7 +31,7 @@
 						<!-- 弹出层 -->
 						<el-dialog :visible.sync="dialogVisible" width="1280px" center :before-close="handleClose">
 							<el-form :inline="true" :model="formInline" class="demo-form-inline">
-								<el-form-item label="关键字查询">
+								<el-form-item label="关键字查询" class="label">
 									<el-input v-model="formInline.keyword" placeholder="请输入关键字"></el-input>
 								</el-form-item>
 								<el-form-item>
@@ -169,7 +169,7 @@
 			};
 			// let validateRefundType = (rule, value, callback) => {
 			// 	console.log(this.formLabelAlign)
-				
+
 			// 	if(this.formLabelAlign.refund_type == undefined || !(this.formLabelAlign.refund_type == '0' || this.formLabelAlign
 			// 			.refund_type == '1')) {
 			// 		callback(new Error('退款方式格式错误'));
@@ -237,7 +237,7 @@
 					blank_addr: undefined,
 					message: undefined,
 					money:'',
-					c_name:'', 
+					c_name:'',
 					img: []
 				},
 				tests: [],
@@ -287,13 +287,13 @@
 		},
 		methods: {
 			onKeySubmit() {
-				
+
 				if(this.coach.length > 0) {
 					if(this.formInline.keyword == '') {
 						this.coachKeyword = this.coach;
-					} 
+					}
 					else {
-						
+
 						let i = 0;
 						this.coachKeyword = [];
 						while (i < this.coach.length) {
@@ -347,7 +347,7 @@
 				}
 				box[index].classList.add("active");
 				this.select = index;
-			},	
+			},
 			//点击关闭弹框时触发事件
 			handleClose(done) {
 				this.$confirm('确认关闭？')
@@ -598,6 +598,41 @@
 			max-width: 305px;
 		}
 	}
+
+  @media (max-width: 760px) {
+    .returnform .el-form-item:first-child{
+      width: 67%;
+    }
+    .returnform .el-form-item:last-child{
+      float: right;
+      margin-right: 0px;
+    }
+    .label > .el-form-item__label{
+      /*width: 80px !important;*/
+      display: none !important;
+    }
+
+    .returnform .el-form-item__content{
+      width: 100% !important;
+    }
+
+    .returnform .label input{
+      width: 100% !important;
+    }
+
+    .boxdialog{
+      margin-top: 20px;
+    }
+
+    .returnform{
+      padding: 0px 10px;
+      box-sizing: border-box;
+    }
+
+    .returnform .el-form-item:last-child{
+      float: none;
+    }
+  }
 </style>
 <style scoped>
 

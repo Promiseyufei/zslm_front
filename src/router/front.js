@@ -45,11 +45,6 @@ let front_router = {
                     ]
                 },
                 {
-                    path: 'Login/resetPassword',
-                    name: '重置密码',
-                    component: resolve => void(require(['@/views/front/Login/resetPassword'], resolve))
-                },
-                {
                     path: 'Login/register',
                     name: '注册会员',
                     component: resolve => void(require(['@/views/front/Login/register'], resolve))
@@ -65,6 +60,11 @@ let front_router = {
                     name: '一级导航',
                     component: resolve => void(require(['@/views/front/firstMenu/firstMenuRouter'], resolve)),
                     children: [
+                      {
+                        path: 'Login/resetPassword',
+                        name: '重置密码',
+                        component: resolve => void(require(['@/views/front/Login/resetPassword'], resolve))
+                      },
                         {
                             path: 'selectCollege',
                             name: '选院校',
@@ -256,7 +256,7 @@ let front_router = {
                     component: resolve => void(require(['@/views/front/index'], resolve))
                 },
             ]
-        },       
+        },
         // {
         //     path: 'search',
         //     name: '搜索页面',

@@ -133,7 +133,7 @@
 		    },
 		    //跳转到重置密码页面
 		    resetPass:function() {
-		    	this.$router.push('/front/Login/resetPassword');
+		    	this.$router.push('/front/firstMenuRouter/Login/resetPassword');
 		    },
 		    //跳转到注册页面
 		    register:function() {

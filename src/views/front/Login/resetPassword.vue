@@ -1,34 +1,38 @@
 <!-- 密码重置 -->
 <template>
-	<div class="updataPass">
-		<div class="header">账号安全</div>
-		<el-form :model="resetPass" status-icon 
-		ref="resetPass" class="demo-ruleForm">
-			<div class="content">
-				<el-form-item prop="phoneNumber">
-					<el-input v-model="resetPass.phoneNumber" placeholder="账号"></el-input>
-				</el-form-item>
-				<div class="codeNumber">
-					<el-form-item prop="codeNumber">
-						<el-input v-model="resetPass.codeNumber" placeholder="验证码"></el-input>
-					</el-form-item>
-					<el-button type="primary" @click="getCodenumber">{{btntxt}}</el-button>
-				</div>
-				<el-form-item prop="pass">
-					<el-input type="password" v-model="resetPass.pass" 
-					placeholder="新密码" autocomplete="off"></el-input>
-				</el-form-item>
-				<el-form-item prop="checkPass">
-					<el-input type="password" v-model="resetPass.checkPass" 
-					placeholder="再次输入" autocomplete="off"></el-input>
-				</el-form-item>
-				<div class="button">
-					<el-button type="primary" @click="submission">确定</el-button>
-					<el-button @click="$router.push('/front/Login/loginRoute/accountNumber')">返回</el-button>
-				</div>
-			</div>
-		</el-form>
-	</div>
+  <div>
+    <div class="bac">
+      <div class="updataPass">
+        <div class="header">账号安全</div>
+        <el-form :model="resetPass" status-icon
+        ref="resetPass" class="demo-ruleForm">
+          <div class="content">
+            <el-form-item prop="phoneNumber">
+              <el-input v-model="resetPass.phoneNumber" placeholder="账号"></el-input>
+            </el-form-item>
+            <div class="codeNumber">
+              <el-form-item prop="codeNumber">
+                <el-input v-model="resetPass.codeNumber" placeholder="验证码"></el-input>
+              </el-form-item>
+              <el-button type="primary" @click="getCodenumber">{{btntxt}}</el-button>
+            </div>
+            <el-form-item prop="pass">
+              <el-input type="password" v-model="resetPass.pass"
+              placeholder="新密码" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="checkPass">
+              <el-input type="password" v-model="resetPass.checkPass"
+              placeholder="再次输入" autocomplete="off"></el-input>
+            </el-form-item>
+            <div class="button">
+              <el-button type="primary" @click="submission">确定</el-button>
+              <el-button @click="$router.push('/front/Login/loginRoute/accountNumber')">返回</el-button>
+            </div>
+          </div>
+        </el-form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -107,6 +111,10 @@
 
 <!-- 全局样式 -->
 <style>
+  .bac{
+    background-color: #f5f5f5;
+    padding: 100px 0px;
+  }
 	.updataPass .el-input__inner {
 		background-color: #f5f5f5;
 		font-size: 14px;
@@ -124,7 +132,7 @@
 	}
 	.button .el-button+.el-button {
 		width: 160px;
-		height: 36px;
+		height: 40px;
 		line-height: 13px;
 	}
 	.content .el-input {
@@ -133,6 +141,12 @@
 	.codeNumber .el-input {
 		width: 160px;
 	}
+
+  @media (max-width: 760px) {
+    .codeNumber .el-input__inner{
+      width: 90%;
+    }
+  }
 
 </style>
 
@@ -158,7 +172,26 @@
 	}
 	.updataPass {
 		width: 955px;
-		margin:50px auto;
+		margin:0px auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
 	}
+
+  @media (max-width: 760px) {
+    .updataPass{
+      width: 90%;
+    }
+
+    .content{
+      width: 100%;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+
+    .content .el-input{
+      width: 100%;
+    }
+  }
 
 </style>

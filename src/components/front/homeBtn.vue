@@ -37,6 +37,7 @@ export default {
         text-align: center;
         color: #009fa0;
         cursor: pointer;
+        box-sizing: border-box;
     }
     .homeBtn:hover {
         background-color: #009fa0;
