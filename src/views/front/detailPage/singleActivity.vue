@@ -641,7 +641,8 @@ export default {
         border-radius: 5px;
         margin-bottom: 20px;
         width: auto;
-        height: 350px;
+        /*height: 350px;*/
+        overflow: hidden;
     }
     .asideBox .asideContent{
         display: flex;
@@ -795,6 +796,15 @@ export default {
         .singleActivityBody section .InfoBox{
             padding-left: 10px;
             padding-right: 10px;
+        }
+
+        .content article{
+          margin-top: 33px;
+          margin-bottom: 49px;
+        }
+
+        .singleActivityBody .InfoBtn{
+          margin-top: 0px;
         }
     }
 
