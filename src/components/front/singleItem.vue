@@ -188,9 +188,11 @@ export default {
     .singleItemDetail {
         display: flex;
         flex-wrap:wrap;
-        width: 870px;
+        /*width: 870px;*/
+        width: 100%;
         /*height: 506px;*/
         padding: 30px 0 0 35px;
+        box-sizing: border-box;
     }
     .informationThree {
         line-height: 22px;
@@ -238,11 +240,12 @@ export default {
         justify-content:space-between;
         align-items:center;
         border-top: 1px solid #efefef;
-        width: 865px;
+        width: 100%;
         height: 71px;
         padding: 0 20px 0;
         cursor: pointer;
         border-radius: 5px;
+        box-sizing: border-box;
     }
     * {
         margin: 0;
