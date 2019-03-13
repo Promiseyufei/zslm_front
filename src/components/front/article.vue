@@ -47,9 +47,9 @@
             * 跳转页面
             * */
             jump:function (id) {
-                console.log();
-                // this.$emit('jump',{id:id});
-                window.open(document.location.origin+'/#/front/firstMenuRouter/lookActivity/singleActivity/'+id , '_blank');
+                console.log(id);
+                this.$emit('jump',{id:id});
+                // window.open(document.location.origin+'/#/front/firstMenuRouter/viewInformation/singleInformation/'+id , '_blank');
             },
         },
 

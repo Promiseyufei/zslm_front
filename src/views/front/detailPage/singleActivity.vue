@@ -122,7 +122,7 @@
                     <!-- </div> -->
                     <!-- 热门活动推荐 -->
                     <div class="HotAcList">
-                        <Article @refreshs="refresh" v-if="hotInfor.length" title="热门活动" :inforArticle="hotInfor"></Article>
+                        <Article @jump="jump" @refreshs="refresh" v-if="hotInfor.length" title="热门活动" :inforArticle="hotInfor"></Article>
                     </div>
                 </aside>
             </div>
@@ -174,6 +174,11 @@ export default {
                     window.open(url);
                 }
             }
+        },
+        jump(zxId) {
+          // console.log(zxId);return false;
+          // this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + zxId.id);
+          window.open(document.location.origin+'/#/front/firstMenuRouter/lookActivity/singleActivity/'+zxId.id , '_blank');
         },
         /**
          * 获取banner图

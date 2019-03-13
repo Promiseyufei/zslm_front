@@ -82,7 +82,8 @@ export default {
         },
         jump(zxId) {
             // console.log(zxId);return false;
-            this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + zxId.id);
+            // this.$router.push('/front/firstMenuRouter/viewInformation/singleInformation/' + zxId.id);
+            window.open(document.location.origin+'/#/front/firstMenuRouter/viewInformation/singleInformation/'+zxId.id , '_blank');
         },
         refresh: function (data) {
             this.pageNumber++;
