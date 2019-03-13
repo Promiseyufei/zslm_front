@@ -233,6 +233,7 @@ export default {
     -webkit-box-align: start;
     -ms-flex-align: start;
     align-items: flex-start;
+    margin-left: 20px;
 }
 
 .div_mnG0wo .div_oLhlRV {

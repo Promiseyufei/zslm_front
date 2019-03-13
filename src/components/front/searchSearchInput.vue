@@ -29,7 +29,7 @@ export default {
 
 <style scoped>
 .search_search_input {
-    margin-right:10px;
+    /*margin-right:10px;*/
 }
 .search_search_input input {
     outline: none;
