@@ -205,7 +205,7 @@
         font-weight: bolder;
     }
     .title-head{
-        margin-top: 59px;
+        /*margin-top: 59px;*/
         height: 40px;
         border-bottom: 1px solid #e7e7e7;
     }
@@ -349,6 +349,8 @@
         }
         .float-right{
             float: left;
+          width: 100%;
+          margin-top: 10px;
         }
         .university{
             width: 100%;
@@ -359,9 +361,9 @@
         .title-head{
             height: 79px;
         }
-
-
     }
+
+
 </style>
 <style>
     .float-right .el-input__inner{
@@ -399,5 +401,20 @@
             width: 89% !important;
         }
 
+    }
+
+    @media (max-width: 760px) {
+      .title-head{
+        height: 90px;
+      }
+
+      float-right{
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .float-right .el-input__inner{
+        width: 100% !important;
+      }
     }
 </style>
