@@ -491,7 +491,7 @@ export default {
         min-height: auto;
         -webkit-box-pack: justify;
         -ms-flex-pack: justify;
-        margin-top: 19px;
+        /*margin-top: 19px;*/
         justify-content: space-between;
     }
     .InfoBtn>a{
@@ -619,11 +619,11 @@ export default {
         font-weight: bold;
     }
     .content article{
-        /*margin-bottom: 49px;*/
+        margin-bottom: 49px;
         font-size: 16px;
         line-height: 30px;
         color: rgb(110,110,110);
-        /*margin-top: 33px;*/
+        margin-top: 33px;
         text-align: justify;
     }
 
