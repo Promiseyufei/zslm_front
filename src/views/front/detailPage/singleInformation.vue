@@ -212,11 +212,15 @@
     font-size: 16px;
     line-height: 30px;
   }
-  
+
   @media (max-width: 760px) {
     .content-article-write img{
       width: 100%;
       height: auto;
+    }
+
+    .content{
+      margin-bottom: 0px !important;
     }
   }
 </style>
@@ -479,7 +483,5 @@
       height: auto;
       display: block;
     }*/
-
-
   }
 </style>
