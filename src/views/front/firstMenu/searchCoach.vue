@@ -527,11 +527,11 @@
   }
 
   .singlecoachtop>img {
-    width: 40%;
+    width: 120px;
   }
 
   .singlecoachtop2>img {
-    width: 40%;
+    width: 120px;
   }
 
   .singlecoach>span {
@@ -625,6 +625,13 @@
       overflow: hidden;
       margin-top: 0px;
       margin-bottom: 20px;
+    }
+
+    .singlecoachtop>img{
+      width: 60%;
+    }
+    .singlecoachtop2>img{
+      width: 60%;
     }
   }
 </style>
