@@ -14,7 +14,7 @@
                         <div class="clearfloat">
                             <div class="collage-conten-article" v-for="(item,index) in information" :key="index">
                                 <div class="collage-title">
-                                    <span style="float:left;width:90%">{{item.z_name}}</span>
+                                    <span>{{item.z_name}}</span>
                                     <span class="collage-cancel"><i class="el-icon-close cancel" @click="removeAsMajor(item.id)"></i></span>
                                     <div class="collage-mba"></div>
                                 </div>
@@ -373,6 +373,10 @@
         font-weight: bolder;
         margin: auto;
     }
+    .collage-title span:first-child{
+      float: left;
+      width: 90%;
+    }
     .collage-cancel{
         float: right;
     }
@@ -405,6 +409,7 @@
         margin-right: 6px;
         margin-left: 6px;
         float: left;
+        line-height: 35px;
     }
     .collage-font{
         font-family: MicrosoftYaHei;
@@ -465,15 +470,22 @@
         }
         .collage-position{
             width: 45%;
+            display: inline-flex;
         }
         .collage-major{
             padding: 0px;
             margin: auto;
             width: 100%;
+          padding-top: 25px;
         }
         .collage-con{
             width: 96%;
             margin: auto;
         }
+
+      .collage-title span:first-child{
+        width: 85%;
+        line-height: 35px;
+      }
     }
 </style>

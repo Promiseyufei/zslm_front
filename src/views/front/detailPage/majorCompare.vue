@@ -83,7 +83,7 @@
                             </p>
                         </div>
                         <div class="clearfloat">
-                            <div v-for="(item,index) in information" class="collage-font collage-position" :key="index"> 
+                            <div v-for="(item,index) in information" class="collage-font collage-position" :key="index">
                                 <div class="languageMajor" v-if="item.language == Chinese"><img src="../../../assets/img/chinese4.jpg" alt=""></div>
                                 <div class="languageMajor" v-else><img src="../../../assets/img/english.jpg" alt=""></div>
                                 <p style="color: #aaaaaa;">(课程均为{{ item.language }})</p>
@@ -294,6 +294,7 @@
     .languageMajor{
         width: 34px;
         height: 34px;
+        margin-bottom: 10px;
     }
     .languageMajor > img{
         width: 100%;
@@ -409,6 +410,7 @@
         margin-right: 6px;
         margin-left: 6px;
         float: left;
+        line-height: 30px;
     }
     .collage-font{
         font-family: MicrosoftYaHei;
@@ -468,7 +470,9 @@
             width: 50%;
         }
         .collage-position{
-            width: 45%;
+            width: 50%;
+            margin-left: 0px;
+            margin-right: 0px;
         }
         .collage-major{
             padding: 0px;
@@ -478,6 +482,29 @@
         .collage-con{
             width: 96%;
             margin: auto;
+            padding-top: 25px;
         }
+
+        .collage-title{
+          height: auto;
+          padding-bottom: 10px;
+          padding-right: 20px;
+          box-sizing: border-box;
+          position: relative;
+          line-height: 40px;
+        }
+
+        .collage-cancel{
+          position: absolute;
+          top: 0px;
+          right: 0px;
+        }
+    }
+
+    @media only screen and (max-width: 767px) and (min-width: 320px){
+      .content[data-v-6dc19430] {
+        width: 100%;
+         margin-bottom: 0px;
+      }
     }
 </style>

@@ -248,6 +248,7 @@
     }
     .university:nth-child(4n){
         margin-right: 0px;
+      
     }
     .university-icon{
         width: 100%;
