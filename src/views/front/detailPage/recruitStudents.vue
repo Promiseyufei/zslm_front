@@ -340,6 +340,11 @@
         height: 50px;
         margin-top: 20px;
     }
+
+    .apartPage button{
+      border: none !important;
+    }
+    
     @media (max-width: 991px){
         .single-div-con{
             width: 95%;
