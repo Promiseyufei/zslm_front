@@ -7,33 +7,87 @@
                     <img class="c-image image_Y5MjSi" src="http://qty83k.creatby.com/materials/2771/origin/c2002a76f6c09f0000660a8ad7c20035_origin.png">
                     <h1 class="c-heading textlink_e6pE3X daliebiao wode">{{data.coach_name}}</h1>
                     <p class="c-ellipse c-paragraph paragraph_XjkcYS">{{data.province}}+{{data.city}}</p>
-                </div><div class="c-div div_m9HjXA c-action-click" >
-                <h1 class="c-heading heading_6Bjcro"><a :href="data.web_url">进入主页</a></h1>
-            </div></div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_PITz90">
-            <div class="c-div cs-repeatable div_2wrISM">
-                <div class="c-div div_x27uqU wode"  v-for="(item,index) in this.data.coupon">
-                    <div class="c-div div_VjbXVh wode">
-                        <div class="row c-row row_le0dbL">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_jKGCDi wode">
-                                <h1 class="c-heading heading_Wi6xhy wode" v-show="item.type == 1">折扣券</h1>
-                                <h1 class="c-heading heading_Wi6xhy wode manjian " v-show="item.type == 0">满减券</h1>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_wOc8K3 wode">
-                                <h1 class="c-heading heading_o0nVub wode">{{item.name}}</h1>
-                                <h1 class="c-heading heading_j4aUpK wode">2018.10.12-2018.11.12</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="c-div div_8LVJIQ shiyong wode c-action-click" v-if="use_show" @click="userCouponFunc(item.id)">
-                        <h1 class="c-heading heading_UEZrXJ shiyong wode" >去<div>使</div><div>用</div></h1>
-                    </div>
                 </div>
-
+              <div class="c-div div_m9HjXA c-action-click" >
+                <h1 class="c-heading heading_6Bjcro"><a :href="data.web_url">进入主页</a></h1>
+              </div>
             </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_PITz90">
+              <div class="c-div cs-repeatable div_2wrISM">
+                  <div class="c-div div_x27uqU wode"  v-for="(item,index) in this.data.coupon">
+                      <div class="c-div div_VjbXVh wode">
+                          <div class="row c-row row_le0dbL">
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_jKGCDi wode">
+                                  <h1 class="c-heading heading_Wi6xhy wode" v-show="item.type == 1">折扣券</h1>
+                                  <h1 class="c-heading heading_Wi6xhy wode manjian " v-show="item.type == 0">满减券</h1>
+                              </div>
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_wOc8K3 wode">
+                                  <h1 class="c-heading heading_o0nVub wode">{{item.name}}</h1>
+                                  <h1 class="c-heading heading_j4aUpK wode">2018.10.12-2018.11.12</h1>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="c-div div_8LVJIQ shiyong wode c-action-click" v-if="use_show" @click="showDialog(item.id)">
+                          <h1 class="c-heading heading_UEZrXJ shiyong wode">去<div>使</div><div>用</div></h1>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
-        </div>
+      <!-- 弹出层 -->
+      <el-dialog
+        title="优惠卷使用说明"
+        :visible.sync="dialogFormVisible"
+        append-to-body=true
+        :before-close="handleClose">
+        <span><div v-html="couponcol"></div></span>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="userCouponFunc">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
 </template>
+<style>
+  .el-dialog{
+    border-radius: 5px !important;
+    width: 40% !important;
+  }
+  .el-dialog__headerbtn:hover{
+    background-color: #ffb957;
+    border-radius: 50%;
+  }
+
+  .el-dialog__headerbtn:hover .el-dialog__close{
+    color: #ffffff;
+  }
+
+  .el-dialog__header{
+    border-bottom:1px solid #efefef;
+  }
+  .el-dialog__footer{
+    margin: 0px;
+    padding: 0px !important;
+    width: 100% !important;
+  }
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: 100% !important;
+    border-radius: 0px 0px 5px 5px !important;
+  }
+
+  .el-dialog__body{
+    line-height: 30px;
+    font-size: 12px;
+    color: #484848;
+  }
+
+  @media (max-width: 760px) {
+    .el-dialog{
+      width: 95% !important;
+    }
+  }
+</style>
 <style>
     *{
         margin: 0;
@@ -259,6 +313,7 @@
         -o-transition: All 0.3s ease;
         -moz-transition: All 0.3s ease;
         -webkit-transition: All 0.3s ease;
+        /*overflow: hidden;*/
     }
 
     .column_uyUjdj {
@@ -356,6 +411,18 @@
         align-items: center;
     }
 
+    .div_m9HjXA:hover{
+      background-color: #ffb957;
+    }
+
+    .div_m9HjXA:hover a{
+      color: #ffffff;
+    }
+
+    .div_m9HjXA:hover .heading_6Bjcro{
+      background-image: url('../../assets/img/icon2.png');
+    }
+
     .c-action-click {
         cursor: pointer;
     }
@@ -373,7 +440,7 @@
         opacity: 0.6;
         text-align: center;
         margin: 0px auto;
-        background-image: url(http://qty83k.creatby.com/materials/2771/origin/861a7ca2f17ebcb8155ecd375730c1eb_origin.png);
+        background-image: url('../../assets/img/icon1.png');
         background-repeat: no-repeat;
         background-position: 0% 50%;
         padding-left: 19px;
@@ -635,26 +702,44 @@
                 active:[],
                 loading:false,
                 disabled:false,
-                loadingBtnText:'加载更多'
+                loadingBtnText:'加载更多',
+                dialogFormVisible:false,
+                couponcol:'',
+                couponId:0,
             };
         },
         methods: {
-
-            userCouponFunc(id){
-                var phone = this.getUserState("user")
-                    let self = this
-                this.post('/front/coupon/usecoupon',{
+            userCouponFunc(){
+                if(this.couponId){
+                  var phone = this.getUserState("user");
+                  let self = this;
+                  this.post('/front/coupon/usecoupon',{
                     u_id:self.id,
-                    c_id:id,
+                    c_id:self.couponId,
                     phone:phone
-                }).then(res=>{
+                  }).then(res=>{
                     if(res.code == 0){
-                        this.message(true,"使用成功",'success')
-                        this.$parent.pageInfo(0,0)
+                      this.message(true,"使用成功",'success')
+                      this.$parent.pageInfo(0,0)
                     }else{
-                        this.message(true,res.msg,'error')
+                      this.message(true,res.msg,'error')
                     }
-                })
+                  })
+                }
+            },
+            showDialog(id){
+              // 获取优惠券使用说明
+              this.fetch('/front/coupon/getCouponcol' , {id:id}).then((res)=>{
+                if(res.code == 0){
+                  this.couponcol = res.result;
+                  this.couponId = id,
+                    this.dialogFormVisible = true;
+                }
+              }).catch((error)=>{
+                this.couponcol = '';
+                this.couponId = 0,
+                  console.log(error);
+              });
             }
         },
         props: ["data","use_show","id"],

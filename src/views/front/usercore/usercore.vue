@@ -20,22 +20,67 @@
 	</div>
 </template>
 <script>
-	export default {
-		data() {
-			return {
+  export default {
+    data() {
+      return {
+        id: 1,
+        userName: '',
+        userProvice: '',
+        userCity: '',
+        userCollege: 0,
+        userActive: 0,
+        userNews: 0,
+        userCoupon: 0,
+        userHead: '',
+        page: 1,
+        page_size: 3,
+      };
+    },
+    methods: {
+      info() {
 
-			}
-		},
-		methods: {
+        var arr, reg = new RegExp("(^| )" + 'userId' + "=([^;]*)(;|$)");
+        var uid = ''
+        if (arr = document.cookie.match(reg)) {
+          uid = arr[2] == '0' ? '' : arr[2];
+        }
 
-		},
-		mounted() {
+        if(uid == '0'){
 
-		}
+        }
 
-	}
+        let self = this;
+        this.fetch('/front/usercore/getuserinfo?id=' + self.id)
+          .then(res => {
+            if (res.code == 0) {
+              let result = res.result[0];
+              self.userName = result.user_name;
+              self.userProvice = result.provice
+              self.userCity = result.city
+              self.userCollege = result.majorCount;
+              self.userActive = result.activeCount;
+              self.userNews = result.newCount;
+              self.userCoupon = result.couponCount;
+              self.userHead = result.head_portrait;
+            }
+          })
+      },
+    },
+    mounted() {
+      console.log(this.loginOr);
+      this.id = this.getUserState("userId")
+      // console.log(this.id)
+      let divs = document.getElementsByTagName("div")
+      divs[1].style.height = 0;
+      divs[2].style.height = 0;
+      this.info();
+      // this.getMajor();
+    },
+    created () {
+      this.changeTile('专硕联盟-个人中心');
+    }
+  }
 </script>
-
 <style scoped>
 	* {
 		margin: 0;
@@ -607,67 +652,3 @@
 		}
 	}
 </style>
-
-<script>
-	export default {
-		data() {
-			return {
-				id: 1,
-				userName: '',
-				userProvice: '',
-				userCity: '',
-				userCollege: 0,
-				userActive: 0,
-				userNews: 0,
-				userCoupon: 0,
-				userHead: '',
-				page: 1,
-				page_size: 3,
-			};
-		},
-		methods: {
-
-
-			info() {
-
-				var arr, reg = new RegExp("(^| )" + 'userId' + "=([^;]*)(;|$)");
-				var uid = ''
-				if (arr = document.cookie.match(reg)) {
-					uid = arr[2] == '0' ? '' : arr[2];
-				}
-
-				if(uid == '0'){
-
-				}
-
-				let self = this;
-				this.fetch('/front/usercore/getuserinfo?id=' + self.id)
-					.then(res => {
-						if (res.code == 0) {
-							let result = res.result[0];
-							self.userName = result.user_name;
-							self.userProvice = result.provice
-							self.userCity = result.city
-							self.userCollege = result.majorCount;
-							self.userActive = result.activeCount;
-							self.userNews = result.newCount;
-							self.userCoupon = result.couponCount;
-							self.userHead = result.head_portrait;
-						}
-					})
-			},
-		},
-		mounted() {
-			this.id = this.getUserState("userId")
-			// console.log(this.id)
-			let divs = document.getElementsByTagName("div")
-			divs[1].style.height = 0;
-			divs[2].style.height = 0;
-			this.info();
-			// this.getMajor();
-		},
-		created () {
-			this.changeTile('专硕联盟-个人中心');
-		}
-	}
-</script>

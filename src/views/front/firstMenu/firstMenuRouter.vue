@@ -275,7 +275,8 @@
 			},
 
 		},
-		watch: {
+
+    watch: {
 			$router() {
 				this.rushRouter();
 			}
