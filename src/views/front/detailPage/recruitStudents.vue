@@ -248,7 +248,7 @@
     }
     .university:nth-child(4n){
         margin-right: 0px;
-      
+
     }
     .university-icon{
         width: 100%;
@@ -367,6 +367,10 @@
 
 </style>
 <style>
+    .university:nth-child(4n){
+      margin-right: 0px;
+
+    }
     .float-right .el-input__inner{
         border-radius: 23px;
         width: 307px;
