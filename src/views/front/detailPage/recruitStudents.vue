@@ -342,9 +342,9 @@
     }
 
     .apartPage button{
-      border: none !important;
+      border: 0px !important;
     }
-    
+
     @media (max-width: 991px){
         .single-div-con{
             width: 95%;

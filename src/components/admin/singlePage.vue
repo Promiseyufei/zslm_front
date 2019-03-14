@@ -49,7 +49,7 @@ export default {
     * 分页样式
     */
     .apartPage li, .apartPage button {
-        border: 1px solid #d7d7d7 !important;
+        /*border: 1px solid #d7d7d7 !important;*/
         margin-right: 10px;
         border-radius: 3px;
         color: #999;
@@ -71,7 +71,7 @@ export default {
     .apartPage .active:hover {
         color: #fff !important;
     }
-    .apartPage li:hover { 
+    .apartPage li:hover {
         color: #1abc9c !important;
     }
     .apartPage button:hover {

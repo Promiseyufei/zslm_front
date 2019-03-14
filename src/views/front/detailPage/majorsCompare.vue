@@ -350,10 +350,12 @@
     ;
     }
     .collage-major{
-        width: 96%;
+        width: 100%;
         padding: 30px;
         padding-top: 46px;
         background-color: #FFFFFF;
+        border-radius: 10px;
+        box-sizing: border-box;
     }
     .collage-conten-article{
         width: 25%;
