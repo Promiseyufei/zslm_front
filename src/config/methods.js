@@ -35,7 +35,7 @@ export default {
 	},
 	/**
 	 * 搜索页用于获得去掉参数的路由
-	 * @param {string} url 
+	 * @param {string} url
 	 */
 	getChangeUrl(url) {
 		var arr = url.split("/");
@@ -63,7 +63,7 @@ export default {
 
 	/**
 	 * 获得本地用户登录状态
-	 * @param {String} userName 
+	 * @param {String} userName
 	 */
 	getUserState(userName) {
 		typeof userName == 'undefined' ? 'user' : userName;
@@ -85,14 +85,25 @@ export default {
 	},
 
 	/**
-	 * 
-	 * @param {String} phoneNumber 手机号码 
+	 *
+	 * @param {String} phoneNumber 手机号码
 	 */
 	sendSmsCode(phoneNumber) {
-
 		this.time = 60;
 		this.disabled = true;
-		this.timer();
+		var _this = this;
+
+		var times = setInterval(function(){
+      if (_this.time > 0) {
+        _this.time--;
+        _this.btntxt = _this.time;
+      }else{
+        _this.time = 0;
+        _this.btntxt = "重新发送";
+        _this.disabled = false;
+        clearInterval(times);
+      }
+    } , 1000);
 
 		this.fetch('/login/front/sendSmsCode', {
 			userPhone: phoneNumber
