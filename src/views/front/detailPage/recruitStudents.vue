@@ -246,8 +246,11 @@
         margin-top: 33px;
         overflow: hidden;
     }
+    .university:nth-child(3n){
+      margin-right: 15px !important;
+    }
     .university:nth-child(4n){
-        margin-right: 0px;
+        margin-right: 0px !important;
 
     }
     .university-icon{
