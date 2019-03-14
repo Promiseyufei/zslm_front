@@ -527,11 +527,11 @@
   }
 
   .singlecoachtop>img {
-    width: 120px;
+    width: 180px;
   }
 
   .singlecoachtop2>img {
-    width: 120px;
+    width: 180px;
   }
 
   .singlecoach>span {
