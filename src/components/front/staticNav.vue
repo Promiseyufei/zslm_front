@@ -1,12 +1,12 @@
 <template>
     <!--footer静态导航栏：关于我们、用户条款、帮助中心、法律声明-->
     <!-- <staticNav :state="state"></staticNav> -->
-    <div>                                                 
+    <div>
         <div class="staticNav">
             <div @click = "toJump(index)" :class="{'activediv':index == state}" :key="index" v-for="(item,index) in data">
                 <span :class="{'activespan':index == state}"></span>
                 <p :class="{'activep':index == state}">{{item}}</p>
-            </div>        
+            </div>
         </div>
     </div>
 </template>
@@ -56,7 +56,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px 191px 19px 21px; 
+        padding: 20px 191px 19px 21px;
     }
     /*.staticNav div:hover{
         background-color: #eaebeb;
@@ -95,7 +95,7 @@
             background-color: unset;
         }
         .staticNav div{
-            width: 55px;
+            /*width: 55px;*/
             padding: 0 1% 3% 1%;
             margin: 2% 2% 0;
         }
