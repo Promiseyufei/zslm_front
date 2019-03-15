@@ -358,7 +358,9 @@
                         self.editorContent = res.result.describe;
                         // console.log(self.editorContent)
                         // self.editor.txt.html(self.editorContent);
-                        self.$refs.ue.setUEContent(self.editorContent);
+                        // self.$refs.ue.setUEContent(self.editorContent);
+                        self.defaultMsg = self.editorContent;
+
                         self.counsellForm.name = res.result.coach_name
                         self.counsellForm.region =  parseInt(res.result.province)
                         self.counsellForm.tell = res.result.phone

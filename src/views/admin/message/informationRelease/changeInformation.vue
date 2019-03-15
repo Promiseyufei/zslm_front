@@ -232,7 +232,8 @@ export default {
                     _this.infoCoverUrl = response.result.z_image;
                     _this.infoMsg = response.result;
                     // _this.editor.txt.html(response.result.z_text);
-                    _this.$refs.ue.setUEContent(response.result.z_text);
+                    // _this.$refs.ue.setUEContent(response.result.z_text);
+                    _this.defaultMsg = response.result.z_text;
                 }
                 else
                     this.message(true, "未查询到指定资讯的信息", 'error');

@@ -23,6 +23,7 @@
       },
     },
     mounted() {
+      console.log(this.defaultMsg);
       const _this = this;
       this.editor = UE.getEditor(this.id, this.config); // 初始化UE
       this.editor.addListener("ready", function () {
@@ -45,11 +46,12 @@
         this.editor.setDisabled('fullscreen');
       },
       setUEContent(html){
-        let self = this;
 
-        this.editor.addListener("ready", function () {
+        this.editor.setContent(html);
+
+       /* this.editor.addListener("ready", function () {
           self.editor.setContent(html);
-        });
+        });*/
 
         /*this.editor.ready(function() {
           // console.log(editor);

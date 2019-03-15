@@ -342,7 +342,8 @@
                             that.form.Keywords = res.result.keywords;
                             that.form.Description = res.result.description;
                             // that.ruleForm.introduce = res.result.introduce;
-                            that.$refs.ue.setUEContent(res.result.introduce);
+                            // that.$refs.ue.setUEContent(res.result.introduce);
+                            that.defaultMsg = res.result.introduce;
 
                             that.activityCoverImg.activityCoverMapUrl = res.result.active_img;
                             that.activityCoverImg.activityCoverDefultName = res.result.active_cover_img_name;
