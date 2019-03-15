@@ -323,6 +323,9 @@ export default {
 </script>
 <style>
 /* 封面图样式 */
+.el-button--primary{
+  width: auto !important;
+}
 .info_cover_img .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
