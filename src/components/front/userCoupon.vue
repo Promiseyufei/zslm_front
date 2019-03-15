@@ -47,7 +47,7 @@
       </el-dialog>
     </div>
 </template>
-<style>
+<style scoped>
   .el-dialog{
     border-radius: 5px !important;
     width: 40% !important;
