@@ -61,27 +61,30 @@
                     v-model="textarea">
                     </el-input>
                 </div>
-               <div id="editor">
+               <!--<div id="editor">
 
                </div>
-
+-->
+              <UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>
                 <div>
                     <el-input placeholder="请输入相关链接" v-model="input" style="margin-top:30px;" :disabled="disabled">
                         <template slot="prepend">Http://</template>
                     </el-input>
                 </div>
-               
+
             </div>
         </div>
         <div class="sendMess">
             <!-- <el-button type="primary" v-if="shortMess == ''" :disabled="false">发消息</el-button>   -->
             <el-button type="primary" v-if="shortMess == 1" :disabled="disabled" @click="send">发消息</el-button>
-            <el-button type="primary" v-else-if="shortMess == 0" @click="putExcel">导出用户列表</el-button>     
-        </div> 
+            <el-button type="primary" v-else-if="shortMess == 0" @click="putExcel">导出用户列表</el-button>
+        </div>
     </div>
 </template>
 <script>
+    import UE from '../../../../components/ue/ue.vue';
     export default {
+        components: {UE},
         data() {
             return {
                 uploadUrl: this.globals.excelUrl + '/admin/news/putExcel',
@@ -100,6 +103,13 @@
                 editorContent:'',
                 carrier:-1,
                 textarea:'',
+
+                defaultMsg: '',
+                config: {
+                  initialFrameWidth: null,
+                  initialFrameHeight: 350
+                },
+                ue1: "ue1", // 不同编辑器必须不同的id
             };
         },
         // watch:{
@@ -111,11 +121,11 @@
             shortMess(newval, oldval) {
                 if(newval == 0 || newval == '0') {
                     this.disabled = true;
-                    this.editor.$textElem.attr('contenteditable', false);
+                    this.$refs.ue.setUEDisabled();
                 }
                 else if(newval == 1 || newval == '1') {
                     this.disabled = false;
-                    this.editor.$textElem.attr('contenteditable', true);
+                    this.$refs.ue.setUeEnabled();
                 }
             }
         },
@@ -149,6 +159,8 @@
                 return true;
             },
             send() {
+                this.editorContent = this.$refs.ue.getUEContent();
+
                 if(this.validateParameter()) {
 
                     // this.confirm(() => {
@@ -164,7 +176,7 @@
                             if(response.code == 0) {
                                 this.message(true, response.msg, 'success');
                             }
-                            else 
+                            else
                                 this.message(true, response.msg, 'error');
                         })
                     // }, () => {
@@ -200,13 +212,13 @@
             }
 
             //生成编辑器
-            this.editor = new WangEditor('#editor');
+            /*this.editor = new WangEditor('#editor');
             this.editor.customConfig.onchange = (html) => {
                 this.editorContent = html;
             }
             this.editor.create();
-            this.editor.$textElem.attr('contenteditable', false);
-            
+            this.editor.$textElem.attr('contenteditable', false);*/
+
         }
     }
 
@@ -227,7 +239,7 @@
         height: 50px;
     }
     .fileSteps .is-finish .is-text {
-        background: #1ABC9C; 
+        background: #1ABC9C;
         color: #fff;
     }
     .fileSteps .el-step__icon-inner {
@@ -256,7 +268,7 @@
         margin: 20px 0 0 180px;
     }
     .rightEditor {
-        border-bottom: 1px solid #dddddd; 
+        border-bottom: 1px solid #dddddd;
         height: 100px;
     }
     .radio {

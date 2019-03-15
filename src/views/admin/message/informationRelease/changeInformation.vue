@@ -50,7 +50,7 @@
                             <el-form-item label="资讯简介">
                                 <el-input type="textarea" v-model="infoMsg.brief_introduction" :disabled = "disabled"></el-input>
                             </el-form-item>
-                            
+
                             <el-form-item label="资讯封面图">
                                 <div class="info_cover_img">
                                     <el-upload class="avatar-uploader" action="" :auto-upload="false" :on-change="changeCoverMapUpload" :multiple="false" :show-file-list="false">
@@ -59,7 +59,7 @@
                                     </el-upload>
                                 </div>
                             </el-form-item>
-                            
+
                             <el-form-item>
                                 <el-button type="primary" @click="putInfoMsg" :disabled = "disabled">提交</el-button>
                             </el-form-item>
@@ -87,11 +87,11 @@
                                 <el-form-item label="Description">
                                     <el-input v-model="infoMsg.description" :disabled = "disabled2"></el-input>
                                 </el-form-item>
-            
+
                                 <el-form-item>
                                     <el-button type="primary" @click="putInfoOtherMsg" :disabled = "disabled2">提交</el-button>
                                 </el-form-item>
-                            </el-form>  
+                            </el-form>
                         </div>
                     </div>
                 </div>
@@ -104,9 +104,10 @@
                     <div class="operateUpfilesRight2">
                         <el-button type="primary" @click="startChange3">编辑</el-button>
                         <div class="messageBtn">
-                            <div id="editor">
+                            <!--<div id="editor">
                                 <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
-                            </div>
+                            </div>-->
+                            <UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>
                             <div class="messageEditor">
                                 <el-button type="primary" plain :disabled = "disabled3" @click="messageEmpty">清空</el-button>
                                 <el-button type="primary" :disabled = "disabled3"  @click="putInfoTextMsg">提交</el-button>
@@ -126,9 +127,9 @@
 </template>
 
 <script>
+  import UE from '../../../../components/ue/ue.vue';
 export default {
-    components: {
-    },
+    components: {UE},
     data() {
         return {
             infoId: 0,
@@ -156,6 +157,13 @@ export default {
             editorContent:'',
             editor: new WangEditor('#editor'),
             id: 0,
+
+            defaultMsg: '',
+            config: {
+              initialFrameWidth: null,
+              initialFrameHeight: 350
+            },
+            ue1: "ue1", // 不同编辑器必须不同的id
         }
     },
     methods: {
@@ -166,7 +174,7 @@ export default {
                 this.infoCoverUrl = file.url;
                 this.infoCoverFile = file.raw;
             }
-        },        
+        },
         //上传图片判断
         beforeAvatarUpload(file) {
             const isJPG = file.raw.type === 'image/jpeg' || file.raw.type === 'image/png';
@@ -189,12 +197,14 @@ export default {
         },
         startChange3: function () {
             this.disabled3 = false;
-            this.editor.$textElem.attr('contenteditable', true);
+            // this.editor.$textElem.attr('contenteditable', true);
+            this.$refs.ue.setUeEnabled();
         },
         // 提交修改数据提交修改数据
         messageSubmit: function() {
             this.disabled3 = true;
-            this.editor.$textElem.attr('contenteditable', false);
+            // this.editor.$textElem.attr('contenteditable', false);
+            this.$refs.ue.setUEDisabled();
         },
         // 清空富文本编辑器内容
         messageEmpty: function() {
@@ -209,9 +219,9 @@ export default {
             if(this.$route.params.infoId != null) {
                 this.$router.push('/admin/message/recommend/' + this.$route.params.infoId);
             }
-            else 
+            else
                 this.message(true, '请先完成当前资讯的创建', 'info');
-            
+
         },
         getAppointIdInfoMsg() {
             let _this = this;
@@ -221,22 +231,25 @@ export default {
                 if(response.code == 0) {
                     _this.infoCoverUrl = response.result.z_image;
                     _this.infoMsg = response.result;
-                    _this.editor.txt.html(response.result.z_text);
+                    // _this.editor.txt.html(response.result.z_text);
+                    _this.$refs.ue.setUEContent(response.result.z_text);
                 }
                 else
                     this.message(true, "未查询到指定资讯的信息", 'error');
-                
+
             })
         },
         // 创建富文本编辑器
-        createEditor() {
+        /*createEditor() {
             let _this = this;
             this.editor.customConfig.onchange = (html) => {
+              console.log(html);
+
                 _this.editorContent = html;
             }
             this.editor.create();
             this.editor.$textElem.attr('contenteditable', false);
-        },
+        },*/
         putInfoMsg() {
             let formdata = new FormData();
             formdata.append('infoName', this.infoMsg.zx_name);
@@ -271,29 +284,29 @@ export default {
                     this.disabled2 = true;
                     this.message(true, response.msg, 'success');
                 }
-                else 
+                else
                     this.message(true, response.msg, 'error');
             })
         },
         putInfoTextMsg() {
             this.post('/admin/information/updateInfoTextMsg', {
                 infoId: this.infoId || this.$route.params.infoId,
-                text: this.editor.txt.html()
+                text: this.$refs.ue.getUEContent()
             }).then((response) => {
                 if(response.code == 0) {
                     this.getAppointIdInfoMsg();
                     this.messageSubmit();
                     this.message(true, response.msg, 'success');
                 }
-                else 
+                else
                     this.message(true, response.msg, 'error');
             })
         }
 
-        
+
     },
     mounted(){
-        this.createEditor();
+        // this.createEditor();
 
         if(this.$route.params.infoId != null && this.$route.params.infoId != '') {
             this.infoId = this.$route.params.infoId;
@@ -342,7 +355,7 @@ export default {
         height: 50px;
     }
     .fileSteps .is-finish .is-text {
-        background: #1ABC9C; 
+        background: #1ABC9C;
         color: #fff;
     }
     .fileSteps .el-step__icon-inner {

@@ -98,7 +98,7 @@
                                                 :show-file-list="false"
                                                 :auto-upload="false"
                                                 :multiple="false"
-                                                :on-change="changeLogoUpload" 
+                                                :on-change="changeLogoUpload"
                                                 >
                                                     <i style="display: inline-flex;flex-direction:row;flex-wrap:nowrap">
                                                         <el-button size="small" type="primary">点击上传</el-button>
@@ -140,7 +140,7 @@
                                                 :show-file-list="false"
                                                 :auto-upload="false"
                                                 :multiple="false"
-                                                :on-change="changeCoverMapUpload" 
+                                                :on-change="changeCoverMapUpload"
                                                 >
                                                     <i style="display: inline-flex;flex-direction:row;flex-wrap:nowrap">
                                                         <el-button size="small" type="primary">点击上传</el-button>
@@ -214,10 +214,11 @@
                     <div class="operateUpfilesRight2">
                         <el-button type="primary" @click="startChange3">编辑</el-button>
                         <div class="messageBtn">
-                            <div id="editor">
-                                <!-- <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> -->
-                                 <!-- <div v-html="editorContent"></div> -->
-                            </div>
+                            <!--<div id="editor">
+                                &lt;!&ndash; <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> &ndash;&gt;
+                                 &lt;!&ndash; <div v-html="editorContent"></div> &ndash;&gt;
+                            </div>-->
+                            <UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>
                             <div class="messageEditor">
                                 <el-button type="primary" plain :disabled="disabled3" @click="messageEmpty">清空
                                 </el-button>
@@ -238,8 +239,9 @@
 </template>
 
 <script>
+    import UE from '../../../../components/ue/ue.vue';
     export default {
-        components: {},
+        components: {UE},
         data() {
             return {
                 formLabelWidth: '120px',
@@ -303,7 +305,14 @@
                 majorLogoUrl: '',
                 majorLogoFile: null,
                 majorCoverMapUrl: '',
-                majorCoverMapFile: ''
+                majorCoverMapFile: '',
+
+                defaultMsg: '',
+                config: {
+                  initialFrameWidth: null,
+                  initialFrameHeight: 350
+                },
+                ue1: "ue1", // 不同编辑器必须不同的id
             }
         },
         computed: {
@@ -348,7 +357,8 @@
                     if(res.code == 0){
                         self.editorContent = res.result.describe;
                         // console.log(self.editorContent)
-                        self.editor.txt.html(self.editorContent);
+                        // self.editor.txt.html(self.editorContent);
+                        self.$refs.ue.setUEContent(self.editorContent);
                         self.counsellForm.name = res.result.coach_name
                         self.counsellForm.region =  parseInt(res.result.province)
                         self.counsellForm.tell = res.result.phone
@@ -380,7 +390,7 @@
 
                     }
                 })
-                    
+
             },
 
 
@@ -496,7 +506,8 @@
                 let that = this;
                 this.post('/admin/information/created', {
                     id: that.id,
-                    describe: that.editor.txt.html()
+                    // describe: that.editor.txt.html()
+                    describe: that.$refs.ue.getUEContent()
                 }).then(res => {
                     if(res.code == 0){
                         that.message(true,'提交成功','success')
@@ -514,17 +525,20 @@
             },
             startChange3: function () {
                 this.disabled3 = false;
-                this.editor.$textElem.attr('contenteditable', true);
+                // this.editor.$textElem.attr('contenteditable', true);
+                this.$refs.ue.setUeEnabled();
             },
             // 提交修改数据
             messageSubmit: function () {
                 this.disabled3 = true;
-                this.editor.$textElem.attr('contenteditable', false);
+                // this.editor.$textElem.attr('contenteditable', false);
+                this.$refs.ue.setUEDisabled();
                 this.postD()
             },
             // 清空富文本编辑器内容
             messageEmpty: function () {
-                this.editor.txt.clear();
+                // this.editor.txt.clear();
+                this.$refs.ue.setUEContent('');
             },
             //返回上一页
             toBack: function () {
@@ -547,9 +561,9 @@
             //     this.editorContent = html;
             // }
             // console.log(this.editorContent +'aaa')
-            this.editor.create();
+            /*this.editor.create();
             // this.editor.txt.html(this.editorContent);
-            this.editor.$textElem.attr('contenteditable', false);
+            this.editor.$textElem.attr('contenteditable', false);*/
         },
     };
 </script>

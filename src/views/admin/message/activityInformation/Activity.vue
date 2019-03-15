@@ -92,7 +92,7 @@
                                                     :show-file-list="false"
                                                     :auto-upload="false"
                                                     :multiple="false"
-                                                    :on-change="changeCoverMapUpload" 
+                                                    :on-change="changeCoverMapUpload"
                                                     >
                                                         <i style="display: inline-flex;flex-direction:row;flex-wrap:nowrap">
                                                             <el-button size="small" type="primary">点击上传</el-button>
@@ -169,10 +169,11 @@
                              <el-button type="primary" @click="startChange3">编辑</el-button>
                     <!---->
                             <div class="messageBtn">
-                                <div id="editor">
-                                    <!-- <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> -->
+                                <!--<div id="editor">
+                                    &lt;!&ndash; <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> &ndash;&gt;
                                     <div v-html="ruleForm.introduce"></div>
-                                </div>
+                                </div>-->
+                                <UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>
                                 <div class="messageEditor">
                                     <el-button type="primary" plain :disabled="disabled3" @click="messageEmpty">清空
                                     </el-button>
@@ -195,8 +196,9 @@
 </template>
 
 <script>
+    import UE from '../../../../components/ue/ue.vue';
     export default {
-        components: {},
+        components: {UE},
         data() {
             return {
                 formLabelWidth: '120px',
@@ -207,7 +209,7 @@
                     activityCoverDiscribe:'',
                     activityCoverDefultName:''
                 },
-                
+
                 dialogTableVisible: false,
                 actId: 0,
                 record: 0,
@@ -253,7 +255,14 @@
                 fileList2: [{
                     name: 'food.jpeg',
                     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                }]
+                }],
+
+                defaultMsg: '',
+                config: {
+                  initialFrameWidth: null,
+                  initialFrameHeight: 350
+                },
+                ue1: "ue1", // 不同编辑器必须不同的id
             }
         },
         computed: {
@@ -266,11 +275,10 @@
                 if(JSON.stringify(newVal) != "{}") {
                     this.ruleForm.coverImgName = '';
                     this.activityCoverImg.activityCoverImgName = '';
-                }                
+                }
             }
         },
         methods: {
-
             /**
              * info
              * 初始化地区字典以及专业字典
@@ -301,7 +309,7 @@
             changeCoverImgMsg() {
                 this.dialogTableVisible = true;
             },
-            
+
             changeActivityCoverImgMsg() {
                 this.ruleForm.coverImgName = this.activityCoverImg.activityCoverImgName;
                 this.ruleForm.coverImgDescribe = this.activityCoverImg.activityCoverDiscribe;
@@ -328,13 +336,14 @@
                             that.ruleForm.status=res.result.sign_up_state;
                             that.ruleForm.coverImgName = res.result.active_cover_img_name.split('.')[0];
                             that.ruleForm.coverImgDescribe = res.result.active_alt;
-                            
+
 
                             that.form.Title = res.result.title;
                             that.form.Keywords = res.result.keywords;
                             that.form.Description = res.result.description;
-                            that.ruleForm.introduce = res.result.introduce;
-                            
+                            // that.ruleForm.introduce = res.result.introduce;
+                            that.$refs.ue.setUEContent(res.result.introduce);
+
                             that.activityCoverImg.activityCoverMapUrl = res.result.active_img;
                             that.activityCoverImg.activityCoverDefultName = res.result.active_cover_img_name;
                             that.activityCoverImg.activityCoverImgName = that.activityCoverImg.activityCoverDefultName.split('.')[0];
@@ -365,7 +374,8 @@
             // },
             startChange3: function () {
                 this.disabled3 = false;
-                this.editor.$textElem.attr('contenteditable', true);
+                // this.editor.$textElem.attr('contenteditable', true);
+                this.$refs.ue.setUeEnabled();
             },
             //将base64转换为文件
             dataURLtoFile: function (dataurl, filename) {
@@ -473,14 +483,16 @@
                 if (this.record == 0) {
                     this.message(true, '请先创建活动', 'error');
                     return;
-                } else if (that.editor.txt.html() == '') {
+                // } else if (that.editor.txt.html() == '') {
+                } else if (this.$refs.ue.setUeEnabled() == '') {
                     this.message(true, '请输入内容', 'error');
                     return;
                 }
-                
+
                 this.post('/admin/information/setin', {
                     id: that.record,
-                    introduce: that.editor.txt.html()
+                    // introduce: that.editor.txt.html()
+                    introduce: that.$refs.ue.getUEContent()
                 }).then(res => {
                     if (res.code == 0) {
                         that.message(true, '提交成功', 'success');
@@ -503,15 +515,16 @@
             },
 
             // 提交修改数据
-
             messageSubmit: function () {
                 this.disabled3 = false;
-                this.editor.$textElem.attr('contenteditable', false);
+                // this.editor.$textElem.attr('contenteditable', false);
+                this.$refs.ue.setUEDisabled();
                 this.inPost();
             },
             // 清空富文本编辑器内容
             messageEmpty: function() {
-                this.editor.txt.clear();
+                // this.editor.txt.clear();
+                this.$refs.ue.setUEContent('');
             },
             //弹出上传图片对话框
             // addPic: function (e) {
@@ -531,9 +544,9 @@
                     }
                 });
             },
-            
+
             changeCoverMapUpload: function(file, fileList) {
-                
+
                 if(this.beforeAvatarUpload(file)) {
                     this.activityCoverImg.activityCoverMapUrl = file.url;
                     this.activityCoverImg.activityCoverMapFile = file.raw;
@@ -560,11 +573,11 @@
             // this.province = this.getProvince();
             // this.getMajor();
             this.actId = this.$route.params.actId
-            this.editor.customConfig.onchange = (html) => {
+            /*this.editor.customConfig.onchange = (html) => {
                 this.editorContent = html;
             }
             this.editor.create();
-            this.editor.$textElem.attr('contenteditable', false);
+            this.editor.$textElem.attr('contenteditable', false);*/
             this.info();
 
             if (this.actId != 0) {

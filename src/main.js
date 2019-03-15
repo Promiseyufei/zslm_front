@@ -44,6 +44,12 @@ import WangEditor from 'wangeditor'
 window.WangEditor = WangEditor
 
 
+import '../static/UE/ueditor.config.js'
+import '../static/UE/ueditor.all.min.js'
+import '../static/UE/lang/zh-cn/zh-cn.js'
+import '../static/UE/ueditor.parse.min.js'
+
+
 // import Mock from 'mockjs'
 // window.Mock = Mock
 // require('../util/mock/xuhong_mock.js')
@@ -93,10 +99,10 @@ Object.keys(wxShare).forEach((key) => {
  * 前端路由过滤
  */
 router.beforeEach((to, from, next) => {
-	
+
 	if(to.matched.length === 0) {
 		if(to.path == '/') {
-			
+
 			next('/front/index');
 		}
 		else {
@@ -116,15 +122,15 @@ router.beforeEach((to, from, next) => {
 		 * 后台
 		 */
 		if (to.path == '/admin/login') {
-		
+
 			var arr, reg = new RegExp("(^| )" + "admin_account" + "=([^;]*)(;|$)");
 			arr = document.cookie.match(reg)
 			var judgelogin = null
 			if (arr != null) {
 				judgelogin = arr[2] == '0' ? null : arr[2];
-			} 
-			
-			
+			}
+
+
 
 			if (judgelogin != null)
 				next({
@@ -140,10 +146,10 @@ router.beforeEach((to, from, next) => {
 
 			if (arr != null) {
 				judgelogin  = arr[2] == '0' ? null : arr[2];
-			} 
+			}
 
 			if (judgelogin == null) {
-	
+
 				next({
 					path: '/admin/login'
 				})
