@@ -45,7 +45,11 @@
         this.editor.setDisabled('fullscreen');
       },
       setUEContent(html){
-        this.editor.setContent(html);
+
+        this.editor.ready(function() {
+          this.editor.setContent(html);
+        });
+        // this.editor.setContent(html);
       },
     },
     destroyed() {
