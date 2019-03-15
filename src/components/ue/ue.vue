@@ -45,10 +45,16 @@
         this.editor.setDisabled('fullscreen');
       },
       setUEContent(html){
+        let self = this;
 
-        this.editor.ready(function() {
-          this.editor.setContent(html);
+        this.editor.addListener("ready", function () {
+          self.editor.setContent(html);
         });
+
+        /*this.editor.ready(function() {
+          // console.log(editor);
+          this.editor.setContent(html);
+        });*/
         // this.editor.setContent(html);
       },
     },
