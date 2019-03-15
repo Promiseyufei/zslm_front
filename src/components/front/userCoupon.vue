@@ -72,7 +72,7 @@
   .el-button--primary{
     background-color: #009fa0 !important;
     border-color: #009fa0 !important;
-    width: 100% !important;
+    /*width: 100% !important;*/
     border-radius: 0px 0px 5px 5px !important;
   }
 
