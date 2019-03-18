@@ -14,7 +14,7 @@
             <p>筛选查询</p>
             <div></div>
             <el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native="refreshActivityPage">刷新</el-button>
-        </div> 
+        </div>
         <div class="majorlist-form">
             <el-form class="majorlist-input" label-width="80px">
                 <el-form-item label="活动名称">
@@ -93,7 +93,7 @@
                 </div>
             </el-table>
         </div>
-        <div class="footer"> 
+        <div class="footer">
             <el-button size="mini" icon="el-icon-delete" @click="BatchDelete">删除</el-button>
             <Page :total="total" :limit="searchContent.limit" @pageChange="pageChange" ></Page>
         </div>
@@ -128,8 +128,8 @@
                 type3:'',
                 showweight:0,
                 options: [
-					{value: 0,　label: '按权重升序'}, 
-					{value: 1,label: '按权重降序'}, 
+					{value: 0,　label: '按权重升序'},
+					{value: 1,label: '按权重降序'},
 					{value: 2,label: '按信息更新时间'}
                 ],
             }
@@ -375,6 +375,13 @@
 
 <!-- 局部样式 scoped -->
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
     .el-table {
         color: #333;
     }
@@ -408,7 +415,7 @@
     .el-table th>.cell {
         font-size: 12px;
         font-weight: bold;
-        color: #666; 
+        color: #666;
         text-align: center;
     }
     .majorlist-icon i {
@@ -447,8 +454,9 @@
         position: absolute;
         right: 10px;
         top: 10px;
-        color: #666; 
-        background-color: #fff; 
+        /*color: #666; */
+        color: #fff;
+        background-color: #fff;
         border:1px solid #CCC;
         border-radius:0;
     }
