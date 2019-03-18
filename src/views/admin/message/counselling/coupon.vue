@@ -75,7 +75,7 @@
                                 ref="singleTable"
                                 :data="tableData"
                                 highlight-current-row
-                                border 
+                                border
                                 style="width: 100%"
                                 :header-cell-style="getRowClass"
                                 class="couponTable">
@@ -101,7 +101,7 @@
                                         <template slot-scope="scope" >
                                             <el-switch
                                                 active-color="#409eff" inactive-color="#999"
-                                                v-model="tableData[scope.$index].state" 
+                                                v-model="tableData[scope.$index].state"
                                                 @click.native="changeState(tableData[scope.$index].state, tableData[scope.$index].id)">
                                             </el-switch>
                                         </template>
@@ -122,7 +122,7 @@
                                         <template slot-scope="scope">
                                             <el-button @click="handleClick(scope.row.id)" type="text" size="small">查看</el-button>
                                         </template>
-                                    </el-table-column>									     
+                                    </el-table-column>
                                 </el-table>
                             </el-form>
                         </div>
@@ -220,7 +220,7 @@ export default {
             console.log(this.TableValue);
         },
         //查看详细内容
-        handleClick: function (couponId) { 
+        handleClick: function (couponId) {
             this.$router.push('/admin/message/coupon/' + this.id + '/' + couponId);
             this.couponId = couponId;
             this.getAppointCoupon();
@@ -257,7 +257,7 @@ export default {
         //         return;
         //     }
         //     this.post('/deletecouponDelete', {
-                
+
         //     }).then((response) => {
         //         if(response.code == 0) {
         //             this.tableData = [];
@@ -390,14 +390,14 @@ export default {
         if(this.$route.params.id != undefined && this.$route.params.id != 'undefined'){
             this.id = this.$route.params.id;
             this.info();
-        } 
+        }
         this.couponId = this.$route.params.couponId;
         if(this.$route.params.couponId != undefined && this.$route.params.couponId != 'undefined') {
             this.couponId = this.$route.params.couponId;
             this.getAppointCoupon();
         }
-        
-        
+
+
 
         // 创建富文本编辑器
         this.editor.customConfig.onchange = (html) => {
@@ -417,7 +417,7 @@ export default {
         height: 50px;
     }
     .fileSteps .is-finish .is-text {
-        background: #1ABC9C; 
+        background: #1ABC9C;
         color: #fff;
     }
     .fileSteps .el-step__icon-inner {
@@ -428,6 +428,13 @@ export default {
     }
 </style>
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
 .operateBox {
   width: 1500px;
   margin: 0 auto;
