@@ -331,8 +331,14 @@
 	}
 
 	.logoInto .el-badge {
-		margin: 0 33px 0 21px;
+    height: 24px;
+		margin: 0 21px;
 	}
+
+  .logoInto .el-badge img{
+    width: auto;
+    height: 100% !important;
+  }
 
 	.el-dropdown-menu__item--divided:before,
 	.el-menu,
@@ -369,9 +375,14 @@
 
 <style scoped>
 	.isLoginPicture {
-		width: 36px;
-		height: 36px;
+		width: 24px;
+		height: 24px;
 	}
+
+  .isLoginPicture img{
+    width: 100%;
+    height: 100%;
+  }
 
 	/*-----------foot-----------*/
 	.footer {
@@ -518,7 +529,7 @@
 	}
 
 	.logoInto {
-		width: 134px;
+		width: 122px;
 		display: flex;
 		align-items: center;
 	}
