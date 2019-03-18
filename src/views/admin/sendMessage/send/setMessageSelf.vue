@@ -24,10 +24,10 @@
                 <!-- 表格 -->
                 <div class="selfTable">
                     <template>
-                        <el-table 
-                            :data="tableData"  
-                            border 
-                            style="width: 100%" 
+                        <el-table
+                            :data="tableData"
+                            border
+                            style="width: 100%"
                             :header-cell-style="getRowClass"
                             @selection-change="handleSelectionChange">
                             <el-table-column
@@ -61,7 +61,7 @@
                 </div>
             </div>
     	</div>
-    	
+
     </div>
 </template>
 
@@ -208,7 +208,7 @@ export default {
     },
     mounted(){
         this.getUser();
-    
+
     },
 };
 </script>
@@ -230,7 +230,7 @@ export default {
         height: 50px;
     }
     .fileSteps .is-finish .is-text {
-        background: #1ABC9C; 
+        background: #1ABC9C;
         color: #fff;
     }
     .fileSteps .el-step__icon-inner {
@@ -241,6 +241,13 @@ export default {
     }
 </style>
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
     .operateBox {
         width: 1500px;
         margin: 0 auto;

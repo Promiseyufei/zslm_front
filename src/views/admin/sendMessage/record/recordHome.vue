@@ -9,7 +9,7 @@
         </div>
 
         <!-- 筛选查询 -->
-        <div class="recordHomeQuery"> 
+        <div class="recordHomeQuery">
             <i class="el-icon-search"></i>
             <p class="screen">筛选查询</p>
             <el-button size="mini" type="primary" icon="el-icon-refresh" class="refreshBut" @click.native = "Refresh">刷新</el-button>
@@ -30,9 +30,9 @@
                     <el-form-item label="消息关键字" label-width="180px">
                         <el-input v-model="messageCont" size="medium" placeholder="输入"></el-input>
                     </el-form-item>
-                </el-form>  
+                </el-form>
            </div>
-           <el-button class="queryBut" type="primary" icon="el-icon-search" @click.native="query">查询</el-button> 
+           <el-button class="queryBut" type="primary" icon="el-icon-search" @click.native="query">查询</el-button>
         </div>
 
         <!-- 数据列表 -->
@@ -72,7 +72,7 @@
                 startTime:'',
                 overTime:'',
                 messageCont: '',
-                
+
                 /*表格*/
                 tableTop:[
                     {type:'',prop:'id',label:'消息ID',width:120},
@@ -173,6 +173,13 @@
 </style>
 
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
     .footer {
         border: 1px solid #E4E4E4;
         text-align: right;
@@ -204,8 +211,9 @@
         position: absolute;
         right: 10px;
         top: 10px;
-        color: #666; 
-        background-color: #fff; 
+        /*color: #666;*/
+        color: #fff;
+        background-color: #fff;
         border:1px solid #CCC;
         border-radius:0;
     }
@@ -218,7 +226,7 @@
         border-radius: 0;
         color: #666;
         font-size: 12px;
-    } 
+    }
     .el-button--primary {
         padding: 9px 15px;
     }
@@ -265,5 +273,5 @@
         margin: 0 auto 20px;
         width: 1500px;
     }
-    
+
 </style>

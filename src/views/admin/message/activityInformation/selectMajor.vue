@@ -310,18 +310,18 @@
                             self.message(true, '设置主办院校专业成功', 'success');
                         }
                         else self.message(true, '设置主办院校专业失败', 'info');
-                        
+
                         self.$router.push('/admin/message/advise/'+this.actid);
                     })
                 }
-                else 
+                else
                     this.$router.push('/admin/message/advise/'+this.actid);
 
             },
         },
         mounted() {
             // this.getMajor();
-            
+
             this.actid = this.$route.params.actid
         }
     }
@@ -381,6 +381,13 @@
 </style>
 
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+  
     .jumpPage {
         width: 200px;
         margin: 95px auto 0;

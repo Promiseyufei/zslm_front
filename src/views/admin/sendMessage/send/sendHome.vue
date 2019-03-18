@@ -13,7 +13,7 @@
                         <el-step title="设置消息对象"></el-step>
                         <el-step title="编辑消息内容"></el-step>
                     </el-steps>
-                </div> 
+                </div>
 
                 <div>
                     <!-- 设置消息对象 -->
@@ -82,7 +82,7 @@
                                </div>
                                <hr>
                            </div>
-                           
+
                            <!-- 表格 -->
                            <userTable :tableData="tableData" :listTable="listTable" v-if=" radio!='' "></userTable>
                            <!-- 分页 -->
@@ -205,7 +205,7 @@ export default {
                     self.tableData = response.result.map;
                     console.log(self.totalData);
                 }
-                else 
+                else
                     this.message(true, response.msg, 'error');
             })
         },
@@ -233,25 +233,25 @@ export default {
 
         // 跳转页面
         toAdvise: function() {
-            
+
             let sendArr = [];
             if(this.radio == "1") {
                 this.tableData.forEach((item) => {
                     sendArr.push(item.id);
                 });
             }
-            else if(this.radio == "3") 
+            else if(this.radio == "3")
                 this.table2.forEach((item) => {
                     sendArr.push(item.id);
                 });
 
-            
+
             // let setStr = encodeURIComponent(JSON.stringify(sendArr));
             if(sendArr.length < 1) {
                 this.message('没有指定要发送消息的用户');
                 return false;
             }
-            else 
+            else
                 this.$router.push({
                     name: '/send/setMessageDetail',
                     params: {
@@ -307,7 +307,7 @@ export default {
             })
         }
     },
-    
+
     mounted() {
         if(this.$route.params.setStr != undefined) {
             let setArray = this.$route.params.setStr;
@@ -329,7 +329,7 @@ export default {
             this.batchScreenUser();
             this.radio = t;
         }
-        
+
     },
 };
 </script>
@@ -347,7 +347,7 @@ export default {
         height: 50px;
     }
     .fileSteps .is-finish .is-text {
-        background: #1ABC9C; 
+        background: #1ABC9C;
         color: #fff;
     }
     .fileSteps .el-step__icon-inner {
@@ -358,6 +358,13 @@ export default {
     }
 </style>
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
     .operateBox {
         width: 1500px;
         margin: 0 auto;

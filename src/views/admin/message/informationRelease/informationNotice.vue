@@ -227,7 +227,7 @@
     width: auto !important;
     border-radius: 5px !important;
   }
-  
+
     .sendMess {
         display: flex;
         justify-content:center;
