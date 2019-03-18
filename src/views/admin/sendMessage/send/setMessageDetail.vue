@@ -61,11 +61,10 @@
                     v-model="textarea">
                     </el-input>
                 </div>
-               <!--<div id="editor">
+               <div id="editor">
 
                </div>
--->
-              <UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>
+              <!--<UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>-->
                 <div>
                     <el-input placeholder="请输入相关链接" v-model="input" style="margin-top:30px;" :disabled="disabled">
                         <template slot="prepend">Http://</template>
@@ -104,12 +103,12 @@
                 carrier:-1,
                 textarea:'',
 
-                defaultMsg: '',
+                /*defaultMsg: '',
                 config: {
                   initialFrameWidth: null,
                   initialFrameHeight: 350
                 },
-                ue1: "ue1", // 不同编辑器必须不同的id
+                ue1: "ue1", // 不同编辑器必须不同的id*/
             };
         },
         // watch:{
@@ -121,11 +120,13 @@
             shortMess(newval, oldval) {
                 if(newval == 0 || newval == '0') {
                     this.disabled = true;
-                    this.$refs.ue.setUEDisabled();
+                    this.editor.$textElem.attr('contenteditable', false);
+                    // this.$refs.ue.setUEDisabled();
                 }
                 else if(newval == 1 || newval == '1') {
                     this.disabled = false;
-                    this.$refs.ue.setUeEnabled();
+                    this.editor.$textElem.attr('contenteditable', true);
+                    // this.$refs.ue.setUeEnabled();
                 }
             }
         },
@@ -212,12 +213,47 @@
             }
 
             //生成编辑器
-            /*this.editor = new WangEditor('#editor');
+            this.editor = new WangEditor('#editor');
+
+            // 配置服务器端地址
+            this.editor.customConfig.uploadImgServer = 'http://www.mbahelper.cn:8889/admin/img';
+            this.editor.customConfig.uploadFileName = 'image' // 后端接受上传文件的参数名
+            this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
+            this.editor.customConfig.uploadImgMaxLength = 6 // 限制一次最多上传 3 张图片
+            this.editor.customConfig.uploadImgTimeout = 3 * 60 * 1000 // 设置超时时间
+
+            this.editor.customConfig.uploadImgHooks = {
+              fail: (xhr, editor, result) => {
+                // 插入图片失败回调
+              },
+              success: (xhr, editor, result) => {
+                // 图片上传成功回调
+                //
+                // let imgUrl = result.data;
+                // insertImg(imgUrl)
+              },
+              timeout: (xhr, editor) => {
+                // 网络超时的回调
+              },
+              error: (xhr, editor) => {
+                console.log(editor)
+                // 图片上传错误的回调
+              },
+              customInsert: (insertImg, result, editor) => {
+                // 图片上传成功,插入图片的回调
+                console.log(result);
+                // if(result.code == 200){
+                var url = result.result;
+                insertImg(url)//将内容插入到富文本中
+                // }
+              }
+            };
+            
             this.editor.customConfig.onchange = (html) => {
                 this.editorContent = html;
             }
             this.editor.create();
-            this.editor.$textElem.attr('contenteditable', false);*/
+            this.editor.$textElem.attr('contenteditable', false);
 
         }
     }

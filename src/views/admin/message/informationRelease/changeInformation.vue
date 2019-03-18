@@ -104,10 +104,10 @@
                     <div class="operateUpfilesRight2">
                         <el-button type="primary" @click="startChange3">编辑</el-button>
                         <div class="messageBtn">
-                            <!--<div id="editor">
+                            <div id="editor">
                                 <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
-                            </div>-->
-                            <UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>
+                            </div>
+                            <!--<UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>-->
                             <div class="messageEditor">
                                 <el-button type="primary" plain :disabled = "disabled3" @click="messageEmpty">清空</el-button>
                                 <el-button type="primary" :disabled = "disabled3"  @click="putInfoTextMsg">提交</el-button>
@@ -158,12 +158,12 @@ export default {
             editor: new WangEditor('#editor'),
             id: 0,
 
-            defaultMsg: '',
+            /*defaultMsg: '',
             config: {
               initialFrameWidth: null,
               initialFrameHeight: 350
             },
-            ue1: "ue1", // 不同编辑器必须不同的id
+            ue1: "ue1", // 不同编辑器必须不同的id*/
         }
     },
     methods: {
@@ -197,14 +197,14 @@ export default {
         },
         startChange3: function () {
             this.disabled3 = false;
-            // this.editor.$textElem.attr('contenteditable', true);
-            this.$refs.ue.setUeEnabled();
+            this.editor.$textElem.attr('contenteditable', true);
+            // this.$refs.ue.setUeEnabled();
         },
         // 提交修改数据提交修改数据
         messageSubmit: function() {
             this.disabled3 = true;
-            // this.editor.$textElem.attr('contenteditable', false);
-            this.$refs.ue.setUEDisabled();
+            this.editor.$textElem.attr('contenteditable', false);
+            // this.$refs.ue.setUEDisabled();
         },
         // 清空富文本编辑器内容
         messageEmpty: function() {
@@ -231,9 +231,9 @@ export default {
                 if(response.code == 0) {
                     _this.infoCoverUrl = response.result.z_image;
                     _this.infoMsg = response.result;
-                    // _this.editor.txt.html(response.result.z_text);
+                    _this.editor.txt.html(response.result.z_text);
                     // _this.$refs.ue.setUEContent(response.result.z_text);
-                    _this.defaultMsg = response.result.z_text;
+                    // _this.defaultMsg = response.result.z_text;
                 }
                 else
                     this.message(true, "未查询到指定资讯的信息", 'error');
@@ -241,8 +241,42 @@ export default {
             })
         },
         // 创建富文本编辑器
-        /*createEditor() {
+        createEditor() {
             let _this = this;
+            // 配置服务器端地址
+            this.editor.customConfig.uploadImgServer = 'http://www.mbahelper.cn:8889/admin/img';
+            this.editor.customConfig.uploadFileName = 'image' // 后端接受上传文件的参数名
+            this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
+            this.editor.customConfig.uploadImgMaxLength = 6 // 限制一次最多上传 3 张图片
+            this.editor.customConfig.uploadImgTimeout = 3 * 60 * 1000 // 设置超时时间
+
+            this.editor.customConfig.uploadImgHooks = {
+              fail: (xhr, editor, result) => {
+                // 插入图片失败回调
+              },
+              success: (xhr, editor, result) => {
+                // 图片上传成功回调
+                //
+                // let imgUrl = result.data;
+                // insertImg(imgUrl)
+              },
+              timeout: (xhr, editor) => {
+                // 网络超时的回调
+              },
+              error: (xhr, editor) => {
+                console.log(editor)
+                // 图片上传错误的回调
+              },
+              customInsert: (insertImg, result, editor) => {
+                // 图片上传成功,插入图片的回调
+                console.log(result);
+                // if(result.code == 200){
+                var url = result.result;
+                insertImg(url)//将内容插入到富文本中
+                // }
+              }
+            };
+
             this.editor.customConfig.onchange = (html) => {
               console.log(html);
 
@@ -250,7 +284,7 @@ export default {
             }
             this.editor.create();
             this.editor.$textElem.attr('contenteditable', false);
-        },*/
+        },
         putInfoMsg() {
             let formdata = new FormData();
             formdata.append('infoName', this.infoMsg.zx_name);
@@ -307,7 +341,7 @@ export default {
 
     },
     mounted(){
-        // this.createEditor();
+        this.createEditor();
 
         if(this.$route.params.infoId != null && this.$route.params.infoId != '') {
             this.infoId = this.$route.params.infoId;

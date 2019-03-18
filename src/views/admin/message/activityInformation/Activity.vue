@@ -580,7 +580,7 @@
             this.actId = this.$route.params.actId
 
             // 配置服务器端地址
-            this.editor.customConfig.uploadImgServer = 'http://zslmadmin.com/admin/img';
+            this.editor.customConfig.uploadImgServer = 'http://www.mbahelper.cn:8889/admin/img';
             this.editor.customConfig.uploadFileName = 'image' // 后端接受上传文件的参数名
             this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
             this.editor.customConfig.uploadImgMaxLength = 6 // 限制一次最多上传 3 张图片
