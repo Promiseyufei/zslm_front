@@ -38,7 +38,7 @@
 			<div class="logoInto" v-show="logoInto">
 				<div style="cursor: pointer;" @click="goSearch"><i class="el-icon-search"></i></div>
 				<div style="cursor: pointer;" @click="goMessage">
-					<el-badge :value="200" :max="news" class="item">
+					<el-badge :value="200" :max="news" class="item" :hidden="hidden">
 						<img src="../../../assets/img/messageLogo.png">
 					</el-badge>
 				</div>
@@ -96,7 +96,8 @@
 	        	logoInto:true,
 	        	mobileIcon:false,
 	        	userId:0,
-				news:0,
+				    news:0,
+            hidden:true,
 	        }
 	    },
 	    methods: {
@@ -252,15 +253,6 @@
 				var that = this
 				var t1 = window.setInterval(that.getAccountMsg, 60000);
 			},
-
-			// 			getMsg: function() {
-			// 				this.fetch("/admin/information/getding").then(res => {
-			// 						if (res.code == 0) {
-			// 							console.log(res)
-			// 						}
-			// 					}
-			//
-			// 				},
 			getAccountMsg: function() {
 				var that = this;
 				var account = this.getUserStatePro('userId')
@@ -269,7 +261,10 @@
 						id: account
 					}).then(res => {
 						if (res.code == 0) {
-							that.news = res.result
+						  if(res.result){
+                that.news = res.result,
+                that.hidden = false
+              }
 						}
 					})
 			},

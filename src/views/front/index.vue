@@ -11,7 +11,12 @@
 								<input type="text" class="indexinput" id="indexinput">
 								<i class="fa fa-search" @click="jumpsearch(1)"></i>
 							</div>
-							<i class="fa fa-bell" @click="jumpsearch(2)"></i>
+              <div style="cursor: pointer;" @click="jumpsearch(2)">
+                <el-badge :value="200" :max="news" class="item" :hidden="hidden">
+                  <img src="../../assets/img/messageLogo1.png">
+                </el-badge>
+              </div>
+							<!--<i class="fa fa-bell" @click="jumpsearch(2)"></i>-->
               <img src="../../assets/img/user.png" @click="jumpsearch(3)" style="margin-left: 10px;" />
 							<!--<i class="fa fa-user-circle" @click="jumpsearch(3)"></i>-->
 						</div>
@@ -419,7 +424,9 @@
 				coach2: [],
 				consult1: [],
 				consult2: [],
-				consult3: []
+				consult3: [],
+        news:0,
+        hidden:true,
 			}
 		},
 		methods: {
@@ -574,11 +581,34 @@
 				this.dots[this.index].className = "on";
 				this.mes[this.index].style.backgroundColor = "#ffb957";
 			},
+      // 获取用户信息
+      getding: function() {
+			  if(this.getUserStatePro('userId')){
+          var that = this
+          var t1 = window.setInterval(that.getAccountMsg, 60000);
+        }
+      },
+      getAccountMsg: function() {
+        var that = this;
+        var account = this.getUserStatePro('userId')
+        if (account != null)
+          this.fetch('/front/usercore/getding', {
+            id: account
+          }).then(res => {
+            if (res.code == 0) {
+              if(res.result){
+                that.news = res.result,
+                  that.hidden = false
+              }
+            }
+          })
+      },
 		},
 		destroyed: function() {
 			clearInterval(this.timer);
 		},
 		mounted() {
+		  this.getding();
 			this.getCollage();
 			var wrap = document.querySelector(".wrap");
 			// var wrap = $('.wrap');

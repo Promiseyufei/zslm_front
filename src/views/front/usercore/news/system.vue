@@ -1,5 +1,5 @@
 <template>
-    <div> 
+    <div>
         <template v-for="(item, index) in systemList">
             <system :key="index" :news="item"></system>
             <h1 class="hostisy" v-if="index == 4" :key="index">--以下为历史消息--</h1>
@@ -24,7 +24,7 @@ export default {
     methods: {
         getSystem() {
             let _this = this;
-            let phone = '15837587256';
+            let phone = this.getUserState('user');
             this.fetch('/front/usercore/getUserNews', {
                 userPhone: phone,
                 userNewsType: this.newsType,
