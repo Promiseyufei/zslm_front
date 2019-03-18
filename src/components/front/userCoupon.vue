@@ -48,40 +48,6 @@
     </div>
 </template>
 <style scoped>
-  .el-dialog{
-    border-radius: 5px !important;
-    width: 40% !important;
-  }
-  .el-dialog__headerbtn:hover{
-    background-color: #ffb957;
-    border-radius: 50%;
-  }
-
-  .el-dialog__headerbtn:hover .el-dialog__close{
-    color: #ffffff;
-  }
-
-  .el-dialog__header{
-    border-bottom:1px solid #efefef;
-  }
-  .el-dialog__footer{
-    margin: 0px;
-    padding: 0px !important;
-    width: 100% !important;
-  }
-  .el-button--primary{
-    background-color: #009fa0 !important;
-    border-color: #009fa0 !important;
-    /*width: 100% !important;*/
-    border-radius: 0px 0px 5px 5px !important;
-  }
-
-  .el-dialog__body{
-    line-height: 30px;
-    font-size: 12px;
-    color: #484848;
-  }
-
   @media (max-width: 760px) {
     .el-dialog{
       width: 95% !important;
@@ -89,6 +55,42 @@
   }
 </style>
 <style>
+    .el-dialog{
+      border-radius: 5px !important;
+      width: 40% !important;
+    }
+    .el-dialog__headerbtn:hover{
+      background-color: #ffb957;
+      border-radius: 50%;
+    }
+
+    .el-dialog__headerbtn:hover .el-dialog__close{
+      color: #ffffff;
+    }
+
+    .el-dialog__header{
+      border-bottom:1px solid #efefef;
+    }
+
+    .el-dialog__body{
+      line-height: 30px !important;
+      font-size: 12px !important;
+      color: #484848 !important;
+    }
+
+    .el-dialog__footer{
+      margin: 0px;
+      padding: 0px !important;
+      width: 100% !important;
+    }
+
+    .el-button--primary{
+      background-color: #009fa0 !important;
+      border-color: #009fa0 !important;
+      width: 100% !important;
+      border-radius: 0px 0px 2px 2px !important;
+    }
+
     *{
         margin: 0;
         padding: 0;

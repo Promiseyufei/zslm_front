@@ -248,7 +248,7 @@
                 // }
               }
             };
-            
+
             this.editor.customConfig.onchange = (html) => {
                 this.editorContent = html;
             }
