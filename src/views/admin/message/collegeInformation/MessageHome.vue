@@ -17,7 +17,7 @@
                 <el-step title="招生项目信息"></el-step>
                 </el-steps>
             </div>
-            
+
             <div>
                 <!-- 上传banner -->
                 <div class="operateUpfiles operateUp">
@@ -25,15 +25,15 @@
                     <div><i class="fa fa-commenting-o fa-fw FA-3X"></i>&nbsp;院校专业信息</div>
                 </div>
                 <div class="operateUpfilesRight">
-                    
+
                     <el-form ref="ruleForm" :model="ruleForm" label-width="100px">
                     <el-form-item>
                         <el-button type="primary" @click="startChange">开始编辑</el-button>
                     </el-form-item>
-                    <el-form-item label="院校专业名称">             
+                    <el-form-item label="院校专业名称">
                         <el-input v-model="majorInfo.z_name" :disabled = "disabled"></el-input>
                     </el-form-item>
-                    <el-form-item label="专业认证"> 
+                    <el-form-item label="专业认证">
                         <el-checkbox-group v-model="majorInfo.major_confirm" :disabled = "disabled">
                             <el-checkbox v-for="(item, index) in majorAuthentication" :key="index" :label="item.id +''">{{ item.name }}</el-checkbox>
                         </el-checkbox-group>
@@ -109,7 +109,7 @@
                             </li>
                         </div>
                     </el-form-item>
-                    
+
 
                     <!-- 院校logo -->
                     <el-form-item label="院校logo">
@@ -120,7 +120,7 @@
                             </el-upload>
                         </div>
                     </el-form-item>
-                    
+
 
                     <!-- 院校封面图 -->
                     <el-form-item label="院校封面图">
@@ -141,7 +141,7 @@
                     </el-form>
                 </div>
                 </div>
-            
+
                 <div>
                     <!-- 当前banner -->
                     <div class="operateUpfiles operateDown">
@@ -167,23 +167,23 @@
                             <el-form-item>
                                 <el-button type="primary" @click="putMajorExtendMsg" :disabled = "disabled2">提交</el-button>
                             </el-form-item>
-                        </el-form>  
+                        </el-form>
                         </div>
                         <!-- 完成按钮 -->
                         <div class="operateFinalUp">
                         <el-button type="primary" @click="jumpPage">下一步，编辑招生信息</el-button>
                         </div>
-                        
+
                     </div>
-                    
+
                     </div>
                 </div>
             </div>
-            
+
             </div>
         </div>
     </div>
-    
+
 </template>
 
 <script>
@@ -224,7 +224,7 @@ export default {
 			majorAuthentication:[],
 			//院校性质
             majorNature:[],
-            
+
             //院校名称
             restaurants:[],
             majorInfo:{
@@ -341,7 +341,7 @@ export default {
                 if(response.code == 0) {
                     this.message(true, response.msg, 'success');
                 }
-                else 
+                else
                     this.message(true, response.msg, 'error');
             })
         },
@@ -437,7 +437,7 @@ export default {
         uploadWB(e) {
             let files = this.upload(e);
             if(files == false) return;
-            
+
             this.imgPreview(files[0],e, 'wb');
             this.wbcount++;
 			this.wbcount>=3?this.iswbShow = false:this.iswbShow;
@@ -470,7 +470,7 @@ export default {
                         if(type == 'wx') {
                             self.wximgUrls.push(this.result);
                             console.log(self.wximgUrls);
-                        }  
+                        }
                         if(type == 'wb') {
                             self.wbimgUrls.push(this.result);
                             // console.log(self.wbimgUrls);
@@ -485,7 +485,7 @@ export default {
             }
 
 		},
-		
+
         rotateImg (img, direction,canvas) {
             //最小与最大旋转方向，图片旋转4次后回到原方向
             const min_step = 0;
@@ -535,7 +535,7 @@ export default {
                     break;
             }
 		},
-		
+
 		//压缩图片
         compress(img,Orientation) {
 			let canvas = document.createElement("canvas");
@@ -599,7 +599,7 @@ export default {
 			tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
 			return ndata;
       },
-      
+
     /**
      * 远程搜索
      */
@@ -619,7 +619,7 @@ export default {
     },
     handleSelect(item) {
         // console.log(item);
-    },     
+    },
 
 
     //字典查询
@@ -647,7 +647,7 @@ export default {
 		let _this = this;
 
         this.dictionaries();
-        
+
         this.post('/admin/information/getAllSchoolName', {}).then((response) => {
             if(response.code == 0) {
                 _this.restaurants = response.result;
@@ -672,7 +672,7 @@ export default {
                     }
                     if(response.result.wb_image instanceof Array && response.result.wb_image.length > 0) {
                         _this.wbimgUrls.push.apply(_this.wbimgUrls, response.result.wb_image);
-						_this.wbSendImg.push.apply(_this.wbSendImg, response.result.wb_image);                        
+						_this.wbSendImg.push.apply(_this.wbSendImg, response.result.wb_image);
                     }
 				}
 				else
@@ -691,7 +691,7 @@ export default {
         height: 50px;
     }
     .fileSteps .is-finish .is-text {
-        background: #1ABC9C; 
+        background: #1ABC9C;
         color: #fff;
     }
     .fileSteps .el-step__icon-inner {
@@ -739,6 +739,13 @@ export default {
 </style>
 
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+  
 .operateBox {
   width: 1500px;
   margin: 0 auto;
@@ -759,7 +766,7 @@ export default {
 
 
 /*
-* 
+*
 */
 .operateUpfiles {
   border: 1px solid #e4e4e4;
@@ -836,13 +843,13 @@ export default {
 
 .el-upload-list--picture .el-upload-list__item{
   border: 0px solid #c0ccda;
-  padding: 0px; 
+  padding: 0px;
   margin-right: 10px;
   width: 95px;
   height: 95px;
 }
 .el-upload-list--picture .el-upload-list__item-thumbnail{
-  margin-left: 0px !important; 
+  margin-left: 0px !important;
 }
 
 .el-upload__tip{
