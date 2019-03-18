@@ -40,7 +40,7 @@
 				</div>
 			</el-table>
 		</div>
-		<div class="footer"> 
+		<div class="footer">
 	  		<div class="addadviseblock">
                 <el-pagination
                 	background
@@ -86,7 +86,7 @@
 						label: '总量',
 						value:3
 					}
-					
+
 				],
 
 	    		tableTop:[
@@ -116,16 +116,16 @@
 		    		name1:'',
 		    		type: 3,
 				},
-				
+
 		    	options: [
 			        {
 			          value: '选项3',
 			          label: '时间'
-			        }, 
+			        },
 			        {
 			          value: '选项4',
 			          label: '浏览量'
-			        }, 
+			        },
 			        {
 			          value: '选项5',
 			          label: '分享次数'
@@ -158,7 +158,7 @@
 		        this.msg = msg;
 		        console.log(this.msg);
 			},
-			
+
 	    	gettableInfo: function (){
 				var that = this;
 		        axios.post('http://www.zslm.com/admin/operate/getPagingData',{
@@ -212,6 +212,13 @@
 </style>
 
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
 	.el-table {
 		color: #333;
 	}
@@ -241,7 +248,7 @@
 	.el-table th>.cell {
 	    font-size: 12px;
 	    font-weight: bold;
-	    color: #666; 
+	    color: #666;
 	    text-align: center;
 	}
 	.datatable {
@@ -273,8 +280,9 @@
 		/* position: absolute;
 		right: 10px;
 		top: 10px; */
-	    color: #666; 
-	    background-color: #fff; 
+	    /*color: #666;*/
+	    color: #fff;
+	    background-color: #fff;
 	    border:1px solid #CCC;
 	    border-radius:0;
 		margin-right: 10px;

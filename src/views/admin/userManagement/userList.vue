@@ -451,6 +451,13 @@
 
 
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
 	/**当前面包屑**/
 
 	.now-page {
@@ -490,7 +497,8 @@
 		position: absolute;
 		right: 10px;
 		top: 10px;
-		color: #666;
+		/*color: #666;*/
+		color: #fff;
 		background-color: #fff;
 		border: 1px solid #CCC;
 		border-radius: 0;

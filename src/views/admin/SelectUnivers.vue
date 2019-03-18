@@ -370,7 +370,7 @@
     width: auto !important;
     border-radius: 5px !important;
   }
-  
+
     .jumpPage {
         width: 200px;
         margin: 95px auto 0;

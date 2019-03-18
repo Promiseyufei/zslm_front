@@ -107,7 +107,7 @@
 
 <script>
 	export default {
-		name: "userFocusMajor",	
+		name: "userFocusMajor",
 		data() {
 			return {
 				uploadUrl:this.globals.excelUrl+'/admin/refund/export',
@@ -317,7 +317,7 @@
 						that.message(true, '修改成功', 'success')
 							that.dialogFormVisible = false
 						that.query()
-					
+
 					} else {
 						that.message(true, '修改失败', 'error')
 					}
@@ -445,6 +445,13 @@
 	}
 </style>
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
 	/**当前面包屑**/
 	.now-page {
 		padding-bottom: 3px;

@@ -416,7 +416,7 @@
 							this.message(true, response.msg, 'error');
 						}
 					})
-					
+
 			},
 
 			// 获得页面的广告信息
@@ -456,6 +456,13 @@
 </style>
 
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
 	.operateBox {
 		width: 1500px;
 		margin: 0 auto;
