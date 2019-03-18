@@ -76,7 +76,7 @@
                         <div class="messageBtn">
                             <el-form ref="form" label-width="100px">
                                 <el-form-item>
-                                    <el-button type="primary" @click="startChange2">开始编辑</el-button>
+                                    <el-button type="primary" @click="startChange2" class="btn">开始编辑</el-button>
                                 </el-form-item>
                                 <el-form-item label="Title">
                                     <el-input v-model="infoMsg.title" :disabled = "disabled2"></el-input>
@@ -357,12 +357,7 @@ export default {
 };
 </script>
 <style>
-  .el-button--primary{
-    background-color: #009fa0 !important;
-    border-color: #009fa0 !important;
-    width: auto !important;
-    border-radius: 5px !important;
-  }
+
 
 .info_cover_img .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
@@ -406,18 +401,20 @@ export default {
         top: 23px !important;
     }
 
+
+</style>
+<style scoped>
+.operateBox {
+  width: 1500px;
+  margin: 0 auto;
+}
+
 /* 封面图样式 */
 .el-button--primary{
   background-color: #009fa0 !important;
   border-color: #009fa0 !important;
   width: auto !important;
   border-radius: 5px !important;
-}
-</style>
-<style scoped>
-.operateBox {
-  width: 1500px;
-  margin: 0 auto;
 }
 
 /*
