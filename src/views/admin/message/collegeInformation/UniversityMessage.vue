@@ -37,7 +37,7 @@
                                         <el-button type="primary" @click="startChange">开始编辑</el-button>
                                     </el-form-item>
                                 </div>
-                                
+
                                 <el-form-item label="招生项目名称">
                                     <el-input v-model="universityForm.project_name" :disabled = "disabled"></el-input>
                                 </el-form-item>
@@ -63,15 +63,15 @@
                                     <el-col :span="5">
                                         <el-form-item>
                                             <el-input v-model="universityForm.student_count" :disabled = "disabled"></el-input>
-                                        </el-form-item>				                	
-                                    </el-col>				                    
+                                        </el-form-item>
+                                    </el-col>
                                 </el-form-item>
                                 <el-form-item label="授课语言">
                                         <el-col :span="5">
                                         <el-form-item>
                                             <el-input v-model="universityForm.language" placeholder="请输入..." :disabled = "disabled"></el-input>
-                                        </el-form-item>				                	
-                                    </el-col>		
+                                        </el-form-item>
+                                    </el-col>
                                 </el-form-item>
 
                                 <el-form-item label="学制">
@@ -115,24 +115,24 @@
                                         @close="handleClose(tag,disabled)">{{tag.name}}
                                     </el-tag>
 
-                                    <el-autocomplete 
-                                        value-key="name" 
-                                        class="input-new-tag" 
-                                        v-if="inputVisible" 
-                                        ref="saveTagInput" 
-                                        size="small" 
-                                        @blur="handleInputConfirm" 
-                                        v-model="professionalDirection" 
-                                        :fetch-suggestions="querySearchAsync" 
+                                    <el-autocomplete
+                                        value-key="name"
+                                        class="input-new-tag"
+                                        v-if="inputVisible"
+                                        ref="saveTagInput"
+                                        size="small"
+                                        @blur="handleInputConfirm"
+                                        v-model="professionalDirection"
+                                        :fetch-suggestions="querySearchAsync"
                                         @select="handleSelect" no-data-text="暂无专业方向信息"></el-autocomplete>
                                     <el-button v-else class="button-new-tag" size="small" @click="showInput" :disabled = "disabled">+ 添加</el-button>
-                                    
+
                                 </el-form-item>
 
 
                                 <el-form-item>
                                     <el-button type="primary" @click="putProjectMsg">提交</el-button>
-                                </el-form-item>		            
+                                </el-form-item>
                             </el-form>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                                     ref="singleTable"
                                     :data="tableData"
                                     highlight-current-row
-                                    border 
+                                    border
                                     style="width: 100%"
                                     :header-cell-style="getRowClass"
                                     class="collegeTable">
@@ -196,10 +196,10 @@
                                                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                                                 <el-button type="text" size="small" @click="deleteSingle(scope.row.id, scope.row)">删除</el-button>
                                             </template>
-                                        </el-table-column>									     
+                                        </el-table-column>
                                     </el-table>
                                 </el-form>
-                                
+
                                 <!-- 小型分页 -->
                                 <div class="block" style="">
                                     <el-pagination background layout="prev, pager, next" @current-change="changeCurrent" :total="total"></el-pagination>
@@ -279,7 +279,7 @@
                         // this.getAppointProject();
                         this.$router.push('/message/universityMessage/' + this.majorId + '/' + this.majorName + '/' + this.proId);
                     }
-                    else 
+                    else
                         this.message(true, response.msg, 'error');
                 })
                 // console.log(this.universityForm);
@@ -436,8 +436,8 @@
                 return status;
 
             },
-            
-            handleClick: function (row) { 
+
+            handleClick: function (row) {
                 this.proId = row.id;
                 this.getAppointProject();
                 this.$router.push('/admin/message/universityMessage/' + this.majorId + '/' + this.majorName + '/' + row.id);
@@ -487,7 +487,7 @@
                         self.total = response.result.total;
                         self.tableData = response.result.data;
                     }
-                    else 
+                    else
                         this.message(true, response.msg, 'error');
                 })
                 .catch(function (error) {
@@ -560,7 +560,7 @@
         height: 50px;
     }
     .fileSteps .is-finish .is-text {
-        background: #1ABC9C; 
+        background: #1ABC9C;
         color: #fff;
     }
     .fileSteps .el-step__icon-inner {
@@ -571,6 +571,13 @@
     }
 </style>
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+  
 .operateBox {
   width: 1500px;
   margin: 0 auto;
@@ -611,7 +618,7 @@
 }
 
 /*
-* 
+*
 */
 .operateUpfiles {
   border: 1px solid #e4e4e4;
