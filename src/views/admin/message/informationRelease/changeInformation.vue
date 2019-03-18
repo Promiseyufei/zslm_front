@@ -357,6 +357,13 @@ export default {
 };
 </script>
 <style>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
 .info_cover_img .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
