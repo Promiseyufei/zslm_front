@@ -287,7 +287,7 @@
                             this.message(true,'删除成功','success');
                         }
                         else this.message(ture, '删除失败', 'info');
-                    }) 
+                    })
                 }, () => {
 
                 }, '确认取消该活动的主办院校？');
@@ -380,14 +380,14 @@
                     }else{
                         that.message(true,'修改失败','error');
                     }
-                
+
                 })
                 this.$confirm('操作需谨慎, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                
+
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -414,7 +414,7 @@
                         }else{
                             that.message(true,'权值修改失败','info');
                         }
-                
+
                     })
                 }).catch(() => {
                     this.$message({
@@ -562,6 +562,13 @@
     }
 </style>
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
     .operateBox {
         width: 1500px;
         margin: 0 auto;
