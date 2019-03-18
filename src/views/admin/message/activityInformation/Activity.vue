@@ -169,11 +169,11 @@
                              <el-button type="primary" @click="startChange3">编辑</el-button>
                     <!---->
                             <div class="messageBtn">
-                                <!--<div id="editor">
-                                    &lt;!&ndash; <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> &ndash;&gt;
+                                <div id="editor">
+                                    <!-- <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> -->
                                     <div v-html="ruleForm.introduce"></div>
-                                </div>-->
-                                <UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>
+                                </div>
+                                <!--<UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>-->
                                 <div class="messageEditor">
                                     <el-button type="primary" plain :disabled="disabled3" @click="messageEmpty">清空
                                     </el-button>
@@ -257,12 +257,16 @@
                     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 }],
 
-                defaultMsg: '',
+                /*defaultMsg: '',
                 config: {
-                  initialFrameWidth: null,
-                  initialFrameHeight: 350
+                  // 编辑器不自动被内容撑高
+                  autoHeightEnabled: false,
+                  // 初始容器高度
+                  initialFrameHeight: 400,
+                  // 初始容器宽度
+                  initialFrameWidth: '100%',
                 },
-                ue1: "ue1", // 不同编辑器必须不同的id
+                ue1: "ue1", // 不同编辑器必须不同的id*/
             }
         },
         computed: {
@@ -320,8 +324,8 @@
                 let that = this;
                 this.fetch('/admin/information/getoneact', {
                     id: that.actId
-                })
-                    .then(res => {
+                }).then(res => {
+                        console.log(res);
                         if (res.code == 0) {
                             console.log(res.result);
                             that.ruleForm.name = res.result.active_name;
@@ -341,9 +345,9 @@
                             that.form.Title = res.result.title;
                             that.form.Keywords = res.result.keywords;
                             that.form.Description = res.result.description;
-                            // that.ruleForm.introduce = res.result.introduce;
+                            that.ruleForm.introduce = res.result.introduce;
                             // that.$refs.ue.setUEContent(res.result.introduce);
-                            that.defaultMsg = res.result.introduce;
+                            // that.defaultMsg = res.result.introduce;
 
                             that.activityCoverImg.activityCoverMapUrl = res.result.active_img;
                             that.activityCoverImg.activityCoverDefultName = res.result.active_cover_img_name;
@@ -375,8 +379,8 @@
             // },
             startChange3: function () {
                 this.disabled3 = false;
-                // this.editor.$textElem.attr('contenteditable', true);
-                this.$refs.ue.setUeEnabled();
+                this.editor.$textElem.attr('contenteditable', true);
+                // this.$refs.ue.setUeEnabled();
             },
             //将base64转换为文件
             dataURLtoFile: function (dataurl, filename) {
@@ -484,16 +488,16 @@
                 if (this.record == 0) {
                     this.message(true, '请先创建活动', 'error');
                     return;
-                // } else if (that.editor.txt.html() == '') {
-                } else if (this.$refs.ue.setUeEnabled() == '') {
+                } else if (that.editor.txt.html() == '') {
+                // } else if (this.$refs.ue.setUeEnabled() == '') {
                     this.message(true, '请输入内容', 'error');
                     return;
                 }
 
                 this.post('/admin/information/setin', {
                     id: that.record,
-                    // introduce: that.editor.txt.html()
-                    introduce: that.$refs.ue.getUEContent()
+                    introduce: that.editor.txt.html()
+                    // introduce: that.$refs.ue.getUEContent()
                 }).then(res => {
                     if (res.code == 0) {
                         that.message(true, '提交成功', 'success');
@@ -518,14 +522,14 @@
             // 提交修改数据
             messageSubmit: function () {
                 this.disabled3 = false;
-                // this.editor.$textElem.attr('contenteditable', false);
-                this.$refs.ue.setUEDisabled();
+                this.editor.$textElem.attr('contenteditable', false);
+                // this.$refs.ue.setUEDisabled();
                 this.inPost();
             },
             // 清空富文本编辑器内容
             messageEmpty: function() {
-                // this.editor.txt.clear();
-                this.$refs.ue.setUEContent('');
+                this.editor.txt.clear();
+                // this.$refs.ue.setUEContent('');
             },
             //弹出上传图片对话框
             // addPic: function (e) {
@@ -574,11 +578,47 @@
             // this.province = this.getProvince();
             // this.getMajor();
             this.actId = this.$route.params.actId
-            /*this.editor.customConfig.onchange = (html) => {
-                this.editorContent = html;
+
+            // 配置服务器端地址
+            this.editor.customConfig.uploadImgServer = 'http://zslmadmin.com/admin/img';
+            this.editor.customConfig.uploadFileName = 'image' // 后端接受上传文件的参数名
+            this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
+            this.editor.customConfig.uploadImgMaxLength = 6 // 限制一次最多上传 3 张图片
+            this.editor.customConfig.uploadImgTimeout = 3 * 60 * 1000 // 设置超时时间
+
+            this.editor.customConfig.uploadImgHooks = {
+              fail: (xhr, editor, result) => {
+                // 插入图片失败回调
+              },
+              success: (xhr, editor, result) => {
+                // 图片上传成功回调
+                //
+                // let imgUrl = result.data;
+                // insertImg(imgUrl)
+              },
+              timeout: (xhr, editor) => {
+                // 网络超时的回调
+              },
+              error: (xhr, editor) => {
+                console.log(editor)
+                // 图片上传错误的回调
+              },
+              customInsert: (insertImg, result, editor) => {
+                // 图片上传成功,插入图片的回调
+                console.log(result);
+                // if(result.code == 200){
+                var url = result.result;
+                insertImg(url)//将内容插入到富文本中
+                // }
+              }
+            };
+
+            this.editor.customConfig.onchange = (html) => {
+              this.editorContent = html;
             }
+
             this.editor.create();
-            this.editor.$textElem.attr('contenteditable', false);*/
+            this.editor.$textElem.attr('contenteditable', false);
             this.info();
 
             if (this.actId != 0) {
