@@ -388,7 +388,8 @@
 		position: absolute;
 		right: 10px;
 		top: 10px;
-		color: #666;
+		/*color: #666;*/
+		color: #fff;
 		background-color: #fff;
 		border: 1px solid #CCC;
 		border-radius: 0;

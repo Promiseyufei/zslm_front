@@ -224,7 +224,8 @@
         background-color: #fff;
         border-color: #CCC;
         border-radius: 0;
-        color: #666;
+        /*color: #666;*/
+        color: #fff;
         font-size: 12px;
     }
     .el-button--primary {
