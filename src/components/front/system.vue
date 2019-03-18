@@ -1,6 +1,6 @@
 <template>
 
-    <div class="c-div div_v60iAm guanzhu huodong" style="border-bottom:1px dashed #C0C0C0;" @click="updateStatus">
+    <div class="c-div div_v60iAm guanzhu huodong" @click="updateStatus">
         <div class="row c-row row_E5qvBw">
             <span v-if="news.status == 0" style="width:5px;height:5px;background-color:#FF9900;border-radius:5px;margin-top:15px;margin-right:5px;"></span>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_KR9WLK">
@@ -36,7 +36,7 @@ export default {
     },
     methods: {
         test() {
-            
+
         },
         updateStatus() {
             let phone = this.getUserState('user');
@@ -52,7 +52,7 @@ export default {
                     }
                 })
             }
-            
+
         }
     },
     mounted() {
@@ -60,10 +60,14 @@ export default {
     }
 }
 </script>
-
+<style>
+  .huodong{
+    border-bottom:1px dashed #C0C0C0;
+  }
+</style>
 <style scoped>
 a {
-    font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
+ font-family: "Microsoft YaHei","Hiragino Sans GB",SimHei,STHeiti;
     text-decoration: none;
 }
 p {
@@ -77,6 +81,11 @@ p {
 .div_v60iAm.guanzhu.huodong {
     padding-top: 35px;
     padding-bottom: 35px;
+    border-bottom:1px dashed #C0C0C0;
+}
+
+.div_v60iAm.guanzhu.huodong:nth-last-child(2){
+  border: none;
 }
 
 @media (max-width: 767px) {
@@ -241,7 +250,7 @@ p {
 @media (min-width: 768px) {
     .col-sm-6 {
         width: 50%;
-    }   
+    }
 }
 
 @media (min-width: 768px) {
@@ -466,7 +475,7 @@ p {
 }
 
 }
- 
+
 @media (max-width: 767px) {
 .textlink_e6pE3X.daliebiao {
     font-size: 16px;
