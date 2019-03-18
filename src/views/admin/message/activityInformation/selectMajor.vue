@@ -328,6 +328,13 @@
 
 </script>
 <style>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
     .SelectUnivers-city .el-checkbox-group {
         font-size: 12px;
         display: flex;
@@ -387,7 +394,7 @@
     width: auto !important;
     border-radius: 5px !important;
   }
-  
+
     .jumpPage {
         width: 200px;
         margin: 95px auto 0;
