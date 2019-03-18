@@ -363,6 +363,14 @@
 </style>
 
 <style scoped>
+
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+  
     .jumpPage {
         width: 200px;
         margin: 95px auto 0;
