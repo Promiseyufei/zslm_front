@@ -78,8 +78,8 @@
             </div>
         </div>
         <div class="sendMess">
-            <el-button type="primary" @click.native="jumpPage">&#8195&#8195完成！&#8195&#8195</el-button>     
-        </div> 
+            <el-button type="primary" @click.native="jumpPage">&#8195&#8195完成！&#8195&#8195</el-button>
+        </div>
     </div>
 </template>
 <script>
@@ -179,7 +179,7 @@
                   this.$message({
                     type: 'info',
                     message: '您已取消修改'
-                  });       
+                  });
                 });
             }
         },
@@ -209,7 +209,7 @@
         height: 50px;
     }
     .fileSteps .is-finish .is-text {
-        background: #1ABC9C; 
+        background: #1ABC9C;
         color: #fff;
     }
     .fileSteps .el-step__icon-inner {
@@ -221,6 +221,13 @@
 </style>
 
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+  
     .sendMess {
         display: flex;
         justify-content:center;
@@ -273,7 +280,7 @@
         width: 120px;
     }
     .contentDetail {
-        display:flex; 
+        display:flex;
         width: 400px;
         justify-content:space-around;
         margin: 28px 120px 30px 25px;

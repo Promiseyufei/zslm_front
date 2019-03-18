@@ -460,7 +460,7 @@
 				}).then((response) => {
 					if (response.code == 0) {
 						this.shoolCount = response.result;
-					} 
+					}
 				});
 			}
 		},
@@ -498,6 +498,13 @@
 	}
 </style>
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
 	.operateBox {
 		width: 1500px;
 		margin: 0 auto;

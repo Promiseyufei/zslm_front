@@ -195,7 +195,7 @@ export default {
     width: auto !important;
     border-radius: 5px !important;
   }
-  
+
 .operateBox {
   width: 1500px;
   margin: 0 auto;

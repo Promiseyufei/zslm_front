@@ -200,7 +200,7 @@
 
 				let routeUrl = this.$router.resolve({
 					path: "/front/firstMenuRouter/viewInformation/singleInformation/"+val,
-	
+
 				});
 				window.open(routeUrl.href, '_blank');
 			},
@@ -290,7 +290,7 @@
 			},
 			//跳到相应的资讯详情页
 			jumpInformDeta() {
-				//此页面未给  
+				//此页面未给
 			},
 			deleteRow(val) {
 				let _this = this;
@@ -397,6 +397,13 @@
 
 <!-- 局部样式 scoped -->
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
 	.el-table {
 		color: #333;
 	}
@@ -485,7 +492,8 @@
 		position: absolute;
 		right: 10px;
 		top: 10px;
-		color: #666;
+		/*color: #666;*/
+		color: #fff;
 		background-color: #fff;
 		border: 1px solid #CCC;
 		border-radius: 0;
