@@ -14,7 +14,7 @@
 			<p>筛选查询</p>
 			<div></div>
 			<el-button size="mini" type="primary" icon="el-icon-refresh" class="majorlist-queryrefresh" @click.native ="refreshMajorPage">刷新</el-button>
-		</div> 
+		</div>
 		<div class="majorlist-form">
 			<el-form class="majorlist-input" label-width="80px">
 				<el-form-item label="院校专业">
@@ -99,10 +99,10 @@
 					<el-table-column :type="val.type" :prop="val.prop" :label="val.label" :width="val.width" >
 				</el-table-column>
 				</div>
-			   
+
 			</el-table>
 		</div>
-		<div class="footer"> 
+		<div class="footer">
 			<el-button size="mini" icon="el-icon-delete" @click.native = "BatchDelete">删除</el-button>
 			<Page :total="total" :limit="searchContent.limit" @pageChange="pageChange" ></Page>
 		</div>
@@ -121,7 +121,7 @@
 					//   showInput: 0,
 					//   showState: true,
 					//   item:'',
-					// }, 
+					// },
 				],
 
 				total:0,
@@ -142,8 +142,8 @@
 					{name:'el-icon-tickets', event:"checkAllProject"}
 				],
 				options: [
-					{value: 0,　label: '按权重升序'}, 
-					{value: 1,label: '按权重降序'}, 
+					{value: 0,　label: '按权重升序'},
+					{value: 1,label: '按权重降序'},
 					{value: 2,label: '按信息更新时间'}
 				],
 				screenType: [
@@ -162,7 +162,7 @@
 				  {prop:'update_time',label:'发布时间',width:160},
 				],
 				majorlisttable:[],
-				multipleSelection:[],//存放多选选中的ID                
+				multipleSelection:[],//存放多选选中的ID
 			}
 		},
 		methods:{
@@ -177,7 +177,7 @@
 						// self.total = response.result.total;
 						this.gridData = response.result.data
                     }
-                    else 
+                    else
                         this.message(true, response.msg, 'error');
                 })
                 .catch(function (error) {
@@ -265,7 +265,7 @@
 							_this.majorlisttable[_this.majorlisttable.indexOf(val)].update_time = response.result;
 							this.message(true, response.msg, 'success');
 						}
-						else 
+						else
 							this.message(true, response.msg, 'error');
 					})
 				}, () => {
@@ -284,7 +284,7 @@
 					query:{id:major.id}
 				});
 				window.open(routeUrl.href, '_blank');
-				
+
 			},
 			//刷新页面
 			refreshMajorPage() {
@@ -300,7 +300,7 @@
 
 			//弹出查看招生项目页面
 			alertSeeProject(){
-				
+
 			},
 
 			//设置专业状态(权重，展示状态，推荐状态)
@@ -322,11 +322,11 @@
 						case 1:
 							_this.majorlisttable[row].is_show = !_this.majorlisttable[row].is_show;
 							break;
-						case 2: 
+						case 2:
 							_this.majorlisttable[row].if_recommended = !_this.majorlisttable[row].if_recommended;
 							break;
 					}
-					this.message(true, '已取消修改', 'info');    
+					this.message(true, '已取消修改', 'info');
 				})
 			},
 
@@ -436,6 +436,13 @@
 
 <!-- 局部样式 scoped -->
 <style scoped>
+  .el-button--primary{
+    background-color: #009fa0 !important;
+    border-color: #009fa0 !important;
+    width: auto !important;
+    border-radius: 5px !important;
+  }
+
 	.dialog i {
 		font-size: 20px;
 	}
@@ -476,7 +483,7 @@
 	.el-table th>.cell {
 		font-size: 12px;
 		font-weight: bold;
-		color: #666; 
+		color: #666;
 		text-align: center;
 	}
 	.majorlist-icon i {
@@ -513,8 +520,8 @@
 		position: absolute;
 		right: 10px;
 		top: 10px;
-		color: #666; 
-		background-color: #fff; 
+		color: #fff;
+		background-color: #fff;
 		border:1px solid #CCC;
 		border-radius:0;
 	}
@@ -547,5 +554,5 @@
 		display: flex;
 		margin: 0 auto;
 		width: 1500px;
-	}    
+	}
 </style>
