@@ -167,12 +167,17 @@
                         </div>
                         <div class="operateUpfilesRight2">
                              <el-button type="primary" @click="startChange3">编辑</el-button>
-                    <!---->
                             <div class="messageBtn">
-                                <div id="editor">
-                                    <!-- <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> -->
+                                <!--<div id="editor">
+                                    &lt;!&ndash; <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> &ndash;&gt;
                                     <div v-html="ruleForm.introduce"></div>
-                                </div>
+                                </div>-->
+                                <script id="container" name="content" type="text/plain">
+                                    这里写你的初始化内容
+                                </script>
+                                <!--<textarea id="editor_id" name="content" style="width:700px;height:300px;">
+                                &lt;strong&gt;HTML内容&lt;/strong&gt;
+                                </textarea>-->
                                 <!--<UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>-->
                                 <div class="messageEditor">
                                     <el-button type="primary" plain :disabled="disabled3" @click="messageEmpty">清空
@@ -196,9 +201,9 @@
 </template>
 
 <script>
-    import UE from '../../../../components/ue/ue.vue';
+    // import UE from '../../../../components/ue/ue.vue';
     export default {
-        components: {UE},
+        // components: {UE},
         data() {
             return {
                 formLabelWidth: '120px',
@@ -251,7 +256,8 @@
                 disabled: true,
                 disabled2: true,
                 disabled3: true,
-                editor: new WangEditor('#editor'),
+                // editor: new WangEditor('#editor'),
+                editor:null,
                 fileList2: [{
                     name: 'food.jpeg',
                     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
@@ -310,6 +316,7 @@
 
 
             },
+
             changeCoverImgMsg() {
                 this.dialogTableVisible = true;
             },
@@ -349,6 +356,10 @@
                             // that.$refs.ue.setUEContent(res.result.introduce);
                             // that.defaultMsg = res.result.introduce;
 
+                            that.editor.ready(function() {
+                                that.editor.setContent(that.ruleForm.introduce);
+                            });
+
                             that.activityCoverImg.activityCoverMapUrl = res.result.active_img;
                             that.activityCoverImg.activityCoverDefultName = res.result.active_cover_img_name;
                             that.activityCoverImg.activityCoverImgName = that.activityCoverImg.activityCoverDefultName.split('.')[0];
@@ -377,11 +388,14 @@
             //     }
             //     return '';
             // },
+
             startChange3: function () {
                 this.disabled3 = false;
-                this.editor.$textElem.attr('contenteditable', true);
+                // this.editor.$textElem.attr('contenteditable', true);
                 // this.$refs.ue.setUeEnabled();
+                this.editor.setEnabled();
             },
+
             //将base64转换为文件
             dataURLtoFile: function (dataurl, filename) {
                 var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
@@ -488,16 +502,16 @@
                 if (this.record == 0) {
                     this.message(true, '请先创建活动', 'error');
                     return;
-                } else if (that.editor.txt.html() == '') {
-                // } else if (this.$refs.ue.setUeEnabled() == '') {
+                // } else if (that.editor.txt.html() == '') {
+                } else if (that.editor.getContent() == '') {
                     this.message(true, '请输入内容', 'error');
                     return;
                 }
 
                 this.post('/admin/information/setin', {
                     id: that.record,
-                    introduce: that.editor.txt.html()
-                    // introduce: that.$refs.ue.getUEContent()
+                    // introduce: that.editor.txt.html()
+                    introduce: that.editor.getContent()
                 }).then(res => {
                     if (res.code == 0) {
                         that.message(true, '提交成功', 'success');
@@ -522,14 +536,16 @@
             // 提交修改数据
             messageSubmit: function () {
                 this.disabled3 = false;
-                this.editor.$textElem.attr('contenteditable', false);
+                // this.editor.$textElem.attr('contenteditable', false);
                 // this.$refs.ue.setUEDisabled();
+                this.editor.setDisabled('fullscreen');
                 this.inPost();
             },
             // 清空富文本编辑器内容
             messageEmpty: function() {
-                this.editor.txt.clear();
+                // this.editor.txt.clear();
                 // this.$refs.ue.setUEContent('');
+                this.editor.setContent('hello');
             },
             //弹出上传图片对话框
             // addPic: function (e) {
@@ -575,11 +591,49 @@
             },
         },
         mounted() {
+            const _this = this;
+
+            /*KindEditor.ready(function(K) {
+              var editor1 = K.create('#editor_id', {
+                cssPath : 'http://zslmadmin.com/js/kindeditor/plugins/code/prettify.css',
+                uploadJson : 'http://zslmadmin.com/js/kindeditor/php/upload_json.php',
+                fileManagerJson : 'http://zslmadmin.com/js/kindeditor/php/file_manager_json.php',
+                allowFileManager : true,
+                afterCreate : function() {
+                  var self = this;
+                  K.ctrl(document, 13, function() {
+                    self.sync();
+                    K('form[name=example]')[0].submit();
+                  });
+                  K.ctrl(self.edit.doc, 13, function() {
+                    self.sync();
+                    K('form[name=example]')[0].submit();
+                  });
+                }
+              });
+              prettyPrint();
+            });*/
+
+            this.editor = UE.getEditor('container' , {
+              // 编辑器不自动被内容撑高
+              autoHeightEnabled: false,
+              // 初始容器高度
+              initialFrameHeight: 400,
+              // 初始容器宽度
+              initialFrameWidth: '100%',
+              autoFloatEnabled:false,
+              // serverUrl: 'http://zslmadmin.com/js/php/controller.php',
+            });
+
+            this.editor.ready(function() {
+                _this.editor.setContent(_this.ruleForm.introduce);
+                _this.editor.setDisabled('fullscreen');
+            });
             // this.province = this.getProvince();
             // this.getMajor();
             this.actId = this.$route.params.actId
 
-            // 配置服务器端地址
+            /*// 配置服务器端地址
             this.editor.customConfig.uploadImgServer = 'http://www.mbahelper.cn:8889/admin/img';
             this.editor.customConfig.uploadFileName = 'image' // 后端接受上传文件的参数名
             this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
@@ -618,13 +672,16 @@
             }
 
             this.editor.create();
-            this.editor.$textElem.attr('contenteditable', false);
+            this.editor.$textElem.attr('contenteditable', false);*/
             this.info();
 
             if (this.actId != 0) {
                 this.record = this.actId
                 this.getone();
             }
+        },
+        destroyed() {//销毁后，第一次和切换路由后都能加载出来
+          this.editor.destroy();
         }
     };
 </script>
