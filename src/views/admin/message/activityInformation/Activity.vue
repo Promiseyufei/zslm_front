@@ -172,9 +172,7 @@
                                     &lt;!&ndash; <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> &ndash;&gt;
                                     <div v-html="ruleForm.introduce"></div>
                                 </div>-->
-                                <script id="container" name="content" type="text/plain">
-                                    这里写你的初始化内容
-                                </script>
+                                <script id="container" name="content" type="text/plain"></script>
                                 <!--<textarea id="editor_id" name="content" style="width:700px;height:300px;">
                                 &lt;strong&gt;HTML内容&lt;/strong&gt;
                                 </textarea>-->
@@ -545,7 +543,7 @@
             messageEmpty: function() {
                 // this.editor.txt.clear();
                 // this.$refs.ue.setUEContent('');
-                this.editor.setContent('hello');
+                this.editor.setContent('');
             },
             //弹出上传图片对话框
             // addPic: function (e) {
@@ -592,27 +590,6 @@
         },
         mounted() {
             const _this = this;
-
-            /*KindEditor.ready(function(K) {
-              var editor1 = K.create('#editor_id', {
-                cssPath : 'http://zslmadmin.com/js/kindeditor/plugins/code/prettify.css',
-                uploadJson : 'http://zslmadmin.com/js/kindeditor/php/upload_json.php',
-                fileManagerJson : 'http://zslmadmin.com/js/kindeditor/php/file_manager_json.php',
-                allowFileManager : true,
-                afterCreate : function() {
-                  var self = this;
-                  K.ctrl(document, 13, function() {
-                    self.sync();
-                    K('form[name=example]')[0].submit();
-                  });
-                  K.ctrl(self.edit.doc, 13, function() {
-                    self.sync();
-                    K('form[name=example]')[0].submit();
-                  });
-                }
-              });
-              prettyPrint();
-            });*/
 
             this.editor = UE.getEditor('container' , {
               // 编辑器不自动被内容撑高

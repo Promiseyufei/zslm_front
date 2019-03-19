@@ -61,9 +61,10 @@
                     v-model="textarea">
                     </el-input>
                 </div>
-               <div id="editor">
+               <!--<div id="editor">-->
 
-               </div>
+               <!--</div>-->
+              <script id="container" name="content" type="text/plain"></script>
               <!--<UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>-->
                 <div>
                     <el-input placeholder="请输入相关链接" v-model="input" style="margin-top:30px;" :disabled="disabled">
@@ -81,9 +82,9 @@
     </div>
 </template>
 <script>
-    import UE from '../../../../components/ue/ue.vue';
+    // import UE from '../../../../components/ue/ue.vue';
     export default {
-        components: {UE},
+        // components: {UE},
         data() {
             return {
                 uploadUrl: this.globals.excelUrl + '/admin/news/putExcel',
@@ -98,7 +99,8 @@
                 idArr:[],
                 radio:0,
                 input:'',
-                editor:{},
+                // editor:{},
+                editor:null,
                 editorContent:'',
                 carrier:-1,
                 textarea:'',
@@ -120,13 +122,13 @@
             shortMess(newval, oldval) {
                 if(newval == 0 || newval == '0') {
                     this.disabled = true;
-                    this.editor.$textElem.attr('contenteditable', false);
-                    // this.$refs.ue.setUEDisabled();
+                    // this.editor.$textElem.attr('contenteditable', false);
+                    this.editor.setDisabled('fullscreen');
                 }
                 else if(newval == 1 || newval == '1') {
                     this.disabled = false;
-                    this.editor.$textElem.attr('contenteditable', true);
-                    // this.$refs.ue.setUeEnabled();
+                    // this.editor.$textElem.attr('contenteditable', true);
+                    this.editor.setEnabled();
                 }
             }
         },
@@ -160,7 +162,8 @@
                 return true;
             },
             send() {
-                this.editorContent = this.$refs.ue.getUEContent();
+                // this.editorContent = this.$refs.ue.getUEContent();
+                this.editorContent = this.editor.getContent()
 
                 if(this.validateParameter()) {
 
@@ -213,7 +216,23 @@
             }
 
             //生成编辑器
-            this.editor = new WangEditor('#editor');
+            let _this = this;
+            this.editor = UE.getEditor('container' , {
+              // 编辑器不自动被内容撑高
+              autoHeightEnabled: false,
+              // 初始容器高度
+              initialFrameHeight: 400,
+              // 初始容器宽度
+              initialFrameWidth: '100%',
+              autoFloatEnabled:false,
+            });
+
+            this.editor.ready(function() {
+              _this.editor.setContent(_this.editorContent);
+              _this.editor.setDisabled('fullscreen');
+            });
+
+            /*this.editor = new WangEditor('#editor');
 
             // 配置服务器端地址
             this.editor.customConfig.uploadImgServer = 'http://www.mbahelper.cn:8889/admin/img';
@@ -253,8 +272,11 @@
                 this.editorContent = html;
             }
             this.editor.create();
-            this.editor.$textElem.attr('contenteditable', false);
+            this.editor.$textElem.attr('contenteditable', false);*/
 
+        },
+        destroyed() {//销毁后，第一次和切换路由后都能加载出来
+          this.editor.destroy();
         }
     }
 

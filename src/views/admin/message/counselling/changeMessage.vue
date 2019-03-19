@@ -214,10 +214,11 @@
                     <div class="operateUpfilesRight2">
                         <el-button type="primary" @click="startChange3">编辑</el-button>
                         <div class="messageBtn">
-                            <div id="editor">
-                                <!-- <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p> -->
-                                 <!-- <div v-html="editorContent"></div> -->
-                            </div>
+                            <!--<div id="editor">
+                                 <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+                                  <div v-html="editorContent"></div>
+                            </div>-->
+                            <script id="container" name="content" type="text/plain"></script>
                             <!--<UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>-->
                             <div class="messageEditor">
                                 <el-button type="primary" plain :disabled="disabled3" @click="messageEmpty">清空
@@ -239,9 +240,9 @@
 </template>
 
 <script>
-    import UE from '../../../../components/ue/ue.vue';
+    // import UE from '../../../../components/ue/ue.vue';
     export default {
-        components: {UE},
+        // components: {UE},
         data() {
             return {
                 formLabelWidth: '120px',
@@ -300,7 +301,8 @@
                 coach: [],
                 // 富文本编辑器
                 editorContent: '',
-                editor: new WangEditor('#editor'),
+                // editor: new WangEditor('#editor'),
+                editor: null,
                 id: 0,
                 majorLogoUrl: '',
                 majorLogoFile: null,
@@ -356,10 +358,12 @@
                 }).then(res => {
                     if(res.code == 0){
                         self.editorContent = res.result.describe;
-                        // console.log(self.editorContent)
-                        self.editor.txt.html(self.editorContent);
+                        // self.editor.txt.html(self.editorContent);
                         // self.$refs.ue.setUEContent(self.editorContent);
                         // self.defaultMsg = self.editorContent;
+                        self.editor.ready(function() {
+                          self.editor.setContent(self.editorContent);
+                        });
 
                         self.counsellForm.name = res.result.coach_name
                         self.counsellForm.region =  parseInt(res.result.province)
@@ -508,7 +512,8 @@
                 let that = this;
                 this.post('/admin/information/created', {
                     id: that.id,
-                    describe: that.editor.txt.html()
+                    // describe: that.editor.txt.html()
+                    describe: that.editor.getContent()
                     // describe: that.$refs.ue.getUEContent()
                 }).then(res => {
                     if(res.code == 0){
@@ -527,20 +532,23 @@
             },
             startChange3: function () {
                 this.disabled3 = false;
-                this.editor.$textElem.attr('contenteditable', true);
+                // this.editor.$textElem.attr('contenteditable', true);
                 // this.$refs.ue.setUeEnabled();
+                this.editor.setEnabled();
             },
             // 提交修改数据
             messageSubmit: function () {
                 this.disabled3 = true;
-                this.editor.$textElem.attr('contenteditable', false);
+                // this.editor.$textElem.attr('contenteditable', false);
                 // this.$refs.ue.setUEDisabled();
+                this.editor.setDisabled('fullscreen');
                 this.postD()
             },
             // 清空富文本编辑器内容
             messageEmpty: function () {
                 // this.editor.txt.clear();
-                this.$refs.ue.setUEContent('');
+                // this.$refs.ue.setUEContent('');
+                this.editor.setContent('');
             },
             //返回上一页
             toBack: function () {
@@ -559,7 +567,23 @@
                 this.getOne()
             }
             // 创建富文本编辑器
-            // 配置服务器端地址
+            let _this = this;
+            this.editor = UE.getEditor('container' , {
+              // 编辑器不自动被内容撑高
+              autoHeightEnabled: false,
+              // 初始容器高度
+              initialFrameHeight: 400,
+              // 初始容器宽度
+              initialFrameWidth: '100%',
+              autoFloatEnabled:false,
+            });
+
+            this.editor.ready(function() {
+              _this.editor.setContent(_this.editorContent);
+              _this.editor.setDisabled('fullscreen');
+            });
+
+            /*// 配置服务器端地址
             this.editor.customConfig.uploadImgServer = 'http://www.mbahelper.cn:8889/admin/img';
             this.editor.customConfig.uploadFileName = 'image' // 后端接受上传文件的参数名
             this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
@@ -599,8 +623,11 @@
 
             this.editor.create();
             this.editor.txt.html(this.editorContent);
-            this.editor.$textElem.attr('contenteditable', false);
+            this.editor.$textElem.attr('contenteditable', false);*/
         },
+        destroyed() {//销毁后，第一次和切换路由后都能加载出来
+          this.editor.destroy();
+        }
     };
 </script>
 <style>

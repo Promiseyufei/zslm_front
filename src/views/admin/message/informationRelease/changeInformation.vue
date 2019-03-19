@@ -104,9 +104,10 @@
                     <div class="operateUpfilesRight2">
                         <el-button type="primary" @click="startChange3">编辑</el-button>
                         <div class="messageBtn">
-                            <div id="editor">
+                            <!--<div id="editor">
                                 <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
-                            </div>
+                            </div>-->
+                            <script id="container" name="content" type="text/plain"></script>
                             <!--<UE :defaultMsg=defaultMsg :config=config :id=ue1 ref="ue"></UE>-->
                             <div class="messageEditor">
                                 <el-button type="primary" plain :disabled = "disabled3" @click="messageEmpty">清空</el-button>
@@ -127,9 +128,9 @@
 </template>
 
 <script>
-  import UE from '../../../../components/ue/ue.vue';
+  // import UE from '../../../../components/ue/ue.vue';
 export default {
-    components: {UE},
+    // components: {UE},
     data() {
         return {
             infoId: 0,
@@ -140,7 +141,9 @@ export default {
                 Keywords: "",
                 Description: ""
             },
-            infoMsg:{},
+            infoMsg:{
+              z_text:''
+            },
             informationForm: {
                 name: "河南科技学院",
                 counsell_type: "提前面试",
@@ -155,7 +158,8 @@ export default {
             counsellType: [],
             // 富文本编辑器
             editorContent:'',
-            editor: new WangEditor('#editor'),
+            // editor: new WangEditor('#editor'),
+            editor: null,
             id: 0,
 
             /*defaultMsg: '',
@@ -197,14 +201,16 @@ export default {
         },
         startChange3: function () {
             this.disabled3 = false;
-            this.editor.$textElem.attr('contenteditable', true);
+            // this.editor.$textElem.attr('contenteditable', true);
             // this.$refs.ue.setUeEnabled();
+            this.editor.setEnabled();
         },
         // 提交修改数据提交修改数据
         messageSubmit: function() {
             this.disabled3 = true;
-            this.editor.$textElem.attr('contenteditable', false);
+            // this.editor.$textElem.attr('contenteditable', false);
             // this.$refs.ue.setUEDisabled();
+            this.editor.setDisabled('fullscreen');
         },
         // 清空富文本编辑器内容
         messageEmpty: function() {
@@ -231,9 +237,11 @@ export default {
                 if(response.code == 0) {
                     _this.infoCoverUrl = response.result.z_image;
                     _this.infoMsg = response.result;
-                    _this.editor.txt.html(response.result.z_text);
+                    // _this.editor.txt.html(response.result.z_text);
                     // _this.$refs.ue.setUEContent(response.result.z_text);
-                    // _this.defaultMsg = response.result.z_text;
+                    _this.editor.ready(function() {
+                      _this.editor.setContent(response.result.z_text);
+                    });
                 }
                 else
                     this.message(true, "未查询到指定资讯的信息", 'error');
@@ -243,7 +251,22 @@ export default {
         // 创建富文本编辑器
         createEditor() {
             let _this = this;
-            // 配置服务器端地址
+            this.editor = UE.getEditor('container' , {
+              // 编辑器不自动被内容撑高
+              autoHeightEnabled: false,
+              // 初始容器高度
+              initialFrameHeight: 400,
+              // 初始容器宽度
+              initialFrameWidth: '100%',
+              autoFloatEnabled:false,
+            });
+
+            this.editor.ready(function() {
+              _this.editor.setContent(_this.infoMsg.z_text);
+              _this.editor.setDisabled('fullscreen');
+            });
+
+            /*// 配置服务器端地址
             this.editor.customConfig.uploadImgServer = 'http://www.mbahelper.cn:8889/admin/img';
             this.editor.customConfig.uploadFileName = 'image' // 后端接受上传文件的参数名
             this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
@@ -283,7 +306,7 @@ export default {
                 _this.editorContent = html;
             }
             this.editor.create();
-            this.editor.$textElem.attr('contenteditable', false);
+            this.editor.$textElem.attr('contenteditable', false);*/
         },
         putInfoMsg() {
             let formdata = new FormData();
@@ -326,7 +349,8 @@ export default {
         putInfoTextMsg() {
             this.post('/admin/information/updateInfoTextMsg', {
                 infoId: this.infoId || this.$route.params.infoId,
-                text: this.$refs.ue.getUEContent()
+                // text: this.$refs.ue.getUEContent()
+                text: this.editor.getContent()
             }).then((response) => {
                 if(response.code == 0) {
                     this.getAppointIdInfoMsg();
@@ -354,6 +378,9 @@ export default {
             this.message(true, '未查询到资讯类型的信息', 'error')
         })
     },
+    destroyed() {//销毁后，第一次和切换路由后都能加载出来
+      this.editor.destroy();
+    }
 };
 </script>
 <style>
