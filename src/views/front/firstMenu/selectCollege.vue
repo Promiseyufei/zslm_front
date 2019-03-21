@@ -283,14 +283,24 @@
                         var n = list[4][i].split('-');
 
                         for (var j = 0; j < n.length; j++) {
+                            if(n.length == 1 && parseInt(n[j]) == 6){ // 如果数组是一个并且数值等于6 说明选择的6一下的
+                              num.push(0);
+                              num.push(parseInt(n[j]));
+                            }else if(n.length == 1 && parseInt(n[j]) == 40){ // 如果数组是一并且数值等于40 说明选择的40以上的
+                              num.push(parseInt(n[j]));
+                              num.push(100);
+                            }else{
                             num.push(parseInt(n[j]));
+                          }
                         }
                     }
                 }
 
+                this.min = Math.min.apply(null, num);
+                this.max = Math.max.apply(null, num);
 
-                this.max = list[4]; //学习费用——int
-                if (list[4].length > 0 && list[4].length == 1) {
+                // this.max = list[4]; //学习费用——int
+                /*if (num.length > 0 && num.length == 1) {
 
                     if (num[0] > 10) {
                         this.min = Math.max.apply(null, num);
@@ -300,10 +310,10 @@
                         this.max = Math.max.apply(null, num);
                     }
 
-                } else if (list[4].length > 0) {
+                } else if (num.length > 0) {
                     this.min = Math.min.apply(null, num);
                     this.max = Math.max.apply(null, num);
-                }
+                }*/
 
                 // console.log(this.min);
                 // console.log(this.max);

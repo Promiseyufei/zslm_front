@@ -95,7 +95,7 @@
                         <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.student_count}}</div>
                 </div>
                 <div style="display:flex;align-items:center;">
-                        <div style="margin:2px 0 0 0;"><img src="../../assets/img/friends.png"></div>
+                        <div style="margin:2px 0 0 0;"><img src="../../assets/img/icon001.png"></div>
                         <div class="SchoolType" style="margin:0 11px 0 8px;font-size: 14px;color: #6e6e6e;">班级情况</div>
                         <div style="font-size: 14px;color: #6e6e6e; font-weight: bold;">{{t.class_situation}}</div>
                 </div>
