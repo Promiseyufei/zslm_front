@@ -624,5 +624,32 @@ export default {
 	changeTile(title) {
 		let oldtitle = 'MBA Helper';
 		document.title = (title == '' || title == null) ? oldtitle : title;
-	}
+	},
+
+  /**
+   * 设置Keywords
+   * @param Keywords
+   */
+  setKeywords(Keywords){
+    let meta = document.getElementsByTagName("meta");
+    for(var i = 0; i < meta.length;i++){
+      console.log(meta[i].name);
+      if(meta[i].name == 'Keywords'){
+          meta[i].content = Keywords;
+      }
+    }
+  },
+
+  /**
+   * 设置Description
+   * @param Description
+   */
+  setDescription(Description){
+    let meta = document.getElementsByTagName("meta");
+    for(var i = 0; i < meta.length;i++){
+      if(meta[i].name == 'Description'){
+        meta[i].content = Description;
+      }
+    }
+  }
 }
