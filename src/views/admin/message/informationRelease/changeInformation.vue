@@ -308,8 +308,13 @@ export default {
             this.editor.create();
             this.editor.$textElem.attr('contenteditable', false);*/
         },
-        putInfoMsg() {
+
+      /**
+       * 咨询提交
+       */
+      putInfoMsg() {
             let formdata = new FormData();
+            formdata.append('infoId', this.infoId);
             formdata.append('infoName', this.infoMsg.zx_name);
             formdata.append('infoType', this.infoMsg.z_type);
             formdata.append('infoFrom', this.infoMsg.z_from);
