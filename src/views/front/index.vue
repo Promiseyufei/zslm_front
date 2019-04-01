@@ -167,14 +167,14 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> 
 							</div>
 						</div>
 						<div class="selectInformationFooter">
 							<div>
 								<p>全国N个省市，M个辅导机构</p>
-								<p>领优惠卷更实惠，退款保障更放心！</p>
 								<p>机构入驻联络010-82863124</p>
+								<p>领优惠卷更实惠，退款保障更放心！</p>								
 							</div>
 							<yellowBtn text="查看全部辅导机构" @click.native="toJump(4)"></yellowBtn>
 						</div>

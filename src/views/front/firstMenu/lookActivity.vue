@@ -18,7 +18,7 @@
 				<div class="selectedTag">
 					<div class="selected" style="position: relative">
 						<div class="slectedLeft">
-							<span>选活动 &gt;</span>
+							<span>找活动 &gt;</span>
 							<tags :tags="seltData" @handleClose="handleClose"></tags>
 						</div>
 						<div style="position: absolute;right: 0;font-size: 14px;color: rgb(110, 110, 110);">

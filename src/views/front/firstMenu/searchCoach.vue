@@ -24,7 +24,7 @@
           <div class="singlecoachbox">
             <div class="coachNav">
               <div class="coachNavleft">
-                <span>选院校 &gt;</span>
+                <span>搜辅导 &gt;</span>
 
                 <tags :tags="tags" @handleClose="handleClose"></tags>
               </div>
