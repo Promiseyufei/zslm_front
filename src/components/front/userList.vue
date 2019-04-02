@@ -268,6 +268,10 @@
 
             },
             jump(index){
+                if(index == 3){
+                  sessionStorage.setItem('isSelect', 0);
+                }
+
                 this.$router.push(this.url[index])
             },
             out(){
