@@ -1,6 +1,6 @@
 <template>
     <!-- <homeBtn text="查看全部院校"></homeBtn> -->
-    <span @mouseover="selectStyle()" @mouseout="outStyle()"  class="homeBtn">{{text}}
+    <span @mouseover="selectStyle()" @mouseout="outStyle()"  class="homeBtn" @click="jump">{{text}}
         <img :src="src" alt="">
     </span>
 </template>
@@ -9,19 +9,23 @@
 export default {
     data() {
         return {
-            src: require('../../assets/img/green.png'),
+            src: require('../../assets/img/white.png'),
         };
     },
     methods:{
         //鼠标移入触发事件
         selectStyle: function() {
+            // this.src = require('../../assets/img/white.png');
             this.src = require('../../assets/img/white.png');
         },
         //鼠标移开触发事件
         outStyle: function(se) {
-            this.src = require('../../assets/img/green.png');
+            // this.src = require('../../assets/img/green.png');
+            this.src = require('../../assets/img/white.png');
+        },
+        jump(){
+          this.$emit('majorWeb');
         }
-
     },
     props:["text"],
     mounted(){

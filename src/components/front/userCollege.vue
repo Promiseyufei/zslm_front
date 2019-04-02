@@ -97,7 +97,7 @@
 						</div>
 
 					</div>
-          <homeBtn class="btn c-button button_LsM2yn123 quguan jinruzhuye" text="进入院校主页" @click="majorWeb"></homeBtn>
+          <homeBtn class="btn c-button button_LsM2yn123 quguan jinruzhuye" text="进入院校主页" @majorWeb="majorWeb"></homeBtn>
 					<!--<a class="btn c-button button_LsM2yn123 quguan jinruzhuye" @click="majorWeb" type="button" >进入院校主页</a>-->
 				</div>
 				<a class="c-textlink textlink_wzNM3e dakai c-action-click" data-c_act_id="M_ab06ccb710e44532|M_126530613a6d5d52"
@@ -1173,6 +1173,7 @@
 				this.notShow = !this.notShow;
 			},
 			majorWeb(){
+			  // alert(1);
 				window.open(this.data.index_web)
 			},
       quguan(){
@@ -1203,10 +1204,14 @@
 			// alert(url);
       // console.log(url);
 			// document.getElementById("logo").style.backgroundImage = "url('" + url + "')";
-			if (this.datas.major_follow_id != null && this.datas.major_follow_id)
-				this.datas.major_follow_id = this.data.major_follow_id.split(',')
-			if (this.datas.major_confirm_id != null && this.datas.major_confirm_id)
-				this.datas.major_confirm_id = this.data.major_confirm_id.split(',')
+			if (this.datas.major_follow_id != null && this.datas.major_follow_id){
+        this.datas.major_follow_id = this.data.major_follow_id.split(',');
+      }
+
+			if (this.datas.major_confirm_id != null && this.datas.major_confirm_id){
+        this.datas.major_confirm_id = this.data.major_confirm_id.split(',')
+      }
+
 		},
 
 	}
