@@ -26,7 +26,8 @@
             </el-form-item>
             <div class="button">
               <el-button type="primary" @click="submission">确定</el-button>
-              <el-button @click="$router.push('/front/Login/loginRoute/accountNumber')">返回</el-button>
+              <!--<el-button @click="$router.push('/front/Login/loginRoute/accountNumber')">返回</el-button>-->
+              <el-button @click="$router.go(-1)">返回</el-button>
             </div>
           </div>
         </el-form>
@@ -121,10 +122,11 @@
 		color: #6e6e6e;
 	}
 	.content .el-button--primary {
-		height: 40px;
-    	width: 160px;
-    	background-color: #ffb957;
-    	border-color: #ffb957
+		  height: 40px;
+    	width: 50% !important;
+    	background-color: #009fa0;
+    	border-color: #009fa0;
+      border-radius: 5px !important;
 	}
 	.button .el-button--primary[data-v-056c4480] {
 		height: 36px;
