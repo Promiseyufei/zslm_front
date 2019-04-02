@@ -5,7 +5,7 @@
     	   	<staticNav :state="state"></staticNav>
             <div class="content">
                 <div class="title">
-                    <p>机构简介</p>
+                    <p>关于我们</p>
                 </div>
                 <article>
                     <img src="../../../assets/img/staticLogo.png">

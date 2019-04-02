@@ -8,7 +8,7 @@
                     <p>帮助中心</p>
                 </div>
                 <article>
-                    <!-- <img src="../../../assets/img/staticLogo.png"> -->
+                    <img src="../../../assets/img/staticLogo.png">
                     <p>暂无信息。</p>
                 </article>
             </div>

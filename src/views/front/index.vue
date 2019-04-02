@@ -338,11 +338,11 @@
 						</div>
 						<div class="float-middle">
 							<ul>
-								<li><a href="">关于我们</a></li>
-								<li><a href="">用户条款</a></li>
-								<li><a href="">帮助中心</a></li>
-								<li><a href="">问题反馈</a></li>
-								<li><a href="">法律声明</a></li>
+							<li><a href="/front/firstMenuRouter/aboutUs#/front/firstMenuRouter/aboutUs">关于我们</a></li>
+							<li><a href="/front/firstMenuRouter/aboutUs#/front/firstMenuRouter/userTerms">用户条款</a></li>
+							<li><a href="/front/firstMenuRouter/aboutUs#/front/firstMenuRouter/helpCenter">帮助中心</a></li>
+							<li><a href="/front/firstMenuRouter/helpCenter#/front/firstMenuRouter/feedback">问题反馈</a></li>
+							<li><a href="/front/firstMenuRouter/helpCenter#/front/firstMenuRouter/legalNotice">法律声明</a></li>
 							</ul>
 						</div>
 						<div class="float-right">
@@ -371,6 +371,7 @@
 		components: {
 
 		},
+		
 		data() {
 			return {
 				equis: "EQUIS",
@@ -431,6 +432,7 @@
 			}
 		},
 		methods: {
+			
 			//得到7个院校
 			getCollage: function() {
 				var that = this;

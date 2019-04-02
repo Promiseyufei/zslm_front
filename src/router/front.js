@@ -284,7 +284,15 @@ let front_router = {
         //         }
         //     ]
         // },
-    ]
+    ],
+	
+	  scrollBehavior(to,from,saveTop){
+	  if(saveTop){
+	    return saveTop;
+	  }else{
+	    return {x:0,y:0}
+	  }
+	}
 }
 
 export default front_router;
