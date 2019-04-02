@@ -18,7 +18,8 @@
                                 </p>
                                 <div class="icon-head" style="margin-top: 10px;color:#6f6f6f;">
                                     <i class="fa fa-calendar position"></i>{{ item.time }}
-                                    <i class="fa fa-paper-plane position" style="margin-left: 10px;"></i>{{ item.author }}
+                                    <!--<i class="fa fa-paper-plane position" style="margin-left: 10px;"></i>{{ item.author }}-->
+                                    <i class="fa fa-paper-plane position" style="margin-left: 10px;"></i>MBA&#12288;Helper
                                 </div>
                             </div>
                         </div>

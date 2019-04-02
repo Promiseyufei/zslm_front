@@ -18,7 +18,8 @@
                                 {{ item.create_time }}
                             </i>
                             <i class="fa fa-paper-plane">
-                                {{ item.publisher }}
+                                <!--{{ item.publisher }}-->
+                                MBA&#12288;Helper
                             </i>
                         </div>
                         <div class="button" @click="jump(item.id)">
@@ -45,7 +46,8 @@
                                         {{ item.create_time }}
                                     </i>
                                     <i class="fa fa-paper-plane">
-                                        {{ item.publisher }}
+                                        <!--{{ item.publisher }}-->
+                                        MBA&#12288;Helper
                                     </i>
                                 </div>
                             </div>
