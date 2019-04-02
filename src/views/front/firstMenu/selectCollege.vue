@@ -294,10 +294,12 @@
                           }
                         }
                     }
+
+                  this.min = Math.min.apply(null, num);
+                  this.max = Math.max.apply(null, num);
                 }
 
-                this.min = Math.min.apply(null, num);
-                this.max = Math.max.apply(null, num);
+
 
                 // this.max = list[4]; //学习费用——int
                 /*if (num.length > 0 && num.length == 1) {

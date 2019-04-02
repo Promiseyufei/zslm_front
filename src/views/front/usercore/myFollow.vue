@@ -2,7 +2,7 @@
     <div >
         <div v-for="(item,index) in majors" :key="index">
 
-            <user-college  :data="item" :id="id"></user-college>
+            <user-college  :data="item" :id="id" @getMajor="getMajor"></user-college>
         </div>
         <!--<el-button  style="float: right" type="text" @click="getPage" :loading="loading" :disabled="disabled">{{ loadingBtnText }}</el-button>-->
     </div>

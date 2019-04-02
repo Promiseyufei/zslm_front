@@ -3,7 +3,7 @@
 		<div class="c-div div_lPV1oN guanzhu">
 			<div class="c-div div_BMsaOd guanzhu">
 				<div class="c-div div_ARD2As">
-					<div id="logo" class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill"
+					<div id="logo" class="c-inlineblock c-imageblock imageblock_VRWtPr" mode="scaleToFill" :style="{backgroundImage:'url(' + data.magor_logo_name + ')'}"
 					 style="background-size:  100% 100%; background-position:  0% 0%;
                          background-repeat:  no-repeat;
                        ">
@@ -55,7 +55,8 @@
 						</div>
 					</div>
 				</div>
-				<a class="btn c-button button_LsM2yn123 quguan" type="button">正在关注</a>
+
+				<a class="btn c-button button_LsM2yn123 quguan" type="button" @click="quguan">正在关注</a>
 			</div>
 			<div class="c-div div_Sd6WRB">
 				<div v-show="classShow" class="c-div div_PiRYSQ" data-c_e_id="div_354d2bc5">
@@ -542,15 +543,32 @@
 	.button_LsM2yn123.quguan {
 		margin-top: 5px;
 		border-radius: 5px;
-		color: rgb(191, 191, 191);
-		background-color: transparent;
-		border-color: rgb(220, 220, 220);
+		/*color: rgb(191, 191, 191);*/
+		/*background-color: transparent;*/
+    color: #ffffff;
+    background-color: rgb(255, 185, 87);
+    border-color: rgb(255, 185, 87);
+		/*border-color: rgb(220, 220, 220);*/
 		font-weight: bold;
 	}
 
+  .button_LsM2yn123.quxiao {
+    margin-top: 5px;
+    border-radius: 5px;
+    color: rgb(191, 191, 191);
+    background-color: transparent;
+   /* color: #ffffff;
+    background-color: rgb(255, 185, 87);
+    border-color: rgb(255, 185, 87);*/
+    border-color: rgb(220, 220, 220);
+    font-weight: bold;
+  }
+
   .div_PiRYSQ > .button_LsM2yn123,.div_PiRYSQ > .quguan{
-    color:rgb(0, 159, 160);
-    border-color: rgb(0, 159, 160);
+    /*color:rgb(0, 159, 160);
+    border-color: rgb(0, 159, 160);*/
+    background-color: rgb(255, 185, 87);
+    border-color: rgb(255, 185, 87);
   }
 
 	.c-button {
@@ -1131,6 +1149,7 @@
 </style>
 <script>
 	export default {
+    inject: ['reload'],
 		data() {
 			return {
 				classShow: false,
@@ -1144,6 +1163,7 @@
 				both29: "双一流",
 				amba: "AMBA",
 				camea: "CAMEA",
+        is_focus:0,
 			}
 		},
 		methods: {
@@ -1154,7 +1174,23 @@
 			},
 			majorWeb(){
 				window.open(this.data.index_web)
-			}
+			},
+      quguan(){
+        // let self = this;
+			  this.fetch('/front/usercore/cancelUserMajor' , {
+          id:this.id,
+          major_id:this.data.major_id
+        }).then((res)=>{
+          if(res.code == 0){
+            this.message(true , res.msg , 'success');
+            this.$router.go(0)
+          }else{
+            this.message(true , res.msg , 'error');
+          }
+        }).catch((error)=>{
+          console.log(error);
+        });
+      }
 		},
 		props: ["data", "id"],
 		mounted() {
@@ -1164,8 +1200,9 @@
 			this.datas = this.data
 
 			let url = this.data.magor_logo_name;
-
-			document.getElementById("logo").style.backgroundImage = "url('" + url + "')";
+			// alert(url);
+      // console.log(url);
+			// document.getElementById("logo").style.backgroundImage = "url('" + url + "')";
 			if (this.datas.major_follow_id != null && this.datas.major_follow_id)
 				this.datas.major_follow_id = this.data.major_follow_id.split(',')
 			if (this.datas.major_confirm_id != null && this.datas.major_confirm_id)
