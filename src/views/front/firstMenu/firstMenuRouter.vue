@@ -135,6 +135,7 @@
 	    	},
 	    	//跳到搜索
 	    	goSearch:function(){
+          sessionStorage.setItem('isSelect', 0);
 	    		this.$router.push('/front/firstMenuRouter/search/major/' + this.$store.state.search['keyword']);
 	    	},
 	    	//头部菜单——组件自带——key为选中的当前页面ID
