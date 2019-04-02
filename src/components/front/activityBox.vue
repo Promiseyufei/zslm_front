@@ -260,7 +260,6 @@ export default {
         align-items: center;
         margin-top: 10px;
         min-height: auto;
-
         /*font-size: 12px;*/
     }
 
@@ -268,7 +267,6 @@ export default {
         display: flex;
         -webkit-box-align: center;
         align-items: center;
-
         margin-top: 0;
         margin-bottom: 0;
         min-height: auto;

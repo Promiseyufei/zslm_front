@@ -550,7 +550,15 @@ let admin_router = {
         //     component: resolve =>void(require(['@/views/admin/refund/refundDetails'], resolve))
         // },
         
-    ]
+    ],
+	
+	    scrollBehavior(to,from,saveTop){
+	  if(saveTop){
+	    return saveTop;
+	  }else{
+	    return {x:0,y:0}
+	  }
+	}
 }
 
 

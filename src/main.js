@@ -98,8 +98,11 @@ Object.keys(wxShare).forEach((key) => {
 /**
  * 前端路由过滤
  */
-router.beforeEach((to, from, next) => {
 
+
+
+router.beforeEach((to, from, next) => {
+	
 	if(to.matched.length === 0) {
 		if(to.path == '/') {
 
@@ -154,16 +157,22 @@ router.beforeEach((to, from, next) => {
 					path: '/admin/login'
 				})
 			}
-
 			next()
-
 		}
 	} else if (paramPath[1] == 'front') {
 		/**
 		 * 前台
 		 */
 		next()
-	}
+	}	
+// 	scrollBehavior(to,from,savedPosition){
+//       if(savedPosition){
+//         return savedPosition;
+//       }else{
+//         return {x:0,y:0}
+//       }
+//     }
+
 })
 
 /* eslint-disable no-new */
