@@ -9,7 +9,7 @@
                     <p class="c-ellipse c-paragraph paragraph_XjkcYS">{{data.province}}+{{data.city}}</p>
                 </div>
               <div class="c-div div_m9HjXA c-action-click" >
-                <h1 class="c-heading heading_6Bjcro"><a :href="data.web_url">进入主页</a></h1>
+                <h1 class="c-heading heading_6Bjcro"><a @click="jump(data.web_url)">进入主页</a></h1>
               </div>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 c-column column_PITz90">
@@ -35,11 +35,15 @@
           </div>
         </div>
       <!-- 弹出层 -->
-      <el-dialog
+      <!--<el-dialog
         title="优惠卷使用说明"
         :visible.sync="dialogFormVisible"
         append-to-body=true
-        :before-close="handleClose">
+        :before-close="handleClose">-->
+      <el-dialog
+        title="优惠卷使用说明"
+        :visible.sync="dialogFormVisible"
+        append-to-body=true>
         <span><div v-html="couponcol"></div></span>
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="userCouponFunc">确 定</el-button>
@@ -742,10 +746,15 @@
                 this.couponId = 0,
                   console.log(error);
               });
+            },
+            jump(url){
+                // alert(url);
+                window.open(url);
             }
         },
         props: ["data","use_show","id"],
         mounted(){
+          // console.log(this.data);
         }
     }
 </script>
