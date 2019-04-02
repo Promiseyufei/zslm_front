@@ -106,6 +106,9 @@ export default {
   .university:nth-child(3n){
     margin-right: 0px;
   }
+  .university:nth-child(4n){
+    margin-right: 15px !important;
+  }
   .university-icon{
     width: 100%;
     height: 255px;
