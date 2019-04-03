@@ -100,7 +100,7 @@ export default {
     border-radius: 10px;
     cursor: pointer;
     float: left;
-    margin-top: 33px;
+    margin-bottom: 33px;
     overflow: hidden;
   }
   .university:nth-child(3n){
@@ -202,7 +202,7 @@ export default {
     flex-wrap: wrap;
 }
 #search_coach .div_rTx1Nf {
-    padding-top: 10px;
+    /*padding-top: 10px;*/
     min-height: 80px;
 }
 #search_coach .div_rTx1Nf .heading_XwQWQq.jieguohuodong {

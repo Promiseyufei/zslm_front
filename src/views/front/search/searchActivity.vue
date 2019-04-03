@@ -74,7 +74,7 @@ export default {
     flex-wrap: wrap;
 }
 #search_activity .div_rTx1Nf {
-    padding-top: 10px;
+    /*padding-top: 10px;*/
     min-height: 80px;
 }
 #search_activity .div_rTx1Nf .heading_XwQWQq.jieguohuodong {
