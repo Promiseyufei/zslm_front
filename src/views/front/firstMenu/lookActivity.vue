@@ -133,46 +133,6 @@
 								id: 2,
 								name: "本月"
 							},
-							/*{
-								id: 3,
-								name: "三月"
-							},
-							{
-								id: 4,
-								name: "四月"
-							},
-							{
-								id: 5,
-								name: "五月"
-							},
-							{
-								id: 6,
-								name: "六月"
-							},
-							{
-								id: 7,
-								name: "七月"
-							},
-							{
-								id: 8,
-								name: "八月"
-							},
-							{
-								id: 9,
-								name: "九月"
-							},
-							{
-								id: 10,
-								name: "十月"
-							},
-							{
-								id: 11,
-								name: "十一月"
-							},
-							{
-								id: 12,
-								name: "十二月"
-							},*/
 						], //时间1-12月
 						"fif": "查看更多"
 					},
@@ -199,7 +159,16 @@
 			 * 获取活动列表内容
 			 * @param  {[int]} val [0 手机端加载更多 1 手机端查询 2 电脑端查询]
 			 */
-			getActivityList: function(val) {
+			getActivityList: function(val , key = 0) {
+			  /*if(val == 1 || val == 2){
+          this.pageNumber = 1; // 重制分页下标
+        }*/
+			  if(key){
+          this.pageNumber = key;
+        }else{
+          this.pageNumber = 1;
+        }
+
 				// console.log(this.activitySelected);
 				var self = this;
 				let state = val;
@@ -266,8 +235,9 @@
 
 			// 筛选块-从组件中获取选中结果
 			change(data) {
-				// console.log(data.length)
+        this.pageNumber = 1; // 重制分页下标
 				this.seltData = data;
+
 				for (let index = 0; index < this.seltData.length; index++) {
 					if (this.seltData[index].length == 0) {
 						this.seltData[index].splice(this.seltData[index].indexOf("*"), 1);
@@ -316,9 +286,8 @@
 
 			// 电脑点击改变分页值
 			changePageNum(pageNum) {
-				this.pageNumber = pageNum;
 				// this.getPcActivityList();
-				this.getActivityList(2);
+				this.getActivityList(2 , pageNum);
 			},
 
 			/**

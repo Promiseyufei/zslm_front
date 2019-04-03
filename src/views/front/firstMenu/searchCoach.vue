@@ -10,7 +10,7 @@
         <div class="singlecoachBig">
           <div class="singlecoachbox">
             <div class="coachInput">
-              <input type="text" placeholder="输入关键字搜索" v-model="inputvalue" @blur.prevent="getCoach">
+              <input type="text" placeholder="输入关键字搜索" v-model="inputvalue" @blur.prevent="getCoach(1)">
               <i class="fa fa-search"></i>
             </div>
           </div>
@@ -190,6 +190,7 @@
 
       //每次子组件改变时，父组件就会改变
       change: function(checkboxGroup) {
+        this.pageNumber = 1; // 重制分页下标
         // console.log(checkboxGroup);
         //当选中全部时，清空当前行数组，通过*号匹配
         // let t = checkboxGroup
@@ -223,7 +224,11 @@
         this.$router.push('/front/firstMenuRouter/searchCoach/singleCoachs/' + id);
       },
       //得到所有筛选过的辅导机构列表
-      getCoach: function() {
+      getCoach: function(key = 0) {
+        if(key){
+          this.pageNumber = 1; // 重制分页下标
+        }
+
         var that = this;
         var str = '';
         let len = that.tags[0].length;

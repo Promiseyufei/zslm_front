@@ -194,6 +194,7 @@
 
             // 点击筛选块-从组件中获取选中结果
             change(data) {
+                this.page = 1; // 重制分页下标
                 // this.page = 1;
                 // this.getAllCollege(data);
                 this.seltData = data;
@@ -346,6 +347,7 @@
             },
             //搜索框失去焦点——传搜索内容
             search: function () {
+                this.page = 1; // 重制页码
                 this.getmajorInform();
             },
             //获得院校信息
