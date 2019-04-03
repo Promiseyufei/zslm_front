@@ -1,7 +1,7 @@
 <template>
     <div id="search_activity">
         <div class="div_rTx1Nf">
-            <h1 class="c-heading heading_XwQWQq jieguohuodong">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
+            <h1 class="c-heading heading_XwQWQq jieguohuodong" v-if="keyword != ''">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
             <div class="activitys">
                 <activityBox v-for="(item, index) in activitys" :key="index" :activityInfo="item"></activityBox>
             </div>
@@ -21,7 +21,7 @@ export default {
             pageNumber:1,
             activitys:[]
         }
-    }, 
+    },
     methods: {
         getActivity(number) {
             this.pageNumber = number;
@@ -35,7 +35,7 @@ export default {
                     this.activitys = response.result.activitys;
                 }
                 else this.message(true, response.msg, 'info');
-            }) 
+            })
         },
         getPage() {
             this.loading = true;
@@ -43,7 +43,7 @@ export default {
             this.fetch('/front/activity/getSearchActivity', {
                 keyword: this.keyword,
                 pageCount: this.pageCount,
-                pageNumber: this.pageNumber   
+                pageNumber: this.pageNumber
             }).then((response) => {
                 if(response.code == 0) {
                     this.count = response.result.count;
@@ -95,7 +95,7 @@ export default {
     min-height: 10px;
 }
 @media only screen and (min-width: 768px) {
-    .activitys .activityBox[data-v-1be92314] {
+    .activitys .activityBox{
         width: 31.2% !important;
     }
 }
