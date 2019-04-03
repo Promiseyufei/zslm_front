@@ -74,8 +74,8 @@
             	}
         	},
 
-		    //注册按钮
-		    registerTest: function() {
+      //注册按钮
+      registerTest: function() {
 				if(this.phoneNumber==''){
 					this.$message('手机号不能为空！');
                 	return;
@@ -94,17 +94,16 @@
 				params = (JSON.stringify(params) == "{}") ? this.returnParams(0) : params;
 				this.post('/login/front/register', params).then((response) => {
 					if(response.code == 2) {
-						this.message(true, '该手机号已注册');
-					}
-					else if(response.code == 3) {
+						this.message(true, '该手机号已注册' , 'error');
+					}else if(response.code == 1){
+            this.message(true, response.msg , 'error');
+          }else if(response.code == 3) {
 						this.confirm(() => {
-							console.log('aaaaa');
 							this.register(this.returnParams(1));
 						}, () => {
 							this.message(true, '已取消注册', 'info');
 						}, '是否注册?');
-					}
-					else if(response.code == 0) {
+					}else if(response.code == 0) {
 						this.saveUserState('user', this.phoneNumber);
 						this.saveUserState('userId', response.result);
 
