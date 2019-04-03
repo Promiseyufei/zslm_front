@@ -2,7 +2,8 @@
     <div class="search_search_input">
         <div class="c-div div_v60iAm biaoqian sousuo">
             <div class="searchbox_PZpLzg">
-                <input class="c-search-box-input c-input input_3ty5SK" name="input1" placeholder="输入关键词进行搜索" type="text"  v-model="keyword" @keyup.enter="enter">
+                <input class="c-search-box-input c-input input_3ty5SK" name="input1" placeholder="输入关键词进行搜索" type="text"
+                       v-model="keyword" @keyup.enter="enter" @blur.prevent="enter">
             </div>
         </div>
     </div>

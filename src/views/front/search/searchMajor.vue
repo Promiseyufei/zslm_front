@@ -1,7 +1,7 @@
 <template>
     <div id="search_major">
         <div class="div_v60iAm xiangqingye">
-            <h1 class="c-heading heading_XwQWQq">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
+            <h1 class="c-heading heading_XwQWQq" v-if="keyword != ''">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
             <searchMajorModular  v-for="(item, index) in majors" :key="index" :majorInfo="item"></searchMajorModular>
         </div>
         <pcPhonePage :totalData="count" :size="pageCount" :currentPage="pageNumber" :loading="loading" @use="getMajor" @getPage="getPage"></pcPhonePage>
@@ -20,7 +20,7 @@ export default {
             majors:[]
         }
     },
-    methods: {                                                                          
+    methods: {
         getMajor(number) {
             this.pageNumber = number;
             this.fetch('/front/colleges/getcollegebyname', {
@@ -33,7 +33,7 @@ export default {
                     this.count = response.result.count;
                     this.majors = response.result.majors;
                 }
-                else this.message(true, response.msg, 'info'); 
+                else this.message(true, response.msg, 'info');
             })
         },
         getPage() {
@@ -60,7 +60,7 @@ export default {
         this.getMajor(this.pageNumber);
 
     }
-    
+
 }
 </script>
 
