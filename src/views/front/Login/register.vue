@@ -108,6 +108,7 @@
 						this.saveUserState('userId', response.result);
 
 						this.message(true, '注册成功，默认密码为手机号后六位~', 'success');
+            this.$router.push('/front/Login/loginRoute/accountNumber');
 					}
 				})
 			},
