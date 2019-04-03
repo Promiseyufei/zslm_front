@@ -110,6 +110,7 @@ export default {
     .publicRowRight .ff span{
         background-color: #ffb957;
         color: #fff !important;
+        margin-top: 5px !important;
     }
     .publicRowRight .fff span{
         color: #333 !important;
