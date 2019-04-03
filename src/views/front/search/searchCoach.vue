@@ -1,7 +1,7 @@
 <template>
     <div id="search_coach">
         <div class="div_rTx1Nf">
-            <h1 class="c-heading heading_XwQWQq jieguohuodong">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
+            <h1 class="c-heading heading_XwQWQq jieguohuodong" v-if="keyword != ''">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
             <div class="coachs">
                 <!--<searchCoachBox v-for="(item, index) in coachs" :key="index" :coachInfo="item"></searchCoachBox>-->
                   <div class="university" @click="putCoachDetail(item.id)" v-for="(item , index) in coachs" :key="index">

@@ -1,7 +1,7 @@
 <template>
     <div id="search_info">
         <div class="div_v60iAm xiangqingye">
-            <h1 class="c-heading heading_XwQWQq">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
+            <h1 class="c-heading heading_XwQWQq" v-if="keyword != ''">当前搜索关键字为“{{ keyword }}”，小助手找到了以下内容：</h1>
             <subPage :shortArticles="info" @detail="putInfoDetail"></subPage>
         </div>
         <pcPhonePage :totalData="count" :size="pageCount" :currentPage="pageNumber" :loading="loading" @use="getInfo" @getPage="getPage"></pcPhonePage>
