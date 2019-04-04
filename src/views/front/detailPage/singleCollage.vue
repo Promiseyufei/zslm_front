@@ -414,9 +414,10 @@ export default {
                 page_size:that.page_size
             }).then((response) => {
                 if(response.code == 0){
-                    let res = response.result;
+                    // let res = response.result;
+                    that.recommedContent = response.result;
                     // console.log(res)
-                    for(var i in res){
+                    /*for(var i in res){
                         that.recommedContent.push({
                             id: res[i].id,
                             img:res[i].z_image ,
@@ -425,7 +426,7 @@ export default {
                             time:res[i].update_time,
                             author:res[i].author,
                         });
-                    }
+                    }*/
                 }
             })
             .catch(error => function (error) {
@@ -736,7 +737,7 @@ export default {
             background-color: #f5f5f5;
         }
         .itemInform .el-card__body{
-            padding: 25px;
+            padding: 25px !important;
         }
         .aboutActivity {
             width: 905px;

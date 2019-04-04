@@ -6,18 +6,18 @@
                 <div class="content-son" v-for="(item, index) in shortArticles" :key="index">
                     <div class="article-con-posiion clearfloat" @click="detail(item.id)">
                         <div class="son-left">
-                            <img :src="item.img" alt="未加载">
+                            <img :src="item.z_image" alt="未加载">
                         </div>
                         <div class="son-right">
                             <div>
                                 <h1 class="son-title">
-                                    {{ item.title }}
+                                    {{ item.zx_name }}
                                 </h1>
-                                <p class="head-paragraph" v-html="item.content">
+                                <p class="head-paragraph" v-html="item.brief_introduction">
                                     <!-- {{ item.content }} -->
                                 </p>
                                 <div class="icon-head" style="margin-top: 10px;color:#6f6f6f;">
-                                    <i class="fa fa-calendar position"></i>{{ item.time }}
+                                    <i class="fa fa-calendar position"></i>{{ item.update_time }}
                                     <!--<i class="fa fa-paper-plane position" style="margin-left: 10px;"></i>{{ item.author }}-->
                                     <i class="fa fa-paper-plane position" style="margin-left: 10px;"></i>MBA&#12288;Helper
                                 </div>
@@ -46,6 +46,12 @@
         },
         mounted(){
 
+        },
+        watch: {
+          shortArticles(newValue) {
+            console.log(newValue);
+            this.shortArticles = newValue;
+          }
         }
     }
 </script>
