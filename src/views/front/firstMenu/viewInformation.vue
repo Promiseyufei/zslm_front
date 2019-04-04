@@ -382,6 +382,7 @@
 			this.advertisementBS();
 			this.getBanner();
 			this.getAd();
+      sessionStorage.setItem('isSelect' , 0);
 		},
 		created () {
 			this.changeTile('专硕联盟-看资讯')
