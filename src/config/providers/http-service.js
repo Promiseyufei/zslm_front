@@ -20,6 +20,7 @@ axios.interceptors.request.use(
 		config.headers = {
 			'UUID': uuid,
 			'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin':'',
 
 		}
 		return config;
