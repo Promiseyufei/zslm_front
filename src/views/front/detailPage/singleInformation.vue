@@ -5,11 +5,11 @@
 			<div class="content-article-single">
 				<div class="single-div-head">
 					<i id="home"></i>&nbsp;
-					<i>首页</i>
+					<i @click="jumps('/')">首页</i>
 					<label>></label>
-					<i>看资讯</i>
+					<i @click="jumps('/front/firstMenuRouter/viewInformation')">看资讯</i>
 					<label>></label>
-					<i>{{ articleContent.type_name }}</i>
+					<i @click="jumps('/front/firstMenuRouter/viewInformation')">{{ articleContent.type_name }}</i>
 					<label>></label>
 					<i class="text-article">正文</i>
 				</div>
@@ -89,7 +89,9 @@
 			testShare() {
 				this.share();
 			},
-
+      jumps(url){
+        this.$router.push(url);
+      },
 
 			/*
 			 * 推荐阅读刷新
@@ -256,6 +258,10 @@
 		letter-spacing: 0px;
 		color: #6e6e6e;
 	}
+  .content-article-single>div>i{
+    cursor: pointer;
+  }
+
 
 	.single-div-head {
 		/*line-height: 65px;*/
