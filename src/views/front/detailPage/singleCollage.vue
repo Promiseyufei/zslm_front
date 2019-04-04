@@ -525,8 +525,9 @@ export default {
 </script>
 <style>
     .el-icon-share{
-      position: relative;
-      right: 5px;
+      /*position: relative;
+      right: 5px;*/
+      margin: 0 auto;
       font-size: 15px !important;
     }
     .leftTwo .el-dialog__body {
@@ -680,18 +681,18 @@ export default {
             background-color: rgb(255, 185, 87);
             color: rgb(255, 255, 255);
             font-size: 18px !important;
-            border-radius: 5px;
+            border-radius: 5px !important;
             border: 0;
             padding-right:25px;
             margin-left: 6px;
         }
         .buttoOne .el-button--primary {
-            width: 138px;
+            width: 138px !important;
             height: 48px;
-            background-color: rgb(255, 185, 87);
+            background-color: rgb(255, 185, 87) !important;
             color: rgb(255, 255, 255);
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 5px !important;
             border: 0;
         }
         /*<!-- 院校logo -->*/
