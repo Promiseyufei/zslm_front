@@ -182,6 +182,7 @@
                     this.message(true,"对比列表已满", 'info');
                     this.setCookie(obj_arr)
                     this.colleges = obj_arr
+                    this.visible2 = false;
                     return true;
                 }else{
                     if(obj_arr == null){
@@ -191,6 +192,7 @@
                         if(obj_arr[i].id == this.collegeInfo.id){
                           this.message(true,"已经在对比列表里", 'info');
                           this.colleges = obj_arr;
+                          this.visible2 = false;
                           return true;
                         }
                       }
@@ -226,7 +228,8 @@
             },
             removeAll(){
                 this.colleges = [];
-                this.setCookie(this.colleges)
+                this.visible2 = false;
+                this.setCookie(this.colleges);
             },
             vs(){
                 let id = '';
