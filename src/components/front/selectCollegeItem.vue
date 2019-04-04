@@ -66,7 +66,7 @@
                             <el-button slot="reference"
                                        style="padding: 12px;width: 100%;margin: 10px auto;background-color:rgb(0, 159, 160) !important;
                                        color: white !important;"
-                            @click="vs">
+                            @click="vs" v-if="colleges.length > 0">
                                 开始对比
                             </el-button>
                         </div>
