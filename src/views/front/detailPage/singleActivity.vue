@@ -48,19 +48,19 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="InfoBtn hostBtn">
+                            <!--<div class="InfoBtn hostBtn">
                                 <a v-if="AppointAcInfo.start_state == 0" href="javascript:;" @click="activitySign">{{acState}}</a>
                                 <a v-else style="background-color:rgb(200,200,200);cursor: not-allowed;" href="javascript:;">{{acState}}</a>
                                 <div class="hostShare">
                                     <p>分享到</p>
                                     <a class="shareweixin" @click="() => {this.message(true, '该功能还未开通，敬请期待。', 'info')}">
-                                        <!-- <img src="../../../assets/img/weixin.png"> -->
+                                        &lt;!&ndash; <img src="../../../assets/img/weixin.png"> &ndash;&gt;
                                     </a>
                                     <a class="shareweibo" @click="() => {this.message(true, '该功能还未开通，敬请期待。', 'info')}">
-                                        <!-- <img src="../../../assets/img/glayxinlang.png"> -->
+                                        &lt;!&ndash; <img src="../../../assets/img/glayxinlang.png"> &ndash;&gt;
                                     </a>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <!-- 活动内容块 -->

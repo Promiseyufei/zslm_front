@@ -24,11 +24,11 @@
     				</div>
     				<div class="threeLogin" style="text-align: center;">
     					<!--<div class="fastIn">快捷登录</div>-->
-    					<div class="logonIn">
+    					<!--<div class="logonIn">
     						<div class="xinlang"></div>
     						<div class="diviLine"></div>
     						<div class="weixin" @click="thirdLogin"></div>
-    					</div>
+    					</div>-->
     				</div>
     			</el-card>
     		</div>

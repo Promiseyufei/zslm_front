@@ -25,13 +25,14 @@
 									<i class="fa fa-calendar color" aria-hidden="true"></i>&nbsp;&nbsp;
 									<i>{{ articleContent.create_time }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
 									<i class="fa fa-paper-plane color" aria-hidden="true"></i>&nbsp;&nbsp;
-									<i>{{ articleContent.publisher }}</i>
+									<!--<i>{{ articleContent.publisher }}</i>-->
+									<i>MBA&#12288;Helper</i>
 								</div>
-								<div class="icon-right">
+								<!--<div class="icon-right">
 									<i>分享到&nbsp;&nbsp;&nbsp;&nbsp;</i>
 									<i class="fa fa-weixin weixin" aria-hidden="true" @click="testShare"></i>
 									&nbsp;&nbsp;<i class="fa fa-weibo weibo" aria-hidden="true"></i>
-								</div>
+								</div>-->
 							</div>
 						</div>
 						<div class="content-article-write" v-html="articleContent.z_text">

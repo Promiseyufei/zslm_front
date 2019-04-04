@@ -15,7 +15,7 @@
                     <p style="opacity: 0.8;text-align: center;color: rgb(255, 255, 255);font-size: 12px;font-weight: bold;">关注{{ z_name }}，获取最新信息！</p>
                     <div class="collageButton">
                         <div class="buttoOne" @click="clickFollow"><el-button type="primary" id="followButt"><i class="el-icon-plus" id="symbol"></i>{{follow}}</el-button></div>
-                        <div class="buttoTwo">
+                        <!--<div class="buttoTwo">
                             <el-popover
                               placement="bottom-start"
                               v-model="visible2">
@@ -29,7 +29,7 @@
                                 </div>
                                 <el-button type="primary" icon="el-icon-share" slot="reference"></el-button>
                             </el-popover>
-                        </div>
+                        </div>-->
 
                     </div>
                 </div>
@@ -678,7 +678,7 @@ export default {
         .buttoTwo .el-button--primary {
             height: 48px;
             width: 48px;
-            background-color: rgb(255, 185, 87);
+            background-color: rgb(255, 185, 87) !important;
             color: rgb(255, 255, 255);
             font-size: 18px !important;
             border-radius: 5px !important;
