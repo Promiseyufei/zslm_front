@@ -170,19 +170,9 @@
 		    },
 		    //判断是否登录
 		    isLogin:function(){
-		    	//手机号
-		    	this.getUserState('user');
-		    	//用户id
-		    	this.getUserState('userId');
-		    	//用户头像
-		    	this.getUserState('userHead');
-		    	//用户名称
-		    	this.getUserState('userName');
-		    	// if (this.getUserState('user')) {
-		    		this.userName = this.getUserState('userName');
-		    		this.loginOr = this.getUserState('userHead');
-		    		this.userId = this.getUserState('userId');
-		    	// }
+            if(this.getUserState('userName')) this.userName = this.getUserState('userName');
+            if(this.getUserState('userHead')) this.loginOr = this.getUserState('userHead');
+		    		if(this.getUserState('userId')) this.userId = this.getUserState('userId');
 		    },
 		    //跳到我的关注or登录
 		    myCare:function(){
@@ -269,7 +259,6 @@
 						}
 					})
 			},
-
 		},
 
     watch: {
@@ -288,6 +277,7 @@
 			}
 			this.getAccountMsg()
 			this.getding()
+      this.isLogin();
 		},
 	};
 </script>
@@ -383,6 +373,7 @@
   .isLoginPicture img{
     width: 100%;
     height: 100%;
+    border-radius: 50%;
   }
 
 	/*-----------foot-----------*/
