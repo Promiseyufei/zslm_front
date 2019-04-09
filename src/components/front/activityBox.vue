@@ -75,7 +75,7 @@ export default {
         	switch(self.activityInfo.startState){
         		case 0:   self.state = "未开始"; break;
         		case 1:   self.state = "进行中"; break;
-    			  case 2:   self.state = "已结束"; break;
+    			case 2:   self.state = "已结束"; break;
         		default:  self.state = "未识别"; break;
         	};
         },

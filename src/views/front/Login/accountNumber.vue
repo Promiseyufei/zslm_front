@@ -24,14 +24,14 @@
 		},
 		methods:{
 			//密码是否可见
-			showOr:function() {
-				let showOr = document.getElementById("password")
-				if (showOr.type=="password") {
-					showOr.type = "text";
-				} else{
-					showOr.type = "password";
-				}
-			}
+// 			showOr:function() {
+// 				let showOr = document.getElementById("password")
+// 				if (showOr.type=="password") {
+// 					showOr.type = "text";
+// 				} else{
+// 					showOr.type = "password";
+// 				}
+// 			}
 		}
 	}
 </script>

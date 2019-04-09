@@ -1,11 +1,11 @@
 <template>
-	<!-- 问题反馈 -->
+	<!-- 用户条款 -->
     <div class="bodyBox">
     	<body>
     	   	<staticNav :state="state"></staticNav>
             <div class="content">
                 <div class="title">
-                    <p>问题反馈</p>
+                    <p>用户条款</p>
                 </div>
                 <article>
                     <img src="../../../assets/img/staticLogo.png">

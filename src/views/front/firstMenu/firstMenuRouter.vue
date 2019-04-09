@@ -8,10 +8,11 @@
 				<div class="firstMenu" v-show="firstMenu">
 					<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" text-color="#6e6e6e"
 					 active-text-color="#009fa0">
-						<el-menu-item index="1" @click="major">选院校</el-menu-item>
-						<el-menu-item index="2">找活动</el-menu-item>
-						<el-menu-item index="3">看资讯</el-menu-item>
-						<el-menu-item index="4" style="border:0;padding-right:0;">搜辅导</el-menu-item>
+					    <!-- <el-menu-item index="1" style="border:0;padding-right:0;"> </el-menu-item> -->
+						<el-menu-item index="2" @click="major">选院校</el-menu-item>
+						<el-menu-item index="3">找活动</el-menu-item>
+						<el-menu-item index="4">看资讯</el-menu-item>
+						<el-menu-item index="5" style="border:0;padding-right:0;">搜辅导</el-menu-item>
 					</el-menu>
 				</div>
 				<!-- 手机版 -->
@@ -59,7 +60,7 @@
 							<li><a href="javascript:0;" @click="toJump(0)">关于我们</a></li>
 							<li><a href="javascript:0;" @click="toJump(1)">用户条款</a></li>
 							<li><a href="javascript:0;" @click="toJump(2)">帮助中心</a></li>
-							<li><a href="javascript:0;" @click="toJump(3)">问题反馈</a></li>
+							<li><a href="javascript:0;" @click="toJump(3)">意见反馈</a></li>
 							<li><a href="javascript:0;" @click="toJump(4)">法律声明</a></li>
 						</ul>
 					</div>
@@ -107,7 +108,7 @@
 	    			case 0:   this.$router.push('/front/firstMenuRouter/aboutUs'); break;
 	                case 1:   this.$router.push('/front/firstMenuRouter/userTerms'); break;
 	                case 2:   this.$router.push('/front/firstMenuRouter/helpCenter'); break;
-	                case 3:   this.$router.push('/front/firstMenuRouter/ href="javascript:0;"singleOpinion'); break;
+	                case 3:   this.$router.push('/front/firstMenuRouter/singleOpinion'); break;
 	                default:  this.$router.push('/front/firstMenuRouter/legalNotice'); break;
 	            };
 	    	},
@@ -141,13 +142,13 @@
 	    	//头部菜单——组件自带——key为选中的当前页面ID
 	    	handleSelect(key, keyPath) {
 	    		this.activeIndex = key;
-	    		if (this.activeIndex==1) {
+	    		if (this.activeIndex==2) {
 	    			this.$router.push('/front/firstMenuRouter/selectCollege');
-	    		} else if(this.activeIndex==2) {
-	    			this.$router.push('/front/firstMenuRouter/lookActivity');
 	    		} else if(this.activeIndex==3) {
-	    			this.$router.push('/front/firstMenuRouter/viewInformation');
+	    			this.$router.push('/front/firstMenuRouter/lookActivity');
 	    		} else if(this.activeIndex==4) {
+	    			this.$router.push('/front/firstMenuRouter/viewInformation');
+	    		} else if(this.activeIndex==5) {
 	    			this.$router.push('/front/firstMenuRouter/searchCoach');
 	    		}
 		    },
@@ -159,13 +160,13 @@
 	    		let path = this.$route.matched[2].path;
 	    		//当前输入的路由包括()中路由时，显示当前高亮
 	    		if (path.indexOf('/front/firstMenuRouter/selectCollege') != -1) {
-	    			this.activeIndex = '1';
+	    			this.activeIndex = '2';
 	    		} else if(path.indexOf('/front/firstMenuRouter/lookActivity') != -1) {
-		    		this.activeIndex = '2';
-	    		} else if(path.indexOf('/front/firstMenuRouter/viewInformation') != -1) {
 		    		this.activeIndex = '3';
-		    	} else if(path.indexOf('/front/firstMenuRouter/searchCoach') != -1) {
+	    		} else if(path.indexOf('/front/firstMenuRouter/viewInformation') != -1) {
 		    		this.activeIndex = '4';
+		    	} else if(path.indexOf('/front/firstMenuRouter/searchCoach') != -1) {
+		    		this.activeIndex = '5';
 		    	}
 		    },
 		    //判断是否登录
@@ -292,6 +293,7 @@
 	};
 </script>
 <style>
+
 	.el-menu.el-menu--horizontal {
 		/*border-bottom: 0;*/
 	}
@@ -363,7 +365,7 @@
 		border-right: 1px solid rgba(0, 0, 0, 0.3);
 		height: 11px;
 		line-height: 11px;
-		color: #009fa0;
+		/* color: #009fa0; */
     font-weight: normal !important;
 	}
 

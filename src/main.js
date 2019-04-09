@@ -135,8 +135,6 @@ router.beforeEach((to, from, next) => {
 				judgelogin = arr[2] == '0' ? null : arr[2];
 			}
 
-
-
 			if (judgelogin != null)
 				next({
 					path: '/admin'

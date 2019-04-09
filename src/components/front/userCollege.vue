@@ -57,12 +57,23 @@
 				</div>
 
 				<a class="btn c-button button_LsM2yn123 quguan" type="button" @click="quguan">正在关注</a>
+				
 			</div>
+			<homeBtn class="btn c-button button_LsM2yn123 quguan jinruzhuye" text="进入院校主页" @majorWeb="majorWeb"></homeBtn>
+			
 			<div class="c-div div_Sd6WRB">
+				
+				
+		
 				<div v-show="classShow" class="c-div div_PiRYSQ" data-c_e_id="div_354d2bc5">
+					
 					<div class="row c-row row_EsvYjt guanzhu" data-c_e_id="row_a53619dd">
+		
 						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 c-column column_WvUK7W" v-for="(item,index) in data.product"
 						 :key="index">
+						 
+						 
+						 
 							<div class="c-div div_zpfJlh">
 								<h1 class="c-heading heading_gviHAE">{{ item.project_name }}</h1>
 								<div class="c-div div_XXPhAx">
@@ -97,7 +108,7 @@
 						</div>
 
 					</div>
-          <homeBtn class="btn c-button button_LsM2yn123 quguan jinruzhuye" text="进入院校主页" @majorWeb="majorWeb"></homeBtn>
+          
 					<!--<a class="btn c-button button_LsM2yn123 quguan jinruzhuye" @click="majorWeb" type="button" >进入院校主页</a>-->
 				</div>
 				<a class="c-textlink textlink_wzNM3e dakai c-action-click" data-c_act_id="M_ab06ccb710e44532|M_126530613a6d5d52"
@@ -112,6 +123,9 @@
   .homeBtn{
     padding: 6px 12px 6px 12px !important;
     color: rgb(0, 159, 160);
+	position: absolute;
+	right: 30px;
+	bottom:25px;
   }
 </style>
 <style scoped>

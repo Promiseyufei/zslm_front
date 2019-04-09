@@ -303,7 +303,7 @@
 					})
 
 				} else {
-					this.message(true, '您的登录状态已经过期，请重新登录', 'info');
+					this.message(true, '您的登录状态已经过期，请重新登录。', 'info');
 					// this.$router.push('/front/Login/loginRoute/accountNumber');
 				}
 			}

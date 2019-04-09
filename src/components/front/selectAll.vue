@@ -8,7 +8,7 @@
                 <nav class="publicRowRight">
                     <div ref="publiccheckbox">
                         <el-checkbox :indeterminate="isIndeterminate[index]" v-model="checkAll[index]" @change="handleCheckAllChange(index)" :class="checkboxGroup[index]==''?'ff':'' ">全部</el-checkbox>
-                        <el-checkbox-group v-model="checkboxGroup[index]" @change="handleChange">
+                        <el-checkbox-group max="1" v-model="checkboxGroup[index]" @change="handleChange">
                             <!-- 循环出来行 -->
                             <el-checkbox-button v-for="(city,ind) in item.cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
                         </el-checkbox-group>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -41,6 +42,7 @@ export default {
             span:"",
         };
     },
+	
     methods:{
         handleCheckAllChange(index,val) {
             this.checkboxGroup[index] = val ? checkboxGroup[index] : [];
@@ -77,6 +79,9 @@ export default {
             }, 1000);
         });
     }
+	
+	
+	
 }
 </script>
 <style>
@@ -110,7 +115,6 @@ export default {
     .publicRowRight .ff span{
         background-color: #ffb957;
         color: #fff !important;
-        margin-top: 5px !important;
     }
     .publicRowRight .fff span{
         color: #333 !important;

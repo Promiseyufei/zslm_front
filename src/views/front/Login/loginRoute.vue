@@ -34,7 +34,9 @@
     		</div>
     		<div class="phoneLogin" v-show="phone">
     			<div class="Close">
-    				<div class="close" @click="close"><img src="../../../assets/img/Close.png"></div>
+    			 	<div class="close" @click="close"><img src="../../../assets/img/Close.png"></div>
+					<!--<div class="close" @click="close"><img src="../../../assets/img/open.png"></div> -->
+					<!-- <div class="close"><img :src="this.registration_data.src" @click="changeType()"/></div> -->
     			</div>
     			<div class="MBA"><img src="../../../assets/img/logoGreen.png"></div>
     			<div class="loginText">登录</div>
@@ -64,7 +66,12 @@
 				active:'1',
 				phoneNumber:'',
 				checked:'',
-				password:''
+				password:'',
+// 								
+// 				registration_data:{
+// 				 pwdType:"password",
+// 				 src:require("../assets/colse_eyes.png")
+// 				},
 			};
 		},
 		watch: {
@@ -80,6 +87,10 @@
 				this.active = 2;
 				this.loginTest();
 			},
+// 			changeType(){
+// 			  this.registration_data.pwdType = this.registration_data.pwdType==='password'?'text':'password';
+// 			  this.registration_data.src=this.registration_data.src==require("../assets/colse_eyes.png")?require("../assets/open_eyes.png"):require("../assets/colse_eyes.png");
+// 			},
 			//获取验证码方法
 			sendcode:function(){
             	if(this.$store.state.userInfo['userPhone'] == ''){

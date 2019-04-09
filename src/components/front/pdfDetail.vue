@@ -31,14 +31,14 @@ export default {
             this.$emit('loadPdf', fileName);
         }
 
-      
+     
     },
     watch:{
-
+          
     },
     mounted(){
-        // console.log(this.t)
-        // console.log(this.tag)
+        console.log(this.t)
+        console.log(this.tag)
     }
 }
 </script>

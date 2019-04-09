@@ -341,7 +341,7 @@
 							<li><a href="/#/front/firstMenuRouter/aboutUs">关于我们</a></li>
 							<li><a href="/#/front/firstMenuRouter/userTerms">用户条款</a></li>
 							<li><a href="/#/front/firstMenuRouter/helpCenter">帮助中心</a></li>
-							<li><a href="/#/front/firstMenuRouter/feedback">问题反馈</a></li>
+							<li><a href="/#/front/firstMenuRouter/singleOpinion">意见反馈</a></li>
 							<li><a href="/#/front/firstMenuRouter/legalNotice">法律声明</a></li>
 							</ul>
 						</div>

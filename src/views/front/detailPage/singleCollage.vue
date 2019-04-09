@@ -700,6 +700,15 @@ export default {
         padding: 25px 10px !important;
       }
     }
+	
+	.typePicture img{
+		width:45px;
+		height:30px;
+	}
+	.majorPicture img{
+		width: 45px;
+		height: 30px;
+	}
 </style>
 <style scoped>
         /*分享按钮*/

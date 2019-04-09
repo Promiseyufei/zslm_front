@@ -9,7 +9,7 @@
 			        <nav class="publicRowRight">
 			            <div ref="publiccheckbox">
 			                <el-checkbox :indeterminate="isIndeterminate[index]" v-model="checkAll[index]" @change="handleCheckAllChange(index)" :class="checkboxGroup[index]==''?'ff':'' ">全部</el-checkbox>
-			                <el-checkbox-group v-model="checkboxGroup[index]" @change="handleChange">
+			                <el-checkbox-group  max="1" v-model="checkboxGroup[index]" @change="handleChange">
 			                    <!-- 循环出来行 -->
 			                    <el-checkbox-button v-for="(city,ind) in item.cities" :label="city" :key="ind">{{city.name}}</el-checkbox-button>
 			                </el-checkbox-group>
