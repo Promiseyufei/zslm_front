@@ -210,30 +210,6 @@
             getAllCollege(data) {
                 this.selectData = data;
 
-
-                /*let city = this.selectData[this.checkboxGroup_region_index];
-
-                if (Array.isArray(city) && city.length == 0) {
-
-                    this.$refs.select.deleteCheck(this.checkboxGroup_region_index);
-                    // checkboxGroup_region_index = 2,这里下标是2,在checkboxGroup数组中下标为2的元素存放着地址，如果不是2请修改
-                    // this.checkboxGroup[this.checkboxGroup_region_index] = []
-
-                }
-
-                if (city.name != undefined) {
-                    this.selectData[this.checkboxGroup_region_index][0] = [];
-                    this.selectData[this.checkboxGroup_region_index][0].id = city.id;
-                    this.selectData[this.checkboxGroup_region_index][0].id = city.name;
-                }*/
-
-
-                // 				if(city.name == undefined){
-                //
-                //
-                // 					this.$refs.select.checkboxGroup[this.checkboxGroup_region_index] = []
-                // 				}
-
                 this.getselt(data);
                 this.getmajorInform();
             },
@@ -299,38 +275,6 @@
                   this.min = Math.min.apply(null, num);
                   this.max = Math.max.apply(null, num);
                 }
-
-
-
-                // this.max = list[4]; //学习费用——int
-                /*if (num.length > 0 && num.length == 1) {
-
-                    if (num[0] > 10) {
-                        this.min = Math.max.apply(null, num);
-                        this.max = 100;
-                    } else {
-                        this.min = 0;
-                        this.max = Math.max.apply(null, num);
-                    }
-
-                } else if (num.length > 0) {
-                    this.min = Math.min.apply(null, num);
-                    this.max = Math.max.apply(null, num);
-                }*/
-
-                // console.log(this.min);
-                // console.log(this.max);
-
-                /*else if (list[4].length > 0 && list[4].length == 2) {
-                    this.min = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][1]) : parseInt(list[4][0]);
-                    this.max = (parseInt(list[4][0]) >= parseInt(list[4][1])) ? parseInt(list[4][0]) : parseInt(list[4][1]);
-                } else if (list[4].length > 2) {
-                    this.min = this.max = parseInt(list[4][0]);
-                    for (let index = 1; index < list[4].length; index++) {
-                        if (this.min > parseInt(list[4][index])) this.min = parseInt(list[4][index]);
-                        if (this.max <= parseInt(list[4][index])) this.max = parseInt(list[4][index]);
-                    }
-                }*/
 
                 this.score_type = list[5].join(","); //分数线——字符串
             },

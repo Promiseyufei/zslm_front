@@ -55,6 +55,11 @@
 
         mounted(){
 
+        },
+        watch: {
+          inforArticle(newValue) {
+            this.infor = newValue;
+          }
         }
     }
 </script>

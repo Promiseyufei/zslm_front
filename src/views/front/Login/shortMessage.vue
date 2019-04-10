@@ -48,7 +48,7 @@
 <!-- 全局样式 -->
 <style>
 	.codeInput .el-button--primary {
-		width: 105px;
+		width: 105px !important;
 		height: 44px;
 		position: relative;
 		left: 270px;

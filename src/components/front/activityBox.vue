@@ -95,7 +95,8 @@ export default {
         this.activityState();
     },
     watch:{
-        activityInfo(){
+        activityInfo(val){
+            console.log(val);
             this.activityState();
         }
 

@@ -5,11 +5,11 @@
 			<div class="content-article-single">
 				<div class="single-div-head">
 					<i id="home"></i>&nbsp;
-					<i>首页</i>
+					<i @click="jumps('/')">首页</i>
 					<label>></label>
-					<i>看资讯</i>
+					<i @click="jumps('/front/firstMenuRouter/viewInformation')">看资讯</i>
 					<label>></label>
-					<i>{{ articleContent.type_name }}</i>
+					<i @click="jumps('/front/firstMenuRouter/viewInformation')">{{ articleContent.type_name }}</i>
 					<label>></label>
 					<i class="text-article">正文</i>
 				</div>
@@ -25,13 +25,14 @@
 									<i class="fa fa-calendar color" aria-hidden="true"></i>&nbsp;&nbsp;
 									<i>{{ articleContent.create_time }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
 									<i class="fa fa-paper-plane color" aria-hidden="true"></i>&nbsp;&nbsp;
-									<i>{{ articleContent.publisher }}</i>
+									<!--<i>{{ articleContent.publisher }}</i>-->
+									<i>MBA&#12288;Helper</i>
 								</div>
-								<div class="icon-right">
+								<!--<div class="icon-right">
 									<i>分享到&nbsp;&nbsp;&nbsp;&nbsp;</i>
 									<i class="fa fa-weixin weixin" aria-hidden="true" @click="testShare"></i>
 									&nbsp;&nbsp;<i class="fa fa-weibo weibo" aria-hidden="true"></i>
-								</div>
+								</div>-->
 							</div>
 						</div>
 						<div class="content-article-write" v-html="articleContent.z_text">
@@ -88,7 +89,9 @@
 			testShare() {
 				this.share();
 			},
-
+      jumps(url){
+        this.$router.push(url);
+      },
 
 			/*
 			 * 推荐阅读刷新
@@ -255,6 +258,10 @@
 		letter-spacing: 0px;
 		color: #6e6e6e;
 	}
+  .content-article-single>div>i{
+    cursor: pointer;
+  }
+
 
 	.single-div-head {
 		/*line-height: 65px;*/

@@ -15,7 +15,7 @@
                     <p style="opacity: 0.8;text-align: center;color: rgb(255, 255, 255);font-size: 12px;font-weight: bold;">关注{{ z_name }}，获取最新信息！</p>
                     <div class="collageButton">
                         <div class="buttoOne" @click="clickFollow"><el-button type="primary" id="followButt"><i class="el-icon-plus" id="symbol"></i>{{follow}}</el-button></div>
-                        <div class="buttoTwo">
+                        <!--<div class="buttoTwo">
                             <el-popover
                               placement="bottom-start"
                               v-model="visible2">
@@ -29,7 +29,7 @@
                                 </div>
                                 <el-button type="primary" icon="el-icon-share" slot="reference"></el-button>
                             </el-popover>
-                        </div>
+                        </div>-->
 
                     </div>
                 </div>
@@ -414,9 +414,10 @@ export default {
                 page_size:that.page_size
             }).then((response) => {
                 if(response.code == 0){
-                    let res = response.result;
+                    // let res = response.result;
+                    that.recommedContent = response.result;
                     // console.log(res)
-                    for(var i in res){
+                    /*for(var i in res){
                         that.recommedContent.push({
                             id: res[i].id,
                             img:res[i].z_image ,
@@ -425,7 +426,7 @@ export default {
                             time:res[i].update_time,
                             author:res[i].author,
                         });
-                    }
+                    }*/
                 }
             })
             .catch(error => function (error) {
@@ -525,8 +526,9 @@ export default {
 </script>
 <style>
     .el-icon-share{
-      position: relative;
-      right: 5px;
+      /*position: relative;
+      right: 5px;*/
+      margin: 0 auto;
       font-size: 15px !important;
     }
     .leftTwo .el-dialog__body {
@@ -677,21 +679,21 @@ export default {
         .buttoTwo .el-button--primary {
             height: 48px;
             width: 48px;
-            background-color: rgb(255, 185, 87);
+            background-color: rgb(255, 185, 87) !important;
             color: rgb(255, 255, 255);
             font-size: 18px !important;
-            border-radius: 5px;
+            border-radius: 5px !important;
             border: 0;
             padding-right:25px;
             margin-left: 6px;
         }
         .buttoOne .el-button--primary {
-            width: 138px;
+            width: 138px !important;
             height: 48px;
-            background-color: rgb(255, 185, 87);
+            background-color: rgb(255, 185, 87) !important;
             color: rgb(255, 255, 255);
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 5px !important;
             border: 0;
         }
         /*<!-- 院校logo -->*/
@@ -744,7 +746,7 @@ export default {
             background-color: #f5f5f5;
         }
         .itemInform .el-card__body{
-            padding: 25px;
+            padding: 25px !important;
         }
         .aboutActivity {
             width: 905px;
