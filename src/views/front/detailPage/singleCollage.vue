@@ -317,7 +317,8 @@ export default {
         },
         //下载pdf
         loadPdf:function(file_name){
-            window.open(this.excelUrl + "/front/colleges/downloadfile?filename=" + file_name);
+            this.excelUrl = this.excelUrl?this.excelUrl:'http://www.mbahelper.cn:8889';
+            window.open(this.excelUrl + "/front/colleges/downloadfile/" + file_name);
         },
         //点击关注
         clickFollow:function(){
@@ -702,7 +703,7 @@ export default {
         padding: 25px 10px !important;
       }
     }
-	
+
 	.typePicture img{
 		width:45px;
 		height:30px;

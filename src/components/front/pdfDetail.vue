@@ -1,7 +1,7 @@
 <template>
-        <div @click="loadPdf(pdfPicture[0].file_name)" class="detailPicture" @mouseover="pdfOne" @mouseout="pdfOneOut" >
+        <div @click="loadPdf(pdfPicture[t].file_url)" class="detailPicture" @mouseover="pdfOne" @mouseout="pdfOneOut" >
             <div><img :src="src" alt="加载中"></div>
-            <div class="detailCity">{{pdfPicture[0].file_name}}</div>
+            <div class="detailCity">{{pdfPicture[t].file_name}}</div>
         </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
             src:require("../../assets/img/pdf.png"),
     	}
     },
-    props:["t","pdfPicture"],
+    props:["t","pdfPicture","index"],
     methods:{
     //资料下载区logo——鼠标滑过样式
         pdfOne:function() {
@@ -28,17 +28,20 @@ export default {
         },
     //资料下载区logo——鼠标滑过样式
         loadPdf(fileName) {
+            // alert(fileName);
             this.$emit('loadPdf', fileName);
+            // window.open('/front/colleges/downloadfile/'+fileName);
+            // this.fetch('/front/colleges/downloadfile/'+fileName);
         }
 
-     
+
     },
     watch:{
-          
+
     },
     mounted(){
-        console.log(this.t)
-        console.log(this.tag)
+        console.log(this.t);
+        console.log(this.pdfPicture)
     }
 }
 </script>
@@ -70,7 +73,7 @@ export default {
         width: 23%;
         padding: 20px 12px;
     }
-    
+
 
 
 </style>
