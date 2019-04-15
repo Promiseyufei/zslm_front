@@ -1532,6 +1532,7 @@
 
 	.selectInformationFooter .homeBtn {
 		margin-top: 3%;
+    position: inherit !important;
 	}
 
 	.selectInformationFooter p {
