@@ -1287,7 +1287,7 @@
 
 	.self {
 		display: block !important;
-		position: absolute;
+		position: absolute !important;
 		bottom: 0;
 		right: 0;
 	}
