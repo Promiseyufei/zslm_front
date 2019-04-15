@@ -112,7 +112,7 @@
 								<p>商学院认证的最新MBA招生项目</p>
 								<p>信息确保真实</p>
 							</div>
-							<homeBtn class="homeBtn self" text="查看全部院校" @click.native="toJump(1)"></homeBtn>
+              <homeBtn class="homeBtn self" text="查看全部院校" @click.native="toJump(1)" :class="marjorBtn"></homeBtn>
 						</div>
 					</div>
 				</div>

@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
     .homeBtn {
-        padding: 15px 30px;
+        padding: 15px 30px !important;
         border: 2px solid #009fa0;
         border-radius: 5px;
         text-align: center;
