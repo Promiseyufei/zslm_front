@@ -9,7 +9,7 @@
 export default {
     data() {
         return {
-            src: require('../../assets/img/white.png'),
+            src: require('../../assets/img/green.png'),
         };
     },
     methods:{
@@ -21,7 +21,7 @@ export default {
         //鼠标移开触发事件
         outStyle: function(se) {
             // this.src = require('../../assets/img/green.png');
-            this.src = require('../../assets/img/white.png');
+            this.src = require('../../assets/img/green.png');
         },
         jump(){
           this.$emit('majorWeb');
