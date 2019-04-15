@@ -662,9 +662,6 @@
 </style>
 
 <style>
-  .homeBtn{
-    position: inherit !important;
-  }
 	.sowingMap [class*=" el-icon-"],
 	.sowingMap [class^=el-icon-] {
 		font-size: 26px;

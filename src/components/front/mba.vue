@@ -320,5 +320,7 @@
 </style>
 
 <style>
-
+  .homeBtn{
+    position: inherit !important;
+  }
 </style>
