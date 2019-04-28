@@ -8,7 +8,7 @@ import router from './router'
 //引入weixin-js-sdk
 import wx from 'weixin-js-sdk'
 
-//test
+
 
 //引入jquery
 import $ from 'jquery'
